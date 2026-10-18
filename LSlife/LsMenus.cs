@@ -1021,11 +1021,11 @@ internal static class LsMenus
 		}
 		if (sender == LSL.takeWeedOzVeh)
 		{
-			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer ~r~" + LSL.takeWeedOzVeh.Value + "~s~z";
+			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.FormatLegacyPacks(LSL.takeWeedOzVeh.Value);
 		}
 		else if (sender == LSL.putWeedOzVeh)
 		{
-			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer ~r~" + LSL.putWeedOzVeh.Value + "~s~z";
+			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatLegacyPacks(LSL.putWeedOzVeh.Value);
 		}
 		else if (sender == LSL.takeCrackVeh)
 		{
@@ -1037,11 +1037,11 @@ internal static class LsMenus
 		}
 		if (sender == LSL.takeCrackOzVeh)
 		{
-			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer ~r~" + LSL.takeCrackOzVeh.Value + "~s~z";
+			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.FormatLegacyPacks(LSL.takeCrackOzVeh.Value);
 		}
 		else if (sender == LSL.putCrackOzVeh)
 		{
-			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer ~r~" + LSL.putCrackOzVeh.Value + "~s~z";
+			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatLegacyPacks(LSL.putCrackOzVeh.Value);
 		}
 		else if (sender == LSL.takeCocainVeh)
 		{
@@ -1053,11 +1053,11 @@ internal static class LsMenus
 		}
 		else if (sender == LSL.takeCocainOzVeh)
 		{
-			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer ~r~" + LSL.takeCocainOzVeh.Value + "~s~z";
+			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.FormatLegacyPacks(LSL.takeCocainOzVeh.Value);
 		}
 		else if (sender == LSL.putCocainOzVeh)
 		{
-			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer ~r~" + LSL.putCocainOzVeh.Value + "~s~z";
+			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatLegacyPacks(LSL.putCocainOzVeh.Value);
 		}
 		else if (sender == LSL.putMoneyVeh)
 		{
@@ -1097,15 +1097,15 @@ internal static class LsMenus
 		}
 		else if (sender == LSL.putWeedOzStash)
 		{
-			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer ~r~" + LSL.putWeedOzStash.Value + "~s~z";
+			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatLegacyPacks(LSL.putWeedOzStash.Value);
 		}
 		else if (sender == LSL.putCrackOzStash)
 		{
-			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer ~r~" + LSL.putCrackOzStash.Value + "~s~z";
+			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatLegacyPacks(LSL.putCrackOzStash.Value);
 		}
 		else if (sender == LSL.putCocainOzStash)
 		{
-			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer ~r~" + LsFunctions.pCocaineOunce + "~s~z";
+			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatLegacyPacks(LsFunctions.pCocaineOunce);
 		}
 		else if (sender == LSL.putMoneyStash)
 		{
