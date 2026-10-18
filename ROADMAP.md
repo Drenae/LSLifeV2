@@ -31,9 +31,9 @@
 
 ### LSlife.HeatBars (3)
 
-- [ ] `LSlife.HeatBars/AreaHeatBar.cs`
-- [ ] `LSlife.HeatBars/BarHandler.cs`
-- [ ] `LSlife.HeatBars/PlayerHeatBar.cs`
+- [x] `LSlife.HeatBars/AreaHeatBar.cs` — audit intégral des chaînes et libellés effectué
+- [x] `LSlife.HeatBars/BarHandler.cs` — audit intégral des chaînes et libellés effectué
+- [x] `LSlife.HeatBars/PlayerHeatBar.cs` — audit intégral des chaînes et libellés effectué
 
 ### LSlife.Inventory (4)
 
@@ -94,7 +94,7 @@
 
 - [ ] `Properties/AssemblyInfo.cs`
 
-**Suivi : 5/52 fichiers C# validés à 100 % pour la traduction (compilation en attente du test utilisateur).**
+**Suivi : 8/52 fichiers C# validés à 100 % pour la traduction (compilation en attente du test utilisateur).**
 
 **Périmètre :** inventaire généré depuis l'arborescence GitHub de `main` ; fichiers `.cs` uniquement. Les scripts de build, projets et autres ressources ne sont pas des fichiers de traduction C#.
 
