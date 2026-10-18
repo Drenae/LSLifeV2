@@ -39,6 +39,7 @@ public class PedDebugger
 		//IL_014e: Unknown result type (might be due to invalid IL or missing references)
 		if (Game.GameTime > dTime + dInterval)
 		{
+			dTime = Game.GameTime;
 			foreach (Ped p in World.GetAllPeds().ToList())
 			{
 				if (!debugPeds.Contains(p))
