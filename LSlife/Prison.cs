@@ -23,9 +23,7 @@ internal static class Prison
 	{
 public Prop Prop;
 
-		private bool Locked = true;
-
-		public Gate(Prop prop)
+public Gate(Prop prop)
 		{
 			Prop = prop;
 		}
