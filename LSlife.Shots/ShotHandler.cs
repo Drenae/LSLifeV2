@@ -16,8 +16,6 @@ internal static class ShotHandler
 
 	public static int currentShot = 99;
 
-	private static bool routeSet = false;
-
 	public static bool ShotOffers => shots.Where((Shot s) => s.shotOffered).Count() > 0;
 
 	public static void Tick()
