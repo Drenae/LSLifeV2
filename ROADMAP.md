@@ -74,16 +74,16 @@
 - [x] `LSlife/HeadShotHandler.cs` — audit intégral des chaînes, identifiants et sauvegardes préservés
 - [x] `LSlife/HirePed.cs` — audit intégral des chaînes, identifiants et sauvegardes préservés
 - [x] `LSlife/InventoryText.cs` — audit intégral des chaînes, identifiants et sauvegardes préservés — traduction entamée, audit final restant
-- [ ] `LSlife/LSL.cs` — traduction entamée, audit final restant
-- [ ] `LSlife/LsFunctions.cs` — traduction entamée, audit final restant
-- [ ] `LSlife/LsLPeds.cs`
-- [ ] `LSlife/LsMenus.cs` — traduction entamée, audit final restant
-- [ ] `LSlife/LsTimer.cs`
-- [ ] `LSlife/PedDebugger.cs`
-- [ ] `LSlife/PedTeam.cs`
-- [ ] `LSlife/PickupHandler.cs`
-- [ ] `LSlife/Pig.cs`
-- [ ] `LSlife/PlayerDealer.cs` — traduction entamée, audit final restant
+- [x] `LSlife/LSL.cs` — audit des textes, clés techniques et identifiants conservés — traduction entamée, audit final restant
+- [x] `LSlife/LsFunctions.cs` — audit des textes, clés techniques et identifiants conservés — traduction entamée, audit final restant
+- [x] `LSlife/LsLPeds.cs` — audit des textes, clés techniques et identifiants conservés
+- [x] `LSlife/LsMenus.cs` — audit des textes, clés techniques et identifiants conservés — traduction entamée, audit final restant
+- [x] `LSlife/LsTimer.cs` — audit des textes, clés techniques et identifiants conservés
+- [x] `LSlife/PedDebugger.cs` — audit des textes, clés techniques et identifiants conservés
+- [x] `LSlife/PedTeam.cs` — audit des textes, clés techniques et identifiants conservés
+- [x] `LSlife/PickupHandler.cs` — audit des textes, clés techniques et identifiants conservés
+- [x] `LSlife/Pig.cs` — audit des textes, clés techniques et identifiants conservés
+- [x] `LSlife/PlayerDealer.cs` — audit des textes, clés techniques et identifiants conservés — traduction entamée, audit final restant
 - [ ] `LSlife/PlayerDealerHandler.cs`
 - [ ] `LSlife/Prison.cs`
 - [ ] `LSlife/StashHouse.cs` — traduction entamée, audit final restant
@@ -94,7 +94,7 @@
 
 - [ ] `Properties/AssemblyInfo.cs`
 
-**Suivi : 36/52 fichiers C# validés à 100 % pour la traduction (compilation en attente du test utilisateur).**
+**Suivi : 46/52 fichiers C# validés à 100 % pour la traduction (compilation en attente du test utilisateur).**
 
 **Périmètre :** inventaire généré depuis l'arborescence GitHub de `main` ; fichiers `.cs` uniquement. Les scripts de build, projets et autres ressources ne sont pas des fichiers de traduction C#.
 
