@@ -54,16 +54,16 @@
 
 ### LSlife (35)
 
-- [ ] `LSlife/Area.cs`
-- [ ] `LSlife/AreaDealer.cs`
-- [ ] `LSlife/Customer.cs`
-- [ ] `LSlife/CustomerPed.cs`
-- [ ] `LSlife/Dealer.cs`
-- [ ] `LSlife/DealerSpawnPostion.cs`
-- [ ] `LSlife/DefaultPed.cs`
-- [ ] `LSlife/DriveBy.cs`
-- [ ] `LSlife/DriveByHandler.cs`
-- [ ] `LSlife/DropDrugs.cs`
+- [x] `LSlife/Area.cs` — chaînes visibles auditées, identifiants internes conservés
+- [x] `LSlife/AreaDealer.cs` — chaînes visibles auditées, identifiants internes conservés
+- [x] `LSlife/Customer.cs` — chaînes visibles auditées, identifiants internes conservés
+- [x] `LSlife/CustomerPed.cs` — chaînes visibles auditées, identifiants internes conservés
+- [x] `LSlife/Dealer.cs` — chaînes visibles auditées, identifiants internes conservés
+- [x] `LSlife/DealerSpawnPostion.cs` — chaînes visibles auditées, identifiants internes conservés
+- [x] `LSlife/DefaultPed.cs` — chaînes visibles auditées, identifiants internes conservés
+- [x] `LSlife/DriveBy.cs` — chaînes visibles auditées, identifiants internes conservés
+- [x] `LSlife/DriveByHandler.cs` — chaînes visibles auditées, identifiants internes conservés
+- [x] `LSlife/DropDrugs.cs` — chaînes visibles auditées, identifiants internes conservés
 - [ ] `LSlife/DroppedBag.cs`
 - [ ] `LSlife/Drug.cs`
 - [ ] `LSlife/DrugDealer.cs`
@@ -94,7 +94,7 @@
 
 - [ ] `Properties/AssemblyInfo.cs`
 
-**Suivi : 16/52 fichiers C# validés à 100 % pour la traduction (compilation en attente du test utilisateur).**
+**Suivi : 26/52 fichiers C# validés à 100 % pour la traduction (compilation en attente du test utilisateur).**
 
 **Périmètre :** inventaire généré depuis l'arborescence GitHub de `main` ; fichiers `.cs` uniquement. Les scripts de build, projets et autres ressources ne sont pas des fichiers de traduction C#.
 
