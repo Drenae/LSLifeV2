@@ -271,7 +271,7 @@ public class Pig
 			{
 				if ((Entity)(object)Game.Player.Character.CurrentVehicle != (Entity)null && !Game.Player.Character.CurrentVehicle.IsStopped)
 				{
-					LsFunctions.DbugString("Wanted level for not stopping for police in vehicle");
+					LsFunctions.DbugString("Indice de recherche augmenté : refus de s'arrêter en véhicule");
 					Game.Player.WantedLevel = 1;
 					LSL.areas[LSL.areaIndex].Heat += 200f;
 					break;
@@ -298,7 +298,7 @@ public class Pig
 			{
 				if (leader)
 				{
-					UI.ShowSubtitle("Tu es en etat d arrestation.", 3000);
+					UI.ShowSubtitle("Tu es en état d'arrestation.", 3000);
 					Game.Player.WantedLevel = 2;
 				}
 				NewState = States.Destroy;
@@ -320,7 +320,7 @@ public class Pig
 			}
 			if (Game.Player.WantedLevel < 1 && LSL.playerPos.DistanceTo(pPos) > 8f)
 			{
-				LsFunctions.DbugString("Wanted level for not stopping for police");
+				LsFunctions.DbugString("Indice de recherche augmenté : refus de s'arrêter");
 				Game.Player.WantedLevel = 2;
 				LSL.areas[LSL.areaIndex].Heat += 200f;
 				break;
@@ -391,7 +391,7 @@ public class Pig
 		}
 		if (DEBUG)
 		{
-			UI.Notify("Nouvel etat de la police : " + NewState);
+			UI.Notify("Nouvel état de la police : " + NewState);
 		}
 		switch (NewState)
 		{
@@ -403,7 +403,7 @@ public class Pig
 			}
 			if (DEBUG)
 			{
-				UI.Notify("Recuperation du sac");
+				UI.Notify("Récupération du sac");
 			}
 			Ped.Task.GoTo(Bag.pos);
 			CurrentState = NewState;
@@ -456,7 +456,7 @@ public class Pig
 			CurrentState = States.Normal;
 			if (DEBUG)
 			{
-				UI.Notify("Retour a la normale");
+				UI.Notify("Retour à la normale");
 			}
 			break;
 		case States.WatchPlayer:
@@ -469,7 +469,7 @@ public class Pig
 			{
 				if (leader)
 				{
-					UI.ShowSubtitle("Monsieur, veuillez sortir du vehicule.", 4000);
+					UI.ShowSubtitle("Monsieur, veuillez sortir du véhicule.", 4000);
 				}
 				AskPlayerToComply = true;
 			}
