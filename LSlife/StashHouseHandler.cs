@@ -20,7 +20,7 @@ public class StashHouseHandler
 		LoadHouses();
 		if (LSL.DEBUG)
 		{
-			UI.Notify("Loaded " + Houses.Count + " houses");
+			UI.Notify("Chargement de " + Houses.Count + " planques");
 		}
 	}
 
@@ -63,7 +63,7 @@ public class StashHouseHandler
 		//IL_0807: Unknown result type (might be due to invalid IL or missing references)
 		if (!File.Exists("scripts\\LSLife\\LSLife_StashHouses.xml"))
 		{
-			UI.Notify("~r~Missing StashHouses.xml");
+			UI.Notify("~r~Fichier StashHouses.xml introuvable");
 			return;
 		}
 		XDocument StashDoc = XDocument.Load("scripts\\LSLife\\LSLife_StashHouses.xml");
@@ -203,7 +203,7 @@ public class StashHouseHandler
 							int.TryParse(ele5.Value, out weed);
 							if (LSL.DEBUG)
 							{
-								UI.Notify("~y~Weed" + weed);
+								UI.Notify("~y~Cannabis : " + weed);
 							}
 						}
 					}
@@ -355,10 +355,10 @@ public class StashHouseHandler
 		LSL.takeCrackStash.Maximum = _house.Crack;
 		LSL.takeCocainStash.Maximum = _house.Cocain;
 		LSL.takeMoneyStash.Maximum = _house.Money;
-		((UIMenuItem)LSL.takeWeedStash).Text = "Weed " + LsFunctions.GramsToOz(_house.Weed);
+		((UIMenuItem)LSL.takeWeedStash).Text = "Cannabis " + LsFunctions.GramsToOz(_house.Weed);
 		((UIMenuItem)LSL.takeCrackStash).Text = "Crack " + LsFunctions.GramsToOz(_house.Crack);
-		((UIMenuItem)LSL.takeCocainStash).Text = "Cocaine " + LsFunctions.GramsToOz(_house.Cocain);
-		((UIMenuItem)LSL.takeMoneyStash).Text = "Money $" + LsFunctions.IntToMoney(_house.Money);
+		((UIMenuItem)LSL.takeCocainStash).Text = "Cocaïne " + LsFunctions.GramsToOz(_house.Cocain);
+		((UIMenuItem)LSL.takeMoneyStash).Text = "Argent $" + LsFunctions.IntToMoney(_house.Money);
 		LSL.takeWeaponStash.Items = _house.Weps;
 		LSL.takeWeaponStash.Index = 0;
 		LSL.takeArmourStash.Items = new List<object>();
@@ -373,13 +373,13 @@ public class StashHouseHandler
 		LSL.putCrackOzStash.Maximum = LsFunctions.pCrackOunce;
 		LSL.putCocainOzStash.Maximum = LsFunctions.pCocaineOunce;
 		LSL.putMoneyStash.Maximum = LSL.player.Money;
-		((UIMenuItem)LSL.putWeedStash).Text = "Weed " + LsFunctions.GramsToOz(LSL.PlayerInventory["Weed"]);
+		((UIMenuItem)LSL.putWeedStash).Text = "Cannabis " + LsFunctions.GramsToOz(LSL.PlayerInventory["Weed"]);
 		((UIMenuItem)LSL.putCrackStash).Text = "Crack " + LsFunctions.GramsToOz(LSL.PlayerInventory["Crack"]);
-		((UIMenuItem)LSL.putCocainStash).Text = "Cocaine " + LsFunctions.GramsToOz(LSL.PlayerInventory["Cocaine"]);
-		((UIMenuItem)LSL.putWeedOzStash).Text = "Weed ~r~" + LsFunctions.pWeedOunce + "~s~z";
+		((UIMenuItem)LSL.putCocainStash).Text = "Cocaïne " + LsFunctions.GramsToOz(LSL.PlayerInventory["Cocaine"]);
+		((UIMenuItem)LSL.putWeedOzStash).Text = "Cannabis ~r~" + LsFunctions.pWeedOunce + "~s~z";
 		((UIMenuItem)LSL.putCrackOzStash).Text = "Crack ~r~" + LsFunctions.pCrackOunce + "~s~z";
-		((UIMenuItem)LSL.putCocainOzStash).Text = "Cocaine ~r~" + LsFunctions.pCocaineOunce + "~s~z";
-		((UIMenuItem)LSL.putMoneyStash).Text = "Money $" + LsFunctions.IntToMoney(LSL.player.Money);
+		((UIMenuItem)LSL.putCocainOzStash).Text = "Cocaïne ~r~" + LsFunctions.pCocaineOunce + "~s~z";
+		((UIMenuItem)LSL.putMoneyStash).Text = "Argent $" + LsFunctions.IntToMoney(LSL.player.Money);
 		LSL.putWeaponStash.Index = 0;
 		LSL.putWeaponStash.Items = LSL.playerWeps;
 		LSL.putArmourStash.Items = new List<object>();
