@@ -45,7 +45,7 @@ internal class OldCustomer
 
 	internal void Destroy()
 	{
-		LsFunctions.DbugString("Old customer Destroyed");
+		LsFunctions.DbugString("Ancien client supprimé");
 		LsFunctions.RemovePedFromWorld(Ped, clearTask: false);
 		if (Inside && (Entity)(object)Ped != (Entity)null)
 		{
@@ -95,12 +95,12 @@ internal class OldCustomer
 						IsRival = true;
 						SetState(OldCustomerStates.Attack);
 						model = ((Entity)Ped).Model;
-						LsFunctions.DbugString(((object)(PedHash)model.Hash/*cast due to constrained. prefix*/).ToString() + "is rival");
+						LsFunctions.DbugString(((object)(PedHash)model.Hash/*cast due to constrained. prefix*/).ToString() + " est un rival");
 						break;
 					}
 					CanBeRival = false;
 					model = ((Entity)Ped).Model;
-					LsFunctions.DbugString(((object)(PedHash)model.Hash/*cast due to constrained. prefix*/).ToString() + "not rival");
+					LsFunctions.DbugString(((object)(PedHash)model.Hash/*cast due to constrained. prefix*/).ToString() + " n'est pas un rival");
 				}
 				SetState(OldCustomerStates.Destroy);
 			}
