@@ -71,9 +71,9 @@ public class DrugDealer
 					if (blip != (Blip)null)
 					{
 						blip.Sprite = (BlipSprite)478;
-						blip.Name = "Drug Pickup";
+						blip.Name = "Récupération de drogue";
 						blip.ShowRoute = true;
-						LsFunctions.DbugString("dealer car spawned");
+						LsFunctions.DbugString("Véhicule du fournisseur créé");
 						string areaName = World.GetZoneName(dealerSpawn.Position);
 						LsFunctions.TextMsg("ZEE", "Commande", "Va retrouver mes hommes à ~y~" + areaName + " ~s~, ils s'occuperont de toi.");
 					}
@@ -85,7 +85,7 @@ public class DrugDealer
 				}
 				string text = dealerSpawn.Heading.ToString();
 				Vector3 position = dealerSpawn.Position;
-				LsFunctions.DbugString("dealer spawn found,~n~heading " + text + ",~n~pos " + ((object)position/*cast due to constrained. prefix*/).ToString());
+				LsFunctions.DbugString("Point d'apparition du fournisseur trouvé,~n~cap " + text + ",~n~position " + ((object)position/*cast due to constrained. prefix*/).ToString());
 			}
 			else
 			{
@@ -221,7 +221,7 @@ public class DrugDealer
 				}
 				((Entity)dealerCar).IsPersistent = true;
 				dealerCar.LockStatus = (VehicleLockStatus)3;
-				LsFunctions.DbugString("Dealer Car Spawned");
+				LsFunctions.DbugString("Véhicule du fournisseur créé");
 				break;
 			}
 			if ((Entity)(object)goon == (Entity)null && (Entity)(object)dealerCar != (Entity)null)
