@@ -232,7 +232,7 @@ public class AreaDealer
 			{
 				if (DEBUG)
 				{
-					UI.Notify("Etat du dealer = " + NewState);
+					UI.Notify("État du dealer = " + NewState);
 				}
 				switch (NewState)
 				{
