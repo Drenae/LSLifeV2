@@ -60,7 +60,7 @@ public class Dealer
 			Script.Wait(0);
 		}
 		((Entity)vehicle).IsPersistent = true;
-		LsFunctions.AddBlip((Entity)(object)vehicle, (BlipColor)3, "Zee's Driver", _friend: true, _edge: false);
+		LsFunctions.AddBlip((Entity)(object)vehicle, (BlipColor)3, "Chauffeur de Rafael Mendoza", _friend: true, _edge: false);
 		ped = World.CreatePed(pedModel, ((Entity)vehicle).Position);
 		while ((Entity)(object)ped == (Entity)null)
 		{
