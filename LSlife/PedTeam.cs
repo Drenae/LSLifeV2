@@ -9,8 +9,6 @@ public class PedTeam
 
 	private List<PlayerDealer> Peds = new List<PlayerDealer>();
 
-	private Vehicle Vehicle;
-
 	private int MaxTeamSize = 1;
 
 	public string Area { get; private set; } = "";
