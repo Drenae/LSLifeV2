@@ -103,7 +103,7 @@ public class DroppedBag
 		//IL_0002: Unknown result type (might be due to invalid IL or missing references)
 		blip = World.CreateBlip(pos);
 		blip.Color = (BlipColor)2;
-		blip.Name = "Bag";
+		blip.Name = "Sac de drogue";
 		blip.IsShortRange = true;
 	}
 
@@ -121,7 +121,7 @@ public class DroppedBag
 		}
 		if (Game.GameTime > timeSpawned + 10000 && LSL.playerPos.DistanceTo(pickup.Position) < 20f)
 		{
-			LsFunctions.DbugString("bag timer reset");
+			LsFunctions.DbugString("Minuteur du sac réinitialisé");
 			timeSpawned = Game.GameTime;
 		}
 		return false;
@@ -133,7 +133,7 @@ public class DroppedBag
 		RemoveBlip();
 		if (LSL.DEBUG)
 		{
-			LsFunctions.DbugString("Pickup Deleted");
+			LsFunctions.DbugString("Objet ramassable supprimé");
 		}
 	}
 
