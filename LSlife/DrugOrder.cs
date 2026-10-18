@@ -120,12 +120,12 @@ public class DrugOrder
 			}
 			else
 			{
-				UI.ShowSubtitle("Ton vehicule doit etre plus proche.");
+				UI.ShowSubtitle("Ton véhicule doit être plus proche.");
 			}
 		}
 		else
 		{
-			UI.ShowSubtitle("Il te faut un vehicule de stockage pour recuperer une commande aussi importante.");
+			UI.ShowSubtitle("Il te faut un véhicule de stockage pour récupérer une commande aussi importante.");
 		}
 		if (pickedUp)
 		{
