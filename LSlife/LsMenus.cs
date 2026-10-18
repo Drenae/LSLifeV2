@@ -1105,7 +1105,7 @@ internal static class LsMenus
 		}
 		else if (sender == LSL.putCocainOzStash)
 		{
-			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatLegacyPacks(LsFunctions.pCocaineOunce);
+			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatLegacyPacks(LSL.putCocainOzStash.Value);
 		}
 		else if (sender == LSL.putMoneyStash)
 		{
