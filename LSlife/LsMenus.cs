@@ -39,11 +39,11 @@ internal static class LsMenus
 			sender.Visible = !sender.Visible;
 			if (LSL.playerHeat > 0f)
 			{
-				LsFunctions.TextMsg("ZEE", "Travail", "Tu attires trop l attention dans ce quartier.");
+				LsFunctions.TextMsg("ZEE", "Travail", "Tu attires trop l'attention dans ce quartier.");
 			}
 			else if (total > 0)
 			{
-				LsFunctions.TextMsg("ZEE", "Travail", "D accord, je fais passer le mot.");
+				LsFunctions.TextMsg("ZEE", "Travail", "D'accord, je fais passer le mot.");
 				LSL.isDealing = true;
 				LSL.lastStreet = World.GetStreetName(new Vector2(((Entity)Game.Player.Character).Position.X, ((Entity)Game.Player.Character).Position.Y));
 				LSL.thisStreet = LSL.lastStreet;
@@ -51,13 +51,13 @@ internal static class LsMenus
 			}
 			else
 			{
-				LsFunctions.TextMsg("ZEE", "Travail", "Tu n as rien a vendre.");
+				LsFunctions.TextMsg("ZEE", "Travail", "Tu n'as rien à vendre.");
 			}
 		}
 		else if (LSL.isDealing)
 		{
 			LSL.isDealing = false;
-			LsFunctions.TextMsg("ZEE", "Travail", "Tu n as rien a vendre.");
+			LsFunctions.TextMsg("ZEE", "Travail", "Tu n'as rien à vendre.");
 		}
 	}
 
@@ -74,18 +74,18 @@ internal static class LsMenus
 			sender.Visible = !sender.Visible;
 			if (LSL.playerHeat > 0f)
 			{
-				LsFunctions.TextMsg("ZEE", "Travail", "Non, tu attires trop l attention.");
+				LsFunctions.TextMsg("ZEE", "Travail", "Non, tu attires trop l'attention.");
 			}
 			else if ((Entity)(object)LSL.weaponDealer1 == (Entity)null)
 			{
 				LSL.callDealer(wepdealer: true);
-				LsFunctions.TextMsg("ZEE", "Travail", "J envoie quelqu un te retrouver.");
+				LsFunctions.TextMsg("ZEE", "Travail", "J'envoie quelqu'un te retrouver.");
 			}
 			else
 			{
 				LsFunctions.RemovePedFromWorld(LSL.weaponDealer1, clearTask: true);
 				LSL.weaponDealer1 = null;
-				LsFunctions.TextMsg("ZEE", "Travail", "D accord, je leur dis de rentrer.");
+				LsFunctions.TextMsg("ZEE", "Travail", "D'accord, je leur dis de rentrer.");
 			}
 		}
 		if (item == LSL.buyLift)
@@ -96,7 +96,7 @@ internal static class LsMenus
 				LSL.wepDealer = new Dealer(new Model(unchecked((int)3882958867u)), ((Entity)Game.Player.Character).Position + ((Entity)Game.Player.Character).ForwardVector * 2f, new Model("INGOT"), LSL.playerGroup);
 				if ((Entity)(object)LSL.wepDealer.ped != (Entity)null)
 				{
-					LsFunctions.TextMsg("ZEE", LSL.wepDealer.ped, "Travail", "J envoie quelqu un te retrouver.");
+					LsFunctions.TextMsg("ZEE", LSL.wepDealer.ped, "Travail", "J'envoie quelqu'un te retrouver.");
 				}
 			}
 			else
@@ -117,7 +117,7 @@ internal static class LsMenus
 					}
 				}
 				LSL.wepDealer = null;
-				LsFunctions.TextMsg("ZEE", "Travail", "D accord, je leur dis que tu ne peux pas venir.");
+				LsFunctions.TextMsg("ZEE", "Travail", "D'accord, je leur dis que tu ne peux pas venir.");
 			}
 		}
 		if (item != LSL.payDebt)
@@ -143,12 +143,12 @@ internal static class LsMenus
 			}
 			else
 			{
-				LsFunctions.TextMsg("ZEE", "Travail", "Merci, ta dette est entierement remboursee.");
+				LsFunctions.TextMsg("ZEE", "Travail", "Merci, ta dette est entièrement remboursée.");
 			}
 		}
 		else
 		{
-			LsFunctions.TextMsg("ZEE", "Travail", "Tu n as pas d argent.");
+			LsFunctions.TextMsg("ZEE", "Travail", "Tu n'as pas d'argent.");
 		}
 	}
 
