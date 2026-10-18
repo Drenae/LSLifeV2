@@ -30,7 +30,7 @@ internal static class OldCustomerHandler
 			List<OldCustomer> oc = OldCustomers.Where((OldCustomer c) => (Entity)(object)c.Ped == (Entity)(object)ped).ToList();
 			if (oc.Count > 0)
 			{
-				LsFunctions.DbugString("Old customer removed as they are a worker");
+				LsFunctions.DbugString("Ancien client retiré : il est désormais employé");
 				oc.First().Remove();
 			}
 		}
