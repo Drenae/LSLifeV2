@@ -367,7 +367,7 @@ public class AreaDealer
 			{
 				Function.Call((Hash)7023634693725934496L);
 				LSL.displayHelpTimer = Game.GameTime;
-				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour parler a cette personne.");
+				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour parler à cette personne.");
 			}
 			if (Game.IsControlJustPressed(2, (Control)21))
 			{
@@ -458,7 +458,7 @@ public class AreaDealer
 			{
 				if (DEBUG)
 				{
-					UI.Notify("Recherche d un client");
+					UI.Notify("Recherche d'un client");
 				}
 				List<Ped> peds = LSL.lPeds.GetPeds;
 				if (peds.ToList().Count > 0)
@@ -482,7 +482,7 @@ public class AreaDealer
 				}
 				if (DEBUG)
 				{
-					UI.Notify("Aucun passant trouve");
+					UI.Notify("Aucun passant trouvé");
 				}
 				cTimer.Reset();
 				return;
@@ -552,7 +552,7 @@ public class AreaDealer
 					dealState = Enums.DealState.GetNear;
 					if (DEBUG)
 					{
-						UI.Notify("Transaction terminee");
+						UI.Notify("Transaction terminée");
 					}
 					LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
 					((Entity)cPed).CurrentBlip.Remove();
@@ -567,7 +567,7 @@ public class AreaDealer
 		{
 			if (DEBUG)
 			{
-				UI.Notify("Client supprime : trop eloigne");
+				UI.Notify("Client supprimé : trop éloigné");
 			}
 			LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
 			cPed = null;
