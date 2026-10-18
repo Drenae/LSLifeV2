@@ -370,13 +370,13 @@ public class PlayerDealerHandler
 				pData.Add(10, new Tuple<int, int>(decalD, decalT));
 				pData.Add(11, new Tuple<int, int>(torsoAuxD, torsoAuxT));
 			}
-			LsFunctions.DbugString("Dealer Postion loaded " + pos.X + ", " + pos.Y + ", " + pos.Z);
+			LsFunctions.DbugString("Position du dealer chargée : " + pos.X + ", " + pos.Y + ", " + pos.Z);
 			if (pos != Vector3.Zero)
 			{
 				allocatedIDs.Add(id2);
 				if (LSL.DEBUG)
 				{
-					UI.Notify("Ajoute : " + id2 + " aux identifiants attribués, taille du groupe =" + allocatedIDs.Count);
+					UI.Notify("Ajout : " + id2 + " aux identifiants attribués, taille du groupe =" + allocatedIDs.Count);
 				}
 				if (dealers.FindAll((PlayerDealer d) =>
 				{
