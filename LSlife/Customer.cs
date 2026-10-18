@@ -94,7 +94,7 @@ public class Customer
 		{
 			Ped.Task.GoTo(target);
 		}
-		string blipName = "Shot";
+		string blipName = "Livraison";
 		if (farAway)
 		{
 			blipName = blipName + " " + Drug.Name + " " + LsFunctions.GramsToOz(amount);
