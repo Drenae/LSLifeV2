@@ -84,17 +84,17 @@
 - [x] `LSlife/PickupHandler.cs` — audit des textes, clés techniques et identifiants conservés
 - [x] `LSlife/Pig.cs` — audit des textes, clés techniques et identifiants conservés
 - [x] `LSlife/PlayerDealer.cs` — audit des textes, clés techniques et identifiants conservés — traduction entamée, audit final restant
-- [ ] `LSlife/PlayerDealerHandler.cs`
-- [ ] `LSlife/Prison.cs`
-- [ ] `LSlife/StashHouse.cs` — traduction entamée, audit final restant
-- [ ] `LSlife/StashHouseHandler.cs`
-- [ ] `LSlife/StashVehicle.cs` — traduction entamée, audit final restant
+- [x] `LSlife/PlayerDealerHandler.cs` — audit des chaînes et compatibilité des identifiants/sauvegardes
+- [x] `LSlife/Prison.cs` — audit des chaînes et compatibilité des identifiants/sauvegardes
+- [x] `LSlife/StashHouse.cs` — audit des chaînes et compatibilité des identifiants/sauvegardes — traduction entamée, audit final restant
+- [x] `LSlife/StashHouseHandler.cs` — audit des chaînes et compatibilité des identifiants/sauvegardes
+- [x] `LSlife/StashVehicle.cs` — audit des chaînes et compatibilité des identifiants/sauvegardes — traduction entamée, audit final restant
 
 ### Properties (1)
 
-- [ ] `Properties/AssemblyInfo.cs`
+- [x] `Properties/AssemblyInfo.cs` — audit des chaînes et compatibilité des identifiants/sauvegardes
 
-**Suivi : 46/52 fichiers C# validés à 100 % pour la traduction (compilation en attente du test utilisateur).**
+**Suivi : 52/52 fichiers C# validés à 100 % pour la traduction (compilation en attente du test utilisateur).**
 
 **Périmètre :** inventaire généré depuis l'arborescence GitHub de `main` ; fichiers `.cs` uniquement. Les scripts de build, projets et autres ressources ne sont pas des fichiers de traduction C#.
 
