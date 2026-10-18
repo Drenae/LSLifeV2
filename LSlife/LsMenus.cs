@@ -369,7 +369,7 @@ internal static class LsMenus
 			LSL.dealer1Weed = LSL.bushWeed.Maximum;
 			LSL.WeedBuy.Text = "Commander ~g~" + LSL.bushWeed.Value + " ~s~pour $" + LsFunctions.IntToMoney(total);
 			LSL.PlaceOrder.Text = "Passer commande : $" + LsFunctions.IntToMoney(LSL.NewOrder.Bill);
-			LsFunctions.DbugString("Weed Order changed");
+			LsFunctions.DbugString("Commande de cannabis modifiée");
 			LsFunctions.UpdateOrderMenuDesc();
 		}
 	}
@@ -385,7 +385,7 @@ internal static class LsMenus
 			LSL.dealer1Crack = LSL.crack.Maximum;
 			LSL.CrackBuy.Text = "Commander ~g~" + LSL.crack.Value + " ~w~pour $~g~" + LsFunctions.IntToMoney(total);
 			LSL.PlaceOrder.Text = "Passer commande : $" + LsFunctions.IntToMoney(LSL.NewOrder.Bill);
-			LsFunctions.DbugString("Crack Order changed");
+			LsFunctions.DbugString("Commande de crack modifiée");
 			LsFunctions.UpdateOrderMenuDesc();
 		}
 	}
@@ -401,7 +401,7 @@ internal static class LsMenus
 			LSL.dealer1Cocain = LSL.cocaine.Maximum;
 			LSL.CocainBuy.Text = "Commander ~g~" + LSL.cocaine.Value + " ~w~pour $~g~" + LsFunctions.IntToMoney(total);
 			LSL.PlaceOrder.Text = "Passer commande : $" + LsFunctions.IntToMoney(LSL.NewOrder.Bill);
-			LsFunctions.DbugString("Cocaïne Order changed");
+			LsFunctions.DbugString("Commande de cocaïne modifiée");
 			LsFunctions.UpdateOrderMenuDesc();
 		}
 	}
@@ -1013,11 +1013,11 @@ internal static class LsMenus
 	{
 		if (sender == LSL.takeWeedVeh)
 		{
-			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Take " + LsFunctions.GramsToOz(LSL.takeWeedVeh.Value);
+			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.GramsToOz(LSL.takeWeedVeh.Value);
 		}
 		else if (sender == LSL.putWeedVeh)
 		{
-			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Put " + LsFunctions.GramsToOz(LSL.putWeedVeh.Value);
+			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.GramsToOz(LSL.putWeedVeh.Value);
 		}
 		if (sender == LSL.takeWeedOzVeh)
 		{
@@ -1029,11 +1029,11 @@ internal static class LsMenus
 		}
 		else if (sender == LSL.takeCrackVeh)
 		{
-			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Take " + LsFunctions.GramsToOz(LSL.takeCrackVeh.Value);
+			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.GramsToOz(LSL.takeCrackVeh.Value);
 		}
 		else if (sender == LSL.putCrackVeh)
 		{
-			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Put " + LsFunctions.GramsToOz(LSL.putCrackVeh.Value);
+			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.GramsToOz(LSL.putCrackVeh.Value);
 		}
 		if (sender == LSL.takeCrackOzVeh)
 		{
@@ -1045,11 +1045,11 @@ internal static class LsMenus
 		}
 		else if (sender == LSL.takeCocainVeh)
 		{
-			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Take " + LsFunctions.GramsToOz(LSL.takeCocainVeh.Value);
+			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.GramsToOz(LSL.takeCocainVeh.Value);
 		}
 		else if (sender == LSL.putCocainVeh)
 		{
-			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Put " + LsFunctions.GramsToOz(LSL.putCocainVeh.Value);
+			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.GramsToOz(LSL.putCocainVeh.Value);
 		}
 		else if (sender == LSL.takeCocainOzVeh)
 		{
@@ -1069,27 +1069,27 @@ internal static class LsMenus
 		}
 		else if (sender == LSL.takeWeedStash)
 		{
-			((UIText)LSL.stashTakeMenu.Subtitle).Caption = "Take " + LsFunctions.GramsToOz(LSL.takeWeedStash.Value);
+			((UIText)LSL.stashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.GramsToOz(LSL.takeWeedStash.Value);
 		}
 		else if (sender == LSL.putWeedStash)
 		{
-			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Put " + LsFunctions.GramsToOz(LSL.putWeedStash.Value);
+			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.GramsToOz(LSL.putWeedStash.Value);
 		}
 		else if (sender == LSL.takeCrackStash)
 		{
-			((UIText)LSL.stashTakeMenu.Subtitle).Caption = "Take " + LsFunctions.GramsToOz(LSL.takeCrackStash.Value);
+			((UIText)LSL.stashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.GramsToOz(LSL.takeCrackStash.Value);
 		}
 		else if (sender == LSL.putCrackStash)
 		{
-			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Put " + LsFunctions.GramsToOz(LSL.putCrackStash.Value);
+			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.GramsToOz(LSL.putCrackStash.Value);
 		}
 		else if (sender == LSL.takeCocainStash)
 		{
-			((UIText)LSL.stashTakeMenu.Subtitle).Caption = "Take " + LsFunctions.GramsToOz(LSL.takeCocainStash.Value);
+			((UIText)LSL.stashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.GramsToOz(LSL.takeCocainStash.Value);
 		}
 		else if (sender == LSL.putCocainStash)
 		{
-			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Put " + LsFunctions.GramsToOz(LSL.putCocainStash.Value);
+			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.GramsToOz(LSL.putCocainStash.Value);
 		}
 		else if (sender == LSL.takeMoneyStash)
 		{
@@ -1132,19 +1132,19 @@ internal static class LsMenus
 	{
 		if (sender == LSL.takeWeaponStash)
 		{
-			((UIText)LSL.stashTakeMenu.Subtitle).Caption = "Take " + sender.Items[LSL.takeWeaponStash.Index];
+			((UIText)LSL.stashTakeMenu.Subtitle).Caption = "Retirer " + sender.Items[LSL.takeWeaponStash.Index];
 		}
 		else if (sender == LSL.putWeaponStash)
 		{
-			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Put " + sender.Items[LSL.putWeaponStash.Index];
+			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer " + sender.Items[LSL.putWeaponStash.Index];
 		}
 		else if (sender == LSL.takeWeaponVeh)
 		{
-			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Take " + sender.Items[LSL.takeWeaponVeh.Index];
+			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer " + sender.Items[LSL.takeWeaponVeh.Index];
 		}
 		else if (sender == LSL.putWeaponVeh)
 		{
-			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Put " + sender.Items[LSL.putWeaponVeh.Index];
+			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + sender.Items[LSL.putWeaponVeh.Index];
 		}
 		else if (sender == LSL.stashPutMultiplier)
 		{
