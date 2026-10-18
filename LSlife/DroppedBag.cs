@@ -33,8 +33,6 @@ public class DroppedBag
 
 	private Pickup pickup;
 
-	private bool players;
-
 	public Pig Pig;
 
 	public DroppedBag(string _subtitleString, int _weed, int _crack, int _cocaine, int _weedZ, int _crackZ, int _cocaineZ, int _money, Vector3 _pos)
