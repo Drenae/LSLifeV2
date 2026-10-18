@@ -1131,7 +1131,7 @@ public class LSL : Script
 		}
 		LsMenuPool = new MenuPool();
 		Color.FromArgb(114, 204, 114);
-		zeeMenu = new UIMenu("Zee", "Que veux-tu ?");
+		zeeMenu = new UIMenu("Rafael Mendoza", "Que veux-tu ?");
 		if (UseSprites)
 		{
 			zeeMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
@@ -1178,14 +1178,14 @@ public class LSL : Script
 		hireDealerOfferAmount.Maximum = player.Money;
 		hireDealerOfferAmount.Multiplier = 1000;
 		hireDealerMakeOffer = new UIMenuItem("Faire une offre");
-		hireDealerFollowButton = new UIMenuItem("Annuler l offre");
+		hireDealerFollowButton = new UIMenuItem("Annuler l’offre");
 		hireDealerMainMenu.AddItem((UIMenuItem)(object)hireDealerOfferAmount);
 		hireDealerMainMenu.AddItem(hireDealerMakeOffer);
 		hireDealerMainMenu.AddItem(hireDealerFollowButton);
 		hireDealerOfferAmount.OnSliderChanged += LsMenus.HireDealerOfferAmount_OnSliderChanged;
 		hireDealerMakeOffer.Activated += LsMenus.HireDealerOfferSelect;
 		hireDealerFollowButton.Activated += LsMenus.HireDealerFollowSelect;
-		WorkerMainMenu = new UIMenu("Employe", "Donner des ressources au dealer");
+		WorkerMainMenu = new UIMenu("Employé", "Donner des ressources au dealer");
 		if (UseSprites)
 		{
 			WorkerMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_worker.png");
@@ -1199,7 +1199,7 @@ public class LSL : Script
 		wCocaine.Maximum = PlayerInventory["Cocaine"];
 		wMultiplier = new UIMenuListItem("Multiplier", (List<object>)multiplier, 0);
 		wConfirm = new UIMenuItem("Confirmer");
-		wCollect = new UIMenuItem("Recuperer");
+		wCollect = new UIMenuItem("Récupérer");
 		List<object> orders = new List<object> { "Nothing" };
 		wOrder = new UIMenuListItem("Commandes", orders, 0);
 		wArmour = new UIMenuItem("Donner un gilet pare-balles");
@@ -1288,7 +1288,7 @@ public class LSL : Script
 		PlaceOrder = new UIMenuItem("Passer commande $" + LsFunctions.IntToMoney(0));
 		OrderDrugs.AddItem(PlaceOrder);
 		OrderDrugs.OnItemSelect += LsMenus.OnOrderDrugsMenuSelect;
-		stashMainMenu = new UIMenu("Cachette du refuge", "Choisir une option");
+		stashMainMenu = new UIMenu("Planque", "Choisir une option");
 		if (UseSprites)
 		{
 			stashMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
@@ -1408,7 +1408,7 @@ public class LSL : Script
 		}
 		stashPutMenu.OnItemSelect += LsMenus.onStashMenuSelect;
 		stashTakeMenu.OnItemSelect += LsMenus.onPlayerMenuSelect;
-		vehStashMainMenu = new UIMenu("Cachette du vehicule", "Choisir");
+		vehStashMainMenu = new UIMenu("Stockage du véhicule", "Choisir");
 		if (UseSprites)
 		{
 			vehStashMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
@@ -1528,9 +1528,9 @@ public class LSL : Script
 			customerMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_customer.png");
 		}
 		LsMenuPool.Add(customerMainMenu);
-		sell = new UIMenuItem("drug");
+		sell = new UIMenuItem("Drogue");
 		customerMainMenu.AddItem(sell);
-		turnAway = new UIMenuItem("Partir");
+		turnAway = new UIMenuItem("Refuser la vente");
 		customerMainMenu.AddItem(turnAway);
 		customerMainMenu.OnItemSelect += LsMenus.onCustomerMenuSelect;
 		LsMenuPool.FormatDescriptions = true;
