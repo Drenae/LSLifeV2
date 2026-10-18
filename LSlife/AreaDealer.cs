@@ -220,11 +220,11 @@ public class AreaDealer
 			{
 				if (dPed.RelationshipGroup != LSL.rival_enemy)
 				{
-					LsFunctions.DbugString("~g~ Rival dealer relasion ship changed to rival_enemy");
+					LsFunctions.DbugString("~g~ Relation du dealer rival passée à rival_enemy");
 				}
 				else
 				{
-					LsFunctions.DbugString("~r~ Rival dealer relasion ship changed to something. ~n~Changing it to rival_nutral");
+					LsFunctions.DbugString("~r~ Relation du dealer rival modifiée. ~n~Rétablissement de rival_nutral");
 					dPed.RelationshipGroup = LSL.rival_nutral;
 				}
 			}
@@ -283,7 +283,7 @@ public class AreaDealer
 				case Enums.DStates.AttackPlayer:
 					dPed.RelationshipGroup = LSL.rival_enemy;
 					dPed.Task.ClearAll();
-					LsFunctions.AddBlip((Entity)(object)dPed, (BlipColor)1, "Rival Dealer", _friend: false, _edge: false);
+					LsFunctions.AddBlip((Entity)(object)dPed, (BlipColor)1, "Dealer rival", _friend: false, _edge: false);
 					dPed.CanSwitchWeapons = true;
 					dPed.Weapons.Select(dPed.Weapons.BestWeapon);
 					dPed.Task.FightAgainst(Game.Player.Character);
@@ -359,7 +359,7 @@ public class AreaDealer
 		if (canHire && LSL.DealerHandler.dealers.Count >= (int)LsFunctions.CurrentRepLvl(LSL.dealer1Rep))
 		{
 			canHire = false;
-			reason = "You need more rep before hiring more dealers.";
+			reason = "Il te faut davantage de réputation pour recruter d'autres dealers.";
 		}
 		if (canHire)
 		{
@@ -372,7 +372,7 @@ public class AreaDealer
 			if (Game.IsControlJustPressed(2, (Control)21))
 			{
 				Function.Call((Hash)7023634693725934496L);
-				((UIText)LSL.hireDealerMainMenu.Subtitle).Caption = "Test";
+				((UIText)LSL.hireDealerMainMenu.Subtitle).Caption = "Recrutement";
 				LSL.hireDealerMainMenu.Visible = !LSL.hireDealerMainMenu.Visible;
 				LSL.hireDealerMainMenu.CurrentSelection = 0;
 				LSL.hireDealerOfferAmount.Maximum = Game.Player.Money;
