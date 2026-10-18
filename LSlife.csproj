@@ -15,7 +15,7 @@
   <PropertyGroup />
   <ItemGroup />
   <ItemGroup>
-    <!-- Temporary baseline reference until SHVDN3 migration. -->
+    <!-- LS Life V2: SHVDN2 baseline; SHVDN3 + LemonUI are reserved for V3. -->
     <Reference Include="ScriptHookVDotNet2">
       <HintPath>$(GtaVPath)\ScriptHookVDotNet2.dll</HintPath>
       <Private>False</Private>
