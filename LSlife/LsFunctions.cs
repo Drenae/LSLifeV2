@@ -1951,15 +1951,28 @@ internal static class LsFunctions
 		return Model;
 	}
 
+	// LSL V2 FR : formatage métrique, sans modifier les stocks ni les clés XML.
+	public static string FormatMetric(int grams, string color = "~g~")
+	{
+		if (grams < 1000)
+		{
+			return color + grams + "~s~ g";
+		}
+		int kg = grams / 1000;
+		int remainder = grams % 1000;
+		return remainder == 0 ? color + kg + "~s~ kg" : color + kg + "~s~ kg " + color + remainder + "~s~ g";
+	}
+
+	// LSL V2 FR : chaque paquet de l'ancienne sauvegarde représente 28 g.
+	public static string FormatLegacyPacks(int packs, string color = "~r~")
+	{
+		return FormatMetric(checked(packs * 28), color);
+	}
+
 	public static string GramsToOz(int _grams)
 	{
-		if (_grams >= 28)
-		{
-			int oz = _grams / 28;
-			int g = _grams - oz * 28;
-			return "~g~" + oz + "~s~oz, ~g~" + g + "~s~g";
-		}
-		return "~g~" + _grams + "~s~g";
+		// LSL V2 FR : garder l'API existante pour ne pas casser les appels.
+		return FormatMetric(_grams);
 	}
 
 	public static void AddWeedOz(int _amount)
