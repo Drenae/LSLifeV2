@@ -117,6 +117,18 @@
 - [ ] Mettre en place une migration des anciennes sauvegardes en onces ; sauvegarder l'original avant conversion.
 - [ ] Tester les anciennes et nouvelles sauvegardes, notamment les transferts entre stocks.
 
+### Implémentation progressive — affichage métrique (18/10/2026)
+
+- [x] `LsFunctions.FormatMetric(int, string)` : affichage entier `500 g`, `1 kg`, `1 kg 250 g`, avec conservation des couleurs NativeUI.
+- [x] `LsFunctions.FormatLegacyPacks(int, string)` : conversion d'affichage des paquets historiques en `paquets × 28 g`, sans toucher aux données persistées.
+- [x] `GramsToOz(int)` conserve sa signature pour les appels existants mais retourne désormais le format métrique.
+- [x] HUD `InventoryText.cs`, planques `StashHouseHandler.cs`, véhicules `StashVehicle.cs`, sous-titres de transfert `LsMenus.cs` : affichage métrique des stocks rouges et verts.
+- [x] Correction du sous-titre de dépôt de cocaïne brute : quantité sélectionnée, et non solde total.
+- [ ] Compiler et tester en jeu ce lot **avant** de modifier les achats, les transferts ou la sauvegarde XML.
+- [ ] Convertir les commandes, les compteurs internes et les sauvegardes après migration versionnée et copie de sécurité.
+
+**Important :** les compteurs `p*Ounce` et `drugCar*Oz` sont encore exprimés en paquets historiques, les curseurs continuent à sélectionner des **paquets**, et les champs XML restent inchangés. L'affichage métrique n'est pas encore une conversion intégrale du gameplay.
+
 ### Audit des conversions — diagnostic détaillé (18/10/2026)
 
 **Inventaire des circuits vérifiés :** `DrugOrder.cs`, `LSL.cs`, `LsFunctions.cs`, `LsMenus.cs`, `StashHouse.cs`, `StashHouseHandler.cs`, `StashVehicle.cs`, `InventoryText.cs`, `PlayerDealer.cs`, `DrugDealer.cs`, `Shot.cs`, `DropDrugs.cs`, `DroppedBag.cs`.
