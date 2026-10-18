@@ -10,6 +10,8 @@ internal static class GangUtilities
 
 	public const int memberCap = 100;
 
+	// LSL V2 FR : noms propres des gangs de GTA V conservés tels quels.
+	// Ces libellés ne doivent pas être traduits : ils désignent les factions du jeu.
 	public static Dictionary<int, string> LsLifeGangs = new Dictionary<int, string>
 	{
 		{ 0, "Armenian Mob" },
