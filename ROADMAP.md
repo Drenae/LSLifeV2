@@ -3,16 +3,16 @@
 > Branche de travail : `main`. Sauvegarde de référence : `backup/v2-stable-before-fr`.
 > V2 : ScriptHookVDotNet2 + NativeUI. La migration SHVDN3 / LemonUI est réservée à une éventuelle V3.
 
-## Phase 1 — Traduction française complète (EN COURS)
+## Phase 1 — Traduction française complète (VALIDÉE — build et tests utilisateur OK)
 
 - [x] Première passe sur les menus, le stockage et certains dialogues.
 - [x] Correction de l'identifiant `sellingCocaine` modifié accidentellement.
 - [x] Clarification initiale de l'unité « oz » dans le HUD.
-- [ ] Inventorier tous les textes visibles : menus, descriptions, notifications, sous-titres, messages iFruit, aide et options.
-- [ ] Traduire et harmoniser les textes en français naturel, accents compris.
-- [ ] Remplacer les mentions **visibles** de Zee par **Rafael Mendoza** ; conserver les identifiants internes nécessaires à la compatibilité.
-- [ ] Vérifier les textes dynamiques et les placeholders, sans modifier les clés de sauvegarde.
-- [ ] Compiler et tester les interactions principales en jeu.
+- [x] Inventorier tous les textes visibles : menus, descriptions, notifications, sous-titres, messages iFruit, aide et options.
+- [x] Traduire et harmoniser les textes en français naturel, accents compris.
+- [x] Remplacer les mentions **visibles** de Zee par **Rafael Mendoza** ; conserver les identifiants internes nécessaires à la compatibilité.
+- [x] Vérifier les textes dynamiques et les placeholders, sans modifier les clés de sauvegarde.
+- [x] Compiler et tester les interactions principales en jeu.
 
 ## Suivi de traduction — inventaire exhaustif des fichiers C#
 
@@ -94,21 +94,21 @@
 
 - [x] `Properties/AssemblyInfo.cs` — audit des chaînes et compatibilité des identifiants/sauvegardes
 
-**Suivi : 52/52 fichiers C# validés à 100 % pour la traduction (compilation en attente du test utilisateur).**
+**Suivi : 52/52 fichiers C# audités pour la traduction ; compilation et tests utilisateur validés.**
 
 **Périmètre :** inventaire généré depuis l'arborescence GitHub de `main` ; fichiers `.cs` uniquement. Les scripts de build, projets et autres ressources ne sont pas des fichiers de traduction C#.
 
-## Phase 2 — Identité graphique et crédits
+## Phase 2 — Identité graphique et crédits (PARTIELLE — suite reportée)
 
 - [ ] Créer et intégrer une bannière principale LS Life V2.
-- [ ] Créer et intégrer les cinq sprites NativeUI : Customer, Dealer, Stash, Worker, Mendoza.
-- [ ] Adopter la direction visuelle sombre émeraude / noir / or.
+- [x] Créer les cinq bannières : Customer, Dealer, Stash, Worker, Mendoza (PNG livrés séparément ; installation et rendu en jeu non vérifiés ici).
+- [x] Définir et appliquer aux cinq bannières la direction visuelle sombre émeraude / noir / or.
 - [ ] Vérifier le rendu des menus et les tailles/chemins des textures en jeu.
 - [ ] Adapter les crédits en respectant l'auteur d'origine ; demander le pseudonyme exact à ajouter.
 
-## Phase 3 — Système métrique français (APRÈS traduction et graphismes)
+## Phase 3 — Système métrique français (EN COURS — audit préalable)
 
-- [ ] Auditer toutes les opérations dépendantes des onces : commandes, prix, livraisons, ventes, stockage, poids porté et conversions.
+- [ ] Auditer toutes les opérations dépendantes des onces : commandes, prix, livraisons, ventes, stockage, poids porté et conversions. (Audit commencé : `LsFunctions.cs`, `LsMenus.cs`, `DrugOrder.cs`, `LSL.cs`, `StashHouseHandler.cs`, `StashVehicle.cs`, `InventoryText.cs` ; reste à couvrir tous les chemins.)
 - [ ] Définir un modèle interne cohérent en grammes, avec kilogrammes pour l'affichage.
 - [ ] Format attendu : `500 g`, `1 kg`, `1 kg 250 g` (pas `1,25 kg`).
 - [ ] Préserver **deux états de stock distincts** : non préparé (rouge) et prêt à vendre (vert).
@@ -116,6 +116,15 @@
 - [ ] Vérifier les contraintes d'achats (quantités entières autorisées, minimums et prix) sans introduire d'arrondis exploitables.
 - [ ] Mettre en place une migration des anciennes sauvegardes en onces ; sauvegarder l'original avant conversion.
 - [ ] Tester les anciennes et nouvelles sauvegardes, notamment les transferts entre stocks.
+
+### Premiers constats techniques — phase 3
+
+- `LsFunctions.pWeedOunce`, `pCrackOunce`, `pCocaineOunce` et les stocks véhicules utilisent encore des quantités en onces ; le poids porté ajoute `28 g` par once.
+- `DrugOrder.cs` transfère les commandes en onces et applique une limite de `7168 g` : vérifier sa cohérence avant conversion.
+- `LsMenus.cs` transfère les onces entre joueur et véhicule, avec écritures XML immédiates.
+- `LSLifeSave.xml` et les véhicules conservent des clés `weedOz`, `crackOz`, `cocaineOz`/`cocainOz` : une migration versionnée avec sauvegarde préalable est indispensable.
+- Le stock prêt à vendre est déjà distinct dans `PlayerInventory` et les stocks des planques ; ne jamais fusionner les deux états.
+- Aucune mécanique de poids, commande ou sauvegarde modifiée à cette étape : audit uniquement.
 
 ## Phase 4 — Stabilisation et validation
 
