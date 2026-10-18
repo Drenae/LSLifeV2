@@ -243,7 +243,6 @@ public class DrugOrder
 		crack = 0;
 		cocaine = 0;
 		Bill = 0;
-		payed = false;
 		pickedUp = false;
 		Placed = false;
 	}
