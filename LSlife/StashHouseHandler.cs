@@ -376,9 +376,9 @@ public class StashHouseHandler
 		((UIMenuItem)LSL.putWeedStash).Text = "Cannabis " + LsFunctions.GramsToOz(LSL.PlayerInventory["Weed"]);
 		((UIMenuItem)LSL.putCrackStash).Text = "Crack " + LsFunctions.GramsToOz(LSL.PlayerInventory["Crack"]);
 		((UIMenuItem)LSL.putCocainStash).Text = "Cocaïne " + LsFunctions.GramsToOz(LSL.PlayerInventory["Cocaine"]);
-		((UIMenuItem)LSL.putWeedOzStash).Text = "Cannabis ~r~" + LsFunctions.pWeedOunce + "~s~z";
-		((UIMenuItem)LSL.putCrackOzStash).Text = "Crack ~r~" + LsFunctions.pCrackOunce + "~s~z";
-		((UIMenuItem)LSL.putCocainOzStash).Text = "Cocaïne ~r~" + LsFunctions.pCocaineOunce + "~s~z";
+		((UIMenuItem)LSL.putWeedOzStash).Text = "Cannabis " + LsFunctions.FormatLegacyPacks(LsFunctions.pWeedOunce);
+		((UIMenuItem)LSL.putCrackOzStash).Text = "Crack " + LsFunctions.FormatLegacyPacks(LsFunctions.pCrackOunce);
+		((UIMenuItem)LSL.putCocainOzStash).Text = "Cocaïne " + LsFunctions.FormatLegacyPacks(LsFunctions.pCocaineOunce);
 		((UIMenuItem)LSL.putMoneyStash).Text = "Argent $" + LsFunctions.IntToMoney(LSL.player.Money);
 		LSL.putWeaponStash.Index = 0;
 		LSL.putWeaponStash.Items = LSL.playerWeps;
