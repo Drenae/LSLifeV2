@@ -1033,9 +1033,9 @@ public class PlayerDealer
 					}
 					int moneyEarned = amountWanted * drug.PricePerG;
 					Money += moneyEarned;
-					float points de réputationEarned = (float)moneyEarned * 0.01f;
-					LsFunctions.DbugString("Le dealer a gagné " + points de réputationEarned + " points de réputation");
-					area.Reputation += points de réputationEarned;
+					float repEarned = (float)moneyEarned * 0.01f;
+					LsFunctions.DbugString("Le dealer a gagné " + repEarned + " points de réputation");
+					area.Reputation += repEarned;
 					Drugs[drug.Name] -= amountWanted;
 					drug.Supplied = true;
 					LsFunctions.DbugString("~r~Vendu " + drug.Name + " * " + amountWanted);
