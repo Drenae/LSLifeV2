@@ -14,6 +14,28 @@
 - [ ] Vérifier les textes dynamiques et les placeholders, sans modifier les clés de sauvegarde.
 - [ ] Compiler et tester les interactions principales en jeu.
 
+## Suivi de traduction — fichiers source
+
+**Règle :** cocher `[x]` uniquement après traduction exhaustive de tous les textes visibles du fichier, relecture des chaînes dynamiques et vérification de la compilation. Une première passe, même importante, **ne signifie pas 100 %**. Les fichiers sans textes destinés au joueur pourront être cochés après vérification explicite.
+
+### Fichiers déjà identifiés (tous à finaliser)
+
+- [ ] `LSlife/LSL.cs` — menus principaux, commandes, planques, stockage ; traduction partielle.
+- [ ] `LSlife/LsMenus.cs` — interactions et dialogues ; traduction partielle.
+- [ ] `LSlife/LsFunctions.cs` — notifications, messages, textes dynamiques ; traduction partielle.
+- [ ] `LSlife/DrugOrder.cs` — commande et livraison ; traduction partielle.
+- [ ] `LSlife/InventoryText.cs` — interface d'inventaire ; traduction partielle.
+- [ ] `LSlife/StashHouse.cs` — planques ; première passe effectuée, audit complet restant.
+- [ ] `LSlife/StashVehicle.cs` — véhicules de stockage ; traduction partielle.
+- [ ] `LSlife/PlayerDealer.cs` — dealers recrutés ; traduction partielle.
+
+### Inventaire complet du dépôt
+
+- [ ] **Recenser tous les autres fichiers source du dépôt** (y compris sous-dossiers) et ajouter une case pour chacun. La liste ci-dessus recense les fichiers vérifiés jusqu'ici ; elle n'est pas encore certifiée exhaustive.
+- [ ] Recenser les ressources contenant du texte visible (fichiers de configuration, XML, sprites portant des libellés, etc.) et ajouter des cases adaptées.
+
+**Progression validée : 0/8 fichiers identifiés à 100 %** — aucun fichier n'a encore fait l'objet d'un audit complet et d'une validation de compilation pour la traduction finale.
+
 ## Phase 2 — Identité graphique et crédits
 
 - [ ] Créer et intégrer une bannière principale LS Life V2.
