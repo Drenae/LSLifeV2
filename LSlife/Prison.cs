@@ -55,9 +55,7 @@ public Gate(Prop prop)
 
 	public static LsTimer SentanceTime = null;
 
-	private static int BailAmount = -1;
-
-	private static PrisonStates NewState = PrisonStates.None;
+private static PrisonStates NewState = PrisonStates.None;
 
 	public static bool Started = false;
 
