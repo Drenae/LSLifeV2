@@ -163,7 +163,7 @@ private static PrisonStates NewState = PrisonStates.None;
 						((Entity)copCar).CurrentBlip.Sprite = (BlipSprite)672;
 						if (DEBUG)
 						{
-							UI.Notify("Transport cree : " + (object)copCar);
+							UI.Notify("Transport créé : " + (object)copCar);
 						}
 					}
 				}
@@ -232,7 +232,7 @@ private static PrisonStates NewState = PrisonStates.None;
 			}
 			if (stateChanged)
 			{
-				UI.Notify("Passage a l etat : " + NewState);
+				UI.Notify("Passage à l'état : " + NewState);
 			}
 			return;
 		}
@@ -274,7 +274,7 @@ private static PrisonStates NewState = PrisonStates.None;
 				((Entity)PriGate1.Prop).FreezePosition = false;
 				NewState = PrisonStates.ApproachGate2;
 				Model model = ((Entity)pGate1()).Model;
-				UI.Notify("Portail trouve : " + model.Hash);
+				UI.Notify("Portail trouvé : " + model.Hash);
 			}
 			break;
 		case PrisonStates.ApproachGate2:
@@ -372,7 +372,7 @@ private static PrisonStates NewState = PrisonStates.None;
 				if (model.Hash == doorHash)
 				{
 					prop = p;
-					UI.Notify("Portail 1 trouve");
+					UI.Notify("Portail 1 trouvé");
 					break;
 				}
 			}
@@ -397,7 +397,7 @@ private static PrisonStates NewState = PrisonStates.None;
 				if (model.Hash == doorHash)
 				{
 					prop = p;
-					UI.Notify("Portail 2 trouve");
+					UI.Notify("Portail 2 trouvé");
 					break;
 				}
 			}
