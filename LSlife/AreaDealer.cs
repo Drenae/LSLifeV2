@@ -9,7 +9,7 @@ namespace LSlife;
 
 public class AreaDealer
 {
-	private bool DEBUG;
+	private readonly bool DEBUG = false;
 
 	public Ped dPed;
 
