@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Migration sandbox: keep LSlife.csproj and the working game DLL unchanged. -->
+  <PropertyGroup>
+    <AssemblyName>LSlife.SHVDN3.Migration</AssemblyName>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
+    <TargetFramework>net48</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <OutputPath>bin\Migration\</OutputPath>
+    <BaseIntermediateOutputPath>obj\Migration\</BaseIntermediateOutputPath>
+    <GtaVPath Condition="'$(GtaVPath)' == ''">D:\Program Files\Rockstar Games\Grand Theft Auto V Legacy</GtaVPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="**\*.cs" Exclude="bin\**;obj\**" />
+    <Reference Include="ScriptHookVDotNet3">
+      <HintPath>$(GtaVPath)\ScriptHookVDotNet3.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="LemonUI.SHVDN3">
+      <HintPath>$(GtaVPath)\scripts\LemonUI.SHVDN3.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="iFruitAddon2">
+      <HintPath>$(GtaVPath)\scripts\iFruitAddon2.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+</Project>
