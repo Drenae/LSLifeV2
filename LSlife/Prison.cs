@@ -21,9 +21,7 @@ internal static class Prison
 
 	public class Gate
 	{
-		private readonly bool DEBUG = true;
-
-		public Prop Prop;
+public Prop Prop;
 
 		private bool Locked = true;
 
