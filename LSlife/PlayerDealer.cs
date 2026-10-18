@@ -1050,11 +1050,11 @@ public class PlayerDealer
 		{
 			if (startMoney != Money)
 			{
-				UI.Notify("Made $~g~" + (Money - startMoney));
+				UI.Notify("Bénéfice : $~g~" + (Money - startMoney));
 			}
 			else
 			{
-				UI.Notify("Made nothing");
+				UI.Notify("Aucun bénéfice");
 			}
 		}
 	}
@@ -1079,7 +1079,7 @@ public class PlayerDealer
 		{
 			Function.Call((Hash)7023634693725934496L);
 			LSL.displayHelpTimer = Game.GameTime;
-			LsFunctions.DisplayHelpText("Press ~INPUT_CONTEXT~ to Talk to this person.");
+			LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour parler à cette personne.");
 		}
 		if (Game.IsControlJustReleased(2, (Control)51))
 		{
@@ -1105,7 +1105,7 @@ public class PlayerDealer
 			{
 				Function.Call((Hash)7023634693725934496L);
 				LSL.displayHelpTimer = Game.GameTime;
-				LsFunctions.DisplayHelpText("Press ~INPUT_VEH_HORN~ to make your dealer Follow you");
+				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_VEH_HORN~ pour demander à ton dealer de te suivre.");
 			}
 			if (Game.IsControlJustPressed(2, (Control)86))
 			{
@@ -1126,11 +1126,11 @@ public class PlayerDealer
 	{
 		if (LSL.playerArmours == 0)
 		{
-			LSL.wArmour.Text = "No armour left";
+			LSL.wArmour.Text = "Plus de gilets pare-balles";
 		}
 		else
 		{
-			LSL.wArmour.Text = "Give armour";
+			LSL.wArmour.Text = "Donner un gilet pare-balles";
 		}
 	}
 
