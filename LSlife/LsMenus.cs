@@ -24,7 +24,7 @@ internal static class LsMenus
 		}
 		LSL.sellingWeed = LSL.sellWeed.Checked;
 		LSL.sellingCrack = LSL.sellCrack.Checked;
-		LSL.sellingCocaïne = LSL.sellCocaine.Checked;
+		LSL.sellingCocaine = LSL.sellCocaine.Checked;
 		if (!LSL.sellingWeed && !LSL.sellingCrack && !LSL.sellingCocaine)
 		{
 			LsFunctions.TextMsg("ZEE", "Travail", "Dis-moi ce que tu veux vendre.");
