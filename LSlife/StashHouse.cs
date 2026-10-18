@@ -102,7 +102,7 @@ public class StashHouse
 		price = _price;
 		blip = World.CreateBlip(entrancePos);
 		blip.Sprite = (BlipSprite)40;
-		blip.Name = "Stash House";
+		blip.Name = "Planque";
 		SetBlip();
 		inside = _inside;
 		Weapons = _weapons;
@@ -170,7 +170,7 @@ public class StashHouse
 		{
 			if (pickupSpawned && healthPickup != (Pickup)null && healthPickup.ObjectExists())
 			{
-				LsFunctions.DbugString("Health Deleted");
+				LsFunctions.DbugString("Soin supprimé");
 				healthPickup.Delete();
 				pickupSpawned = false;
 			}
@@ -272,7 +272,7 @@ public class StashHouse
 		{
 			if (healthPickup != (Pickup)null && !healthPickup.ObjectExists())
 			{
-				LsFunctions.DbugString("Health Deleted");
+				LsFunctions.DbugString("Soin supprimé");
 				healthPickup.Delete();
 				healthPickup = null;
 				pickupSpawned = false;
@@ -282,7 +282,7 @@ public class StashHouse
 		{
 			pickupSpawned = true;
 			healthPickup = World.CreatePickup(unchecked((PickupType)(-1888453608)), houseHealthPickPos, Vector3.Zero, new Model("prop_ld_health_pack"), 100);
-			LsFunctions.DbugString("Spawned Health");
+			LsFunctions.DbugString("Soin créé");
 		}
 		if (!LSL.LsMenuPool.IsAnyMenuOpen() && LSL.playerPos.DistanceTo(stashPos) <= 1f)
 		{
