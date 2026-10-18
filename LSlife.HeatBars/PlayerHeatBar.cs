@@ -5,7 +5,7 @@ namespace LSlife.HeatBars;
 
 internal static class PlayerHeatBar
 {
-	private static BarTimerBar aBar = new BarTimerBar("Player");
+	private static BarTimerBar aBar = new BarTimerBar("Joueur");
 
 	public static bool Displayed = false;
 
