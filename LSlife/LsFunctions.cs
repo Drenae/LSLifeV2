@@ -142,7 +142,7 @@ internal static class LsFunctions
 				Tuple<LSL.AreaType, LSL.jurisdictionType> zData = new Tuple<LSL.AreaType, LSL.jurisdictionType>(wealth, police);
 				LSL.zoneData.Add(zoneName, zData);
 			}
-			DbugString("LosSantos data loaded " + i + " areas added");
+			DbugString("Données de Los Santos chargées : " + i + " quartiers ajoutés");
 		}
 		else
 		{
@@ -179,7 +179,7 @@ internal static class LsFunctions
 				Tuple<LSL.AreaType, LSL.jurisdictionType> zData2 = new Tuple<LSL.AreaType, LSL.jurisdictionType>(wealth2, police2);
 				LSL.zoneData.Add(zoneName2, zData2);
 			}
-			DbugString("LibertyCity Rewind data loaded " + i2 + " areas added");
+			DbugString("Données de Liberty City Rewind chargées : " + i2 + " quartiers ajoutés");
 		}
 		else
 		{
@@ -287,7 +287,7 @@ internal static class LsFunctions
 
 	public static string OrderMenuDesc()
 	{
-		string mWeed = "Weed:~g~" + LSL.NewOrder.weed + "~s~oz";
+		string mWeed = "Cannabis : ~g~" + LSL.NewOrder.weed + "~s~oz";
 		string mCrack = "\nCrack : ~g~" + LSL.NewOrder.crack + "~s~oz";
 		string mCoke = "\nCoke:~g~" + LSL.NewOrder.cocaine + "~s~oz";
 		string mBill = "\nBill:$" + IntToMoney(LSL.NewOrder.Bill);
@@ -548,7 +548,7 @@ internal static class LsFunctions
 
 	public static void SetWorkerMenuHealth(Ped p)
 	{
-		((UIText)LSL.WorkerMainMenu.Subtitle).Caption = "Health:" + ((Entity)p).Health + " Armour:" + p.Armor;
+		((UIText)LSL.WorkerMainMenu.Subtitle).Caption = "Santé : " + ((Entity)p).Health + " Armure : " + p.Armor;
 	}
 
 	public static void SetRandomCombatStats(Ped p)
@@ -1310,7 +1310,7 @@ internal static class LsFunctions
 			}
 			if (LSL.areas.Count > 0)
 			{
-				DbugString("HoursPassed = " + HoursPassed);
+				DbugString("Heures écoulées = " + HoursPassed);
 				for (int i = 0; i < HoursPassed; i++)
 				{
 					foreach (Area area in LSL.areas)
@@ -1572,7 +1572,7 @@ internal static class LsFunctions
 
 	private static void UpdateDealerInventory()
 	{
-		((UIText)LSL.zeeMenu.Subtitle).Caption = "Rep:" + IntToMoney((int)LSL.dealer1Rep) + " Level:~g~" + (int)CurrentRepLvl(LSL.dealer1Rep);
+		((UIText)LSL.zeeMenu.Subtitle).Caption = "Réputation : " + IntToMoney((int)LSL.dealer1Rep) + " Niveau : ~g~" + (int)CurrentRepLvl(LSL.dealer1Rep);
 		LSL.payDebt.Text = "Rembourser la dette : $" + IntToMoney(LSL.dealer1Debt);
 		LSL.bushWeed.Maximum = LSL.dealer1Weed;
 		LSL.bushWeed.Value = 0;
@@ -1864,7 +1864,7 @@ internal static class LsFunctions
 			position = ((Entity)LSL.aDealer.dPed).Position;
 			if (position.DistanceTo(LSL.playerPos) < 40f && CanSee((Entity)(object)LSL.aDealer.dPed, (Entity)(object)Game.Player.Character) && LSL.rnd.Next(0, 2) == 0 && LSL.driveByHandler.AmountOfDriveBy(_agg: true) == 0)
 			{
-				DbugString("Spawning Driveby, player seen doing deal.");
+				DbugString("Création d'une attaque : joueur surpris en pleine transaction.");
 				SpawnDriveBy(LSL.player.Character, _agressive: true);
 			}
 		}
@@ -1923,10 +1923,10 @@ internal static class LsFunctions
 			{
 				Script.Yield();
 			}
-			DbugString("modelTime = " + (time - Game.GameTime));
+			DbugString("Temps du modèle = " + (time - Game.GameTime));
 			return Model;
 		}
-		DbugString("modelInvalid");
+		DbugString("Modèle invalide");
 		Model.MarkAsNoLongerNeeded();
 		return Model;
 	}
