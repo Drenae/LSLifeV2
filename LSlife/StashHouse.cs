@@ -188,7 +188,7 @@ public class StashHouse
 				{
 					Function.Call((Hash)7023634693725934496L);
 					LSL.displayHelpTimer = Game.GameTime;
-					LsFunctions.DisplayHelpText("Press ~INPUT_CONTEXT~ to enter StashHouse.");
+					LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour entrer dans la planque.");
 				}
 				if (!Game.IsControlJustReleased(2, (Control)51))
 				{
@@ -237,7 +237,7 @@ public class StashHouse
 			{
 				Function.Call((Hash)7023634693725934496L);
 				LSL.displayHelpTimer = Game.GameTime;
-				LsFunctions.DisplayHelpText("Press ~INPUT_CONTEXT~ To Purchase For $" + LsFunctions.IntToMoney(price));
+				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour acheter cette propriété : $" + LsFunctions.IntToMoney(price));
 			}
 			if (Game.IsControlJustReleased(2, (Control)51))
 			{
@@ -251,7 +251,7 @@ public class StashHouse
 				}
 				else
 				{
-					UI.ShowSubtitle("You do not have enough money to purchase this property");
+					UI.ShowSubtitle("Tu n'as pas assez d'argent pour acheter cette propriété.");
 				}
 			}
 			return;
@@ -290,7 +290,7 @@ public class StashHouse
 			{
 				Function.Call((Hash)7023634693725934496L);
 				LSL.displayHelpTimer = Game.GameTime;
-				LsFunctions.DisplayHelpText("Press ~INPUT_CONTEXT~ to open stash.");
+				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour ouvrir la réserve.");
 			}
 			if (Game.IsControlJustReleased(2, (Control)51))
 			{
@@ -307,7 +307,7 @@ public class StashHouse
 			{
 				Function.Call((Hash)7023634693725934496L);
 				LSL.displayHelpTimer = Game.GameTime;
-				LsFunctions.DisplayHelpText("Press ~INPUT_CONTEXT~ to exit StashHouse.");
+				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour sortir de la planque.");
 			}
 			if (Game.IsControlJustReleased(2, (Control)51))
 			{
