@@ -22,8 +22,6 @@ internal class DefaultPed
 
 	public bool working;
 
-	private int areaIndex;
-
 	private InventoryObject pInventory = new InventoryObject();
 
 	public DefaultPed(PedType type, Ped ped, Vector3 target)
