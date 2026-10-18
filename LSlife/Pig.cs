@@ -18,7 +18,7 @@ public class Pig
 		GetBag
 	}
 
-	private readonly bool DEBUG;
+	private readonly bool DEBUG = false;
 
 	public Ped Ped;
 
