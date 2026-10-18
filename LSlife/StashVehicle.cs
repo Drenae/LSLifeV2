@@ -301,7 +301,7 @@ public class StashVehicle
 		{
 			((Entity)drugCar).CurrentBlip.IsShortRange = true;
 			((Entity)drugCar).CurrentBlip.Sprite = (BlipSprite)225;
-			((Entity)drugCar).CurrentBlip.Name = "Drug Car";
+			((Entity)drugCar).CurrentBlip.Name = "Véhicule de stockage";
 			((Entity)drugCar).CurrentBlip.Color = (BlipColor)2;
 		}
 		if (LSL.player.Character.IsInVehicle())
@@ -470,7 +470,7 @@ public class StashVehicle
 						((Entity)drugCar).CurrentBlip.IsShortRange = true;
 						((Entity)drugCar).CurrentBlip.IsFriendly = true;
 						((Entity)drugCar).CurrentBlip.Sprite = (BlipSprite)225;
-						((Entity)drugCar).CurrentBlip.Name = "Drug Car";
+						((Entity)drugCar).CurrentBlip.Name = "Véhicule de stockage";
 						((Entity)drugCar).CurrentBlip.Color = (BlipColor)2;
 					}
 				}
@@ -489,7 +489,7 @@ public class StashVehicle
 				drugCarBlip.IsShortRange = true;
 				drugCarBlip.IsFriendly = true;
 				drugCarBlip.Sprite = (BlipSprite)225;
-				drugCarBlip.Name = "Drug Car";
+				drugCarBlip.Name = "Véhicule de stockage";
 				drugCarBlip.Color = (BlipColor)2;
 			}
 		}
@@ -529,7 +529,7 @@ public class StashVehicle
 		}
 		if (((Entity)drugCar).IsDead || drugCar.EngineHealth <= -500f)
 		{
-			LsFunctions.DbugString("Vehicle Destroyed");
+			LsFunctions.DbugString("Véhicule détruit");
 			drugCarWanted = false;
 			((Entity)drugCar).IsPersistent = false;
 			((Entity)drugCar).MarkAsNoLongerNeeded();
@@ -586,7 +586,7 @@ public class StashVehicle
 				drugCarBlip.IsShortRange = true;
 				drugCarBlip.IsFriendly = true;
 				drugCarBlip.Sprite = (BlipSprite)225;
-				drugCarBlip.Name = "Drug Car";
+				drugCarBlip.Name = "Véhicule de stockage";
 				drugCarBlip.Color = (BlipColor)2;
 			}
 			((Entity)drugCar).CurrentBlip.Remove();
@@ -601,7 +601,7 @@ public class StashVehicle
 				drugCarBlip.IsShortRange = true;
 				drugCarBlip.IsFriendly = true;
 				drugCarBlip.Sprite = (BlipSprite)225;
-				drugCarBlip.Name = "Drug Car";
+				drugCarBlip.Name = "Véhicule de stockage";
 				drugCarBlip.Color = (BlipColor)2;
 			}
 			((Entity)drugCar).CurrentBlip.Remove();
@@ -956,7 +956,7 @@ public class StashVehicle
 			((Entity)drugCar).CurrentBlip.IsShortRange = true;
 			((Entity)drugCar).CurrentBlip.IsFriendly = true;
 			((Entity)drugCar).CurrentBlip.Sprite = (BlipSprite)225;
-			((Entity)drugCar).CurrentBlip.Name = "Drug Car";
+			((Entity)drugCar).CurrentBlip.Name = "Véhicule de stockage";
 			((Entity)drugCar).CurrentBlip.Color = (BlipColor)2;
 			{
 				foreach (XElement veh2 in vehiclesXML.Descendants())
@@ -1123,7 +1123,7 @@ public class StashVehicle
 		((Entity)drugCar).CurrentBlip.IsShortRange = true;
 		((Entity)drugCar).CurrentBlip.IsFriendly = true;
 		((Entity)drugCar).CurrentBlip.Sprite = (BlipSprite)225;
-		((Entity)drugCar).CurrentBlip.Name = "Drug Car";
+		((Entity)drugCar).CurrentBlip.Name = "Véhicule de stockage";
 		((Entity)drugCar).CurrentBlip.Color = (BlipColor)2;
 		drugCarDestroyed = false;
 		CurrentPosition = ((Entity)drugCar).Position;
