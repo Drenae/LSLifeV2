@@ -45,7 +45,7 @@ internal static class InventoryText
 		InventoryPosY = new UIMenuSliderItem("PosY: ~g~" + posY);
 		InventoryPosY.Maximum = 1080;
 		InventoryPosY.Value = posY;
-		Save = new UIMenuItem("Enregistrer les reglages");
+		Save = new UIMenuItem("Enregistrer les réglages");
 		Options.AddItem((UIMenuItem)(object)InventoryPosX);
 		Options.AddItem((UIMenuItem)(object)InventoryPosY);
 		Options.AddItem(Save);
@@ -184,7 +184,7 @@ internal static class InventoryText
 		UIcrack.DropShadow = true;
 		((UIText)UIcrack).Shadow = true;
 		UIcrack.Outline = true;
-		UIResText UICocainetxt = new UIResText("-Cocaine-", new Point(UIpos.X, UIpos.Y + 160), 0.4f, Color.WhiteSmoke, (GTA.Font)7, (UIResText.Alignment)2);
+		UIResText UICocainetxt = new UIResText("-Cocaïne-", new Point(UIpos.X, UIpos.Y + 160), 0.4f, Color.WhiteSmoke, (GTA.Font)7, (UIResText.Alignment)2);
 		UICocainetxt.DropShadow = true;
 		((UIText)UICocainetxt).Shadow = true;
 		UICocainetxt.Outline = true;
@@ -200,11 +200,11 @@ internal static class InventoryText
 			Shadow = true,
 			Outline = true
 		};
-		((UIText)UIWeed).Caption = "~r~" + LsFunctions.pWeedOunce + "~s~z";
+		((UIText)UIWeed).Caption = "~r~" + LsFunctions.pWeedOunce + "~s~ oz";
 		((UIText)UIweed).Caption = LsFunctions.GramsToOz(LSL.PlayerInventory["Weed"]) ?? "";
-		((UIText)UICrack).Caption = "~r~" + LsFunctions.pCrackOunce + "~s~z";
+		((UIText)UICrack).Caption = "~r~" + LsFunctions.pCrackOunce + "~s~ oz";
 		((UIText)UIcrack).Caption = LsFunctions.GramsToOz(LSL.PlayerInventory["Crack"]) ?? "";
-		((UIText)UICocaine).Caption = "~r~" + LsFunctions.pCocaineOunce + "~s~z";
+		((UIText)UICocaine).Caption = "~r~" + LsFunctions.pCocaineOunce + "~s~ oz";
 		((UIText)val).Caption = LsFunctions.GramsToOz(LSL.PlayerInventory["Cocaine"]) ?? "";
 		((UIText)UIWeedtxt).Draw();
 		((UIText)UIWeed).Draw();
