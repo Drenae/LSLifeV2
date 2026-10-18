@@ -24,7 +24,7 @@ internal static class LsMenus
 		}
 		LSL.sellingWeed = LSL.sellWeed.Checked;
 		LSL.sellingCrack = LSL.sellCrack.Checked;
-		LSL.sellingCocaine = LSL.sellCocaine.Checked;
+		LSL.sellingCocaïne = LSL.sellCocaine.Checked;
 		if (!LSL.sellingWeed && !LSL.sellingCrack && !LSL.sellingCocaine)
 		{
 			LsFunctions.TextMsg("ZEE", "Travail", "Dis-moi ce que tu veux vendre.");
@@ -401,7 +401,7 @@ internal static class LsMenus
 			LSL.dealer1Cocain = LSL.cocaine.Maximum;
 			LSL.CocainBuy.Text = "Commander ~g~" + LSL.cocaine.Value + " ~w~pour $~g~" + LsFunctions.IntToMoney(total);
 			LSL.PlaceOrder.Text = "Passer commande : $" + LsFunctions.IntToMoney(LSL.NewOrder.Bill);
-			LsFunctions.DbugString("Cocaine Order changed");
+			LsFunctions.DbugString("Cocaïne Order changed");
 			LsFunctions.UpdateOrderMenuDesc();
 		}
 	}
@@ -1185,7 +1185,7 @@ internal static class LsMenus
 		}
 		else if (sender == LSL.melee)
 		{
-			((UIMenuItem)LSL.melee).Text = "Arme de melee $" + LsFunctions.IntToMoney(LSL.meleePrice[LSL.melee.Index] - LsFunctions.Discount(LSL.meleePrice[LSL.melee.Index]));
+			((UIMenuItem)LSL.melee).Text = "Arme de mêlée $" + LsFunctions.IntToMoney(LSL.meleePrice[LSL.melee.Index] - LsFunctions.Discount(LSL.meleePrice[LSL.melee.Index]));
 		}
 		else if (sender == LSL.pistol)
 		{
@@ -1514,7 +1514,7 @@ internal static class LsMenus
 			{
 				Function.Call(unchecked((Hash)(-8213159594590722974L)), (InputArgument)(LSL.aDealer.dPed), (InputArgument)("GENERIC_YES"), (InputArgument)("SPEECH_PARAMS_FORCE"));
 				LsFunctions.ChangeAdealerToPdealer();
-				UI.ShowSubtitle("D accord, je travaillerai pour toi.", 4000);
+				UI.ShowSubtitle("D'accord, je travaillerai pour toi.", 4000);
 				Player player = Game.Player;
 				player.Money -= LSL.hireDealerOfferAmount.Value;
 				LsFunctions.PlayTheSound();
@@ -1536,7 +1536,7 @@ internal static class LsMenus
 			else
 			{
 				Function.Call(unchecked((Hash)(-8213159594590722974L)), (InputArgument)(LSL.aDealer.dPed), (InputArgument)("GENERIC_NO"), (InputArgument)("SPEECH_PARAMS_FORCE"));
-				UI.ShowSubtitle("Tu plaisantes ? Je vaux bien plus que ca !", 4000);
+				UI.ShowSubtitle("Tu plaisantes ? Je vaux bien plus que ça !", 4000);
 				LSL.aDealer.SetLastOfferAmount(LSL.hireDealerOfferAmount.Value);
 			}
 		}
@@ -1552,7 +1552,7 @@ internal static class LsMenus
 		}
 		else
 		{
-			UI.ShowSubtitle("Propose davantage et j accepterai peut-etre.", 4000);
+			UI.ShowSubtitle("Propose davantage et j'accepterai peut-être.", 4000);
 		}
 	}
 
@@ -1587,7 +1587,7 @@ internal static class LsMenus
 				return;
 			}
 		}
-		UI.ShowSubtitle("J ai deja assez de protection.", 4000);
+		UI.ShowSubtitle("J'ai déjà assez de protection.", 4000);
 	}
 
 	public static void WWeapons_Activated(UIMenu sender, UIMenuItem selectedItem)
@@ -1600,7 +1600,7 @@ internal static class LsMenus
 		//IL_0327: Unknown result type (might be due to invalid IL or missing references)
 		if (LSL.DEBUG)
 		{
-			UI.Notify("Arme transferee");
+			UI.Notify("Arme transférée");
 		}
 		if (LSL.wWeapons.Items.Count > 0)
 		{
@@ -1702,7 +1702,7 @@ internal static class LsMenus
 							LSL.wWeapons.Index = 0;
 							if (LSL.DEBUG)
 							{
-								UI.Notify("Enregistrement de l arme du dealer " + ((object)wep/*cast due to constrained. prefix*/).ToString() + " munitions :" + ammo);
+								UI.Notify("Enregistrement de l'arme du dealer " + ((object)wep/*cast due to constrained. prefix*/).ToString() + " munitions :" + ammo);
 							}
 							break;
 						}
@@ -1711,17 +1711,17 @@ internal static class LsMenus
 				}
 				if (LSL.DEBUG)
 				{
-					UI.Notify("Aucune arme correspondante dans l inventaire");
+					UI.Notify("Aucune arme correspondante dans l'inventaire");
 				}
 			}
 			else if (LSL.DEBUG)
 			{
-				UI.Notify("Identifiant d arme introuvable : " + LSL.playerWeps[LSL.wWeapons.Index]);
+				UI.Notify("Identifiant d'arme introuvable : " + LSL.playerWeps[LSL.wWeapons.Index]);
 			}
 		}
 		else if (LSL.DEBUG)
 		{
-			UI.Notify("Aucune arme trouvee");
+			UI.Notify("Aucune arme trouvée");
 		}
 	}
 
@@ -1767,7 +1767,7 @@ internal static class LsMenus
 			LSL.DealerHandler.dealers[i].Drugs["Cocaine"] += LSL.wCocaine.Value;
 			LSL.PlayerInventory["Cocaine"] -= LSL.wCocaine.Value;
 			LSL.wCocaine.Value = 0;
-			((UIMenuItem)LSL.wCocaine).Text = "Cocaine " + LsFunctions.GramsToOz(LSL.wCocaine.Value);
+			((UIMenuItem)LSL.wCocaine).Text = "Cocaïne " + LsFunctions.GramsToOz(LSL.wCocaine.Value);
 			change = true;
 		}
 		if (change)
@@ -1800,7 +1800,7 @@ internal static class LsMenus
 
 	public static void WCocaine_OnSliderChanged(UIMenuSliderItem sender, int newIndex)
 	{
-		((UIMenuItem)LSL.wCocaine).Text = "Cocaine " + LsFunctions.GramsToOz(sender.Value);
+		((UIMenuItem)LSL.wCocaine).Text = "Cocaïne " + LsFunctions.GramsToOz(sender.Value);
 	}
 
 	public static void WCrack_OnSliderChanged(UIMenuSliderItem sender, int newIndex)
