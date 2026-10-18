@@ -347,7 +347,7 @@ public class PlayerDealer
 		{
 			if (Ped.RelationshipGroup != LSL.playerRelationship)
 			{
-				UI.Notify("~r~Worker was removed from companion group, putting them back in");
+				UI.Notify("~r~Employé retiré du groupe : réintégration en cours");
 				Ped.RelationshipGroup = LSL.playerRelationship;
 			}
 			if (!isFollowing() && LSL.driveByHandler.AmountOfDriveBy(_agg: true) > 0 && !playerNear())
@@ -391,14 +391,14 @@ public class PlayerDealer
 				}
 				if (LSL.DEBUG)
 				{
-					UI.Notify("PDealer state = " + NewState);
+					UI.Notify("État du dealer = " + NewState);
 				}
 				switch (NewState)
 				{
 				case Enums.PdStates.Dead:
 				{
 					CurrentState = Enums.PdStates.Dead;
-					string onDeathSay = "One of your dealers dropped a ~g~bag.";
+					string onDeathSay = "Un de tes dealers a laissé tomber un ~g~sac.";
 					LSL.pickupHandler.AddBag(new DroppedBag(onDeathSay, Drugs["Weed"], Drugs["Crack"], Drugs["Cocaine"], Money, dWeapons.ToList(), Pos));
 					RemoveBlip();
 					((Entity)Ped).IsPersistent = false;
@@ -484,7 +484,7 @@ public class PlayerDealer
 					break;
 				case Enums.PdStates.Rest:
 					Target = LSL.DealerHandler.GetCloseHealPosition(((Entity)Ped).Position);
-					LsFunctions.DbugString("pDealer distance to healPos ~g~" + Target.DistanceTo(((Entity)Ped).Position) + " ~s~healPos type ~g~" + LSL.DealerHandler.HealPositionType);
+					LsFunctions.DbugString("Distance du dealer au point de soin ~g~" + Target.DistanceTo(((Entity)Ped).Position) + " ~s~type de point de soin ~g~" + LSL.DealerHandler.HealPositionType);
 					if (LSL.DealerHandler.HealPositionType != Enums.HealPositionTypes.None && Target.DistanceTo(((Entity)Ped).Position) < 30f)
 					{
 						if (!Ped.IsInVehicle() || (Ped.IsInVehicle() && Ped.CurrentVehicle.Speed < 1f))
@@ -751,7 +751,7 @@ public class PlayerDealer
 				cPed = null;
 				if (LSL.DEBUG)
 				{
-					UI.Notify("pDealer Customer doesnt exist");
+					UI.Notify("Client du dealer introuvable");
 				}
 			}
 			if ((Entity)(object)cPed != (Entity)null && ((Entity)cPed).Exists() && ((Entity)cPed).IsDead)
@@ -760,7 +760,7 @@ public class PlayerDealer
 				cPed = null;
 				if (LSL.DEBUG)
 				{
-					UI.Notify("pDealer Customer doesnt exist");
+					UI.Notify("Client du dealer introuvable");
 				}
 			}
 			if ((Entity)(object)cPed == (Entity)null)
@@ -771,7 +771,7 @@ public class PlayerDealer
 				}
 				if (LSL.DEBUG)
 				{
-					UI.Notify("pDealer Getting Customer");
+					UI.Notify("Recherche d'un client pour le dealer");
 				}
 				List<Ped> peds = LSL.lPeds.GetPeds;
 				if (peds.ToList().Count > 0)
@@ -794,7 +794,7 @@ public class PlayerDealer
 				}
 				if (LSL.DEBUG)
 				{
-					UI.Notify("pDealer found no peds");
+					UI.Notify("Aucun passant trouvé pour le dealer");
 				}
 				return;
 			}
@@ -836,7 +836,7 @@ public class PlayerDealer
 				{
 					if (LSL.DEBUG)
 					{
-						UI.Notify("Doing Deal");
+						UI.Notify("Transaction en cours");
 					}
 					dealState = Enums.DealState.DoingDeal;
 					cPed.Task.PlayAnimation("switch@franklin@002110_04_magd_3_weed_exchange", "002110_04_magd_3_weed_exchange_franklin", 8f, 3000, (AnimationFlags)16);
@@ -860,7 +860,7 @@ public class PlayerDealer
 					dealState = Enums.DealState.GetNear;
 					if (LSL.DEBUG)
 					{
-						UI.Notify("Deal Finished");
+						UI.Notify("Transaction terminée");
 					}
 					LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
 					((Entity)cPed).CurrentBlip.Remove();
@@ -874,7 +874,7 @@ public class PlayerDealer
 		{
 			if (LSL.DEBUG)
 			{
-				UI.Notify("aDealer Removing Customer to Far Away");
+				UI.Notify("Client du dealer supprimé : trop éloigné");
 			}
 			LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
 			cPed = null;
@@ -907,11 +907,11 @@ public class PlayerDealer
 		//IL_00ea: Unknown result type (might be due to invalid IL or missing references)
 		//IL_00ef: Unknown result type (might be due to invalid IL or missing references)
 		//IL_021c: Unknown result type (might be due to invalid IL or missing references)
-		LsFunctions.DbugString("Spawning Ped at" + Pos.X + ", " + Pos.Y + ", " + Pos.Z);
+		LsFunctions.DbugString("Création du personnage à " + Pos.X + ", " + Pos.Y + ", " + Pos.Z);
 		Ped = World.CreatePed((int)(pHash), Pos);
 		if ((Entity)(object)Ped != (Entity)null)
 		{
-			LsFunctions.DbugString("Ped spawned at " + ((Entity)Ped).Position.X + ", " + ((Entity)Ped).Position.Y + ", " + ((Entity)Ped).Position.Z);
+			LsFunctions.DbugString("Personnage créé à " + ((Entity)Ped).Position.X + ", " + ((Entity)Ped).Position.Y + ", " + ((Entity)Ped).Position.Z);
 			Function.Call((Hash)3327951495314425415L, (InputArgument)(((Entity)Ped).Handle), (InputArgument)(Game.Player.Character.CurrentPedGroup.Handle), (InputArgument)(false));
 			LsFunctions.SetImmuneToPlayer(Ped);
 			LsFunctions.AddBlip((Entity)(object)Ped, (BlipColor)3, "Dealer", _friend: true, _edge: true);
@@ -961,7 +961,7 @@ public class PlayerDealer
 			LsFunctions.NotImmuneToPlayer(Ped);
 			if (LSL.DEBUG)
 			{
-				UI.Notify("Dealer DESPAWNED");
+				UI.Notify("Dealer retiré du monde");
 			}
 			Pos = ((Entity)Ped).Position;
 			RemoveBlip();
@@ -988,11 +988,11 @@ public class PlayerDealer
 			}
 			else
 			{
-				UI.Notify("~r~LsLife - Error getting area type for Area " + this.area);
+				UI.Notify("~r~LsLife - Impossible de déterminer le type du quartier " + this.area);
 			}
 			if (LSL.DEBUG)
 			{
-				UI.Notify("~r~Added area for dealer " + this.area);
+				UI.Notify("~r~Quartier attribué au dealer : " + this.area);
 			}
 		}
 		if (pArea == null || pArea.Drugs.Count <= 0)
@@ -1033,12 +1033,12 @@ public class PlayerDealer
 					}
 					int moneyEarned = amountWanted * drug.PricePerG;
 					Money += moneyEarned;
-					float repEarned = (float)moneyEarned * 0.01f;
-					LsFunctions.DbugString("dealer earned " + repEarned + " rep");
-					area.Reputation += repEarned;
+					float points de réputationEarned = (float)moneyEarned * 0.01f;
+					LsFunctions.DbugString("Le dealer a gagné " + points de réputationEarned + " points de réputation");
+					area.Reputation += points de réputationEarned;
 					Drugs[drug.Name] -= amountWanted;
 					drug.Supplied = true;
-					LsFunctions.DbugString("~r~Sold " + drug.Name + " * " + amountWanted);
+					LsFunctions.DbugString("~r~Vendu " + drug.Name + " * " + amountWanted);
 				}
 				else
 				{
@@ -1140,17 +1140,17 @@ public class PlayerDealer
 		LSL.wWeed.Maximum = LSL.PlayerInventory["Weed"];
 		LSL.wCrack.Maximum = LSL.PlayerInventory["Crack"];
 		LSL.wCocaine.Maximum = LSL.PlayerInventory["Cocaine"];
-		((UIMenuItem)LSL.wWeed).Description = "Has " + LsFunctions.GramsToOz(Drugs["Weed"]) + " Weed.";
-		((UIMenuItem)LSL.wCrack).Description = "Has " + LsFunctions.GramsToOz(Drugs["Crack"]) + " Crack.";
-		((UIMenuItem)LSL.wCocaine).Description = "Has " + LsFunctions.GramsToOz(Drugs["Cocaine"]) + " Cocaine.";
+		((UIMenuItem)LSL.wWeed).Description = "Possède " + LsFunctions.GramsToOz(Drugs["Weed"]) + " de cannabis.";
+		((UIMenuItem)LSL.wCrack).Description = "Possède " + LsFunctions.GramsToOz(Drugs["Crack"]) + " de crack.";
+		((UIMenuItem)LSL.wCocaine).Description = "Possède " + LsFunctions.GramsToOz(Drugs["Cocaine"]) + " de cocaïne.";
 		int cMoney = Money - Money / 100 * 20;
 		if (Money > 100)
 		{
-			LSL.wCollect.Description = "Dealer has $" + LsFunctions.IntToMoney(Money) + " gets 20% cut, Collect $" + LsFunctions.IntToMoney(cMoney) + ".";
+			LSL.wCollect.Description = "Le dealer possède $" + LsFunctions.IntToMoney(Money) + " ; sa commission est de 20 %. Récupérer $" + LsFunctions.IntToMoney(cMoney) + ".";
 		}
 		else
 		{
-			LSL.wCollect.Description = "Dealer hasnt made any money yet";
+			LSL.wCollect.Description = "Le dealer n'a encore gagné aucun argent.";
 		}
 	}
 
@@ -1174,7 +1174,7 @@ public class PlayerDealer
 		{
 			blip = World.CreateBlip(Pos);
 			blip.IsShortRange = true;
-			blip.Name = "Dealer Location";
+			blip.Name = "Position du dealer";
 		}
 	}
 
