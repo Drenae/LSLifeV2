@@ -376,7 +376,7 @@ public class PlayerDealerHandler
 				allocatedIDs.Add(id2);
 				if (LSL.DEBUG)
 				{
-					UI.Notify("Ajoute : " + id2 + " aux identifiants attribues, taille du groupe =" + allocatedIDs.Count);
+					UI.Notify("Ajoute : " + id2 + " aux identifiants attribués, taille du groupe =" + allocatedIDs.Count);
 				}
 				if (dealers.FindAll((PlayerDealer d) =>
 				{
@@ -392,7 +392,7 @@ public class PlayerDealerHandler
 				}
 				if (LSL.DEBUG)
 				{
-					UI.Notify("Dealer charge : " + id2);
+					UI.Notify("Dealer chargé : " + id2);
 				}
 			}
 		}
@@ -701,11 +701,11 @@ public class PlayerDealerHandler
 					teams.Add(new PedTeam(_dealer, LSL.playerArea));
 					return true;
 				}
-				LsFunctions.SendTextMsg("Tu dois gagner en reputation dans ce quartier avant d y envoyer une equipe.");
+				LsFunctions.SendTextMsg("Tu dois gagner en réputation dans ce quartier avant d'y envoyer une équipe.");
 			}
 			else
 			{
-				LsFunctions.SendTextMsg("Une equipe patrouille deja dans ce quartier");
+				LsFunctions.SendTextMsg("Une équipe patrouille déjà dans ce quartier");
 			}
 		}
 		return false;
