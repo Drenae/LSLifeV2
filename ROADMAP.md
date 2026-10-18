@@ -14,27 +14,89 @@
 - [ ] Vérifier les textes dynamiques et les placeholders, sans modifier les clés de sauvegarde.
 - [ ] Compiler et tester les interactions principales en jeu.
 
-## Suivi de traduction — fichiers source
+## Suivi de traduction — inventaire exhaustif des fichiers C#
 
-**Règle :** cocher `[x]` uniquement après traduction exhaustive de tous les textes visibles du fichier, relecture des chaînes dynamiques et vérification de la compilation. Une première passe, même importante, **ne signifie pas 100 %**. Les fichiers sans textes destinés au joueur pourront être cochés après vérification explicite.
+**Règle :** `[x]` seulement après audit de tous les textes visibles, relecture et compilation vérifiée. Les fichiers purement techniques doivent également être inspectés avant validation. Le statut « partiel » ne vaut pas terminé.
 
-### Fichiers déjà identifiés (tous à finaliser)
+### Racine (1)
 
-- [ ] `LSlife/LSL.cs` — menus principaux, commandes, planques, stockage ; traduction partielle.
-- [ ] `LSlife/LsMenus.cs` — interactions et dialogues ; traduction partielle.
-- [ ] `LSlife/LsFunctions.cs` — notifications, messages, textes dynamiques ; traduction partielle.
-- [ ] `LSlife/DrugOrder.cs` — commande et livraison ; traduction partielle.
-- [ ] `LSlife/InventoryText.cs` — interface d'inventaire ; traduction partielle.
-- [ ] `LSlife/StashHouse.cs` — planques ; première passe effectuée, audit complet restant.
-- [ ] `LSlife/StashVehicle.cs` — véhicules de stockage ; traduction partielle.
-- [ ] `LSlife/PlayerDealer.cs` — dealers recrutés ; traduction partielle.
+- [ ] `-PrivateImplementationDetails-.cs`
 
-### Inventaire complet du dépôt
+### LSlife.Gangs (4)
 
-- [ ] **Recenser tous les autres fichiers source du dépôt** (y compris sous-dossiers) et ajouter une case pour chacun. La liste ci-dessus recense les fichiers vérifiés jusqu'ici ; elle n'est pas encore certifiée exhaustive.
-- [ ] Recenser les ressources contenant du texte visible (fichiers de configuration, XML, sprites portant des libellés, etc.) et ajouter des cases adaptées.
+- [ ] `LSlife.Gangs/Gang.cs`
+- [ ] `LSlife.Gangs/GangUtilities.cs`
+- [ ] `LSlife.Gangs/Threat.cs`
+- [ ] `LSlife.Gangs/ThreatHandler.cs`
 
-**Progression validée : 0/8 fichiers identifiés à 100 %** — aucun fichier n'a encore fait l'objet d'un audit complet et d'une validation de compilation pour la traduction finale.
+### LSlife.HeatBars (3)
+
+- [ ] `LSlife.HeatBars/AreaHeatBar.cs`
+- [ ] `LSlife.HeatBars/BarHandler.cs`
+- [ ] `LSlife.HeatBars/PlayerHeatBar.cs`
+
+### LSlife.Inventory (4)
+
+- [ ] `LSlife.Inventory/Cocaine.cs`
+- [ ] `LSlife.Inventory/InventoryObject.cs`
+- [ ] `LSlife.Inventory/ItemObject.cs`
+- [ ] `LSlife.Inventory/ItemSlot.cs`
+
+### LSlife.OldCustomers (2)
+
+- [ ] `LSlife.OldCustomers/OldCustomer.cs`
+- [ ] `LSlife.OldCustomers/OldCustomerHandler.cs`
+
+### LSlife.Shots (2)
+
+- [ ] `LSlife.Shots/Shot.cs`
+- [ ] `LSlife.Shots/ShotHandler.cs`
+
+### LSlife (35)
+
+- [ ] `LSlife/Area.cs`
+- [ ] `LSlife/AreaDealer.cs`
+- [ ] `LSlife/Customer.cs`
+- [ ] `LSlife/CustomerPed.cs`
+- [ ] `LSlife/Dealer.cs`
+- [ ] `LSlife/DealerSpawnPostion.cs`
+- [ ] `LSlife/DefaultPed.cs`
+- [ ] `LSlife/DriveBy.cs`
+- [ ] `LSlife/DriveByHandler.cs`
+- [ ] `LSlife/DropDrugs.cs`
+- [ ] `LSlife/DroppedBag.cs`
+- [ ] `LSlife/Drug.cs`
+- [ ] `LSlife/DrugDealer.cs`
+- [ ] `LSlife/DrugOrder.cs` — traduction entamée, audit final restant
+- [ ] `LSlife/EnemyHandler.cs`
+- [ ] `LSlife/Enums.cs`
+- [ ] `LSlife/HeadShot.cs`
+- [ ] `LSlife/HeadShotHandler.cs`
+- [ ] `LSlife/HirePed.cs`
+- [ ] `LSlife/InventoryText.cs` — traduction entamée, audit final restant
+- [ ] `LSlife/LSL.cs` — traduction entamée, audit final restant
+- [ ] `LSlife/LsFunctions.cs` — traduction entamée, audit final restant
+- [ ] `LSlife/LsLPeds.cs`
+- [ ] `LSlife/LsMenus.cs` — traduction entamée, audit final restant
+- [ ] `LSlife/LsTimer.cs`
+- [ ] `LSlife/PedDebugger.cs`
+- [ ] `LSlife/PedTeam.cs`
+- [ ] `LSlife/PickupHandler.cs`
+- [ ] `LSlife/Pig.cs`
+- [ ] `LSlife/PlayerDealer.cs` — traduction entamée, audit final restant
+- [ ] `LSlife/PlayerDealerHandler.cs`
+- [ ] `LSlife/Prison.cs`
+- [ ] `LSlife/StashHouse.cs` — traduction entamée, audit final restant
+- [ ] `LSlife/StashHouseHandler.cs`
+- [ ] `LSlife/StashVehicle.cs` — traduction entamée, audit final restant
+
+### Properties (1)
+
+- [ ] `Properties/AssemblyInfo.cs`
+
+**Suivi : 0/52 fichiers C# validés à 100 %.**
+
+**Périmètre :** inventaire généré depuis l'arborescence GitHub de `main` ; fichiers `.cs` uniquement. Les scripts de build, projets et autres ressources ne sont pas des fichiers de traduction C#.
 
 ## Phase 2 — Identité graphique et crédits
 
