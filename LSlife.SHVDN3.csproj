@@ -11,7 +11,6 @@
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <OutputPath>bin\Migration\</OutputPath>
-    <BaseIntermediateOutputPath>obj\Migration\</BaseIntermediateOutputPath>
     <GtaVPath Condition="'$(GtaVPath)' == ''">D:\Program Files\Rockstar Games\Grand Theft Auto V Legacy</GtaVPath>
   </PropertyGroup>
   <ItemGroup>
