@@ -117,6 +117,39 @@
 - [ ] Mettre en place une migration des anciennes sauvegardes en onces ; sauvegarder l'original avant conversion.
 - [ ] Tester les anciennes et nouvelles sauvegardes, notamment les transferts entre stocks.
 
+### Audit des conversions — diagnostic détaillé (18/10/2026)
+
+**Inventaire des circuits vérifiés :** `DrugOrder.cs`, `LSL.cs`, `LsFunctions.cs`, `LsMenus.cs`, `StashHouse.cs`, `StashHouseHandler.cs`, `StashVehicle.cs`, `InventoryText.cs`, `PlayerDealer.cs`, `DrugDealer.cs`, `Shot.cs`, `DropDrugs.cs`, `DroppedBag.cs`.
+
+| Circuit | État actuel | Conversion nécessaire |
+| --- | --- | --- |
+| Commande fournisseur | `DrugOrder.weed/crack/cocaine` comptent des paquets de 28 g ; prix par paquet ; `OrderSizeInGrams() = somme × 28` | Choisir le pas d'achat (paquet de 28 g conservé ou nouvelle quantité entière en grammes) et recalculer les prix sans arrondi exploitable |
+| Réception | `PickupDrugs()` crédite les compteurs `p*Ounce` ou `drugCar*Oz` | Stocker les grammes **non préparés**, sans les confondre avec les grammes prêts à vendre |
+| Préparation en planque | `StashHouse.AddDrugs()` et `LsMenus.onStashMenuSelect()` multiplient les paquets par 28 et les ajoutent à `StashHouse.Weed/Crack/Cocain` | Conserver une conversion explicite **non préparé → préparé** et la quantité totale |
+| Transferts véhicule | `LsMenus.cs` transfère séparément grammes préparés et compteurs de paquets ; sauvegarde XML à chaque action | Conserver deux voies de transfert et contrôler les limites / soldes |
+| Ventes et employés | `PlayerInventory`, `PlayerDealer.Drugs`, `Customer.amount` et `PricePerG` sont déjà en grammes | Préserver ces valeurs ; modifier seulement le formatage des quantités |
+| HUD et menus | `GramsToOz()` transforme les grammes préparés en `oz + g` ; les paquets rouges affichent `oz` | Remplacer par `500 g`, `1 kg`, `1 kg 250 g` ; conserver les codes couleur GTA |
+| Limite de poids | `pMaxDrugs = 7168` g ; `DrugOrder.PlayerCanPickup()` utilise `< 7168` | Clarifier la limite exacte, l'inclusion de la borne et la prise en compte des stocks |
+| Sauvegardes | `LSLifeSave.xml` et `LSLife_Vehicles.xml` utilisent des champs `*Oz` ; `LSLife_StashHouses.xml` contient des grammes préparés | Migration **versionnée, idempotente et sauvegardée** avant toute écriture |
+
+**Points de vigilance relevés dans le code :**
+- `LsFunctions.TotalDrugs(Dictionary<...>)` additionne toujours les onces **du joueur**, même lorsqu'il reçoit l'inventaire d'un employé ; ne pas changer ce calcul isolément sans vérifier tous les appels.
+- Le code véhicule mélange `cocaineOz` et `cocainOz` : relever tous les lecteurs et écrivains et choisir un seul schéma cible.
+- `StashVehicle.TotalDrugs()` additionne uniquement le stock préparé ; vérifier chaque appel qui a besoin du poids **total**.
+- Le tableau `LSL.multiplier` contient notamment `28`, `280`, `2800` ; adapter le pas des curseurs à l'unité retenue.
+- `DrugOrder.PlayerCanPickup()` compare strictement `< 7168`, alors que la constante `pMaxDrugs` existe déjà.
+- `GramsToOz()` est utilisée par les ventes, HUD et menus ; prévoir une fonction métrique unique plutôt que des conversions locales.
+
+**Architecture cible proposée (à appliquer après audit de toutes les écritures XML) :**
+1. Quantités internes entières en grammes : `RawWeedGrams`, `RawCrackGrams`, `RawCocaineGrams` (non préparé) distinctes des quantités préparées actuelles. Garder les anciens identifiants tant que la migration et les appels ne sont pas adaptés.
+2. Conversion `1 paquet historique = 28 g` **uniquement lors de la migration** et aux points d'entrée d'une éventuelle vente de paquets historiques.
+3. Affichage centralisé : `0 g`, `500 g`, `1 kg`, `1 kg 250 g`. Pas de nombres décimaux.
+4. Préparation en planque : soustraire le brut et créditer la même masse au stock prêt à vendre ; les transferts ne changent jamais l'état du produit.
+5. Migration : créer une copie de sécurité des XML **avant tout chargement qui les réécrit**, ajouter un marqueur de version, multiplier les anciens champs `*Oz` par 28 une seule fois, puis relire et vérifier les totaux. Ne jamais migrer un fichier isolé si la sauvegarde en contient plusieurs.
+6. Validation : tests de non-régression pour achats, paiement, livraison, ramassage, stockage véhicule, dépôt/préparation en planque, revente, sacs au sol, persistance et chargement d'anciennes sauvegardes.
+
+**État :** audit des principaux circuits terminé ; modification des mécaniques et migration **non commencées**. Vérification exhaustive de tous les appels et XML encore nécessaire avant la bascule.
+
 ### Premiers constats techniques — phase 3
 
 - `LsFunctions.pWeedOunce`, `pCrackOunce`, `pCocaineOunce` et les stocks véhicules utilisent encore des quantités en onces ; le poids porté ajoute `28 g` par once.
