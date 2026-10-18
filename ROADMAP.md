@@ -37,10 +37,10 @@
 
 ### LSlife.Inventory (4)
 
-- [ ] `LSlife.Inventory/Cocaine.cs`
-- [ ] `LSlife.Inventory/InventoryObject.cs`
-- [ ] `LSlife.Inventory/ItemObject.cs`
-- [ ] `LSlife.Inventory/ItemSlot.cs`
+- [x] `LSlife.Inventory/Cocaine.cs` — audit intégral : aucun libellé codé en dur, paramètres de texte conservés
+- [x] `LSlife.Inventory/InventoryObject.cs` — audit intégral : aucun libellé codé en dur, paramètres de texte conservés
+- [x] `LSlife.Inventory/ItemObject.cs` — audit intégral : aucun libellé codé en dur, paramètres de texte conservés
+- [x] `LSlife.Inventory/ItemSlot.cs` — audit intégral : aucun libellé codé en dur, paramètres de texte conservés
 
 ### LSlife.OldCustomers (2)
 
@@ -94,7 +94,7 @@
 
 - [ ] `Properties/AssemblyInfo.cs`
 
-**Suivi : 8/52 fichiers C# validés à 100 % pour la traduction (compilation en attente du test utilisateur).**
+**Suivi : 12/52 fichiers C# validés à 100 % pour la traduction (compilation en attente du test utilisateur).**
 
 **Périmètre :** inventaire généré depuis l'arborescence GitHub de `main` ; fichiers `.cs` uniquement. Les scripts de build, projets et autres ressources ne sont pas des fichiers de traduction C#.
 
