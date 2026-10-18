@@ -99,7 +99,7 @@ public class LSL : Script
 				if (DEBUG)
 				{
 					model = ((Entity)Prop).Model;
-					UI.Notify(model.Hash + " Porte deverrouillee " + ((object)((Entity)Prop).Position/*cast due to constrained. prefix*/).ToString());
+					UI.Notify(model.Hash + " Porte déverrouillée " + ((object)((Entity)Prop).Position/*cast due to constrained. prefix*/).ToString());
 				}
 			}
 			else
@@ -112,7 +112,7 @@ public class LSL : Script
 				if (DEBUG)
 				{
 					model = ((Entity)Prop).Model;
-					UI.Notify(model.Hash + " Porte verrouillee " + ((object)((Entity)Prop).Position/*cast due to constrained. prefix*/).ToString());
+					UI.Notify(model.Hash + " Porte verrouillée " + ((object)((Entity)Prop).Position/*cast due to constrained. prefix*/).ToString());
 				}
 			}
 		}
@@ -1557,7 +1557,7 @@ public class LSL : Script
 		if (dealer1ReloadOrder)
 		{
 			Enum.TryParse<Enums.DayGTA>(dealer1ReloadDay.ToString(), out var mDay);
-			LsFunctions.TextMsg("ZEE", "Livraison", "La commande devrait arriver le " + mDay.ToString() + " a " + dealer1ReloadHour + ":00");
+			LsFunctions.TextMsg("ZEE", "Livraison", "La commande devrait arriver le " + mDay.ToString() + " à " + dealer1ReloadHour + ":00");
 		}
 		if (!NewOrder.Placed)
 		{
@@ -1869,7 +1869,7 @@ public class LSL : Script
 				LoadAreaData();
 			}
 			UI.Notify("~g~LsLife: " + vNumber);
-			UI.Notify("~g~LsLife: " + areas.Count + " zones chargees");
+			UI.Notify("~g~LsLife: " + areas.Count + " zones chargées");
 			lPeds = new LsLPeds();
 			World.SetRelationshipBetweenGroups((Relationship)3, playerRelationship, CustomerRel);
 			World.SetRelationshipBetweenGroups((Relationship)3, playerRelationship, rival_nutral);
@@ -1989,7 +1989,7 @@ public class LSL : Script
 				{
 					Function.Call((Hash)7023634693725934496L);
 					displayHelpTimer = Game.GameTime;
-					LsFunctions.DisplayHelpText("~INPUT_CONTEXT~ pour obtemperer.");
+					LsFunctions.DisplayHelpText("~INPUT_CONTEXT~ pour obtempérer.");
 				}
 				if (Game.IsControlJustPressed(2, (GTA.Control)51))
 				{
@@ -2320,7 +2320,7 @@ public class LSL : Script
 								position = ((Entity)c.Ped).Position;
 								if (position.DistanceTo(playerPos) > 80f)
 								{
-									LsFunctions.DbugString("Customer deleted out of range");
+									LsFunctions.DbugString("Client supprimé : trop éloigné");
 									customers.Remove(c);
 									LsFunctions.RemovePedFromWorld(c.Ped, clearTask: true);
 									break;
@@ -2380,14 +2380,14 @@ public class LSL : Script
 							{
 								Function.Call((Hash)7023634693725934496L);
 								displayHelpTimer = Game.GameTime;
-								LsFunctions.DisplayHelpText("~INPUT_SPRINT~ pour vendre depuis le vehicule.");
+								LsFunctions.DisplayHelpText("~INPUT_SPRINT~ pour vendre depuis le véhicule.");
 							}
 							if (Game.IsControlJustPressed(2, (GTA.Control)21))
 							{
 								Function.Call((Hash)7023634693725934496L);
 								customerSellTo = nCustomer;
-								sell.Text = "Vendre " + LsFunctions.GramsToOz(customerSellTo.amount) + " of " + customerSellTo.Drug.Name + "?";
-								((UIText)customerMainMenu.Subtitle).Caption = "You have " + LsFunctions.GramsToOz(PlayerInventory[customerSellTo.Drug.Name]) + " of " + customerSellTo.Drug.Name;
+								sell.Text = "Vendre " + LsFunctions.GramsToOz(customerSellTo.amount) + " de " + customerSellTo.Drug.Name + "?";
+								((UIText)customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.GramsToOz(PlayerInventory[customerSellTo.Drug.Name]) + " de " + customerSellTo.Drug.Name;
 								customerMainMenu.Visible = !customerMainMenu.Visible;
 								customerMainMenu.CurrentSelection = 0;
 							}
@@ -2398,14 +2398,14 @@ public class LSL : Script
 							{
 								Function.Call((Hash)7023634693725934496L);
 								displayHelpTimer = Game.GameTime;
-								LsFunctions.DisplayHelpText("Appuyez sur ~INPUT_SPRINT~ pour vendre a cette personne.");
+								LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour vendre à cette personne.");
 							}
 							if (Game.IsControlJustPressed(2, (GTA.Control)21) && !LsMenuPool.IsAnyMenuOpen())
 							{
 								Function.Call((Hash)7023634693725934496L);
 								customerSellTo = nCustomer;
-								sell.Text = "Vendre " + LsFunctions.GramsToOz(customerSellTo.amount) + " of " + customerSellTo.Drug.Name + "?";
-								((UIText)customerMainMenu.Subtitle).Caption = "You have " + LsFunctions.GramsToOz(PlayerInventory[customerSellTo.Drug.Name]) + " of " + customerSellTo.Drug.Name;
+								sell.Text = "Vendre " + LsFunctions.GramsToOz(customerSellTo.amount) + " de " + customerSellTo.Drug.Name + "?";
+								((UIText)customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.GramsToOz(PlayerInventory[customerSellTo.Drug.Name]) + " de " + customerSellTo.Drug.Name;
 								customerMainMenu.Visible = !customerMainMenu.Visible;
 								customerMainMenu.CurrentSelection = 0;
 							}
@@ -2473,7 +2473,7 @@ public class LSL : Script
 				{
 					if (DEBUG)
 					{
-						UI.Notify("dealer1 angry");
+						UI.Notify("Fournisseur en colère");
 					}
 					dealer1Angry = true;
 				}
@@ -2491,7 +2491,7 @@ public class LSL : Script
 					{
 						if (DEBUG)
 						{
-							UI.Notify("dealer1 drive-by");
+							UI.Notify("Attaque du fournisseur");
 						}
 						LsFunctions.SpawnDriveBy(player.Character, _agressive: true);
 						LsFunctions.TextMsg("ZEE", "Dette", "Rembourse ta dette et je les rappellerai.");
@@ -2520,7 +2520,7 @@ public class LSL : Script
 								entitiesCleanUp.Remove(ent);
 								if (DEBUG)
 								{
-									UI.Notify("stoped delete attacker");
+									UI.Notify("Attaquant supprimé après l'arrêt");
 								}
 								continue;
 							}
@@ -2530,7 +2530,7 @@ public class LSL : Script
 								entitiesCleanUp.Remove(ent);
 								if (DEBUG)
 								{
-									UI.Notify("Delete:" + (object)ent);
+									UI.Notify("Suppression : " + (object)ent);
 								}
 								ent.Delete();
 							}
@@ -2558,7 +2558,7 @@ public class LSL : Script
 			{
 				if (DEBUG)
 				{
-					UI.Notify("Changement d arme du joueur detecte");
+					UI.Notify("Changement d'arme du joueur détecté");
 				}
 				playerWeps.Clear();
 				playerWeapons.Clear();
@@ -2576,7 +2576,7 @@ public class LSL : Script
 					XElement weaponNameElement = new XElement("HASH", (object)weapon2);
 					if (DEBUG)
 					{
-						UI.Notify("Added " + ((object)weapon2/*cast due to constrained. prefix*/).ToString() + " a la liste des armes du joueur.");
+						UI.Notify("Ajout de " + ((object)weapon2/*cast due to constrained. prefix*/).ToString() + " à la liste des armes du joueur.");
 					}
 					XElement weaponAmmoElement = new XElement("AMMO", ammunitionInWeapon);
 					parentElement.Add(weaponNameElement);
@@ -2672,7 +2672,7 @@ public class LSL : Script
 								if (DEBUG)
 								{
 									model = ((Entity)p3).Model;
-									UI.Notify("Dealer de quartier cree avec ~g~" + ((object)model/*cast due to constrained. prefix*/).ToString());
+									UI.Notify("Dealer de quartier créé avec ~g~" + ((object)model/*cast due to constrained. prefix*/).ToString());
 								}
 								break;
 							}
@@ -2682,7 +2682,7 @@ public class LSL : Script
 			}
 			else
 			{
-				LsFunctions.DbugString("Cant spawn dealer dead :" + areas[areaIndex].DealerKilled);
+				LsFunctions.DbugString("Impossible de créer un dealer mort : " + areas[areaIndex].DealerKilled);
 			}
 		}
 		if (Game.GameTime <= SlowTickTime + 375)
@@ -2760,7 +2760,7 @@ public class LSL : Script
 					}
 					if (DEBUG)
 					{
-						UI.Notify("Meurtre du dealer repere");
+						UI.Notify("Meurtre du dealer repéré");
 					}
 				}
 				Ped dKiller2 = null;
@@ -2942,7 +2942,7 @@ public class LSL : Script
 				Ped p4 = (Ped)(object)((killer3 is Ped) ? killer3 : null);
 				if (p4 != null && (Entity)(object)p4 != (Entity)null && p4.IsHuman && !p4.IsPlayer && !LsFunctions.IsPolice(p4) && (Entity)(object)attacker == (Entity)null)
 				{
-					LsFunctions.TextMsg("ZEE", "info", "J ai retrouve cette personne et envoye sa position.");
+					LsFunctions.TextMsg("ZEE", "info", "J'ai retrouvé cette personne et envoyé sa position.");
 					attacker = p4;
 					((Entity)attacker).IsPersistent = true;
 					attackerMoney = player.Money - (int)((double)player.Money * 0.1);
@@ -2969,7 +2969,7 @@ public class LSL : Script
 					}
 					attacker.BlockPermanentEvents = true;
 					((Entity)attacker).IsPersistent = true;
-					LsFunctions.AddBlip((Entity)(object)attacker, (BlipColor)1, "Robber", _friend: false, _edge: false);
+					LsFunctions.AddBlip((Entity)(object)attacker, (BlipColor)1, "Braqueur", _friend: false, _edge: false);
 					WeaponHash weaponHash2 = unchecked((WeaponHash)(-1569615261));
 					int ammo2 = 0;
 					player.Character.Weapons.RemoveAll();
@@ -3003,7 +3003,7 @@ public class LSL : Script
 					attacker.DropsWeaponsOnDeath = false;
 					if (DEBUG)
 					{
-						UI.Notify("Le tueur est equipe de " + attacker.Weapons.Current.Name + " et porte un gilet pare-balles");
+						UI.Notify("Le tueur est équipé de " + attacker.Weapons.Current.Name + " et porte un gilet pare-balles");
 					}
 					attackerWeed = PlayerInventory["Weed"];
 					attackerCrack = PlayerInventory["Crack"];
@@ -3076,7 +3076,7 @@ public class LSL : Script
 				if ((Entity)(object)attacker == (Entity)null && TotalDrugsCarried() > 0)
 				{
 					player.Character.Weapons.RemoveAll();
-					LsFunctions.SendTextMsg("La police a confisque $" + LsFunctions.IntToMoney(player.Money) + ", toutes tes drogues et tes armes.");
+					LsFunctions.SendTextMsg("La police a confisqué $" + LsFunctions.IntToMoney(player.Money) + ", toutes tes drogues et tes armes.");
 					Player val4 = player;
 					val4.Money -= player.Money;
 					if (PlayerInventory.Keys.ToList().Count > 0)
@@ -3154,7 +3154,7 @@ public class LSL : Script
 					p5.BlockPermanentEvents = true;
 					if (((Entity)p5).CurrentBlip.Exists())
 					{
-						((Entity)p5).CurrentBlip.Name = "Robber";
+						((Entity)p5).CurrentBlip.Name = "Braqueur";
 						((Entity)p5).CurrentBlip.IsFriendly = false;
 					}
 				}
@@ -3196,7 +3196,7 @@ public class LSL : Script
 			if (Function.Call<bool>((Hash)5315141875575487047L) && !Prison.Ready)
 			{
 				Function.Call(unchecked((Hash)(-8272491852216909662L)), (InputArgument)(player.Handle), (InputArgument)(false), (InputArgument)(256));
-				UI.Notify("READY");
+				UI.Notify("PRÊT");
 				Prison.Ready = true;
 			}
 			Prison.PrisonTick();
@@ -3205,7 +3205,7 @@ public class LSL : Script
 		{
 			if (((Entity)attacker).CurrentBlip == (Blip)null || !((Entity)attacker).CurrentBlip.Exists())
 			{
-				LsFunctions.AddBlip((Entity)(object)attacker, (BlipColor)1, "Robber", _friend: false, _edge: false);
+				LsFunctions.AddBlip((Entity)(object)attacker, (BlipColor)1, "Braqueur", _friend: false, _edge: false);
 			}
 			if (((Entity)attacker).IsDead)
 			{
@@ -3476,7 +3476,7 @@ public class LSL : Script
 				((Entity)wepDealer.vehicle).IsInvincible = true;
 				wepDealer.ped.Task.ClearAll();
 				wepDealer.ped.Task.DriveTo(wepDealer.vehicle, wepDealer.destination, 1f, 10f, 786603);
-				UI.ShowSubtitle("D accord, nous allons vers ~y~" + World.GetStreetName(wepDealer.destination));
+				UI.ShowSubtitle("D'accord, nous allons vers ~y~" + World.GetStreetName(wepDealer.destination));
 				wepDealer.state = Dealer.States.Leaving;
 			}
 		}
@@ -3490,14 +3490,14 @@ public class LSL : Script
 		{
 			wepDealer.ped.Task.DriveTo(wepDealer.vehicle, wepDealer.destination, 4f, 50f, 6);
 			wepDealer.state = Dealer.States.Fast;
-			UI.ShowSubtitle("Ok, putting my foot down.", 2000);
+			UI.ShowSubtitle("D'accord, j'accélère.", 2000);
 			wepDealer.canSpeed = true;
 		}
 		if (wepDealer.state == Dealer.States.Slower)
 		{
 			wepDealer.ped.Task.DriveTo(wepDealer.vehicle, wepDealer.destination, 4f, 20f, 786603);
 			wepDealer.state = Dealer.States.Driving;
-			UI.ShowSubtitle("Ok, Slowing it down.", 2000);
+			UI.ShowSubtitle("D'accord, je ralentis.", 2000);
 			wepDealer.canSpeed = false;
 		}
 		goto IL_29de;
@@ -3915,7 +3915,7 @@ public class LSL : Script
 				pig.DeletePig();
 				if (DEBUG)
 				{
-					UI.Notify("Removed spawned Cop");
+					UI.Notify("Policier créé supprimé");
 				}
 				goto IL_008c;
 			}
@@ -3942,7 +3942,7 @@ public class LSL : Script
 		{
 			if (DEBUG)
 			{
-				UI.Notify("COP SPAWNED");
+				UI.Notify("Policier créé");
 				((Entity)pigCar).AddBlip();
 				((Entity)pigCar).CurrentBlip.Name = "Police Car";
 			}
@@ -3990,7 +3990,7 @@ public class LSL : Script
 			{
 				if (pStashVehicle != null && (Entity)(object)pStashVehicle.drugCar != (Entity)null)
 				{
-					LsFunctions.SendTextMsg(pStashVehicle.drugCar.DisplayName + " n est plus un vehicule de stockage.");
+					LsFunctions.SendTextMsg(pStashVehicle.drugCar.DisplayName + " n'est plus un véhicule de stockage.");
 					pStashVehicle.RemoveOldCar();
 					pStashVehicle = null;
 				}
@@ -4011,7 +4011,7 @@ public class LSL : Script
 									model = ((Entity)player.Character.CurrentVehicle).Model;
 									if (!model.IsPlane)
 									{
-										LsFunctions.SendTextMsg("Ce vehicule ne peut pas servir de cachette.");
+										LsFunctions.SendTextMsg("Ce véhicule ne peut pas servir de cachette.");
 										goto IL_0180;
 									}
 								}
@@ -4022,7 +4022,7 @@ public class LSL : Script
 					pStashVehicle.VehicleSave(player.Character.CurrentVehicle);
 					if ((Entity)(object)pStashVehicle.drugCar != (Entity)null)
 					{
-						LsFunctions.SendTextMsg(pStashVehicle.drugCar.DisplayName + " est maintenant ton vehicule de stockage.");
+						LsFunctions.SendTextMsg(pStashVehicle.drugCar.DisplayName + " est maintenant ton véhicule de stockage.");
 					}
 				}
 			}
@@ -4038,7 +4038,7 @@ public class LSL : Script
 			if (isDealing)
 			{
 				isDealing = false;
-				LsFunctions.SendTextMsg("Vente de rue annulee");
+				LsFunctions.SendTextMsg("Vente de rue annulée");
 			}
 			else if (!isDealing)
 			{
@@ -4062,11 +4062,11 @@ public class LSL : Script
 					ePos.Add(new XElement("h", vHead));
 					xDocument.Root.Add(ePos);
 					xDocument.Save("scripts\\LSLife\\LSLife_Spawns.xml");
-					UI.Notify("Position ajoutee au fichier XML");
+					UI.Notify("Position ajoutée au fichier XML");
 				}
 				else
 				{
-					UI.Notify("Tu dois etre dans un vehicule pour ajouter une position");
+					UI.Notify("Tu dois être dans un véhicule pour ajouter une position");
 				}
 			}
 			if (DEBUG)
@@ -4118,7 +4118,7 @@ public class LSL : Script
 			if ((Entity)(object)weaponDealer1 != (Entity)null)
 			{
 				weaponDealer1.RelationshipGroup = playerRelationship;
-				LsFunctions.AddBlip((Entity)(object)weaponDealer1, (BlipColor)3, "Zee's Dealer", _friend: true, _edge: true);
+				LsFunctions.AddBlip((Entity)(object)weaponDealer1, (BlipColor)3, "Vendeur de Rafael Mendoza", _friend: true, _edge: true);
 				weaponDealer1.CanSwitchWeapons = true;
 				weaponDealer1.Weapons.Give((WeaponHash)453432689, 9999, false, true);
 				weaponDealer1.Armor = 100;
@@ -4168,7 +4168,7 @@ public class LSL : Script
 			}
 			else
 			{
-				LsFunctions.SendTextMsg("~r~Impossible de faire apparaitre le vendeur d armes");
+				LsFunctions.SendTextMsg("~r~Impossible de faire apparaître le vendeur d'armes");
 			}
 		}
 		else if (ZeesDealers == null && NewOrder != null)
