@@ -289,10 +289,10 @@ internal static class LsFunctions
 	{
 		string mWeed = "Cannabis : ~g~" + LSL.NewOrder.weed + "~s~oz";
 		string mCrack = "\nCrack : ~g~" + LSL.NewOrder.crack + "~s~oz";
-		string mCoke = "\nCoke:~g~" + LSL.NewOrder.cocaine + "~s~oz";
-		string mBill = "\nBill:$" + IntToMoney(LSL.NewOrder.Bill);
-		string mDebt = "\nDebt:$" + IntToMoney(LSL.dealer1Debt);
-		string mLimit = "\nCredit:$" + IntToMoney(zeeDebtCap());
+		string mCoke = "\nCocaïne : ~g~" + LSL.NewOrder.cocaine + "~s~oz";
+		string mBill = "\nFacture : $" + IntToMoney(LSL.NewOrder.Bill);
+		string mDebt = "\nDette : $" + IntToMoney(LSL.dealer1Debt);
+		string mLimit = "\nCrédit : $" + IntToMoney(zeeDebtCap());
 		return mWeed + mCrack + mCoke + mBill + mDebt + mLimit;
 	}
 
