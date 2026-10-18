@@ -64,16 +64,16 @@
 - [x] `LSlife/DriveBy.cs` — chaînes visibles auditées, identifiants internes conservés
 - [x] `LSlife/DriveByHandler.cs` — chaînes visibles auditées, identifiants internes conservés
 - [x] `LSlife/DropDrugs.cs` — chaînes visibles auditées, identifiants internes conservés
-- [ ] `LSlife/DroppedBag.cs`
-- [ ] `LSlife/Drug.cs`
-- [ ] `LSlife/DrugDealer.cs`
-- [ ] `LSlife/DrugOrder.cs` — traduction entamée, audit final restant
-- [ ] `LSlife/EnemyHandler.cs`
-- [ ] `LSlife/Enums.cs`
-- [ ] `LSlife/HeadShot.cs`
-- [ ] `LSlife/HeadShotHandler.cs`
-- [ ] `LSlife/HirePed.cs`
-- [ ] `LSlife/InventoryText.cs` — traduction entamée, audit final restant
+- [x] `LSlife/DroppedBag.cs` — audit intégral des chaînes, identifiants et sauvegardes préservés
+- [x] `LSlife/Drug.cs` — audit intégral des chaînes, identifiants et sauvegardes préservés
+- [x] `LSlife/DrugDealer.cs` — audit intégral des chaînes, identifiants et sauvegardes préservés
+- [x] `LSlife/DrugOrder.cs` — audit intégral des chaînes, identifiants et sauvegardes préservés — traduction entamée, audit final restant
+- [x] `LSlife/EnemyHandler.cs` — audit intégral des chaînes, identifiants et sauvegardes préservés
+- [x] `LSlife/Enums.cs` — audit intégral des chaînes, identifiants et sauvegardes préservés
+- [x] `LSlife/HeadShot.cs` — audit intégral des chaînes, identifiants et sauvegardes préservés
+- [x] `LSlife/HeadShotHandler.cs` — audit intégral des chaînes, identifiants et sauvegardes préservés
+- [x] `LSlife/HirePed.cs` — audit intégral des chaînes, identifiants et sauvegardes préservés
+- [x] `LSlife/InventoryText.cs` — audit intégral des chaînes, identifiants et sauvegardes préservés — traduction entamée, audit final restant
 - [ ] `LSlife/LSL.cs` — traduction entamée, audit final restant
 - [ ] `LSlife/LsFunctions.cs` — traduction entamée, audit final restant
 - [ ] `LSlife/LsLPeds.cs`
@@ -94,7 +94,7 @@
 
 - [ ] `Properties/AssemblyInfo.cs`
 
-**Suivi : 26/52 fichiers C# validés à 100 % pour la traduction (compilation en attente du test utilisateur).**
+**Suivi : 36/52 fichiers C# validés à 100 % pour la traduction (compilation en attente du test utilisateur).**
 
 **Périmètre :** inventaire généré depuis l'arborescence GitHub de `main` ; fichiers `.cs` uniquement. Les scripts de build, projets et autres ressources ne sont pas des fichiers de traduction C#.
 
