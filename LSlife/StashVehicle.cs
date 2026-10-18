@@ -371,7 +371,7 @@ public class StashVehicle
 			if ((float)Game.GameTime > LSL.displayHelpTimer + 3000f)
 			{
 				LSL.displayHelpTimer = Game.GameTime;
-				LsFunctions.DisplayHelpText("~INPUT_SPRINT~ pour ouvrir les portes arriere.");
+				LsFunctions.DisplayHelpText("~INPUT_SPRINT~ pour ouvrir les portes arrière.");
 			}
 			if (Game.IsControlJustPressed(2, (Control)21) && !LSL.LsMenuPool.IsAnyMenuOpen() && LSL.player.Character.IsStopped)
 			{
@@ -405,7 +405,7 @@ public class StashVehicle
 			if ((float)Game.GameTime > LSL.displayHelpTimer + 3000f && !LSL.LsMenuPool.IsAnyMenuOpen() && LSL.player.Character.IsStopped)
 			{
 				LSL.displayHelpTimer = Game.GameTime;
-				LsFunctions.DisplayHelpText("~INPUT_SPRINT~ pour fermer les portes arriere.");
+				LsFunctions.DisplayHelpText("~INPUT_SPRINT~ pour fermer les portes arrière.");
 			}
 			if (Game.IsControlJustPressed(2, (Control)21) && !LSL.LsMenuPool.IsAnyMenuOpen() && LSL.player.Character.IsStopped)
 			{
@@ -478,7 +478,7 @@ public class StashVehicle
 				{
 					if (LSL.DEBUG)
 					{
-						UI.Notify("Chargement du vehicule");
+						UI.Notify("Chargement du véhicule");
 					}
 					VehicleLoad();
 				}
@@ -654,7 +654,7 @@ public class StashVehicle
 		{
 			return;
 		}
-		LsFunctions.SendTextMsg("Le vehicule de stockage a ete confisque et son contenu detruit");
+		LsFunctions.SendTextMsg("Le véhicule de stockage a été confisqué et son contenu détruit");
 		drugCarDestroyed = true;
 		XDocument veh = XDocument.Load("scripts\\LSLife\\LSLife_Vehicles.xml");
 		foreach (XElement element in veh.Descendants())
@@ -900,7 +900,7 @@ public class StashVehicle
 		{
 			UI.Notify(vehicles.Count.ToString() ?? "");
 			Vector3 currentPosition = CurrentPosition;
-			UI.Notify("~r~Coordonnees attendues :" + ((object)currentPosition/*cast due to constrained. prefix*/).ToString());
+			UI.Notify("~r~Coordonnées attendues :" + ((object)currentPosition/*cast due to constrained. prefix*/).ToString());
 		}
 		if (vehicles.Count == 0)
 		{
@@ -994,7 +994,7 @@ public class StashVehicle
 				return;
 			}
 		}
-		UI.Notify("~r~Impossible de charger le vehicule");
+		UI.Notify("~r~Impossible de charger le véhicule");
 	}
 
 	public void VehicleSave(Vehicle veh)
@@ -1163,8 +1163,8 @@ public class StashVehicle
 		((UIMenuItem)LSL.takeWeedVeh).Text = "Cannabis " + LsFunctions.GramsToOz(drugCarWeed);
 		((UIMenuItem)LSL.putCrackVeh).Text = "Crack " + LsFunctions.GramsToOz(LSL.PlayerInventory["Crack"]);
 		((UIMenuItem)LSL.takeCrackVeh).Text = "Crack " + LsFunctions.GramsToOz(drugCarCrack);
-		((UIMenuItem)LSL.putCocainVeh).Text = "Cocaine " + LsFunctions.GramsToOz(LSL.PlayerInventory["Cocaine"]);
-		((UIMenuItem)LSL.takeCocainVeh).Text = "Cocaine " + LsFunctions.GramsToOz(drugCarCocain);
+		((UIMenuItem)LSL.putCocainVeh).Text = "Cocaïne " + LsFunctions.GramsToOz(LSL.PlayerInventory["Cocaine"]);
+		((UIMenuItem)LSL.takeCocainVeh).Text = "Cocaïne " + LsFunctions.GramsToOz(drugCarCocain);
 		LSL.takeWeedOzVeh.Maximum = drugCarWeedOz;
 		LSL.takeCrackOzVeh.Maximum = drugCarCrackOz;
 		LSL.takeCocainOzVeh.Maximum = drugCarCocainOz;
@@ -1184,8 +1184,8 @@ public class StashVehicle
 		((UIMenuItem)LSL.takeWeedOzVeh).Text = "Cannabis ~r~" + drugCarWeedOz + "~s~z";
 		((UIMenuItem)LSL.putCrackOzVeh).Text = "Crack ~r~" + LsFunctions.pCrackOunce + "~s~z";
 		((UIMenuItem)LSL.takeCrackOzVeh).Text = "Crack ~r~" + drugCarCrackOz + "~s~z";
-		((UIMenuItem)LSL.putCocainOzVeh).Text = "Cocaine ~r~" + LsFunctions.pCocaineOunce + "~s~z";
-		((UIMenuItem)LSL.takeCocainOzVeh).Text = "Cocaine ~r~" + drugCarCocainOz + "~s~z";
+		((UIMenuItem)LSL.putCocainOzVeh).Text = "Cocaïne ~r~" + LsFunctions.pCocaineOunce + "~s~z";
+		((UIMenuItem)LSL.takeCocainOzVeh).Text = "Cocaïne ~r~" + drugCarCocainOz + "~s~z";
 		((UIMenuItem)LSL.putMoneyVeh).Text = "Argent $" + LsFunctions.IntToMoney(LSL.player.Money);
 		((UIMenuItem)LSL.takeMoneyVeh).Text = "Argent $" + LsFunctions.IntToMoney(drugCarMoney);
 		LSL.takeMoneyStash.Maximum = drugCarMoney;
