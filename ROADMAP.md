@@ -16,18 +16,18 @@
 
 ## Suivi de traduction — inventaire exhaustif des fichiers C#
 
-**Règle :** `[x]` seulement après audit de tous les textes visibles, relecture et compilation vérifiée. Les fichiers purement techniques doivent également être inspectés avant validation. Le statut « partiel » ne vaut pas terminé.
+**Règle :** `[x]` après audit intégral des textes visibles et relecture du fichier ; la compilation reste une validation distincte à effectuer sur l'ensemble du projet. Les fichiers purement techniques sont également inspectés avant validation. Le statut « partiel » ne vaut pas terminé.
 
 ### Racine (1)
 
-- [ ] `-PrivateImplementationDetails-.cs`
+- [x] `-PrivateImplementationDetails-.cs` — audit intégral : aucun texte utilisateur à traduire
 
 ### LSlife.Gangs (4)
 
-- [ ] `LSlife.Gangs/Gang.cs`
-- [ ] `LSlife.Gangs/GangUtilities.cs`
-- [ ] `LSlife.Gangs/Threat.cs`
-- [ ] `LSlife.Gangs/ThreatHandler.cs`
+- [x] `LSlife.Gangs/Gang.cs` — audit intégral : aucun texte utilisateur à traduire
+- [x] `LSlife.Gangs/GangUtilities.cs` — audit intégral : aucun texte utilisateur à traduire ; noms de gangs conservés volontairement
+- [x] `LSlife.Gangs/Threat.cs` — audit intégral : aucun texte utilisateur à traduire
+- [x] `LSlife.Gangs/ThreatHandler.cs` — audit intégral : aucun texte utilisateur à traduire
 
 ### LSlife.HeatBars (3)
 
@@ -94,7 +94,7 @@
 
 - [ ] `Properties/AssemblyInfo.cs`
 
-**Suivi : 0/52 fichiers C# validés à 100 %.**
+**Suivi : 5/52 fichiers C# validés à 100 % pour la traduction (compilation en attente du test utilisateur).**
 
 **Périmètre :** inventaire généré depuis l'arborescence GitHub de `main` ; fichiers `.cs` uniquement. Les scripts de build, projets et autres ressources ne sont pas des fichiers de traduction C#.
 
