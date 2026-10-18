@@ -44,13 +44,13 @@
 
 ### LSlife.OldCustomers (2)
 
-- [ ] `LSlife.OldCustomers/OldCustomer.cs`
-- [ ] `LSlife.OldCustomers/OldCustomerHandler.cs`
+- [x] `LSlife.OldCustomers/OldCustomer.cs` — textes et messages audités intégralement, traduction vérifiée
+- [x] `LSlife.OldCustomers/OldCustomerHandler.cs` — textes et messages audités intégralement, traduction vérifiée
 
 ### LSlife.Shots (2)
 
-- [ ] `LSlife.Shots/Shot.cs`
-- [ ] `LSlife.Shots/ShotHandler.cs`
+- [x] `LSlife.Shots/Shot.cs` — textes et messages audités intégralement, traduction vérifiée
+- [x] `LSlife.Shots/ShotHandler.cs` — textes et messages audités intégralement, traduction vérifiée
 
 ### LSlife (35)
 
@@ -94,7 +94,7 @@
 
 - [ ] `Properties/AssemblyInfo.cs`
 
-**Suivi : 12/52 fichiers C# validés à 100 % pour la traduction (compilation en attente du test utilisateur).**
+**Suivi : 16/52 fichiers C# validés à 100 % pour la traduction (compilation en attente du test utilisateur).**
 
 **Périmètre :** inventaire généré depuis l'arborescence GitHub de `main` ; fichiers `.cs` uniquement. Les scripts de build, projets et autres ressources ne sont pas des fichiers de traduction C#.
 
