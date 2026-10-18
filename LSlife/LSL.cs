@@ -1144,7 +1144,7 @@ public class LSL : Script
 		}
 		sellWeed = new UIMenuCheckboxItem("Vendre du cannabis", true);
 		sellCrack = new UIMenuCheckboxItem("Vendre du crack", true);
-		sellCocaine = new UIMenuCheckboxItem("Vendre de la cocaine", true);
+		sellCocaine = new UIMenuCheckboxItem("Vendre de la cocaïne", true);
 		StartDeal = new UIMenuItem("Commencer la vente");
 		startDealing.AddItem((UIMenuItem)(object)sellWeed);
 		startDealing.AddItem((UIMenuItem)(object)sellCrack);
@@ -1174,7 +1174,7 @@ public class LSL : Script
 			hireDealerMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_dealer.png");
 		}
 		LsMenuPool.Add(hireDealerMainMenu);
-		hireDealerOfferAmount = new UIMenuSliderItem("Montant propose");
+		hireDealerOfferAmount = new UIMenuSliderItem("Montant proposé");
 		hireDealerOfferAmount.Maximum = player.Money;
 		hireDealerOfferAmount.Multiplier = 1000;
 		hireDealerMakeOffer = new UIMenuItem("Faire une offre");
@@ -1230,7 +1230,7 @@ public class LSL : Script
 			wepMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_dealer.png");
 		}
 		LsMenuPool.Add(wepMenu);
-		melee = new UIMenuListItem("Arme de melee $" + LsFunctions.IntToMoney(mWprice), (List<object>)meleeWeps, 0);
+		melee = new UIMenuListItem("Arme de mêlée $" + LsFunctions.IntToMoney(mWprice), (List<object>)meleeWeps, 0);
 		wepMenu.AddItem((UIMenuItem)(object)melee);
 		pistol = new UIMenuListItem("Pistolet $" + LsFunctions.IntToMoney(pWprice), (List<object>)pistolWeps, 0);
 		wepMenu.AddItem((UIMenuItem)(object)pistol);
@@ -1243,7 +1243,7 @@ public class LSL : Script
 		pistol.OnListChanged += LsMenus.onListChange;
 		OrderMultipliers = new UIMenuListItem("Multiplier", (List<object>)multiplier, 0);
 		OrderMultipliers.OnListChanged += DMultiplier_OnListChanged;
-		weedMenu = LsMenuPool.AddSubMenu(OrderDrugs, "Weed");
+		weedMenu = LsMenuPool.AddSubMenu(OrderDrugs, "Cannabis");
 		if (UseSprites)
 		{
 			weedMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
@@ -1271,7 +1271,7 @@ public class LSL : Script
 		crackMenu.AddItem(CrackBuy);
 		crack.OnSliderChanged += LsMenus.onSliderChange;
 		crackMenu.OnItemSelect += LsMenus.onCrackMenuSelect;
-		cocainMenu = LsMenuPool.AddSubMenu(OrderDrugs, "Cocaine");
+		cocainMenu = LsMenuPool.AddSubMenu(OrderDrugs, "Cocaïne");
 		if (UseSprites)
 		{
 			cocainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
@@ -1294,21 +1294,21 @@ public class LSL : Script
 			stashMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
 		}
 		LsMenuPool.Add(stashMainMenu);
-		stashTakeMenu = LsMenuPool.AddSubMenu(stashMainMenu, "Take");
+		stashTakeMenu = LsMenuPool.AddSubMenu(stashMainMenu, "Retirer");
 		if (UseSprites)
 		{
 			stashTakeMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
 		}
-		stashPutMenu = LsMenuPool.AddSubMenu(stashMainMenu, "Stash");
+		stashPutMenu = LsMenuPool.AddSubMenu(stashMainMenu, "Déposer");
 		if (UseSprites)
 		{
 			stashPutMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
 		}
-		putWeedStash = new UIMenuSliderItem("Weed");
+		putWeedStash = new UIMenuSliderItem("Cannabis");
 		stashPutMenu.AddItem((UIMenuItem)(object)putWeedStash);
 		putWeedStash.Maximum = PlayerInventory["Weed"];
 		putWeedStash.Multiplier = 1;
-		takeWeedStash = new UIMenuSliderItem("Weed");
+		takeWeedStash = new UIMenuSliderItem("Cannabis");
 		stashTakeMenu.AddItem((UIMenuItem)(object)takeWeedStash);
 		takeWeedStash.Maximum = 0;
 		takeWeedStash.Multiplier = 1;
@@ -1324,11 +1324,11 @@ public class LSL : Script
 		takeCrackStash.Multiplier = 1;
 		putCrackStash.OnSliderChanged += LsMenus.onSliderChange;
 		takeCrackStash.OnSliderChanged += LsMenus.onSliderChange;
-		putCocainStash = new UIMenuSliderItem("Cocaine");
+		putCocainStash = new UIMenuSliderItem("Cocaïne");
 		stashPutMenu.AddItem((UIMenuItem)(object)putCocainStash);
 		putCocainStash.Maximum = PlayerInventory["Cocaine"];
 		putCocainStash.Multiplier = 1;
-		takeCocainStash = new UIMenuSliderItem("Cocaine");
+		takeCocainStash = new UIMenuSliderItem("Cocaïne");
 		stashTakeMenu.AddItem((UIMenuItem)(object)takeCocainStash);
 		takeCocainStash.Maximum = 0;
 		takeCocainStash.Multiplier = 1;
@@ -1388,7 +1388,7 @@ public class LSL : Script
 		{
 			pArm.Add(t);
 		}
-		putArmourStash = new UIMenuListItem("Deposer un gilet pare-balles", pArm, 0);
+		putArmourStash = new UIMenuListItem("Déposer un gilet pare-balles", pArm, 0);
 		stashPutMenu.AddItem((UIMenuItem)(object)putArmourStash);
 		List<object> sArm = new List<object>();
 		for (int j = 0; j < 1; j++)
@@ -1399,7 +1399,7 @@ public class LSL : Script
 		stashTakeMenu.AddItem((UIMenuItem)(object)takeArmourStash);
 		if (playerWeapons.Count > 0)
 		{
-			putWeaponStash = new UIMenuListItem("Deposer une arme : ", (List<object>)playerWeps, 0);
+			putWeaponStash = new UIMenuListItem("Déposer une arme : ", (List<object>)playerWeps, 0);
 			stashPutMenu.AddItem((UIMenuItem)(object)putWeaponStash);
 			putWeaponStash.OnListChanged += LsMenus.onListChange;
 			takeWeaponStash = new UIMenuListItem("Prendre une arme :", (List<object>)playerWeps, 0);
@@ -1414,12 +1414,12 @@ public class LSL : Script
 			vehStashMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
 		}
 		LsMenuPool.Add(vehStashMainMenu);
-		vehStashTakeMenu = LsMenuPool.AddSubMenu(vehStashMainMenu, "Take");
+		vehStashTakeMenu = LsMenuPool.AddSubMenu(vehStashMainMenu, "Retirer");
 		if (UseSprites)
 		{
 			vehStashTakeMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
 		}
-		vehStashPutMenu = LsMenuPool.AddSubMenu(vehStashMainMenu, "Stash");
+		vehStashPutMenu = LsMenuPool.AddSubMenu(vehStashMainMenu, "Déposer");
 		if (UseSprites)
 		{
 			vehStashPutMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
@@ -1428,7 +1428,7 @@ public class LSL : Script
 		vehStashPutMenu.AddItem((UIMenuItem)(object)putWeedVeh);
 		putWeedVeh.Maximum = PlayerInventory["Weed"];
 		putWeedVeh.Multiplier = 1;
-		takeWeedVeh = new UIMenuSliderItem("Cannabis drugCarWeedg");
+		takeWeedVeh = new UIMenuSliderItem("Cannabis");
 		vehStashTakeMenu.AddItem((UIMenuItem)(object)takeWeedVeh);
 		takeWeedVeh.Maximum = 0;
 		takeWeedVeh.Multiplier = 1;
@@ -1438,7 +1438,7 @@ public class LSL : Script
 		vehStashPutMenu.AddItem((UIMenuItem)(object)putCrackVeh);
 		putCrackVeh.Maximum = PlayerInventory["Crack"];
 		putCrackVeh.Multiplier = 1;
-		takeCrackVeh = new UIMenuSliderItem("Crack drugCarCrackg");
+		takeCrackVeh = new UIMenuSliderItem("Crack");
 		vehStashTakeMenu.AddItem((UIMenuItem)(object)takeCrackVeh);
 		takeCrackVeh.Maximum = 0;
 		takeCrackVeh.Multiplier = 1;
@@ -1448,7 +1448,7 @@ public class LSL : Script
 		vehStashPutMenu.AddItem((UIMenuItem)(object)putCocainVeh);
 		putCocainVeh.Maximum = PlayerInventory["Cocaine"];
 		putCocainVeh.Multiplier = 1;
-		takeCocainVeh = new UIMenuSliderItem("Cocaine drugCarCocaing");
+		takeCocainVeh = new UIMenuSliderItem("Cocaïne");
 		vehStashTakeMenu.AddItem((UIMenuItem)(object)takeCocainVeh);
 		takeCocainVeh.Maximum = 0;
 		takeCocainVeh.Multiplier = 1;
@@ -1458,7 +1458,7 @@ public class LSL : Script
 		vehStashPutMenu.AddItem((UIMenuItem)(object)putWeedOzVeh);
 		putWeedOzVeh.Maximum = LsFunctions.pWeedOunce;
 		putWeedOzVeh.Multiplier = 1;
-		takeWeedOzVeh = new UIMenuSliderItem("Cannabis drugCarWeedoz");
+		takeWeedOzVeh = new UIMenuSliderItem("Cannabis (oz)");
 		vehStashTakeMenu.AddItem((UIMenuItem)(object)takeWeedOzVeh);
 		takeWeedOzVeh.Maximum = 0;
 		takeWeedOzVeh.Multiplier = 1;
@@ -1468,7 +1468,7 @@ public class LSL : Script
 		vehStashPutMenu.AddItem((UIMenuItem)(object)putCrackOzVeh);
 		putCrackOzVeh.Maximum = LsFunctions.pCrackOunce;
 		putCrackOzVeh.Multiplier = 1;
-		takeCrackOzVeh = new UIMenuSliderItem("Crack drugCarCrackoz");
+		takeCrackOzVeh = new UIMenuSliderItem("Crack (oz)");
 		vehStashTakeMenu.AddItem((UIMenuItem)(object)takeCrackOzVeh);
 		takeCrackOzVeh.Maximum = 0;
 		takeCrackOzVeh.Multiplier = 1;
@@ -1478,7 +1478,7 @@ public class LSL : Script
 		vehStashPutMenu.AddItem((UIMenuItem)(object)putCocainOzVeh);
 		putCocainOzVeh.Maximum = LsFunctions.pCocaineOunce;
 		putCocainOzVeh.Multiplier = 1;
-		takeCocainOzVeh = new UIMenuSliderItem("Cocaine drugCarCocaing");
+		takeCocainOzVeh = new UIMenuSliderItem("Cocaïne");
 		vehStashTakeMenu.AddItem((UIMenuItem)(object)takeCocainOzVeh);
 		takeCocainOzVeh.Maximum = 0;
 		takeCocainOzVeh.Multiplier = 1;
@@ -1488,7 +1488,7 @@ public class LSL : Script
 		vehStashPutMenu.AddItem((UIMenuItem)(object)putMoneyVeh);
 		putMoneyVeh.Maximum = player.Money;
 		putMoneyVeh.Multiplier = 100;
-		takeMoneyVeh = new UIMenuSliderItem("Argent $drugCarMoney");
+		takeMoneyVeh = new UIMenuSliderItem("Argent $");
 		vehStashTakeMenu.AddItem((UIMenuItem)(object)takeMoneyVeh);
 		takeMoneyVeh.Maximum = 0;
 		takeMoneyVeh.Multiplier = 100;
@@ -1500,10 +1500,10 @@ public class LSL : Script
 		vehTakeMultiplier = new UIMenuListItem("Multiplier", (List<object>)multiplier, 0);
 		vehStashTakeMenu.AddItem((UIMenuItem)(object)vehTakeMultiplier);
 		vehTakeMultiplier.OnListChanged += LsMenus.onListChange;
-		takeWeaponVeh = new UIMenuListItem("Prendre une arme :", new List<object> { "EROaR!" }, 0);
+		takeWeaponVeh = new UIMenuListItem("Prendre une arme :", new List<object> { "Aucune arme" }, 0);
 		vehStashTakeMenu.AddItem((UIMenuItem)(object)takeWeaponVeh);
 		takeWeaponVeh.OnListChanged += LsMenus.onListChange;
-		putArmourVeh = new UIMenuListItem("Deposer un gilet pare-balles", pArm, 0);
+		putArmourVeh = new UIMenuListItem("Déposer un gilet pare-balles", pArm, 0);
 		vehStashPutMenu.AddItem((UIMenuItem)(object)putArmourVeh);
 		((UIMenuItem)putArmourVeh).Activated += PutArmourVeh_Activated;
 		List<object> vArm = new List<object>();
@@ -1516,7 +1516,7 @@ public class LSL : Script
 		((UIMenuItem)takeArmourVeh).Activated += TakeArmourVeh_Activated;
 		if (playerWeapons.Count > 0)
 		{
-			putWeaponVeh = new UIMenuListItem("Deposer une arme : ", (List<object>)playerWeps, 0);
+			putWeaponVeh = new UIMenuListItem("Déposer une arme : ", (List<object>)playerWeps, 0);
 			vehStashPutMenu.AddItem((UIMenuItem)(object)putWeaponVeh);
 			putWeaponVeh.OnListChanged += LsMenus.onListChange;
 		}
