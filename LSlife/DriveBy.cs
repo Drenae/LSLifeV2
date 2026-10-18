@@ -104,13 +104,13 @@ public class DriveBy
 			if (!Agressive)
 			{
 				((Entity)Vehicle).CurrentBlip.Color = (BlipColor)1;
-				((Entity)Vehicle).CurrentBlip.Name = "Driveby Vehicle";
+				((Entity)Vehicle).CurrentBlip.Name = "Véhicule de l'équipe";
 			}
 		}
 		else if (Agressive)
 		{
 			((Entity)Vehicle).CurrentBlip.Color = (BlipColor)61;
-			((Entity)Vehicle).CurrentBlip.Name = "Patrol";
+			((Entity)Vehicle).CurrentBlip.Name = "Patrouille";
 		}
 	}
 
@@ -196,13 +196,13 @@ public class DriveBy
 						position = ((Entity)Leader).Position;
 						if (position.DistanceTo(LastKnownPosition) < 10f)
 						{
-							DriveBySate = Enums.DriveBySates.VehPatrol;
+							DriveBySate = Enums.DriveBySates.VehPatrouille;
 							enterState = true;
 						}
 					}
 					break;
 				}
-				case Enums.DriveBySates.VehPatrol:
+				case Enums.DriveBySates.VehPatrouille:
 					if (enterState)
 					{
 						enterState = false;
@@ -273,11 +273,11 @@ public class DriveBy
 					position = ((Entity)Leader).Position;
 					if (position.DistanceTo(LastKnownPosition) < 20f)
 					{
-						DriveBySate = Enums.DriveBySates.VehPatrol;
+						DriveBySate = Enums.DriveBySates.VehPatrouille;
 						enterState = true;
 					}
 					break;
-				case Enums.DriveBySates.VehPatrol:
+				case Enums.DriveBySates.VehPatrouille:
 					if (enterState)
 					{
 						enterState = false;
@@ -304,7 +304,7 @@ public class DriveBy
 		}
 		if (enterState && DriveBySate == Enums.DriveBySates.CleanDriveBy)
 		{
-			LsFunctions.DbugString("DriveByCleaned");
+			LsFunctions.DbugString("Équipe d'attaque supprimée");
 			enterState = false;
 			Dead = true;
 			CleanDriveBy();
@@ -322,13 +322,13 @@ public class DriveBy
 		//IL_005c: Unknown result type (might be due to invalid IL or missing references)
 		foreach (DriveBy d in LSL.driveByHandler.GetDriveBies.Where((DriveBy r) => r.timeSeen > timeSeen))
 		{
-			if (DriveBySate == Enums.DriveBySates.VehPatrol || (DriveBySate == Enums.DriveBySates.VehDrive && d.timeSeen > timeSeen))
+			if (DriveBySate == Enums.DriveBySates.VehPatrouille || (DriveBySate == Enums.DriveBySates.VehDrive && d.timeSeen > timeSeen))
 			{
 				timeSeen = d.timeSeen;
 				LastKnownPosition = d.LastKnownPosition;
 				DriveBySate = Enums.DriveBySates.VehDrive;
 				enterState = true;
-				LsFunctions.DbugString("Driveby updated position from team");
+				LsFunctions.DbugString("Position de l'équipe d'attaque mise à jour");
 			}
 		}
 	}
@@ -385,7 +385,7 @@ public class DriveBy
 				{
 					if (!p.IsInVehicle() && !((Entity)p).CurrentBlip.Exists())
 					{
-						LsFunctions.AddBlip((Entity)(object)p, (BlipColor)1, "Driveby Ped", _friend: false, _edge: false);
+						LsFunctions.AddBlip((Entity)(object)p, (BlipColor)1, "Membre de l'équipe d'attaque", _friend: false, _edge: false);
 					}
 					if (((Entity)p).IsDead)
 					{
@@ -471,13 +471,13 @@ public class DriveBy
 		{
 			if (Agressive)
 			{
-				LsFunctions.AddBlip((Entity)(object)Vehicle, (BlipColor)1, "Driveby Vehicle", _friend: false, _edge: false);
+				LsFunctions.AddBlip((Entity)(object)Vehicle, (BlipColor)1, "Véhicule de l'équipe", _friend: false, _edge: false);
 			}
 			((Entity)Vehicle).IsPersistent = true;
 		}
 		else if (LSL.DEBUG)
 		{
-			UI.Notify("~r~Spawning DriveBy Failed");
+			UI.Notify("~r~Échec de création de l'équipe d'attaque");
 		}
 	}
 
@@ -568,7 +568,7 @@ public class DriveBy
 				vehicleHash = (VehicleHash)model.Hash;
 				if (LSL.DEBUG)
 				{
-					UI.Notify("foundSUV");
+					UI.Notify("SUV trouvé");
 				}
 				break;
 			}
