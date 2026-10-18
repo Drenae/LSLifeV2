@@ -196,13 +196,13 @@ public class DriveBy
 						position = ((Entity)Leader).Position;
 						if (position.DistanceTo(LastKnownPosition) < 10f)
 						{
-							DriveBySate = Enums.DriveBySates.VehPatrouille;
+							DriveBySate = Enums.DriveBySates.VehPatrol;
 							enterState = true;
 						}
 					}
 					break;
 				}
-				case Enums.DriveBySates.VehPatrouille:
+				case Enums.DriveBySates.VehPatrol:
 					if (enterState)
 					{
 						enterState = false;
@@ -273,11 +273,11 @@ public class DriveBy
 					position = ((Entity)Leader).Position;
 					if (position.DistanceTo(LastKnownPosition) < 20f)
 					{
-						DriveBySate = Enums.DriveBySates.VehPatrouille;
+						DriveBySate = Enums.DriveBySates.VehPatrol;
 						enterState = true;
 					}
 					break;
-				case Enums.DriveBySates.VehPatrouille:
+				case Enums.DriveBySates.VehPatrol:
 					if (enterState)
 					{
 						enterState = false;
@@ -322,7 +322,7 @@ public class DriveBy
 		//IL_005c: Unknown result type (might be due to invalid IL or missing references)
 		foreach (DriveBy d in LSL.driveByHandler.GetDriveBies.Where((DriveBy r) => r.timeSeen > timeSeen))
 		{
-			if (DriveBySate == Enums.DriveBySates.VehPatrouille || (DriveBySate == Enums.DriveBySates.VehDrive && d.timeSeen > timeSeen))
+			if (DriveBySate == Enums.DriveBySates.VehPatrol || (DriveBySate == Enums.DriveBySates.VehDrive && d.timeSeen > timeSeen))
 			{
 				timeSeen = d.timeSeen;
 				LastKnownPosition = d.LastKnownPosition;
