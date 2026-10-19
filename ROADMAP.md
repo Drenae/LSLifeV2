@@ -124,10 +124,20 @@
 - [x] `GramsToOz(int)` conserve sa signature pour les appels existants mais retourne désormais le format métrique.
 - [x] HUD `InventoryText.cs`, planques `StashHouseHandler.cs`, véhicules `StashVehicle.cs`, sous-titres de transfert `LsMenus.cs` : affichage métrique des stocks rouges et verts.
 - [x] Correction du sous-titre de dépôt de cocaïne brute : quantité sélectionnée, et non solde total.
-- [ ] Compiler et tester en jeu ce lot **avant** de modifier les achats, les transferts ou la sauvegarde XML.
+- [x] Compiler et tester en jeu ce lot **avant** de modifier les achats, les transferts ou la sauvegarde XML. (Build et HUD, véhicules, planques confirmés par l'utilisateur.)
 - [ ] Convertir les commandes, les compteurs internes et les sauvegardes après migration versionnée et copie de sécurité.
 
 **Important :** les compteurs `p*Ounce` et `drugCar*Oz` sont encore exprimés en paquets historiques, les curseurs continuent à sélectionner des **paquets**, et les champs XML restent inchangés. L'affichage métrique n'est pas encore une conversion intégrale du gameplay.
+
+### Deuxième lot — commandes fournisseur (19/10/2026)
+
+- [x] Affichage des quantités de commande et des notifications de livraison en grammes/kilogrammes.
+- [x] Prix unitaires explicitement indiqués **pour 28 g** ; le prix et le pas de commande historiques restent inchangés.
+- [x] Libellés et descriptions des stocks non préparés corrigés dans les menus planque/véhicule.
+- [x] Affichage des quantités sélectionnées en grammes sur les trois curseurs de commande.
+- [ ] Validation compilation et tests en jeu du deuxième lot.
+
+**Compatibilité :** aucune conversion de sauvegarde ni modification de la logique de commande. Les curseurs sélectionnent toujours des paquets historiques de 28 g. L'étape suivante nécessitera une migration versionnée avant de convertir les compteurs internes.
 
 ### Audit des conversions — diagnostic détaillé (18/10/2026)
 
