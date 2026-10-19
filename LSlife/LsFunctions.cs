@@ -285,11 +285,25 @@ internal static class LsFunctions
 		return new Random().Next(start, end);
 	}
 
+	// LSL V2 FR : format compact pour les descriptions NativeUI étroites.
+	// La quantité reste stockée en paquets historiques de 28 g.
+	public static string FormatOrderPacks(int packs)
+	{
+		int grams = checked(packs * 28);
+		if (grams < 1000)
+		{
+			return "~g~" + grams + "g";
+		}
+		int kg = grams / 1000;
+		int remainder = grams % 1000;
+		return remainder == 0 ? "~g~" + kg + "kg" : "~g~" + kg + "kg " + remainder + "g";
+	}
+
 	public static string OrderMenuDesc()
 	{
-		string mWeed = "Cannabis : " + FormatLegacyPacks(LSL.NewOrder.weed, "~g~");
-		string mCrack = "\nCrack : " + FormatLegacyPacks(LSL.NewOrder.crack, "~g~");
-		string mCoke = "\nCocaïne : " + FormatLegacyPacks(LSL.NewOrder.cocaine, "~g~");
+		string mWeed = "Cannabis : " + FormatOrderPacks(LSL.NewOrder.weed);
+		string mCrack = "\nCrack : " + FormatOrderPacks(LSL.NewOrder.crack);
+		string mCoke = "\nCocaïne : " + FormatOrderPacks(LSL.NewOrder.cocaine);
 		string mBill = "\nFacture : $" + IntToMoney(LSL.NewOrder.Bill);
 		string mDebt = "\nDette : $" + IntToMoney(LSL.dealer1Debt);
 		string mLimit = "\nCrédit : $" + IntToMoney(zeeDebtCap());
