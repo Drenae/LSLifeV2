@@ -7,7 +7,12 @@ Set-StrictMode -Version Latest
 $root = [IO.Path]::GetFullPath($NativeUISource)
 $project = Join-Path $root "NativeUI\NativeUI.csproj"
 $config = Join-Path $root "NativeUI\packages.config"
-$dependency = Join-Path $root "packages\ScriptHookVDotNet2.2.10.12\lib\net48\ScriptHookVDotNet2.dll"
+# La version et le framework dependent du tag NativeUI (1.9.1 = 2.10.9/net40).
+# Lire le chemin de reference directement dans le .csproj plutot que le coder en dur.
+[xml]$projectXml = Get-Content -LiteralPath $project
+$referenceNode = $projectXml.Project.ItemGroup.Reference | Where-Object { $_.Include -like "ScriptHookVDotNet2*" } | Select-Object -First 1
+if (-not $referenceNode -or -not $referenceNode.HintPath) { throw "Reference ScriptHookVDotNet2 introuvable dans $project" }
+$dependency = [IO.Path]::GetFullPath((Join-Path (Split-Path $project) ([string]$referenceNode.HintPath)))
 $output = Join-Path $root "NativeUI\bin\x64\Release\NativeUI.dll"
 $patch = Join-Path $PSScriptRoot "Patch-NativeUI-DescriptionWidth.ps1"
 foreach ($file in @($project, $config, $patch)) {
