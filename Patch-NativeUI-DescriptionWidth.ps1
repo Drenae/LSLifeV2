@@ -1,39 +1,62 @@
-# LSL V2 FR : correctif local de NativeUI (Guad/NativeUI, branche master).
-# Ne modifie pas le jeu ni la DLL installee. A executer sur une copie du depot officiel.
-param(
-    [Parameter(Mandatory = $true)]
-    [string]$NativeUISource
-)
-
+# LSL V2 FR - Patch specifique a Guad/NativeUI 1.9.1.
+# Modifie uniquement FormatDescription() dans une copie locale des sources.
+param([Parameter(Mandatory=$true)][string]$NativeUISource)
 $ErrorActionPreference = 'Stop'
 $source = Join-Path $NativeUISource 'NativeUI\UIMenu.cs'
-if (-not (Test-Path -LiteralPath $source -PathType Leaf)) {
-    throw "Fichier introuvable : $source. Cloner https://github.com/Guad/NativeUI puis transmettre son dossier racine."
-}
-
-$original = [System.IO.File]::ReadAllText($source)
-# LSL V2 FR : les deux limites de texte doivent suivre l'offset du menu.
-$oldWrap = '_descriptionText.Wrap = 400;'
-$newWrap = '_descriptionText.Wrap = 400 + WidthOffset;'
-$oldCount = 'Screen.GetLineCount(descCaption, _descriptionText.Position, _descriptionText.Font, _descriptionText.Scale, 400);'
-$newCount = 'Screen.GetLineCount(descCaption, _descriptionText.Position, _descriptionText.Font, _descriptionText.Scale, 400 + WidthOffset);'
-
-if ($original.Contains($newWrap) -and $original.Contains($newCount)) {
-    Write-Host 'Correctif deja applique ; aucune modification.' -ForegroundColor Yellow
+if (-not (Test-Path -LiteralPath $source)) { throw "Source introuvable : $source" }
+$original = [IO.File]::ReadAllText($source)
+$start = $original.IndexOf('        private string FormatDescription(string input)')
+$end = $original.IndexOf('        #endregion', $start)
+if ($start -lt 0 -or $end -lt 0) { throw 'FormatDescription introuvable : version de NativeUI incompatible.' }
+$oldMethod = $original.Substring($start, $end - $start)
+if ($oldMethod.Contains('LSLV2_DESCRIPTION_PATCH')) {
+    Write-Host 'Correctif deja applique.' -ForegroundColor Yellow
     exit 0
 }
-if (($original.Split(@($oldWrap), [System.StringSplitOptions]::None).Count -ne 2) -or
-    ($original.Split(@($oldCount), [System.StringSplitOptions]::None).Count -ne 2)) {
-    throw 'Version du code source differente : modification annulee pour eviter un patch incorrect.'
+if (-not $oldMethod.Contains('425 + WidthOffset') -or -not $oldMethod.Contains("input.Split(' ')")) {
+    throw 'La methode ne correspond pas a NativeUI 1.9.1. Aucun changement.'
 }
+$newMethod = @'
+        // LSLV2_DESCRIPTION_PATCH : respecte les sauts de ligne GTA et la largeur reelle.
+        private string FormatDescription(string input)
+        {
+            if (String.IsNullOrEmpty(input)) return input;
+            int maxPixelsPerLine = 425 + WidthOffset;
+            var output = new System.Text.StringBuilder();
+            // ~n~ est le saut de ligne GTA ; il ne doit jamais etre mesure comme un mot.
+            string normalized = input.Replace("~n~", "\n").Replace("\r\n", "\n");
+            string[] lines = normalized.Split('\n');
+            for (int lineIndex = 0; lineIndex < lines.Length; lineIndex++)
+            {
+                if (lineIndex > 0) output.Append("\n");
+                int pixels = 0;
+                string[] words = lines[lineIndex].Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (string word in words)
+                {
+                    // Les codes de couleur GTA (~g~, ~r~, ~s~...) ne sont pas visibles.
+                    string visible = System.Text.RegularExpressions.Regex.Replace(word, @"~[^~]*~", "");
+                    int wordPixels = (int)StringMeasurer.MeasureString(visible, (Font)0, 0.35f);
+                    int spacePixels = (int)StringMeasurer.MeasureString(" ");
+                    if (pixels > 0 && pixels + spacePixels + wordPixels > maxPixelsPerLine)
+                    {
+                        output.Append("\n");
+                        pixels = 0;
+                    }
+                    else if (pixels > 0)
+                    {
+                        output.Append(' ');
+                        pixels += spacePixels;
+                    }
+                    output.Append(word);
+                    pixels += wordPixels;
+                }
+            }
+            return output.ToString();
+        }
 
-$patched = $original.Replace($oldWrap, $newWrap).Replace($oldCount, $newCount)
+'@
 $backup = "$source.lslv2.bak"
-if (-not (Test-Path -LiteralPath $backup)) {
-    [System.IO.File]::Copy($source, $backup)
-}
-[System.IO.File]::WriteAllText($source, $patched, (New-Object System.Text.UTF8Encoding($true)))
-Write-Host 'Correctif applique a NativeUI/UIMenu.cs (400 + WidthOffset).' -ForegroundColor Green
-Write-Host "Sauvegarde du source : $backup"
-Write-Host 'Compiler maintenant NativeUI en Release x64 (framework .NET 4.8) depuis Visual Studio.'
-Write-Host 'Avant de tester la DLL reconstruite, sauvegarder scripts\NativeUI.dll et quitter GTA V.'
+if (-not (Test-Path $backup)) { [IO.File]::Copy($source, $backup) }
+$updated = $original.Substring(0, $start) + $newMethod + $original.Substring($end)
+[IO.File]::WriteAllText($source, $updated, (New-Object Text.UTF8Encoding($true)))
+Write-Host 'Correctif NativeUI 1.9.1 applique.' -ForegroundColor Green
