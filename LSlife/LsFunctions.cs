@@ -301,13 +301,14 @@ internal static class LsFunctions
 
 	public static string OrderMenuDesc()
 	{
-		string mWeed = "Cannabis : " + FormatOrderPacks(LSL.NewOrder.weed);
+		// LSL V2 FR : total placé en tête pour éviter la coupure automatique NativeUI.
+		string mBill = "Total : $" + IntToMoney(LSL.NewOrder.Bill);
+		string mWeed = "\nCannabis : " + FormatOrderPacks(LSL.NewOrder.weed);
 		string mCrack = "\nCrack : " + FormatOrderPacks(LSL.NewOrder.crack);
 		string mCoke = "\nCocaïne : " + FormatOrderPacks(LSL.NewOrder.cocaine);
-		string mBill = "\nTotal : $" + IntToMoney(LSL.NewOrder.Bill);
 		string mDebt = "\nDette : $" + IntToMoney(LSL.dealer1Debt);
 		string mLimit = "\nCrédit : $" + IntToMoney(zeeDebtCap());
-		return mWeed + mCrack + mCoke + mBill + mDebt + mLimit;
+		return mBill + mWeed + mCrack + mCoke + mDebt + mLimit;
 	}
 
 	public static void UpdateOrderMenuDesc()
