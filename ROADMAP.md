@@ -129,6 +129,13 @@
 
 **Important :** les compteurs `p*Ounce` et `drugCar*Oz` sont encore exprimés en paquets historiques, les curseurs continuent à sélectionner des **paquets**, et les champs XML restent inchangés. L'affichage métrique n'est pas encore une conversion intégrale du gameplay.
 
+### Correctifs après test en jeu — 19/10/2026
+
+- [x] Contact iFruit visible renommé **Rafael Mendoza** ; le gestionnaire de réponse reconnaît le nouveau nom.
+- [x] Notifications du fournisseur affichées au nom **Rafael Mendoza**, tout en conservant la clé interne `ZEE` pour les portraits et les dictionnaires.
+- [x] Récapitulatif de commande compact (`0g`, `28g`, `1kg 260g`) pour éviter que l'unité `g` se retrouve seule à la ligne dans NativeUI.
+- [ ] Compiler et vérifier en jeu le contact, les notifications, la commande et l'ouverture du menu par téléphone.
+
 ### Deuxième lot — commandes fournisseur (19/10/2026)
 
 - [x] Affichage des quantités de commande et des notifications de livraison en grammes/kilogrammes.
