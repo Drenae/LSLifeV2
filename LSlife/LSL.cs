@@ -1248,12 +1248,12 @@ public class LSL : Script
 		{
 			weedMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
 		}
-		bushWeed = new UIMenuSliderItem("Cannabis $" + LsFunctions.IntToMoney(weed1Price - LsFunctions.Discount(weed1Price)) + "oz");
+		bushWeed = new UIMenuSliderItem("Cannabis (28 g) $" + LsFunctions.IntToMoney(weed1Price - LsFunctions.Discount(weed1Price)));
 		weedMenu.AddItem((UIMenuItem)(object)bushWeed);
 		bushWeed.Maximum = dealer1Weed;
 		bushWeed.Multiplier = 1;
 		weedMenu.AddItem((UIMenuItem)(object)OrderMultipliers);
-		WeedBuy = new UIMenuItem("Commander : " + bushWeed.Value);
+		WeedBuy = new UIMenuItem("Commander : " + LsFunctions.FormatLegacyPacks(bushWeed.Value));
 		weedMenu.AddItem(WeedBuy);
 		bushWeed.OnSliderChanged += LsMenus.onSliderChange;
 		weedMenu.OnItemSelect += LsMenus.onWeedMenuSelect;
@@ -1262,12 +1262,12 @@ public class LSL : Script
 		{
 			crackMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
 		}
-		crack = new UIMenuSliderItem("Crack $" + LsFunctions.IntToMoney(crack1Price - LsFunctions.Discount(crack1Price)) + "oz");
+		crack = new UIMenuSliderItem("Crack (28 g) $" + LsFunctions.IntToMoney(crack1Price - LsFunctions.Discount(crack1Price)));
 		crackMenu.AddItem((UIMenuItem)(object)crack);
 		crack.Maximum = dealer1Crack;
 		crack.Multiplier = 1;
 		crackMenu.AddItem((UIMenuItem)(object)OrderMultipliers);
-		CrackBuy = new UIMenuItem("Commander : " + crack.Value);
+		CrackBuy = new UIMenuItem("Commander : " + LsFunctions.FormatLegacyPacks(crack.Value));
 		crackMenu.AddItem(CrackBuy);
 		crack.OnSliderChanged += LsMenus.onSliderChange;
 		crackMenu.OnItemSelect += LsMenus.onCrackMenuSelect;
@@ -1276,12 +1276,12 @@ public class LSL : Script
 		{
 			cocainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
 		}
-		cocaine = new UIMenuSliderItem("Cocaïne $" + LsFunctions.IntToMoney(cocain1Price - LsFunctions.Discount(cocain1Price)) + "oz");
+		cocaine = new UIMenuSliderItem("Cocaïne (28 g) $" + LsFunctions.IntToMoney(cocain1Price - LsFunctions.Discount(cocain1Price)));
 		cocainMenu.AddItem((UIMenuItem)(object)cocaine);
 		cocaine.Maximum = dealer1Cocain;
 		cocaine.Multiplier = 1;
 		cocainMenu.AddItem((UIMenuItem)(object)OrderMultipliers);
-		CocainBuy = new UIMenuItem("Commander : " + cocaine.Value);
+		CocainBuy = new UIMenuItem("Commander : " + LsFunctions.FormatLegacyPacks(cocaine.Value));
 		cocainMenu.AddItem(CocainBuy);
 		cocaine.OnSliderChanged += LsMenus.onSliderChange;
 		cocainMenu.OnItemSelect += LsMenus.onCocainMenuSelect;
@@ -1334,17 +1334,17 @@ public class LSL : Script
 		takeCocainStash.Multiplier = 1;
 		putCocainStash.OnSliderChanged += LsMenus.onSliderChange;
 		takeCocainStash.OnSliderChanged += LsMenus.onSliderChange;
-		putWeedOzStash = new UIMenuSliderItem("Cannabis (oz)");
+		putWeedOzStash = new UIMenuSliderItem("Cannabis non préparé");
 		stashPutMenu.AddItem((UIMenuItem)(object)putWeedOzStash);
 		putWeedOzStash.Maximum = LsFunctions.pWeedOunce;
 		putWeedOzStash.Multiplier = 1;
 		putWeedOzStash.OnSliderChanged += LsMenus.onSliderChange;
-		putCrackOzStash = new UIMenuSliderItem("Crack (oz)");
+		putCrackOzStash = new UIMenuSliderItem("Crack non préparé");
 		stashPutMenu.AddItem((UIMenuItem)(object)putCrackOzStash);
 		putCrackOzStash.Maximum = LsFunctions.pCrackOunce;
 		putCrackOzStash.Multiplier = 1;
 		putCrackStash.OnSliderChanged += LsMenus.onSliderChange;
-		putCocainOzStash = new UIMenuSliderItem("Cocaïne (oz)");
+		putCocainOzStash = new UIMenuSliderItem("Cocaïne non préparée");
 		stashPutMenu.AddItem((UIMenuItem)(object)putCocainOzStash);
 		putCocainOzStash.Maximum = LsFunctions.pCocaineOunce;
 		putCocainStash.Multiplier = 1;
@@ -1367,13 +1367,13 @@ public class LSL : Script
 		stashTakeMultiplier.OnListChanged += LsMenus.onListChange;
 		InventoryText.Innit();
 		stashMainMenu.FormatDescriptions = true;
-		string mWeed = "Weed. ";
+		string mWeed = "Cannabis. ";
 		string mCrack = "Crack. ";
-		string mCocaine = "Cocaine. ";
-		string mGrams = "Grams of ";
-		string mOunce = "Oz's of ";
-		string mSell = "Ready to sell on the streets or give to a dealer.";
-		string mStash = "Must be deposited in a Stash house before it can be sold.";
+		string mCocaine = "Cocaïne. ";
+		string mGrams = "Grammes de ";
+		string mOunce = "Produit non préparé : ";
+		string mSell = "Prêt à vendre ou à confier à un dealer.";
+		string mStash = "À déposer dans une planque avant la vente.";
 		((UIMenuItem)takeWeedStash).Description = mGrams + mWeed + mSell;
 		((UIMenuItem)takeCrackStash).Description = mGrams + mCrack + mSell;
 		((UIMenuItem)takeCocainStash).Description = mGrams + mCocaine + mSell;
@@ -1454,27 +1454,27 @@ public class LSL : Script
 		takeCocainVeh.Multiplier = 1;
 		putCocainVeh.OnSliderChanged += LsMenus.onSliderChange;
 		takeCocainVeh.OnSliderChanged += LsMenus.onSliderChange;
-		putWeedOzVeh = new UIMenuSliderItem("Cannabis (oz) ~g~" + LsFunctions.pWeedOunce + "~s~oz");
+		putWeedOzVeh = new UIMenuSliderItem("Cannabis non préparé " + LsFunctions.FormatLegacyPacks(LsFunctions.pWeedOunce));
 		vehStashPutMenu.AddItem((UIMenuItem)(object)putWeedOzVeh);
 		putWeedOzVeh.Maximum = LsFunctions.pWeedOunce;
 		putWeedOzVeh.Multiplier = 1;
-		takeWeedOzVeh = new UIMenuSliderItem("Cannabis (oz)");
+		takeWeedOzVeh = new UIMenuSliderItem("Cannabis non préparé");
 		vehStashTakeMenu.AddItem((UIMenuItem)(object)takeWeedOzVeh);
 		takeWeedOzVeh.Maximum = 0;
 		takeWeedOzVeh.Multiplier = 1;
 		putWeedOzVeh.OnSliderChanged += LsMenus.onSliderChange;
 		takeWeedOzVeh.OnSliderChanged += LsMenus.onSliderChange;
-		putCrackOzVeh = new UIMenuSliderItem("Crack (oz) ~g~" + LsFunctions.pCrackOunce + "~s~oz");
+		putCrackOzVeh = new UIMenuSliderItem("Crack non préparé " + LsFunctions.FormatLegacyPacks(LsFunctions.pCrackOunce));
 		vehStashPutMenu.AddItem((UIMenuItem)(object)putCrackOzVeh);
 		putCrackOzVeh.Maximum = LsFunctions.pCrackOunce;
 		putCrackOzVeh.Multiplier = 1;
-		takeCrackOzVeh = new UIMenuSliderItem("Crack (oz)");
+		takeCrackOzVeh = new UIMenuSliderItem("Crack non préparé");
 		vehStashTakeMenu.AddItem((UIMenuItem)(object)takeCrackOzVeh);
 		takeCrackOzVeh.Maximum = 0;
 		takeCrackOzVeh.Multiplier = 1;
 		putCrackOzVeh.OnSliderChanged += LsMenus.onSliderChange;
 		takeCrackOzVeh.OnSliderChanged += LsMenus.onSliderChange;
-		putCocainOzVeh = new UIMenuSliderItem("Cocaïne (oz) ~g~" + LsFunctions.pCocaineOunce + "~s~oz");
+		putCocainOzVeh = new UIMenuSliderItem("Cocaïne non préparée " + LsFunctions.FormatLegacyPacks(LsFunctions.pCocaineOunce));
 		vehStashPutMenu.AddItem((UIMenuItem)(object)putCocainOzVeh);
 		putCocainOzVeh.Maximum = LsFunctions.pCocaineOunce;
 		putCocainOzVeh.Multiplier = 1;
