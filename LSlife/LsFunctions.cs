@@ -287,9 +287,9 @@ internal static class LsFunctions
 
 	public static string OrderMenuDesc()
 	{
-		string mWeed = "Cannabis : ~g~" + LSL.NewOrder.weed + "~s~oz";
-		string mCrack = "\nCrack : ~g~" + LSL.NewOrder.crack + "~s~oz";
-		string mCoke = "\nCocaïne : ~g~" + LSL.NewOrder.cocaine + "~s~oz";
+		string mWeed = "Cannabis : " + FormatLegacyPacks(LSL.NewOrder.weed);
+		string mCrack = "\nCrack : " + FormatLegacyPacks(LSL.NewOrder.crack);
+		string mCoke = "\nCocaïne : " + FormatLegacyPacks(LSL.NewOrder.cocaine);
 		string mBill = "\nFacture : $" + IntToMoney(LSL.NewOrder.Bill);
 		string mDebt = "\nDette : $" + IntToMoney(LSL.dealer1Debt);
 		string mLimit = "\nCrédit : $" + IntToMoney(zeeDebtCap());
@@ -1245,7 +1245,7 @@ internal static class LsFunctions
 				crackMoney -= (float)(finalCrack * dCrack);
 				cocainMoney -= (float)(finalCocain * dCocaine);
 				LSL.dealer1Money += (int)weedMoney + (int)crackMoney + (int)cocainMoney;
-				TextMsg("ZEE", "Livraison", "Cannabis : " + finalWeed + "oz, Crack : " + finalCrack + "oz, Cocaïne : " + finalCocain + "oz.");
+				TextMsg("ZEE", "Livraison", "Cannabis : " + FormatLegacyPacks(finalWeed) + ", Crack : " + FormatLegacyPacks(finalCrack) + ", Cocaïne : " + FormatLegacyPacks(finalCocain) + ".");
 				LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
 				UpdateSave();
 			}
@@ -1300,7 +1300,7 @@ internal static class LsFunctions
 				crackMoney2 -= (float)(finalCrack2 * dCrack2);
 				cocainMoney2 -= (float)(finalCocain2 * dCocaine2);
 				LSL.dealer1Money += (int)weedMoney2 + (int)crackMoney2 + (int)cocainMoney2;
-				TextMsg("ZEE", "Livraison", "Cannabis : " + finalWeed2 + "oz, Crack : " + finalCrack2 + "oz, Cocaïne : " + finalCocain2 + "oz.");
+				TextMsg("ZEE", "Livraison", "Cannabis : " + FormatLegacyPacks(finalWeed2) + ", Crack : " + FormatLegacyPacks(finalCrack2) + ", Cocaïne : " + FormatLegacyPacks(finalCocain2) + ".");
 				if (LSL.DEBUG)
 				{
 					UI.Notify("Cannabis : " + finalWeed2 + " Crack : " + finalCrack2 + " Cocaïne : " + finalCocain2);
