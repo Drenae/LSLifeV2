@@ -304,7 +304,7 @@ internal static class LsFunctions
 		string mWeed = "Cannabis : " + FormatOrderPacks(LSL.NewOrder.weed);
 		string mCrack = "\nCrack : " + FormatOrderPacks(LSL.NewOrder.crack);
 		string mCoke = "\nCocaïne : " + FormatOrderPacks(LSL.NewOrder.cocaine);
-		string mBill = "\nFacture : $" + IntToMoney(LSL.NewOrder.Bill);
+		string mBill = "\nTotal : $" + IntToMoney(LSL.NewOrder.Bill);
 		string mDebt = "\nDette : $" + IntToMoney(LSL.dealer1Debt);
 		string mLimit = "\nCrédit : $" + IntToMoney(zeeDebtCap());
 		return mWeed + mCrack + mCoke + mBill + mDebt + mLimit;
@@ -2014,9 +2014,10 @@ internal static class LsFunctions
 
 	public static string IntToMoney(int _money)
 	{
-		StringBuilder stringBuilder = new StringBuilder("~g~" + _money.ToString("#,##0") + "~s~");
-		stringBuilder.Replace(",", "~s~,~g~");
-		return stringBuilder.ToString();
+		// LSL V2 FR : espace ASCII entre milliers, sans balise GTA insérée dans le nombre.
+		// Culture invariante pour éviter les espaces insécables affichés comme des carrés.
+		string amount = _money.ToString("#,##0", System.Globalization.CultureInfo.InvariantCulture).Replace(',', ' ');
+		return "~g~" + amount + "~s~";
 	}
 
 	public static bool zeeClose()
