@@ -301,14 +301,15 @@ internal static class LsFunctions
 
 	public static string OrderMenuDesc()
 	{
-		// LSL V2 FR : total placé en tête pour éviter la coupure automatique NativeUI.
-		string mBill = "Total : $" + IntToMoney(LSL.NewOrder.Bill);
-		string mWeed = "\nCannabis : " + FormatOrderPacks(LSL.NewOrder.weed);
-		string mCrack = "\nCrack : " + FormatOrderPacks(LSL.NewOrder.crack);
-		string mCoke = "\nCocaïne : " + FormatOrderPacks(LSL.NewOrder.cocaine);
-		string mDebt = "\nDette : $" + IntToMoney(LSL.dealer1Debt);
-		string mLimit = "\nCrédit : $" + IntToMoney(zeeDebtCap());
-		return mBill + mWeed + mCrack + mCoke + mDebt + mLimit;
+		// LSL V2 FR : NativeUI gère les sauts de ligne via ~n~ et non via \n.
+		// Chaque ligne réinitialise la couleur ; la valeur seule est en vert.
+		string mBill = "~s~Total : $" + IntToMoney(LSL.NewOrder.Bill);
+		string mWeed = "~n~~s~Cannabis : " + FormatOrderPacks(LSL.NewOrder.weed);
+		string mCrack = "~n~~s~Crack : " + FormatOrderPacks(LSL.NewOrder.crack);
+		string mCoke = "~n~~s~Cocaïne : " + FormatOrderPacks(LSL.NewOrder.cocaine);
+		string mDebt = "~n~~s~Dette : $" + IntToMoney(LSL.dealer1Debt);
+		string mLimit = "~n~~s~Crédit : $" + IntToMoney(zeeDebtCap());
+		return mBill + mWeed + mCrack + mCoke + mDebt + mLimit + "~s~";
 	}
 
 	public static void UpdateOrderMenuDesc()
