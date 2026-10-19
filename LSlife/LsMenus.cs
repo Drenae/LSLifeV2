@@ -367,7 +367,7 @@ internal static class LsMenus
 			UIMenuSliderItem bushWeed = LSL.bushWeed;
 			bushWeed.Maximum -= LSL.bushWeed.Value;
 			LSL.dealer1Weed = LSL.bushWeed.Maximum;
-			LSL.WeedBuy.Text = "Commander ~g~" + LSL.bushWeed.Value + " ~s~pour $" + LsFunctions.IntToMoney(total);
+			LSL.WeedBuy.Text = "Commander ~g~" + LsFunctions.FormatLegacyPacks(LSL.bushWeed.Value, "~g~") + " ~s~pour $" + LsFunctions.IntToMoney(total);
 			LSL.PlaceOrder.Text = "Passer commande : $" + LsFunctions.IntToMoney(LSL.NewOrder.Bill);
 			LsFunctions.DbugString("Commande de cannabis modifiée");
 			LsFunctions.UpdateOrderMenuDesc();
@@ -383,7 +383,7 @@ internal static class LsMenus
 			UIMenuSliderItem crack = LSL.crack;
 			crack.Maximum -= LSL.crack.Value;
 			LSL.dealer1Crack = LSL.crack.Maximum;
-			LSL.CrackBuy.Text = "Commander ~g~" + LSL.crack.Value + " ~w~pour $~g~" + LsFunctions.IntToMoney(total);
+			LSL.CrackBuy.Text = "Commander ~g~" + LsFunctions.FormatLegacyPacks(LSL.crack.Value, "~g~") + " ~w~pour $~g~" + LsFunctions.IntToMoney(total);
 			LSL.PlaceOrder.Text = "Passer commande : $" + LsFunctions.IntToMoney(LSL.NewOrder.Bill);
 			LsFunctions.DbugString("Commande de crack modifiée");
 			LsFunctions.UpdateOrderMenuDesc();
@@ -399,7 +399,7 @@ internal static class LsMenus
 			UIMenuSliderItem cocaine = LSL.cocaine;
 			cocaine.Maximum -= LSL.cocaine.Value;
 			LSL.dealer1Cocain = LSL.cocaine.Maximum;
-			LSL.CocainBuy.Text = "Commander ~g~" + LSL.cocaine.Value + " ~w~pour $~g~" + LsFunctions.IntToMoney(total);
+			LSL.CocainBuy.Text = "Commander ~g~" + LsFunctions.FormatLegacyPacks(LSL.cocaine.Value, "~g~") + " ~w~pour $~g~" + LsFunctions.IntToMoney(total);
 			LSL.PlaceOrder.Text = "Passer commande : $" + LsFunctions.IntToMoney(LSL.NewOrder.Bill);
 			LsFunctions.DbugString("Commande de cocaïne modifiée");
 			LsFunctions.UpdateOrderMenuDesc();
@@ -1114,17 +1114,17 @@ internal static class LsMenus
 		else if (sender == LSL.bushWeed)
 		{
 			int total = LSL.bushWeed.Value * (LSL.weed1Price - LsFunctions.Discount(LSL.weed1Price));
-			LSL.WeedBuy.Text = "Commander ~g~" + LSL.bushWeed.Value + " ~s~pour $" + LsFunctions.IntToMoney(total);
+			LSL.WeedBuy.Text = "Commander ~g~" + LsFunctions.FormatLegacyPacks(LSL.bushWeed.Value, "~g~") + " ~s~pour $" + LsFunctions.IntToMoney(total);
 		}
 		else if (sender == LSL.crack)
 		{
 			int total2 = LSL.crack.Value * (LSL.crack1Price - LsFunctions.Discount(LSL.crack1Price));
-			LSL.CrackBuy.Text = "Commander ~g~" + LSL.crack.Value + " ~s~pour $" + LsFunctions.IntToMoney(total2);
+			LSL.CrackBuy.Text = "Commander ~g~" + LsFunctions.FormatLegacyPacks(LSL.crack.Value, "~g~") + " ~s~pour $" + LsFunctions.IntToMoney(total2);
 		}
 		else if (sender == LSL.cocaine)
 		{
 			int total3 = LSL.cocaine.Value * (LSL.cocain1Price - LsFunctions.Discount(LSL.cocain1Price));
-			LSL.CocainBuy.Text = "Commander ~g~" + LSL.cocaine.Value + " ~s~pour $" + LsFunctions.IntToMoney(total3);
+			LSL.CocainBuy.Text = "Commander ~g~" + LsFunctions.FormatLegacyPacks(LSL.cocaine.Value, "~g~") + " ~s~pour $" + LsFunctions.IntToMoney(total3);
 		}
 	}
 
