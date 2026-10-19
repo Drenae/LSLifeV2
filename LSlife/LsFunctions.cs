@@ -287,9 +287,9 @@ internal static class LsFunctions
 
 	public static string OrderMenuDesc()
 	{
-		string mWeed = "Cannabis : " + FormatLegacyPacks(LSL.NewOrder.weed);
-		string mCrack = "\nCrack : " + FormatLegacyPacks(LSL.NewOrder.crack);
-		string mCoke = "\nCocaïne : " + FormatLegacyPacks(LSL.NewOrder.cocaine);
+		string mWeed = "Cannabis : " + FormatLegacyPacks(LSL.NewOrder.weed, "~g~");
+		string mCrack = "\nCrack : " + FormatLegacyPacks(LSL.NewOrder.crack, "~g~");
+		string mCoke = "\nCocaïne : " + FormatLegacyPacks(LSL.NewOrder.cocaine, "~g~");
 		string mBill = "\nFacture : $" + IntToMoney(LSL.NewOrder.Bill);
 		string mDebt = "\nDette : $" + IntToMoney(LSL.dealer1Debt);
 		string mLimit = "\nCrédit : $" + IntToMoney(zeeDebtCap());
@@ -639,7 +639,7 @@ internal static class LsFunctions
 		Game.PlaySound("Text_Arrive_Tone", "Phone_SoundSet_Default");
 		Function.Call((Hash)2316831480196236324L, (InputArgument)("CELL_EMAIL_BCON"));
 		Function.Call((Hash)7789129354908300458L, (InputArgument)(_msg));
-		Function.Call((Hash)2075484565200204495L, (InputArgument)(HeadShotHandler.headShots[_name].Texture), (InputArgument)(HeadShotHandler.headShots[_name].Texture), (InputArgument)(true), (InputArgument)(1), (InputArgument)(_title), (InputArgument)(_name));
+		Function.Call((Hash)2075484565200204495L, (InputArgument)(HeadShotHandler.headShots[_name].Texture), (InputArgument)(HeadShotHandler.headShots[_name].Texture), (InputArgument)(true), (InputArgument)(1), (InputArgument)(_title), (InputArgument)(_name == "ZEE" ? "Rafael Mendoza" : _name));
 		Script.Yield();
 	}
 
@@ -666,7 +666,7 @@ internal static class LsFunctions
 		Game.PlaySound("Text_Arrive_Tone", "Phone_SoundSet_Default");
 		Function.Call((Hash)2316831480196236324L, (InputArgument)("CELL_EMAIL_BCON"));
 		Function.Call((Hash)7789129354908300458L, (InputArgument)(_msg));
-		Function.Call((Hash)2075484565200204495L, (InputArgument)(HeadShotHandler.headShots[_name].Texture), (InputArgument)(HeadShotHandler.headShots[_name].Texture), (InputArgument)(true), (InputArgument)(1), (InputArgument)(_title), (InputArgument)(_name));
+		Function.Call((Hash)2075484565200204495L, (InputArgument)(HeadShotHandler.headShots[_name].Texture), (InputArgument)(HeadShotHandler.headShots[_name].Texture), (InputArgument)(true), (InputArgument)(1), (InputArgument)(_title), (InputArgument)(_name == "ZEE" ? "Rafael Mendoza" : _name));
 		Script.Yield();
 	}
 
@@ -1553,7 +1553,7 @@ internal static class LsFunctions
 
 	public static void ContactAnswered(iFruitContact contact)
 	{
-		if (contact.Name == "Zee" && LSL.LsMenuPool != null)
+		if (contact.Name == "Rafael Mendoza" && LSL.LsMenuPool != null)
 		{
 			if (LSL.isDealing)
 			{
