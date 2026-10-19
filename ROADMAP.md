@@ -129,6 +129,12 @@
 
 **Important :** les compteurs `p*Ounce` et `drugCar*Oz` sont encore exprimés en paquets historiques, les curseurs continuent à sélectionner des **paquets**, et les champs XML restent inchangés. L'affichage métrique n'est pas encore une conversion intégrale du gameplay.
 
+### Ajustements NativeUI — 19/10/2026
+
+- [x] `IntToMoney()` : regroupement des milliers avec espaces ASCII standards, sans insertion de balises de couleur entre les chiffres (évite les caractères carrés).
+- [x] Récapitulatif des commandes : libellé `Total` plus court que `Facture` pour limiter le retour à la ligne.
+- [ ] Compiler et vérifier en jeu les montants de 1 000 $ et plus, et la description des commandes.
+
 ### Correctifs après test en jeu — 19/10/2026
 
 - [x] Contact iFruit visible renommé **Rafael Mendoza** ; le gestionnaire de réponse reconnaît le nouveau nom.
