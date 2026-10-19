@@ -1152,6 +1152,8 @@ public class LSL : Script
 		startDealing.AddItem(StartDeal);
 		startDealing.OnItemSelect += LsMenus.OnstartDealSelect;
 		OrderDrugs = LsMenuPool.AddSubMenu(zeeMenu, "Commander de la drogue");
+		// LSL V2 FR : élargir ce menu NativeUI pour conserver les libellés complets.
+		OrderDrugs.SetMenuWidthOffset(140);
 		if (UseSprites)
 		{
 			OrderDrugs.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
@@ -1244,6 +1246,8 @@ public class LSL : Script
 		OrderMultipliers = new UIMenuListItem("Multiplier", (List<object>)multiplier, 0);
 		OrderMultipliers.OnListChanged += DMultiplier_OnListChanged;
 		weedMenu = LsMenuPool.AddSubMenu(OrderDrugs, "Cannabis");
+		// LSL V2 FR : élargir ce menu NativeUI pour conserver les libellés complets.
+		weedMenu.SetMenuWidthOffset(140);
 		if (UseSprites)
 		{
 			weedMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
@@ -1258,6 +1262,8 @@ public class LSL : Script
 		bushWeed.OnSliderChanged += LsMenus.onSliderChange;
 		weedMenu.OnItemSelect += LsMenus.onWeedMenuSelect;
 		crackMenu = LsMenuPool.AddSubMenu(OrderDrugs, "Crack");
+		// LSL V2 FR : élargir ce menu NativeUI pour conserver les libellés complets.
+		crackMenu.SetMenuWidthOffset(140);
 		if (UseSprites)
 		{
 			crackMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
@@ -1272,6 +1278,8 @@ public class LSL : Script
 		crack.OnSliderChanged += LsMenus.onSliderChange;
 		crackMenu.OnItemSelect += LsMenus.onCrackMenuSelect;
 		cocainMenu = LsMenuPool.AddSubMenu(OrderDrugs, "Cocaïne");
+		// LSL V2 FR : élargir ce menu NativeUI pour conserver les libellés complets.
+		cocainMenu.SetMenuWidthOffset(140);
 		if (UseSprites)
 		{
 			cocainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
