@@ -362,7 +362,7 @@ internal static class LsMenus
 	{
 		if (item == LSL.WeedBuy && LSL.dealer1Weed > 0 && LSL.bushWeed.Value > 0)
 		{
-			int total = LSL.bushWeed.Value * (LSL.weed1Price - LsFunctions.Discount(LSL.weed1Price));
+			int total = LsFunctions.PriceForGrams(LSL.bushWeed.Value, LSL.weed1Price - LsFunctions.Discount(LSL.weed1Price));
 			LSL.NewOrder.OrderWeed(LSL.bushWeed.Value, total);
 			UIMenuSliderItem bushWeed = LSL.bushWeed;
 			bushWeed.Maximum -= LSL.bushWeed.Value;
@@ -378,7 +378,7 @@ internal static class LsMenus
 	{
 		if (item == LSL.CrackBuy && LSL.dealer1Crack > 0 && LSL.crack.Value > 0)
 		{
-			int total = LSL.crack.Value * (LSL.crack1Price - LsFunctions.Discount(LSL.crack1Price));
+			int total = LsFunctions.PriceForGrams(LSL.crack.Value, LSL.crack1Price - LsFunctions.Discount(LSL.crack1Price));
 			LSL.NewOrder.OrderCrack(LSL.crack.Value, total);
 			UIMenuSliderItem crack = LSL.crack;
 			crack.Maximum -= LSL.crack.Value;
@@ -394,7 +394,7 @@ internal static class LsMenus
 	{
 		if (item == LSL.CocainBuy && LSL.dealer1Cocain > 0)
 		{
-			int total = LSL.cocaine.Value * (LSL.cocain1Price - LsFunctions.Discount(LSL.cocain1Price));
+			int total = LsFunctions.PriceForGrams(LSL.cocaine.Value, LSL.cocain1Price - LsFunctions.Discount(LSL.cocain1Price));
 			LSL.NewOrder.OrderCocaine(LSL.cocaine.Value, total);
 			UIMenuSliderItem cocaine = LSL.cocaine;
 			cocaine.Maximum -= LSL.cocaine.Value;
@@ -1113,17 +1113,17 @@ internal static class LsMenus
 		}
 		else if (sender == LSL.bushWeed)
 		{
-			int total = LSL.bushWeed.Value * (LSL.weed1Price - LsFunctions.Discount(LSL.weed1Price));
+			int total = LsFunctions.PriceForGrams(LSL.bushWeed.Value, LSL.weed1Price - LsFunctions.Discount(LSL.weed1Price));
 			LSL.WeedBuy.Text = "Commander ~g~" + LsFunctions.FormatMetric(LSL.bushWeed.Value, "~g~") + " ~s~pour $" + LsFunctions.IntToMoney(total);
 		}
 		else if (sender == LSL.crack)
 		{
-			int total2 = LSL.crack.Value * (LSL.crack1Price - LsFunctions.Discount(LSL.crack1Price));
+			int total2 = LsFunctions.PriceForGrams(LSL.crack.Value, LSL.crack1Price - LsFunctions.Discount(LSL.crack1Price));
 			LSL.CrackBuy.Text = "Commander ~g~" + LsFunctions.FormatMetric(LSL.crack.Value, "~g~") + " ~s~pour $" + LsFunctions.IntToMoney(total2);
 		}
 		else if (sender == LSL.cocaine)
 		{
-			int total3 = LSL.cocaine.Value * (LSL.cocain1Price - LsFunctions.Discount(LSL.cocain1Price));
+			int total3 = LsFunctions.PriceForGrams(LSL.cocaine.Value, LSL.cocain1Price - LsFunctions.Discount(LSL.cocain1Price));
 			LSL.CocainBuy.Text = "Commander ~g~" + LsFunctions.FormatMetric(LSL.cocaine.Value, "~g~") + " ~s~pour $" + LsFunctions.IntToMoney(total3);
 		}
 	}
