@@ -93,7 +93,7 @@ internal static class LsMenus
 			if (LSL.wepDealer == null)
 			{
 				sender.Visible = !sender.Visible;
-				LSL.wepDealer = new Dealer(Model.op_Implicit((PedHash)(-412008429)), ((Entity)Game.Player.Character).Position + ((Entity)Game.Player.Character).ForwardVector * 2f, Model.op_Implicit("INGOT"), LSL.playerGroup);
+				LSL.wepDealer = new Dealer(new Model((PedHash)(-412008429)), ((Entity)Game.Player.Character).Position + ((Entity)Game.Player.Character).ForwardVector * 2f, new Model("INGOT"), LSL.playerGroup);
 				if ((Entity)(object)LSL.wepDealer.ped != (Entity)null)
 				{
 					LsFunctions.TextMsg("ZEE", LSL.wepDealer.ped, "Work", "Sending someone to meet you.");
