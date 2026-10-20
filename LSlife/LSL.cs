@@ -965,9 +965,9 @@ public class LSL : Script
 						int.TryParse(e.Value, out number);
 						PlayerInventory.Add("Weed", number);
 					}
-					if (e.Name == "weedOz")
+					if (e.Name == "weedGrams")
 					{
-						int.TryParse(e.Value, out LsFunctions.pWeedOunce);
+						int.TryParse(e.Value, out LsFunctions.pWeedGrams);
 						foundOz = true;
 					}
 					if (e.Name == "crack")
@@ -975,9 +975,9 @@ public class LSL : Script
 						int.TryParse(e.Value, out number);
 						PlayerInventory.Add("Crack", number);
 					}
-					if (e.Name == "crackOz")
+					if (e.Name == "crackGrams")
 					{
-						int.TryParse(e.Value, out LsFunctions.pCrackOunce);
+						int.TryParse(e.Value, out LsFunctions.pCrackGrams);
 						foundOz = true;
 					}
 					if (e.Name == "cocain")
@@ -985,9 +985,9 @@ public class LSL : Script
 						int.TryParse(e.Value, out number);
 						PlayerInventory.Add("Cocaine", number);
 					}
-					if (e.Name == "cocaineOz")
+					if (e.Name == "cocaineGrams")
 					{
-						int.TryParse(e.Value, out LsFunctions.pCocaineOunce);
+						int.TryParse(e.Value, out LsFunctions.pCocaineGrams);
 						foundOz = true;
 					}
 					if (e.Name == "armour")
@@ -1003,9 +1003,9 @@ public class LSL : Script
 				}
 				if (!foundOz)
 				{
-					element.Add(new XElement("weedOz", LsFunctions.pWeedOunce.ToString()));
-					element.Add(new XElement("crackOz", LsFunctions.pCrackOunce.ToString()));
-					element.Add(new XElement("cocaineOz", LsFunctions.pCocaineOunce.ToString()));
+					element.Add(new XElement("weedGrams", LsFunctions.pWeedGrams.ToString()));
+					element.Add(new XElement("crackGrams", LsFunctions.pCrackGrams.ToString()));
+					element.Add(new XElement("cocaineGrams", LsFunctions.pCocaineGrams.ToString()));
 					LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
 				}
 			}
@@ -1257,7 +1257,7 @@ public class LSL : Script
 		bushWeed.Maximum = dealer1Weed;
 		bushWeed.Multiplier = 1;
 		weedMenu.AddItem((UIMenuItem)(object)OrderMultipliers);
-		WeedBuy = new UIMenuItem("Commander : " + LsFunctions.FormatLegacyPacks(bushWeed.Value));
+		WeedBuy = new UIMenuItem("Commander : " + LsFunctions.FormatMetric(bushWeed.Value));
 		weedMenu.AddItem(WeedBuy);
 		bushWeed.OnSliderChanged += LsMenus.onSliderChange;
 		weedMenu.OnItemSelect += LsMenus.onWeedMenuSelect;
@@ -1273,7 +1273,7 @@ public class LSL : Script
 		crack.Maximum = dealer1Crack;
 		crack.Multiplier = 1;
 		crackMenu.AddItem((UIMenuItem)(object)OrderMultipliers);
-		CrackBuy = new UIMenuItem("Commander : " + LsFunctions.FormatLegacyPacks(crack.Value));
+		CrackBuy = new UIMenuItem("Commander : " + LsFunctions.FormatMetric(crack.Value));
 		crackMenu.AddItem(CrackBuy);
 		crack.OnSliderChanged += LsMenus.onSliderChange;
 		crackMenu.OnItemSelect += LsMenus.onCrackMenuSelect;
@@ -1289,7 +1289,7 @@ public class LSL : Script
 		cocaine.Maximum = dealer1Cocain;
 		cocaine.Multiplier = 1;
 		cocainMenu.AddItem((UIMenuItem)(object)OrderMultipliers);
-		CocainBuy = new UIMenuItem("Commander : " + LsFunctions.FormatLegacyPacks(cocaine.Value));
+		CocainBuy = new UIMenuItem("Commander : " + LsFunctions.FormatMetric(cocaine.Value));
 		cocainMenu.AddItem(CocainBuy);
 		cocaine.OnSliderChanged += LsMenus.onSliderChange;
 		cocainMenu.OnItemSelect += LsMenus.onCocainMenuSelect;
@@ -1344,17 +1344,17 @@ public class LSL : Script
 		takeCocainStash.OnSliderChanged += LsMenus.onSliderChange;
 		putWeedOzStash = new UIMenuSliderItem("Cannabis non préparé");
 		stashPutMenu.AddItem((UIMenuItem)(object)putWeedOzStash);
-		putWeedOzStash.Maximum = LsFunctions.pWeedOunce;
+		putWeedOzStash.Maximum = LsFunctions.pWeedGrams;
 		putWeedOzStash.Multiplier = 1;
 		putWeedOzStash.OnSliderChanged += LsMenus.onSliderChange;
 		putCrackOzStash = new UIMenuSliderItem("Crack non préparé");
 		stashPutMenu.AddItem((UIMenuItem)(object)putCrackOzStash);
-		putCrackOzStash.Maximum = LsFunctions.pCrackOunce;
+		putCrackOzStash.Maximum = LsFunctions.pCrackGrams;
 		putCrackOzStash.Multiplier = 1;
 		putCrackStash.OnSliderChanged += LsMenus.onSliderChange;
 		putCocainOzStash = new UIMenuSliderItem("Cocaïne non préparée");
 		stashPutMenu.AddItem((UIMenuItem)(object)putCocainOzStash);
-		putCocainOzStash.Maximum = LsFunctions.pCocaineOunce;
+		putCocainOzStash.Maximum = LsFunctions.pCocaineGrams;
 		putCocainStash.Multiplier = 1;
 		putCocainStash.OnSliderChanged += LsMenus.onSliderChange;
 		putMoneyStash = new UIMenuSliderItem("Argent $");
@@ -1462,9 +1462,9 @@ public class LSL : Script
 		takeCocainVeh.Multiplier = 1;
 		putCocainVeh.OnSliderChanged += LsMenus.onSliderChange;
 		takeCocainVeh.OnSliderChanged += LsMenus.onSliderChange;
-		putWeedOzVeh = new UIMenuSliderItem("Cannabis non préparé " + LsFunctions.FormatLegacyPacks(LsFunctions.pWeedOunce));
+		putWeedOzVeh = new UIMenuSliderItem("Cannabis non préparé " + LsFunctions.FormatMetric(LsFunctions.pWeedGrams));
 		vehStashPutMenu.AddItem((UIMenuItem)(object)putWeedOzVeh);
-		putWeedOzVeh.Maximum = LsFunctions.pWeedOunce;
+		putWeedOzVeh.Maximum = LsFunctions.pWeedGrams;
 		putWeedOzVeh.Multiplier = 1;
 		takeWeedOzVeh = new UIMenuSliderItem("Cannabis non préparé");
 		vehStashTakeMenu.AddItem((UIMenuItem)(object)takeWeedOzVeh);
@@ -1472,9 +1472,9 @@ public class LSL : Script
 		takeWeedOzVeh.Multiplier = 1;
 		putWeedOzVeh.OnSliderChanged += LsMenus.onSliderChange;
 		takeWeedOzVeh.OnSliderChanged += LsMenus.onSliderChange;
-		putCrackOzVeh = new UIMenuSliderItem("Crack non préparé " + LsFunctions.FormatLegacyPacks(LsFunctions.pCrackOunce));
+		putCrackOzVeh = new UIMenuSliderItem("Crack non préparé " + LsFunctions.FormatMetric(LsFunctions.pCrackGrams));
 		vehStashPutMenu.AddItem((UIMenuItem)(object)putCrackOzVeh);
-		putCrackOzVeh.Maximum = LsFunctions.pCrackOunce;
+		putCrackOzVeh.Maximum = LsFunctions.pCrackGrams;
 		putCrackOzVeh.Multiplier = 1;
 		takeCrackOzVeh = new UIMenuSliderItem("Crack non préparé");
 		vehStashTakeMenu.AddItem((UIMenuItem)(object)takeCrackOzVeh);
@@ -1482,9 +1482,9 @@ public class LSL : Script
 		takeCrackOzVeh.Multiplier = 1;
 		putCrackOzVeh.OnSliderChanged += LsMenus.onSliderChange;
 		takeCrackOzVeh.OnSliderChanged += LsMenus.onSliderChange;
-		putCocainOzVeh = new UIMenuSliderItem("Cocaïne non préparée " + LsFunctions.FormatLegacyPacks(LsFunctions.pCocaineOunce));
+		putCocainOzVeh = new UIMenuSliderItem("Cocaïne non préparée " + LsFunctions.FormatMetric(LsFunctions.pCocaineGrams));
 		vehStashPutMenu.AddItem((UIMenuItem)(object)putCocainOzVeh);
-		putCocainOzVeh.Maximum = LsFunctions.pCocaineOunce;
+		putCocainOzVeh.Maximum = LsFunctions.pCocaineGrams;
 		putCocainOzVeh.Multiplier = 1;
 		takeCocainOzVeh = new UIMenuSliderItem("Cocaïne");
 		vehStashTakeMenu.AddItem((UIMenuItem)(object)takeCocainOzVeh);
@@ -2779,10 +2779,10 @@ public class LSL : Script
 				}
 				if ((Entity)(object)dKiller2 != (Entity)null && dKiller2.CurrentPedGroup == player.Character.CurrentPedGroup)
 				{
-					int drugCap = LsFunctions.GramsPerLegacyPack * ((int)areas[areaIndex].GangPresance + 1);
-					if (drugCap < LsFunctions.GramsPerLegacyPack)
+					int drugCap = 28 * ((int)areas[areaIndex].GangPresance + 1);
+					if (drugCap < 28)
 					{
-						drugCap = LsFunctions.GramsPerLegacyPack;
+						drugCap = 28;
 					}
 					int moneyCap = 1000 * ((int)areas[areaIndex].GangPresance + 1);
 					if (moneyCap < 1000)
