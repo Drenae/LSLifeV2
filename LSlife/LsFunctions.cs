@@ -289,7 +289,7 @@ internal static class LsFunctions
 	// La quantité reste stockée en paquets historiques de 28 g.
 	public static string FormatOrderPacks(int packs)
 	{
-		int grams = checked(packs * 28);
+		int grams = LegacyPacksToGrams(packs);
 		if (grams < 1000)
 		{
 			return "~g~" + grams + "g";
@@ -1693,7 +1693,7 @@ internal static class LsFunctions
 			ped2.Money -= price;
 			LSL.PlayerInventory[c.Drug.Name] -= c.amount;
 			PlayTheSound();
-			UI.Notify("Vendu : " + c.Drug.Name + " " + GramsToOz(c.amount) + ", il te reste " + GramsToOz(LSL.PlayerInventory[c.Drug.Name]) + ". Gain : ~g~" + repEarned + " ~s~réputation, réputation totale ~g~" + LSL.areas[LSL.areaIndex].Reputation + "~s~ dans " + LSL.areas[LSL.areaIndex].Name);
+			UI.Notify("Vendu : " + c.Drug.Name + " " + FormatMetric(c.amount) + ", il te reste " + FormatMetric(LSL.PlayerInventory[c.Drug.Name]) + ". Gain : ~g~" + repEarned + " ~s~réputation, réputation totale ~g~" + LSL.areas[LSL.areaIndex].Reputation + "~s~ dans " + LSL.areas[LSL.areaIndex].Name);
 			Function.Call(unchecked((Hash)(-8213159594590722974L)), (InputArgument)(p), (InputArgument)("GENERIC_THANKS"), (InputArgument)("SPEECH_PARAMS_STANDARD"), (InputArgument)(0));
 			if ((Entity)(object)c.Vehicle != (Entity)null && ((Entity)c.Vehicle).Exists())
 			{
@@ -1720,7 +1720,7 @@ internal static class LsFunctions
 			ped3.Money -= price;
 			LSL.PlayerInventory[c.Drug.Name] -= c.amount;
 			PlayTheSound();
-			UI.Notify("Vendu : " + c.Drug.Name + " " + GramsToOz(c.amount) + ", il te reste " + GramsToOz(LSL.PlayerInventory[c.Drug.Name]) + ". Gain : ~g~" + repEarned + " ~s~réputation, réputation totale ~g~" + LSL.areas[LSL.areaIndex].Reputation + "~s~ dans " + LSL.areas[LSL.areaIndex].Name);
+			UI.Notify("Vendu : " + c.Drug.Name + " " + FormatMetric(c.amount) + ", il te reste " + FormatMetric(LSL.PlayerInventory[c.Drug.Name]) + ". Gain : ~g~" + repEarned + " ~s~réputation, réputation totale ~g~" + LSL.areas[LSL.areaIndex].Reputation + "~s~ dans " + LSL.areas[LSL.areaIndex].Name);
 			Function.Call(unchecked((Hash)(-8213159594590722974L)), (InputArgument)(p), (InputArgument)("GENERIC_THANKS"), (InputArgument)("SPEECH_PARAMS_STANDARD"), (InputArgument)(0));
 			if ((Entity)(object)c.Vehicle != (Entity)null && ((Entity)c.Vehicle).Exists())
 			{
@@ -1967,6 +1967,15 @@ internal static class LsFunctions
 		return Model;
 	}
 
+	// Conversion centralisee : les anciennes quantites sont des paquets de 28 grammes.
+	// Ne pas renommer les champs *Oz des sauvegardes XML avant une migration versionnee.
+	public const int GramsPerLegacyPack = 28;
+
+	public static int LegacyPacksToGrams(int packs)
+	{
+		return checked(packs * GramsPerLegacyPack);
+	}
+
 	// LSL V2 FR : formatage métrique, sans modifier les stocks ni les clés XML.
 	public static string FormatMetric(int grams, string color = "~g~")
 	{
@@ -1982,10 +1991,10 @@ internal static class LsFunctions
 	// LSL V2 FR : chaque paquet de l'ancienne sauvegarde représente 28 g.
 	public static string FormatLegacyPacks(int packs, string color = "~r~")
 	{
-		return FormatMetric(checked(packs * 28), color);
+		return FormatMetric(LegacyPacksToGrams(packs), color);
 	}
 
-	public static string GramsToOz(int _grams)
+	public static string FormatMetric(int _grams)
 	{
 		// LSL V2 FR : garder l'API existante pour ne pas casser les appels.
 		return FormatMetric(_grams);
