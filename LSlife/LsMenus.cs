@@ -457,13 +457,13 @@ internal static class LsMenus
 			}
 			LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
 		}
-		if ((object)item == LSL.putWeedOzVeh)
+		if ((object)item == LSL.putWeedGramsVeh)
 		{
-			LSL.pStashVehicle.drugCarWeedGrams += LSL.putWeedOzVeh.Value;
-			LsFunctions.pWeedGrams -= LSL.putWeedOzVeh.Value;
-			UIMenuSliderItem putWeedOzVeh = LSL.putWeedOzVeh;
-			putWeedOzVeh.Maximum -= LSL.putWeedOzVeh.Value;
-			LSL.takeWeedOzVeh.Maximum = LSL.pStashVehicle.drugCarWeedGrams;
+			LSL.pStashVehicle.drugCarWeedGrams += LSL.putWeedGramsVeh.Value;
+			LsFunctions.pWeedGrams -= LSL.putWeedGramsVeh.Value;
+			UIMenuSliderItem putWeedGramsVeh = LSL.putWeedGramsVeh;
+			putWeedGramsVeh.Maximum -= LSL.putWeedGramsVeh.Value;
+			LSL.takeWeedGramsVeh.Maximum = LSL.pStashVehicle.drugCarWeedGrams;
 			LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
 			foreach (XElement element2 in LSL.LSLifeSave.Descendants())
 			{
@@ -529,13 +529,13 @@ internal static class LsMenus
 			}
 			LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
 		}
-		if ((object)item == LSL.putCrackOzVeh)
+		if ((object)item == LSL.putCrackGramsVeh)
 		{
-			LSL.pStashVehicle.drugCarCrackGrams += LSL.putCrackOzVeh.Value;
-			LsFunctions.pCrackGrams -= LSL.putCrackOzVeh.Value;
-			UIMenuSliderItem putCrackOzVeh = LSL.putCrackOzVeh;
-			putCrackOzVeh.Maximum -= LSL.putCrackOzVeh.Value;
-			LSL.takeCrackOzVeh.Maximum = LSL.pStashVehicle.drugCarCrackGrams;
+			LSL.pStashVehicle.drugCarCrackGrams += LSL.putCrackGramsVeh.Value;
+			LsFunctions.pCrackGrams -= LSL.putCrackGramsVeh.Value;
+			UIMenuSliderItem putCrackGramsVeh = LSL.putCrackGramsVeh;
+			putCrackGramsVeh.Maximum -= LSL.putCrackGramsVeh.Value;
+			LSL.takeCrackGramsVeh.Maximum = LSL.pStashVehicle.drugCarCrackGrams;
 			LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
 			foreach (XElement element4 in LSL.LSLifeSave.Descendants())
 			{
@@ -601,13 +601,13 @@ internal static class LsMenus
 			}
 			LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
 		}
-		if ((object)item == LSL.putCocainOzVeh)
+		if ((object)item == LSL.putCocainGramsVeh)
 		{
-			LSL.pStashVehicle.drugCarCocainGrams += LSL.putCocainOzVeh.Value;
-			LsFunctions.pCocaineGrams -= LSL.putCocainOzVeh.Value;
-			UIMenuSliderItem putCocainOzVeh = LSL.putCocainOzVeh;
-			putCocainOzVeh.Maximum -= LSL.putCocainOzVeh.Value;
-			LSL.takeCocainOzVeh.Maximum = LSL.pStashVehicle.drugCarCocainGrams;
+			LSL.pStashVehicle.drugCarCocainGrams += LSL.putCocainGramsVeh.Value;
+			LsFunctions.pCocaineGrams -= LSL.putCocainGramsVeh.Value;
+			UIMenuSliderItem putCocainGramsVeh = LSL.putCocainGramsVeh;
+			putCocainGramsVeh.Maximum -= LSL.putCocainGramsVeh.Value;
+			LSL.takeCocainGramsVeh.Maximum = LSL.pStashVehicle.drugCarCocainGrams;
 			LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
 			foreach (XElement element6 in LSL.LSLifeSave.Descendants())
 			{
@@ -747,13 +747,13 @@ internal static class LsMenus
 			}
 			LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
 		}
-		if ((object)item == LSL.takeWeedOzVeh)
+		if ((object)item == LSL.takeWeedGramsVeh)
 		{
-			LsFunctions.pWeedGrams += LSL.takeWeedOzVeh.Value;
-			LSL.pStashVehicle.drugCarWeedGrams -= LSL.takeWeedOzVeh.Value;
-			UIMenuSliderItem takeWeedOzVeh = LSL.takeWeedOzVeh;
-			takeWeedOzVeh.Maximum -= LSL.takeWeedOzVeh.Value;
-			LSL.putWeedOzVeh.Maximum = LsFunctions.pWeedGrams;
+			LsFunctions.pWeedGrams += LSL.takeWeedGramsVeh.Value;
+			LSL.pStashVehicle.drugCarWeedGrams -= LSL.takeWeedGramsVeh.Value;
+			UIMenuSliderItem takeWeedGramsVeh = LSL.takeWeedGramsVeh;
+			takeWeedGramsVeh.Maximum -= LSL.takeWeedGramsVeh.Value;
+			LSL.putWeedGramsVeh.Maximum = LsFunctions.pWeedGrams;
 			LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
 			foreach (XElement element2 in LSL.LSLifeSave.Descendants())
 			{
@@ -819,13 +819,13 @@ internal static class LsMenus
 			}
 			LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
 		}
-		if ((object)item == LSL.takeCrackOzVeh)
+		if ((object)item == LSL.takeCrackGramsVeh)
 		{
-			LsFunctions.pCrackGrams += LSL.takeCrackOzVeh.Value;
-			LSL.pStashVehicle.drugCarCrackGrams -= LSL.takeCrackOzVeh.Value;
-			UIMenuSliderItem takeCrackOzVeh = LSL.takeCrackOzVeh;
-			takeCrackOzVeh.Maximum -= LSL.takeCrackOzVeh.Value;
-			LSL.putCrackOzVeh.Maximum = LsFunctions.pCrackGrams;
+			LsFunctions.pCrackGrams += LSL.takeCrackGramsVeh.Value;
+			LSL.pStashVehicle.drugCarCrackGrams -= LSL.takeCrackGramsVeh.Value;
+			UIMenuSliderItem takeCrackGramsVeh = LSL.takeCrackGramsVeh;
+			takeCrackGramsVeh.Maximum -= LSL.takeCrackGramsVeh.Value;
+			LSL.putCrackGramsVeh.Maximum = LsFunctions.pCrackGrams;
 			LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
 			foreach (XElement element4 in LSL.LSLifeSave.Descendants())
 			{
@@ -891,12 +891,12 @@ internal static class LsMenus
 			}
 			LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
 		}
-		if ((object)item == LSL.takeCocainOzVeh)
+		if ((object)item == LSL.takeCocainGramsVeh)
 		{
-			LsFunctions.pCocaineGrams += LSL.takeCocainOzVeh.Value;
-			LSL.pStashVehicle.drugCarCocainGrams -= LSL.takeCocainOzVeh.Value;
-			UIMenuSliderItem takeCocainOzVeh = LSL.takeCocainOzVeh;
-			takeCocainOzVeh.Maximum -= LSL.takeCocainOzVeh.Value;
+			LsFunctions.pCocaineGrams += LSL.takeCocainGramsVeh.Value;
+			LSL.pStashVehicle.drugCarCocainGrams -= LSL.takeCocainGramsVeh.Value;
+			UIMenuSliderItem takeCocainGramsVeh = LSL.takeCocainGramsVeh;
+			takeCocainGramsVeh.Maximum -= LSL.takeCocainGramsVeh.Value;
 			LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
 			foreach (XElement element6 in LSL.LSLifeSave.Descendants())
 			{
@@ -1019,13 +1019,13 @@ internal static class LsMenus
 		{
 			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatMetric(LSL.putWeedVeh.Value);
 		}
-		if (sender == LSL.takeWeedOzVeh)
+		if (sender == LSL.takeWeedGramsVeh)
 		{
-			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.FormatMetric(LSL.takeWeedOzVeh.Value);
+			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.FormatMetric(LSL.takeWeedGramsVeh.Value);
 		}
-		else if (sender == LSL.putWeedOzVeh)
+		else if (sender == LSL.putWeedGramsVeh)
 		{
-			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatMetric(LSL.putWeedOzVeh.Value);
+			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatMetric(LSL.putWeedGramsVeh.Value);
 		}
 		else if (sender == LSL.takeCrackVeh)
 		{
@@ -1035,13 +1035,13 @@ internal static class LsMenus
 		{
 			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatMetric(LSL.putCrackVeh.Value);
 		}
-		if (sender == LSL.takeCrackOzVeh)
+		if (sender == LSL.takeCrackGramsVeh)
 		{
-			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.FormatMetric(LSL.takeCrackOzVeh.Value);
+			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.FormatMetric(LSL.takeCrackGramsVeh.Value);
 		}
-		else if (sender == LSL.putCrackOzVeh)
+		else if (sender == LSL.putCrackGramsVeh)
 		{
-			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatMetric(LSL.putCrackOzVeh.Value);
+			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatMetric(LSL.putCrackGramsVeh.Value);
 		}
 		else if (sender == LSL.takeCocainVeh)
 		{
@@ -1051,13 +1051,13 @@ internal static class LsMenus
 		{
 			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatMetric(LSL.putCocainVeh.Value);
 		}
-		else if (sender == LSL.takeCocainOzVeh)
+		else if (sender == LSL.takeCocainGramsVeh)
 		{
-			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.FormatMetric(LSL.takeCocainOzVeh.Value);
+			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.FormatMetric(LSL.takeCocainGramsVeh.Value);
 		}
-		else if (sender == LSL.putCocainOzVeh)
+		else if (sender == LSL.putCocainGramsVeh)
 		{
-			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatMetric(LSL.putCocainOzVeh.Value);
+			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatMetric(LSL.putCocainGramsVeh.Value);
 		}
 		else if (sender == LSL.putMoneyVeh)
 		{
@@ -1095,17 +1095,17 @@ internal static class LsMenus
 		{
 			((UIText)LSL.stashTakeMenu.Subtitle).Caption = "Retirer $" + LsFunctions.IntToMoney(LSL.takeMoneyStash.Value);
 		}
-		else if (sender == LSL.putWeedOzStash)
+		else if (sender == LSL.putWeedGramsStash)
 		{
-			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatMetric(LSL.putWeedOzStash.Value);
+			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatMetric(LSL.putWeedGramsStash.Value);
 		}
-		else if (sender == LSL.putCrackOzStash)
+		else if (sender == LSL.putCrackGramsStash)
 		{
-			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatMetric(LSL.putCrackOzStash.Value);
+			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatMetric(LSL.putCrackGramsStash.Value);
 		}
-		else if (sender == LSL.putCocainOzStash)
+		else if (sender == LSL.putCocainGramsStash)
 		{
-			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatMetric(LSL.putCocainOzStash.Value);
+			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatMetric(LSL.putCocainGramsStash.Value);
 		}
 		else if (sender == LSL.putMoneyStash)
 		{
@@ -1152,9 +1152,9 @@ internal static class LsMenus
 			LSL.putCrackStash.Multiplier = (int)LSL.multiplier[LSL.stashPutMultiplier.Index];
 			LSL.putCocainStash.Multiplier = (int)LSL.multiplier[LSL.stashPutMultiplier.Index];
 			LSL.putMoneyStash.Multiplier = (int)LSL.multiplier[LSL.stashPutMultiplier.Index];
-			LSL.putWeedOzStash.Multiplier = (int)LSL.multiplier[LSL.stashPutMultiplier.Index];
-			LSL.putCrackOzStash.Multiplier = (int)LSL.multiplier[LSL.stashPutMultiplier.Index];
-			LSL.putCocainOzStash.Multiplier = (int)LSL.multiplier[LSL.stashPutMultiplier.Index];
+			LSL.putWeedGramsStash.Multiplier = (int)LSL.multiplier[LSL.stashPutMultiplier.Index];
+			LSL.putCrackGramsStash.Multiplier = (int)LSL.multiplier[LSL.stashPutMultiplier.Index];
+			LSL.putCocainGramsStash.Multiplier = (int)LSL.multiplier[LSL.stashPutMultiplier.Index];
 		}
 		else if (sender == LSL.stashTakeMultiplier)
 		{
@@ -1169,9 +1169,9 @@ internal static class LsMenus
 			LSL.putCrackVeh.Multiplier = (int)LSL.multiplier[LSL.vehPutMultiplier.Index];
 			LSL.putCocainVeh.Multiplier = (int)LSL.multiplier[LSL.vehPutMultiplier.Index];
 			LSL.putMoneyVeh.Multiplier = (int)LSL.multiplier[LSL.vehPutMultiplier.Index];
-			LSL.putWeedOzVeh.Multiplier = (int)LSL.multiplier[LSL.vehPutMultiplier.Index];
-			LSL.putCrackOzVeh.Multiplier = (int)LSL.multiplier[LSL.vehPutMultiplier.Index];
-			LSL.putCocainOzVeh.Multiplier = (int)LSL.multiplier[LSL.vehPutMultiplier.Index];
+			LSL.putWeedGramsVeh.Multiplier = (int)LSL.multiplier[LSL.vehPutMultiplier.Index];
+			LSL.putCrackGramsVeh.Multiplier = (int)LSL.multiplier[LSL.vehPutMultiplier.Index];
+			LSL.putCocainGramsVeh.Multiplier = (int)LSL.multiplier[LSL.vehPutMultiplier.Index];
 		}
 		else if (sender == LSL.vehTakeMultiplier)
 		{
@@ -1179,9 +1179,9 @@ internal static class LsMenus
 			LSL.takeCrackVeh.Multiplier = (int)LSL.multiplier[LSL.vehTakeMultiplier.Index];
 			LSL.takeCocainVeh.Multiplier = (int)LSL.multiplier[LSL.vehTakeMultiplier.Index];
 			LSL.takeMoneyVeh.Multiplier = (int)LSL.multiplier[LSL.vehTakeMultiplier.Index];
-			LSL.takeWeedOzVeh.Multiplier = (int)LSL.multiplier[LSL.vehTakeMultiplier.Index];
-			LSL.takeCrackOzVeh.Multiplier = (int)LSL.multiplier[LSL.vehTakeMultiplier.Index];
-			LSL.takeCocainOzVeh.Multiplier = (int)LSL.multiplier[LSL.vehTakeMultiplier.Index];
+			LSL.takeWeedGramsVeh.Multiplier = (int)LSL.multiplier[LSL.vehTakeMultiplier.Index];
+			LSL.takeCrackGramsVeh.Multiplier = (int)LSL.multiplier[LSL.vehTakeMultiplier.Index];
+			LSL.takeCocainGramsVeh.Multiplier = (int)LSL.multiplier[LSL.vehTakeMultiplier.Index];
 		}
 		else if (sender == LSL.melee)
 		{
@@ -1219,20 +1219,20 @@ internal static class LsMenus
 			Player player = Game.Player;
 			player.Money -= LSL.putMoneyStash.Value;
 		}
-		else if ((object)item == LSL.putWeedOzStash)
+		else if ((object)item == LSL.putWeedGramsStash)
 		{
-			LSL.HouseHandler.CurrentHouse.Weed += LSL.putWeedOzStash.Value;
-			LsFunctions.pWeedGrams -= LSL.putWeedOzStash.Value;
+			LSL.HouseHandler.CurrentHouse.Weed += LSL.putWeedGramsStash.Value;
+			LsFunctions.pWeedGrams -= LSL.putWeedGramsStash.Value;
 		}
-		else if ((object)item == LSL.putCrackOzStash)
+		else if ((object)item == LSL.putCrackGramsStash)
 		{
-			LSL.HouseHandler.CurrentHouse.Crack += LSL.putCrackOzStash.Value;
-			LsFunctions.pCrackGrams -= LSL.putCrackOzStash.Value;
+			LSL.HouseHandler.CurrentHouse.Crack += LSL.putCrackGramsStash.Value;
+			LsFunctions.pCrackGrams -= LSL.putCrackGramsStash.Value;
 		}
-		else if ((object)item == LSL.putCocainOzStash)
+		else if ((object)item == LSL.putCocainGramsStash)
 		{
-			LSL.HouseHandler.CurrentHouse.Cocain += LSL.putCocainOzStash.Value;
-			LsFunctions.pCocaineGrams -= LSL.putCocainOzStash.Value;
+			LSL.HouseHandler.CurrentHouse.Cocain += LSL.putCocainGramsStash.Value;
+			LsFunctions.pCocaineGrams -= LSL.putCocainGramsStash.Value;
 		}
 		else if ((object)item == LSL.putArmourStash)
 		{
