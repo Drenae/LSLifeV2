@@ -80,15 +80,15 @@ public class DrugOrder
 		{
 			if (weed > 0)
 			{
-				LsFunctions.pWeedOunce += weed;
+				LsFunctions.pWeedGrams += weed;
 			}
 			if (crack > 0)
 			{
-				LsFunctions.pCrackOunce += crack;
+				LsFunctions.pCrackGrams += crack;
 			}
 			if (cocaine > 0)
 			{
-				LsFunctions.pCocaineOunce += cocaine;
+				LsFunctions.pCocaineGrams += cocaine;
 			}
 			LsFunctions.PlayTheSound();
 			pickedUp = true;
@@ -104,15 +104,15 @@ public class DrugOrder
 				LSL.player.Character.SetIntoVehicle(stash.drugCar, (VehicleSeat)(-1));
 				if (weed > 0)
 				{
-					LSL.pStashVehicle.drugCarWeedOz += weed;
+					LSL.pStashVehicle.drugCarWeedGrams += weed;
 				}
 				if (crack > 0)
 				{
-					LSL.pStashVehicle.drugCarCrackOz += crack;
+					LSL.pStashVehicle.drugCarCrackGrams += crack;
 				}
 				if (cocaine > 0)
 				{
-					LSL.pStashVehicle.drugCarCocainOz += cocaine;
+					LSL.pStashVehicle.drugCarCocainGrams += cocaine;
 				}
 				LsFunctions.PlayTheSound();
 				pickedUp = true;
@@ -142,17 +142,17 @@ public class DrugOrder
 			{
 				foreach (XElement e in element.Elements())
 				{
-					if (e.Name == "weedOz")
+					if (e.Name == "weedGrams")
 					{
-						e.Value = LsFunctions.pWeedOunce.ToString();
+						e.Value = LsFunctions.pWeedGrams.ToString();
 					}
-					if (e.Name == "crackOz")
+					if (e.Name == "crackGrams")
 					{
-						e.Value = LsFunctions.pCrackOunce.ToString();
+						e.Value = LsFunctions.pCrackGrams.ToString();
 					}
-					if (e.Name == "cocaineOz")
+					if (e.Name == "cocaineGrams")
 					{
-						e.Value = LsFunctions.pCocaineOunce.ToString();
+						e.Value = LsFunctions.pCocaineGrams.ToString();
 					}
 				}
 			}
@@ -160,17 +160,17 @@ public class DrugOrder
 			{
 				foreach (XElement e2 in element.Elements())
 				{
-					if (e2.Name == "weedOz")
+					if (e2.Name == "weedGrams")
 					{
-						e2.Value = LSL.pStashVehicle.drugCarWeedOz.ToString();
+						e2.Value = LSL.pStashVehicle.drugCarWeedGrams.ToString();
 					}
-					if (e2.Name == "crackOz")
+					if (e2.Name == "crackGrams")
 					{
-						e2.Value = LSL.pStashVehicle.drugCarCrackOz.ToString();
+						e2.Value = LSL.pStashVehicle.drugCarCrackGrams.ToString();
 					}
-					if (e2.Name == "cocainOz")
+					if (e2.Name == "cocainGrams")
 					{
-						e2.Value = LSL.pStashVehicle.drugCarCocainOz.ToString();
+						e2.Value = LSL.pStashVehicle.drugCarCocainGrams.ToString();
 					}
 				}
 			}
