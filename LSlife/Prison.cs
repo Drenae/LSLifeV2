@@ -164,7 +164,7 @@ internal static class Prison
 					Vector3 pos = outArgA.GetResult<Vector3>();
 					if ((Entity)(object)copCar == (Entity)null)
 					{
-						copCar = World.CreateVehicle(Model.op_Implicit((VehicleHash)2046537925), pos, heading);
+						copCar = World.CreateVehicle(new Model((VehicleHash)2046537925), pos, heading);
 						((Entity)copCar).AddBlip();
 						((Entity)copCar).CurrentBlip.Sprite = (BlipSprite)672;
 						if (DEBUG)
@@ -175,7 +175,7 @@ internal static class Prison
 				}
 				if ((Entity)(object)cop == (Entity)null)
 				{
-					cop = World.CreatePed(Model.op_Implicit((PedHash)1581098148), ((Entity)Game.Player.Character).Position + ((Entity)Game.Player.Character).ForwardVector * -1f * 1.5f);
+					cop = World.CreatePed(new Model((PedHash)1581098148), ((Entity)Game.Player.Character).Position + ((Entity)Game.Player.Character).ForwardVector * -1f * 1.5f);
 				}
 				if ((Entity)(object)copCar != (Entity)null && (Entity)(object)cop != (Entity)null)
 				{
