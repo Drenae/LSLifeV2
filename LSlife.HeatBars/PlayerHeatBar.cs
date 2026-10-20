@@ -5,7 +5,7 @@ namespace LSlife.HeatBars;
 
 internal static class PlayerHeatBar
 {
-	private static BarTimerBar aBar = new BarTimerBar("Joueur");
+	private static BarTimerBar aBar = new BarTimerBar("Player");
 
 	public static bool Displayed = false;
 
@@ -37,11 +37,5 @@ internal static class PlayerHeatBar
 				aBar.Percentage = 0f;
 			}
 		}
-	}
-
-	static PlayerHeatBar()
-	{
-		//IL_0005: Unknown result type (might be due to invalid IL or missing references)
-		//IL_000f: Expected Obj, but got Unknown
 	}
 }

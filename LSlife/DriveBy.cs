@@ -104,13 +104,13 @@ public class DriveBy
 			if (!Agressive)
 			{
 				((Entity)Vehicle).CurrentBlip.Color = (BlipColor)1;
-				((Entity)Vehicle).CurrentBlip.Name = "Véhicule de l'équipe";
+				((Entity)Vehicle).CurrentBlip.Name = "Driveby Vehicle";
 			}
 		}
 		else if (Agressive)
 		{
 			((Entity)Vehicle).CurrentBlip.Color = (BlipColor)61;
-			((Entity)Vehicle).CurrentBlip.Name = "Patrouille";
+			((Entity)Vehicle).CurrentBlip.Name = "Patrol";
 		}
 	}
 
@@ -304,7 +304,7 @@ public class DriveBy
 		}
 		if (enterState && DriveBySate == Enums.DriveBySates.CleanDriveBy)
 		{
-			LsFunctions.DbugString("Équipe d'attaque supprimée");
+			LsFunctions.DbugString("DriveByCleaned");
 			enterState = false;
 			Dead = true;
 			CleanDriveBy();
@@ -328,7 +328,7 @@ public class DriveBy
 				LastKnownPosition = d.LastKnownPosition;
 				DriveBySate = Enums.DriveBySates.VehDrive;
 				enterState = true;
-				LsFunctions.DbugString("Position de l'équipe d'attaque mise à jour");
+				LsFunctions.DbugString("Driveby updated position from team");
 			}
 		}
 	}
@@ -385,7 +385,7 @@ public class DriveBy
 				{
 					if (!p.IsInVehicle() && !((Entity)p).CurrentBlip.Exists())
 					{
-						LsFunctions.AddBlip((Entity)(object)p, (BlipColor)1, "Membre de l'équipe d'attaque", _friend: false, _edge: false);
+						LsFunctions.AddBlip((Entity)(object)p, (BlipColor)1, "Driveby Ped", _friend: false, _edge: false);
 					}
 					if (((Entity)p).IsDead)
 					{
@@ -471,13 +471,13 @@ public class DriveBy
 		{
 			if (Agressive)
 			{
-				LsFunctions.AddBlip((Entity)(object)Vehicle, (BlipColor)1, "Véhicule de l'équipe", _friend: false, _edge: false);
+				LsFunctions.AddBlip((Entity)(object)Vehicle, (BlipColor)1, "Driveby Vehicle", _friend: false, _edge: false);
 			}
 			((Entity)Vehicle).IsPersistent = true;
 		}
 		else if (LSL.DEBUG)
 		{
-			UI.Notify("~r~Échec de création de l'équipe d'attaque");
+			UI.Notify("~r~Spawning DriveBy Failed");
 		}
 	}
 
@@ -522,10 +522,10 @@ public class DriveBy
 			p.RelationshipGroup = LSL.rival_nutral;
 		}
 		LsFunctions.SetRandomCombatStats(p);
-		p.FiringPattern = unchecked((FiringPattern)(-753768974));
+		p.FiringPattern = (FiringPattern)(-753768974);
 		p.AlwaysKeepTask = true;
 		p.CanSwitchWeapons = true;
-		Function.Call(unchecked((Hash)(-4079649877180351064L)), (InputArgument)(p), (InputArgument)(100));
+		Function.Call((Hash)(-4079649877180351064L), InputArgument.op_Implicit(p), InputArgument.op_Implicit(100));
 		LsFunctions.SetRivalWeapons(p);
 		if (_leader)
 		{
@@ -568,7 +568,7 @@ public class DriveBy
 				vehicleHash = (VehicleHash)model.Hash;
 				if (LSL.DEBUG)
 				{
-					UI.Notify("SUV trouvé");
+					UI.Notify("foundSUV");
 				}
 				break;
 			}

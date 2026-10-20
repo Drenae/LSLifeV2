@@ -7,7 +7,6 @@ using System.Xml.Linq;
 using GTA;
 using GTA.Math;
 using GTA.Native;
-using NativeUI;
 
 namespace LSlife;
 
@@ -23,15 +22,15 @@ public class StashVehicle
 
 	public int drugCarWeed;
 
-	public int drugCarWeedGrams;
+	public int drugCarWeedOz;
 
 	public int drugCarCrack;
 
-	public int drugCarCrackGrams;
+	public int drugCarCrackOz;
 
 	public int drugCarCocain;
 
-	public int drugCarCocainGrams;
+	public int drugCarCocainOz;
 
 	public int drugCarMoney;
 
@@ -65,27 +64,27 @@ public class StashVehicle
 				{
 					int.TryParse(e.Value, out drugCarWeed);
 				}
-				if (e.Name == "weedGrams")
+				if (e.Name == "weedOz")
 				{
-					int.TryParse(e.Value, out drugCarWeedGrams);
+					int.TryParse(e.Value, out drugCarWeedOz);
 					foundOz = true;
 				}
 				if (e.Name == "crack")
 				{
 					int.TryParse(e.Value, out drugCarCrack);
 				}
-				if (e.Name == "crackGrams")
+				if (e.Name == "crackOz")
 				{
-					int.TryParse(e.Value, out drugCarCrackGrams);
+					int.TryParse(e.Value, out drugCarCrackOz);
 					foundOz = true;
 				}
 				if (e.Name == "cocain")
 				{
 					int.TryParse(e.Value, out drugCarCocain);
 				}
-				if (e.Name == "cocaineGrams")
+				if (e.Name == "cocainOz")
 				{
-					int.TryParse(e.Value, out drugCarCocainGrams);
+					int.TryParse(e.Value, out drugCarCocainOz);
 					foundOz = true;
 				}
 				if (e.Name == "money")
@@ -105,9 +104,9 @@ public class StashVehicle
 			}
 			if (!foundOz)
 			{
-				element.Add(new XElement("weedGrams", 0));
-				element.Add(new XElement("crackGrams", 0));
-				element.Add(new XElement("cocaineGrams", 0));
+				element.Add(new XElement("weedOz", 0));
+				element.Add(new XElement("crackOz", 0));
+				element.Add(new XElement("cocainOz", 0));
 				LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
 			}
 		}
@@ -182,12 +181,12 @@ public class StashVehicle
 		LSL.PlayerInventory["Crack"] = 0;
 		drugCarCocain += LSL.PlayerInventory["Cocaine"];
 		LSL.PlayerInventory["Cocaine"] = 0;
-		drugCarWeedGrams += LsFunctions.pWeedGrams;
-		LsFunctions.pWeedGrams = 0;
-		drugCarCrackGrams += LsFunctions.pCrackGrams;
-		LsFunctions.pCrackGrams = 0;
-		drugCarCocainGrams += LsFunctions.pCocaineGrams;
-		LsFunctions.pCocaineGrams = 0;
+		drugCarWeedOz += LsFunctions.pWeedOunce;
+		LsFunctions.pWeedOunce = 0;
+		drugCarCrackOz += LsFunctions.pCrackOunce;
+		LsFunctions.pCrackOunce = 0;
+		drugCarCocainOz += LsFunctions.pCocaineOunce;
+		LsFunctions.pCocaineOunce = 0;
 		LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
 		foreach (XElement element in LSL.LSLifeSave.Descendants())
 		{
@@ -207,17 +206,17 @@ public class StashVehicle
 					{
 						e.Value = LSL.PlayerInventory["Cocaine"].ToString();
 					}
-					else if (e.Name == "weedGrams")
+					else if (e.Name == "weedOz")
 					{
-						e.Value = LsFunctions.pWeedGrams.ToString();
+						e.Value = LsFunctions.pWeedOunce.ToString();
 					}
-					else if (e.Name == "crackGrams")
+					else if (e.Name == "crackOz")
 					{
-						e.Value = LsFunctions.pCrackGrams.ToString();
+						e.Value = LsFunctions.pCrackOunce.ToString();
 					}
-					else if (e.Name == "cocaineGrams")
+					else if (e.Name == "cocaineOz")
 					{
-						e.Value = LsFunctions.pCocaineGrams.ToString();
+						e.Value = LsFunctions.pCocaineOunce.ToString();
 					}
 				}
 			}
@@ -241,17 +240,17 @@ public class StashVehicle
 					{
 						e2.Value = drugCarCocain.ToString();
 					}
-					else if (e2.Name == "weedGrams")
+					else if (e2.Name == "weedOz")
 					{
-						e2.Value = drugCarWeedGrams.ToString();
+						e2.Value = drugCarWeedOz.ToString();
 					}
-					else if (e2.Name == "crackGrams")
+					else if (e2.Name == "crackOz")
 					{
-						e2.Value = drugCarCrackGrams.ToString();
+						e2.Value = drugCarCrackOz.ToString();
 					}
-					else if (e2.Name == "cocaineGrams")
+					else if (e2.Name == "cocaineOz")
 					{
-						e2.Value = drugCarCocainGrams.ToString();
+						e2.Value = drugCarCocainOz.ToString();
 					}
 				}
 			}
@@ -301,7 +300,7 @@ public class StashVehicle
 		{
 			((Entity)drugCar).CurrentBlip.IsShortRange = true;
 			((Entity)drugCar).CurrentBlip.Sprite = (BlipSprite)225;
-			((Entity)drugCar).CurrentBlip.Name = "Véhicule de stockage";
+			((Entity)drugCar).CurrentBlip.Name = "Drug Car";
 			((Entity)drugCar).CurrentBlip.Color = (BlipColor)2;
 		}
 		if (LSL.player.Character.IsInVehicle())
@@ -325,7 +324,7 @@ public class StashVehicle
 				if ((float)Game.GameTime > LSL.displayHelpTimer + 5000f && !LSL.LsMenuPool.IsAnyMenuOpen() && LSL.player.Character.IsStopped)
 				{
 					LSL.displayHelpTimer = Game.GameTime;
-					LsFunctions.DisplayHelpText("~INPUT_SPRINT~ pour ouvrir le coffre.");
+					LsFunctions.DisplayHelpText("~INPUT_SPRINT~ to open trunk.");
 				}
 				if (Game.IsControlJustPressed(2, (Control)21) && !LSL.LsMenuPool.IsAnyMenuOpen() && LSL.player.Character.IsStopped)
 				{
@@ -358,7 +357,7 @@ public class StashVehicle
 				if ((float)Game.GameTime > LSL.displayHelpTimer + 5000f && !LSL.LsMenuPool.IsAnyMenuOpen() && LSL.player.Character.IsStopped)
 				{
 					LSL.displayHelpTimer = Game.GameTime;
-					LsFunctions.DisplayHelpText("~INPUT_SPRINT~ pour fermer le coffre.");
+					LsFunctions.DisplayHelpText("~INPUT_SPRINT~ to close trunk.");
 				}
 				if (Game.IsControlJustPressed(2, (Control)21) && !LSL.LsMenuPool.IsAnyMenuOpen() && LSL.player.Character.IsStopped)
 				{
@@ -371,7 +370,7 @@ public class StashVehicle
 			if ((float)Game.GameTime > LSL.displayHelpTimer + 3000f)
 			{
 				LSL.displayHelpTimer = Game.GameTime;
-				LsFunctions.DisplayHelpText("~INPUT_SPRINT~ pour ouvrir les portes arrière.");
+				LsFunctions.DisplayHelpText("~INPUT_SPRINT~ to back doors.");
 			}
 			if (Game.IsControlJustPressed(2, (Control)21) && !LSL.LsMenuPool.IsAnyMenuOpen() && LSL.player.Character.IsStopped)
 			{
@@ -405,7 +404,7 @@ public class StashVehicle
 			if ((float)Game.GameTime > LSL.displayHelpTimer + 3000f && !LSL.LsMenuPool.IsAnyMenuOpen() && LSL.player.Character.IsStopped)
 			{
 				LSL.displayHelpTimer = Game.GameTime;
-				LsFunctions.DisplayHelpText("~INPUT_SPRINT~ pour fermer les portes arrière.");
+				LsFunctions.DisplayHelpText("~INPUT_SPRINT~ to close back doors.");
 			}
 			if (Game.IsControlJustPressed(2, (Control)21) && !LSL.LsMenuPool.IsAnyMenuOpen() && LSL.player.Character.IsStopped)
 			{
@@ -470,7 +469,7 @@ public class StashVehicle
 						((Entity)drugCar).CurrentBlip.IsShortRange = true;
 						((Entity)drugCar).CurrentBlip.IsFriendly = true;
 						((Entity)drugCar).CurrentBlip.Sprite = (BlipSprite)225;
-						((Entity)drugCar).CurrentBlip.Name = "Véhicule de stockage";
+						((Entity)drugCar).CurrentBlip.Name = "Drug Car";
 						((Entity)drugCar).CurrentBlip.Color = (BlipColor)2;
 					}
 				}
@@ -478,7 +477,7 @@ public class StashVehicle
 				{
 					if (LSL.DEBUG)
 					{
-						UI.Notify("Chargement du véhicule");
+						UI.Notify("Trying to load vehicle");
 					}
 					VehicleLoad();
 				}
@@ -489,7 +488,7 @@ public class StashVehicle
 				drugCarBlip.IsShortRange = true;
 				drugCarBlip.IsFriendly = true;
 				drugCarBlip.Sprite = (BlipSprite)225;
-				drugCarBlip.Name = "Véhicule de stockage";
+				drugCarBlip.Name = "Drug Car";
 				drugCarBlip.Color = (BlipColor)2;
 			}
 		}
@@ -529,7 +528,7 @@ public class StashVehicle
 		}
 		if (((Entity)drugCar).IsDead || drugCar.EngineHealth <= -500f)
 		{
-			LsFunctions.DbugString("Véhicule détruit");
+			LsFunctions.DbugString("Vehicle Destroyed");
 			drugCarWanted = false;
 			((Entity)drugCar).IsPersistent = false;
 			((Entity)drugCar).MarkAsNoLongerNeeded();
@@ -586,7 +585,7 @@ public class StashVehicle
 				drugCarBlip.IsShortRange = true;
 				drugCarBlip.IsFriendly = true;
 				drugCarBlip.Sprite = (BlipSprite)225;
-				drugCarBlip.Name = "Véhicule de stockage";
+				drugCarBlip.Name = "Drug Car";
 				drugCarBlip.Color = (BlipColor)2;
 			}
 			((Entity)drugCar).CurrentBlip.Remove();
@@ -601,7 +600,7 @@ public class StashVehicle
 				drugCarBlip.IsShortRange = true;
 				drugCarBlip.IsFriendly = true;
 				drugCarBlip.Sprite = (BlipSprite)225;
-				drugCarBlip.Name = "Véhicule de stockage";
+				drugCarBlip.Name = "Drug Car";
 				drugCarBlip.Color = (BlipColor)2;
 			}
 			((Entity)drugCar).CurrentBlip.Remove();
@@ -654,7 +653,7 @@ public class StashVehicle
 		{
 			return;
 		}
-		LsFunctions.SendTextMsg("Le véhicule de stockage a été confisqué et son contenu détruit");
+		LsFunctions.SendTextMsg("Storage Vehicle has been confiscated, and its contents destroyed");
 		drugCarDestroyed = true;
 		XDocument veh = XDocument.Load("scripts\\LSLife\\LSLife_Vehicles.xml");
 		foreach (XElement element in veh.Descendants())
@@ -900,7 +899,7 @@ public class StashVehicle
 		{
 			UI.Notify(vehicles.Count.ToString() ?? "");
 			Vector3 currentPosition = CurrentPosition;
-			UI.Notify("~r~Coordonnées attendues :" + ((object)currentPosition/*cast due to constrained. prefix*/).ToString());
+			UI.Notify("~r~expected cord:" + ((object)currentPosition/*cast due to constrained. prefix*/).ToString());
 		}
 		if (vehicles.Count == 0)
 		{
@@ -956,7 +955,7 @@ public class StashVehicle
 			((Entity)drugCar).CurrentBlip.IsShortRange = true;
 			((Entity)drugCar).CurrentBlip.IsFriendly = true;
 			((Entity)drugCar).CurrentBlip.Sprite = (BlipSprite)225;
-			((Entity)drugCar).CurrentBlip.Name = "Véhicule de stockage";
+			((Entity)drugCar).CurrentBlip.Name = "Drug Car";
 			((Entity)drugCar).CurrentBlip.Color = (BlipColor)2;
 			{
 				foreach (XElement veh2 in vehiclesXML.Descendants())
@@ -994,7 +993,7 @@ public class StashVehicle
 				return;
 			}
 		}
-		UI.Notify("~r~Impossible de charger le véhicule");
+		UI.Notify("~r~Failed to load vehicle");
 	}
 
 	public void VehicleSave(Vehicle veh)
@@ -1088,7 +1087,7 @@ public class StashVehicle
 		parentElement.Add(new XElement("CanTiresBurst", veh.CanTiresBurst));
 		parentElement.Add(new XElement("Fuel", veh.FuelLevel));
 		parentElement.Add(new XElement("Livery", veh.Livery));
-		if (Function.Call<bool>(unchecked((Hash)(-5507252750051666468L)), (InputArgument)(((Entity)veh).Handle), (InputArgument)(23)))
+		if (Function.Call<bool>((Hash)(-5507252750051666468L), InputArgument.op_Implicit(((Entity)veh).Handle), InputArgument.op_Implicit(23)))
 		{
 			parentElement.Add(new XElement("CustomTire", true));
 		}
@@ -1123,7 +1122,7 @@ public class StashVehicle
 		((Entity)drugCar).CurrentBlip.IsShortRange = true;
 		((Entity)drugCar).CurrentBlip.IsFriendly = true;
 		((Entity)drugCar).CurrentBlip.Sprite = (BlipSprite)225;
-		((Entity)drugCar).CurrentBlip.Name = "Véhicule de stockage";
+		((Entity)drugCar).CurrentBlip.Name = "Drug Car";
 		((Entity)drugCar).CurrentBlip.Color = (BlipColor)2;
 		drugCarDestroyed = false;
 		CurrentPosition = ((Entity)drugCar).Position;
@@ -1150,44 +1149,44 @@ public class StashVehicle
 		LSL.takeWeedVeh.Maximum = drugCarWeed;
 		LSL.takeCrackVeh.Maximum = drugCarCrack;
 		LSL.takeCocainVeh.Maximum = drugCarCocain;
-		string sDescription = "Cannabis préparé (g). Prêt à vendre ou à confier à un employé.";
-		((UIMenuItem)LSL.putWeedVeh).Description = sDescription;
-		((UIMenuItem)LSL.takeWeedVeh).Description = sDescription;
-		sDescription = "Crack préparé (g). Prêt à vendre ou à confier à un employé.";
-		((UIMenuItem)LSL.putCrackVeh).Description = sDescription;
-		((UIMenuItem)LSL.takeCrackVeh).Description = sDescription;
-		sDescription = "Cocaïne préparée (g). Prête à vendre ou à confier à un employé.";
-		((UIMenuItem)LSL.putCocainVeh).Description = sDescription;
-		((UIMenuItem)LSL.takeCocainVeh).Description = sDescription;
-		((UIMenuItem)LSL.putWeedVeh).Text = "Cannabis " + LsFunctions.FormatMetric(LSL.PlayerInventory["Weed"]);
-		((UIMenuItem)LSL.takeWeedVeh).Text = "Cannabis " + LsFunctions.FormatMetric(drugCarWeed);
-		((UIMenuItem)LSL.putCrackVeh).Text = "Crack " + LsFunctions.FormatMetric(LSL.PlayerInventory["Crack"]);
-		((UIMenuItem)LSL.takeCrackVeh).Text = "Crack " + LsFunctions.FormatMetric(drugCarCrack);
-		((UIMenuItem)LSL.putCocainVeh).Text = "Cocaïne " + LsFunctions.FormatMetric(LSL.PlayerInventory["Cocaine"]);
-		((UIMenuItem)LSL.takeCocainVeh).Text = "Cocaïne " + LsFunctions.FormatMetric(drugCarCocain);
-		LSL.takeWeedGramsVeh.Maximum = drugCarWeedGrams;
-		LSL.takeCrackGramsVeh.Maximum = drugCarCrackGrams;
-		LSL.takeCocainGramsVeh.Maximum = drugCarCocainGrams;
-		LSL.putWeedGramsVeh.Maximum = LsFunctions.pWeedGrams;
-		LSL.putCrackGramsVeh.Maximum = LsFunctions.pCrackGrams;
-		LSL.putCocainGramsVeh.Maximum = LsFunctions.pCocaineGrams;
-		sDescription = "Cannabis non préparé. À déposer dans une planque avant la vente.";
-		((UIMenuItem)LSL.putWeedGramsVeh).Description = sDescription;
-		((UIMenuItem)LSL.takeWeedGramsVeh).Description = sDescription;
-		sDescription = "Crack non préparé. À déposer dans une planque avant la vente.";
-		((UIMenuItem)LSL.putCrackGramsVeh).Description = sDescription;
-		((UIMenuItem)LSL.takeCrackGramsVeh).Description = sDescription;
-		sDescription = "Cocaïne non préparée. À déposer dans une planque avant la vente.";
-		((UIMenuItem)LSL.putCocainGramsVeh).Description = sDescription;
-		((UIMenuItem)LSL.takeCocainGramsVeh).Description = sDescription;
-		((UIMenuItem)LSL.putWeedGramsVeh).Text = "Cannabis " + LsFunctions.FormatMetric(LsFunctions.pWeedGrams);
-		((UIMenuItem)LSL.takeWeedGramsVeh).Text = "Cannabis " + LsFunctions.FormatMetric(drugCarWeedGrams);
-		((UIMenuItem)LSL.putCrackGramsVeh).Text = "Crack " + LsFunctions.FormatMetric(LsFunctions.pCrackGrams);
-		((UIMenuItem)LSL.takeCrackGramsVeh).Text = "Crack " + LsFunctions.FormatMetric(drugCarCrackGrams);
-		((UIMenuItem)LSL.putCocainGramsVeh).Text = "Cocaïne " + LsFunctions.FormatMetric(LsFunctions.pCocaineGrams);
-		((UIMenuItem)LSL.takeCocainGramsVeh).Text = "Cocaïne " + LsFunctions.FormatMetric(drugCarCocainGrams);
-		((UIMenuItem)LSL.putMoneyVeh).Text = "Argent $" + LsFunctions.IntToMoney(LSL.player.Money);
-		((UIMenuItem)LSL.takeMoneyVeh).Text = "Argent $" + LsFunctions.IntToMoney(drugCarMoney);
+		string sDescription = "Grams of Weed. Ready to be sold on the streets or given to a worker.";
+		LSL.putWeedVeh.Description = sDescription;
+		LSL.takeWeedVeh.Description = sDescription;
+		sDescription = "Grams of Crack. Ready to be sold on the streets or given to a worker.";
+		LSL.putCrackVeh.Description = sDescription;
+		LSL.takeCrackVeh.Description = sDescription;
+		sDescription = "Grams of Cocaine. Ready to be sold on the streets or given to a worker.";
+		LSL.putCocainVeh.Description = sDescription;
+		LSL.takeCocainVeh.Description = sDescription;
+		LSL.putWeedVeh.Text = "Weed " + LsFunctions.GramsToOz(LSL.PlayerInventory["Weed"]);
+		LSL.takeWeedVeh.Text = "Weed " + LsFunctions.GramsToOz(drugCarWeed);
+		LSL.putCrackVeh.Text = "Crack " + LsFunctions.GramsToOz(LSL.PlayerInventory["Crack"]);
+		LSL.takeCrackVeh.Text = "Crack " + LsFunctions.GramsToOz(drugCarCrack);
+		LSL.putCocainVeh.Text = "Cocaine " + LsFunctions.GramsToOz(LSL.PlayerInventory["Cocaine"]);
+		LSL.takeCocainVeh.Text = "Cocaine " + LsFunctions.GramsToOz(drugCarCocain);
+		LSL.takeWeedOzVeh.Maximum = drugCarWeedOz;
+		LSL.takeCrackOzVeh.Maximum = drugCarCrackOz;
+		LSL.takeCocainOzVeh.Maximum = drugCarCocainOz;
+		LSL.putWeedOzVeh.Maximum = LsFunctions.pWeedOunce;
+		LSL.putCrackOzVeh.Maximum = LsFunctions.pCrackOunce;
+		LSL.putCocainOzVeh.Maximum = LsFunctions.pCocaineOunce;
+		sDescription = "Oz packs of Weed. Must be deposited at a Stash house before it can be sold.";
+		LSL.putWeedOzVeh.Description = sDescription;
+		LSL.takeWeedOzVeh.Description = sDescription;
+		sDescription = "Oz packs of Crack. Must be deposited at a Stash house before it can be sold.";
+		LSL.putCrackOzVeh.Description = sDescription;
+		LSL.takeCrackOzVeh.Description = sDescription;
+		sDescription = "Oz packs of Cocaine. Must be deposited at a Stash house before it can be sold.";
+		LSL.putCocainOzVeh.Description = sDescription;
+		LSL.takeCocainOzVeh.Description = sDescription;
+		LSL.putWeedOzVeh.Text = "Weed ~r~" + LsFunctions.pWeedOunce + "~s~z";
+		LSL.takeWeedOzVeh.Text = "Weed ~r~" + drugCarWeedOz + "~s~z";
+		LSL.putCrackOzVeh.Text = "Crack ~r~" + LsFunctions.pCrackOunce + "~s~z";
+		LSL.takeCrackOzVeh.Text = "Crack ~r~" + drugCarCrackOz + "~s~z";
+		LSL.putCocainOzVeh.Text = "Cocaine ~r~" + LsFunctions.pCocaineOunce + "~s~z";
+		LSL.takeCocainOzVeh.Text = "Cocaine ~r~" + drugCarCocainOz + "~s~z";
+		LSL.putMoneyVeh.Text = "Money $" + LsFunctions.IntToMoney(LSL.player.Money);
+		LSL.takeMoneyVeh.Text = "Money $" + LsFunctions.IntToMoney(drugCarMoney);
 		LSL.takeMoneyStash.Maximum = drugCarMoney;
 		if (LSL.DEBUG)
 		{
@@ -1199,8 +1198,8 @@ public class StashVehicle
 		int i = 0;
 		foreach (WeaponHash weapon in Enum.GetValues(typeof(WeaponHash)))
 		{
-			bool flag = Function.Call<bool>(unchecked((Hash)(-8220001501650343748L)), (InputArgument)(LSL.player.Character), (InputArgument)((int)weapon));
-			int ammunitionInWeapon = Function.Call<int>((Hash)97480644549409105L, (InputArgument)(LSL.player.Character), (InputArgument)((int)weapon));
+			bool flag = Function.Call<bool>((Hash)(-8220001501650343748L), InputArgument.op_Implicit(LSL.player.Character), InputArgument.op_Implicit((int)weapon));
+			int ammunitionInWeapon = Function.Call<int>((Hash)97480644549409105L, InputArgument.op_Implicit(LSL.player.Character), InputArgument.op_Implicit((int)weapon));
 			if (!flag)
 			{
 				continue;
@@ -1213,7 +1212,7 @@ public class StashVehicle
 			parentElement.Add(weaponAmmoElement);
 			foreach (WeaponComponent component in Enum.GetValues(typeof(WeaponComponent)))
 			{
-				if (Function.Call<bool>(unchecked((Hash)(-4209984786179366080L)), (InputArgument)(LSL.player.Character), (InputArgument)((int)weapon), (InputArgument)((int)component)))
+				if (Function.Call<bool>((Hash)(-4209984786179366080L), InputArgument.op_Implicit(LSL.player.Character), InputArgument.op_Implicit((int)weapon), InputArgument.op_Implicit((int)component)))
 				{
 					XElement weaponComponentElement = new XElement("COMPONENT", (object)component);
 					parentElement.Add(weaponComponentElement);

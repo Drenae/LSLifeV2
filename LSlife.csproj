@@ -5,30 +5,23 @@
     <UseWindowsForms>True</UseWindowsForms>
     <TargetFramework>net48</TargetFramework>
     <PlatformTarget>x64</PlatformTarget>
-    <GtaVPath Condition="'$(GtaVPath)' == ''">D:\Program Files\Rockstar Games\Grand Theft Auto V Legacy</GtaVPath>
   </PropertyGroup>
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>14.0</LangVersion>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
   </PropertyGroup>
   <PropertyGroup />
   <ItemGroup />
   <ItemGroup>
-    <!-- LS Life V2: SHVDN2 baseline; SHVDN3 + LemonUI are reserved for V3. -->
-    <Reference Include="ScriptHookVDotNet2">
-      <HintPath>$(GtaVPath)\ScriptHookVDotNet2.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
+    <Reference Include="ScriptHookVDotNet2" />
     <Reference Include="NativeUI">
-      <HintPath>$(GtaVPath)\scripts\NativeUI.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>D:\Program Files\Rockstar Games\Grand Theft Auto V Legacy\scripts\NativeUI.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Core" />
     <Reference Include="iFruitAddon2">
-      <HintPath>$(GtaVPath)\scripts\iFruitAddon2.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>D:\Program Files\Rockstar Games\Grand Theft Auto V Legacy\scripts\iFruitAddon2.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>

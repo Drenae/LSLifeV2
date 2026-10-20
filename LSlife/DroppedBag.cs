@@ -33,6 +33,8 @@ public class DroppedBag
 
 	private Pickup pickup;
 
+	private bool players;
+
 	public Pig Pig;
 
 	public DroppedBag(string _subtitleString, int _weed, int _crack, int _cocaine, int _weedZ, int _crackZ, int _cocaineZ, int _money, Vector3 _pos)
@@ -85,16 +87,16 @@ public class DroppedBag
 		LSL.PlayerInventory["Weed"] += weed;
 		LSL.PlayerInventory["Crack"] += crack;
 		LSL.PlayerInventory["Cocaine"] += cocaine;
-		LsFunctions.pWeedGrams += weedZ;
-		LsFunctions.pCrackGrams += crackZ;
-		LsFunctions.pCocaineGrams += cocaineZ;
+		LsFunctions.pWeedOunce += weedZ;
+		LsFunctions.pCrackOunce += crackZ;
+		LsFunctions.pCocaineOunce += cocaineZ;
 		Player player = Game.Player;
 		player.Money += money;
 		if (weapons != null)
 		{
 			LsFunctions.GivePedWeapons(Game.Player.Character, weapons);
 		}
-		UI.ShowSubtitle("Tu as ramassé " + LsFunctions.FormatMetric(weed) + " de cannabis, " + LsFunctions.FormatMetric(crack) + " de crack, " + LsFunctions.FormatMetric(cocaine) + " de cocaïne et $~g~" + money, 5000);
+		UI.ShowSubtitle("You picked up " + LsFunctions.GramsToOz(weed) + " Weed, " + LsFunctions.GramsToOz(crack) + " Crack, " + LsFunctions.GramsToOz(cocaine) + " Cocaine and $~g~" + money, 5000);
 		LsFunctions.UpdateInventory();
 	}
 
@@ -103,7 +105,7 @@ public class DroppedBag
 		//IL_0002: Unknown result type (might be due to invalid IL or missing references)
 		blip = World.CreateBlip(pos);
 		blip.Color = (BlipColor)2;
-		blip.Name = "Sac de drogue";
+		blip.Name = "Bag";
 		blip.IsShortRange = true;
 	}
 
@@ -121,7 +123,7 @@ public class DroppedBag
 		}
 		if (Game.GameTime > timeSpawned + 10000 && LSL.playerPos.DistanceTo(pickup.Position) < 20f)
 		{
-			LsFunctions.DbugString("Minuteur du sac réinitialisé");
+			LsFunctions.DbugString("bag timer reset");
 			timeSpawned = Game.GameTime;
 		}
 		return false;
@@ -133,7 +135,7 @@ public class DroppedBag
 		RemoveBlip();
 		if (LSL.DEBUG)
 		{
-			LsFunctions.DbugString("Objet ramassable supprimé");
+			LsFunctions.DbugString("Pickup Deleted");
 		}
 	}
 

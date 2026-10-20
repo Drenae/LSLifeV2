@@ -36,13 +36,13 @@ internal static class DropDrugs
 		case 0:
 		{
 			Vector3 forwardPos = LSL.playerPos + ((Entity)LSL.player.Character).ForwardVector * 2f;
-			Function.Call<Vector3>((Hash)7932734660826570736L, (InputArgument)(forwardPos.X), (InputArgument)(forwardPos.Y), (InputArgument)(forwardPos.Z), (InputArgument)(0), (InputArgument)(0));
+			Function.Call<Vector3>((Hash)7932734660826570736L, InputArgument.op_Implicit(forwardPos.X), InputArgument.op_Implicit(forwardPos.Y), InputArgument.op_Implicit(forwardPos.Z), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0));
 			RaycastResult ray = World.Raycast(LSL.playerPos, forwardPos, (IntersectOptions)1);
 			if (ray.DitHitAnything)
 			{
 				forwardPos = ray.HitCoords + ray.SurfaceNormal;
 			}
-			LSL.pickupHandler.AddBag(new DroppedBag("Tu as déposé " + LsFunctions.FormatMetric(LSL.TotalDrugsCarried()) + " de drogue !", LSL.PlayerInventory["Weed"], LSL.PlayerInventory["Crack"], LSL.PlayerInventory["Cocaine"], LsFunctions.pWeedGrams, LsFunctions.pCrackGrams, LsFunctions.pCocaineGrams, 0, forwardPos));
+			LSL.pickupHandler.AddBag(new DroppedBag("You have dropped " + LsFunctions.GramsToOz(LSL.TotalDrugsCarried()) + " of drugs!", LSL.PlayerInventory["Weed"], LSL.PlayerInventory["Crack"], LSL.PlayerInventory["Cocaine"], LsFunctions.pWeedOunce, LsFunctions.pCrackOunce, LsFunctions.pCocaineOunce, 0, forwardPos));
 			LsFunctions.PlayTheSound();
 			RemovePlayerDrugs();
 			LsFunctions.UpdateInventory();
@@ -50,11 +50,11 @@ internal static class DropDrugs
 		}
 		case 1:
 			LSL.pStashVehicle.AddDrugs();
-			LsFunctions.SendTextMsg("Drogue transférée dans le véhicule");
+			LsFunctions.SendTextMsg("Transfered drugs to vehicle");
 			break;
 		case 2:
 			LSL.HouseHandler.CurrentHouse.AddDrugs();
-			LsFunctions.SendTextMsg("Drogue transférée dans la cachette");
+			LsFunctions.SendTextMsg("Transfered drugs to stash");
 			break;
 		}
 	}
@@ -65,8 +65,8 @@ internal static class DropDrugs
 		{
 			LSL.PlayerInventory[drug] = 0;
 		}
-		LsFunctions.pCocaineGrams = 0;
-		LsFunctions.pWeedGrams = 0;
-		LsFunctions.pCrackGrams = 0;
+		LsFunctions.pCocaineOunce = 0;
+		LsFunctions.pWeedOunce = 0;
+		LsFunctions.pCrackOunce = 0;
 	}
 }

@@ -11,7 +11,6 @@ using GTA.Native;
 using iFruitAddon2;
 using LSlife.OldCustomers;
 using LSlife.Shots;
-using NativeUI;
 
 namespace LSlife;
 
@@ -19,11 +18,11 @@ internal static class LsFunctions
 {
 	public const int pMaxDrugs = 7168;
 
-	public static int pWeedGrams = 0;
+	public static int pWeedOunce = 0;
 
-	public static int pCrackGrams = 0;
+	public static int pCrackOunce = 0;
 
-	public static int pCocaineGrams = 0;
+	public static int pCocaineOunce = 0;
 
 	public static List<PedHash> cHashes = new List<PedHash>();
 
@@ -34,7 +33,7 @@ internal static class LsFunctions
 	public static Dictionary<string, PedHash> PedModels = new Dictionary<string, PedHash> { 
 	{
 		"ZEE",
-		unchecked((PedHash)(-236444766))
+		(PedHash)(-236444766)
 	} };
 
 	private static List<int> AllowedInteriors = new List<int> { 118018, 271617, 92674, 275201, 233729 };
@@ -142,11 +141,11 @@ internal static class LsFunctions
 				Tuple<LSL.AreaType, LSL.jurisdictionType> zData = new Tuple<LSL.AreaType, LSL.jurisdictionType>(wealth, police);
 				LSL.zoneData.Add(zoneName, zData);
 			}
-			DbugString("Données de Los Santos chargées : " + i + " quartiers ajoutés");
+			DbugString("LosSantos data loaded " + i + " areas added");
 		}
 		else
 		{
-			UI.Notify("~r~Fichier LsLife_LSSA.xml introuvable");
+			UI.Notify("~r~LsLife_LSSA.xml not found");
 		}
 		if (!LSL.LCRWMAP)
 		{
@@ -179,11 +178,11 @@ internal static class LsFunctions
 				Tuple<LSL.AreaType, LSL.jurisdictionType> zData2 = new Tuple<LSL.AreaType, LSL.jurisdictionType>(wealth2, police2);
 				LSL.zoneData.Add(zoneName2, zData2);
 			}
-			DbugString("Données de Liberty City Rewind chargées : " + i2 + " quartiers ajoutés");
+			DbugString("LibertyCity Rewind data loaded " + i2 + " areas added");
 		}
 		else
 		{
-			UI.Notify("~r~Fichier LsLife_LCRW.xml introuvable");
+			UI.Notify("~r~LsLife_LCRW.xml not found");
 		}
 	}
 
@@ -285,33 +284,24 @@ internal static class LsFunctions
 		return new Random().Next(start, end);
 	}
 
-	// LSL V2 FR : format compact pour les descriptions NativeUI étroites.
-	// Toutes les quantites sont exprimees en grammes.
-	public static string FormatOrderPacks(int grams)
-	{
-		return FormatMetric(grams);
-	}
-
 	public static string OrderMenuDesc()
 	{
-		// LSL V2 FR : limiter les balises de couleur pour éviter la fragmentation
-		// du texte de description NativeUI ; chaque valeur reste verte.
-		string mBill = "Total : $" + IntToMoney(LSL.NewOrder.Bill);
-		string mWeed = "~n~Cannabis : " + FormatOrderPacks(LSL.NewOrder.weed) + "~s~";
-		string mCrack = "~n~Crack : " + FormatOrderPacks(LSL.NewOrder.crack) + "~s~";
-		string mCoke = "~n~Cocaïne : " + FormatOrderPacks(LSL.NewOrder.cocaine) + "~s~";
-		string mDebt = "~n~Dette : $" + IntToMoney(LSL.dealer1Debt);
-		string mLimit = "~n~Crédit : $" + IntToMoney(zeeDebtCap());
-		return mBill + mWeed + mCrack + mCoke + mDebt + mLimit;
+		string mWeed = "Weed:~g~" + LSL.NewOrder.weed + "~s~oz";
+		string mCrack = "\nCrack:~g~" + LSL.NewOrder.crack + "~s~oz";
+		string mCoke = "\nCoke:~g~" + LSL.NewOrder.cocaine + "~s~oz";
+		string mBill = "\nBill:$" + IntToMoney(LSL.NewOrder.Bill);
+		string mDebt = "\nDebt:$" + IntToMoney(LSL.dealer1Debt);
+		string mLimit = "\nCredit:$" + IntToMoney(zeeDebtCap());
+		return mWeed + mCrack + mCoke + mBill + mDebt + mLimit;
 	}
 
 	public static void UpdateOrderMenuDesc()
 	{
 		string desc = OrderMenuDesc();
 		LSL.PlaceOrder.Description = desc;
-		((UIMenuItem)LSL.bushWeed).Description = desc;
-		((UIMenuItem)LSL.crack).Description = desc;
-		((UIMenuItem)LSL.cocaine).Description = desc;
+		LSL.bushWeed.Description = desc;
+		LSL.crack.Description = desc;
+		LSL.cocaine.Description = desc;
 		LSL.WeedBuy.Description = desc;
 		LSL.CrackBuy.Description = desc;
 		LSL.CocainBuy.Description = desc;
@@ -338,12 +328,12 @@ internal static class LsFunctions
 
 	public static bool CanSee(Entity _ent, Entity _targetEnt)
 	{
-		return Function.Call<bool>((Hash)173335856089985402L, (InputArgument)(_ent), (InputArgument)(_targetEnt));
+		return Function.Call<bool>((Hash)173335856089985402L, InputArgument.op_Implicit(_ent), InputArgument.op_Implicit(_targetEnt));
 	}
 
 	public static bool CanHearPlayer(Ped _ped)
 	{
-		return Function.Call<bool>(unchecked((Hash)(-966241770451121623L)), (InputArgument)(Game.Player.Character), (InputArgument)(_ped));
+		return Function.Call<bool>((Hash)(-966241770451121623L), InputArgument.op_Implicit(Game.Player.Character), InputArgument.op_Implicit(_ped));
 	}
 
 	public static bool IsPolice(Ped p)
@@ -351,7 +341,7 @@ internal static class LsFunctions
 		bool cop = false;
 		foreach (Enums.LawEnforcePed lawEnforce in Enum.GetValues(typeof(Enums.LawEnforcePed)))
 		{
-			if (Function.Call<int>(unchecked((Hash)(-70476366192974276L)), (InputArgument)(((Entity)p).Handle)) == (int)lawEnforce)
+			if (Function.Call<int>((Hash)(-70476366192974276L), InputArgument.op_Implicit(((Entity)p).Handle)) == (int)lawEnforce)
 			{
 				cop = true;
 				break;
@@ -402,7 +392,7 @@ internal static class LsFunctions
 		for (int i = 0; i < 16; i++)
 		{
 			newSpawnPos.Z = World.GetGroundHeight(newSpawnPos);
-			if (Function.Call<bool>((Hash)1322919935073282825L, (InputArgument)(newSpawnPos.X), (InputArgument)(newSpawnPos.Y), (InputArgument)(newSpawnPos.Z)) || newSpawnPos.DistanceTo(spawnPos) < newSpawnPos.DistanceTo(directionPos))
+			if (Function.Call<bool>((Hash)1322919935073282825L, InputArgument.op_Implicit(newSpawnPos.X), InputArgument.op_Implicit(newSpawnPos.Y), InputArgument.op_Implicit(newSpawnPos.Z)) || newSpawnPos.DistanceTo(spawnPos) < newSpawnPos.DistanceTo(directionPos))
 			{
 				oldSpawnPos = newSpawnPos;
 				newSpawnPos += directionFromSpawn * 0.5f;
@@ -421,11 +411,11 @@ internal static class LsFunctions
 
 	public static void NotImmuneToPlayer(Ped ped)
 	{
-		Function.Call(unchecked((Hash)(-2148903261299834599L)), (InputArgument)(ped), (InputArgument)(true), (InputArgument)(LSL.playerRelationship));
+		Function.Call((Hash)(-2148903261299834599L), InputArgument.op_Implicit(ped), InputArgument.op_Implicit(true), InputArgument.op_Implicit(LSL.playerRelationship));
 		ped.CanBeTargetted = true;
 		ped.CanBeShotInVehicle = true;
-		Function.Call((Hash)7400957295976475254L, (InputArgument)(ped), (InputArgument)(LSL.player), (InputArgument)(true));
-		Function.Call((Hash)7202820943940500141L, (InputArgument)(ped), (InputArgument)(true));
+		Function.Call((Hash)7400957295976475254L, InputArgument.op_Implicit(ped), InputArgument.op_Implicit(LSL.player), InputArgument.op_Implicit(true));
+		Function.Call((Hash)7202820943940500141L, InputArgument.op_Implicit(ped), InputArgument.op_Implicit(true));
 	}
 
 	public static Vector2 World3DToScreen2d(Vector3 pos)
@@ -440,7 +430,7 @@ internal static class LsFunctions
 		//IL_0049: Unknown result type (might be due to invalid IL or missing references)
 		OutputArgument x2dp = new OutputArgument();
 		OutputArgument y2dp = new OutputArgument();
-		Function.Call((Hash)3812348786834502901L, (InputArgument)(pos.X), (InputArgument)(pos.Y), (InputArgument)(pos.Z), (InputArgument)(object)x2dp, (InputArgument)(object)y2dp);
+		Function.Call((Hash)3812348786834502901L, InputArgument.op_Implicit(pos.X), InputArgument.op_Implicit(pos.Y), InputArgument.op_Implicit(pos.Z), (InputArgument)(object)x2dp, (InputArgument)(object)y2dp);
 		return new Vector2(x2dp.GetResult<float>(), y2dp.GetResult<float>());
 	}
 
@@ -530,8 +520,8 @@ internal static class LsFunctions
 				break;
 			}
 		}
-		int NodeID = Function.Call<int>((Hash)2510518586829603349L, (InputArgument)(pos.X), (InputArgument)(pos.Y), (InputArgument)(pos.Z), (InputArgument)(1), (InputArgument)(1), (InputArgument)(200f), (InputArgument)(200f));
-		if (Function.Call<bool>((Hash)5715191804072465017L, (InputArgument)(NodeID)))
+		int NodeID = Function.Call<int>((Hash)2510518586829603349L, InputArgument.op_Implicit(pos.X), InputArgument.op_Implicit(pos.Y), InputArgument.op_Implicit(pos.Z), InputArgument.op_Implicit(1), InputArgument.op_Implicit(1), InputArgument.op_Implicit(200f), InputArgument.op_Implicit(200f));
+		if (Function.Call<bool>((Hash)5715191804072465017L, InputArgument.op_Implicit(NodeID)))
 		{
 			speed = ((!((speed * 0.5f > 9f) & shouldSpeed)) ? 9f : (speed * 0.5f));
 		}
@@ -548,7 +538,7 @@ internal static class LsFunctions
 		//IL_0055: Unknown result type (might be due to invalid IL or missing references)
 		//IL_004f: Unknown result type (might be due to invalid IL or missing references)
 		OutputArgument outArgA = new OutputArgument();
-		if (Function.Call<bool>((Hash)2596914974566212883L, (InputArgument)(pos.X), (InputArgument)(pos.Y), (InputArgument)(pos.Z), (InputArgument)(object)outArgA, (InputArgument)(1), (InputArgument)(3f), (InputArgument)(0)))
+		if (Function.Call<bool>((Hash)2596914974566212883L, InputArgument.op_Implicit(pos.X), InputArgument.op_Implicit(pos.Y), InputArgument.op_Implicit(pos.Z), (InputArgument)(object)outArgA, InputArgument.op_Implicit(1), InputArgument.op_Implicit(3f), InputArgument.op_Implicit(0)))
 		{
 			return outArgA.GetResult<Vector3>();
 		}
@@ -557,7 +547,7 @@ internal static class LsFunctions
 
 	public static void SetWorkerMenuHealth(Ped p)
 	{
-		((UIText)LSL.WorkerMainMenu.Subtitle).Caption = "Santé : " + ((Entity)p).Health + " Armure : " + p.Armor;
+		((UIText)LSL.WorkerMainMenu.Subtitle).Caption = "Health:" + ((Entity)p).Health + " Armour:" + p.Armor;
 	}
 
 	public static void SetRandomCombatStats(Ped p)
@@ -577,20 +567,20 @@ internal static class LsFunctions
 		switch (RanRange(0, (int)(1f + LSL.areas[LSL.areaIndex].GangPresance * 0.5f)))
 		{
 		case 5:
-			p.Weapons.Give(unchecked((WeaponHash)(-1074790547)), 500, false, true);
+			p.Weapons.Give((WeaponHash)(-1074790547), 500, false, true);
 			p.Weapons.Give((WeaponHash)324215364, 500, true, true);
 			break;
 		case 4:
 			p.Weapons.Give((WeaponHash)1649403952, 500, false, true);
-			p.Weapons.Give(unchecked((WeaponHash)(-1121678507)), 500, true, true);
+			p.Weapons.Give((WeaponHash)(-1121678507), 500, true, true);
 			break;
 		case 3:
 			p.Weapons.Give((WeaponHash)1649403952, 500, false, true);
-			p.Weapons.Give(unchecked((WeaponHash)(-619010992)), 500, true, true);
+			p.Weapons.Give((WeaponHash)(-619010992), 500, true, true);
 			break;
 		case 2:
 			p.Weapons.Give((WeaponHash)487013001, 500, false, true);
-			p.Weapons.Give(unchecked((WeaponHash)(-619010992)), 500, true, true);
+			p.Weapons.Give((WeaponHash)(-619010992), 500, true, true);
 			break;
 		case 1:
 			p.Weapons.Give((WeaponHash)2017895192, 500, false, true);
@@ -646,9 +636,9 @@ internal static class LsFunctions
 			((Entity)ped).Delete();
 		}
 		Game.PlaySound("Text_Arrive_Tone", "Phone_SoundSet_Default");
-		Function.Call((Hash)2316831480196236324L, (InputArgument)("CELL_EMAIL_BCON"));
-		Function.Call((Hash)7789129354908300458L, (InputArgument)(_msg));
-		Function.Call((Hash)2075484565200204495L, (InputArgument)(HeadShotHandler.headShots[_name].Texture), (InputArgument)(HeadShotHandler.headShots[_name].Texture), (InputArgument)(true), (InputArgument)(1), (InputArgument)(_title), (InputArgument)(_name == "ZEE" ? "Rafael Mendoza" : _name));
+		Function.Call((Hash)2316831480196236324L, InputArgument.op_Implicit("CELL_EMAIL_BCON"));
+		Function.Call((Hash)7789129354908300458L, InputArgument.op_Implicit(_msg));
+		Function.Call((Hash)2075484565200204495L, InputArgument.op_Implicit(HeadShotHandler.headShots[_name].Texture), InputArgument.op_Implicit(HeadShotHandler.headShots[_name].Texture), InputArgument.op_Implicit(true), InputArgument.op_Implicit(1), InputArgument.op_Implicit(_title), InputArgument.op_Implicit(_name));
 		Script.Yield();
 	}
 
@@ -673,9 +663,9 @@ internal static class LsFunctions
 			HeadShotHandler.MugShot(_ped, _name);
 		}
 		Game.PlaySound("Text_Arrive_Tone", "Phone_SoundSet_Default");
-		Function.Call((Hash)2316831480196236324L, (InputArgument)("CELL_EMAIL_BCON"));
-		Function.Call((Hash)7789129354908300458L, (InputArgument)(_msg));
-		Function.Call((Hash)2075484565200204495L, (InputArgument)(HeadShotHandler.headShots[_name].Texture), (InputArgument)(HeadShotHandler.headShots[_name].Texture), (InputArgument)(true), (InputArgument)(1), (InputArgument)(_title), (InputArgument)(_name == "ZEE" ? "Rafael Mendoza" : _name));
+		Function.Call((Hash)2316831480196236324L, InputArgument.op_Implicit("CELL_EMAIL_BCON"));
+		Function.Call((Hash)7789129354908300458L, InputArgument.op_Implicit(_msg));
+		Function.Call((Hash)2075484565200204495L, InputArgument.op_Implicit(HeadShotHandler.headShots[_name].Texture), InputArgument.op_Implicit(HeadShotHandler.headShots[_name].Texture), InputArgument.op_Implicit(true), InputArgument.op_Implicit(1), InputArgument.op_Implicit(_title), InputArgument.op_Implicit(_name));
 		Script.Yield();
 	}
 
@@ -686,7 +676,7 @@ internal static class LsFunctions
 		{
 			totalDrugs += _drugs[_drug.Key];
 		}
-		return totalDrugs + pWeedGrams + pCrackGrams + pCocaineGrams;
+		return totalDrugs + (pWeedOunce * 28 + pCrackOunce * 28 + pCocaineOunce * 28);
 	}
 
 	public static void PedBag(Ped ped, bool give)
@@ -711,35 +701,35 @@ internal static class LsFunctions
 		{
 			if (FreeMode)
 			{
-				Function.Call((Hash)2750315038012726912L, (InputArgument)(ped), (InputArgument)(5), (InputArgument)(81), (InputArgument)(0), (InputArgument)(1));
+				Function.Call((Hash)2750315038012726912L, InputArgument.op_Implicit(ped), InputArgument.op_Implicit(5), InputArgument.op_Implicit(81), InputArgument.op_Implicit(0), InputArgument.op_Implicit(1));
 			}
 			else
 			{
-				Function.Call((Hash)2750315038012726912L, (InputArgument)(ped), (InputArgument)(9), (InputArgument)(1), (InputArgument)(0), (InputArgument)(0));
+				Function.Call((Hash)2750315038012726912L, InputArgument.op_Implicit(ped), InputArgument.op_Implicit(9), InputArgument.op_Implicit(1), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0));
 			}
 		}
 		else if (FreeMode)
 		{
-			Function.Call((Hash)2750315038012726912L, (InputArgument)(ped), (InputArgument)(5), (InputArgument)(0), (InputArgument)(0), (InputArgument)(1));
+			Function.Call((Hash)2750315038012726912L, InputArgument.op_Implicit(ped), InputArgument.op_Implicit(5), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(1));
 		}
 		else
 		{
-			Function.Call((Hash)2750315038012726912L, (InputArgument)(ped), (InputArgument)(9), (InputArgument)(0), (InputArgument)(0), (InputArgument)(0));
+			Function.Call((Hash)2750315038012726912L, InputArgument.op_Implicit(ped), InputArgument.op_Implicit(9), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0));
 		}
 	}
 
 	public static void DisplayHelpText(string text)
 	{
-		InputArgument[] arguments = new InputArgument[1] { (InputArgument)("STRING") };
-		Function.Call(unchecked((Hash)(-8860350453193909743L)), arguments);
-		InputArgument[] argumentArray2 = new InputArgument[1] { (InputArgument)(text) };
+		InputArgument[] arguments = new InputArgument[1] { InputArgument.op_Implicit("STRING") };
+		Function.Call((Hash)(-8860350453193909743L), arguments);
+		InputArgument[] argumentArray2 = new InputArgument[1] { InputArgument.op_Implicit(text) };
 		Function.Call((Hash)7789129354908300458L, argumentArray2);
 		InputArgument[] argumentArray3 = new InputArgument[4]
 		{
-			(InputArgument)(0),
-			(InputArgument)(0),
-			(InputArgument)(1),
-			(InputArgument)(-1)
+			InputArgument.op_Implicit(0),
+			InputArgument.op_Implicit(0),
+			InputArgument.op_Implicit(1),
+			InputArgument.op_Implicit(-1)
 		};
 		Function.Call((Hash)2562546386151446694L, argumentArray3);
 	}
@@ -781,7 +771,7 @@ internal static class LsFunctions
 	{
 		if ((Entity)(object)ped.LastVehicle == (Entity)(object)LSL.player.Character.LastVehicle)
 		{
-			Function.Call(unchecked((Hash)(-4932030039357269829L)), (InputArgument)(ped));
+			Function.Call((Hash)(-4932030039357269829L), InputArgument.op_Implicit(ped));
 		}
 		Blip currentBlip = ((Entity)ped).CurrentBlip;
 		if (currentBlip != null)
@@ -812,7 +802,7 @@ internal static class LsFunctions
 
 	public static bool IsInInterior(Entity _entity)
 	{
-		int interior = Function.Call<int>((Hash)2380075781929936571L, (InputArgument)(_entity));
+		int interior = Function.Call<int>((Hash)2380075781929936571L, InputArgument.op_Implicit(_entity));
 		foreach (int allowedInterior in AllowedInteriors)
 		{
 			if (allowedInterior == interior)
@@ -912,7 +902,7 @@ internal static class LsFunctions
 			LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
 			if (LSL.DEBUG)
 			{
-				UI.Notify("Sauvegarde modifiée");
+				UI.Notify("Save Changed");
 			}
 		}
 	}
@@ -936,11 +926,11 @@ internal static class LsFunctions
 		List<XElement> weps = new List<XElement>();
 		foreach (WeaponHash weapon in Enum.GetValues(typeof(WeaponHash)))
 		{
-			if (!Function.Call<bool>(unchecked((Hash)(-8220001501650343748L)), (InputArgument)(_ped), (InputArgument)((int)weapon)))
+			if (!Function.Call<bool>((Hash)(-8220001501650343748L), InputArgument.op_Implicit(_ped), InputArgument.op_Implicit((int)weapon)))
 			{
 				continue;
 			}
-			int ammunitionInWeapon = Function.Call<int>((Hash)97480644549409105L, (InputArgument)(_ped), (InputArgument)((int)weapon));
+			int ammunitionInWeapon = Function.Call<int>((Hash)97480644549409105L, InputArgument.op_Implicit(_ped), InputArgument.op_Implicit((int)weapon));
 			if (ammunitionInWeapon < 500)
 			{
 				ammunitionInWeapon = 500;
@@ -952,7 +942,7 @@ internal static class LsFunctions
 			parentElement.Add(weaponAmmoElement);
 			foreach (WeaponComponent component in Enum.GetValues(typeof(WeaponComponent)))
 			{
-				if (Function.Call<bool>(unchecked((Hash)(-4209984786179366080L)), (InputArgument)(_ped), (InputArgument)((int)weapon), (InputArgument)((int)component)))
+				if (Function.Call<bool>((Hash)(-4209984786179366080L), InputArgument.op_Implicit(_ped), InputArgument.op_Implicit((int)weapon), InputArgument.op_Implicit((int)component)))
 				{
 					XElement weaponComponentElement = new XElement("COMPONENT", (object)component);
 					parentElement.Add(weaponComponentElement);
@@ -997,7 +987,7 @@ internal static class LsFunctions
 		foreach (XElement _weapon in _weapons)
 		{
 			bool hasWeapon = false;
-			WeaponHash weapon = unchecked((WeaponHash)(-1569615261));
+			WeaponHash weapon = (WeaponHash)(-1569615261);
 			foreach (XElement ele in _weapon.Elements())
 			{
 				if (ele.Name == "HASH")
@@ -1030,7 +1020,7 @@ internal static class LsFunctions
 					current2.Ammo += ammo;
 					if (LSL.DEBUG)
 					{
-						UI.Notify("Arme donnée au personnage : " + ((object)weapon/*cast due to constrained. prefix*/).ToString());
+						UI.Notify("Gave ped" + ((object)weapon/*cast due to constrained. prefix*/).ToString());
 					}
 				}
 				if (ele.Name == "COMPONENT" && !hasWeapon && Enum.TryParse<WeaponComponent>(ele.Value, out WeaponComponent wepcomp) && _ped != null)
@@ -1077,27 +1067,27 @@ internal static class LsFunctions
 						saveChanged = true;
 					}
 				}
-				else if (e.Name == "weedGrams")
+				else if (e.Name == "weedOz")
 				{
-					if (e.Value != pWeedGrams.ToString())
+					if (e.Value != pWeedOunce.ToString())
 					{
-						e.Value = pWeedGrams.ToString();
+						e.Value = pWeedOunce.ToString();
 						saveChanged = true;
 					}
 				}
-				else if (e.Name == "crackGrams")
+				else if (e.Name == "crackOz")
 				{
-					if (e.Value != pCrackGrams.ToString())
+					if (e.Value != pCrackOunce.ToString())
 					{
-						e.Value = pCrackGrams.ToString();
+						e.Value = pCrackOunce.ToString();
 						saveChanged = true;
 					}
 				}
-				else if (e.Name == "cocaineGrams")
+				else if (e.Name == "cocaineOz")
 				{
-					if (e.Value != pCocaineGrams.ToString())
+					if (e.Value != pCocaineOunce.ToString())
 					{
-						e.Value = pCocaineGrams.ToString();
+						e.Value = pCocaineOunce.ToString();
 						saveChanged = true;
 					}
 				}
@@ -1166,7 +1156,7 @@ internal static class LsFunctions
 					timeTodeliver -= 12;
 					amPm = "PM";
 				}
-				TextMsg("ZEE", "Livraison", "Commande validée, livraison prévue le " + mDay.ToString() + " à " + timeTodeliver + ":00" + amPm);
+				TextMsg("ZEE", "Reload", "order in, should come " + mDay.ToString() + " at " + timeTodeliver + ":00" + amPm);
 			}
 			int timeReduction = 0;
 			timeReduction = ((!(CurrentRepLvl(LSL.dealer1Rep) > 36.0)) ? ((int)CurrentRepLvl(LSL.dealer1Rep) * 10000) : 360000);
@@ -1210,7 +1200,7 @@ internal static class LsFunctions
 					{
 						LSL.dealer1Debt = 0;
 					}
-					TextMsg("ZEE", "Dette", "Ajout de $" + IntToMoney((int)intrestAmount) + " à ta dette, total : $" + IntToMoney(LSL.dealer1Debt));
+					TextMsg("ZEE", "Debt", "added $" + IntToMoney((int)intrestAmount) + " to your bill, its now $" + IntToMoney(LSL.dealer1Debt));
 				}
 				if (LSL.hardMode)
 				{
@@ -1226,17 +1216,17 @@ internal static class LsFunctions
 				float weedMoney = 0f;
 				float crackMoney = 0f;
 				float cocainMoney = 0f;
-				if (LSL.dealer1Weed < 1120)
+				if (LSL.dealer1Weed < 40)
 				{
 					weedMoney = (float)LSL.dealer1Money * 0.75f;
 					LSL.dealer1Money -= (int)weedMoney;
 				}
-				if (LSL.dealer1Crack < 1120)
+				if (LSL.dealer1Crack < 40)
 				{
 					crackMoney = (float)LSL.dealer1Money * 0.6f;
 					LSL.dealer1Money -= (int)crackMoney;
 				}
-				if (LSL.dealer1Cocain < 1120)
+				if (LSL.dealer1Cocain < 40)
 				{
 					cocainMoney = LSL.dealer1Money;
 					LSL.dealer1Money -= (int)cocainMoney;
@@ -1244,17 +1234,17 @@ internal static class LsFunctions
 				int dWeed = LSL.weed1Price / 2 - Discount(LSL.weed1Price / 2);
 				int dCrack = LSL.crack1Price / 2 - Discount(LSL.crack1Price / 2);
 				int dCocaine = LSL.cocain1Price / 2 - Discount(LSL.cocain1Price / 2);
-				int finalWeed = GramsForBudget((decimal)weedMoney, dWeed);
-				int finalCrack = GramsForBudget((decimal)crackMoney, dCrack);
-				int finalCocain = GramsForBudget((decimal)cocainMoney, dCocaine);
+				int finalWeed = (int)weedMoney / dWeed;
+				int finalCrack = (int)crackMoney / dCrack;
+				int finalCocain = (int)cocainMoney / dCocaine;
 				LSL.dealer1Weed += finalWeed;
 				LSL.dealer1Crack += finalCrack;
 				LSL.dealer1Cocain += finalCocain;
-				weedMoney -= PriceForGrams(finalWeed, dWeed);
-				crackMoney -= PriceForGrams(finalCrack, dCrack);
-				cocainMoney -= PriceForGrams(finalCocain, dCocaine);
+				weedMoney -= (float)(finalWeed * dWeed);
+				crackMoney -= (float)(finalCrack * dCrack);
+				cocainMoney -= (float)(finalCocain * dCocaine);
 				LSL.dealer1Money += (int)weedMoney + (int)crackMoney + (int)cocainMoney;
-				TextMsg("ZEE", "Livraison", "Cannabis : " + FormatMetric(finalWeed) + ", Crack : " + FormatMetric(finalCrack) + ", Cocaïne : " + FormatMetric(finalCocain) + ".");
+				TextMsg("ZEE", "Reload", "Weed:" + finalWeed + "oz, Crack:" + finalCrack + "oz, Cocaine:" + finalCocain + "oz.");
 				LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
 				UpdateSave();
 			}
@@ -1272,7 +1262,7 @@ internal static class LsFunctions
 					{
 						LSL.dealer1Debt = 0;
 					}
-					TextMsg("ZEE", "Dette", "Ajout de $" + IntToMoney((int)intrestAmount2) + " à ta dette, total : $" + IntToMoney(LSL.dealer1Debt));
+					TextMsg("ZEE", "Debt", "added $" + IntToMoney((int)intrestAmount2) + " to your bill, its now $" + IntToMoney(LSL.dealer1Debt));
 				}
 				if (LSL.dealer1Money < 10000)
 				{
@@ -1281,17 +1271,17 @@ internal static class LsFunctions
 				float weedMoney2 = 0f;
 				float crackMoney2 = 0f;
 				float cocainMoney2 = 0f;
-				if (LSL.dealer1Weed < 1120)
+				if (LSL.dealer1Weed < 40)
 				{
 					weedMoney2 = (float)LSL.dealer1Money * 0.75f;
 					LSL.dealer1Money -= (int)weedMoney2;
 				}
-				if (LSL.dealer1Crack < 1120)
+				if (LSL.dealer1Crack < 40)
 				{
 					crackMoney2 = (float)LSL.dealer1Money * 0.6f;
 					LSL.dealer1Money -= (int)crackMoney2;
 				}
-				if (LSL.dealer1Cocain < 1120)
+				if (LSL.dealer1Cocain < 40)
 				{
 					cocainMoney2 = LSL.dealer1Money;
 					LSL.dealer1Money -= (int)cocainMoney2;
@@ -1299,27 +1289,27 @@ internal static class LsFunctions
 				int dWeed2 = LSL.weed1Price / 2 - Discount(LSL.weed1Price / 2);
 				int dCrack2 = LSL.crack1Price / 2 - Discount(LSL.crack1Price / 2);
 				int dCocaine2 = LSL.cocain1Price / 2 - Discount(LSL.cocain1Price / 2);
-				int finalWeed2 = GramsForBudget((decimal)weedMoney2, dWeed2);
-				int finalCrack2 = GramsForBudget((decimal)crackMoney2, dCrack2);
-				int finalCocain2 = GramsForBudget((decimal)cocainMoney2, dCocaine2);
+				int finalWeed2 = (int)weedMoney2 / dWeed2;
+				int finalCrack2 = (int)crackMoney2 / dCrack2;
+				int finalCocain2 = (int)cocainMoney2 / dCocaine2;
 				LSL.dealer1Weed += finalWeed2;
 				LSL.dealer1Crack += finalCrack2;
 				LSL.dealer1Cocain += finalCocain2;
-				weedMoney2 -= PriceForGrams(finalWeed2, dWeed2);
-				crackMoney2 -= PriceForGrams(finalCrack2, dCrack2);
-				cocainMoney2 -= PriceForGrams(finalCocain2, dCocaine2);
+				weedMoney2 -= (float)(finalWeed2 * dWeed2);
+				crackMoney2 -= (float)(finalCrack2 * dCrack2);
+				cocainMoney2 -= (float)(finalCocain2 * dCocaine2);
 				LSL.dealer1Money += (int)weedMoney2 + (int)crackMoney2 + (int)cocainMoney2;
-				TextMsg("ZEE", "Livraison", "Cannabis : " + FormatMetric(finalWeed2) + ", Crack : " + FormatMetric(finalCrack2) + ", Cocaïne : " + FormatMetric(finalCocain2) + ".");
+				TextMsg("ZEE", "Reload", "Weed:" + finalWeed2 + "oz, Crack:" + finalCrack2 + "oz, Cocaine:" + finalCocain2 + "oz.");
 				if (LSL.DEBUG)
 				{
-					UI.Notify("Cannabis : " + finalWeed2 + " Crack : " + finalCrack2 + " Cocaïne : " + finalCocain2);
+					UI.Notify("Weed:" + finalWeed2 + " Crack:" + finalCrack2 + " Cocaine:" + finalCocain2);
 				}
 				LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
 				UpdateSave();
 			}
 			if (LSL.areas.Count > 0)
 			{
-				DbugString("Heures écoulées = " + HoursPassed);
+				DbugString("HoursPassed = " + HoursPassed);
 				for (int i = 0; i < HoursPassed; i++)
 				{
 					foreach (Area area in LSL.areas)
@@ -1348,11 +1338,11 @@ internal static class LsFunctions
 		{
 			TimeChanged = false;
 		}
-		if (Function.Call<int>(unchecked((Hash)(-2777906517671992481L))) == LSL.day)
+		if (Function.Call<int>((Hash)(-2777906517671992481L)) == LSL.day)
 		{
 			return;
 		}
-		LSL.day = Function.Call<int>(unchecked((Hash)(-2777906517671992481L)));
+		LSL.day = Function.Call<int>((Hash)(-2777906517671992481L));
 		LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
 		if (LSL.dealer1Money > 1200000)
 		{
@@ -1368,7 +1358,7 @@ internal static class LsFunctions
 			else
 			{
 				LSL.dealer1Weed -= LSL.dealer1Weed / 2;
-				LSL.dealer1Money += PriceForGrams(LSL.dealer1Weed, LSL.weed1Price / 2 + Discount(LSL.weed1Price / 2));
+				LSL.dealer1Money += (LSL.weed1Price / 2 + Discount(LSL.weed1Price / 2)) * LSL.dealer1Weed;
 			}
 			foreach (XElement element2 in LSL.LSLifeSave.Descendants())
 			{
@@ -1399,7 +1389,7 @@ internal static class LsFunctions
 			else
 			{
 				LSL.dealer1Crack -= LSL.dealer1Crack / 2;
-				LSL.dealer1Money += PriceForGrams(LSL.dealer1Crack, LSL.crack1Price / 2 + Discount(LSL.crack1Price / 2));
+				LSL.dealer1Money += (LSL.crack1Price / 2 + Discount(LSL.crack1Price / 2)) * LSL.dealer1Crack;
 			}
 			foreach (XElement element3 in LSL.LSLifeSave.Descendants())
 			{
@@ -1430,7 +1420,7 @@ internal static class LsFunctions
 			else
 			{
 				LSL.dealer1Cocain -= LSL.dealer1Cocain / 2;
-				LSL.dealer1Money += PriceForGrams(LSL.dealer1Cocain, LSL.cocain1Price / 2 + Discount(LSL.cocain1Price / 2));
+				LSL.dealer1Money += (LSL.cocain1Price / 2 + Discount(LSL.cocain1Price / 2)) * LSL.dealer1Cocain;
 			}
 			foreach (XElement element4 in LSL.LSLifeSave.Descendants())
 			{
@@ -1493,7 +1483,7 @@ internal static class LsFunctions
 			lastHour = currentHour;
 			if (LSL.DEBUG)
 			{
-				UI.Notify("Heures écoulées : " + hoursPassed);
+				UI.Notify("Hours Passed " + hoursPassed);
 			}
 		}
 		return hoursPassed;
@@ -1532,7 +1522,7 @@ internal static class LsFunctions
 					}
 					if (LSL.DEBUG)
 					{
-						UI.Notify("Porte trouvée");
+						UI.Notify("Door found");
 					}
 					break;
 				}
@@ -1540,10 +1530,10 @@ internal static class LsFunctions
 		}
 		if ((Entity)(object)prop == (Entity)null)
 		{
-			prop = World.CreateProp((int)(doorHash), pos, new Vector3(0f, 0f, 0f), false, false);
+			prop = World.CreateProp(Model.op_Implicit(doorHash), pos, new Vector3(0f, 0f, 0f), false, false);
 			if (LSL.DEBUG)
 			{
-				UI.Notify("Aucune porte trouvée, création en cours");
+				UI.Notify("Didnt find a door spawning one");
 			}
 		}
 		return prop;
@@ -1562,15 +1552,15 @@ internal static class LsFunctions
 
 	public static void ContactAnswered(iFruitContact contact)
 	{
-		if (contact.Name == "Rafael Mendoza" && LSL.LsMenuPool != null)
+		if (contact.Name == "Zee" && LSL.LsMenuPool != null)
 		{
 			if (LSL.isDealing)
 			{
-				LSL.StartDeal.Text = "Arrêter la vente";
+				LSL.StartDeal.Text = "Stop Dealing";
 			}
 			else
 			{
-				LSL.StartDeal.Text = "Commencer la vente";
+				LSL.StartDeal.Text = " Start Dealing";
 			}
 			LSL.zeeMenu.Visible = !LSL.zeeMenu.Visible;
 			UpdateDealerInventory();
@@ -1581,8 +1571,8 @@ internal static class LsFunctions
 
 	private static void UpdateDealerInventory()
 	{
-		((UIText)LSL.zeeMenu.Subtitle).Caption = "Réputation : " + IntToMoney((int)LSL.dealer1Rep) + " Niveau : ~g~" + (int)CurrentRepLvl(LSL.dealer1Rep);
-		LSL.payDebt.Text = "Rembourser la dette : $" + IntToMoney(LSL.dealer1Debt);
+		((UIText)LSL.zeeMenu.Subtitle).Caption = "Rep:" + IntToMoney((int)LSL.dealer1Rep) + " Level:~g~" + (int)CurrentRepLvl(LSL.dealer1Rep);
+		LSL.payDebt.Text = "Pay Debt $" + IntToMoney(LSL.dealer1Debt);
 		LSL.bushWeed.Maximum = LSL.dealer1Weed;
 		LSL.bushWeed.Value = 0;
 		LSL.crack.Maximum = LSL.dealer1Crack;
@@ -1602,7 +1592,7 @@ internal static class LsFunctions
 		//IL_0035: Unknown result type (might be due to invalid IL or missing references)
 		//IL_005a: Unknown result type (might be due to invalid IL or missing references)
 		Vector3 position = ((Entity)p).Position;
-		if (position.DistanceTo(target) > 20f || Function.Call<bool>((Hash)1322919935073282825L, (InputArgument)(target.X), (InputArgument)(target.Y), (InputArgument)(target.Z)))
+		if (position.DistanceTo(target) > 20f || Function.Call<bool>((Hash)1322919935073282825L, InputArgument.op_Implicit(target.X), InputArgument.op_Implicit(target.Y), InputArgument.op_Implicit(target.Z)))
 		{
 			p.Task.RunTo(target);
 		}
@@ -1675,7 +1665,7 @@ internal static class LsFunctions
 		if (!inCar)
 		{
 			Game.Player.Character.Task.TurnTo((Entity)(object)p);
-			Function.Call(unchecked((Hash)(-8213159594590722974L)), (InputArgument)(p), (InputArgument)("GENERIC_HOWS_IT_GOING"), (InputArgument)("SPEECH_PARAMS_STANDARD"), (InputArgument)(0));
+			Function.Call((Hash)(-8213159594590722974L), InputArgument.op_Implicit(p), InputArgument.op_Implicit("GENERIC_HOWS_IT_GOING"), InputArgument.op_Implicit("SPEECH_PARAMS_STANDARD"), InputArgument.op_Implicit(0));
 			Script.Wait(1000);
 			p.Task.PlayAnimation("switch@franklin@002110_04_magd_3_weed_exchange", "002110_04_magd_3_weed_exchange_franklin", 8f, 3000, (AnimationFlags)16);
 			Game.Player.Character.Task.PlayAnimation("switch@franklin@002110_04_magd_3_weed_exchange", "002110_04_magd_3_weed_exchange_shopkeeper", 8f, 3000, (AnimationFlags)16);
@@ -1686,8 +1676,8 @@ internal static class LsFunctions
 			ped2.Money -= price;
 			LSL.PlayerInventory[c.Drug.Name] -= c.amount;
 			PlayTheSound();
-			UI.Notify("Vendu : " + c.Drug.Name + " " + FormatMetric(c.amount) + ", il te reste " + FormatMetric(LSL.PlayerInventory[c.Drug.Name]) + ". Gain : ~g~" + repEarned + " ~s~réputation, réputation totale ~g~" + LSL.areas[LSL.areaIndex].Reputation + "~s~ dans " + LSL.areas[LSL.areaIndex].Name);
-			Function.Call(unchecked((Hash)(-8213159594590722974L)), (InputArgument)(p), (InputArgument)("GENERIC_THANKS"), (InputArgument)("SPEECH_PARAMS_STANDARD"), (InputArgument)(0));
+			UI.Notify("Sold " + c.Drug.Name + " " + GramsToOz(c.amount) + ", you got " + GramsToOz(LSL.PlayerInventory[c.Drug.Name]) + " left. Gained ~g~" + repEarned + " ~s~rep, total rep ~g~" + LSL.areas[LSL.areaIndex].Reputation + "~s~ in " + LSL.areas[LSL.areaIndex].Name);
+			Function.Call((Hash)(-8213159594590722974L), InputArgument.op_Implicit(p), InputArgument.op_Implicit("GENERIC_THANKS"), InputArgument.op_Implicit("SPEECH_PARAMS_STANDARD"), InputArgument.op_Implicit(0));
 			if ((Entity)(object)c.Vehicle != (Entity)null && ((Entity)c.Vehicle).Exists())
 			{
 				c.Ped.Task.PerformSequence(LSL.PerformTaskSeq(1, c.Vehicle, Vector3.Zero));
@@ -1703,7 +1693,7 @@ internal static class LsFunctions
 		}
 		else
 		{
-			Function.Call(unchecked((Hash)(-8213159594590722974L)), (InputArgument)(p), (InputArgument)("GENERIC_HOWS_IT_GOING"), (InputArgument)("SPEECH_PARAMS_STANDARD"), (InputArgument)(0));
+			Function.Call((Hash)(-8213159594590722974L), InputArgument.op_Implicit(p), InputArgument.op_Implicit("GENERIC_HOWS_IT_GOING"), InputArgument.op_Implicit("SPEECH_PARAMS_STANDARD"), InputArgument.op_Implicit(0));
 			Script.Wait(1000);
 			p.Task.PlayAnimation("switch@franklin@002110_04_magd_3_weed_exchange", "002110_04_magd_3_weed_exchange_franklin", 8f, 3000, (AnimationFlags)16);
 			Script.Wait(3000);
@@ -1713,8 +1703,8 @@ internal static class LsFunctions
 			ped3.Money -= price;
 			LSL.PlayerInventory[c.Drug.Name] -= c.amount;
 			PlayTheSound();
-			UI.Notify("Vendu : " + c.Drug.Name + " " + FormatMetric(c.amount) + ", il te reste " + FormatMetric(LSL.PlayerInventory[c.Drug.Name]) + ". Gain : ~g~" + repEarned + " ~s~réputation, réputation totale ~g~" + LSL.areas[LSL.areaIndex].Reputation + "~s~ dans " + LSL.areas[LSL.areaIndex].Name);
-			Function.Call(unchecked((Hash)(-8213159594590722974L)), (InputArgument)(p), (InputArgument)("GENERIC_THANKS"), (InputArgument)("SPEECH_PARAMS_STANDARD"), (InputArgument)(0));
+			UI.Notify("Sold " + c.Drug.Name + " " + GramsToOz(c.amount) + ", you got " + GramsToOz(LSL.PlayerInventory[c.Drug.Name]) + " left. Gained ~g~" + repEarned + " ~s~rep, total rep ~g~" + LSL.areas[LSL.areaIndex].Reputation + "~s~ in " + LSL.areas[LSL.areaIndex].Name);
+			Function.Call((Hash)(-8213159594590722974L), InputArgument.op_Implicit(p), InputArgument.op_Implicit("GENERIC_THANKS"), InputArgument.op_Implicit("SPEECH_PARAMS_STANDARD"), InputArgument.op_Implicit(0));
 			if ((Entity)(object)c.Vehicle != (Entity)null && ((Entity)c.Vehicle).Exists())
 			{
 				c.Ped.Task.PerformSequence(LSL.PerformTaskSeq(1, c.Vehicle, Vector3.Zero));
@@ -1762,7 +1752,7 @@ internal static class LsFunctions
 			double gangStr = LSL.areas[LSL.areaIndex].GangPresance * 1.5f;
 			if (RanRange(0, 8 + (int)gangStr) == 0)
 			{
-				UI.ShowSubtitle("Je voulais te prévenir : ~r~quelqu'un ~w~vend aussi vers ~y~" + World.GetStreetName(((Entity)LSL.aDealer.dPed).Position) + "~w~.", 6000);
+				UI.ShowSubtitle("Hey thought you might like to know, ~r~someone ~w~else selling over on ~y~" + World.GetStreetName(((Entity)LSL.aDealer.dPed).Position) + "~w~.", 6000);
 				AddBlip((Entity)(object)LSL.aDealer.dPed, (BlipColor)1, "Dealer", _friend: false, _edge: false);
 				LSL.aDealer.Detected = true;
 				tip = true;
@@ -1770,7 +1760,7 @@ internal static class LsFunctions
 		}
 		if (!tip && LSL.pigs.Count > 0 && !tip && !LSL.pigs[0].detected && RanRange(0, 5 + (int)LSL.areas[LSL.areaIndex].GangPresance) == 0)
 		{
-			UI.ShowSubtitle("Il paraît que la ~r~police ~w~est vers ~y~" + World.GetStreetName(((Entity)LSL.pigs[0].Ped).Position) + "~w~. Ils viennent par ici.", 6000);
+			UI.ShowSubtitle("I hear ~r~Police ~w~are over on ~y~" + World.GetStreetName(((Entity)LSL.pigs[0].Ped).Position) + "~w~. They heading this way.", 6000);
 			LSL.pigs[0].detected = true;
 			tip = true;
 		}
@@ -1782,7 +1772,7 @@ internal static class LsFunctions
 			{
 				Hire = true;
 				LSL.PottentialWorker = new HirePed(c.Ped);
-				UI.ShowSubtitle("Tu recrutes des employés ?", 6000);
+				UI.ShowSubtitle("You taking on any workers?", 6000);
 				tip = true;
 			}
 		}
@@ -1795,11 +1785,11 @@ internal static class LsFunctions
 		{
 			if (LSL.DEBUG)
 			{
-				UI.Notify(police.Count + " | " + Function.Call<int>(unchecked((Hash)(-70476366192974276L)), (InputArgument)(((Entity)pol).Handle)) + " | " + IsPolice(pol));
+				UI.Notify(police.Count + " | " + Function.Call<int>((Hash)(-70476366192974276L), InputArgument.op_Implicit(((Entity)pol).Handle)) + " | " + IsPolice(pol));
 			}
 			if (CanSee((Entity)(object)pol, (Entity)(object)Game.Player.Character))
 			{
-				SendTextMsg("Ils t'ont vu vendre, le quartier est maintenant sous surveillance.");
+				SendTextMsg("They spotted you dealing, your gona be hot round there now.");
 				LSL.areas[LSL.areaIndex].Heat++;
 				Game.Player.WantedLevel = 1;
 				break;
@@ -1852,12 +1842,12 @@ internal static class LsFunctions
 		{
 			if (LSL.DEBUG)
 			{
-				UI.Notify(police.Count + " | " + Function.Call<int>(unchecked((Hash)(-70476366192974276L)), (InputArgument)(((Entity)pol).Handle)) + " | " + IsPolice(pol));
+				UI.Notify(police.Count + " | " + Function.Call<int>((Hash)(-70476366192974276L), InputArgument.op_Implicit(((Entity)pol).Handle)) + " | " + IsPolice(pol));
 			}
 			position = ((Entity)pol).Position;
 			if (position.DistanceTo(LSL.playerPos) < 40f && CanSee((Entity)(object)pol, (Entity)(object)Game.Player.Character))
 			{
-				SendTextMsg("Ils t'ont vu vendre, le quartier est maintenant sous surveillance.");
+				SendTextMsg("They spotted you dealing, your gona be hot round there now.");
 				LSL.areas[LSL.areaIndex].Heat += 200f;
 				Game.Player.WantedLevel = 1;
 				break;
@@ -1873,7 +1863,7 @@ internal static class LsFunctions
 			position = ((Entity)LSL.aDealer.dPed).Position;
 			if (position.DistanceTo(LSL.playerPos) < 40f && CanSee((Entity)(object)LSL.aDealer.dPed, (Entity)(object)Game.Player.Character) && LSL.rnd.Next(0, 2) == 0 && LSL.driveByHandler.AmountOfDriveBy(_agg: true) == 0)
 			{
-				DbugString("Création d'une attaque : joueur surpris en pleine transaction.");
+				DbugString("Spawning Driveby, player seen doing deal.");
 				SpawnDriveBy(LSL.player.Character, _agressive: true);
 			}
 		}
@@ -1886,7 +1876,7 @@ internal static class LsFunctions
 		if (LSL.driveByHandler.GetDriveBies.Where((DriveBy r) => CanSee((Entity)(object)r.Leader, (Entity)(object)LSL.player.Character)).Count() > 0)
 		{
 			LSL.driveByHandler.SetAgressiveTarget(_agg: true, LSL.player.Character);
-			UI.Notify("Transaction repérée depuis un véhicule");
+			UI.Notify("Driveby saw deal");
 		}
 	}
 
@@ -1932,10 +1922,10 @@ internal static class LsFunctions
 			{
 				Script.Yield();
 			}
-			DbugString("Temps du modèle = " + (time - Game.GameTime));
+			DbugString("modelTime = " + (time - Game.GameTime));
 			return Model;
 		}
-		DbugString("Modèle invalide");
+		DbugString("modelInvalid");
 		Model.MarkAsNoLongerNeeded();
 		return Model;
 	}
@@ -1960,29 +1950,30 @@ internal static class LsFunctions
 		return Model;
 	}
 
-	// Toutes les quantites de produits sont maintenant stockees en grammes.
-	// Tarifs pour 100 g ; commandes et stocks en grammes.
-	public static int PriceForGrams(int grams, int priceFor100Grams)
+	public static string GramsToOz(int _grams)
 	{
-		if (grams <= 0 || priceFor100Grams <= 0) return 0;
-		return checked((int)Math.Round((decimal)grams * priceFor100Grams / 100m, MidpointRounding.AwayFromZero));
-	}
-
-	public static int GramsForBudget(decimal budget, int priceFor100Grams)
-	{
-		if (budget <= 0 || priceFor100Grams <= 0) return 0;
-		return checked((int)Math.Floor(budget * 100m / priceFor100Grams));
-	}
-
-	public static string FormatMetric(int grams, string color = "~g~")
-	{
-		if (grams < 1000)
+		if (_grams >= 28)
 		{
-			return color + grams + "~s~ g";
+			int oz = _grams / 28;
+			int g = _grams - oz * 28;
+			return "~g~" + oz + "~s~oz, ~g~" + g + "~s~g";
 		}
-		int kg = grams / 1000;
-		int remainder = grams % 1000;
-		return remainder == 0 ? color + kg + "~s~ kg" : color + kg + "~s~ kg " + color + remainder + "~s~ g";
+		return "~g~" + _grams + "~s~g";
+	}
+
+	public static void AddWeedOz(int _amount)
+	{
+		pWeedOunce += _amount;
+	}
+
+	public static void AddCrackOz(int _amount)
+	{
+		pCrackOunce += _amount;
+	}
+
+	public static void AddCocaineOz(int _amount)
+	{
+		pCocaineOunce += _amount;
 	}
 
 	public static void DbugString(string _string)
@@ -1995,10 +1986,9 @@ internal static class LsFunctions
 
 	public static string IntToMoney(int _money)
 	{
-		// LSL V2 FR : espace ASCII entre milliers, sans balise GTA insérée dans le nombre.
-		// Culture invariante pour éviter les espaces insécables affichés comme des carrés.
-		string amount = _money.ToString("#,##0", System.Globalization.CultureInfo.InvariantCulture).Replace(',', ' ');
-		return "~g~" + amount + "~s~";
+		StringBuilder stringBuilder = new StringBuilder("~g~" + _money.ToString("#,##0") + "~s~");
+		stringBuilder.Replace(",", "~s~,~g~");
+		return stringBuilder.ToString();
 	}
 
 	public static bool zeeClose()
@@ -2062,8 +2052,8 @@ internal static class LsFunctions
 		Dictionary<int, Tuple<int, int>> pedData = new Dictionary<int, Tuple<int, int>>();
 		foreach (int id in list)
 		{
-			int item = Function.Call<int>((Hash)7490462606036423932L, (InputArgument)(_ped), (InputArgument)(id));
-			int textureID = Function.Call<int>((Hash)334205219021784294L, (InputArgument)(_ped), (InputArgument)(id));
+			int item = Function.Call<int>((Hash)7490462606036423932L, InputArgument.op_Implicit(_ped), InputArgument.op_Implicit(id));
+			int textureID = Function.Call<int>((Hash)334205219021784294L, InputArgument.op_Implicit(_ped), InputArgument.op_Implicit(id));
 			Tuple<int, int> data = new Tuple<int, int>(item, textureID);
 			pedData.Add(id, data);
 		}
@@ -2082,7 +2072,7 @@ internal static class LsFunctions
 			11
 		})
 		{
-			Function.Call((Hash)2750315038012726912L, (InputArgument)(_ped), (InputArgument)(id), (InputArgument)(_pData[id].Item1), (InputArgument)(_pData[id].Item2), (InputArgument)(0));
+			Function.Call((Hash)2750315038012726912L, InputArgument.op_Implicit(_ped), InputArgument.op_Implicit(id), InputArgument.op_Implicit(_pData[id].Item1), InputArgument.op_Implicit(_pData[id].Item2), InputArgument.op_Implicit(0));
 		}
 	}
 }

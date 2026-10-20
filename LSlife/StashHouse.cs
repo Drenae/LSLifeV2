@@ -102,7 +102,7 @@ public class StashHouse
 		price = _price;
 		blip = World.CreateBlip(entrancePos);
 		blip.Sprite = (BlipSprite)40;
-		blip.Name = "Planque";
+		blip.Name = "Stash House";
 		SetBlip();
 		inside = _inside;
 		Weapons = _weapons;
@@ -127,12 +127,12 @@ public class StashHouse
 		LSL.PlayerInventory["Crack"] = 0;
 		Cocain += LSL.PlayerInventory["Cocaine"];
 		LSL.PlayerInventory["Cocaine"] = 0;
-		Weed += LsFunctions.pWeedGrams;
-		LsFunctions.pWeedGrams = 0;
-		Crack += LsFunctions.pCrackGrams;
-		LsFunctions.pCrackGrams = 0;
-		Cocain += LsFunctions.pCocaineGrams;
-		LsFunctions.pCocaineGrams = 0;
+		Weed += LsFunctions.pWeedOunce * 28;
+		LsFunctions.pWeedOunce = 0;
+		Crack += LsFunctions.pCrackOunce * 28;
+		LsFunctions.pCrackOunce = 0;
+		Cocain += LsFunctions.pCocaineOunce * 28;
+		LsFunctions.pCocaineOunce = 0;
 		LsFunctions.UpdateInventory();
 		LSL.HouseHandler.UpdateMenu(this);
 		LSL.HouseHandler.SaveHouse(this);
@@ -170,7 +170,7 @@ public class StashHouse
 		{
 			if (pickupSpawned && healthPickup != (Pickup)null && healthPickup.ObjectExists())
 			{
-				LsFunctions.DbugString("Soin supprimé");
+				LsFunctions.DbugString("Health Deleted");
 				healthPickup.Delete();
 				pickupSpawned = false;
 			}
@@ -188,7 +188,7 @@ public class StashHouse
 				{
 					Function.Call((Hash)7023634693725934496L);
 					LSL.displayHelpTimer = Game.GameTime;
-					LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour entrer dans la planque.");
+					LsFunctions.DisplayHelpText("Press ~INPUT_CONTEXT~ to enter StashHouse.");
 				}
 				if (!Game.IsControlJustReleased(2, (Control)51))
 				{
@@ -220,11 +220,11 @@ public class StashHouse
 					{
 						(PedHash)1581098148,
 						(PedHash)368603149,
-						unchecked((PedHash)(-1920001264)),
-						unchecked((PedHash)(-1614285257)),
-						unchecked((PedHash)(-277793362)),
+						(PedHash)(-1920001264),
+						(PedHash)(-1614285257),
+						(PedHash)(-277793362),
 						(PedHash)1096929346,
-						unchecked((PedHash)(-1320879687))
+						(PedHash)(-1320879687)
 					}.Contains(hash) && !LsFunctions.cHashes.Contains(hash))
 					{
 						LsFunctions.cHashes.Add(hash);
@@ -237,7 +237,7 @@ public class StashHouse
 			{
 				Function.Call((Hash)7023634693725934496L);
 				LSL.displayHelpTimer = Game.GameTime;
-				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour acheter cette propriété : $" + LsFunctions.IntToMoney(price));
+				LsFunctions.DisplayHelpText("Press ~INPUT_CONTEXT~ To Purchase For $" + LsFunctions.IntToMoney(price));
 			}
 			if (Game.IsControlJustReleased(2, (Control)51))
 			{
@@ -251,7 +251,7 @@ public class StashHouse
 				}
 				else
 				{
-					UI.ShowSubtitle("Tu n'as pas assez d'argent pour acheter cette propriété.");
+					UI.ShowSubtitle("You do not have enough money to purchase this property");
 				}
 			}
 			return;
@@ -272,7 +272,7 @@ public class StashHouse
 		{
 			if (healthPickup != (Pickup)null && !healthPickup.ObjectExists())
 			{
-				LsFunctions.DbugString("Soin supprimé");
+				LsFunctions.DbugString("Health Deleted");
 				healthPickup.Delete();
 				healthPickup = null;
 				pickupSpawned = false;
@@ -281,8 +281,8 @@ public class StashHouse
 		else
 		{
 			pickupSpawned = true;
-			healthPickup = World.CreatePickup(unchecked((PickupType)(-1888453608)), houseHealthPickPos, Vector3.Zero, new Model("prop_ld_health_pack"), 100);
-			LsFunctions.DbugString("Soin créé");
+			healthPickup = World.CreatePickup((PickupType)(-1888453608), houseHealthPickPos, Vector3.Zero, new Model("prop_ld_health_pack"), 100);
+			LsFunctions.DbugString("Spawned Health");
 		}
 		if (!LSL.LsMenuPool.IsAnyMenuOpen() && LSL.playerPos.DistanceTo(stashPos) <= 1f)
 		{
@@ -290,7 +290,7 @@ public class StashHouse
 			{
 				Function.Call((Hash)7023634693725934496L);
 				LSL.displayHelpTimer = Game.GameTime;
-				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour ouvrir la réserve.");
+				LsFunctions.DisplayHelpText("Press ~INPUT_CONTEXT~ to open stash.");
 			}
 			if (Game.IsControlJustReleased(2, (Control)51))
 			{
@@ -307,7 +307,7 @@ public class StashHouse
 			{
 				Function.Call((Hash)7023634693725934496L);
 				LSL.displayHelpTimer = Game.GameTime;
-				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour sortir de la planque.");
+				LsFunctions.DisplayHelpText("Press ~INPUT_CONTEXT~ to exit StashHouse.");
 			}
 			if (Game.IsControlJustReleased(2, (Control)51))
 			{

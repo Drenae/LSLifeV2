@@ -8,6 +8,8 @@ public class DrugOrder
 {
 	public bool Placed;
 
+	private bool payed;
+
 	public bool pickedUp;
 
 	public int weed { get; private set; }
@@ -40,6 +42,7 @@ public class DrugOrder
 	{
 		if (CanPayBill())
 		{
+			payed = true;
 			int cash = LSL.player.Money;
 			int toPay = 0;
 			toPay = ((cash >= Bill) ? Bill : cash);
@@ -55,6 +58,7 @@ public class DrugOrder
 			}
 			LsFunctions.SaveDealer();
 			LsFunctions.PlayTheSound();
+			payed = true;
 			return true;
 		}
 		return false;
@@ -80,15 +84,15 @@ public class DrugOrder
 		{
 			if (weed > 0)
 			{
-				LsFunctions.pWeedGrams += weed;
+				LsFunctions.pWeedOunce += weed;
 			}
 			if (crack > 0)
 			{
-				LsFunctions.pCrackGrams += crack;
+				LsFunctions.pCrackOunce += crack;
 			}
 			if (cocaine > 0)
 			{
-				LsFunctions.pCocaineGrams += cocaine;
+				LsFunctions.pCocaineOunce += cocaine;
 			}
 			LsFunctions.PlayTheSound();
 			pickedUp = true;
@@ -104,15 +108,15 @@ public class DrugOrder
 				LSL.player.Character.SetIntoVehicle(stash.drugCar, (VehicleSeat)(-1));
 				if (weed > 0)
 				{
-					LSL.pStashVehicle.drugCarWeedGrams += weed;
+					LSL.pStashVehicle.drugCarWeedOz += weed;
 				}
 				if (crack > 0)
 				{
-					LSL.pStashVehicle.drugCarCrackGrams += crack;
+					LSL.pStashVehicle.drugCarCrackOz += crack;
 				}
 				if (cocaine > 0)
 				{
-					LSL.pStashVehicle.drugCarCocainGrams += cocaine;
+					LSL.pStashVehicle.drugCarCocainOz += cocaine;
 				}
 				LsFunctions.PlayTheSound();
 				pickedUp = true;
@@ -120,12 +124,12 @@ public class DrugOrder
 			}
 			else
 			{
-				UI.ShowSubtitle("Ton véhicule doit être plus proche.");
+				UI.ShowSubtitle("Your Vehicle needs to be closer.");
 			}
 		}
 		else
 		{
-			UI.ShowSubtitle("Il te faut un véhicule de stockage pour récupérer une commande aussi importante.");
+			UI.ShowSubtitle("You need a stash vehicle to pickup an order this big.");
 		}
 		if (pickedUp)
 		{
@@ -142,17 +146,17 @@ public class DrugOrder
 			{
 				foreach (XElement e in element.Elements())
 				{
-					if (e.Name == "weedGrams")
+					if (e.Name == "weedOz")
 					{
-						e.Value = LsFunctions.pWeedGrams.ToString();
+						e.Value = LsFunctions.pWeedOunce.ToString();
 					}
-					if (e.Name == "crackGrams")
+					if (e.Name == "crackOz")
 					{
-						e.Value = LsFunctions.pCrackGrams.ToString();
+						e.Value = LsFunctions.pCrackOunce.ToString();
 					}
-					if (e.Name == "cocaineGrams")
+					if (e.Name == "cocaineOz")
 					{
-						e.Value = LsFunctions.pCocaineGrams.ToString();
+						e.Value = LsFunctions.pCocaineOunce.ToString();
 					}
 				}
 			}
@@ -160,17 +164,17 @@ public class DrugOrder
 			{
 				foreach (XElement e2 in element.Elements())
 				{
-					if (e2.Name == "weedGrams")
+					if (e2.Name == "weedOz")
 					{
-						e2.Value = LSL.pStashVehicle.drugCarWeedGrams.ToString();
+						e2.Value = LSL.pStashVehicle.drugCarWeedOz.ToString();
 					}
-					if (e2.Name == "crackGrams")
+					if (e2.Name == "crackOz")
 					{
-						e2.Value = LSL.pStashVehicle.drugCarCrackGrams.ToString();
+						e2.Value = LSL.pStashVehicle.drugCarCrackOz.ToString();
 					}
-					if (e2.Name == "cocaineGrams")
+					if (e2.Name == "cocainOz")
 					{
-						e2.Value = LSL.pStashVehicle.drugCarCocainGrams.ToString();
+						e2.Value = LSL.pStashVehicle.drugCarCocainOz.ToString();
 					}
 				}
 			}
@@ -207,7 +211,7 @@ public class DrugOrder
 
 	public bool PlayerCanPickup()
 	{
-		if ((long)LsFunctions.TotalDrugs(LSL.PlayerInventory) + OrderSizeInGrams() <= 7000)
+		if (LsFunctions.TotalDrugs(LSL.PlayerInventory) + OrderSizeInGrams() < 7168)
 		{
 			return true;
 		}
@@ -216,14 +220,14 @@ public class DrugOrder
 
 	private int OrderSizeInGrams()
 	{
-		return checked(weed + crack + cocaine);
+		return weed * 28 + crack * 28 + cocaine * 28;
 	}
 
 	internal bool OrderValid()
 	{
 		if (weed == 0 && crack == 0 && cocaine == 0)
 		{
-			LsFunctions.TextMsg("ZEE", "Commande", "Ta commande est vide");
+			LsFunctions.TextMsg("ZEE", "Order", "Your order is empty");
 			return false;
 		}
 		return true;
@@ -243,6 +247,7 @@ public class DrugOrder
 		crack = 0;
 		cocaine = 0;
 		Bill = 0;
+		payed = false;
 		pickedUp = false;
 		Placed = false;
 	}

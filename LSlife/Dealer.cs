@@ -60,7 +60,7 @@ public class Dealer
 			Script.Wait(0);
 		}
 		((Entity)vehicle).IsPersistent = true;
-		LsFunctions.AddBlip((Entity)(object)vehicle, (BlipColor)3, "Chauffeur de Rafael Mendoza", _friend: true, _edge: false);
+		LsFunctions.AddBlip((Entity)(object)vehicle, (BlipColor)3, "Zee's Driver", _friend: true, _edge: false);
 		ped = World.CreatePed(pedModel, ((Entity)vehicle).Position);
 		while ((Entity)(object)ped == (Entity)null)
 		{
@@ -68,14 +68,14 @@ public class Dealer
 		}
 		((Entity)ped).IsPersistent = true;
 		ped.SetIntoVehicle(vehicle, (VehicleSeat)(-1));
-		Function.Call(unchecked((Hash)(-5650329060376590909L)), (InputArgument)(((Entity)ped).Handle), (InputArgument)(100f));
-		Function.Call(unchecked((Hash)(-5348838930497642877L)), (InputArgument)(((Entity)vehicle).Handle), (InputArgument)(((Entity)ped).Handle));
+		Function.Call((Hash)(-5650329060376590909L), InputArgument.op_Implicit(((Entity)ped).Handle), InputArgument.op_Implicit(100f));
+		Function.Call((Hash)(-5348838930497642877L), InputArgument.op_Implicit(((Entity)vehicle).Handle), InputArgument.op_Implicit(((Entity)ped).Handle));
 		destination = World.GetNextPositionOnStreet(pos, true);
 		ped.Task.DriveTo(vehicle, destination, 5f, 25f, 5);
 		state = States.Driving;
 		ped.StaysInVehicleWhenJacked = true;
 		ped.BlockPermanentEvents = true;
-		maxSpeed = Function.Call<float>(unchecked((Hash)(-858003554332316349L)), (InputArgument)(vehicle)) * 0.8f;
+		maxSpeed = Function.Call<float>((Hash)(-858003554332316349L), InputArgument.op_Implicit(vehicle)) * 0.8f;
 	}
 
 	internal void SetSpeed()

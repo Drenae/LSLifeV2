@@ -370,13 +370,13 @@ public class PlayerDealerHandler
 				pData.Add(10, new Tuple<int, int>(decalD, decalT));
 				pData.Add(11, new Tuple<int, int>(torsoAuxD, torsoAuxT));
 			}
-			LsFunctions.DbugString("Position du dealer chargée : " + pos.X + ", " + pos.Y + ", " + pos.Z);
+			LsFunctions.DbugString("Dealer Postion loaded " + pos.X + ", " + pos.Y + ", " + pos.Z);
 			if (pos != Vector3.Zero)
 			{
 				allocatedIDs.Add(id2);
 				if (LSL.DEBUG)
 				{
-					UI.Notify("Ajout : " + id2 + " aux identifiants attribués, taille du groupe =" + allocatedIDs.Count);
+					UI.Notify("Added " + id2 + " to allocated ID's, Size of pool =" + allocatedIDs.Count);
 				}
 				if (dealers.FindAll((PlayerDealer d) =>
 				{
@@ -392,7 +392,7 @@ public class PlayerDealerHandler
 				}
 				if (LSL.DEBUG)
 				{
-					UI.Notify("Dealer chargé : " + id2);
+					UI.Notify("Loaded dealer" + id2);
 				}
 			}
 		}
@@ -534,7 +534,7 @@ public class PlayerDealerHandler
 		}
 		if (LSL.DEBUG)
 		{
-			UI.Notify("Nouvel identifiant : " + id);
+			UI.Notify("New ID " + id);
 		}
 		allocatedIDs.Add(id);
 		return id;
@@ -701,11 +701,11 @@ public class PlayerDealerHandler
 					teams.Add(new PedTeam(_dealer, LSL.playerArea));
 					return true;
 				}
-				LsFunctions.SendTextMsg("Tu dois gagner en réputation dans ce quartier avant d'y envoyer une équipe.");
+				LsFunctions.SendTextMsg("You need to earn more reputation in this area before putting a team on patrol here.");
 			}
 			else
 			{
-				LsFunctions.SendTextMsg("Une équipe patrouille déjà dans ce quartier");
+				LsFunctions.SendTextMsg("There is a team in this area already");
 			}
 		}
 		return false;

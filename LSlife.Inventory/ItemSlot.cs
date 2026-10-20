@@ -2,6 +2,8 @@ namespace LSlife.Inventory;
 
 internal class ItemSlot
 {
+	private int SlotNumber;
+
 	private bool empty = true;
 
 	private ItemObject item;

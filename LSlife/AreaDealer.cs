@@ -9,7 +9,7 @@ namespace LSlife;
 
 public class AreaDealer
 {
-	private readonly bool DEBUG = false;
+	private bool DEBUG;
 
 	public Ped dPed;
 
@@ -45,14 +45,15 @@ public class AreaDealer
 		dPed = p;
 		((Entity)dPed).IsPersistent = true;
 		dPed.Armor = 100;
-		// Fallback: the original embedded weapon array was lost during decompilation.
-		WeaponHash[] weaponHashes = { WeaponHash.Pistol, WeaponHash.MicroSMG, WeaponHash.SMG, WeaponHash.AssaultRifle };
+		WeaponHash[] array = new WeaponHash[4];
+		RuntimeHelpers.InitializeArray(array, __ldtoken(_003CPrivateImplementationDetails_003E._2DCBDDCA284576F0288ABC533C1295A8A5E2E8CAFDF0C853E4145C53C0960676));
+		WeaponHash[] weaponHashes = array;
 		dPed.Weapons.Give(weaponHashes[LSL.rnd.Next(0, weaponHashes.Count())], 100, false, true);
 		dPed.RelationshipGroup = LSL.rival_nutral;
 		LsFunctions.SetRandomCombatStats(dPed);
-		dPed.FiringPattern = unchecked((FiringPattern)(-957453492));
+		dPed.FiringPattern = (FiringPattern)(-957453492);
 		dPed.CanSwitchWeapons = true;
-		Function.Call(unchecked((Hash)(-4079649877180351064L)), (InputArgument)(dPed), (InputArgument)(100));
+		Function.Call((Hash)(-4079649877180351064L), InputArgument.op_Implicit(dPed), InputArgument.op_Implicit(100));
 		if (dPed.IsInVehicle())
 		{
 			Vehicle = dPed.CurrentVehicle;
@@ -181,7 +182,7 @@ public class AreaDealer
 			if (!playerNear())
 			{
 				NewState = Enums.DStates.Normal;
-				Function.Call(unchecked((Hash)(-4137652152022615111L)), (InputArgument)(dPed), (InputArgument)("GENERIC_BYE"), (InputArgument)("SPEECH_PARAMS_FORCE"));
+				Function.Call((Hash)(-4137652152022615111L), InputArgument.op_Implicit(dPed), InputArgument.op_Implicit("GENERIC_BYE"), InputArgument.op_Implicit("SPEECH_PARAMS_FORCE"));
 			}
 			if (ShouldAttackPlayer())
 			{
@@ -220,11 +221,11 @@ public class AreaDealer
 			{
 				if (dPed.RelationshipGroup != LSL.rival_enemy)
 				{
-					LsFunctions.DbugString("~g~ Relation du dealer rival passée à rival_enemy");
+					LsFunctions.DbugString("~g~ Rival dealer relasion ship changed to rival_enemy");
 				}
 				else
 				{
-					LsFunctions.DbugString("~r~ Relation du dealer rival modifiée. ~n~Rétablissement de rival_nutral");
+					LsFunctions.DbugString("~r~ Rival dealer relasion ship changed to something. ~n~Changing it to rival_nutral");
 					dPed.RelationshipGroup = LSL.rival_nutral;
 				}
 			}
@@ -232,7 +233,7 @@ public class AreaDealer
 			{
 				if (DEBUG)
 				{
-					UI.Notify("État du dealer = " + NewState);
+					UI.Notify("adealer state = " + NewState);
 				}
 				switch (NewState)
 				{
@@ -277,13 +278,13 @@ public class AreaDealer
 					CurrentState = Enums.DStates.LookAtPlayer;
 					break;
 				case Enums.DStates.TalkToPlayer:
-					Function.Call(unchecked((Hash)(-8213159594590722974L)), (InputArgument)(dPed), (InputArgument)("GENERIC_HOWS_IT_GOING"), (InputArgument)("SPEECH_PARAMS_FORCE"));
+					Function.Call((Hash)(-8213159594590722974L), InputArgument.op_Implicit(dPed), InputArgument.op_Implicit("GENERIC_HOWS_IT_GOING"), InputArgument.op_Implicit("SPEECH_PARAMS_FORCE"));
 					CurrentState = Enums.DStates.TalkToPlayer;
 					break;
 				case Enums.DStates.AttackPlayer:
 					dPed.RelationshipGroup = LSL.rival_enemy;
 					dPed.Task.ClearAll();
-					LsFunctions.AddBlip((Entity)(object)dPed, (BlipColor)1, "Dealer rival", _friend: false, _edge: false);
+					LsFunctions.AddBlip((Entity)(object)dPed, (BlipColor)1, "Rival Dealer", _friend: false, _edge: false);
 					dPed.CanSwitchWeapons = true;
 					dPed.Weapons.Select(dPed.Weapons.BestWeapon);
 					dPed.Task.FightAgainst(Game.Player.Character);
@@ -308,7 +309,7 @@ public class AreaDealer
 		}
 		else
 		{
-			UI.Notify("~r~Erreur : dealer de quartier introuvable");
+			UI.Notify("~r~Area Dealer Ped NULL something wrong");
 		}
 	}
 
@@ -359,7 +360,7 @@ public class AreaDealer
 		if (canHire && LSL.DealerHandler.dealers.Count >= (int)LsFunctions.CurrentRepLvl(LSL.dealer1Rep))
 		{
 			canHire = false;
-			reason = "Il te faut davantage de réputation pour recruter d'autres dealers.";
+			reason = "You need more rep before hiring more dealers.";
 		}
 		if (canHire)
 		{
@@ -367,12 +368,12 @@ public class AreaDealer
 			{
 				Function.Call((Hash)7023634693725934496L);
 				LSL.displayHelpTimer = Game.GameTime;
-				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour parler à cette personne.");
+				LsFunctions.DisplayHelpText("Press ~INPUT_SPRINT~ to Talk to this person.");
 			}
 			if (Game.IsControlJustPressed(2, (Control)21))
 			{
 				Function.Call((Hash)7023634693725934496L);
-				((UIText)LSL.hireDealerMainMenu.Subtitle).Caption = "Recrutement";
+				((UIText)LSL.hireDealerMainMenu.Subtitle).Caption = "Test";
 				LSL.hireDealerMainMenu.Visible = !LSL.hireDealerMainMenu.Visible;
 				LSL.hireDealerMainMenu.CurrentSelection = 0;
 				LSL.hireDealerOfferAmount.Maximum = Game.Player.Money;
@@ -451,14 +452,14 @@ public class AreaDealer
 				cPed = null;
 				if (DEBUG)
 				{
-					UI.Notify("Client du dealer introuvable");
+					UI.Notify("aDealer Customer doesnt exist");
 				}
 			}
 			if ((Entity)(object)cPed == (Entity)null)
 			{
 				if (DEBUG)
 				{
-					UI.Notify("Recherche d'un client");
+					UI.Notify("aDealer Getting Customer");
 				}
 				List<Ped> peds = LSL.lPeds.GetPeds;
 				if (peds.ToList().Count > 0)
@@ -482,7 +483,7 @@ public class AreaDealer
 				}
 				if (DEBUG)
 				{
-					UI.Notify("Aucun passant trouvé");
+					UI.Notify("aDealer found no peds");
 				}
 				cTimer.Reset();
 				return;
@@ -527,7 +528,7 @@ public class AreaDealer
 				{
 					if (DEBUG)
 					{
-						UI.Notify("Transaction en cours");
+						UI.Notify("Doing Deal");
 					}
 					dealState = Enums.DealState.DoingDeal;
 					cPed.Task.PlayAnimation("switch@franklin@002110_04_magd_3_weed_exchange", "002110_04_magd_3_weed_exchange_franklin", 8f, 3000, (AnimationFlags)16);
@@ -539,7 +540,7 @@ public class AreaDealer
 				if (Game.GameTime > time + 2000)
 				{
 					dealState = Enums.DealState.WalkingAway;
-					Function.Call(unchecked((Hash)(-8213159594590722974L)), (InputArgument)(cPed), (InputArgument)("GENERIC_THANKS"), (InputArgument)("SPEECH_PARAMS_STANDARD"));
+					Function.Call((Hash)(-8213159594590722974L), InputArgument.op_Implicit(cPed), InputArgument.op_Implicit("GENERIC_THANKS"), InputArgument.op_Implicit("SPEECH_PARAMS_STANDARD"));
 					cPed.Task.WanderAround();
 					dPed.Task.GuardCurrentPosition();
 				}
@@ -552,7 +553,7 @@ public class AreaDealer
 					dealState = Enums.DealState.GetNear;
 					if (DEBUG)
 					{
-						UI.Notify("Transaction terminée");
+						UI.Notify("Deal Finished");
 					}
 					LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
 					((Entity)cPed).CurrentBlip.Remove();
@@ -567,7 +568,7 @@ public class AreaDealer
 		{
 			if (DEBUG)
 			{
-				UI.Notify("Client supprimé : trop éloigné");
+				UI.Notify("aDealer Removing Customer to Far Away");
 			}
 			LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
 			cPed = null;

@@ -5,7 +5,6 @@ using System.Linq;
 using System.Xml.Linq;
 using GTA;
 using GTA.Math;
-using NativeUI;
 
 namespace LSlife;
 
@@ -20,7 +19,7 @@ public class StashHouseHandler
 		LoadHouses();
 		if (LSL.DEBUG)
 		{
-			UI.Notify("Chargement de " + Houses.Count + " planques");
+			UI.Notify("Loaded " + Houses.Count + " houses");
 		}
 	}
 
@@ -63,7 +62,7 @@ public class StashHouseHandler
 		//IL_0807: Unknown result type (might be due to invalid IL or missing references)
 		if (!File.Exists("scripts\\LSLife\\LSLife_StashHouses.xml"))
 		{
-			UI.Notify("~r~Fichier StashHouses.xml introuvable");
+			UI.Notify("~r~Missing StashHouses.xml");
 			return;
 		}
 		XDocument StashDoc = XDocument.Load("scripts\\LSLife\\LSLife_StashHouses.xml");
@@ -203,7 +202,7 @@ public class StashHouseHandler
 							int.TryParse(ele5.Value, out weed);
 							if (LSL.DEBUG)
 							{
-								UI.Notify("~y~Cannabis : " + weed);
+								UI.Notify("~y~Weed" + weed);
 							}
 						}
 					}
@@ -355,10 +354,10 @@ public class StashHouseHandler
 		LSL.takeCrackStash.Maximum = _house.Crack;
 		LSL.takeCocainStash.Maximum = _house.Cocain;
 		LSL.takeMoneyStash.Maximum = _house.Money;
-		((UIMenuItem)LSL.takeWeedStash).Text = "Cannabis " + LsFunctions.FormatMetric(_house.Weed);
-		((UIMenuItem)LSL.takeCrackStash).Text = "Crack " + LsFunctions.FormatMetric(_house.Crack);
-		((UIMenuItem)LSL.takeCocainStash).Text = "Cocaïne " + LsFunctions.FormatMetric(_house.Cocain);
-		((UIMenuItem)LSL.takeMoneyStash).Text = "Argent $" + LsFunctions.IntToMoney(_house.Money);
+		LSL.takeWeedStash.Text = "Weed " + LsFunctions.GramsToOz(_house.Weed);
+		LSL.takeCrackStash.Text = "Crack " + LsFunctions.GramsToOz(_house.Crack);
+		LSL.takeCocainStash.Text = "Cocaine " + LsFunctions.GramsToOz(_house.Cocain);
+		LSL.takeMoneyStash.Text = "Money $" + LsFunctions.IntToMoney(_house.Money);
 		LSL.takeWeaponStash.Items = _house.Weps;
 		LSL.takeWeaponStash.Index = 0;
 		LSL.takeArmourStash.Items = new List<object>();
@@ -369,17 +368,17 @@ public class StashHouseHandler
 		LSL.putWeedStash.Maximum = LSL.PlayerInventory["Weed"];
 		LSL.putCrackStash.Maximum = LSL.PlayerInventory["Crack"];
 		LSL.putCocainStash.Maximum = LSL.PlayerInventory["Cocaine"];
-		LSL.putWeedGramsStash.Maximum = LsFunctions.pWeedGrams;
-		LSL.putCrackGramsStash.Maximum = LsFunctions.pCrackGrams;
-		LSL.putCocainGramsStash.Maximum = LsFunctions.pCocaineGrams;
+		LSL.putWeedOzStash.Maximum = LsFunctions.pWeedOunce;
+		LSL.putCrackOzStash.Maximum = LsFunctions.pCrackOunce;
+		LSL.putCocainOzStash.Maximum = LsFunctions.pCocaineOunce;
 		LSL.putMoneyStash.Maximum = LSL.player.Money;
-		((UIMenuItem)LSL.putWeedStash).Text = "Cannabis " + LsFunctions.FormatMetric(LSL.PlayerInventory["Weed"]);
-		((UIMenuItem)LSL.putCrackStash).Text = "Crack " + LsFunctions.FormatMetric(LSL.PlayerInventory["Crack"]);
-		((UIMenuItem)LSL.putCocainStash).Text = "Cocaïne " + LsFunctions.FormatMetric(LSL.PlayerInventory["Cocaine"]);
-		((UIMenuItem)LSL.putWeedGramsStash).Text = "Cannabis " + LsFunctions.FormatMetric(LsFunctions.pWeedGrams);
-		((UIMenuItem)LSL.putCrackGramsStash).Text = "Crack " + LsFunctions.FormatMetric(LsFunctions.pCrackGrams);
-		((UIMenuItem)LSL.putCocainGramsStash).Text = "Cocaïne " + LsFunctions.FormatMetric(LsFunctions.pCocaineGrams);
-		((UIMenuItem)LSL.putMoneyStash).Text = "Argent $" + LsFunctions.IntToMoney(LSL.player.Money);
+		LSL.putWeedStash.Text = "Weed " + LsFunctions.GramsToOz(LSL.PlayerInventory["Weed"]);
+		LSL.putCrackStash.Text = "Crack " + LsFunctions.GramsToOz(LSL.PlayerInventory["Crack"]);
+		LSL.putCocainStash.Text = "Cocaine " + LsFunctions.GramsToOz(LSL.PlayerInventory["Cocaine"]);
+		LSL.putWeedOzStash.Text = "Weed ~r~" + LsFunctions.pWeedOunce + "~s~z";
+		LSL.putCrackOzStash.Text = "Crack ~r~" + LsFunctions.pCrackOunce + "~s~z";
+		LSL.putCocainOzStash.Text = "Cocaine ~r~" + LsFunctions.pCocaineOunce + "~s~z";
+		LSL.putMoneyStash.Text = "Money $" + LsFunctions.IntToMoney(LSL.player.Money);
 		LSL.putWeaponStash.Index = 0;
 		LSL.putWeaponStash.Items = LSL.playerWeps;
 		LSL.putArmourStash.Items = new List<object>();

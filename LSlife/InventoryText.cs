@@ -25,18 +25,6 @@ internal static class InventoryText
 
 	public static void Innit()
 	{
-		//IL_0032: Unknown result type (might be due to invalid IL or missing references)
-		//IL_003c: Expected Obj, but got Unknown
-		//IL_006e: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0078: Expected Obj, but got Unknown
-		//IL_009b: Unknown result type (might be due to invalid IL or missing references)
-		//IL_00a5: Expected Obj, but got Unknown
-		//IL_00de: Unknown result type (might be due to invalid IL or missing references)
-		//IL_00e8: Expected Obj, but got Unknown
-		//IL_00f4: Unknown result type (might be due to invalid IL or missing references)
-		//IL_00fe: Expected Obj, but got Unknown
-		//IL_010a: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0114: Expected Obj, but got Unknown
 		LoadInvConfig();
 		Options = LSL.LsMenuPool.AddSubMenu(LSL.zeeMenu, "Options");
 		InventoryPosX = new UIMenuSliderItem("PosX: ~g~" + posX);
@@ -45,9 +33,9 @@ internal static class InventoryText
 		InventoryPosY = new UIMenuSliderItem("PosY: ~g~" + posY);
 		InventoryPosY.Maximum = 1080;
 		InventoryPosY.Value = posY;
-		Save = new UIMenuItem("Enregistrer les réglages");
-		Options.AddItem((UIMenuItem)(object)InventoryPosX);
-		Options.AddItem((UIMenuItem)(object)InventoryPosY);
+		Save = new UIMenuItem("Save config");
+		Options.AddItem(InventoryPosX);
+		Options.AddItem(InventoryPosY);
 		Options.AddItem(Save);
 		InventoryPosX.OnSliderChanged += InventoryPos_OnSliderChanged;
 		InventoryPosY.OnSliderChanged += InventoryPos_OnSliderChanged;
@@ -122,90 +110,66 @@ internal static class InventoryText
 		if (sender == InventoryPosX)
 		{
 			posX = sender.Value;
-			((UIMenuItem)sender).Text = "PosX: ~g~" + posX;
+			sender.Text = "PosX: ~g~" + posX;
 		}
 		if (sender == InventoryPosY)
 		{
 			posY = sender.Value;
-			((UIMenuItem)sender).Text = "PosY: ~g~" + posY;
+			sender.Text = "PosY: ~g~" + posY;
 		}
 	}
 
 	public static void InventoryGui()
 	{
-		//IL_0023: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0029: Expected Obj, but got Unknown
-		//IL_0065: Unknown result type (might be due to invalid IL or missing references)
-		//IL_006b: Expected Obj, but got Unknown
-		//IL_00ae: Unknown result type (might be due to invalid IL or missing references)
-		//IL_00b4: Expected Obj, but got Unknown
-		//IL_00f7: Unknown result type (might be due to invalid IL or missing references)
-		//IL_00fe: Expected Obj, but got Unknown
-		//IL_0140: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0147: Expected Obj, but got Unknown
-		//IL_0191: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0198: Expected Obj, but got Unknown
-		//IL_01e2: Unknown result type (might be due to invalid IL or missing references)
-		//IL_01e9: Expected Obj, but got Unknown
-		//IL_022e: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0235: Expected Obj, but got Unknown
-		//IL_0285: Unknown result type (might be due to invalid IL or missing references)
-		//IL_028a: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0291: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0298: Unknown result type (might be due to invalid IL or missing references)
-		//IL_029f: Unknown result type (might be due to invalid IL or missing references)
-		//IL_034c: Unknown result type (might be due to invalid IL or missing references)
 		Point UIpos = new Point(posX, posY);
-		UIResText UIWeedtxt = new UIResText("-Cannabis-", UIpos, 0.4f, Color.WhiteSmoke, (GTA.Font)7, (UIResText.Alignment)2);
+		UIResText UIWeedtxt = new UIResText("-Weed-", UIpos, 0.4f, Color.WhiteSmoke, (Font)7, UIResText.Alignment.Right);
 		UIWeedtxt.DropShadow = true;
 		((UIText)UIWeedtxt).Shadow = true;
 		UIWeedtxt.Outline = true;
-		UIResText UIWeed = new UIResText("", new Point(UIpos.X, UIpos.Y + 20), 0.5f, Color.WhiteSmoke, (GTA.Font)7, (UIResText.Alignment)2);
+		UIResText UIWeed = new UIResText("", new Point(UIpos.X, UIpos.Y + 20), 0.5f, Color.WhiteSmoke, (Font)7, UIResText.Alignment.Right);
 		((UIText)UIWeed).Enabled = true;
 		UIWeed.DropShadow = true;
 		((UIText)UIWeed).Shadow = true;
 		UIWeed.Outline = true;
-		UIResText UIweed = new UIResText("", new Point(UIpos.X, UIpos.Y + 45), 0.5f, Color.WhiteSmoke, (GTA.Font)7, (UIResText.Alignment)2);
+		UIResText UIweed = new UIResText("", new Point(UIpos.X, UIpos.Y + 45), 0.5f, Color.WhiteSmoke, (Font)7, UIResText.Alignment.Right);
 		((UIText)UIweed).Enabled = true;
 		UIweed.DropShadow = true;
 		((UIText)UIweed).Shadow = true;
 		UIweed.Outline = true;
-		UIResText UICracktxt = new UIResText("-Crack-", new Point(UIpos.X, UIpos.Y + 80), 0.4f, Color.WhiteSmoke, (GTA.Font)7, (UIResText.Alignment)2);
+		UIResText UICracktxt = new UIResText("-Crack-", new Point(UIpos.X, UIpos.Y + 80), 0.4f, Color.WhiteSmoke, (Font)7, UIResText.Alignment.Right);
 		UICracktxt.DropShadow = true;
 		((UIText)UICracktxt).Shadow = true;
 		UICracktxt.Outline = true;
-		UIResText UICrack = new UIResText("", new Point(UIpos.X, UIpos.Y + 80 + 20), 0.5f, Color.WhiteSmoke, (GTA.Font)7, (UIResText.Alignment)2);
+		UIResText UICrack = new UIResText("", new Point(UIpos.X, UIpos.Y + 80 + 20), 0.5f, Color.WhiteSmoke, (Font)7, UIResText.Alignment.Right);
 		((UIText)UICrack).Enabled = true;
 		UICrack.DropShadow = true;
 		((UIText)UICrack).Shadow = true;
 		UICrack.Outline = true;
-		UIResText UIcrack = new UIResText("", new Point(UIpos.X, UIpos.Y + 100 + 25), 0.5f, Color.WhiteSmoke, (GTA.Font)7, (UIResText.Alignment)2);
+		UIResText UIcrack = new UIResText("", new Point(UIpos.X, UIpos.Y + 100 + 25), 0.5f, Color.WhiteSmoke, (Font)7, UIResText.Alignment.Right);
 		((UIText)UIcrack).Enabled = true;
 		UIcrack.DropShadow = true;
 		((UIText)UIcrack).Shadow = true;
 		UIcrack.Outline = true;
-		UIResText UICocainetxt = new UIResText("-Cocaïne-", new Point(UIpos.X, UIpos.Y + 160), 0.4f, Color.WhiteSmoke, (GTA.Font)7, (UIResText.Alignment)2);
+		UIResText UICocainetxt = new UIResText("-Coke-", new Point(UIpos.X, UIpos.Y + 160), 0.4f, Color.WhiteSmoke, (Font)7, UIResText.Alignment.Right);
 		UICocainetxt.DropShadow = true;
 		((UIText)UICocainetxt).Shadow = true;
 		UICocainetxt.Outline = true;
-		UIResText UICocaine = new UIResText("", new Point(UIpos.X, UIpos.Y + 160 + 20), 0.5f, Color.WhiteSmoke, (GTA.Font)7, (UIResText.Alignment)2);
+		UIResText UICocaine = new UIResText("", new Point(UIpos.X, UIpos.Y + 160 + 20), 0.5f, Color.WhiteSmoke, (Font)7, UIResText.Alignment.Right);
 		((UIText)UICocaine).Enabled = true;
 		UICocaine.DropShadow = true;
 		((UIText)UICocaine).Shadow = true;
 		UICocaine.Outline = true;
-		UIResText val = new UIResText("", new Point(UIpos.X, UIpos.Y + 160 + 20 + 25), 0.5f, Color.WhiteSmoke, (GTA.Font)7, (UIResText.Alignment)2)
-		{
-			Enabled = true,
-			DropShadow = true,
-			Shadow = true,
-			Outline = true
-		};
-		((UIText)UIWeed).Caption = LsFunctions.FormatMetric(LsFunctions.pWeedGrams, "~r~");
-		((UIText)UIweed).Caption = LsFunctions.FormatMetric(LSL.PlayerInventory["Weed"]) ?? "";
-		((UIText)UICrack).Caption = LsFunctions.FormatMetric(LsFunctions.pCrackGrams, "~r~");
-		((UIText)UIcrack).Caption = LsFunctions.FormatMetric(LSL.PlayerInventory["Crack"]) ?? "";
-		((UIText)UICocaine).Caption = LsFunctions.FormatMetric(LsFunctions.pCocaineGrams, "~r~");
-		((UIText)val).Caption = LsFunctions.FormatMetric(LSL.PlayerInventory["Cocaine"]) ?? "";
+		UIResText uIResText = new UIResText("", new Point(UIpos.X, UIpos.Y + 160 + 20 + 25), 0.5f, Color.WhiteSmoke, (Font)7, UIResText.Alignment.Right);
+		((UIText)uIResText).Enabled = true;
+		uIResText.DropShadow = true;
+		((UIText)uIResText).Shadow = true;
+		uIResText.Outline = true;
+		((UIText)UIWeed).Caption = "~r~" + LsFunctions.pWeedOunce + "~s~z";
+		((UIText)UIweed).Caption = LsFunctions.GramsToOz(LSL.PlayerInventory["Weed"]) ?? "";
+		((UIText)UICrack).Caption = "~r~" + LsFunctions.pCrackOunce + "~s~z";
+		((UIText)UIcrack).Caption = LsFunctions.GramsToOz(LSL.PlayerInventory["Crack"]) ?? "";
+		((UIText)UICocaine).Caption = "~r~" + LsFunctions.pCocaineOunce + "~s~z";
+		((UIText)uIResText).Caption = LsFunctions.GramsToOz(LSL.PlayerInventory["Cocaine"]) ?? "";
 		((UIText)UIWeedtxt).Draw();
 		((UIText)UIWeed).Draw();
 		((UIText)UIweed).Draw();
@@ -214,7 +178,7 @@ internal static class InventoryText
 		((UIText)UIcrack).Draw();
 		((UIText)UICocainetxt).Draw();
 		((UIText)UICocaine).Draw();
-		((UIText)val).Draw();
+		((UIText)uIResText).Draw();
 		UI.ShowHudComponentThisFrame((HudComponent)3);
 	}
 }

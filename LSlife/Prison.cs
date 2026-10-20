@@ -21,9 +21,13 @@ internal static class Prison
 
 	public class Gate
 	{
-public Prop Prop;
+		private readonly bool DEBUG = true;
 
-public Gate(Prop prop)
+		public Prop Prop;
+
+		private bool Locked = true;
+
+		public Gate(Prop prop)
 		{
 			Prop = prop;
 		}
@@ -37,7 +41,7 @@ public Gate(Prop prop)
 			//IL_0058: Unknown result type (might be due to invalid IL or missing references)
 			Script.Wait(10);
 			Model model = ((Entity)Prop).Model;
-			Function.Call(unchecked((Hash)(-7272475972733243984L)), (InputArgument)(model.Hash), (InputArgument)(((Entity)Prop).Position.X), (InputArgument)(((Entity)Prop).Position.Y), (InputArgument)(((Entity)Prop).Position.Z), (InputArgument)(false), (InputArgument)(0f), (InputArgument)(50f), (InputArgument)(0f));
+			Function.Call((Hash)(-7272475972733243984L), InputArgument.op_Implicit(model.Hash), InputArgument.op_Implicit(((Entity)Prop).Position.X), InputArgument.op_Implicit(((Entity)Prop).Position.Y), InputArgument.op_Implicit(((Entity)Prop).Position.Z), InputArgument.op_Implicit(false), InputArgument.op_Implicit(0f), InputArgument.op_Implicit(50f), InputArgument.op_Implicit(0f));
 		}
 
 		public void Lock()
@@ -49,13 +53,15 @@ public Gate(Prop prop)
 			//IL_0058: Unknown result type (might be due to invalid IL or missing references)
 			Script.Wait(10);
 			Model model = ((Entity)Prop).Model;
-			Function.Call(unchecked((Hash)(-7272475972733243984L)), (InputArgument)(model.Hash), (InputArgument)(((Entity)Prop).Position.X), (InputArgument)(((Entity)Prop).Position.Y), (InputArgument)(((Entity)Prop).Position.Z), (InputArgument)(true), (InputArgument)(0f), (InputArgument)(50f), (InputArgument)(0f));
+			Function.Call((Hash)(-7272475972733243984L), InputArgument.op_Implicit(model.Hash), InputArgument.op_Implicit(((Entity)Prop).Position.X), InputArgument.op_Implicit(((Entity)Prop).Position.Y), InputArgument.op_Implicit(((Entity)Prop).Position.Z), InputArgument.op_Implicit(true), InputArgument.op_Implicit(0f), InputArgument.op_Implicit(50f), InputArgument.op_Implicit(0f));
 		}
 	}
 
 	public static LsTimer SentanceTime = null;
 
-private static PrisonStates NewState = PrisonStates.None;
+	private static int BailAmount = -1;
+
+	private static PrisonStates NewState = PrisonStates.None;
 
 	public static bool Started = false;
 
@@ -152,39 +158,39 @@ private static PrisonStates NewState = PrisonStates.None;
 				Vector3 playerPos = ((Entity)Game.Player.Character).Position;
 				OutputArgument outArgA = new OutputArgument();
 				OutputArgument outArgB = new OutputArgument();
-				if (Function.Call<bool>(unchecked((Hash)(-70052395799280720L)), (InputArgument)(playerPos.X), (InputArgument)(playerPos.Y), (InputArgument)(playerPos.Z), (InputArgument)(object)outArgA, (InputArgument)(object)outArgB, (InputArgument)(0), (InputArgument)(1077936128), (InputArgument)(0)))
+				if (Function.Call<bool>((Hash)(-70052395799280720L), InputArgument.op_Implicit(playerPos.X), InputArgument.op_Implicit(playerPos.Y), InputArgument.op_Implicit(playerPos.Z), (InputArgument)(object)outArgA, (InputArgument)(object)outArgB, InputArgument.op_Implicit(0), InputArgument.op_Implicit(1077936128), InputArgument.op_Implicit(0)))
 				{
 					float heading = outArgB.GetResult<float>();
 					Vector3 pos = outArgA.GetResult<Vector3>();
 					if ((Entity)(object)copCar == (Entity)null)
 					{
-						copCar = World.CreateVehicle((int)((VehicleHash)2046537925), pos, heading);
+						copCar = World.CreateVehicle(Model.op_Implicit((VehicleHash)2046537925), pos, heading);
 						((Entity)copCar).AddBlip();
 						((Entity)copCar).CurrentBlip.Sprite = (BlipSprite)672;
 						if (DEBUG)
 						{
-							UI.Notify("Transport créé : " + (object)copCar);
+							UI.Notify("transport Spawned" + (object)copCar);
 						}
 					}
 				}
 				if ((Entity)(object)cop == (Entity)null)
 				{
-					cop = World.CreatePed((int)((PedHash)1581098148), ((Entity)Game.Player.Character).Position + ((Entity)Game.Player.Character).ForwardVector * -1f * 1.5f);
+					cop = World.CreatePed(Model.op_Implicit((PedHash)1581098148), ((Entity)Game.Player.Character).Position + ((Entity)Game.Player.Character).ForwardVector * -1f * 1.5f);
 				}
 				if ((Entity)(object)copCar != (Entity)null && (Entity)(object)cop != (Entity)null)
 				{
-					Function.Call(unchecked((Hash)(-3189321952077349130L)), (InputArgument)("mp_arresting"));
-					while (!Function.Call<bool>(unchecked((Hash)(-3444786327252301684L)), (InputArgument)("mp_arresting")))
+					Function.Call((Hash)(-3189321952077349130L), InputArgument.op_Implicit("mp_arresting"));
+					while (!Function.Call<bool>((Hash)(-3444786327252301684L), InputArgument.op_Implicit("mp_arresting")))
 					{
 						Script.Wait(100);
 					}
-					Function.Call(unchecked((Hash)(-1565002832890405996L)), (InputArgument)(Game.Player.Character), (InputArgument)("mp_arresting"), (InputArgument)("idle"), (InputArgument)(8f), (InputArgument)(1f), (InputArgument)(-1), (InputArgument)(49), (InputArgument)(0.1f), (InputArgument)(0), (InputArgument)(0), (InputArgument)(0));
+					Function.Call((Hash)(-1565002832890405996L), InputArgument.op_Implicit(Game.Player.Character), InputArgument.op_Implicit("mp_arresting"), InputArgument.op_Implicit("idle"), InputArgument.op_Implicit(8f), InputArgument.op_Implicit(1f), InputArgument.op_Implicit(-1), InputArgument.op_Implicit(49), InputArgument.op_Implicit(0.1f), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0));
 					Game.Player.Character.Task.EnterVehicle(copCar, (VehicleSeat)2);
 					if (Function.Call<bool>((Hash)5315141875575487047L))
 					{
-						Function.Call(unchecked((Hash)(-8272491852216909662L)), (InputArgument)(Game.Player.Handle), (InputArgument)(false), (InputArgument)(256));
+						Function.Call((Hash)(-8272491852216909662L), InputArgument.op_Implicit(Game.Player.Handle), InputArgument.op_Implicit(false), InputArgument.op_Implicit(256));
 					}
-					Function.Call((Hash)3479844549214047358L, (InputArgument)(((Entity)cop).Handle), (InputArgument)(((Entity)Game.Player.Character).Handle), (InputArgument)(1), (InputArgument)(1), (InputArgument)(0), (InputArgument)(1), (InputArgument)(-1), (InputArgument)(10), (InputArgument)(true));
+					Function.Call((Hash)3479844549214047358L, InputArgument.op_Implicit(((Entity)cop).Handle), InputArgument.op_Implicit(((Entity)Game.Player.Character).Handle), InputArgument.op_Implicit(1), InputArgument.op_Implicit(1), InputArgument.op_Implicit(0), InputArgument.op_Implicit(1), InputArgument.op_Implicit(-1), InputArgument.op_Implicit(10), InputArgument.op_Implicit(true));
 					CurrentState = PrisonStates.None;
 					stateChanged = true;
 				}
@@ -199,7 +205,7 @@ private static PrisonStates NewState = PrisonStates.None;
 				stateChanged = true;
 				break;
 			case PrisonStates.CopEnterCar:
-				Function.Call(unchecked((Hash)(-5650329060376590909L)), (InputArgument)(((Entity)cop).Handle), (InputArgument)(100f));
+				Function.Call((Hash)(-5650329060376590909L), InputArgument.op_Implicit(((Entity)cop).Handle), InputArgument.op_Implicit(100f));
 				cop.Task.DriveTo(copCar, PrisonPos, 5f, Speed, 5);
 				CurrentState = PrisonStates.CopEnterCar;
 				stateChanged = true;
@@ -232,7 +238,7 @@ private static PrisonStates NewState = PrisonStates.None;
 			}
 			if (stateChanged)
 			{
-				UI.Notify("Passage à l'état : " + NewState);
+				UI.Notify("Switching to state " + NewState);
 			}
 			return;
 		}
@@ -274,7 +280,7 @@ private static PrisonStates NewState = PrisonStates.None;
 				((Entity)PriGate1.Prop).FreezePosition = false;
 				NewState = PrisonStates.ApproachGate2;
 				Model model = ((Entity)pGate1()).Model;
-				UI.Notify("Portail trouvé : " + model.Hash);
+				UI.Notify("Gate Found " + model.Hash);
 			}
 			break;
 		case PrisonStates.ApproachGate2:
@@ -343,7 +349,7 @@ private static PrisonStates NewState = PrisonStates.None;
 	private static void PlayerExitPrison()
 	{
 		//IL_0072: Unknown result type (might be due to invalid IL or missing references)
-		Function.Call(unchecked((Hash)(-8272491852216909662L)), (InputArgument)(Game.Player.Handle), (InputArgument)(true), (InputArgument)(256));
+		Function.Call((Hash)(-8272491852216909662L), InputArgument.op_Implicit(Game.Player.Handle), InputArgument.op_Implicit(true), InputArgument.op_Implicit(256));
 		Game.Player.CanControlCharacter = true;
 		LSL.entitiesCleanUp.Add((Entity)(object)copCar);
 		LSL.entitiesCleanUp.Add((Entity)(object)cop);
@@ -372,7 +378,7 @@ private static PrisonStates NewState = PrisonStates.None;
 				if (model.Hash == doorHash)
 				{
 					prop = p;
-					UI.Notify("Portail 1 trouvé");
+					UI.Notify("Gate1 found");
 					break;
 				}
 			}
@@ -397,7 +403,7 @@ private static PrisonStates NewState = PrisonStates.None;
 				if (model.Hash == doorHash)
 				{
 					prop = p;
-					UI.Notify("Portail 2 trouvé");
+					UI.Notify("Gate2 found");
 					break;
 				}
 			}

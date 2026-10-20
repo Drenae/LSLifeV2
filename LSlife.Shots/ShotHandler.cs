@@ -16,6 +16,8 @@ internal static class ShotHandler
 
 	public static int currentShot = 99;
 
+	private static bool routeSet = false;
+
 	public static bool ShotOffers => shots.Where((Shot s) => s.shotOffered).Count() > 0;
 
 	public static void Tick()
@@ -110,13 +112,13 @@ internal static class ShotHandler
 		{
 			if (LSL.DEBUG)
 			{
-				UI.Notify("Création d'une nouvelle livraison : un passant a été trouvé.");
+				UI.Notify("spawning new job, that one guy was found.");
 			}
 			spawnPos = LSL.GenerateSpawnPos(LSL.playerPos.Around(200f), LSL.Nodetype.Offroad, sidewalk: true);
 		}
 		for (int j = 0; j < 100; j++)
 		{
-			if (!Function.Call<bool>((Hash)1322919935073282825L, (InputArgument)(spawnPos.X), (InputArgument)(spawnPos.Y), (InputArgument)(spawnPos.Z)))
+			if (!Function.Call<bool>((Hash)1322919935073282825L, InputArgument.op_Implicit(spawnPos.X), InputArgument.op_Implicit(spawnPos.Y), InputArgument.op_Implicit(spawnPos.Z)))
 			{
 				break;
 			}
@@ -140,7 +142,7 @@ internal static class ShotHandler
 				val = spawnPos;
 				string text = ((object)val/*cast due to constrained. prefix*/).ToString();
 				val = ((Entity)newPed).Position;
-				UI.Notify("Position livraison : " + text + " Position client : " + ((object)val/*cast due to constrained. prefix*/).ToString());
+				UI.Notify("shotPos:" + text + " pedPos:" + ((object)val/*cast due to constrained. prefix*/).ToString());
 			}
 			if (!((Entity)(object)newPed != (Entity)null))
 			{

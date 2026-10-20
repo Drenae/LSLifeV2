@@ -92,14 +92,14 @@ public class LSL : Script
 			{
 				Locked = false;
 				Script.Wait(10);
-				Function.Call((Hash)3423943577717663365L, (InputArgument)("BIG_SCORE_GOLD_CAGE_LOCK"), (InputArgument)(0));
+				Function.Call((Hash)3423943577717663365L, InputArgument.op_Implicit("BIG_SCORE_GOLD_CAGE_LOCK"), InputArgument.op_Implicit(0));
 				Game.PlaySound("0x08053C9C", "BIG_SCORE_GOLD_CAGE_LOCK");
 				model = ((Entity)Prop).Model;
-				Function.Call(unchecked((Hash)(-7272475972733243984L)), (InputArgument)(model.Hash), (InputArgument)(((Entity)Prop).Position.X), (InputArgument)(((Entity)Prop).Position.Y), (InputArgument)(((Entity)Prop).Position.Z), (InputArgument)(false), (InputArgument)(0f), (InputArgument)(50f), (InputArgument)(0f));
+				Function.Call((Hash)(-7272475972733243984L), InputArgument.op_Implicit(model.Hash), InputArgument.op_Implicit(((Entity)Prop).Position.X), InputArgument.op_Implicit(((Entity)Prop).Position.Y), InputArgument.op_Implicit(((Entity)Prop).Position.Z), InputArgument.op_Implicit(false), InputArgument.op_Implicit(0f), InputArgument.op_Implicit(50f), InputArgument.op_Implicit(0f));
 				if (DEBUG)
 				{
 					model = ((Entity)Prop).Model;
-					UI.Notify(model.Hash + " Porte déverrouillée " + ((object)((Entity)Prop).Position/*cast due to constrained. prefix*/).ToString());
+					UI.Notify(model.Hash + " Door unlocked " + ((object)((Entity)Prop).Position/*cast due to constrained. prefix*/).ToString());
 				}
 			}
 			else
@@ -108,11 +108,11 @@ public class LSL : Script
 				Script.Wait(10);
 				Game.PlaySound("Bar_Lower_And_Lock", "DLC_IND_ROLLERCOASTER_SOUNDS");
 				model = ((Entity)Prop).Model;
-				Function.Call(unchecked((Hash)(-7272475972733243984L)), (InputArgument)(model.Hash), (InputArgument)(((Entity)Prop).Position.X), (InputArgument)(((Entity)Prop).Position.Y), (InputArgument)(((Entity)Prop).Position.Z), (InputArgument)(true), (InputArgument)(0f), (InputArgument)(50f), (InputArgument)(0f));
+				Function.Call((Hash)(-7272475972733243984L), InputArgument.op_Implicit(model.Hash), InputArgument.op_Implicit(((Entity)Prop).Position.X), InputArgument.op_Implicit(((Entity)Prop).Position.Y), InputArgument.op_Implicit(((Entity)Prop).Position.Z), InputArgument.op_Implicit(true), InputArgument.op_Implicit(0f), InputArgument.op_Implicit(50f), InputArgument.op_Implicit(0f));
 				if (DEBUG)
 				{
 					model = ((Entity)Prop).Model;
-					UI.Notify(model.Hash + " Porte verrouillée " + ((object)((Entity)Prop).Position/*cast due to constrained. prefix*/).ToString());
+					UI.Notify(model.Hash + " Door locked " + ((object)((Entity)Prop).Position/*cast due to constrained. prefix*/).ToString());
 				}
 			}
 		}
@@ -179,7 +179,7 @@ public class LSL : Script
 
 	public static int rival_enemy = World.AddRelationshipGroup("RIVAL_E");
 
-	public static int playerRelationship = Function.Call<int>(unchecked((Hash)(-3292914402564945716L)), (InputArgument)("PLAYER"));
+	public static int playerRelationship = Function.Call<int>((Hash)(-3292914402564945716L), InputArgument.op_Implicit("PLAYER"));
 
 	public PedDebugger PedDebugger = new PedDebugger();
 
@@ -323,17 +323,17 @@ public class LSL : Script
 
 	public static UIMenuSliderItem takeCocainStash;
 
-	public static UIMenuSliderItem putWeedGramsStash;
+	public static UIMenuSliderItem putWeedOzStash;
 
-	public static UIMenuSliderItem takeWeedGramsStash;
+	public static UIMenuSliderItem takeWeedOzStash;
 
-	public static UIMenuSliderItem putCrackGramsStash;
+	public static UIMenuSliderItem putCrackOzStash;
 
-	public static UIMenuSliderItem takeCrackGramsStash;
+	public static UIMenuSliderItem takeCrackOzStash;
 
-	public static UIMenuSliderItem putCocainGramsStash;
+	public static UIMenuSliderItem putCocainOzStash;
 
-	public static UIMenuSliderItem takeCocainGramsStash;
+	public static UIMenuSliderItem takeCocainOzStash;
 
 	public static UIMenuSliderItem putMoneyStash;
 
@@ -369,17 +369,17 @@ public class LSL : Script
 
 	public static UIMenuSliderItem takeCocainVeh;
 
-	public static UIMenuSliderItem putWeedGramsVeh;
+	public static UIMenuSliderItem putWeedOzVeh;
 
-	public static UIMenuSliderItem takeWeedGramsVeh;
+	public static UIMenuSliderItem takeWeedOzVeh;
 
-	public static UIMenuSliderItem putCrackGramsVeh;
+	public static UIMenuSliderItem putCrackOzVeh;
 
-	public static UIMenuSliderItem takeCrackGramsVeh;
+	public static UIMenuSliderItem takeCrackOzVeh;
 
-	public static UIMenuSliderItem putCocainGramsVeh;
+	public static UIMenuSliderItem putCocainOzVeh;
 
-	public static UIMenuSliderItem takeCocainGramsVeh;
+	public static UIMenuSliderItem takeCocainOzVeh;
 
 	public static UIMenuSliderItem putMoneyVeh;
 
@@ -397,7 +397,7 @@ public class LSL : Script
 
 	public static UIMenuListItem vehTakeMultiplier;
 
-	public static readonly List<dynamic> multiplier = new List<object> { 1, 5, 10, 25, 50, 100, 250, 500, 1000 };
+	public static readonly List<dynamic> multiplier = new List<object> { 1, 10, 28, 100, 280, 1000, 2800, 10000, 100000 };
 
 	public static UIMenu customerMainMenu;
 
@@ -618,7 +618,7 @@ public class LSL : Script
 		((Script)this).Aborted += OnAbort;
 		((Script)this).Tick += onTick;
 		((Script)this).KeyDown += onKeyDown;
-		this.Interval = 3;
+		((Script)this).Interval = 3;
 	}
 
 	private void Setup()
@@ -630,310 +630,16 @@ public class LSL : Script
 		//IL_07d6: Unknown result type (might be due to invalid IL or missing references)
 		//IL_07dd: Expected I4, but got Unknown
 		//IL_0816: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0932: Unknown result type (might be due to invalid IL or missing references)
-		//IL_093c: Expected Obj, but got Unknown
-		//IL_0955: Unknown result type (might be due to invalid IL or missing references)
-		//IL_095f: Expected Obj, but got Unknown
-		//IL_09b9: Unknown result type (might be due to invalid IL or missing references)
-		//IL_09c3: Expected Obj, but got Unknown
-		//IL_09c9: Unknown result type (might be due to invalid IL or missing references)
-		//IL_09d3: Expected Obj, but got Unknown
-		//IL_09d9: Unknown result type (might be due to invalid IL or missing references)
-		//IL_09e3: Expected Obj, but got Unknown
-		//IL_09e8: Unknown result type (might be due to invalid IL or missing references)
-		//IL_09f2: Expected Obj, but got Unknown
-		//IL_0a3a: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0a44: Expected Obj, but got Unknown
 		//IL_0873: Unknown result type (might be due to invalid IL or missing references)
 		//IL_0878: Unknown result type (might be due to invalid IL or missing references)
 		//IL_0892: Unknown result type (might be due to invalid IL or missing references)
 		//IL_0899: Expected I4, but got Unknown
 		//IL_0899: Unknown result type (might be due to invalid IL or missing references)
 		//IL_08a0: Expected I4, but got Unknown
-		//IL_0ac3: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0acd: Expected Obj, but got Unknown
-		//IL_0ad2: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0adc: Expected Obj, but got Unknown
-		//IL_0af0: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0afa: Expected Obj, but got Unknown
-		//IL_0b0e: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0b18: Expected Obj, but got Unknown
-		//IL_0b33: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0b3d: Expected Obj, but got Unknown
-		//IL_0b47: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0b51: Expected Obj, but got Unknown
 		//IL_08b1: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0b7b: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0b85: Expected Obj, but got Unknown
-		//IL_0bad: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0bb7: Expected Obj, but got Unknown
-		//IL_0bbc: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0bc6: Expected Obj, but got Unknown
-		//IL_0bff: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0c09: Expected Obj, but got Unknown
-		//IL_0c15: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0c1f: Expected Obj, but got Unknown
-		//IL_0c2b: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0c35: Expected Obj, but got Unknown
-		//IL_0c3f: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0c49: Expected Obj, but got Unknown
-		//IL_0c7e: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0c88: Expected Obj, but got Unknown
-		//IL_0cb1: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0cbb: Expected Obj, but got Unknown
-		//IL_0ce4: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0cee: Expected Obj, but got Unknown
-		//IL_0d12: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0d1c: Expected Obj, but got Unknown
-		//IL_0d21: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0d2b: Expected Obj, but got Unknown
-		//IL_0d30: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0d3a: Expected Obj, but got Unknown
-		//IL_0d54: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0d5e: Expected Obj, but got Unknown
-		//IL_0d63: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0d6d: Expected Obj, but got Unknown
-		//IL_0d78: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0d82: Expected Obj, but got Unknown
-		//IL_0e15: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0e1f: Expected Obj, but got Unknown
-		//IL_0e2b: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0e35: Expected Obj, but got Unknown
-		//IL_0e41: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0e4b: Expected Obj, but got Unknown
-		//IL_0e57: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0e61: Expected Obj, but got Unknown
-		//IL_0e6d: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0e77: Expected Obj, but got Unknown
-		//IL_0e83: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0e8d: Expected Obj, but got Unknown
-		//IL_0e99: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0ea3: Expected Obj, but got Unknown
-		//IL_0eaf: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0eb9: Expected Obj, but got Unknown
-		//IL_0ec5: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0ecf: Expected Obj, but got Unknown
-		//IL_0f15: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0f1f: Expected Obj, but got Unknown
-		//IL_0f5b: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0f65: Expected Obj, but got Unknown
-		//IL_0f8b: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0f95: Expected Obj, but got Unknown
-		//IL_0fc3: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0fcd: Expected Obj, but got Unknown
-		//IL_0fe1: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0feb: Expected Obj, but got Unknown
-		//IL_1006: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1010: Expected Obj, but got Unknown
-		//IL_101c: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1026: Expected Obj, but got Unknown
-		//IL_1032: Unknown result type (might be due to invalid IL or missing references)
-		//IL_103c: Expected Obj, but got Unknown
-		//IL_1048: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1052: Expected Obj, but got Unknown
-		//IL_105f: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1069: Expected Obj, but got Unknown
-		//IL_10bc: Unknown result type (might be due to invalid IL or missing references)
-		//IL_10c6: Expected Obj, but got Unknown
-		//IL_111c: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1126: Expected Obj, but got Unknown
-		//IL_1141: Unknown result type (might be due to invalid IL or missing references)
-		//IL_114b: Expected Obj, but got Unknown
-		//IL_1157: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1161: Expected Obj, but got Unknown
-		//IL_11b4: Unknown result type (might be due to invalid IL or missing references)
-		//IL_11be: Expected Obj, but got Unknown
-		//IL_1214: Unknown result type (might be due to invalid IL or missing references)
-		//IL_121e: Expected Obj, but got Unknown
-		//IL_1239: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1243: Expected Obj, but got Unknown
-		//IL_124f: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1259: Expected Obj, but got Unknown
-		//IL_12ac: Unknown result type (might be due to invalid IL or missing references)
-		//IL_12b6: Expected Obj, but got Unknown
-		//IL_130c: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1316: Expected Obj, but got Unknown
-		//IL_1331: Unknown result type (might be due to invalid IL or missing references)
-		//IL_133b: Expected Obj, but got Unknown
-		//IL_1347: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1351: Expected Obj, but got Unknown
-		//IL_1361: Unknown result type (might be due to invalid IL or missing references)
-		//IL_136b: Expected Obj, but got Unknown
-		//IL_1386: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1390: Expected Obj, but got Unknown
-		//IL_139a: Unknown result type (might be due to invalid IL or missing references)
-		//IL_13a4: Expected Obj, but got Unknown
-		//IL_142c: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1436: Expected Obj, but got Unknown
-		//IL_146e: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1478: Expected Obj, but got Unknown
-		//IL_14a9: Unknown result type (might be due to invalid IL or missing references)
-		//IL_14b3: Expected Obj, but got Unknown
-		//IL_14bf: Unknown result type (might be due to invalid IL or missing references)
-		//IL_14c9: Expected Obj, but got Unknown
-		//IL_14ce: Unknown result type (might be due to invalid IL or missing references)
-		//IL_14d8: Expected Obj, but got Unknown
-		//IL_1510: Unknown result type (might be due to invalid IL or missing references)
-		//IL_151a: Expected Obj, but got Unknown
-		//IL_154b: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1555: Expected Obj, but got Unknown
-		//IL_1561: Unknown result type (might be due to invalid IL or missing references)
-		//IL_156b: Expected Obj, but got Unknown
-		//IL_1570: Unknown result type (might be due to invalid IL or missing references)
-		//IL_157a: Expected Obj, but got Unknown
-		//IL_15b2: Unknown result type (might be due to invalid IL or missing references)
-		//IL_15bc: Expected Obj, but got Unknown
-		//IL_15ed: Unknown result type (might be due to invalid IL or missing references)
-		//IL_15f7: Expected Obj, but got Unknown
-		//IL_1603: Unknown result type (might be due to invalid IL or missing references)
-		//IL_160d: Expected Obj, but got Unknown
-		//IL_1612: Unknown result type (might be due to invalid IL or missing references)
-		//IL_161c: Expected Obj, but got Unknown
-		//IL_1651: Unknown result type (might be due to invalid IL or missing references)
-		//IL_165b: Expected Obj, but got Unknown
-		//IL_1660: Unknown result type (might be due to invalid IL or missing references)
-		//IL_166a: Expected Obj, but got Unknown
-		//IL_169f: Unknown result type (might be due to invalid IL or missing references)
-		//IL_16a9: Expected Obj, but got Unknown
-		//IL_16ae: Unknown result type (might be due to invalid IL or missing references)
-		//IL_16b8: Expected Obj, but got Unknown
-		//IL_16ed: Unknown result type (might be due to invalid IL or missing references)
-		//IL_16f7: Expected Obj, but got Unknown
-		//IL_16fc: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1706: Expected Obj, but got Unknown
-		//IL_173a: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1744: Expected Obj, but got Unknown
-		//IL_1776: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1780: Expected Obj, but got Unknown
-		//IL_178c: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1796: Expected Obj, but got Unknown
-		//IL_17a1: Unknown result type (might be due to invalid IL or missing references)
-		//IL_17ab: Expected Obj, but got Unknown
-		//IL_17c6: Unknown result type (might be due to invalid IL or missing references)
-		//IL_17d0: Expected Obj, but got Unknown
-		//IL_17db: Unknown result type (might be due to invalid IL or missing references)
-		//IL_17e5: Expected Obj, but got Unknown
-		//IL_1800: Unknown result type (might be due to invalid IL or missing references)
-		//IL_180a: Expected Obj, but got Unknown
-		//IL_193b: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1945: Expected Obj, but got Unknown
-		//IL_1981: Unknown result type (might be due to invalid IL or missing references)
-		//IL_198b: Expected Obj, but got Unknown
-		//IL_1a27: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1a31: Expected Obj, but got Unknown
-		//IL_1a3d: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1a47: Expected Obj, but got Unknown
-		//IL_1a51: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1a5b: Expected Obj, but got Unknown
-		//IL_19b2: Unknown result type (might be due to invalid IL or missing references)
-		//IL_19bc: Expected Obj, but got Unknown
-		//IL_19d7: Unknown result type (might be due to invalid IL or missing references)
-		//IL_19e1: Expected Obj, but got Unknown
-		//IL_19ec: Unknown result type (might be due to invalid IL or missing references)
-		//IL_19f6: Expected Obj, but got Unknown
-		//IL_1a11: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1a1b: Expected Obj, but got Unknown
-		//IL_1afc: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1b06: Expected Obj, but got Unknown
-		//IL_1b3e: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1b48: Expected Obj, but got Unknown
-		//IL_1b79: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1b83: Expected Obj, but got Unknown
-		//IL_1b8f: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1b99: Expected Obj, but got Unknown
-		//IL_1bb7: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1bc1: Expected Obj, but got Unknown
-		//IL_1bf9: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1c03: Expected Obj, but got Unknown
-		//IL_1c34: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1c3e: Expected Obj, but got Unknown
-		//IL_1c4a: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1c54: Expected Obj, but got Unknown
-		//IL_1c72: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1c7c: Expected Obj, but got Unknown
-		//IL_1cb4: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1cbe: Expected Obj, but got Unknown
-		//IL_1cef: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1cf9: Expected Obj, but got Unknown
-		//IL_1d05: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1d0f: Expected Obj, but got Unknown
-		//IL_1d28: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1d32: Expected Obj, but got Unknown
-		//IL_1d60: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1d6a: Expected Obj, but got Unknown
-		//IL_1d9b: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1da5: Expected Obj, but got Unknown
-		//IL_1db1: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1dbb: Expected Obj, but got Unknown
-		//IL_1dd4: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1dde: Expected Obj, but got Unknown
-		//IL_1e0c: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1e16: Expected Obj, but got Unknown
-		//IL_1e47: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1e51: Expected Obj, but got Unknown
-		//IL_1e5d: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1e67: Expected Obj, but got Unknown
-		//IL_1e80: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1e8a: Expected Obj, but got Unknown
-		//IL_1eb8: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1ec2: Expected Obj, but got Unknown
-		//IL_1ef3: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1efd: Expected Obj, but got Unknown
-		//IL_1f09: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1f13: Expected Obj, but got Unknown
-		//IL_1f2c: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1f36: Expected Obj, but got Unknown
-		//IL_1f6a: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1f74: Expected Obj, but got Unknown
-		//IL_1fa6: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1fb0: Expected Obj, but got Unknown
-		//IL_1fbc: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1fc6: Expected Obj, but got Unknown
-		//IL_1fd1: Unknown result type (might be due to invalid IL or missing references)
-		//IL_1fdb: Expected Obj, but got Unknown
-		//IL_1ff6: Unknown result type (might be due to invalid IL or missing references)
-		//IL_2000: Expected Obj, but got Unknown
-		//IL_200b: Unknown result type (might be due to invalid IL or missing references)
-		//IL_2015: Expected Obj, but got Unknown
-		//IL_2030: Unknown result type (might be due to invalid IL or missing references)
-		//IL_203a: Expected Obj, but got Unknown
-		//IL_2050: Unknown result type (might be due to invalid IL or missing references)
-		//IL_205a: Expected Obj, but got Unknown
-		//IL_2075: Unknown result type (might be due to invalid IL or missing references)
-		//IL_207f: Expected Obj, but got Unknown
-		//IL_2087: Unknown result type (might be due to invalid IL or missing references)
-		//IL_2091: Expected Obj, but got Unknown
-		//IL_20ac: Unknown result type (might be due to invalid IL or missing references)
-		//IL_20b6: Expected Obj, but got Unknown
-		//IL_20e3: Unknown result type (might be due to invalid IL or missing references)
-		//IL_20ed: Expected Obj, but got Unknown
-		//IL_2108: Unknown result type (might be due to invalid IL or missing references)
-		//IL_2112: Expected Obj, but got Unknown
-		//IL_2165: Unknown result type (might be due to invalid IL or missing references)
-		//IL_216f: Expected Obj, but got Unknown
-		//IL_217b: Unknown result type (might be due to invalid IL or missing references)
-		//IL_2185: Expected Obj, but got Unknown
-		//IL_218f: Unknown result type (might be due to invalid IL or missing references)
-		//IL_2199: Expected Obj, but got Unknown
-		//IL_212a: Unknown result type (might be due to invalid IL or missing references)
-		//IL_2134: Expected Obj, but got Unknown
-		//IL_214f: Unknown result type (might be due to invalid IL or missing references)
-		//IL_2159: Expected Obj, but got Unknown
-		//IL_21c3: Unknown result type (might be due to invalid IL or missing references)
-		//IL_21cd: Expected Obj, but got Unknown
-		//IL_21e1: Unknown result type (might be due to invalid IL or missing references)
-		//IL_21eb: Expected Obj, but got Unknown
-		//IL_2206: Unknown result type (might be due to invalid IL or missing references)
-		//IL_2210: Expected Obj, but got Unknown
-		//IL_2225: Unknown result type (might be due to invalid IL or missing references)
-		//IL_222f: Expected Obj, but got Unknown
-		//IL_2234: Unknown result type (might be due to invalid IL or missing references)
-		//IL_223e: Expected Obj, but got Unknown
-		//IL_224a: Unknown result type (might be due to invalid IL or missing references)
-		//IL_2254: Expected Obj, but got Unknown
-		lsDebug = Function.Call<uint>(unchecked((Hash)(-3292914402564945716L)), (InputArgument)("lsdebug"));
-		areaDebug = Function.Call<uint>(unchecked((Hash)(-3292914402564945716L)), (InputArgument)("areadebug"));
-		spawnP = Function.Call<uint>(unchecked((Hash)(-3292914402564945716L)), (InputArgument)("spawnP"));
+		lsDebug = Function.Call<uint>((Hash)(-3292914402564945716L), InputArgument.op_Implicit("lsdebug"));
+		areaDebug = Function.Call<uint>((Hash)(-3292914402564945716L), InputArgument.op_Implicit("areadebug"));
+		spawnP = Function.Call<uint>((Hash)(-3292914402564945716L), InputArgument.op_Implicit("spawnP"));
 		player = Game.Player;
 		player.Character.CurrentPedGroup.SeparationRange = 100f;
 		iniSettings = ScriptSettings.Load("scripts\\LSlife.ini");
@@ -956,9 +662,7 @@ public class LSL : Script
 			if (element.Name == "playerInventory")
 			{
 				bool foundArmour = false;
-				bool foundWeedGrams = false;
-				bool foundCrackGrams = false;
-				bool foundCocaineGrams = false;
+				bool foundOz = false;
 				foreach (XElement e in element.Elements())
 				{
 					int number;
@@ -967,30 +671,30 @@ public class LSL : Script
 						int.TryParse(e.Value, out number);
 						PlayerInventory.Add("Weed", number);
 					}
-					if (e.Name == "weedGrams")
+					if (e.Name == "weedOz")
 					{
-						int.TryParse(e.Value, out LsFunctions.pWeedGrams);
-						foundWeedGrams = true;
+						int.TryParse(e.Value, out LsFunctions.pWeedOunce);
+						foundOz = true;
 					}
 					if (e.Name == "crack")
 					{
 						int.TryParse(e.Value, out number);
 						PlayerInventory.Add("Crack", number);
 					}
-					if (e.Name == "crackGrams")
+					if (e.Name == "crackOz")
 					{
-						int.TryParse(e.Value, out LsFunctions.pCrackGrams);
-						foundCrackGrams = true;
+						int.TryParse(e.Value, out LsFunctions.pCrackOunce);
+						foundOz = true;
 					}
 					if (e.Name == "cocain")
 					{
 						int.TryParse(e.Value, out number);
 						PlayerInventory.Add("Cocaine", number);
 					}
-					if (e.Name == "cocaineGrams")
+					if (e.Name == "cocaineOz")
 					{
-						int.TryParse(e.Value, out LsFunctions.pCocaineGrams);
-						foundCocaineGrams = true;
+						int.TryParse(e.Value, out LsFunctions.pCocaineOunce);
+						foundOz = true;
 					}
 					if (e.Name == "armour")
 					{
@@ -1003,11 +707,11 @@ public class LSL : Script
 					element.Add(new XElement("armour", playerArmours.ToString()));
 					LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
 				}
-				if (!foundWeedGrams) element.Add(new XElement("weedGrams", LsFunctions.pWeedGrams.ToString()));
-				if (!foundCrackGrams) element.Add(new XElement("crackGrams", LsFunctions.pCrackGrams.ToString()));
-				if (!foundCocaineGrams) element.Add(new XElement("cocaineGrams", LsFunctions.pCocaineGrams.ToString()));
-				if (!foundWeedGrams || !foundCrackGrams || !foundCocaineGrams)
+				if (!foundOz)
 				{
+					element.Add(new XElement("weedOz", LsFunctions.pWeedOunce.ToString()));
+					element.Add(new XElement("crackOz", LsFunctions.pCrackOunce.ToString()));
+					element.Add(new XElement("cocaineOz", LsFunctions.pCocaineOunce.ToString()));
 					LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
 				}
 			}
@@ -1107,11 +811,11 @@ public class LSL : Script
 		int i = 0;
 		foreach (WeaponHash weapon in Enum.GetValues(typeof(WeaponHash)))
 		{
-			if (!Function.Call<bool>(unchecked((Hash)(-8220001501650343748L)), (InputArgument)(player.Character), (InputArgument)((int)weapon)))
+			if (!Function.Call<bool>((Hash)(-8220001501650343748L), InputArgument.op_Implicit(player.Character), InputArgument.op_Implicit((int)weapon)))
 			{
 				continue;
 			}
-			int ammunitionInWeapon = Function.Call<int>((Hash)97480644549409105L, (InputArgument)(player.Character), (InputArgument)((int)weapon));
+			int ammunitionInWeapon = Function.Call<int>((Hash)97480644549409105L, InputArgument.op_Implicit(player.Character), InputArgument.op_Implicit((int)weapon));
 			XElement parentElement = new XElement("weapon");
 			parentElement.SetAttributeValue("id", i);
 			XElement weaponNameElement = new XElement("HASH", (object)weapon);
@@ -1121,7 +825,7 @@ public class LSL : Script
 			parentElement.Add(weaponAmmoElement);
 			foreach (WeaponComponent component in Enum.GetValues(typeof(WeaponComponent)))
 			{
-				if (Function.Call<bool>(unchecked((Hash)(-4209984786179366080L)), (InputArgument)(player.Character), (InputArgument)((int)weapon), (InputArgument)((int)component)))
+				if (Function.Call<bool>((Hash)(-4209984786179366080L), InputArgument.op_Implicit(player.Character), InputArgument.op_Implicit((int)weapon), InputArgument.op_Implicit((int)component)))
 				{
 					XElement weaponComponentElement = new XElement("COMPONENT", (object)component);
 					parentElement.Add(weaponComponentElement);
@@ -1133,29 +837,27 @@ public class LSL : Script
 		}
 		LsMenuPool = new MenuPool();
 		Color.FromArgb(114, 204, 114);
-		zeeMenu = new UIMenu("Rafael Mendoza", "Que veux-tu ?");
+		zeeMenu = new UIMenu("Zee", "What you want?");
 		if (UseSprites)
 		{
 			zeeMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
 		}
 		LsMenuPool.Add(zeeMenu);
-		startDealing = LsMenuPool.AddSubMenu(zeeMenu, "Vente de drogue");
+		startDealing = LsMenuPool.AddSubMenu(zeeMenu, "Dealing.");
 		if (UseSprites)
 		{
 			startDealing.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
 		}
-		sellWeed = new UIMenuCheckboxItem("Vendre du cannabis", true);
-		sellCrack = new UIMenuCheckboxItem("Vendre du crack", true);
-		sellCocaine = new UIMenuCheckboxItem("Vendre de la cocaïne", true);
-		StartDeal = new UIMenuItem("Commencer la vente");
-		startDealing.AddItem((UIMenuItem)(object)sellWeed);
-		startDealing.AddItem((UIMenuItem)(object)sellCrack);
-		startDealing.AddItem((UIMenuItem)(object)sellCocaine);
+		sellWeed = new UIMenuCheckboxItem("Sell Weed", check: true);
+		sellCrack = new UIMenuCheckboxItem("Sell Crack", check: true);
+		sellCocaine = new UIMenuCheckboxItem("Sell Cocaine", check: true);
+		StartDeal = new UIMenuItem("Start Dealing.");
+		startDealing.AddItem(sellWeed);
+		startDealing.AddItem(sellCrack);
+		startDealing.AddItem(sellCocaine);
 		startDealing.AddItem(StartDeal);
 		startDealing.OnItemSelect += LsMenus.OnstartDealSelect;
-		OrderDrugs = LsMenuPool.AddSubMenu(zeeMenu, "Commander de la drogue");
-		// LSL V2 FR : élargir ce menu NativeUI pour conserver les libellés complets.
-		OrderDrugs.SetMenuWidthOffset(140);
+		OrderDrugs = LsMenuPool.AddSubMenu(zeeMenu, "Order Drugs.");
 		if (UseSprites)
 		{
 			OrderDrugs.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
@@ -1165,397 +867,391 @@ public class LSL : Script
 		OrderDrugs.Title.Outline = true;
 		((UIText)OrderDrugs.Title).Shadow = true;
 		OrderDrugs.OnMenuOpen += OrderDrugs_OnMenuOpen;
-		buyWeapons = new UIMenuItem("Acheter des armes");
+		buyWeapons = new UIMenuItem("Buy Weapons.");
 		zeeMenu.AddItem(buyWeapons);
-		buyLift = new UIMenuItem("Demander un trajet");
+		buyLift = new UIMenuItem("Ask for a Lift.");
 		zeeMenu.AddItem(buyLift);
-		payDebt = new UIMenuItem("Rembourser la dette");
+		payDebt = new UIMenuItem("Pay Debt");
 		zeeMenu.AddItem(payDebt);
 		zeeMenu.OnItemSelect += LsMenus.OnZeeMenuSelect;
-		hireDealerMainMenu = new UIMenu("Recruter un dealer", "Choisir une option");
+		hireDealerMainMenu = new UIMenu("Hire Dealer", "Select an option");
 		if (UseSprites)
 		{
 			hireDealerMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_dealer.png");
 		}
 		LsMenuPool.Add(hireDealerMainMenu);
-		hireDealerOfferAmount = new UIMenuSliderItem("Montant proposé");
+		hireDealerOfferAmount = new UIMenuSliderItem("Offer Amount");
 		hireDealerOfferAmount.Maximum = player.Money;
 		hireDealerOfferAmount.Multiplier = 1000;
-		hireDealerMakeOffer = new UIMenuItem("Faire une offre");
-		hireDealerFollowButton = new UIMenuItem("Annuler l’offre");
-		hireDealerMainMenu.AddItem((UIMenuItem)(object)hireDealerOfferAmount);
+		hireDealerMakeOffer = new UIMenuItem("Make Offer");
+		hireDealerFollowButton = new UIMenuItem("Cancel Offer");
+		hireDealerMainMenu.AddItem(hireDealerOfferAmount);
 		hireDealerMainMenu.AddItem(hireDealerMakeOffer);
 		hireDealerMainMenu.AddItem(hireDealerFollowButton);
 		hireDealerOfferAmount.OnSliderChanged += LsMenus.HireDealerOfferAmount_OnSliderChanged;
 		hireDealerMakeOffer.Activated += LsMenus.HireDealerOfferSelect;
 		hireDealerFollowButton.Activated += LsMenus.HireDealerFollowSelect;
-		WorkerMainMenu = new UIMenu("Employé", "Donner des ressources au dealer");
+		WorkerMainMenu = new UIMenu("Worker", "Give stuff to your Dealer");
 		if (UseSprites)
 		{
 			WorkerMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_worker.png");
 		}
 		LsMenuPool.Add(WorkerMainMenu);
-		wWeed = new UIMenuSliderItem("Cannabis " + LsFunctions.FormatMetric(0));
+		wWeed = new UIMenuSliderItem("Weed " + LsFunctions.GramsToOz(0));
 		wWeed.Maximum = PlayerInventory["Weed"];
-		wCrack = new UIMenuSliderItem("Crack " + LsFunctions.FormatMetric(0));
+		wCrack = new UIMenuSliderItem("Crack " + LsFunctions.GramsToOz(0));
 		wCrack.Maximum = PlayerInventory["Crack"];
-		wCocaine = new UIMenuSliderItem("Cocaïne " + LsFunctions.FormatMetric(0));
+		wCocaine = new UIMenuSliderItem("Coke " + LsFunctions.GramsToOz(0));
 		wCocaine.Maximum = PlayerInventory["Cocaine"];
-		wMultiplier = new UIMenuListItem("Multiplier", (List<object>)multiplier, 0);
-		wConfirm = new UIMenuItem("Confirmer");
-		wCollect = new UIMenuItem("Récupérer");
+		wMultiplier = new UIMenuListItem("Multiplier", multiplier, 0);
+		wConfirm = new UIMenuItem("Confirm");
+		wCollect = new UIMenuItem("Collect");
 		List<object> orders = new List<object> { "Nothing" };
-		wOrder = new UIMenuListItem("Commandes", orders, 0);
-		wArmour = new UIMenuItem("Donner un gilet pare-balles");
-		wWeapons = new UIMenuListItem("Donner une arme", (List<object>)playerWeps, 0);
-		WorkerMainMenu.AddItem((UIMenuItem)(object)wWeed);
-		WorkerMainMenu.AddItem((UIMenuItem)(object)wCrack);
-		WorkerMainMenu.AddItem((UIMenuItem)(object)wCocaine);
-		WorkerMainMenu.AddItem((UIMenuItem)(object)wMultiplier);
+		wOrder = new UIMenuListItem("Orders", orders, 0);
+		wArmour = new UIMenuItem("Give Armour");
+		wWeapons = new UIMenuListItem("Give weapon", playerWeps, 0);
+		WorkerMainMenu.AddItem(wWeed);
+		WorkerMainMenu.AddItem(wCrack);
+		WorkerMainMenu.AddItem(wCocaine);
+		WorkerMainMenu.AddItem(wMultiplier);
 		WorkerMainMenu.AddItem(wConfirm);
 		WorkerMainMenu.AddItem(wCollect);
-		WorkerMainMenu.AddItem((UIMenuItem)(object)wOrder);
+		WorkerMainMenu.AddItem(wOrder);
 		WorkerMainMenu.AddItem(wArmour);
-		WorkerMainMenu.AddItem((UIMenuItem)(object)wWeapons);
+		WorkerMainMenu.AddItem(wWeapons);
 		wWeed.OnSliderChanged += LsMenus.WWeed_OnSliderChanged;
 		wCrack.OnSliderChanged += LsMenus.WCrack_OnSliderChanged;
 		wCocaine.OnSliderChanged += LsMenus.WCocaine_OnSliderChanged;
 		wMultiplier.OnListChanged += WMultiplier_OnListChanged;
 		wConfirm.Activated += LsMenus.WConfirm_Activated;
 		wCollect.Activated += LsMenus.WCollect_Activated;
-		((UIMenuItem)wOrder).Activated += LsMenus.WOrder_Activated;
+		wOrder.Activated += LsMenus.WOrder_Activated;
 		wArmour.Activated += LsMenus.WArmour_Activated;
-		((UIMenuItem)wWeapons).Activated += LsMenus.WWeapons_Activated;
+		wWeapons.Activated += LsMenus.WWeapons_Activated;
 		int mWprice = meleePrice[0] - LsFunctions.Discount(meleePrice[0]);
 		int pWprice = pistolPrice[0] - LsFunctions.Discount(pistolPrice[0]);
-		wepMenu = new UIMenu("Armes", "Que veux-tu ?");
+		wepMenu = new UIMenu("Wepons", "What you want?");
 		if (UseSprites)
 		{
 			wepMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_dealer.png");
 		}
 		LsMenuPool.Add(wepMenu);
-		melee = new UIMenuListItem("Arme de mêlée $" + LsFunctions.IntToMoney(mWprice), (List<object>)meleeWeps, 0);
-		wepMenu.AddItem((UIMenuItem)(object)melee);
-		pistol = new UIMenuListItem("Pistolet $" + LsFunctions.IntToMoney(pWprice), (List<object>)pistolWeps, 0);
-		wepMenu.AddItem((UIMenuItem)(object)pistol);
-		armour = new UIMenuItem("Gilet pare-balles $" + LsFunctions.IntToMoney(250 - LsFunctions.Discount(250)));
+		melee = new UIMenuListItem("Melee $" + LsFunctions.IntToMoney(mWprice), meleeWeps, 0);
+		wepMenu.AddItem(melee);
+		pistol = new UIMenuListItem("Pistol $" + LsFunctions.IntToMoney(pWprice), pistolWeps, 0);
+		wepMenu.AddItem(pistol);
+		armour = new UIMenuItem("Armour $" + LsFunctions.IntToMoney(250 - LsFunctions.Discount(250)));
 		wepMenu.AddItem(armour);
-		dismiss = new UIMenuItem("Renvoyer");
+		dismiss = new UIMenuItem("Dismiss");
 		wepMenu.AddItem(dismiss);
 		wepMenu.OnItemSelect += LsMenus.OnWepMenuSelect;
 		melee.OnListChanged += LsMenus.onListChange;
 		pistol.OnListChanged += LsMenus.onListChange;
-		OrderMultipliers = new UIMenuListItem("Multiplier", (List<object>)multiplier, 0);
+		OrderMultipliers = new UIMenuListItem("Multiplier", multiplier, 0);
 		OrderMultipliers.OnListChanged += DMultiplier_OnListChanged;
-		weedMenu = LsMenuPool.AddSubMenu(OrderDrugs, "Cannabis");
-		// LSL V2 FR : élargir ce menu NativeUI pour conserver les libellés complets.
-		weedMenu.SetMenuWidthOffset(140);
+		weedMenu = LsMenuPool.AddSubMenu(OrderDrugs, "Weed");
 		if (UseSprites)
 		{
 			weedMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
 		}
-		bushWeed = new UIMenuSliderItem("Cannabis (prix/100 g) $" + LsFunctions.IntToMoney(LsFunctions.PriceForGrams(100, weed1Price - LsFunctions.Discount(weed1Price))));
-		weedMenu.AddItem((UIMenuItem)(object)bushWeed);
+		bushWeed = new UIMenuSliderItem("Weed $" + LsFunctions.IntToMoney(weed1Price - LsFunctions.Discount(weed1Price)) + "oz");
+		weedMenu.AddItem(bushWeed);
 		bushWeed.Maximum = dealer1Weed;
 		bushWeed.Multiplier = 1;
-		weedMenu.AddItem((UIMenuItem)(object)OrderMultipliers);
-		WeedBuy = new UIMenuItem("Commander : " + LsFunctions.FormatMetric(bushWeed.Value));
+		weedMenu.AddItem(OrderMultipliers);
+		WeedBuy = new UIMenuItem("Order: " + bushWeed.Value);
 		weedMenu.AddItem(WeedBuy);
 		bushWeed.OnSliderChanged += LsMenus.onSliderChange;
 		weedMenu.OnItemSelect += LsMenus.onWeedMenuSelect;
 		crackMenu = LsMenuPool.AddSubMenu(OrderDrugs, "Crack");
-		// LSL V2 FR : élargir ce menu NativeUI pour conserver les libellés complets.
-		crackMenu.SetMenuWidthOffset(140);
 		if (UseSprites)
 		{
 			crackMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
 		}
-		crack = new UIMenuSliderItem("Crack (prix/100 g) $" + LsFunctions.IntToMoney(LsFunctions.PriceForGrams(100, crack1Price - LsFunctions.Discount(crack1Price))));
-		crackMenu.AddItem((UIMenuItem)(object)crack);
+		crack = new UIMenuSliderItem("Crack $" + LsFunctions.IntToMoney(crack1Price - LsFunctions.Discount(crack1Price)) + "oz");
+		crackMenu.AddItem(crack);
 		crack.Maximum = dealer1Crack;
 		crack.Multiplier = 1;
-		crackMenu.AddItem((UIMenuItem)(object)OrderMultipliers);
-		CrackBuy = new UIMenuItem("Commander : " + LsFunctions.FormatMetric(crack.Value));
+		crackMenu.AddItem(OrderMultipliers);
+		CrackBuy = new UIMenuItem("Buy: " + crack.Value);
 		crackMenu.AddItem(CrackBuy);
 		crack.OnSliderChanged += LsMenus.onSliderChange;
 		crackMenu.OnItemSelect += LsMenus.onCrackMenuSelect;
-		cocainMenu = LsMenuPool.AddSubMenu(OrderDrugs, "Cocaïne");
-		// LSL V2 FR : élargir ce menu NativeUI pour conserver les libellés complets.
-		cocainMenu.SetMenuWidthOffset(140);
+		cocainMenu = LsMenuPool.AddSubMenu(OrderDrugs, "Cocaine");
 		if (UseSprites)
 		{
 			cocainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
 		}
-		cocaine = new UIMenuSliderItem("Cocaïne (prix/100 g) $" + LsFunctions.IntToMoney(LsFunctions.PriceForGrams(100, cocain1Price - LsFunctions.Discount(cocain1Price))));
-		cocainMenu.AddItem((UIMenuItem)(object)cocaine);
+		cocaine = new UIMenuSliderItem("Cocaine $" + LsFunctions.IntToMoney(cocain1Price - LsFunctions.Discount(cocain1Price)) + "oz");
+		cocainMenu.AddItem(cocaine);
 		cocaine.Maximum = dealer1Cocain;
 		cocaine.Multiplier = 1;
-		cocainMenu.AddItem((UIMenuItem)(object)OrderMultipliers);
-		CocainBuy = new UIMenuItem("Commander : " + LsFunctions.FormatMetric(cocaine.Value));
+		cocainMenu.AddItem(OrderMultipliers);
+		CocainBuy = new UIMenuItem("Buy: " + cocaine.Value);
 		cocainMenu.AddItem(CocainBuy);
 		cocaine.OnSliderChanged += LsMenus.onSliderChange;
 		cocainMenu.OnItemSelect += LsMenus.onCocainMenuSelect;
-		PlaceOrder = new UIMenuItem("Passer commande $" + LsFunctions.IntToMoney(0));
+		PlaceOrder = new UIMenuItem("Place Order $" + LsFunctions.IntToMoney(0));
 		OrderDrugs.AddItem(PlaceOrder);
 		OrderDrugs.OnItemSelect += LsMenus.OnOrderDrugsMenuSelect;
-		stashMainMenu = new UIMenu("Planque", "Choisir une option");
+		stashMainMenu = new UIMenu("Safehouse Stash", "Select an option.");
 		if (UseSprites)
 		{
 			stashMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
 		}
 		LsMenuPool.Add(stashMainMenu);
-		stashTakeMenu = LsMenuPool.AddSubMenu(stashMainMenu, "Retirer");
+		stashTakeMenu = LsMenuPool.AddSubMenu(stashMainMenu, "Take");
 		if (UseSprites)
 		{
 			stashTakeMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
 		}
-		stashPutMenu = LsMenuPool.AddSubMenu(stashMainMenu, "Déposer");
+		stashPutMenu = LsMenuPool.AddSubMenu(stashMainMenu, "Stash");
 		if (UseSprites)
 		{
 			stashPutMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
 		}
-		putWeedStash = new UIMenuSliderItem("Cannabis");
-		stashPutMenu.AddItem((UIMenuItem)(object)putWeedStash);
+		putWeedStash = new UIMenuSliderItem("Weed");
+		stashPutMenu.AddItem(putWeedStash);
 		putWeedStash.Maximum = PlayerInventory["Weed"];
 		putWeedStash.Multiplier = 1;
-		takeWeedStash = new UIMenuSliderItem("Cannabis");
-		stashTakeMenu.AddItem((UIMenuItem)(object)takeWeedStash);
+		takeWeedStash = new UIMenuSliderItem("Weed");
+		stashTakeMenu.AddItem(takeWeedStash);
 		takeWeedStash.Maximum = 0;
 		takeWeedStash.Multiplier = 1;
 		putWeedStash.OnSliderChanged += LsMenus.onSliderChange;
 		takeWeedStash.OnSliderChanged += LsMenus.onSliderChange;
 		putCrackStash = new UIMenuSliderItem("Crack");
-		stashPutMenu.AddItem((UIMenuItem)(object)putCrackStash);
+		stashPutMenu.AddItem(putCrackStash);
 		putCrackStash.Maximum = PlayerInventory["Crack"];
 		putCrackStash.Multiplier = 1;
 		takeCrackStash = new UIMenuSliderItem("Crack");
-		stashTakeMenu.AddItem((UIMenuItem)(object)takeCrackStash);
+		stashTakeMenu.AddItem(takeCrackStash);
 		takeCrackStash.Maximum = 0;
 		takeCrackStash.Multiplier = 1;
 		putCrackStash.OnSliderChanged += LsMenus.onSliderChange;
 		takeCrackStash.OnSliderChanged += LsMenus.onSliderChange;
-		putCocainStash = new UIMenuSliderItem("Cocaïne");
-		stashPutMenu.AddItem((UIMenuItem)(object)putCocainStash);
+		putCocainStash = new UIMenuSliderItem("Cocaine");
+		stashPutMenu.AddItem(putCocainStash);
 		putCocainStash.Maximum = PlayerInventory["Cocaine"];
 		putCocainStash.Multiplier = 1;
-		takeCocainStash = new UIMenuSliderItem("Cocaïne");
-		stashTakeMenu.AddItem((UIMenuItem)(object)takeCocainStash);
+		takeCocainStash = new UIMenuSliderItem("Cocaine");
+		stashTakeMenu.AddItem(takeCocainStash);
 		takeCocainStash.Maximum = 0;
 		takeCocainStash.Multiplier = 1;
 		putCocainStash.OnSliderChanged += LsMenus.onSliderChange;
 		takeCocainStash.OnSliderChanged += LsMenus.onSliderChange;
-		putWeedGramsStash = new UIMenuSliderItem("Cannabis non préparé");
-		stashPutMenu.AddItem((UIMenuItem)(object)putWeedGramsStash);
-		putWeedGramsStash.Maximum = LsFunctions.pWeedGrams;
-		putWeedGramsStash.Multiplier = 1;
-		putWeedGramsStash.OnSliderChanged += LsMenus.onSliderChange;
-		putCrackGramsStash = new UIMenuSliderItem("Crack non préparé");
-		stashPutMenu.AddItem((UIMenuItem)(object)putCrackGramsStash);
-		putCrackGramsStash.Maximum = LsFunctions.pCrackGrams;
-		putCrackGramsStash.Multiplier = 1;
+		putWeedOzStash = new UIMenuSliderItem("Weed Z's");
+		stashPutMenu.AddItem(putWeedOzStash);
+		putWeedOzStash.Maximum = LsFunctions.pWeedOunce;
+		putWeedOzStash.Multiplier = 1;
+		putWeedOzStash.OnSliderChanged += LsMenus.onSliderChange;
+		putCrackOzStash = new UIMenuSliderItem("Crack Z's");
+		stashPutMenu.AddItem(putCrackOzStash);
+		putCrackOzStash.Maximum = LsFunctions.pCrackOunce;
+		putCrackOzStash.Multiplier = 1;
 		putCrackStash.OnSliderChanged += LsMenus.onSliderChange;
-		putCocainGramsStash = new UIMenuSliderItem("Cocaïne non préparée");
-		stashPutMenu.AddItem((UIMenuItem)(object)putCocainGramsStash);
-		putCocainGramsStash.Maximum = LsFunctions.pCocaineGrams;
+		putCocainOzStash = new UIMenuSliderItem("Cocaine Oz");
+		stashPutMenu.AddItem(putCocainOzStash);
+		putCocainOzStash.Maximum = LsFunctions.pCocaineOunce;
 		putCocainStash.Multiplier = 1;
 		putCocainStash.OnSliderChanged += LsMenus.onSliderChange;
-		putMoneyStash = new UIMenuSliderItem("Argent $");
-		stashPutMenu.AddItem((UIMenuItem)(object)putMoneyStash);
+		putMoneyStash = new UIMenuSliderItem("Money $");
+		stashPutMenu.AddItem(putMoneyStash);
 		putMoneyStash.Maximum = player.Money;
 		putMoneyStash.Multiplier = 100;
-		takeMoneyStash = new UIMenuSliderItem("Argent $");
-		stashTakeMenu.AddItem((UIMenuItem)(object)takeMoneyStash);
+		takeMoneyStash = new UIMenuSliderItem("Money $");
+		stashTakeMenu.AddItem(takeMoneyStash);
 		takeMoneyStash.Maximum = 0;
 		takeMoneyStash.Multiplier = 100;
 		putMoneyStash.OnSliderChanged += LsMenus.onSliderChange;
 		takeMoneyStash.OnSliderChanged += LsMenus.onSliderChange;
-		stashPutMultiplier = new UIMenuListItem("Multiplier", (List<object>)multiplier, 0);
-		stashPutMenu.AddItem((UIMenuItem)(object)stashPutMultiplier);
+		stashPutMultiplier = new UIMenuListItem("Multiplier", multiplier, 0);
+		stashPutMenu.AddItem(stashPutMultiplier);
 		stashPutMultiplier.OnListChanged += LsMenus.onListChange;
-		stashTakeMultiplier = new UIMenuListItem("Multiplier", (List<object>)multiplier, 0);
-		stashTakeMenu.AddItem((UIMenuItem)(object)stashTakeMultiplier);
+		stashTakeMultiplier = new UIMenuListItem("Multiplier", multiplier, 0);
+		stashTakeMenu.AddItem(stashTakeMultiplier);
 		stashTakeMultiplier.OnListChanged += LsMenus.onListChange;
 		InventoryText.Innit();
 		stashMainMenu.FormatDescriptions = true;
-		string mWeed = "Cannabis. ";
+		string mWeed = "Weed. ";
 		string mCrack = "Crack. ";
-		string mCocaine = "Cocaïne. ";
-		string mGrams = "Grammes de ";
-		string mOunce = "Produit non préparé : ";
-		string mSell = "Prêt à vendre ou à confier à un dealer.";
-		string mStash = "À déposer dans une planque avant la vente.";
-		((UIMenuItem)takeWeedStash).Description = mGrams + mWeed + mSell;
-		((UIMenuItem)takeCrackStash).Description = mGrams + mCrack + mSell;
-		((UIMenuItem)takeCocainStash).Description = mGrams + mCocaine + mSell;
-		((UIMenuItem)putWeedStash).Description = mGrams + mWeed + mSell;
-		((UIMenuItem)putCrackStash).Description = mGrams + mCrack + mSell;
-		((UIMenuItem)putCocainStash).Description = mGrams + mCocaine + mSell;
-		((UIMenuItem)putWeedGramsStash).Description = mOunce + mWeed + mStash;
-		((UIMenuItem)putCrackGramsStash).Description = mOunce + mCrack + mStash;
-		((UIMenuItem)putCocainGramsStash).Description = mOunce + mCocaine + mStash;
+		string mCocaine = "Cocaine. ";
+		string mGrams = "Grams of ";
+		string mOunce = "Oz's of ";
+		string mSell = "Ready to sell on the streets or give to a dealer.";
+		string mStash = "Must be deposited in a Stash house before it can be sold.";
+		takeWeedStash.Description = mGrams + mWeed + mSell;
+		takeCrackStash.Description = mGrams + mCrack + mSell;
+		takeCocainStash.Description = mGrams + mCocaine + mSell;
+		putWeedStash.Description = mGrams + mWeed + mSell;
+		putCrackStash.Description = mGrams + mCrack + mSell;
+		putCocainStash.Description = mGrams + mCocaine + mSell;
+		putWeedOzStash.Description = mOunce + mWeed + mStash;
+		putCrackOzStash.Description = mOunce + mCrack + mStash;
+		putCocainOzStash.Description = mOunce + mCocaine + mStash;
 		List<object> pArm = new List<object>();
 		for (int t = 0; t < playerArmours + 1; t++)
 		{
 			pArm.Add(t);
 		}
-		putArmourStash = new UIMenuListItem("Déposer un gilet pare-balles", pArm, 0);
-		stashPutMenu.AddItem((UIMenuItem)(object)putArmourStash);
+		putArmourStash = new UIMenuListItem("Stash Armour", pArm, 0);
+		stashPutMenu.AddItem(putArmourStash);
 		List<object> sArm = new List<object>();
 		for (int j = 0; j < 1; j++)
 		{
 			sArm.Add(j);
 		}
-		takeArmourStash = new UIMenuListItem("Prendre un gilet pare-balles", sArm, 0);
-		stashTakeMenu.AddItem((UIMenuItem)(object)takeArmourStash);
+		takeArmourStash = new UIMenuListItem("Take Armour", sArm, 0);
+		stashTakeMenu.AddItem(takeArmourStash);
 		if (playerWeapons.Count > 0)
 		{
-			putWeaponStash = new UIMenuListItem("Déposer une arme : ", (List<object>)playerWeps, 0);
-			stashPutMenu.AddItem((UIMenuItem)(object)putWeaponStash);
+			putWeaponStash = new UIMenuListItem("Stash Weapon: ", playerWeps, 0);
+			stashPutMenu.AddItem(putWeaponStash);
 			putWeaponStash.OnListChanged += LsMenus.onListChange;
-			takeWeaponStash = new UIMenuListItem("Prendre une arme :", (List<object>)playerWeps, 0);
-			stashTakeMenu.AddItem((UIMenuItem)(object)takeWeaponStash);
+			takeWeaponStash = new UIMenuListItem("Take Weapon:", playerWeps, 0);
+			stashTakeMenu.AddItem(takeWeaponStash);
 			takeWeaponStash.OnListChanged += LsMenus.onListChange;
 		}
 		stashPutMenu.OnItemSelect += LsMenus.onStashMenuSelect;
 		stashTakeMenu.OnItemSelect += LsMenus.onPlayerMenuSelect;
-		vehStashMainMenu = new UIMenu("Stockage du véhicule", "Choisir");
+		vehStashMainMenu = new UIMenu("Vehicle Stash", "Select");
 		if (UseSprites)
 		{
 			vehStashMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
 		}
 		LsMenuPool.Add(vehStashMainMenu);
-		vehStashTakeMenu = LsMenuPool.AddSubMenu(vehStashMainMenu, "Retirer");
+		vehStashTakeMenu = LsMenuPool.AddSubMenu(vehStashMainMenu, "Take");
 		if (UseSprites)
 		{
 			vehStashTakeMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
 		}
-		vehStashPutMenu = LsMenuPool.AddSubMenu(vehStashMainMenu, "Déposer");
+		vehStashPutMenu = LsMenuPool.AddSubMenu(vehStashMainMenu, "Stash");
 		if (UseSprites)
 		{
 			vehStashPutMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
 		}
-		putWeedVeh = new UIMenuSliderItem("Cannabis " + LsFunctions.FormatMetric(PlayerInventory["Weed"]));
-		vehStashPutMenu.AddItem((UIMenuItem)(object)putWeedVeh);
+		putWeedVeh = new UIMenuSliderItem("Weed " + LsFunctions.GramsToOz(PlayerInventory["Weed"]));
+		vehStashPutMenu.AddItem(putWeedVeh);
 		putWeedVeh.Maximum = PlayerInventory["Weed"];
 		putWeedVeh.Multiplier = 1;
-		takeWeedVeh = new UIMenuSliderItem("Cannabis");
-		vehStashTakeMenu.AddItem((UIMenuItem)(object)takeWeedVeh);
+		takeWeedVeh = new UIMenuSliderItem("Weed drugCarWeedg");
+		vehStashTakeMenu.AddItem(takeWeedVeh);
 		takeWeedVeh.Maximum = 0;
 		takeWeedVeh.Multiplier = 1;
 		putWeedVeh.OnSliderChanged += LsMenus.onSliderChange;
 		takeWeedVeh.OnSliderChanged += LsMenus.onSliderChange;
-		putCrackVeh = new UIMenuSliderItem("Crack " + LsFunctions.FormatMetric(PlayerInventory["Crack"]));
-		vehStashPutMenu.AddItem((UIMenuItem)(object)putCrackVeh);
+		putCrackVeh = new UIMenuSliderItem("Crack " + LsFunctions.GramsToOz(PlayerInventory["Crack"]));
+		vehStashPutMenu.AddItem(putCrackVeh);
 		putCrackVeh.Maximum = PlayerInventory["Crack"];
 		putCrackVeh.Multiplier = 1;
-		takeCrackVeh = new UIMenuSliderItem("Crack");
-		vehStashTakeMenu.AddItem((UIMenuItem)(object)takeCrackVeh);
+		takeCrackVeh = new UIMenuSliderItem("Crack drugCarCrackg");
+		vehStashTakeMenu.AddItem(takeCrackVeh);
 		takeCrackVeh.Maximum = 0;
 		takeCrackVeh.Multiplier = 1;
 		putCrackVeh.OnSliderChanged += LsMenus.onSliderChange;
 		takeCrackVeh.OnSliderChanged += LsMenus.onSliderChange;
-		putCocainVeh = new UIMenuSliderItem("Cocaïne " + LsFunctions.FormatMetric(PlayerInventory["Cocaine"]));
-		vehStashPutMenu.AddItem((UIMenuItem)(object)putCocainVeh);
+		putCocainVeh = new UIMenuSliderItem("Cocaine " + LsFunctions.GramsToOz(PlayerInventory["Cocaine"]));
+		vehStashPutMenu.AddItem(putCocainVeh);
 		putCocainVeh.Maximum = PlayerInventory["Cocaine"];
 		putCocainVeh.Multiplier = 1;
-		takeCocainVeh = new UIMenuSliderItem("Cocaïne");
-		vehStashTakeMenu.AddItem((UIMenuItem)(object)takeCocainVeh);
+		takeCocainVeh = new UIMenuSliderItem("Cocaine drugCarCocaing");
+		vehStashTakeMenu.AddItem(takeCocainVeh);
 		takeCocainVeh.Maximum = 0;
 		takeCocainVeh.Multiplier = 1;
 		putCocainVeh.OnSliderChanged += LsMenus.onSliderChange;
 		takeCocainVeh.OnSliderChanged += LsMenus.onSliderChange;
-		putWeedGramsVeh = new UIMenuSliderItem("Cannabis non préparé " + LsFunctions.FormatMetric(LsFunctions.pWeedGrams));
-		vehStashPutMenu.AddItem((UIMenuItem)(object)putWeedGramsVeh);
-		putWeedGramsVeh.Maximum = LsFunctions.pWeedGrams;
-		putWeedGramsVeh.Multiplier = 1;
-		takeWeedGramsVeh = new UIMenuSliderItem("Cannabis non préparé");
-		vehStashTakeMenu.AddItem((UIMenuItem)(object)takeWeedGramsVeh);
-		takeWeedGramsVeh.Maximum = 0;
-		takeWeedGramsVeh.Multiplier = 1;
-		putWeedGramsVeh.OnSliderChanged += LsMenus.onSliderChange;
-		takeWeedGramsVeh.OnSliderChanged += LsMenus.onSliderChange;
-		putCrackGramsVeh = new UIMenuSliderItem("Crack non préparé " + LsFunctions.FormatMetric(LsFunctions.pCrackGrams));
-		vehStashPutMenu.AddItem((UIMenuItem)(object)putCrackGramsVeh);
-		putCrackGramsVeh.Maximum = LsFunctions.pCrackGrams;
-		putCrackGramsVeh.Multiplier = 1;
-		takeCrackGramsVeh = new UIMenuSliderItem("Crack non préparé");
-		vehStashTakeMenu.AddItem((UIMenuItem)(object)takeCrackGramsVeh);
-		takeCrackGramsVeh.Maximum = 0;
-		takeCrackGramsVeh.Multiplier = 1;
-		putCrackGramsVeh.OnSliderChanged += LsMenus.onSliderChange;
-		takeCrackGramsVeh.OnSliderChanged += LsMenus.onSliderChange;
-		putCocainGramsVeh = new UIMenuSliderItem("Cocaïne non préparée " + LsFunctions.FormatMetric(LsFunctions.pCocaineGrams));
-		vehStashPutMenu.AddItem((UIMenuItem)(object)putCocainGramsVeh);
-		putCocainGramsVeh.Maximum = LsFunctions.pCocaineGrams;
-		putCocainGramsVeh.Multiplier = 1;
-		takeCocainGramsVeh = new UIMenuSliderItem("Cocaïne");
-		vehStashTakeMenu.AddItem((UIMenuItem)(object)takeCocainGramsVeh);
-		takeCocainGramsVeh.Maximum = 0;
-		takeCocainGramsVeh.Multiplier = 1;
-		putCocainGramsVeh.OnSliderChanged += LsMenus.onSliderChange;
-		takeCocainGramsVeh.OnSliderChanged += LsMenus.onSliderChange;
-		putMoneyVeh = new UIMenuSliderItem("Argent $" + LsFunctions.IntToMoney(player.Money));
-		vehStashPutMenu.AddItem((UIMenuItem)(object)putMoneyVeh);
+		putWeedOzVeh = new UIMenuSliderItem("Weed Z's~g~" + LsFunctions.pWeedOunce + "~s~oz");
+		vehStashPutMenu.AddItem(putWeedOzVeh);
+		putWeedOzVeh.Maximum = LsFunctions.pWeedOunce;
+		putWeedOzVeh.Multiplier = 1;
+		takeWeedOzVeh = new UIMenuSliderItem("Weed Z'sdrugCarWeedoz");
+		vehStashTakeMenu.AddItem(takeWeedOzVeh);
+		takeWeedOzVeh.Maximum = 0;
+		takeWeedOzVeh.Multiplier = 1;
+		putWeedOzVeh.OnSliderChanged += LsMenus.onSliderChange;
+		takeWeedOzVeh.OnSliderChanged += LsMenus.onSliderChange;
+		putCrackOzVeh = new UIMenuSliderItem("Crack Z's~g~" + LsFunctions.pCrackOunce + "~s~oz");
+		vehStashPutMenu.AddItem(putCrackOzVeh);
+		putCrackOzVeh.Maximum = LsFunctions.pCrackOunce;
+		putCrackOzVeh.Multiplier = 1;
+		takeCrackOzVeh = new UIMenuSliderItem("Crack Z'sdrugCarCrackoz");
+		vehStashTakeMenu.AddItem(takeCrackOzVeh);
+		takeCrackOzVeh.Maximum = 0;
+		takeCrackOzVeh.Multiplier = 1;
+		putCrackOzVeh.OnSliderChanged += LsMenus.onSliderChange;
+		takeCrackOzVeh.OnSliderChanged += LsMenus.onSliderChange;
+		putCocainOzVeh = new UIMenuSliderItem("Cocaine Z's~g~" + LsFunctions.pCocaineOunce + "~s~oz");
+		vehStashPutMenu.AddItem(putCocainOzVeh);
+		putCocainOzVeh.Maximum = LsFunctions.pCocaineOunce;
+		putCocainOzVeh.Multiplier = 1;
+		takeCocainOzVeh = new UIMenuSliderItem("Cocaine Z'sdrugCarCocaing");
+		vehStashTakeMenu.AddItem(takeCocainOzVeh);
+		takeCocainOzVeh.Maximum = 0;
+		takeCocainOzVeh.Multiplier = 1;
+		putCocainOzVeh.OnSliderChanged += LsMenus.onSliderChange;
+		takeCocainOzVeh.OnSliderChanged += LsMenus.onSliderChange;
+		putMoneyVeh = new UIMenuSliderItem("Money $" + LsFunctions.IntToMoney(player.Money));
+		vehStashPutMenu.AddItem(putMoneyVeh);
 		putMoneyVeh.Maximum = player.Money;
 		putMoneyVeh.Multiplier = 100;
-		takeMoneyVeh = new UIMenuSliderItem("Argent $");
-		vehStashTakeMenu.AddItem((UIMenuItem)(object)takeMoneyVeh);
+		takeMoneyVeh = new UIMenuSliderItem("Money $drugCarMoney");
+		vehStashTakeMenu.AddItem(takeMoneyVeh);
 		takeMoneyVeh.Maximum = 0;
 		takeMoneyVeh.Multiplier = 100;
 		putMoneyVeh.OnSliderChanged += LsMenus.onSliderChange;
 		takeMoneyVeh.OnSliderChanged += LsMenus.onSliderChange;
-		vehPutMultiplier = new UIMenuListItem("Multiplier", (List<object>)multiplier, 0);
-		vehStashPutMenu.AddItem((UIMenuItem)(object)vehPutMultiplier);
+		vehPutMultiplier = new UIMenuListItem("Multiplier", multiplier, 0);
+		vehStashPutMenu.AddItem(vehPutMultiplier);
 		vehPutMultiplier.OnListChanged += LsMenus.onListChange;
-		vehTakeMultiplier = new UIMenuListItem("Multiplier", (List<object>)multiplier, 0);
-		vehStashTakeMenu.AddItem((UIMenuItem)(object)vehTakeMultiplier);
+		vehTakeMultiplier = new UIMenuListItem("Multiplier", multiplier, 0);
+		vehStashTakeMenu.AddItem(vehTakeMultiplier);
 		vehTakeMultiplier.OnListChanged += LsMenus.onListChange;
-		takeWeaponVeh = new UIMenuListItem("Prendre une arme :", new List<object> { "Aucune arme" }, 0);
-		vehStashTakeMenu.AddItem((UIMenuItem)(object)takeWeaponVeh);
+		takeWeaponVeh = new UIMenuListItem("Take Weapon :", new List<object> { "EROaR!" }, 0);
+		vehStashTakeMenu.AddItem(takeWeaponVeh);
 		takeWeaponVeh.OnListChanged += LsMenus.onListChange;
-		putArmourVeh = new UIMenuListItem("Déposer un gilet pare-balles", pArm, 0);
-		vehStashPutMenu.AddItem((UIMenuItem)(object)putArmourVeh);
-		((UIMenuItem)putArmourVeh).Activated += PutArmourVeh_Activated;
+		putArmourVeh = new UIMenuListItem("Stash Armour", pArm, 0);
+		vehStashPutMenu.AddItem(putArmourVeh);
+		putArmourVeh.Activated += PutArmourVeh_Activated;
 		List<object> vArm = new List<object>();
 		for (int k = 0; k < 1; k++)
 		{
 			vArm.Add(k);
 		}
-		takeArmourVeh = new UIMenuListItem("Prendre un gilet pare-balles", vArm, 0);
-		vehStashTakeMenu.AddItem((UIMenuItem)(object)takeArmourVeh);
-		((UIMenuItem)takeArmourVeh).Activated += TakeArmourVeh_Activated;
+		takeArmourVeh = new UIMenuListItem("Take Armour", vArm, 0);
+		vehStashTakeMenu.AddItem(takeArmourVeh);
+		takeArmourVeh.Activated += TakeArmourVeh_Activated;
 		if (playerWeapons.Count > 0)
 		{
-			putWeaponVeh = new UIMenuListItem("Déposer une arme : ", (List<object>)playerWeps, 0);
-			vehStashPutMenu.AddItem((UIMenuItem)(object)putWeaponVeh);
+			putWeaponVeh = new UIMenuListItem("Stash Weapon: ", playerWeps, 0);
+			vehStashPutMenu.AddItem(putWeaponVeh);
 			putWeaponVeh.OnListChanged += LsMenus.onListChange;
 		}
 		vehStashPutMenu.OnItemSelect += LsMenus.onPutVehicleMenuSelect;
 		vehStashTakeMenu.OnItemSelect += LsMenus.onTakeVehicleMenuSelect;
-		customerMainMenu = new UIMenu("Client", "Choisir une option");
+		customerMainMenu = new UIMenu("Customer", "Select an option");
 		if (UseSprites)
 		{
 			customerMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_customer.png");
 		}
 		LsMenuPool.Add(customerMainMenu);
-		sell = new UIMenuItem("Drogue");
+		sell = new UIMenuItem("drug");
 		customerMainMenu.AddItem(sell);
-		turnAway = new UIMenuItem("Refuser la vente");
+		turnAway = new UIMenuItem("cya");
 		customerMainMenu.AddItem(turnAway);
 		customerMainMenu.OnItemSelect += LsMenus.onCustomerMenuSelect;
 		LsMenuPool.FormatDescriptions = true;
 		LsMenuPool.RefreshIndex();
 		iFruit = new CustomiFruit();
-		contactZee = new iFruitContact("Rafael Mendoza");
+		contactZee = new iFruitContact("Zee");
 		contactZee.Answered += LsFunctions.ContactAnswered;
 		contactZee.DialTimeout = 1000;
 		contactZee.Active = true;
 		contactZee.Icon = ContactIcon.Blank;
-		((List<iFruitContact>)(object)iFruit.Contacts).Add(contactZee);
+		iFruit.Contacts.Add(contactZee);
 		DealerHandler = new PlayerDealerHandler();
 		HouseHandler = new StashHouseHandler();
 		LsFunctions.LoadSpawnLocations();
-		day = Function.Call<int>(unchecked((Hash)(-2777906517671992481L)));
+		day = Function.Call<int>((Hash)(-2777906517671992481L));
 		hour = Function.Call<int>((Hash)2675767815307398015L);
 		SlowTickTime = Game.GameTime;
 		randomAttackTimer = Game.GameTime;
@@ -1567,11 +1263,11 @@ public class LSL : Script
 		if (dealer1ReloadOrder)
 		{
 			Enum.TryParse<Enums.DayGTA>(dealer1ReloadDay.ToString(), out var mDay);
-			LsFunctions.TextMsg("ZEE", "Livraison", "La commande devrait arriver le " + mDay.ToString() + " à " + dealer1ReloadHour + ":00");
+			LsFunctions.TextMsg("ZEE", "Reload", "Order should be here " + mDay.ToString() + " at " + dealer1ReloadHour + ":00");
 		}
 		if (!NewOrder.Placed)
 		{
-			PlaceOrder.Text = "Passer commande $" + LsFunctions.IntToMoney(NewOrder.Bill);
+			PlaceOrder.Text = "Place Order $" + LsFunctions.IntToMoney(NewOrder.Bill);
 			LsFunctions.UpdateOrderMenuDesc();
 		}
 	}
@@ -1879,7 +1575,7 @@ public class LSL : Script
 				LoadAreaData();
 			}
 			UI.Notify("~g~LsLife: " + vNumber);
-			UI.Notify("~g~LsLife: " + areas.Count + " zones chargées");
+			UI.Notify("~g~LsLife: " + areas.Count + " Areas loaded");
 			lPeds = new LsLPeds();
 			World.SetRelationshipBetweenGroups((Relationship)3, playerRelationship, CustomerRel);
 			World.SetRelationshipBetweenGroups((Relationship)3, playerRelationship, rival_nutral);
@@ -1894,7 +1590,7 @@ public class LSL : Script
 			World.SetRelationshipBetweenGroups((Relationship)0, CustomerRel, rival_nutral);
 			World.SetRelationshipBetweenGroups((Relationship)0, CustomerRel, rival_enemy);
 			playerHeat = -100f;
-			Function.Call((Hash)2750315038012726912L, (InputArgument)(player.Character), (InputArgument)(9), (InputArgument)(0), (InputArgument)(0), (InputArgument)(0));
+			Function.Call((Hash)2750315038012726912L, InputArgument.op_Implicit(player.Character), InputArgument.op_Implicit(9), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0));
 			playerHasBag = false;
 			canSprint = true;
 			playerArea = World.GetZoneNameLabel(playerPos);
@@ -1906,7 +1602,7 @@ public class LSL : Script
 				}
 				else
 				{
-					UI.Notify("~r~LsLife - Erreur de type de zone : " + playerArea);
+					UI.Notify("~r~LsLife - Error getting area type for Area " + playerArea);
 				}
 			}
 			Area cArea = areas.Find((Area a) => a.Name == playerArea);
@@ -1923,20 +1619,20 @@ public class LSL : Script
 			{
 				debugString = (areas[areaIndex].DemandBuff() - Game.GameTime).ToString();
 			}
-			myUIText = new UIText(debugString, new Point(10, 10), 0.4f, Color.WhiteSmoke, (GTA.Font)0, false);
+			myUIText = new UIText(debugString, new Point(10, 10), 0.4f, Color.WhiteSmoke, (Font)0, false);
 			myUIText.Draw();
 		}
 		if (Prison.Started && Prison.CurrentState > Prison.PrisonStates.ApproachBarrier)
 		{
-			Function.Call(unchecked((Hash)(-7077668788463384353L)), (InputArgument)("restrictedareas"));
-			Function.Call(unchecked((Hash)(-7077668788463384353L)), (InputArgument)("re_prison"));
+			Function.Call((Hash)(-7077668788463384353L), InputArgument.op_Implicit("restrictedareas"));
+			Function.Call((Hash)(-7077668788463384353L), InputArgument.op_Implicit("re_prison"));
 		}
 		if (LsMenuPool != null)
 		{
 			LsMenuPool.ProcessMenus();
 		}
 		iFruit.Update();
-		if (Game.IsControlPressed(2, (GTA.Control)76) && Game.IsControlJustPressed(2, (GTA.Control)26))
+		if (Game.IsControlPressed(2, (Control)76) && Game.IsControlJustPressed(2, (Control)26))
 		{
 			DropDrugs.Drop();
 		}
@@ -1999,9 +1695,9 @@ public class LSL : Script
 				{
 					Function.Call((Hash)7023634693725934496L);
 					displayHelpTimer = Game.GameTime;
-					LsFunctions.DisplayHelpText("~INPUT_CONTEXT~ pour obtempérer.");
+					LsFunctions.DisplayHelpText("~INPUT_CONTEXT~ to comply.");
 				}
-				if (Game.IsControlJustPressed(2, (GTA.Control)51))
+				if (Game.IsControlJustPressed(2, (Control)51))
 				{
 					PlayerComplied = true;
 					TaskSequence giveUP = new TaskSequence();
@@ -2015,7 +1711,7 @@ public class LSL : Script
 				}
 			}
 			HandleAreaDealers();
-			if (!LsMenuPool.IsAnyMenuOpen() && (Entity)(object)weaponDealer1 != (Entity)null && readyToDeal && Game.IsControlJustPressed(2, (GTA.Control)51) && LsMenuPool != null && !LsMenuPool.IsAnyMenuOpen())
+			if (!LsMenuPool.IsAnyMenuOpen() && (Entity)(object)weaponDealer1 != (Entity)null && readyToDeal && Game.IsControlJustPressed(2, (Control)51) && LsMenuPool != null && !LsMenuPool.IsAnyMenuOpen())
 			{
 				wepMenu.Visible = !wepMenu.Visible;
 			}
@@ -2163,7 +1859,7 @@ public class LSL : Script
 										}
 										if (random2.Next(0, 15 - rIntMax2) == 0)
 										{
-											PedHash hash2 = unchecked((PedHash)(-1954728090));
+											PedHash hash2 = (PedHash)(-1954728090);
 											if (LsFunctions.cHashes.Count > 0)
 											{
 												hash2 = LsFunctions.cHashes[rnd.Next(0, LsFunctions.cHashes.Count)];
@@ -2196,7 +1892,7 @@ public class LSL : Script
 										}
 										if (random3.Next(0, 15 - rIntMax3) == 0)
 										{
-											PedHash hash3 = unchecked((PedHash)(-1954728090));
+											PedHash hash3 = (PedHash)(-1954728090);
 											if (LsFunctions.cHashes.Count > 0)
 											{
 												hash3 = LsFunctions.cHashes[rnd.Next(0, LsFunctions.cHashes.Count)];
@@ -2229,7 +1925,7 @@ public class LSL : Script
 										}
 										if (random.Next(0, 15 - rIntMax) == 0)
 										{
-											PedHash hash = unchecked((PedHash)(-1954728090));
+											PedHash hash = (PedHash)(-1954728090);
 											if (LsFunctions.cHashes.Count > 0)
 											{
 												hash = LsFunctions.cHashes[rnd.Next(0, LsFunctions.cHashes.Count)];
@@ -2330,7 +2026,7 @@ public class LSL : Script
 								position = ((Entity)c.Ped).Position;
 								if (position.DistanceTo(playerPos) > 80f)
 								{
-									LsFunctions.DbugString("Client supprimé : trop éloigné");
+									LsFunctions.DbugString("Customer deleted out of range");
 									customers.Remove(c);
 									LsFunctions.RemovePedFromWorld(c.Ped, clearTask: true);
 									break;
@@ -2343,8 +2039,8 @@ public class LSL : Script
 								if (position.DistanceTo(playerPos) < 3f)
 								{
 									c.Ped.Task.ClearAll();
-									Function.Call(unchecked((Hash)(-6974808092771143243L)), (InputArgument)(((Entity)c.Ped).Handle), (InputArgument)(playerGroup));
-									Function.Call(unchecked((Hash)(-8213159594590722974L)), (InputArgument)(c.Ped), (InputArgument)("GENERIC_HI"), (InputArgument)("SPEECH_PARAMS_STANDARD"));
+									Function.Call((Hash)(-6974808092771143243L), InputArgument.op_Implicit(((Entity)c.Ped).Handle), InputArgument.op_Implicit(playerGroup));
+									Function.Call((Hash)(-8213159594590722974L), InputArgument.op_Implicit(c.Ped), InputArgument.op_Implicit("GENERIC_HI"), InputArgument.op_Implicit("SPEECH_PARAMS_STANDARD"));
 									continue;
 								}
 								if (c.Ped.IsInVehicle())
@@ -2390,14 +2086,14 @@ public class LSL : Script
 							{
 								Function.Call((Hash)7023634693725934496L);
 								displayHelpTimer = Game.GameTime;
-								LsFunctions.DisplayHelpText("~INPUT_SPRINT~ pour vendre depuis le véhicule.");
+								LsFunctions.DisplayHelpText("~INPUT_SPRINT~ to sell from car.");
 							}
-							if (Game.IsControlJustPressed(2, (GTA.Control)21))
+							if (Game.IsControlJustPressed(2, (Control)21))
 							{
 								Function.Call((Hash)7023634693725934496L);
 								customerSellTo = nCustomer;
-								sell.Text = "Vendre " + LsFunctions.FormatMetric(customerSellTo.amount) + " de " + customerSellTo.Drug.Name + "?";
-								((UIText)customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.FormatMetric(PlayerInventory[customerSellTo.Drug.Name]) + " de " + customerSellTo.Drug.Name;
+								sell.Text = "Sell " + LsFunctions.GramsToOz(customerSellTo.amount) + " of " + customerSellTo.Drug.Name + "?";
+								((UIText)customerMainMenu.Subtitle).Caption = "You have " + LsFunctions.GramsToOz(PlayerInventory[customerSellTo.Drug.Name]) + " of " + customerSellTo.Drug.Name;
 								customerMainMenu.Visible = !customerMainMenu.Visible;
 								customerMainMenu.CurrentSelection = 0;
 							}
@@ -2408,14 +2104,14 @@ public class LSL : Script
 							{
 								Function.Call((Hash)7023634693725934496L);
 								displayHelpTimer = Game.GameTime;
-								LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour vendre à cette personne.");
+								LsFunctions.DisplayHelpText("Press ~INPUT_SPRINT~ to sell to this person.");
 							}
-							if (Game.IsControlJustPressed(2, (GTA.Control)21) && !LsMenuPool.IsAnyMenuOpen())
+							if (Game.IsControlJustPressed(2, (Control)21) && !LsMenuPool.IsAnyMenuOpen())
 							{
 								Function.Call((Hash)7023634693725934496L);
 								customerSellTo = nCustomer;
-								sell.Text = "Vendre " + LsFunctions.FormatMetric(customerSellTo.amount) + " de " + customerSellTo.Drug.Name + "?";
-								((UIText)customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.FormatMetric(PlayerInventory[customerSellTo.Drug.Name]) + " de " + customerSellTo.Drug.Name;
+								sell.Text = "Sell " + LsFunctions.GramsToOz(customerSellTo.amount) + " of " + customerSellTo.Drug.Name + "?";
+								((UIText)customerMainMenu.Subtitle).Caption = "You have " + LsFunctions.GramsToOz(PlayerInventory[customerSellTo.Drug.Name]) + " of " + customerSellTo.Drug.Name;
 								customerMainMenu.Visible = !customerMainMenu.Visible;
 								customerMainMenu.CurrentSelection = 0;
 							}
@@ -2435,9 +2131,9 @@ public class LSL : Script
 						{
 							Function.Call((Hash)7023634693725934496L);
 							displayHelpTimer = Game.GameTime;
-							LsFunctions.DisplayHelpText("Appuyez sur ~INPUT_VEH_EXIT~ pour entrer.");
+							LsFunctions.DisplayHelpText("Press ~INPUT_VEH_EXIT~ to enter.");
 						}
-						if (Game.IsControlJustPressed(2, (GTA.Control)75))
+						if (Game.IsControlJustPressed(2, (Control)75))
 						{
 							Function.Call((Hash)7023634693725934496L);
 							player.Character.Task.EnterVehicle(wepDealer.vehicle, (VehicleSeat)0);
@@ -2446,7 +2142,7 @@ public class LSL : Script
 				}
 				else if (player.Character.IsInVehicle() && ((Entity)player.Character.CurrentVehicle).Handle == ((Entity)wepDealer.vehicle).Handle)
 				{
-					if (Game.IsControlJustPressed(2, (GTA.Control)52))
+					if (Game.IsControlJustPressed(2, (Control)52))
 					{
 						player.Character.Task.LeaveVehicle(player.Character.CurrentVehicle, true);
 						Script.Wait(5500);
@@ -2456,10 +2152,10 @@ public class LSL : Script
 						((Entity)wepDealer.ped).IsPersistent = false;
 						((Entity)wepDealer.vehicle).IsPersistent = false;
 						((Entity)wepDealer.vehicle).CurrentBlip.Remove();
-						Function.Call((Hash)5188501456062479616L, (InputArgument)(((Entity)wepDealer.ped).Handle), (InputArgument)(((Entity)wepDealer.vehicle).Handle), (InputArgument)(20f), (InputArgument)(786603));
+						Function.Call((Hash)5188501456062479616L, InputArgument.op_Implicit(((Entity)wepDealer.ped).Handle), InputArgument.op_Implicit(((Entity)wepDealer.vehicle).Handle), InputArgument.op_Implicit(20f), InputArgument.op_Implicit(786603));
 						wepDealer = null;
 					}
-					if (Game.IsControlJustPressed(2, (GTA.Control)51))
+					if (Game.IsControlJustPressed(2, (Control)51))
 					{
 						if (wepDealer.state == Dealer.States.Driving)
 						{
@@ -2483,7 +2179,7 @@ public class LSL : Script
 				{
 					if (DEBUG)
 					{
-						UI.Notify("Fournisseur en colère");
+						UI.Notify("dealer1 angry");
 					}
 					dealer1Angry = true;
 				}
@@ -2493,7 +2189,7 @@ public class LSL : Script
 					{
 						if (DEBUG)
 						{
-							UI.Notify("Fusillade dans un quartier pauvre");
+							UI.Notify("poor area drive-by");
 						}
 						LsFunctions.SpawnDriveBy(player.Character, _agressive: true);
 					}
@@ -2501,10 +2197,10 @@ public class LSL : Script
 					{
 						if (DEBUG)
 						{
-							UI.Notify("Attaque du fournisseur");
+							UI.Notify("dealer1 drive-by");
 						}
 						LsFunctions.SpawnDriveBy(player.Character, _agressive: true);
-						LsFunctions.TextMsg("ZEE", "Dette", "Rembourse ta dette et je les rappellerai.");
+						LsFunctions.TextMsg("ZEE", "Debt", "Pay your debt and i will call them off.");
 					}
 				}
 				if (entitiesCleanUp.Count > 0)
@@ -2530,7 +2226,7 @@ public class LSL : Script
 								entitiesCleanUp.Remove(ent);
 								if (DEBUG)
 								{
-									UI.Notify("Attaquant supprimé après l'arrêt");
+									UI.Notify("stoped delete attacker");
 								}
 								continue;
 							}
@@ -2540,7 +2236,7 @@ public class LSL : Script
 								entitiesCleanUp.Remove(ent);
 								if (DEBUG)
 								{
-									UI.Notify("Suppression : " + (object)ent);
+									UI.Notify("Delete:" + (object)ent);
 								}
 								ent.Delete();
 							}
@@ -2555,7 +2251,7 @@ public class LSL : Script
 			newWepAmount = 0;
 			foreach (WeaponHash weapon in Enum.GetValues(typeof(WeaponHash)))
 			{
-				if (Function.Call<bool>(unchecked((Hash)(-8220001501650343748L)), (InputArgument)(player.Character), (InputArgument)((int)weapon)))
+				if (Function.Call<bool>((Hash)(-8220001501650343748L), InputArgument.op_Implicit(player.Character), InputArgument.op_Implicit((int)weapon)))
 				{
 					newWepAmount++;
 					if (newWepAmount > playerWeapons.Count)
@@ -2568,15 +2264,15 @@ public class LSL : Script
 			{
 				if (DEBUG)
 				{
-					UI.Notify("Changement d'arme du joueur détecté");
+					UI.Notify("Player weapon change detected");
 				}
 				playerWeps.Clear();
 				playerWeapons.Clear();
 				int i = 0;
 				foreach (WeaponHash weapon2 in Enum.GetValues(typeof(WeaponHash)))
 				{
-					bool flag = Function.Call<bool>(unchecked((Hash)(-8220001501650343748L)), (InputArgument)(player.Character), (InputArgument)((int)weapon2));
-					int ammunitionInWeapon = Function.Call<int>((Hash)97480644549409105L, (InputArgument)(player.Character), (InputArgument)((int)weapon2));
+					bool flag = Function.Call<bool>((Hash)(-8220001501650343748L), InputArgument.op_Implicit(player.Character), InputArgument.op_Implicit((int)weapon2));
+					int ammunitionInWeapon = Function.Call<int>((Hash)97480644549409105L, InputArgument.op_Implicit(player.Character), InputArgument.op_Implicit((int)weapon2));
 					if (!flag)
 					{
 						continue;
@@ -2586,14 +2282,14 @@ public class LSL : Script
 					XElement weaponNameElement = new XElement("HASH", (object)weapon2);
 					if (DEBUG)
 					{
-						UI.Notify("Ajout de " + ((object)weapon2/*cast due to constrained. prefix*/).ToString() + " à la liste des armes du joueur.");
+						UI.Notify("Added " + ((object)weapon2/*cast due to constrained. prefix*/).ToString() + " to playerWeapons list.");
 					}
 					XElement weaponAmmoElement = new XElement("AMMO", ammunitionInWeapon);
 					parentElement.Add(weaponNameElement);
 					parentElement.Add(weaponAmmoElement);
 					foreach (WeaponComponent component in Enum.GetValues(typeof(WeaponComponent)))
 					{
-						if (Function.Call<bool>(unchecked((Hash)(-4209984786179366080L)), (InputArgument)(player.Character), (InputArgument)((int)weapon2), (InputArgument)((int)component)))
+						if (Function.Call<bool>((Hash)(-4209984786179366080L), InputArgument.op_Implicit(player.Character), InputArgument.op_Implicit((int)weapon2), InputArgument.op_Implicit((int)component)))
 						{
 							XElement weaponComponentElement = new XElement("COMPONENT", (object)component);
 							parentElement.Add(weaponComponentElement);
@@ -2626,7 +2322,7 @@ public class LSL : Script
 					}
 					else
 					{
-						UI.Notify("~r~LsLife - Erreur de type de zone : " + playerArea);
+						UI.Notify("~r~LsLife - Error getting area type for Area " + playerArea);
 					}
 					int aIndex = 0;
 					foreach (Area area2 in areas)
@@ -2682,7 +2378,7 @@ public class LSL : Script
 								if (DEBUG)
 								{
 									model = ((Entity)p3).Model;
-									UI.Notify("Dealer de quartier créé avec ~g~" + ((object)model/*cast due to constrained. prefix*/).ToString());
+									UI.Notify("Area Dealer Spawned using ~g~" + ((object)model/*cast due to constrained. prefix*/).ToString());
 								}
 								break;
 							}
@@ -2692,7 +2388,7 @@ public class LSL : Script
 			}
 			else
 			{
-				LsFunctions.DbugString("Impossible de créer un dealer mort : " + areas[areaIndex].DealerKilled);
+				LsFunctions.DbugString("Cant spawn dealer dead :" + areas[areaIndex].DealerKilled);
 			}
 		}
 		if (Game.GameTime <= SlowTickTime + 375)
@@ -2702,15 +2398,15 @@ public class LSL : Script
 		SlowTickTime = Game.GameTime;
 		player = Game.Player;
 		playerGroup = player.Character.CurrentPedGroup;
-		if (Function.Call<bool>((Hash)6160435850588389544L, (InputArgument)(lsDebug)))
+		if (Function.Call<bool>((Hash)6160435850588389544L, InputArgument.op_Implicit(lsDebug)))
 		{
 			DEBUG = !DEBUG;
 		}
-		else if (Function.Call<bool>((Hash)6160435850588389544L, (InputArgument)(areaDebug)))
+		else if (Function.Call<bool>((Hash)6160435850588389544L, InputArgument.op_Implicit(areaDebug)))
 		{
 			AreaDebug = !AreaDebug;
 		}
-		else if (Function.Call<bool>((Hash)6160435850588389544L, (InputArgument)(spawnP)))
+		else if (Function.Call<bool>((Hash)6160435850588389544L, InputArgument.op_Implicit(spawnP)))
 		{
 			LsFunctions.SpawnDriveBy(player.Character, _agressive: false);
 		}
@@ -2770,7 +2466,7 @@ public class LSL : Script
 					}
 					if (DEBUG)
 					{
-						UI.Notify("Meurtre du dealer repéré");
+						UI.Notify("Was seen killing dealer");
 					}
 				}
 				Ped dKiller2 = null;
@@ -2831,9 +2527,9 @@ public class LSL : Script
 		goto IL_29de;
 		IL_252a:
 		Vector3 pos = ((Entity)wepDealer.vehicle).Position + ((Entity)wepDealer.vehicle).Velocity;
-		int NodeID = Function.Call<int>((Hash)2510518586829603349L, (InputArgument)(pos.X), (InputArgument)(pos.Y), (InputArgument)(pos.Z), (InputArgument)(1), (InputArgument)(1), (InputArgument)(1f), (InputArgument)(0f));
+		int NodeID = Function.Call<int>((Hash)2510518586829603349L, InputArgument.op_Implicit(pos.X), InputArgument.op_Implicit(pos.Y), InputArgument.op_Implicit(pos.Z), InputArgument.op_Implicit(1), InputArgument.op_Implicit(1), InputArgument.op_Implicit(1f), InputArgument.op_Implicit(0f));
 		OutputArgument outArgA = new OutputArgument();
-		Function.Call((Hash)8084282276450675138L, (InputArgument)(NodeID), (InputArgument)(object)outArgA);
+		Function.Call((Hash)8084282276450675138L, InputArgument.op_Implicit(NodeID), (InputArgument)(object)outArgA);
 		Vector3 parkPos = outArgA.GetResult<Vector3>();
 		wepDealer.destination = parkPos;
 		goto IL_25d6;
@@ -2847,7 +2543,7 @@ public class LSL : Script
 		{
 			attackerPickup.Delete();
 			attackerPickupSpawned = false;
-			WeaponHash weaponHash = unchecked((WeaponHash)(-1569615261));
+			WeaponHash weaponHash = (WeaponHash)(-1569615261);
 			int ammo = 0;
 			WeaponHash currentWep = player.Character.Weapons.Current.Hash;
 			foreach (XElement element in attackerWeapons)
@@ -2886,7 +2582,7 @@ public class LSL : Script
 					}
 					if (DEBUG)
 					{
-						UI.Notify("Donne : " + ((object)weaponHash/*cast due to constrained. prefix*/).ToString() + " munitions = " + ammo);
+						UI.Notify("Gave " + ((object)weaponHash/*cast due to constrained. prefix*/).ToString() + " ammo = " + ammo);
 					}
 				}
 			}
@@ -2952,7 +2648,7 @@ public class LSL : Script
 				Ped p4 = (Ped)(object)((killer3 is Ped) ? killer3 : null);
 				if (p4 != null && (Entity)(object)p4 != (Entity)null && p4.IsHuman && !p4.IsPlayer && !LsFunctions.IsPolice(p4) && (Entity)(object)attacker == (Entity)null)
 				{
-					LsFunctions.TextMsg("ZEE", "info", "J'ai retrouvé cette personne et envoyé sa position.");
+					LsFunctions.TextMsg("ZEE", "info", "I found that person for you, i sent you his location.");
 					attacker = p4;
 					((Entity)attacker).IsPersistent = true;
 					attackerMoney = player.Money - (int)((double)player.Money * 0.1);
@@ -2979,8 +2675,8 @@ public class LSL : Script
 					}
 					attacker.BlockPermanentEvents = true;
 					((Entity)attacker).IsPersistent = true;
-					LsFunctions.AddBlip((Entity)(object)attacker, (BlipColor)1, "Braqueur", _friend: false, _edge: false);
-					WeaponHash weaponHash2 = unchecked((WeaponHash)(-1569615261));
+					LsFunctions.AddBlip((Entity)(object)attacker, (BlipColor)1, "Robber", _friend: false, _edge: false);
+					WeaponHash weaponHash2 = (WeaponHash)(-1569615261);
 					int ammo2 = 0;
 					player.Character.Weapons.RemoveAll();
 					attacker.Armor = 100;
@@ -3013,7 +2709,7 @@ public class LSL : Script
 					attacker.DropsWeaponsOnDeath = false;
 					if (DEBUG)
 					{
-						UI.Notify("Le tueur est équipé de " + attacker.Weapons.Current.Name + " et porte un gilet pare-balles");
+						UI.Notify("Killer has equiped " + attacker.Weapons.Current.Name + " & and has equiped Body Armour");
 					}
 					attackerWeed = PlayerInventory["Weed"];
 					attackerCrack = PlayerInventory["Crack"];
@@ -3043,7 +2739,7 @@ public class LSL : Script
 				}
 				if ((Entity)(object)attacker == (Entity)null && AmountOfDrugs > 0)
 				{
-					LsFunctions.SendTextMsg("Ils ont pris $" + LsFunctions.IntToMoney(player.Money) + ", toutes tes drogues et tes armes.");
+					LsFunctions.SendTextMsg("They took $" + LsFunctions.IntToMoney(player.Money) + ", all your Drugs and Weapons.");
 					player.Character.Weapons.RemoveAll();
 					Player val3 = player;
 					val3.Money -= player.Money;
@@ -3086,7 +2782,7 @@ public class LSL : Script
 				if ((Entity)(object)attacker == (Entity)null && TotalDrugsCarried() > 0)
 				{
 					player.Character.Weapons.RemoveAll();
-					LsFunctions.SendTextMsg("La police a confisqué $" + LsFunctions.IntToMoney(player.Money) + ", toutes tes drogues et tes armes.");
+					LsFunctions.SendTextMsg("Police confisated $" + LsFunctions.IntToMoney(player.Money) + ", all your Drugs and Weapons.");
 					Player val4 = player;
 					val4.Money -= player.Money;
 					if (PlayerInventory.Keys.ToList().Count > 0)
@@ -3164,7 +2860,7 @@ public class LSL : Script
 					p5.BlockPermanentEvents = true;
 					if (((Entity)p5).CurrentBlip.Exists())
 					{
-						((Entity)p5).CurrentBlip.Name = "Braqueur";
+						((Entity)p5).CurrentBlip.Name = "Robber";
 						((Entity)p5).CurrentBlip.IsFriendly = false;
 					}
 				}
@@ -3205,8 +2901,8 @@ public class LSL : Script
 		{
 			if (Function.Call<bool>((Hash)5315141875575487047L) && !Prison.Ready)
 			{
-				Function.Call(unchecked((Hash)(-8272491852216909662L)), (InputArgument)(player.Handle), (InputArgument)(false), (InputArgument)(256));
-				UI.Notify("PRÊT");
+				Function.Call((Hash)(-8272491852216909662L), InputArgument.op_Implicit(player.Handle), InputArgument.op_Implicit(false), InputArgument.op_Implicit(256));
+				UI.Notify("READY");
 				Prison.Ready = true;
 			}
 			Prison.PrisonTick();
@@ -3215,7 +2911,7 @@ public class LSL : Script
 		{
 			if (((Entity)attacker).CurrentBlip == (Blip)null || !((Entity)attacker).CurrentBlip.Exists())
 			{
-				LsFunctions.AddBlip((Entity)(object)attacker, (BlipColor)1, "Braqueur", _friend: false, _edge: false);
+				LsFunctions.AddBlip((Entity)(object)attacker, (BlipColor)1, "Robber", _friend: false, _edge: false);
 			}
 			if (((Entity)attacker).IsDead)
 			{
@@ -3241,8 +2937,8 @@ public class LSL : Script
 					attackCheckTime = Game.GameTime;
 					if (distance < 60f && LsFunctions.CanSee((Entity)(object)attacker, (Entity)(object)player.Character))
 					{
-						int EnemyRelationShipGroup = Function.Call<int>(unchecked((Hash)(-3292914402564945716L)), (InputArgument)("HATES_PLAYER"));
-						Function.Call(unchecked((Hash)(-4032282232082276974L)), (InputArgument)(attacker), (InputArgument)(EnemyRelationShipGroup));
+						int EnemyRelationShipGroup = Function.Call<int>((Hash)(-3292914402564945716L), InputArgument.op_Implicit("HATES_PLAYER"));
+						Function.Call((Hash)(-4032282232082276974L), InputArgument.op_Implicit(attacker), InputArgument.op_Implicit(EnemyRelationShipGroup));
 						attackerAttacking = true;
 						attacker.Task.ClearAll();
 						attacker.Task.FightAgainst(player.Character);
@@ -3299,11 +2995,11 @@ public class LSL : Script
 		{
 			if (canSprint)
 			{
-				Function.Call(unchecked((Hash)(-6909787959634350604L)), (InputArgument)(player), (InputArgument)(true));
+				Function.Call((Hash)(-6909787959634350604L), InputArgument.op_Implicit(player), InputArgument.op_Implicit(true));
 			}
 			else
 			{
-				Function.Call(unchecked((Hash)(-6909787959634350604L)), (InputArgument)(player), (InputArgument)(false));
+				Function.Call((Hash)(-6909787959634350604L), InputArgument.op_Implicit(player), InputArgument.op_Implicit(false));
 			}
 		}
 		if (player.WantedLevel > 0 && !playerWanted)
@@ -3397,7 +3093,7 @@ public class LSL : Script
 		else if (weaponDealer1.CurrentPedGroup != player.Character.CurrentPedGroup)
 		{
 			weaponDealer1.Task.ClearAll();
-			Function.Call(unchecked((Hash)(-6974808092771143243L)), (InputArgument)(((Entity)weaponDealer1).Handle), (InputArgument)(playerGroup));
+			Function.Call((Hash)(-6974808092771143243L), InputArgument.op_Implicit(((Entity)weaponDealer1).Handle), InputArgument.op_Implicit(playerGroup));
 		}
 		if (!ShotHandler.ShotOffers && weaponDealer1.IsStopped && distanceToPlayer <= 3f && player.Character.IsStopped && LsFunctions.IsCustomerNear() && PottentialWorker == null)
 		{
@@ -3413,7 +3109,7 @@ public class LSL : Script
 				if ((float)Game.GameTime > displayHelpTimer + 5000f)
 				{
 					displayHelpTimer = Game.GameTime;
-					LsFunctions.DisplayHelpText("Trouve un endroit plus calme.");
+					LsFunctions.DisplayHelpText("Find some where quiter.");
 				}
 				readyToDeal = false;
 				if (wepMenu.Visible)
@@ -3426,7 +3122,7 @@ public class LSL : Script
 				if ((float)Game.GameTime > displayHelpTimer + 5000f)
 				{
 					displayHelpTimer = Game.GameTime;
-					LsFunctions.DisplayHelpText("Appuyez sur ~INPUT_CONTEXT~ pour interagir");
+					LsFunctions.DisplayHelpText("Press ~INPUT_CONTEXT~ to interact");
 				}
 				readyToDeal = true;
 			}
@@ -3440,7 +3136,7 @@ public class LSL : Script
 			((Entity)weaponDealer1).IsPersistent = false;
 			((Entity)weaponDealer1).CurrentBlip.Remove();
 			((Entity)weaponDealer1).MarkAsNoLongerNeeded();
-			LsFunctions.SendTextMsg("Le dealer est mort !");
+			LsFunctions.SendTextMsg("Dealer is dead!");
 			weaponDealer1 = null;
 			readyToDeal = false;
 		}
@@ -3462,9 +3158,9 @@ public class LSL : Script
 			{
 				wepDealer.doneTutorial = false;
 				Vector3 pos2 = wepDealer.destination;
-				int NodeID2 = Function.Call<int>((Hash)2510518586829603349L, (InputArgument)(pos2.X), (InputArgument)(pos2.Y), (InputArgument)(pos2.Z), (InputArgument)(1), (InputArgument)(1), (InputArgument)(1f), (InputArgument)(0f));
+				int NodeID2 = Function.Call<int>((Hash)2510518586829603349L, InputArgument.op_Implicit(pos2.X), InputArgument.op_Implicit(pos2.Y), InputArgument.op_Implicit(pos2.Z), InputArgument.op_Implicit(1), InputArgument.op_Implicit(1), InputArgument.op_Implicit(1f), InputArgument.op_Implicit(0f));
 				OutputArgument outArgA2 = new OutputArgument();
-				Function.Call((Hash)8084282276450675138L, (InputArgument)(NodeID2), (InputArgument)(object)outArgA2);
+				Function.Call((Hash)8084282276450675138L, InputArgument.op_Implicit(NodeID2), (InputArgument)(object)outArgA2);
 				Vector3 parkPos2 = outArgA2.GetResult<Vector3>();
 				wepDealer.ped.Task.DriveTo(wepDealer.vehicle, parkPos2, 2f, 6f, 786603);
 				wepDealer.destination = Vector3.Zero;
@@ -3478,7 +3174,7 @@ public class LSL : Script
 				Function.Call((Hash)7023634693725934496L);
 				wepDealer.doneTutorial = true;
 				displayHelpTimer = Game.GameTime;
-				LsFunctions.DisplayHelpText("Appuyez sur ~INPUT_CONTEXT~ pour interagir ou ~INPUT_CONTEXT_SECONDARY~ pour renvoyer.");
+				LsFunctions.DisplayHelpText("Press ~INPUT_CONTEXT~to interact or ~INPUT_CONTEXT_SECONDARY~to dismiss.");
 			}
 			if (Game.IsWaypointActive && wepDealer.destination != World.GetNextPositionOnStreet(World.GetWaypointPosition()))
 			{
@@ -3486,7 +3182,7 @@ public class LSL : Script
 				((Entity)wepDealer.vehicle).IsInvincible = true;
 				wepDealer.ped.Task.ClearAll();
 				wepDealer.ped.Task.DriveTo(wepDealer.vehicle, wepDealer.destination, 1f, 10f, 786603);
-				UI.ShowSubtitle("D'accord, nous allons vers ~y~" + World.GetStreetName(wepDealer.destination));
+				UI.ShowSubtitle("Ok, we heading to ~y~" + World.GetStreetName(wepDealer.destination));
 				wepDealer.state = Dealer.States.Leaving;
 			}
 		}
@@ -3500,14 +3196,14 @@ public class LSL : Script
 		{
 			wepDealer.ped.Task.DriveTo(wepDealer.vehicle, wepDealer.destination, 4f, 50f, 6);
 			wepDealer.state = Dealer.States.Fast;
-			UI.ShowSubtitle("D'accord, j'accélère.", 2000);
+			UI.ShowSubtitle("Ok, putting my foot down.", 2000);
 			wepDealer.canSpeed = true;
 		}
 		if (wepDealer.state == Dealer.States.Slower)
 		{
 			wepDealer.ped.Task.DriveTo(wepDealer.vehicle, wepDealer.destination, 4f, 20f, 786603);
 			wepDealer.state = Dealer.States.Driving;
-			UI.ShowSubtitle("D'accord, je ralentis.", 2000);
+			UI.ShowSubtitle("Ok, Slowing it down.", 2000);
 			wepDealer.canSpeed = false;
 		}
 		goto IL_29de;
@@ -3585,7 +3281,7 @@ public class LSL : Script
 				}
 				else
 				{
-					UI.Notify("~r~LsLife - Erreur de type de zone : " + name);
+					UI.Notify("~r~LsLife - Error getting area type for Area " + name);
 				}
 				areas.Add(new Area(name, LsFunctions.LsDrugs(), type, cStr, gstr, heat, rep));
 			}
@@ -3597,10 +3293,10 @@ public class LSL : Script
 		//IL_009c: Unknown result type (might be due to invalid IL or missing references)
 		bool flag = Function.Call<bool>((Hash)7576188390707304864L);
 		bool SaveHud = UI.IsHudComponentActive((HudComponent)17);
-		bool StatSave = Function.Call<bool>(unchecked((Hash)(-4920555325479993693L)));
-		bool Paused = Function.Call<bool>(unchecked((Hash)(-5763681587332382773L)));
-		bool sPaused = Function.Call<bool>(unchecked((Hash)(-1572002141673951856L)));
-		bool Busy = Function.Call<bool>(unchecked((Hash)(-5573887678010054197L)));
+		bool StatSave = Function.Call<bool>((Hash)(-4920555325479993693L));
+		bool Paused = Function.Call<bool>((Hash)(-5763681587332382773L));
+		bool sPaused = Function.Call<bool>((Hash)(-1572002141673951856L));
+		bool Busy = Function.Call<bool>((Hash)(-5573887678010054197L));
 		if (flag | SaveHud | StatSave | Paused | sPaused | Busy)
 		{
 			pSaved = true;
@@ -3925,7 +3621,7 @@ public class LSL : Script
 				pig.DeletePig();
 				if (DEBUG)
 				{
-					UI.Notify("Policier créé supprimé");
+					UI.Notify("Removed spawned Cop");
 				}
 				goto IL_008c;
 			}
@@ -3947,18 +3643,18 @@ public class LSL : Script
 		//IL_0086: Unknown result type (might be due to invalid IL or missing references)
 		//IL_00a2: Unknown result type (might be due to invalid IL or missing references)
 		//IL_00a7: Unknown result type (might be due to invalid IL or missing references)
-		Vehicle pigCar = World.CreateVehicle((int)(Enums.GetPoliceVehType()), GenerateSpawnPos(playerPos.Around(200f), Nodetype.Road, sidewalk: false));
+		Vehicle pigCar = World.CreateVehicle(Model.op_Implicit(Enums.GetPoliceVehType()), GenerateSpawnPos(playerPos.Around(200f), Nodetype.Road, sidewalk: false));
 		if ((Entity)(object)pigCar != (Entity)null)
 		{
 			if (DEBUG)
 			{
-				UI.Notify("Policier créé");
+				UI.Notify("COP SPAWNED");
 				((Entity)pigCar).AddBlip();
 				((Entity)pigCar).CurrentBlip.Name = "Police Car";
 			}
-			Function.Call(unchecked((Hash)(-823518585696636035L)), (InputArgument)(((Entity)pigCar).Handle), (InputArgument)(true));
-			pigs.Add(new Pig(pigCar.CreatePedOnSeat((VehicleSeat)(-1), (int)(Enums.GetPolicePedType())), _leader: true));
-			pigs.Add(new Pig(pigCar.CreatePedOnSeat((VehicleSeat)0, (int)(Enums.GetPolicePedType())), _leader: false));
+			Function.Call((Hash)(-823518585696636035L), InputArgument.op_Implicit(((Entity)pigCar).Handle), InputArgument.op_Implicit(true));
+			pigs.Add(new Pig(pigCar.CreatePedOnSeat((VehicleSeat)(-1), Model.op_Implicit(Enums.GetPolicePedType())), _leader: true));
+			pigs.Add(new Pig(pigCar.CreatePedOnSeat((VehicleSeat)0, Model.op_Implicit(Enums.GetPolicePedType())), _leader: false));
 		}
 		if (pigs.Count <= 0)
 		{
@@ -3968,7 +3664,7 @@ public class LSL : Script
 		{
 			if ((Entity)(object)p.Ped != (Entity)null)
 			{
-				Function.Call(unchecked((Hash)(-4970914549772615683L)), (InputArgument)(p.Ped), (InputArgument)(true));
+				Function.Call((Hash)(-4970914549772615683L), InputArgument.op_Implicit(p.Ped), InputArgument.op_Implicit(true));
 				if (areas[areaIndex].CopPresance < 10)
 				{
 					areas[areaIndex].CopPresance++;
@@ -4000,7 +3696,7 @@ public class LSL : Script
 			{
 				if (pStashVehicle != null && (Entity)(object)pStashVehicle.drugCar != (Entity)null)
 				{
-					LsFunctions.SendTextMsg(pStashVehicle.drugCar.DisplayName + " n'est plus un véhicule de stockage.");
+					LsFunctions.SendTextMsg(pStashVehicle.drugCar.DisplayName + " is no longer a stash Vehicle.");
 					pStashVehicle.RemoveOldCar();
 					pStashVehicle = null;
 				}
@@ -4021,7 +3717,7 @@ public class LSL : Script
 									model = ((Entity)player.Character.CurrentVehicle).Model;
 									if (!model.IsPlane)
 									{
-										LsFunctions.SendTextMsg("Ce véhicule ne peut pas servir de cachette.");
+										LsFunctions.SendTextMsg("You can not use this vehicle as a stash.");
 										goto IL_0180;
 									}
 								}
@@ -4032,7 +3728,7 @@ public class LSL : Script
 					pStashVehicle.VehicleSave(player.Character.CurrentVehicle);
 					if ((Entity)(object)pStashVehicle.drugCar != (Entity)null)
 					{
-						LsFunctions.SendTextMsg(pStashVehicle.drugCar.DisplayName + " est maintenant ton véhicule de stockage.");
+						LsFunctions.SendTextMsg(pStashVehicle.drugCar.DisplayName + " is now youre Stash Vehicle.");
 					}
 				}
 			}
@@ -4048,11 +3744,11 @@ public class LSL : Script
 			if (isDealing)
 			{
 				isDealing = false;
-				LsFunctions.SendTextMsg("Vente de rue annulée");
+				LsFunctions.SendTextMsg("Street dealing cancel");
 			}
 			else if (!isDealing)
 			{
-				LsFunctions.SendTextMsg("Aucune vente de rue en cours.");
+				LsFunctions.SendTextMsg("Street dealing is not in progress.");
 			}
 		}
 		if (e.KeyCode == Keys.J && !started)
@@ -4072,11 +3768,11 @@ public class LSL : Script
 					ePos.Add(new XElement("h", vHead));
 					xDocument.Root.Add(ePos);
 					xDocument.Save("scripts\\LSLife\\LSLife_Spawns.xml");
-					UI.Notify("Position ajoutée au fichier XML");
+					UI.Notify("position added to xml");
 				}
 				else
 				{
-					UI.Notify("Tu dois être dans un véhicule pour ajouter une position");
+					UI.Notify("you must be in a vehicle to add a position");
 				}
 			}
 			if (DEBUG)
@@ -4119,7 +3815,7 @@ public class LSL : Script
 		if (wepdealer)
 		{
 			Vector3 dealer1pos = World.GetNextPositionOnSidewalk(GenerateSpawnPos(playerPos.Around(60f), Nodetype.AnyRoad, sidewalk: true));
-			weaponDealer1 = World.CreatePed(new Model(unchecked((int)4058522530u)), GenerateSpawnPos(dealer1pos, Nodetype.AnyRoad, sidewalk: true));
+			weaponDealer1 = World.CreatePed(Model.op_Implicit((PedHash)(-236444766)), GenerateSpawnPos(dealer1pos, Nodetype.AnyRoad, sidewalk: true));
 			while ((Entity)(object)weaponDealer1 == (Entity)null)
 			{
 				Script.Wait(0);
@@ -4128,11 +3824,11 @@ public class LSL : Script
 			if ((Entity)(object)weaponDealer1 != (Entity)null)
 			{
 				weaponDealer1.RelationshipGroup = playerRelationship;
-				LsFunctions.AddBlip((Entity)(object)weaponDealer1, (BlipColor)3, "Vendeur de Rafael Mendoza", _friend: true, _edge: true);
+				LsFunctions.AddBlip((Entity)(object)weaponDealer1, (BlipColor)3, "Zee's Dealer", _friend: true, _edge: true);
 				weaponDealer1.CanSwitchWeapons = true;
 				weaponDealer1.Weapons.Give((WeaponHash)453432689, 9999, false, true);
 				weaponDealer1.Armor = 100;
-				Function.Call(unchecked((Hash)(-4079649877180351064L)), (InputArgument)(weaponDealer1), (InputArgument)(100));
+				Function.Call((Hash)(-4079649877180351064L), InputArgument.op_Implicit(weaponDealer1), InputArgument.op_Implicit(100));
 				readyToDeal = false;
 				Script.Wait(100);
 				weaponDealer1.Task.GoTo(pedTarget);
@@ -4178,7 +3874,7 @@ public class LSL : Script
 			}
 			else
 			{
-				LsFunctions.SendTextMsg("~r~Impossible de faire apparaître le vendeur d'armes");
+				LsFunctions.SendTextMsg("~r~Spawning Weapon Dealer Failed");
 			}
 		}
 		else if (ZeesDealers == null && NewOrder != null)
@@ -4186,12 +3882,12 @@ public class LSL : Script
 			ZeesDealers = new DrugDealer(NewOrder);
 			if (ZeesDealers != null)
 			{
-				PlaceOrder.Text = "Annuler la commande";
+				PlaceOrder.Text = "Cancel Order";
 			}
 		}
 		else
 		{
-			LsFunctions.TextMsg("ZEE", "Commande", "Je leur dirai que tu ne viens pas.");
+			LsFunctions.TextMsg("ZEE", "Order", "I'll let them know your not coming.");
 			ZeesDealers.Dismiss();
 			if (NewOrder != null)
 			{
@@ -4431,11 +4127,11 @@ public class LSL : Script
 						}
 					}
 				}
-				if (!Function.Call<bool>((Hash)5176593366545292405L, (InputArgument)(_ped)))
+				if (!Function.Call<bool>((Hash)5176593366545292405L, InputArgument.op_Implicit(_ped)))
 				{
 					return true;
 				}
-				int type = Function.Call<int>(unchecked((Hash)(-70476366192974276L)), (InputArgument)(((Entity)_ped).Handle));
+				int type = Function.Call<int>((Hash)(-70476366192974276L), InputArgument.op_Implicit(((Entity)_ped).Handle));
 				if (type == 24 || type == 26)
 				{
 					return true;
@@ -4487,7 +4183,7 @@ public class LSL : Script
 		if (c.Target == target)
 		{
 			Vector3 position = ((Entity)c.Ped).Position;
-			if (position.DistanceTo(c.Target) > 20f || Function.Call<bool>((Hash)1322919935073282825L, (InputArgument)(((Entity)c.Ped).Position.X), (InputArgument)(((Entity)c.Ped).Position.Y), (InputArgument)(((Entity)c.Ped).Position.Z)))
+			if (position.DistanceTo(c.Target) > 20f || Function.Call<bool>((Hash)1322919935073282825L, InputArgument.op_Implicit(((Entity)c.Ped).Position.X), InputArgument.op_Implicit(((Entity)c.Ped).Position.Y), InputArgument.op_Implicit(((Entity)c.Ped).Position.Z)))
 			{
 				c.Ped.Task.RunTo(c.Target);
 			}
@@ -4543,16 +4239,16 @@ public class LSL : Script
 		{
 			type = 3;
 		}
-		int NodeID = Function.Call<int>((Hash)2510518586829603349L, (InputArgument)(desiredPos.X), (InputArgument)(desiredPos.Y), (InputArgument)(desiredPos.Z), (InputArgument)(NodeNumber), (InputArgument)(type), (InputArgument)(200f), (InputArgument)(200f));
+		int NodeID = Function.Call<int>((Hash)2510518586829603349L, InputArgument.op_Implicit(desiredPos.X), InputArgument.op_Implicit(desiredPos.Y), InputArgument.op_Implicit(desiredPos.Z), InputArgument.op_Implicit(NodeNumber), InputArgument.op_Implicit(type), InputArgument.op_Implicit(200f), InputArgument.op_Implicit(200f));
 		if (ForceOffroad)
 		{
-			while (!Function.Call<bool>((Hash)5715191804072465017L, (InputArgument)(NodeID)))
+			while (!Function.Call<bool>((Hash)5715191804072465017L, InputArgument.op_Implicit(NodeID)))
 			{
-				NodeID = Function.Call<int>((Hash)2510518586829603349L, (InputArgument)(desiredPos.X), (InputArgument)(desiredPos.Y), (InputArgument)(desiredPos.Z), (InputArgument)(NodeNumber), (InputArgument)(type), (InputArgument)(200f), (InputArgument)(200f));
+				NodeID = Function.Call<int>((Hash)2510518586829603349L, InputArgument.op_Implicit(desiredPos.X), InputArgument.op_Implicit(desiredPos.Y), InputArgument.op_Implicit(desiredPos.Z), InputArgument.op_Implicit(NodeNumber), InputArgument.op_Implicit(type), InputArgument.op_Implicit(200f), InputArgument.op_Implicit(200f));
 				NodeNumber++;
 			}
 		}
-		Function.Call((Hash)8084282276450675138L, (InputArgument)(NodeID), (InputArgument)(object)outArgA);
+		Function.Call((Hash)8084282276450675138L, InputArgument.op_Implicit(NodeID), (InputArgument)(object)outArgA);
 		finalpos = outArgA.GetResult<Vector3>();
 		if (sidewalk)
 		{
@@ -4571,9 +4267,9 @@ public class LSL : Script
 		//IL_005c: Expected Obj, but got Unknown
 		//IL_0072: Unknown result type (might be due to invalid IL or missing references)
 		_ = Vector3.Zero;
-		int NodeID = Function.Call<int>((Hash)2510518586829603349L, (InputArgument)(pos.X), (InputArgument)(pos.Y), (InputArgument)(pos.Z), (InputArgument)(1), (InputArgument)(1), (InputArgument)(200f), (InputArgument)(200f));
+		int NodeID = Function.Call<int>((Hash)2510518586829603349L, InputArgument.op_Implicit(pos.X), InputArgument.op_Implicit(pos.Y), InputArgument.op_Implicit(pos.Z), InputArgument.op_Implicit(1), InputArgument.op_Implicit(1), InputArgument.op_Implicit(200f), InputArgument.op_Implicit(200f));
 		OutputArgument outArgA = new OutputArgument();
-		Function.Call((Hash)8084282276450675138L, (InputArgument)(NodeID), (InputArgument)(object)outArgA);
+		Function.Call((Hash)8084282276450675138L, InputArgument.op_Implicit(NodeID), (InputArgument)(object)outArgA);
 		return outArgA.GetResult<Vector3>();
 	}
 
@@ -4594,7 +4290,7 @@ public class LSL : Script
 		List<PathnodeFlags> pathnodesflags = new List<PathnodeFlags>();
 		OutputArgument outArgA = new OutputArgument();
 		OutputArgument outArgB = new OutputArgument();
-		if (Function.Call<bool>((Hash)389656384451763932L, (InputArgument)(pos.X), (InputArgument)(pos.Y), (InputArgument)(pos.Z), (InputArgument)(object)outArgA, (InputArgument)(object)outArgB))
+		if (Function.Call<bool>((Hash)389656384451763932L, InputArgument.op_Implicit(pos.X), InputArgument.op_Implicit(pos.Y), InputArgument.op_Implicit(pos.Z), (InputArgument)(object)outArgA, (InputArgument)(object)outArgB))
 		{
 			outArgA.GetResult<int>();
 			int flags = outArgB.GetResult<int>();
@@ -4620,7 +4316,7 @@ public class LSL : Script
 		//IL_002b: Unknown result type (might be due to invalid IL or missing references)
 		OutputArgument outArgA = new OutputArgument();
 		OutputArgument outArgB = new OutputArgument();
-		if (Function.Call<bool>((Hash)389656384451763932L, (InputArgument)(pos.X), (InputArgument)(pos.Y), (InputArgument)(pos.Z), (InputArgument)(object)outArgA, (InputArgument)(object)outArgB))
+		if (Function.Call<bool>((Hash)389656384451763932L, InputArgument.op_Implicit(pos.X), InputArgument.op_Implicit(pos.Y), InputArgument.op_Implicit(pos.Z), (InputArgument)(object)outArgA, (InputArgument)(object)outArgB))
 		{
 			outArgA.GetResult<int>();
 			if (((uint)outArgB.GetResult<int>() & (uint)flag) != 0)
@@ -4642,7 +4338,11 @@ public class LSL : Script
 
 	private void OnAbort(object sender, EventArgs e)
 	{
-if (ShotHandler.shots.Count > 0)
+		if (1 == 0)
+		{
+			return;
+		}
+		if (ShotHandler.shots.Count > 0)
 		{
 			foreach (Shot s in ShotHandler.shots)
 			{

@@ -71,31 +71,31 @@ public class DrugDealer
 					if (blip != (Blip)null)
 					{
 						blip.Sprite = (BlipSprite)478;
-						blip.Name = "Récupération de drogue";
+						blip.Name = "Drug Pickup";
 						blip.ShowRoute = true;
-						LsFunctions.DbugString("Véhicule du fournisseur créé");
+						LsFunctions.DbugString("dealer car spawned");
 						string areaName = World.GetZoneName(dealerSpawn.Position);
-						LsFunctions.TextMsg("ZEE", "Commande", "Va retrouver mes hommes à ~y~" + areaName + " ~s~, ils s'occuperont de toi.");
+						LsFunctions.TextMsg("ZEE", "Order", "Ok go meet my people in ~y~" + areaName + " ~s~, they will sort you out.");
 					}
 					else
 					{
-						LsFunctions.SendTextMsg("LsLife : ~r~Impossible de créer le marqueur");
+						LsFunctions.SendTextMsg("LsLife: ~r~Failed to create blip");
 						Destroy();
 					}
 				}
 				string text = dealerSpawn.Heading.ToString();
 				Vector3 position = dealerSpawn.Position;
-				LsFunctions.DbugString("Point d'apparition du fournisseur trouvé,~n~cap " + text + ",~n~position " + ((object)position/*cast due to constrained. prefix*/).ToString());
+				LsFunctions.DbugString("dealer spawn found,~n~heading " + text + ",~n~pos " + ((object)position/*cast due to constrained. prefix*/).ToString());
 			}
 			else
 			{
-				LsFunctions.SendTextMsg("LsLife : erreur, commande introuvable");
+				LsFunctions.SendTextMsg("LsLife: Error Order is null");
 				Destroy();
 			}
 		}
 		else
 		{
-			LsFunctions.TextMsg("ZEE", "Commande", "Nous n'avons personne dans ce secteur.");
+			LsFunctions.TextMsg("ZEE", "Order", "We havent got anyone around there.");
 			DealState = DrugDealSates.Destroy;
 		}
 	}
@@ -118,7 +118,7 @@ public class DrugDealer
 				DealState = DrugDealSates.Payed;
 				EnterState = true;
 				Ready = false;
-				Function.Call(unchecked((Hash)(-8213159594590722974L)), (InputArgument)(lieut), (InputArgument)("GENERIC_THANKS"), (InputArgument)("SPEECH_PARAMS_STANDARD"), (InputArgument)(0));
+				Function.Call((Hash)(-8213159594590722974L), InputArgument.op_Implicit(lieut), InputArgument.op_Implicit("GENERIC_THANKS"), InputArgument.op_Implicit("SPEECH_PARAMS_STANDARD"), InputArgument.op_Implicit(0));
 			}
 			break;
 		case DrugDealSates.Payed:
@@ -221,7 +221,7 @@ public class DrugDealer
 				}
 				((Entity)dealerCar).IsPersistent = true;
 				dealerCar.LockStatus = (VehicleLockStatus)3;
-				LsFunctions.DbugString("Véhicule du fournisseur créé");
+				LsFunctions.DbugString("Dealer Car Spawned");
 				break;
 			}
 			if ((Entity)(object)goon == (Entity)null && (Entity)(object)dealerCar != (Entity)null)
@@ -361,7 +361,7 @@ public class DrugDealer
 		case DrugDealSates.PickedUp:
 			if (EnterState)
 			{
-				Function.Call(unchecked((Hash)(-8213159594590722974L)), (InputArgument)(lieut), (InputArgument)("GENERIC_BYE"), (InputArgument)("SPEECH_PARAMS_STANDARD"), (InputArgument)(0));
+				Function.Call((Hash)(-8213159594590722974L), InputArgument.op_Implicit(lieut), InputArgument.op_Implicit("GENERIC_BYE"), InputArgument.op_Implicit("SPEECH_PARAMS_STANDARD"), InputArgument.op_Implicit(0));
 				EnterState = false;
 			}
 			else
@@ -454,7 +454,7 @@ public class DrugDealer
 		if (!LSL.LsMenuPool.IsAnyMenuOpen() && (float)Game.GameTime > LSL.displayHelpTimer + 6000f)
 		{
 			LSL.displayHelpTimer = Game.GameTime;
-			LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour récupérer la drogue");
+			LsFunctions.DisplayHelpText("Press ~INPUT_CONTEXT~ to pickup the Drugs");
 		}
 	}
 
@@ -471,11 +471,11 @@ public class DrugDealer
 			LSL.displayHelpTimer = Game.GameTime;
 			if (PlayerOrder.CanPayBill())
 			{
-				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour conclure la transaction");
+				LsFunctions.DisplayHelpText("Press ~INPUT_CONTEXT~ to do the deal");
 			}
 			else
 			{
-				LsFunctions.DisplayHelpText("Tu n'as pas assez d'argent ou de crédit pour payer.");
+				LsFunctions.DisplayHelpText("You do not have enough credit or cash to cover the price.");
 			}
 		}
 	}
@@ -498,10 +498,10 @@ public class DrugDealer
 		//IL_0016: Unknown result type (might be due to invalid IL or missing references)
 		//IL_0017: Unknown result type (might be due to invalid IL or missing references)
 		//IL_000e: Unknown result type (might be due to invalid IL or missing references)
-		PedHash pedHash = unchecked((PedHash)(-412008429));
+		PedHash pedHash = (PedHash)(-412008429);
 		if (!_leader)
 		{
-			pedHash = unchecked((PedHash)(-984709238));
+			pedHash = (PedHash)(-984709238);
 		}
 		Ped p = dealerCar.CreatePedOnSeat(_seat, LsFunctions.RequestModel(pedHash));
 		if ((Entity)(object)p != (Entity)null && ((Entity)p).Exists())
@@ -509,28 +509,28 @@ public class DrugDealer
 			((Entity)p).IsPersistent = true;
 			p.RelationshipGroup = LSL.playerRelationship;
 			LsFunctions.SetRandomCombatStats(p);
-			p.FiringPattern = unchecked((FiringPattern)(-753768974));
+			p.FiringPattern = (FiringPattern)(-753768974);
 			p.AlwaysKeepTask = true;
 			p.CanSwitchWeapons = true;
 			p.BlockPermanentEvents = true;
-			Function.Call(unchecked((Hash)(-4079649877180351064L)), (InputArgument)(p), (InputArgument)(100));
+			Function.Call((Hash)(-4079649877180351064L), InputArgument.op_Implicit(p), InputArgument.op_Implicit(100));
 			switch (LsFunctions.RanRange(0, (int)(1f + LSL.areas[LSL.areaIndex].GangPresance * 0.5f)))
 			{
 			case 5:
-				p.Weapons.Give(unchecked((WeaponHash)(-1074790547)), 500, false, true);
+				p.Weapons.Give((WeaponHash)(-1074790547), 500, false, true);
 				p.Weapons.Give((WeaponHash)324215364, 500, true, true);
 				break;
 			case 4:
 				p.Weapons.Give((WeaponHash)1649403952, 500, false, true);
-				p.Weapons.Give(unchecked((WeaponHash)(-1121678507)), 500, true, true);
+				p.Weapons.Give((WeaponHash)(-1121678507), 500, true, true);
 				break;
 			case 3:
 				p.Weapons.Give((WeaponHash)1649403952, 500, false, true);
-				p.Weapons.Give(unchecked((WeaponHash)(-619010992)), 500, true, true);
+				p.Weapons.Give((WeaponHash)(-619010992), 500, true, true);
 				break;
 			case 2:
 				p.Weapons.Give((WeaponHash)487013001, 500, false, true);
-				p.Weapons.Give(unchecked((WeaponHash)(-619010992)), 500, true, true);
+				p.Weapons.Give((WeaponHash)(-619010992), 500, true, true);
 				break;
 			case 1:
 				p.Weapons.Give((WeaponHash)2017895192, 500, false, true);

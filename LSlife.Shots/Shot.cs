@@ -49,7 +49,7 @@ public class Shot
 				{
 					price -= (int)div * customer.Drug.PricePerG;
 				}
-				LsFunctions.TextMsg("Drop", customer.Ped, "SMS", "Tu peux me livrer ~g~" + LsFunctions.FormatMetric(customer.amount) + "~w~ de ~g~" + customer.Drug.Name + " ~w~pour $" + LsFunctions.IntToMoney(price) + " à ~y~" + World.GetStreetName(((Entity)customer.Ped).Position) + " ~w~dans ~y~" + World.GetZoneName(((Entity)customer.Ped).Position) + "~w~ ?");
+				LsFunctions.TextMsg("Drop", customer.Ped, "Text message", "Can you do ~g~" + LsFunctions.GramsToOz(customer.amount) + "~w~ of ~g~" + customer.Drug.Name + " ~w~for $" + LsFunctions.IntToMoney(price) + " to ~y~" + World.GetStreetName(((Entity)customer.Ped).Position) + " ~w~in ~y~" + World.GetZoneName(((Entity)customer.Ped).Position) + "~w~?");
 				timeShotOffered = Game.GameTime;
 				shotOffered = true;
 			}
@@ -59,7 +59,7 @@ public class Shot
 				{
 					Function.Call((Hash)7023634693725934496L);
 					LSL.displayHelpTimer = Game.GameTime;
-					LsFunctions.DisplayHelpText("~INPUT_CONTEXT_SECONDARY~ pour refuser ou ~INPUT_CONTEXT~ pour accepter");
+					LsFunctions.DisplayHelpText("~INPUT_CONTEXT_SECONDARY~ to reject or ~INPUT_CONTEXT~ to accept");
 				}
 				if (Game.IsControlJustPressed(2, (Control)52) && !LSL.LsMenuPool.IsAnyMenuOpen())
 				{
@@ -68,7 +68,7 @@ public class Shot
 					shotOffered = false;
 					if ((Entity)(object)customer.Ped != (Entity)null)
 					{
-						LsFunctions.TextMsg("Drop", customer.Ped, "SMS", "D'accord, je te recontacte si j'en veux davantage.");
+						LsFunctions.TextMsg("Drop", customer.Ped, "Text message", "ok ill let you know if i want anymore");
 						Function.Call((Hash)7023634693725934496L);
 						LsFunctions.RemovePedFromWorld(customer.Ped, clearTask: true);
 					}
@@ -79,19 +79,19 @@ public class Shot
 					accepted = true;
 					shotOffered = false;
 					((Entity)customer.Ped).CurrentBlip.IsShortRange = false;
-					LsFunctions.TextMsg("Drop", customer.Ped, "SMS", "On se retrouve là-bas.");
+					LsFunctions.TextMsg("Drop", customer.Ped, "Text message", "See you there");
 					if (LSL.PlayerInventory[customer.Drug.Name] >= customer.amount)
 					{
-						UI.ShowSubtitle("Livre " + LsFunctions.FormatMetric(customer.amount) + " de ~g~" + customer.Drug.Name + "~w~ à ~y~" + World.GetStreetName(((Entity)customer.Ped).Position) + ".", 10000);
+						UI.ShowSubtitle("Deliver " + LsFunctions.GramsToOz(customer.amount) + " of ~g~" + customer.Drug.Name + "~w~ to ~y~" + World.GetStreetName(((Entity)customer.Ped).Position) + ".", 10000);
 					}
 					else
 					{
-						UI.ShowSubtitle("Tu n'as pas assez de ~g~" + customer.Drug.Name + "~w~. Récupère ~g~" + LsFunctions.FormatMetric(customer.amount) + "~w~ et livre-la à ~y~" + World.GetStreetName(((Entity)customer.Ped).Position) + ".", 10000);
+						UI.ShowSubtitle("You do not have enough ~g~" + customer.Drug.Name + "~w~ go get ~g~" + LsFunctions.GramsToOz(customer.amount) + "~w~ and deliver it to ~y~" + World.GetStreetName(((Entity)customer.Ped).Position) + ".", 10000);
 					}
 				}
 				if (Game.GameTime > timeShotOffered + 25000)
 				{
-					LsFunctions.TextMsg("Drop", customer.Ped, "SMS", "J'ai trouvé quelqu'un d'autre, ne t'inquiète pas.");
+					LsFunctions.TextMsg("Drop", customer.Ped, "Text message", "i got someone dont worry");
 					if (LSL.areas[LSL.areaIndex].Reputation > 0f)
 					{
 						float repLost = LSL.areas[LSL.areaIndex].Reputation * 0.1f;
@@ -111,7 +111,7 @@ public class Shot
 				if (customer.Ped.CurrentPedGroup != LSL.player.Character.CurrentPedGroup && dist <= 10f)
 				{
 					customer.Ped.Task.ClearAll();
-					Function.Call(unchecked((Hash)(-6974808092771143243L)), (InputArgument)(((Entity)customer.Ped).Handle), (InputArgument)(LSL.playerGroup));
+					Function.Call((Hash)(-6974808092771143243L), InputArgument.op_Implicit(((Entity)customer.Ped).Handle), InputArgument.op_Implicit(LSL.playerGroup));
 					((Entity)customer.Ped).CurrentBlip.ShowRoute = false;
 				}
 				if (!LSL.LsMenuPool.IsAnyMenuOpen() && dist <= 2f)
@@ -122,14 +122,14 @@ public class Shot
 						{
 							Function.Call((Hash)7023634693725934496L);
 							LSL.displayHelpTimer = Game.GameTime;
-							LsFunctions.DisplayHelpText("~INPUT_SPRINT~ pour vendre à cette personne.");
+							LsFunctions.DisplayHelpText("~INPUT_SPRINT~ to sell to this person.");
 						}
 						if (Game.IsControlJustPressed(2, (Control)21) && !LSL.LsMenuPool.IsAnyMenuOpen())
 						{
 							Function.Call((Hash)7023634693725934496L);
 							LSL.customerSellTo = customer;
-							LSL.sell.Text = "Vendre " + LsFunctions.FormatMetric(customer.amount) + " de " + customer.Drug.Name + "?";
-							((UIText)LSL.customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.FormatMetric(LSL.PlayerInventory[customer.Drug.Name]) + " de " + customer.Drug.Name;
+							LSL.sell.Text = "Sell " + LsFunctions.GramsToOz(customer.amount) + " of " + customer.Drug.Name + "?";
+							((UIText)LSL.customerMainMenu.Subtitle).Caption = "You have " + LsFunctions.GramsToOz(LSL.PlayerInventory[customer.Drug.Name]) + " of " + customer.Drug.Name;
 							LSL.customerMainMenu.Visible = !LSL.customerMainMenu.Visible;
 							LSL.customerMainMenu.CurrentSelection = 0;
 						}
@@ -140,14 +140,14 @@ public class Shot
 						{
 							Function.Call((Hash)7023634693725934496L);
 							LSL.displayHelpTimer = Game.GameTime;
-							LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour vendre à cette personne.");
+							LsFunctions.DisplayHelpText("Press ~INPUT_SPRINT~ to sell to this person.");
 						}
 						if (Game.IsControlJustPressed(2, (Control)21) && !LSL.LsMenuPool.IsAnyMenuOpen())
 						{
 							Function.Call((Hash)7023634693725934496L);
 							LSL.customerSellTo = customer;
-							LSL.sell.Text = "Vendre " + LsFunctions.FormatMetric(customer.amount) + " de " + customer.Drug.Name + "?";
-							((UIText)LSL.customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.FormatMetric(LSL.PlayerInventory[customer.Drug.Name]) + " de " + customer.Drug.Name;
+							LSL.sell.Text = "Sell " + LsFunctions.GramsToOz(customer.amount) + " of " + customer.Drug.Name + "?";
+							((UIText)LSL.customerMainMenu.Subtitle).Caption = "You have " + LsFunctions.GramsToOz(LSL.PlayerInventory[customer.Drug.Name]) + " of " + customer.Drug.Name;
 							LSL.customerMainMenu.Visible = !LSL.customerMainMenu.Visible;
 							LSL.customerMainMenu.CurrentSelection = 0;
 						}

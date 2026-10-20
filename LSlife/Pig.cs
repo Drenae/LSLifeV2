@@ -18,7 +18,7 @@ public class Pig
 		GetBag
 	}
 
-	private readonly bool DEBUG = false;
+	private readonly bool DEBUG;
 
 	public Ped Ped;
 
@@ -72,8 +72,8 @@ public class Pig
 		((Entity)Ped).IsPersistent = true;
 		Ped.AlwaysKeepTask = true;
 		Ped.BlockPermanentEvents = true;
-		Function.Call(unchecked((Hash)(-4970914549772615683L)), (InputArgument)(Ped), (InputArgument)(true));
-		Function.Call(unchecked((Hash)(-5650329060376590909L)), (InputArgument)(Ped), (InputArgument)(100));
+		Function.Call((Hash)(-4970914549772615683L), InputArgument.op_Implicit(Ped), InputArgument.op_Implicit(true));
+		Function.Call((Hash)(-5650329060376590909L), InputArgument.op_Implicit(Ped), InputArgument.op_Implicit(100));
 	}
 
 	private Vector3 StopPosition()
@@ -159,7 +159,7 @@ public class Pig
 			{
 				if (DEBUG)
 				{
-					UI.Notify("Sac disparu");
+					UI.Notify("Bag gone");
 				}
 				NewState = States.Destroy;
 			}
@@ -203,7 +203,7 @@ public class Pig
 						if (Game.GameTime > time + 3000)
 						{
 							time = Game.GameTime;
-							Function.Call((Hash)1986128932158055094L, (InputArgument)(((Entity)Vehicle).Handle));
+							Function.Call((Hash)1986128932158055094L, InputArgument.op_Implicit(((Entity)Vehicle).Handle));
 						}
 						if (!seenPlayer && LsFunctions.CanSee((Entity)(object)Ped, (Entity)(object)Game.Player.Character))
 						{
@@ -243,13 +243,13 @@ public class Pig
 			{
 				if (!SirenActive)
 				{
-					Function.Call(unchecked((Hash)(-823518585696636035L)), (InputArgument)(((Entity)Vehicle).Handle), (InputArgument)(true));
+					Function.Call((Hash)(-823518585696636035L), InputArgument.op_Implicit(((Entity)Vehicle).Handle), InputArgument.op_Implicit(true));
 					SirenActive = true;
 				}
 				if (SirenSoundActive)
 				{
 					SirenSoundActive = false;
-					Function.Call(unchecked((Hash)(-2880880930286931340L)), (InputArgument)(((Entity)Vehicle).Handle), (InputArgument)(true));
+					Function.Call((Hash)(-2880880930286931340L), InputArgument.op_Implicit(((Entity)Vehicle).Handle), InputArgument.op_Implicit(true));
 				}
 			}
 			break;
@@ -271,7 +271,7 @@ public class Pig
 			{
 				if ((Entity)(object)Game.Player.Character.CurrentVehicle != (Entity)null && !Game.Player.Character.CurrentVehicle.IsStopped)
 				{
-					LsFunctions.DbugString("Indice de recherche augmenté : refus de s'arrêter en véhicule");
+					LsFunctions.DbugString("Wanted level for not stopping for police in vehicle");
 					Game.Player.WantedLevel = 1;
 					LSL.areas[LSL.areaIndex].Heat += 200f;
 					break;
@@ -298,7 +298,7 @@ public class Pig
 			{
 				if (leader)
 				{
-					UI.ShowSubtitle("Tu es en état d'arrestation.", 3000);
+					UI.ShowSubtitle("Your busted.", 3000);
 					Game.Player.WantedLevel = 2;
 				}
 				NewState = States.Destroy;
@@ -306,7 +306,7 @@ public class Pig
 			}
 			if (leader)
 			{
-				UI.ShowSubtitle("On te surveille. On te conseille de quitter ~y~" + World.GetZoneName(LSL.playerPos) + "~n~.", 4000);
+				UI.ShowSubtitle("Ok we got our eye on you, we suggest you get outa ~y~" + World.GetZoneName(LSL.playerPos) + "~n~.", 4000);
 			}
 			LSL.areas[LSL.areaIndex].HeatDecay();
 			Game.Player.Character.Task.ClearAll();
@@ -320,7 +320,7 @@ public class Pig
 			}
 			if (Game.Player.WantedLevel < 1 && LSL.playerPos.DistanceTo(pPos) > 8f)
 			{
-				LsFunctions.DbugString("Indice de recherche augmenté : refus de s'arrêter");
+				LsFunctions.DbugString("Wanted level for not stopping for police");
 				Game.Player.WantedLevel = 2;
 				LSL.areas[LSL.areaIndex].Heat += 200f;
 				break;
@@ -334,7 +334,7 @@ public class Pig
 			if (!sayWait && !Ped.IsInVehicle() && Ped.IsWalking && LSL.playerPos.DistanceTo(((Entity)Ped).Position) < 10f)
 			{
 				sayWait = true;
-				Function.Call(unchecked((Hash)(-8213159594590722974L)), (InputArgument)(Ped), (InputArgument)("WAIT"), (InputArgument)("SPEECH_PARAMS_STANDARD"));
+				Function.Call((Hash)(-8213159594590722974L), InputArgument.op_Implicit(Ped), InputArgument.op_Implicit("WAIT"), InputArgument.op_Implicit("SPEECH_PARAMS_STANDARD"));
 			}
 			break;
 		}
@@ -391,7 +391,7 @@ public class Pig
 		}
 		if (DEBUG)
 		{
-			UI.Notify("Nouvel état de la police : " + NewState);
+			UI.Notify("Police new State " + NewState);
 		}
 		switch (NewState)
 		{
@@ -403,7 +403,7 @@ public class Pig
 			}
 			if (DEBUG)
 			{
-				UI.Notify("Récupération du sac");
+				UI.Notify("Getting bag");
 			}
 			Ped.Task.GoTo(Bag.pos);
 			CurrentState = NewState;
@@ -456,7 +456,7 @@ public class Pig
 			CurrentState = States.Normal;
 			if (DEBUG)
 			{
-				UI.Notify("Retour à la normale");
+				UI.Notify("Changing to normal");
 			}
 			break;
 		case States.WatchPlayer:
@@ -469,7 +469,7 @@ public class Pig
 			{
 				if (leader)
 				{
-					UI.ShowSubtitle("Monsieur, veuillez sortir du véhicule.", 4000);
+					UI.ShowSubtitle("Sir, please step out of the vehicle.", 4000);
 				}
 				AskPlayerToComply = true;
 			}
@@ -477,13 +477,13 @@ public class Pig
 			{
 				if (leader)
 				{
-					UI.ShowSubtitle("Mettez-vous au sol !", 4000);
+					UI.ShowSubtitle("Get down on the ground", 4000);
 				}
 				AskPlayerToComply = true;
 			}
 			if (DEBUG)
 			{
-				UI.Notify("Passage en surveillance");
+				UI.Notify("Changing to watch");
 			}
 			break;
 		case States.ApproachPlayer:

@@ -18,17 +18,11 @@ internal static class BarHandler
 
 	public static void AddBar(BarTimerBar _bar)
 	{
-		BarPool.Add((TimerBarBase)(object)_bar);
+		BarPool.Add(_bar);
 	}
 
 	public static void RemoveBar(BarTimerBar _bar)
 	{
-		BarPool.Remove((TimerBarBase)(object)_bar);
-	}
-
-	static BarHandler()
-	{
-		//IL_0000: Unknown result type (might be due to invalid IL or missing references)
-		//IL_000a: Expected Obj, but got Unknown
+		BarPool.Remove(_bar);
 	}
 }
