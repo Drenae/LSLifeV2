@@ -628,7 +628,7 @@ internal static class LsMenus
 				}
 				foreach (XElement e12 in element6.Elements())
 				{
-					if (e12.Name == "cocainGrams")
+					if (e12.Name == "cocaineGrams")
 					{
 						e12.Value = LSL.pStashVehicle.drugCarCocainGrams.ToString();
 						break;
@@ -904,7 +904,7 @@ internal static class LsMenus
 				{
 					foreach (XElement e11 in element6.Elements())
 					{
-						if (e11.Name == "cocainGrams")
+						if (e11.Name == "cocaineGrams")
 						{
 							e11.Value = LsFunctions.pCocaineGrams.ToString();
 							break;
@@ -917,7 +917,7 @@ internal static class LsMenus
 				}
 				foreach (XElement e12 in element6.Elements())
 				{
-					if (e12.Name == "cocainGrams")
+					if (e12.Name == "cocaineGrams")
 					{
 						e12.Value = LSL.pStashVehicle.drugCarCocainGrams.ToString();
 						break;
