@@ -1226,17 +1226,17 @@ internal static class LsFunctions
 				float weedMoney = 0f;
 				float crackMoney = 0f;
 				float cocainMoney = 0f;
-				if (LSL.dealer1Weed < 40)
+				if (LSL.dealer1Weed < 1120)
 				{
 					weedMoney = (float)LSL.dealer1Money * 0.75f;
 					LSL.dealer1Money -= (int)weedMoney;
 				}
-				if (LSL.dealer1Crack < 40)
+				if (LSL.dealer1Crack < 1120)
 				{
 					crackMoney = (float)LSL.dealer1Money * 0.6f;
 					LSL.dealer1Money -= (int)crackMoney;
 				}
-				if (LSL.dealer1Cocain < 40)
+				if (LSL.dealer1Cocain < 1120)
 				{
 					cocainMoney = LSL.dealer1Money;
 					LSL.dealer1Money -= (int)cocainMoney;
@@ -1244,15 +1244,15 @@ internal static class LsFunctions
 				int dWeed = LSL.weed1Price / 2 - Discount(LSL.weed1Price / 2);
 				int dCrack = LSL.crack1Price / 2 - Discount(LSL.crack1Price / 2);
 				int dCocaine = LSL.cocain1Price / 2 - Discount(LSL.cocain1Price / 2);
-				int finalWeed = (int)weedMoney / dWeed;
-				int finalCrack = (int)crackMoney / dCrack;
-				int finalCocain = (int)cocainMoney / dCocaine;
+				int finalWeed = checked((int)((decimal)weedMoney * 28m / dWeed));
+				int finalCrack = checked((int)((decimal)crackMoney * 28m / dCrack));
+				int finalCocain = checked((int)((decimal)cocainMoney * 28m / dCocaine));
 				LSL.dealer1Weed += finalWeed;
 				LSL.dealer1Crack += finalCrack;
 				LSL.dealer1Cocain += finalCocain;
-				weedMoney -= (float)(finalWeed * dWeed);
-				crackMoney -= (float)(finalCrack * dCrack);
-				cocainMoney -= (float)(finalCocain * dCocaine);
+				weedMoney -= PriceForGrams(finalWeed, dWeed);
+				crackMoney -= PriceForGrams(finalCrack, dCrack);
+				cocainMoney -= PriceForGrams(finalCocain, dCocaine);
 				LSL.dealer1Money += (int)weedMoney + (int)crackMoney + (int)cocainMoney;
 				TextMsg("ZEE", "Livraison", "Cannabis : " + FormatMetric(finalWeed) + ", Crack : " + FormatMetric(finalCrack) + ", Cocaïne : " + FormatMetric(finalCocain) + ".");
 				LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
@@ -1281,17 +1281,17 @@ internal static class LsFunctions
 				float weedMoney2 = 0f;
 				float crackMoney2 = 0f;
 				float cocainMoney2 = 0f;
-				if (LSL.dealer1Weed < 40)
+				if (LSL.dealer1Weed < 1120)
 				{
 					weedMoney2 = (float)LSL.dealer1Money * 0.75f;
 					LSL.dealer1Money -= (int)weedMoney2;
 				}
-				if (LSL.dealer1Crack < 40)
+				if (LSL.dealer1Crack < 1120)
 				{
 					crackMoney2 = (float)LSL.dealer1Money * 0.6f;
 					LSL.dealer1Money -= (int)crackMoney2;
 				}
-				if (LSL.dealer1Cocain < 40)
+				if (LSL.dealer1Cocain < 1120)
 				{
 					cocainMoney2 = LSL.dealer1Money;
 					LSL.dealer1Money -= (int)cocainMoney2;
@@ -1299,15 +1299,15 @@ internal static class LsFunctions
 				int dWeed2 = LSL.weed1Price / 2 - Discount(LSL.weed1Price / 2);
 				int dCrack2 = LSL.crack1Price / 2 - Discount(LSL.crack1Price / 2);
 				int dCocaine2 = LSL.cocain1Price / 2 - Discount(LSL.cocain1Price / 2);
-				int finalWeed2 = (int)weedMoney2 / dWeed2;
-				int finalCrack2 = (int)crackMoney2 / dCrack2;
-				int finalCocain2 = (int)cocainMoney2 / dCocaine2;
+				int finalWeed2 = checked((int)((decimal)weedMoney2 * 28m / dWeed2));
+				int finalCrack2 = checked((int)((decimal)crackMoney2 * 28m / dCrack2));
+				int finalCocain2 = checked((int)((decimal)cocainMoney2 * 28m / dCocaine2));
 				LSL.dealer1Weed += finalWeed2;
 				LSL.dealer1Crack += finalCrack2;
 				LSL.dealer1Cocain += finalCocain2;
-				weedMoney2 -= (float)(finalWeed2 * dWeed2);
-				crackMoney2 -= (float)(finalCrack2 * dCrack2);
-				cocainMoney2 -= (float)(finalCocain2 * dCocaine2);
+				weedMoney2 -= PriceForGrams(finalWeed2, dWeed2);
+				crackMoney2 -= PriceForGrams(finalCrack2, dCrack2);
+				cocainMoney2 -= PriceForGrams(finalCocain2, dCocaine2);
 				LSL.dealer1Money += (int)weedMoney2 + (int)crackMoney2 + (int)cocainMoney2;
 				TextMsg("ZEE", "Livraison", "Cannabis : " + FormatMetric(finalWeed2) + ", Crack : " + FormatMetric(finalCrack2) + ", Cocaïne : " + FormatMetric(finalCocain2) + ".");
 				if (LSL.DEBUG)
@@ -1368,7 +1368,7 @@ internal static class LsFunctions
 			else
 			{
 				LSL.dealer1Weed -= LSL.dealer1Weed / 2;
-				LSL.dealer1Money += (LSL.weed1Price / 2 + Discount(LSL.weed1Price / 2)) * LSL.dealer1Weed;
+				LSL.dealer1Money += PriceForGrams(LSL.dealer1Weed, LSL.weed1Price / 2 + Discount(LSL.weed1Price / 2));
 			}
 			foreach (XElement element2 in LSL.LSLifeSave.Descendants())
 			{
@@ -1399,7 +1399,7 @@ internal static class LsFunctions
 			else
 			{
 				LSL.dealer1Crack -= LSL.dealer1Crack / 2;
-				LSL.dealer1Money += (LSL.crack1Price / 2 + Discount(LSL.crack1Price / 2)) * LSL.dealer1Crack;
+				LSL.dealer1Money += PriceForGrams(LSL.dealer1Crack, LSL.crack1Price / 2 + Discount(LSL.crack1Price / 2));
 			}
 			foreach (XElement element3 in LSL.LSLifeSave.Descendants())
 			{
@@ -1430,7 +1430,7 @@ internal static class LsFunctions
 			else
 			{
 				LSL.dealer1Cocain -= LSL.dealer1Cocain / 2;
-				LSL.dealer1Money += (LSL.cocain1Price / 2 + Discount(LSL.cocain1Price / 2)) * LSL.dealer1Cocain;
+				LSL.dealer1Money += PriceForGrams(LSL.dealer1Cocain, LSL.cocain1Price / 2 + Discount(LSL.cocain1Price / 2));
 			}
 			foreach (XElement element4 in LSL.LSLifeSave.Descendants())
 			{
@@ -1961,6 +1961,13 @@ internal static class LsFunctions
 	}
 
 	// Toutes les quantites de produits sont maintenant stockees en grammes.
+	// Les tarifs historiques correspondent a 28 g ; les commandes sont libres au gramme.
+	public static int PriceForGrams(int grams, int priceFor28Grams)
+	{
+		if (grams <= 0 || priceFor28Grams <= 0) return 0;
+		return checked((int)Math.Round((decimal)grams * priceFor28Grams / 28m, MidpointRounding.AwayFromZero));
+	}
+
 	public static string FormatMetric(int grams, string color = "~g~")
 	{
 		if (grams < 1000)
