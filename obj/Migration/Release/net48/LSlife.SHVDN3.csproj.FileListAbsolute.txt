@@ -1,0 +1,4 @@
+E:\LSLife\obj\Migration\Release\net48\LSlife.SHVDN3.csproj.AssemblyReference.cache
+E:\LSLife\obj\Migration\Release\net48\LSlife.SHVDN3.GeneratedMSBuildEditorConfig.editorconfig
+E:\LSLife\obj\Migration\Release\net48\LSlife.SHVDN3.csproj.CoreCompileInputs.cache
+E:\LSLife\obj\Migration\Release\net48\LSlife.SHVDN3.sourcelink.json

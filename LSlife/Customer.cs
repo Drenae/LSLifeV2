@@ -97,7 +97,7 @@ public class Customer
 		string blipName = "Livraison";
 		if (farAway)
 		{
-			blipName = blipName + " " + Drug.Name + " " + LsFunctions.GramsToOz(amount);
+			blipName = blipName + " " + Drug.Name + " " + LsFunctions.FormatMetric(amount);
 		}
 		LsFunctions.AddBlip((Entity)(object)ped, (BlipColor)3, blipName, _friend: true, _edge: true);
 		((Entity)ped).CurrentBlip.Scale = 0.5f;

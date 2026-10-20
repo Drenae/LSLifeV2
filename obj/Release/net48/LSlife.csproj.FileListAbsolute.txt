@@ -1,0 +1,8 @@
+E:\LSLife\bin\Release\net48\LSlife.dll
+E:\LSLife\bin\Release\net48\LSlife.pdb
+E:\LSLife\obj\Release\net48\LSlife.csproj.AssemblyReference.cache
+E:\LSLife\obj\Release\net48\LSlife.GeneratedMSBuildEditorConfig.editorconfig
+E:\LSLife\obj\Release\net48\LSlife.csproj.CoreCompileInputs.cache
+E:\LSLife\obj\Release\net48\LSlife.sourcelink.json
+E:\LSLife\obj\Release\net48\LSlife.dll
+E:\LSLife\obj\Release\net48\LSlife.pdb

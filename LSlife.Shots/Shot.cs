@@ -49,7 +49,7 @@ public class Shot
 				{
 					price -= (int)div * customer.Drug.PricePerG;
 				}
-				LsFunctions.TextMsg("Drop", customer.Ped, "SMS", "Tu peux me livrer ~g~" + LsFunctions.GramsToOz(customer.amount) + "~w~ de ~g~" + customer.Drug.Name + " ~w~pour $" + LsFunctions.IntToMoney(price) + " à ~y~" + World.GetStreetName(((Entity)customer.Ped).Position) + " ~w~dans ~y~" + World.GetZoneName(((Entity)customer.Ped).Position) + "~w~ ?");
+				LsFunctions.TextMsg("Drop", customer.Ped, "SMS", "Tu peux me livrer ~g~" + LsFunctions.FormatMetric(customer.amount) + "~w~ de ~g~" + customer.Drug.Name + " ~w~pour $" + LsFunctions.IntToMoney(price) + " à ~y~" + World.GetStreetName(((Entity)customer.Ped).Position) + " ~w~dans ~y~" + World.GetZoneName(((Entity)customer.Ped).Position) + "~w~ ?");
 				timeShotOffered = Game.GameTime;
 				shotOffered = true;
 			}
@@ -82,11 +82,11 @@ public class Shot
 					LsFunctions.TextMsg("Drop", customer.Ped, "SMS", "On se retrouve là-bas.");
 					if (LSL.PlayerInventory[customer.Drug.Name] >= customer.amount)
 					{
-						UI.ShowSubtitle("Livre " + LsFunctions.GramsToOz(customer.amount) + " de ~g~" + customer.Drug.Name + "~w~ à ~y~" + World.GetStreetName(((Entity)customer.Ped).Position) + ".", 10000);
+						UI.ShowSubtitle("Livre " + LsFunctions.FormatMetric(customer.amount) + " de ~g~" + customer.Drug.Name + "~w~ à ~y~" + World.GetStreetName(((Entity)customer.Ped).Position) + ".", 10000);
 					}
 					else
 					{
-						UI.ShowSubtitle("Tu n'as pas assez de ~g~" + customer.Drug.Name + "~w~. Récupère ~g~" + LsFunctions.GramsToOz(customer.amount) + "~w~ et livre-la à ~y~" + World.GetStreetName(((Entity)customer.Ped).Position) + ".", 10000);
+						UI.ShowSubtitle("Tu n'as pas assez de ~g~" + customer.Drug.Name + "~w~. Récupère ~g~" + LsFunctions.FormatMetric(customer.amount) + "~w~ et livre-la à ~y~" + World.GetStreetName(((Entity)customer.Ped).Position) + ".", 10000);
 					}
 				}
 				if (Game.GameTime > timeShotOffered + 25000)
@@ -128,8 +128,8 @@ public class Shot
 						{
 							Function.Call((Hash)7023634693725934496L);
 							LSL.customerSellTo = customer;
-							LSL.sell.Text = "Vendre " + LsFunctions.GramsToOz(customer.amount) + " de " + customer.Drug.Name + "?";
-							((UIText)LSL.customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.GramsToOz(LSL.PlayerInventory[customer.Drug.Name]) + " de " + customer.Drug.Name;
+							LSL.sell.Text = "Vendre " + LsFunctions.FormatMetric(customer.amount) + " de " + customer.Drug.Name + "?";
+							((UIText)LSL.customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.FormatMetric(LSL.PlayerInventory[customer.Drug.Name]) + " de " + customer.Drug.Name;
 							LSL.customerMainMenu.Visible = !LSL.customerMainMenu.Visible;
 							LSL.customerMainMenu.CurrentSelection = 0;
 						}
@@ -146,8 +146,8 @@ public class Shot
 						{
 							Function.Call((Hash)7023634693725934496L);
 							LSL.customerSellTo = customer;
-							LSL.sell.Text = "Vendre " + LsFunctions.GramsToOz(customer.amount) + " de " + customer.Drug.Name + "?";
-							((UIText)LSL.customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.GramsToOz(LSL.PlayerInventory[customer.Drug.Name]) + " de " + customer.Drug.Name;
+							LSL.sell.Text = "Vendre " + LsFunctions.FormatMetric(customer.amount) + " de " + customer.Drug.Name + "?";
+							((UIText)LSL.customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.FormatMetric(LSL.PlayerInventory[customer.Drug.Name]) + " de " + customer.Drug.Name;
 							LSL.customerMainMenu.Visible = !LSL.customerMainMenu.Visible;
 							LSL.customerMainMenu.CurrentSelection = 0;
 						}
