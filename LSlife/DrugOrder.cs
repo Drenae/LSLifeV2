@@ -168,7 +168,7 @@ public class DrugOrder
 					{
 						e2.Value = LSL.pStashVehicle.drugCarCrackGrams.ToString();
 					}
-					if (e2.Name == "cocainGrams")
+					if (e2.Name == "cocaineGrams")
 					{
 						e2.Value = LSL.pStashVehicle.drugCarCocainGrams.ToString();
 					}
