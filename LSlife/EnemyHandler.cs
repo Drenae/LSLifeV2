@@ -80,7 +80,7 @@ internal class EnemyHandler
 				}
 			}
 			int pedIndex = Rand.Next(0, 2);
-			Ped enemy = World.CreatePed(Model.op_Implicit(pedHashes[pedIndex]), SpawnLocations[index]);
+			Ped enemy = World.CreatePed(new Model(pedHashes[pedIndex]), SpawnLocations[index]);
 			while ((Entity)(object)enemy == (Entity)null)
 			{
 				Script.Wait(0);
