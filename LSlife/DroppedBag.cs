@@ -85,9 +85,9 @@ public class DroppedBag
 		LSL.PlayerInventory["Weed"] += weed;
 		LSL.PlayerInventory["Crack"] += crack;
 		LSL.PlayerInventory["Cocaine"] += cocaine;
-		LsFunctions.pWeedOunce += weedZ;
-		LsFunctions.pCrackOunce += crackZ;
-		LsFunctions.pCocaineOunce += cocaineZ;
+		LsFunctions.pWeedGrams += weedZ;
+		LsFunctions.pCrackGrams += crackZ;
+		LsFunctions.pCocaineGrams += cocaineZ;
 		Player player = Game.Player;
 		player.Money += money;
 		if (weapons != null)
