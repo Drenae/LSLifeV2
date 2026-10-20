@@ -23,15 +23,15 @@ public class StashVehicle
 
 	public int drugCarWeed;
 
-	public int drugCarWeedOz;
+	public int drugCarWeedGrams;
 
 	public int drugCarCrack;
 
-	public int drugCarCrackOz;
+	public int drugCarCrackGrams;
 
 	public int drugCarCocain;
 
-	public int drugCarCocainOz;
+	public int drugCarCocainGrams;
 
 	public int drugCarMoney;
 
@@ -65,27 +65,27 @@ public class StashVehicle
 				{
 					int.TryParse(e.Value, out drugCarWeed);
 				}
-				if (e.Name == "weedOz")
+				if (e.Name == "weedGrams")
 				{
-					int.TryParse(e.Value, out drugCarWeedOz);
+					int.TryParse(e.Value, out drugCarWeedGrams);
 					foundOz = true;
 				}
 				if (e.Name == "crack")
 				{
 					int.TryParse(e.Value, out drugCarCrack);
 				}
-				if (e.Name == "crackOz")
+				if (e.Name == "crackGrams")
 				{
-					int.TryParse(e.Value, out drugCarCrackOz);
+					int.TryParse(e.Value, out drugCarCrackGrams);
 					foundOz = true;
 				}
 				if (e.Name == "cocain")
 				{
 					int.TryParse(e.Value, out drugCarCocain);
 				}
-				if (e.Name == "cocainOz")
+				if (e.Name == "cocainGrams")
 				{
-					int.TryParse(e.Value, out drugCarCocainOz);
+					int.TryParse(e.Value, out drugCarCocainGrams);
 					foundOz = true;
 				}
 				if (e.Name == "money")
@@ -105,9 +105,9 @@ public class StashVehicle
 			}
 			if (!foundOz)
 			{
-				element.Add(new XElement("weedOz", 0));
-				element.Add(new XElement("crackOz", 0));
-				element.Add(new XElement("cocainOz", 0));
+				element.Add(new XElement("weedGrams", 0));
+				element.Add(new XElement("crackGrams", 0));
+				element.Add(new XElement("cocainGrams", 0));
 				LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
 			}
 		}
@@ -182,12 +182,12 @@ public class StashVehicle
 		LSL.PlayerInventory["Crack"] = 0;
 		drugCarCocain += LSL.PlayerInventory["Cocaine"];
 		LSL.PlayerInventory["Cocaine"] = 0;
-		drugCarWeedOz += LsFunctions.pWeedOunce;
-		LsFunctions.pWeedOunce = 0;
-		drugCarCrackOz += LsFunctions.pCrackOunce;
-		LsFunctions.pCrackOunce = 0;
-		drugCarCocainOz += LsFunctions.pCocaineOunce;
-		LsFunctions.pCocaineOunce = 0;
+		drugCarWeedGrams += LsFunctions.pWeedGrams;
+		LsFunctions.pWeedGrams = 0;
+		drugCarCrackGrams += LsFunctions.pCrackGrams;
+		LsFunctions.pCrackGrams = 0;
+		drugCarCocainGrams += LsFunctions.pCocaineGrams;
+		LsFunctions.pCocaineGrams = 0;
 		LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
 		foreach (XElement element in LSL.LSLifeSave.Descendants())
 		{
@@ -207,17 +207,17 @@ public class StashVehicle
 					{
 						e.Value = LSL.PlayerInventory["Cocaine"].ToString();
 					}
-					else if (e.Name == "weedOz")
+					else if (e.Name == "weedGrams")
 					{
-						e.Value = LsFunctions.pWeedOunce.ToString();
+						e.Value = LsFunctions.pWeedGrams.ToString();
 					}
-					else if (e.Name == "crackOz")
+					else if (e.Name == "crackGrams")
 					{
-						e.Value = LsFunctions.pCrackOunce.ToString();
+						e.Value = LsFunctions.pCrackGrams.ToString();
 					}
-					else if (e.Name == "cocaineOz")
+					else if (e.Name == "cocaineGrams")
 					{
-						e.Value = LsFunctions.pCocaineOunce.ToString();
+						e.Value = LsFunctions.pCocaineGrams.ToString();
 					}
 				}
 			}
@@ -241,17 +241,17 @@ public class StashVehicle
 					{
 						e2.Value = drugCarCocain.ToString();
 					}
-					else if (e2.Name == "weedOz")
+					else if (e2.Name == "weedGrams")
 					{
-						e2.Value = drugCarWeedOz.ToString();
+						e2.Value = drugCarWeedGrams.ToString();
 					}
-					else if (e2.Name == "crackOz")
+					else if (e2.Name == "crackGrams")
 					{
-						e2.Value = drugCarCrackOz.ToString();
+						e2.Value = drugCarCrackGrams.ToString();
 					}
-					else if (e2.Name == "cocaineOz")
+					else if (e2.Name == "cocaineGrams")
 					{
-						e2.Value = drugCarCocainOz.ToString();
+						e2.Value = drugCarCocainGrams.ToString();
 					}
 				}
 			}
@@ -1165,12 +1165,12 @@ public class StashVehicle
 		((UIMenuItem)LSL.takeCrackVeh).Text = "Crack " + LsFunctions.GramsToOz(drugCarCrack);
 		((UIMenuItem)LSL.putCocainVeh).Text = "Cocaïne " + LsFunctions.GramsToOz(LSL.PlayerInventory["Cocaine"]);
 		((UIMenuItem)LSL.takeCocainVeh).Text = "Cocaïne " + LsFunctions.GramsToOz(drugCarCocain);
-		LSL.takeWeedOzVeh.Maximum = drugCarWeedOz;
-		LSL.takeCrackOzVeh.Maximum = drugCarCrackOz;
-		LSL.takeCocainOzVeh.Maximum = drugCarCocainOz;
-		LSL.putWeedOzVeh.Maximum = LsFunctions.pWeedOunce;
-		LSL.putCrackOzVeh.Maximum = LsFunctions.pCrackOunce;
-		LSL.putCocainOzVeh.Maximum = LsFunctions.pCocaineOunce;
+		LSL.takeWeedOzVeh.Maximum = drugCarWeedGrams;
+		LSL.takeCrackOzVeh.Maximum = drugCarCrackGrams;
+		LSL.takeCocainOzVeh.Maximum = drugCarCocainGrams;
+		LSL.putWeedOzVeh.Maximum = LsFunctions.pWeedGrams;
+		LSL.putCrackOzVeh.Maximum = LsFunctions.pCrackGrams;
+		LSL.putCocainOzVeh.Maximum = LsFunctions.pCocaineGrams;
 		sDescription = "Cannabis non préparé. À déposer dans une planque avant la vente.";
 		((UIMenuItem)LSL.putWeedOzVeh).Description = sDescription;
 		((UIMenuItem)LSL.takeWeedOzVeh).Description = sDescription;
@@ -1180,12 +1180,12 @@ public class StashVehicle
 		sDescription = "Cocaïne non préparée. À déposer dans une planque avant la vente.";
 		((UIMenuItem)LSL.putCocainOzVeh).Description = sDescription;
 		((UIMenuItem)LSL.takeCocainOzVeh).Description = sDescription;
-		((UIMenuItem)LSL.putWeedOzVeh).Text = "Cannabis " + LsFunctions.FormatLegacyPacks(LsFunctions.pWeedOunce);
-		((UIMenuItem)LSL.takeWeedOzVeh).Text = "Cannabis " + LsFunctions.FormatLegacyPacks(drugCarWeedOz);
-		((UIMenuItem)LSL.putCrackOzVeh).Text = "Crack " + LsFunctions.FormatLegacyPacks(LsFunctions.pCrackOunce);
-		((UIMenuItem)LSL.takeCrackOzVeh).Text = "Crack " + LsFunctions.FormatLegacyPacks(drugCarCrackOz);
-		((UIMenuItem)LSL.putCocainOzVeh).Text = "Cocaïne " + LsFunctions.FormatLegacyPacks(LsFunctions.pCocaineOunce);
-		((UIMenuItem)LSL.takeCocainOzVeh).Text = "Cocaïne " + LsFunctions.FormatLegacyPacks(drugCarCocainOz);
+		((UIMenuItem)LSL.putWeedOzVeh).Text = "Cannabis " + LsFunctions.FormatMetric(LsFunctions.pWeedGrams);
+		((UIMenuItem)LSL.takeWeedOzVeh).Text = "Cannabis " + LsFunctions.FormatMetric(drugCarWeedGrams);
+		((UIMenuItem)LSL.putCrackOzVeh).Text = "Crack " + LsFunctions.FormatMetric(LsFunctions.pCrackGrams);
+		((UIMenuItem)LSL.takeCrackOzVeh).Text = "Crack " + LsFunctions.FormatMetric(drugCarCrackGrams);
+		((UIMenuItem)LSL.putCocainOzVeh).Text = "Cocaïne " + LsFunctions.FormatMetric(LsFunctions.pCocaineGrams);
+		((UIMenuItem)LSL.takeCocainOzVeh).Text = "Cocaïne " + LsFunctions.FormatMetric(drugCarCocainGrams);
 		((UIMenuItem)LSL.putMoneyVeh).Text = "Argent $" + LsFunctions.IntToMoney(LSL.player.Money);
 		((UIMenuItem)LSL.takeMoneyVeh).Text = "Argent $" + LsFunctions.IntToMoney(drugCarMoney);
 		LSL.takeMoneyStash.Maximum = drugCarMoney;
