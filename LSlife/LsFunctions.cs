@@ -1530,7 +1530,7 @@ internal static class LsFunctions
 		}
 		if ((Entity)(object)prop == (Entity)null)
 		{
-			prop = World.CreateProp(Model.op_Implicit(doorHash), pos, new Vector3(0f, 0f, 0f), false, false);
+			prop = World.CreateProp(new Model(doorHash), pos, new Vector3(0f, 0f, 0f), false, false);
 			if (LSL.DEBUG)
 			{
 				UI.Notify("Didnt find a door spawning one");
