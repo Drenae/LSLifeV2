@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using Control = GTA.Control;
 using System.Xml.Linq;
 using GTA;
 using GTA.Math;
@@ -3643,7 +3644,7 @@ public class LSL : Script
 		//IL_0086: Unknown result type (might be due to invalid IL or missing references)
 		//IL_00a2: Unknown result type (might be due to invalid IL or missing references)
 		//IL_00a7: Unknown result type (might be due to invalid IL or missing references)
-		Vehicle pigCar = World.CreateVehicle(Model.op_Implicit(Enums.GetPoliceVehType()), GenerateSpawnPos(playerPos.Around(200f), Nodetype.Road, sidewalk: false));
+		Vehicle pigCar = World.CreateVehicle(new Model(Enums.GetPoliceVehType()), GenerateSpawnPos(playerPos.Around(200f), Nodetype.Road, sidewalk: false));
 		if ((Entity)(object)pigCar != (Entity)null)
 		{
 			if (DEBUG)
@@ -3653,8 +3654,8 @@ public class LSL : Script
 				((Entity)pigCar).CurrentBlip.Name = "Police Car";
 			}
 			Function.Call((Hash)(-823518585696636035L), InputArgument.op_Implicit(((Entity)pigCar).Handle), InputArgument.op_Implicit(true));
-			pigs.Add(new Pig(pigCar.CreatePedOnSeat((VehicleSeat)(-1), Model.op_Implicit(Enums.GetPolicePedType())), _leader: true));
-			pigs.Add(new Pig(pigCar.CreatePedOnSeat((VehicleSeat)0, Model.op_Implicit(Enums.GetPolicePedType())), _leader: false));
+			pigs.Add(new Pig(pigCar.CreatePedOnSeat((VehicleSeat)(-1), new Model(Enums.GetPolicePedType())), _leader: true));
+			pigs.Add(new Pig(pigCar.CreatePedOnSeat((VehicleSeat)0, new Model(Enums.GetPolicePedType())), _leader: false));
 		}
 		if (pigs.Count <= 0)
 		{
@@ -3815,7 +3816,7 @@ public class LSL : Script
 		if (wepdealer)
 		{
 			Vector3 dealer1pos = World.GetNextPositionOnSidewalk(GenerateSpawnPos(playerPos.Around(60f), Nodetype.AnyRoad, sidewalk: true));
-			weaponDealer1 = World.CreatePed(Model.op_Implicit((PedHash)(-236444766)), GenerateSpawnPos(dealer1pos, Nodetype.AnyRoad, sidewalk: true));
+			weaponDealer1 = World.CreatePed(new Model((PedHash)(-236444766)), GenerateSpawnPos(dealer1pos, Nodetype.AnyRoad, sidewalk: true));
 			while ((Entity)(object)weaponDealer1 == (Entity)null)
 			{
 				Script.Wait(0);
