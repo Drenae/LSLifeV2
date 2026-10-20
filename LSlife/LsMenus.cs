@@ -1013,11 +1013,11 @@ internal static class LsMenus
 	{
 		if (sender == LSL.takeWeedVeh)
 		{
-			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.GramsToOz(LSL.takeWeedVeh.Value);
+			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.FormatMetric(LSL.takeWeedVeh.Value);
 		}
 		else if (sender == LSL.putWeedVeh)
 		{
-			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.GramsToOz(LSL.putWeedVeh.Value);
+			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatMetric(LSL.putWeedVeh.Value);
 		}
 		if (sender == LSL.takeWeedOzVeh)
 		{
@@ -1029,11 +1029,11 @@ internal static class LsMenus
 		}
 		else if (sender == LSL.takeCrackVeh)
 		{
-			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.GramsToOz(LSL.takeCrackVeh.Value);
+			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.FormatMetric(LSL.takeCrackVeh.Value);
 		}
 		else if (sender == LSL.putCrackVeh)
 		{
-			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.GramsToOz(LSL.putCrackVeh.Value);
+			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatMetric(LSL.putCrackVeh.Value);
 		}
 		if (sender == LSL.takeCrackOzVeh)
 		{
@@ -1045,11 +1045,11 @@ internal static class LsMenus
 		}
 		else if (sender == LSL.takeCocainVeh)
 		{
-			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.GramsToOz(LSL.takeCocainVeh.Value);
+			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.FormatMetric(LSL.takeCocainVeh.Value);
 		}
 		else if (sender == LSL.putCocainVeh)
 		{
-			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.GramsToOz(LSL.putCocainVeh.Value);
+			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatMetric(LSL.putCocainVeh.Value);
 		}
 		else if (sender == LSL.takeCocainOzVeh)
 		{
@@ -1069,27 +1069,27 @@ internal static class LsMenus
 		}
 		else if (sender == LSL.takeWeedStash)
 		{
-			((UIText)LSL.stashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.GramsToOz(LSL.takeWeedStash.Value);
+			((UIText)LSL.stashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.FormatMetric(LSL.takeWeedStash.Value);
 		}
 		else if (sender == LSL.putWeedStash)
 		{
-			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.GramsToOz(LSL.putWeedStash.Value);
+			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatMetric(LSL.putWeedStash.Value);
 		}
 		else if (sender == LSL.takeCrackStash)
 		{
-			((UIText)LSL.stashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.GramsToOz(LSL.takeCrackStash.Value);
+			((UIText)LSL.stashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.FormatMetric(LSL.takeCrackStash.Value);
 		}
 		else if (sender == LSL.putCrackStash)
 		{
-			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.GramsToOz(LSL.putCrackStash.Value);
+			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatMetric(LSL.putCrackStash.Value);
 		}
 		else if (sender == LSL.takeCocainStash)
 		{
-			((UIText)LSL.stashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.GramsToOz(LSL.takeCocainStash.Value);
+			((UIText)LSL.stashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.FormatMetric(LSL.takeCocainStash.Value);
 		}
 		else if (sender == LSL.putCocainStash)
 		{
-			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.GramsToOz(LSL.putCocainStash.Value);
+			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatMetric(LSL.putCocainStash.Value);
 		}
 		else if (sender == LSL.takeMoneyStash)
 		{
@@ -1751,7 +1751,7 @@ internal static class LsMenus
 			LSL.DealerHandler.dealers[i].Drugs["Weed"] += LSL.wWeed.Value;
 			LSL.PlayerInventory["Weed"] -= LSL.wWeed.Value;
 			LSL.wWeed.Value = 0;
-			((UIMenuItem)LSL.wWeed).Text = "Cannabis " + LsFunctions.GramsToOz(LSL.wWeed.Value);
+			((UIMenuItem)LSL.wWeed).Text = "Cannabis " + LsFunctions.FormatMetric(LSL.wWeed.Value);
 			change = true;
 		}
 		if (LSL.wCrack.Value > 0)
@@ -1759,7 +1759,7 @@ internal static class LsMenus
 			LSL.DealerHandler.dealers[i].Drugs["Crack"] += LSL.wCrack.Value;
 			LSL.PlayerInventory["Crack"] -= LSL.wCrack.Value;
 			LSL.wCrack.Value = 0;
-			((UIMenuItem)LSL.wCrack).Text = "Crack " + LsFunctions.GramsToOz(LSL.wCrack.Value);
+			((UIMenuItem)LSL.wCrack).Text = "Crack " + LsFunctions.FormatMetric(LSL.wCrack.Value);
 			change = true;
 		}
 		if (LSL.wCocaine.Value > 0)
@@ -1767,7 +1767,7 @@ internal static class LsMenus
 			LSL.DealerHandler.dealers[i].Drugs["Cocaine"] += LSL.wCocaine.Value;
 			LSL.PlayerInventory["Cocaine"] -= LSL.wCocaine.Value;
 			LSL.wCocaine.Value = 0;
-			((UIMenuItem)LSL.wCocaine).Text = "Cocaïne " + LsFunctions.GramsToOz(LSL.wCocaine.Value);
+			((UIMenuItem)LSL.wCocaine).Text = "Cocaïne " + LsFunctions.FormatMetric(LSL.wCocaine.Value);
 			change = true;
 		}
 		if (change)
@@ -1800,16 +1800,16 @@ internal static class LsMenus
 
 	public static void WCocaine_OnSliderChanged(UIMenuSliderItem sender, int newIndex)
 	{
-		((UIMenuItem)LSL.wCocaine).Text = "Cocaïne " + LsFunctions.GramsToOz(sender.Value);
+		((UIMenuItem)LSL.wCocaine).Text = "Cocaïne " + LsFunctions.FormatMetric(sender.Value);
 	}
 
 	public static void WCrack_OnSliderChanged(UIMenuSliderItem sender, int newIndex)
 	{
-		((UIMenuItem)LSL.wCrack).Text = "Crack " + LsFunctions.GramsToOz(sender.Value);
+		((UIMenuItem)LSL.wCrack).Text = "Crack " + LsFunctions.FormatMetric(sender.Value);
 	}
 
 	public static void WWeed_OnSliderChanged(UIMenuSliderItem sender, int newIndex)
 	{
-		((UIMenuItem)LSL.wWeed).Text = "Cannabis " + LsFunctions.GramsToOz(sender.Value);
+		((UIMenuItem)LSL.wWeed).Text = "Cannabis " + LsFunctions.FormatMetric(sender.Value);
 	}
 }
