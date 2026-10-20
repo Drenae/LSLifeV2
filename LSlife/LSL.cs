@@ -397,7 +397,7 @@ public class LSL : Script
 
 	public static UIMenuListItem vehTakeMultiplier;
 
-	public static readonly List<dynamic> multiplier = new List<object> { 1, 10, 28, 100, 280, 1000, 2800, 10000, 100000 };
+	public static readonly List<dynamic> multiplier = new List<object> { 1, 10, 28, 100, 280, 1000, 2800, 10000, 100000 }; // Valeurs historiques conservees pour les curseurs.
 
 	public static UIMenu customerMainMenu;
 
@@ -1193,11 +1193,11 @@ public class LSL : Script
 			WorkerMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_worker.png");
 		}
 		LsMenuPool.Add(WorkerMainMenu);
-		wWeed = new UIMenuSliderItem("Cannabis " + LsFunctions.GramsToOz(0));
+		wWeed = new UIMenuSliderItem("Cannabis " + LsFunctions.FormatMetric(0));
 		wWeed.Maximum = PlayerInventory["Weed"];
-		wCrack = new UIMenuSliderItem("Crack " + LsFunctions.GramsToOz(0));
+		wCrack = new UIMenuSliderItem("Crack " + LsFunctions.FormatMetric(0));
 		wCrack.Maximum = PlayerInventory["Crack"];
-		wCocaine = new UIMenuSliderItem("Cocaïne " + LsFunctions.GramsToOz(0));
+		wCocaine = new UIMenuSliderItem("Cocaïne " + LsFunctions.FormatMetric(0));
 		wCocaine.Maximum = PlayerInventory["Cocaine"];
 		wMultiplier = new UIMenuListItem("Multiplier", (List<object>)multiplier, 0);
 		wConfirm = new UIMenuItem("Confirmer");
@@ -1432,7 +1432,7 @@ public class LSL : Script
 		{
 			vehStashPutMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
 		}
-		putWeedVeh = new UIMenuSliderItem("Cannabis " + LsFunctions.GramsToOz(PlayerInventory["Weed"]));
+		putWeedVeh = new UIMenuSliderItem("Cannabis " + LsFunctions.FormatMetric(PlayerInventory["Weed"]));
 		vehStashPutMenu.AddItem((UIMenuItem)(object)putWeedVeh);
 		putWeedVeh.Maximum = PlayerInventory["Weed"];
 		putWeedVeh.Multiplier = 1;
@@ -1442,7 +1442,7 @@ public class LSL : Script
 		takeWeedVeh.Multiplier = 1;
 		putWeedVeh.OnSliderChanged += LsMenus.onSliderChange;
 		takeWeedVeh.OnSliderChanged += LsMenus.onSliderChange;
-		putCrackVeh = new UIMenuSliderItem("Crack " + LsFunctions.GramsToOz(PlayerInventory["Crack"]));
+		putCrackVeh = new UIMenuSliderItem("Crack " + LsFunctions.FormatMetric(PlayerInventory["Crack"]));
 		vehStashPutMenu.AddItem((UIMenuItem)(object)putCrackVeh);
 		putCrackVeh.Maximum = PlayerInventory["Crack"];
 		putCrackVeh.Multiplier = 1;
@@ -1452,7 +1452,7 @@ public class LSL : Script
 		takeCrackVeh.Multiplier = 1;
 		putCrackVeh.OnSliderChanged += LsMenus.onSliderChange;
 		takeCrackVeh.OnSliderChanged += LsMenus.onSliderChange;
-		putCocainVeh = new UIMenuSliderItem("Cocaïne " + LsFunctions.GramsToOz(PlayerInventory["Cocaine"]));
+		putCocainVeh = new UIMenuSliderItem("Cocaïne " + LsFunctions.FormatMetric(PlayerInventory["Cocaine"]));
 		vehStashPutMenu.AddItem((UIMenuItem)(object)putCocainVeh);
 		putCocainVeh.Maximum = PlayerInventory["Cocaine"];
 		putCocainVeh.Multiplier = 1;
@@ -2394,8 +2394,8 @@ public class LSL : Script
 							{
 								Function.Call((Hash)7023634693725934496L);
 								customerSellTo = nCustomer;
-								sell.Text = "Vendre " + LsFunctions.GramsToOz(customerSellTo.amount) + " de " + customerSellTo.Drug.Name + "?";
-								((UIText)customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.GramsToOz(PlayerInventory[customerSellTo.Drug.Name]) + " de " + customerSellTo.Drug.Name;
+								sell.Text = "Vendre " + LsFunctions.FormatMetric(customerSellTo.amount) + " de " + customerSellTo.Drug.Name + "?";
+								((UIText)customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.FormatMetric(PlayerInventory[customerSellTo.Drug.Name]) + " de " + customerSellTo.Drug.Name;
 								customerMainMenu.Visible = !customerMainMenu.Visible;
 								customerMainMenu.CurrentSelection = 0;
 							}
@@ -2412,8 +2412,8 @@ public class LSL : Script
 							{
 								Function.Call((Hash)7023634693725934496L);
 								customerSellTo = nCustomer;
-								sell.Text = "Vendre " + LsFunctions.GramsToOz(customerSellTo.amount) + " de " + customerSellTo.Drug.Name + "?";
-								((UIText)customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.GramsToOz(PlayerInventory[customerSellTo.Drug.Name]) + " de " + customerSellTo.Drug.Name;
+								sell.Text = "Vendre " + LsFunctions.FormatMetric(customerSellTo.amount) + " de " + customerSellTo.Drug.Name + "?";
+								((UIText)customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.FormatMetric(PlayerInventory[customerSellTo.Drug.Name]) + " de " + customerSellTo.Drug.Name;
 								customerMainMenu.Visible = !customerMainMenu.Visible;
 								customerMainMenu.CurrentSelection = 0;
 							}
