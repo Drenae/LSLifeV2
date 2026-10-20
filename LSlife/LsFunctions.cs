@@ -19,11 +19,11 @@ internal static class LsFunctions
 {
 	public const int pMaxDrugs = 7168;
 
-	public static int pWeedOunce = 0;
+	public static int pWeedGrams = 0;
 
-	public static int pCrackOunce = 0;
+	public static int pCrackGrams = 0;
 
-	public static int pCocaineOunce = 0;
+	public static int pCocaineGrams = 0;
 
 	public static List<PedHash> cHashes = new List<PedHash>();
 
@@ -287,16 +287,9 @@ internal static class LsFunctions
 
 	// LSL V2 FR : format compact pour les descriptions NativeUI étroites.
 	// La quantité reste stockée en paquets historiques de 28 g.
-	public static string FormatOrderPacks(int packs)
+	public static string FormatOrderPacks(int grams)
 	{
-		int grams = LegacyPacksToGrams(packs);
-		if (grams < 1000)
-		{
-			return "~g~" + grams + "g";
-		}
-		int kg = grams / 1000;
-		int remainder = grams % 1000;
-		return remainder == 0 ? "~g~" + kg + "kg" : "~g~" + kg + "kg " + remainder + "g";
+		return FormatMetric(grams);
 	}
 
 	public static string OrderMenuDesc()
@@ -693,7 +686,7 @@ internal static class LsFunctions
 		{
 			totalDrugs += _drugs[_drug.Key];
 		}
-		return totalDrugs + (LegacyPacksToGrams(pWeedOunce) + LegacyPacksToGrams(pCrackOunce) + LegacyPacksToGrams(pCocaineOunce));
+		return totalDrugs + (pWeedGrams) + pCrackGrams) + pCocaineGrams));
 	}
 
 	public static void PedBag(Ped ped, bool give)
@@ -1084,27 +1077,27 @@ internal static class LsFunctions
 						saveChanged = true;
 					}
 				}
-				else if (e.Name == "weedOz")
+				else if (e.Name == "weedGrams")
 				{
-					if (e.Value != pWeedOunce.ToString())
+					if (e.Value != pWeedGrams.ToString())
 					{
-						e.Value = pWeedOunce.ToString();
+						e.Value = pWeedGrams.ToString();
 						saveChanged = true;
 					}
 				}
-				else if (e.Name == "crackOz")
+				else if (e.Name == "crackGrams")
 				{
-					if (e.Value != pCrackOunce.ToString())
+					if (e.Value != pCrackGrams.ToString())
 					{
-						e.Value = pCrackOunce.ToString();
+						e.Value = pCrackGrams.ToString();
 						saveChanged = true;
 					}
 				}
-				else if (e.Name == "cocaineOz")
+				else if (e.Name == "cocaineGrams")
 				{
-					if (e.Value != pCocaineOunce.ToString())
+					if (e.Value != pCocaineGrams.ToString())
 					{
-						e.Value = pCocaineOunce.ToString();
+						e.Value = pCocaineGrams.ToString();
 						saveChanged = true;
 					}
 				}
@@ -1261,7 +1254,7 @@ internal static class LsFunctions
 				crackMoney -= (float)(finalCrack * dCrack);
 				cocainMoney -= (float)(finalCocain * dCocaine);
 				LSL.dealer1Money += (int)weedMoney + (int)crackMoney + (int)cocainMoney;
-				TextMsg("ZEE", "Livraison", "Cannabis : " + FormatLegacyPacks(finalWeed) + ", Crack : " + FormatLegacyPacks(finalCrack) + ", Cocaïne : " + FormatLegacyPacks(finalCocain) + ".");
+				TextMsg("ZEE", "Livraison", "Cannabis : " + FormatMetric(finalWeed) + ", Crack : " + FormatMetric(finalCrack) + ", Cocaïne : " + FormatMetric(finalCocain) + ".");
 				LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
 				UpdateSave();
 			}
@@ -1316,7 +1309,7 @@ internal static class LsFunctions
 				crackMoney2 -= (float)(finalCrack2 * dCrack2);
 				cocainMoney2 -= (float)(finalCocain2 * dCocaine2);
 				LSL.dealer1Money += (int)weedMoney2 + (int)crackMoney2 + (int)cocainMoney2;
-				TextMsg("ZEE", "Livraison", "Cannabis : " + FormatLegacyPacks(finalWeed2) + ", Crack : " + FormatLegacyPacks(finalCrack2) + ", Cocaïne : " + FormatLegacyPacks(finalCocain2) + ".");
+				TextMsg("ZEE", "Livraison", "Cannabis : " + FormatMetric(finalWeed2) + ", Crack : " + FormatMetric(finalCrack2) + ", Cocaïne : " + FormatMetric(finalCocain2) + ".");
 				if (LSL.DEBUG)
 				{
 					UI.Notify("Cannabis : " + finalWeed2 + " Crack : " + finalCrack2 + " Cocaïne : " + finalCocain2);
@@ -1967,16 +1960,7 @@ internal static class LsFunctions
 		return Model;
 	}
 
-	// Conversion centralisee : les anciennes quantites sont des paquets de 28 grammes.
-	// Ne pas renommer les champs *Oz des sauvegardes XML avant une migration versionnee.
-	public const int GramsPerLegacyPack = 28;
-
-	public static int LegacyPacksToGrams(int packs)
-	{
-		return checked(packs * GramsPerLegacyPack);
-	}
-
-	// LSL V2 FR : formatage métrique, sans modifier les stocks ni les clés XML.
+	// Toutes les quantites de produits sont maintenant stockees en grammes.
 	public static string FormatMetric(int grams, string color = "~g~")
 	{
 		if (grams < 1000)
@@ -1989,11 +1973,6 @@ internal static class LsFunctions
 	}
 
 	// LSL V2 FR : chaque paquet de l'ancienne sauvegarde représente 28 g.
-	public static string FormatLegacyPacks(int packs, string color = "~r~")
-	{
-		return FormatMetric(LegacyPacksToGrams(packs), color);
-	}
-
 	public static string GramsToOz(int _grams)
 	{
 		// LSL V2 FR : garder l'API existante pour ne pas casser les appels.
@@ -2002,17 +1981,17 @@ internal static class LsFunctions
 
 	public static void AddWeedOz(int _amount)
 	{
-		pWeedOunce += _amount;
+		pWeedGrams += _amount;
 	}
 
 	public static void AddCrackOz(int _amount)
 	{
-		pCrackOunce += _amount;
+		pCrackGrams += _amount;
 	}
 
 	public static void AddCocaineOz(int _amount)
 	{
-		pCocaineOunce += _amount;
+		pCocaineGrams += _amount;
 	}
 
 	public static void DbugString(string _string)
