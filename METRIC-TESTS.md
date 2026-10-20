@@ -6,7 +6,7 @@
 
 - Stocks de produits non préparés en grammes : `pWeedGrams`, `pCrackGrams`, `pCocaineGrams`.
 - Stocks du véhicule en grammes : `drugCarWeedGrams`, `drugCarCrackGrams`, `drugCarCocainGrams`.
-- Nouvelles clés XML : `weedGrams`, `crackGrams`, `cocaineGrams` (inventaire) ; `cocainGrams` pour le véhicule.
+- Nouvelles clés XML : `weedGrams`, `crackGrams`, `cocaineGrams` (inventaire) ; `cocaineGrams` également pour le véhicule.
 - Commandes du fournisseur : curseurs en grammes, sans lots de 28 g ; multiplicateurs 1, 5, 10, 25, 50, 100, 250, 500, 1000.
 - Prix : calcul proportionnel au gramme à partir des tarifs historiques (prix affiché pour 100 g).
 - Livraison, véhicule, planque et inventaire : quantités en grammes, avec affichage g/kg.
