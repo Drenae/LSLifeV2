@@ -2779,10 +2779,10 @@ public class LSL : Script
 				}
 				if ((Entity)(object)dKiller2 != (Entity)null && dKiller2.CurrentPedGroup == player.Character.CurrentPedGroup)
 				{
-					int drugCap = 28 * ((int)areas[areaIndex].GangPresance + 1);
-					if (drugCap < 28)
+					int drugCap = LsFunctions.GramsPerLegacyPack * ((int)areas[areaIndex].GangPresance + 1);
+					if (drugCap < LsFunctions.GramsPerLegacyPack)
 					{
-						drugCap = 28;
+						drugCap = LsFunctions.GramsPerLegacyPack;
 					}
 					int moneyCap = 1000 * ((int)areas[areaIndex].GangPresance + 1);
 					if (moneyCap < 1000)
