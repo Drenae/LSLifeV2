@@ -1,43 +1,35 @@
-# LS Life V2 — Validation de la conversion métrique
+# LS Life V2 — Conversion métrique native (réinitialisation requise)
 
-Cette mise à jour **ne modifie pas le format des sauvegardes**. Les clés historiques `weedOz`, `crackOz`, `cocaineOz` et les valeurs des curseurs de paquets restent inchangées : **1 paquet = 28 g**. Les quantités déjà exprimées en grammes restent des grammes. NativeUI 1.9.1 n'est pas modifiée.
+**IMPORTANT :** Cette branche modifie les unités **stockées**, pas seulement l'affichage. Les anciens fichiers XML utilisant `weedOz`, `crackOz`, `cocaineOz` ne doivent pas être réutilisés comme sauvegardes de progression. Fermer GTA V, sauvegarder puis réinitialiser les fichiers de progression avant de lancer le mod.
 
-## Avant de tester
+## Modifications
 
-1. Fermer GTA V.
-2. Sauvegarder le dossier `scripts/LSLife` (en particulier les fichiers XML).
-3. Garder la DLL NativeUI 1.9.1 actuellement fonctionnelle.
-4. Exécuter `git pull origin main` puis `.\Verify-Build.ps1` dans `E:\LSLife`.
-5. Installer la DLL LS Life compilée **uniquement si la compilation réussit**.
+- Stocks de produits non préparés en grammes : `pWeedGrams`, `pCrackGrams`, `pCocaineGrams`.
+- Stocks du véhicule en grammes : `drugCarWeedGrams`, `drugCarCrackGrams`, `drugCarCocainGrams`.
+- Nouvelles clés XML : `weedGrams`, `crackGrams`, `cocaineGrams` (inventaire) ; `cocainGrams` pour le véhicule.
+- Commandes du fournisseur : curseurs en grammes, sans lots de 28 g ; multiplicateurs 1, 5, 10, 25, 50, 100, 250, 500, 1000.
+- Prix : calcul proportionnel au gramme à partir des tarifs historiques (prix affiché pour 100 g).
+- Livraison, véhicule, planque et inventaire : quantités en grammes, avec affichage g/kg.
+- Réapprovisionnement du fournisseur : volumes adaptés aux grammes.
+- NativeUI 1.9.1 inchangée.
 
-## Tests en jeu — à effectuer dans cet ordre
+## Tests en jeu (à effectuer après compilation)
 
-| # | Zone | Action | Résultat attendu |
-|---|---|---|---|
-| 1 | Démarrage | Charger une sauvegarde existante | Aucune erreur ; stocks inchangés |
-| 2 | Inventaire | Vérifier cannabis, crack, cocaïne | Quantités en g ou kg ; pas d'oz visible |
-| 3 | Commande Rafael | Choisir 1 paquet de chaque produit | Chaque paquet correspond à 28 g ; prix inchangé |
-| 4 | Commande Rafael | Choisir 10 paquets | Affichage 280 g ; total financier inchangé |
-| 5 | Commande Rafael | Choisir 36 paquets | Affichage 1 kg 8 g |
-| 6 | Livraison | Réceptionner la commande | Stocks augmentés des bonnes quantités |
-| 7 | Véhicule | Déposer puis reprendre des produits non préparés | Même quantité avant/après ; affichage g/kg |
-| 8 | Véhicule | Déposer puis reprendre des grammes préparés | Même quantité avant/après ; affichage g/kg |
-| 9 | Planque | Déposer des produits non préparés | +28 g par paquet dans la planque |
-| 10 | Planque | Déposer puis reprendre des grammes | Conservation exacte des quantités |
-| 11 | Vente | Vendre aux clients | Quantité vendue et reste affichés en g/kg |
-| 12 | Redémarrage | Sauvegarder, quitter, relancer | Stocks et sauvegardes conservés |
-| 13 | Interface | Parcourir tous les menus | Aucun libellé d'once visible ; aucun plantage |
-| 14 | Limites | Tester stocks nuls, quantité proche de 1 kg | 0 g, 999 g, 1 kg, 1 kg 1 g correctement affichés |
+| Test | Action | Résultat attendu |
+|---|---|---|
+| Démarrage | Nouvelle sauvegarde, ouvrir inventaire | Aucun crash, 0 g |
+| Commande 1 g | Acheter 1 g de cannabis | Facturation et livraison de 1 g |
+| Commande 25 g | Acheter 25 g de crack | Stock augmenté de 25 g |
+| Commande 100 g | Acheter 100 g de cocaïne | Prix proportionnel et livraison de 100 g |
+| Commande 1 kg | Acheter 1000 g | Affichage 1 kg |
+| Commande mixte | Commander 1 g + 25 g + 100 g | Facture = somme des lignes |
+| Stock fournisseur | Commander puis annuler | Stock restitué intégralement |
+| Véhicule | Déposer/reprendre 37 g non préparés | Exactement 37 g transférés |
+| Planque | Déposer 53 g non préparés | Exactement 53 g ajoutés |
+| Vente | Vendre puis contrôler l'inventaire | Décompte en grammes |
+| Sauvegarde | Sauvegarder, quitter, relancer | Stocks identiques |
+| XML | Inspecter les clés de stock | Clés *Grams et valeurs en grammes |
+| Réapprovisionnement | Attendre le réassort du fournisseur | Stock positif et prix cohérents |
+| Affichage | Parcourir menus | Pas d'oz ni de lot 28 g visible |
 
-## Périmètre technique
-
-- `LsFunctions.FormatMetric` est la fonction commune pour les quantités déjà en grammes.
-- `LsFunctions.LegacyPacksToGrams` centralise la conversion des anciens paquets.
-- `LsFunctions.FormatLegacyPacks` affiche ces paquets en g/kg.
-- L'ancienne méthode `GramsToOz` reste disponible comme alias de compatibilité.
-- Les clés XML et les champs internes contenant `Oz` sont conservés volontairement pour éviter une migration de sauvegarde risquée.
-- Aucun changement de NativeUI ou LemonUI n'est inclus.
-
-## Remontée de bugs
-
-Pour chaque anomalie, relever le menu, la quantité avant/après, la valeur attendue et une capture si l'affichage est incorrect.
+**Compilation et validation en jeu non réalisées par l'assistant.** Ne pas écraser les sauvegardes ni la DLL fonctionnelle sans copie de sécurité.
