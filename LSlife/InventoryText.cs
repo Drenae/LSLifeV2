@@ -200,11 +200,11 @@ internal static class InventoryText
 			Shadow = true,
 			Outline = true
 		};
-		((UIText)UIWeed).Caption = LsFunctions.FormatLegacyPacks(LsFunctions.pWeedOunce);
+		((UIText)UIWeed).Caption = LsFunctions.FormatMetric(LsFunctions.pWeedGrams);
 		((UIText)UIweed).Caption = LsFunctions.FormatMetric(LSL.PlayerInventory["Weed"]) ?? "";
-		((UIText)UICrack).Caption = LsFunctions.FormatLegacyPacks(LsFunctions.pCrackOunce);
+		((UIText)UICrack).Caption = LsFunctions.FormatMetric(LsFunctions.pCrackGrams);
 		((UIText)UIcrack).Caption = LsFunctions.FormatMetric(LSL.PlayerInventory["Crack"]) ?? "";
-		((UIText)UICocaine).Caption = LsFunctions.FormatLegacyPacks(LsFunctions.pCocaineOunce);
+		((UIText)UICocaine).Caption = LsFunctions.FormatMetric(LsFunctions.pCocaineGrams);
 		((UIText)val).Caption = LsFunctions.FormatMetric(LSL.PlayerInventory["Cocaine"]) ?? "";
 		((UIText)UIWeedtxt).Draw();
 		((UIText)UIWeed).Draw();
