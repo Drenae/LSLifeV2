@@ -367,7 +367,7 @@ internal static class LsMenus
 			UIMenuSliderItem bushWeed = LSL.bushWeed;
 			bushWeed.Maximum -= LSL.bushWeed.Value;
 			LSL.dealer1Weed = LSL.bushWeed.Maximum;
-			LSL.WeedBuy.Text = "Commander ~g~" + LsFunctions.FormatLegacyPacks(LSL.bushWeed.Value, "~g~") + " ~s~pour $" + LsFunctions.IntToMoney(total);
+			LSL.WeedBuy.Text = "Commander ~g~" + LsFunctions.FormatMetric(LSL.bushWeed.Value, "~g~") + " ~s~pour $" + LsFunctions.IntToMoney(total);
 			LSL.PlaceOrder.Text = "Passer commande : $" + LsFunctions.IntToMoney(LSL.NewOrder.Bill);
 			LsFunctions.DbugString("Commande de cannabis modifiée");
 			LsFunctions.UpdateOrderMenuDesc();
@@ -383,7 +383,7 @@ internal static class LsMenus
 			UIMenuSliderItem crack = LSL.crack;
 			crack.Maximum -= LSL.crack.Value;
 			LSL.dealer1Crack = LSL.crack.Maximum;
-			LSL.CrackBuy.Text = "Commander ~g~" + LsFunctions.FormatLegacyPacks(LSL.crack.Value, "~g~") + " ~w~pour $~g~" + LsFunctions.IntToMoney(total);
+			LSL.CrackBuy.Text = "Commander ~g~" + LsFunctions.FormatMetric(LSL.crack.Value, "~g~") + " ~w~pour $~g~" + LsFunctions.IntToMoney(total);
 			LSL.PlaceOrder.Text = "Passer commande : $" + LsFunctions.IntToMoney(LSL.NewOrder.Bill);
 			LsFunctions.DbugString("Commande de crack modifiée");
 			LsFunctions.UpdateOrderMenuDesc();
@@ -399,7 +399,7 @@ internal static class LsMenus
 			UIMenuSliderItem cocaine = LSL.cocaine;
 			cocaine.Maximum -= LSL.cocaine.Value;
 			LSL.dealer1Cocain = LSL.cocaine.Maximum;
-			LSL.CocainBuy.Text = "Commander ~g~" + LsFunctions.FormatLegacyPacks(LSL.cocaine.Value, "~g~") + " ~w~pour $~g~" + LsFunctions.IntToMoney(total);
+			LSL.CocainBuy.Text = "Commander ~g~" + LsFunctions.FormatMetric(LSL.cocaine.Value, "~g~") + " ~w~pour $~g~" + LsFunctions.IntToMoney(total);
 			LSL.PlaceOrder.Text = "Passer commande : $" + LsFunctions.IntToMoney(LSL.NewOrder.Bill);
 			LsFunctions.DbugString("Commande de cocaïne modifiée");
 			LsFunctions.UpdateOrderMenuDesc();
@@ -459,11 +459,11 @@ internal static class LsMenus
 		}
 		if ((object)item == LSL.putWeedOzVeh)
 		{
-			LSL.pStashVehicle.drugCarWeedOz += LSL.putWeedOzVeh.Value;
-			LsFunctions.pWeedOunce -= LSL.putWeedOzVeh.Value;
+			LSL.pStashVehicle.drugCarWeedGrams += LSL.putWeedOzVeh.Value;
+			LsFunctions.pWeedGrams -= LSL.putWeedOzVeh.Value;
 			UIMenuSliderItem putWeedOzVeh = LSL.putWeedOzVeh;
 			putWeedOzVeh.Maximum -= LSL.putWeedOzVeh.Value;
-			LSL.takeWeedOzVeh.Maximum = LSL.pStashVehicle.drugCarWeedOz;
+			LSL.takeWeedOzVeh.Maximum = LSL.pStashVehicle.drugCarWeedGrams;
 			LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
 			foreach (XElement element2 in LSL.LSLifeSave.Descendants())
 			{
@@ -471,9 +471,9 @@ internal static class LsMenus
 				{
 					foreach (XElement e3 in element2.Elements())
 					{
-						if (e3.Name == "weedOz")
+						if (e3.Name == "weedGrams")
 						{
-							e3.Value = LsFunctions.pWeedOunce.ToString();
+							e3.Value = LsFunctions.pWeedGrams.ToString();
 							break;
 						}
 					}
@@ -484,9 +484,9 @@ internal static class LsMenus
 				}
 				foreach (XElement e4 in element2.Elements())
 				{
-					if (e4.Name == "weedOz")
+					if (e4.Name == "weedGrams")
 					{
-						e4.Value = LSL.pStashVehicle.drugCarWeedOz.ToString();
+						e4.Value = LSL.pStashVehicle.drugCarWeedGrams.ToString();
 						break;
 					}
 				}
@@ -531,11 +531,11 @@ internal static class LsMenus
 		}
 		if ((object)item == LSL.putCrackOzVeh)
 		{
-			LSL.pStashVehicle.drugCarCrackOz += LSL.putCrackOzVeh.Value;
-			LsFunctions.pCrackOunce -= LSL.putCrackOzVeh.Value;
+			LSL.pStashVehicle.drugCarCrackGrams += LSL.putCrackOzVeh.Value;
+			LsFunctions.pCrackGrams -= LSL.putCrackOzVeh.Value;
 			UIMenuSliderItem putCrackOzVeh = LSL.putCrackOzVeh;
 			putCrackOzVeh.Maximum -= LSL.putCrackOzVeh.Value;
-			LSL.takeCrackOzVeh.Maximum = LSL.pStashVehicle.drugCarCrackOz;
+			LSL.takeCrackOzVeh.Maximum = LSL.pStashVehicle.drugCarCrackGrams;
 			LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
 			foreach (XElement element4 in LSL.LSLifeSave.Descendants())
 			{
@@ -543,9 +543,9 @@ internal static class LsMenus
 				{
 					foreach (XElement e7 in element4.Elements())
 					{
-						if (e7.Name == "crackOz")
+						if (e7.Name == "crackGrams")
 						{
-							e7.Value = LsFunctions.pCrackOunce.ToString();
+							e7.Value = LsFunctions.pCrackGrams.ToString();
 							break;
 						}
 					}
@@ -556,9 +556,9 @@ internal static class LsMenus
 				}
 				foreach (XElement e8 in element4.Elements())
 				{
-					if (e8.Name == "crackOz")
+					if (e8.Name == "crackGrams")
 					{
-						e8.Value = LSL.pStashVehicle.drugCarCrackOz.ToString();
+						e8.Value = LSL.pStashVehicle.drugCarCrackGrams.ToString();
 						break;
 					}
 				}
@@ -603,11 +603,11 @@ internal static class LsMenus
 		}
 		if ((object)item == LSL.putCocainOzVeh)
 		{
-			LSL.pStashVehicle.drugCarCocainOz += LSL.putCocainOzVeh.Value;
-			LsFunctions.pCocaineOunce -= LSL.putCocainOzVeh.Value;
+			LSL.pStashVehicle.drugCarCocainGrams += LSL.putCocainOzVeh.Value;
+			LsFunctions.pCocaineGrams -= LSL.putCocainOzVeh.Value;
 			UIMenuSliderItem putCocainOzVeh = LSL.putCocainOzVeh;
 			putCocainOzVeh.Maximum -= LSL.putCocainOzVeh.Value;
-			LSL.takeCocainOzVeh.Maximum = LSL.pStashVehicle.drugCarCocainOz;
+			LSL.takeCocainOzVeh.Maximum = LSL.pStashVehicle.drugCarCocainGrams;
 			LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
 			foreach (XElement element6 in LSL.LSLifeSave.Descendants())
 			{
@@ -615,9 +615,9 @@ internal static class LsMenus
 				{
 					foreach (XElement e11 in element6.Elements())
 					{
-						if (e11.Name == "cocaineOz")
+						if (e11.Name == "cocaineGrams")
 						{
-							e11.Value = LsFunctions.pCocaineOunce.ToString();
+							e11.Value = LsFunctions.pCocaineGrams.ToString();
 							break;
 						}
 					}
@@ -628,9 +628,9 @@ internal static class LsMenus
 				}
 				foreach (XElement e12 in element6.Elements())
 				{
-					if (e12.Name == "cocainOz")
+					if (e12.Name == "cocainGrams")
 					{
-						e12.Value = LSL.pStashVehicle.drugCarCocainOz.ToString();
+						e12.Value = LSL.pStashVehicle.drugCarCocainGrams.ToString();
 						break;
 					}
 				}
@@ -749,11 +749,11 @@ internal static class LsMenus
 		}
 		if ((object)item == LSL.takeWeedOzVeh)
 		{
-			LsFunctions.pWeedOunce += LSL.takeWeedOzVeh.Value;
-			LSL.pStashVehicle.drugCarWeedOz -= LSL.takeWeedOzVeh.Value;
+			LsFunctions.pWeedGrams += LSL.takeWeedOzVeh.Value;
+			LSL.pStashVehicle.drugCarWeedGrams -= LSL.takeWeedOzVeh.Value;
 			UIMenuSliderItem takeWeedOzVeh = LSL.takeWeedOzVeh;
 			takeWeedOzVeh.Maximum -= LSL.takeWeedOzVeh.Value;
-			LSL.putWeedOzVeh.Maximum = LsFunctions.pWeedOunce;
+			LSL.putWeedOzVeh.Maximum = LsFunctions.pWeedGrams;
 			LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
 			foreach (XElement element2 in LSL.LSLifeSave.Descendants())
 			{
@@ -761,9 +761,9 @@ internal static class LsMenus
 				{
 					foreach (XElement e3 in element2.Elements())
 					{
-						if (e3.Name == "weedOz")
+						if (e3.Name == "weedGrams")
 						{
-							e3.Value = LsFunctions.pWeedOunce.ToString();
+							e3.Value = LsFunctions.pWeedGrams.ToString();
 							break;
 						}
 					}
@@ -774,9 +774,9 @@ internal static class LsMenus
 				}
 				foreach (XElement e4 in element2.Elements())
 				{
-					if (e4.Name == "weedOz")
+					if (e4.Name == "weedGrams")
 					{
-						e4.Value = LSL.pStashVehicle.drugCarWeedOz.ToString();
+						e4.Value = LSL.pStashVehicle.drugCarWeedGrams.ToString();
 						break;
 					}
 				}
@@ -821,11 +821,11 @@ internal static class LsMenus
 		}
 		if ((object)item == LSL.takeCrackOzVeh)
 		{
-			LsFunctions.pCrackOunce += LSL.takeCrackOzVeh.Value;
-			LSL.pStashVehicle.drugCarCrackOz -= LSL.takeCrackOzVeh.Value;
+			LsFunctions.pCrackGrams += LSL.takeCrackOzVeh.Value;
+			LSL.pStashVehicle.drugCarCrackGrams -= LSL.takeCrackOzVeh.Value;
 			UIMenuSliderItem takeCrackOzVeh = LSL.takeCrackOzVeh;
 			takeCrackOzVeh.Maximum -= LSL.takeCrackOzVeh.Value;
-			LSL.putCrackOzVeh.Maximum = LsFunctions.pCrackOunce;
+			LSL.putCrackOzVeh.Maximum = LsFunctions.pCrackGrams;
 			LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
 			foreach (XElement element4 in LSL.LSLifeSave.Descendants())
 			{
@@ -833,9 +833,9 @@ internal static class LsMenus
 				{
 					foreach (XElement e7 in element4.Elements())
 					{
-						if (e7.Name == "crackOz")
+						if (e7.Name == "crackGrams")
 						{
-							e7.Value = LsFunctions.pCrackOunce.ToString();
+							e7.Value = LsFunctions.pCrackGrams.ToString();
 							break;
 						}
 					}
@@ -846,9 +846,9 @@ internal static class LsMenus
 				}
 				foreach (XElement e8 in element4.Elements())
 				{
-					if (e8.Name == "crackOz")
+					if (e8.Name == "crackGrams")
 					{
-						e8.Value = LSL.pStashVehicle.drugCarCrackOz.ToString();
+						e8.Value = LSL.pStashVehicle.drugCarCrackGrams.ToString();
 						break;
 					}
 				}
@@ -893,8 +893,8 @@ internal static class LsMenus
 		}
 		if ((object)item == LSL.takeCocainOzVeh)
 		{
-			LsFunctions.pCocaineOunce += LSL.takeCocainOzVeh.Value;
-			LSL.pStashVehicle.drugCarCocainOz -= LSL.takeCocainOzVeh.Value;
+			LsFunctions.pCocaineGrams += LSL.takeCocainOzVeh.Value;
+			LSL.pStashVehicle.drugCarCocainGrams -= LSL.takeCocainOzVeh.Value;
 			UIMenuSliderItem takeCocainOzVeh = LSL.takeCocainOzVeh;
 			takeCocainOzVeh.Maximum -= LSL.takeCocainOzVeh.Value;
 			LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
@@ -904,9 +904,9 @@ internal static class LsMenus
 				{
 					foreach (XElement e11 in element6.Elements())
 					{
-						if (e11.Name == "cocainOz")
+						if (e11.Name == "cocainGrams")
 						{
-							e11.Value = LsFunctions.pCocaineOunce.ToString();
+							e11.Value = LsFunctions.pCocaineGrams.ToString();
 							break;
 						}
 					}
@@ -917,9 +917,9 @@ internal static class LsMenus
 				}
 				foreach (XElement e12 in element6.Elements())
 				{
-					if (e12.Name == "cocainOz")
+					if (e12.Name == "cocainGrams")
 					{
-						e12.Value = LSL.pStashVehicle.drugCarCocainOz.ToString();
+						e12.Value = LSL.pStashVehicle.drugCarCocainGrams.ToString();
 						break;
 					}
 				}
@@ -1021,11 +1021,11 @@ internal static class LsMenus
 		}
 		if (sender == LSL.takeWeedOzVeh)
 		{
-			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.FormatLegacyPacks(LSL.takeWeedOzVeh.Value);
+			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.FormatMetric(LSL.takeWeedOzVeh.Value);
 		}
 		else if (sender == LSL.putWeedOzVeh)
 		{
-			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatLegacyPacks(LSL.putWeedOzVeh.Value);
+			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatMetric(LSL.putWeedOzVeh.Value);
 		}
 		else if (sender == LSL.takeCrackVeh)
 		{
@@ -1037,11 +1037,11 @@ internal static class LsMenus
 		}
 		if (sender == LSL.takeCrackOzVeh)
 		{
-			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.FormatLegacyPacks(LSL.takeCrackOzVeh.Value);
+			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.FormatMetric(LSL.takeCrackOzVeh.Value);
 		}
 		else if (sender == LSL.putCrackOzVeh)
 		{
-			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatLegacyPacks(LSL.putCrackOzVeh.Value);
+			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatMetric(LSL.putCrackOzVeh.Value);
 		}
 		else if (sender == LSL.takeCocainVeh)
 		{
@@ -1053,11 +1053,11 @@ internal static class LsMenus
 		}
 		else if (sender == LSL.takeCocainOzVeh)
 		{
-			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.FormatLegacyPacks(LSL.takeCocainOzVeh.Value);
+			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.FormatMetric(LSL.takeCocainOzVeh.Value);
 		}
 		else if (sender == LSL.putCocainOzVeh)
 		{
-			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatLegacyPacks(LSL.putCocainOzVeh.Value);
+			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatMetric(LSL.putCocainOzVeh.Value);
 		}
 		else if (sender == LSL.putMoneyVeh)
 		{
@@ -1097,15 +1097,15 @@ internal static class LsMenus
 		}
 		else if (sender == LSL.putWeedOzStash)
 		{
-			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatLegacyPacks(LSL.putWeedOzStash.Value);
+			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatMetric(LSL.putWeedOzStash.Value);
 		}
 		else if (sender == LSL.putCrackOzStash)
 		{
-			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatLegacyPacks(LSL.putCrackOzStash.Value);
+			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatMetric(LSL.putCrackOzStash.Value);
 		}
 		else if (sender == LSL.putCocainOzStash)
 		{
-			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatLegacyPacks(LSL.putCocainOzStash.Value);
+			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.FormatMetric(LSL.putCocainOzStash.Value);
 		}
 		else if (sender == LSL.putMoneyStash)
 		{
@@ -1114,17 +1114,17 @@ internal static class LsMenus
 		else if (sender == LSL.bushWeed)
 		{
 			int total = LSL.bushWeed.Value * (LSL.weed1Price - LsFunctions.Discount(LSL.weed1Price));
-			LSL.WeedBuy.Text = "Commander ~g~" + LsFunctions.FormatLegacyPacks(LSL.bushWeed.Value, "~g~") + " ~s~pour $" + LsFunctions.IntToMoney(total);
+			LSL.WeedBuy.Text = "Commander ~g~" + LsFunctions.FormatMetric(LSL.bushWeed.Value, "~g~") + " ~s~pour $" + LsFunctions.IntToMoney(total);
 		}
 		else if (sender == LSL.crack)
 		{
 			int total2 = LSL.crack.Value * (LSL.crack1Price - LsFunctions.Discount(LSL.crack1Price));
-			LSL.CrackBuy.Text = "Commander ~g~" + LsFunctions.FormatLegacyPacks(LSL.crack.Value, "~g~") + " ~s~pour $" + LsFunctions.IntToMoney(total2);
+			LSL.CrackBuy.Text = "Commander ~g~" + LsFunctions.FormatMetric(LSL.crack.Value, "~g~") + " ~s~pour $" + LsFunctions.IntToMoney(total2);
 		}
 		else if (sender == LSL.cocaine)
 		{
 			int total3 = LSL.cocaine.Value * (LSL.cocain1Price - LsFunctions.Discount(LSL.cocain1Price));
-			LSL.CocainBuy.Text = "Commander ~g~" + LsFunctions.FormatLegacyPacks(LSL.cocaine.Value, "~g~") + " ~s~pour $" + LsFunctions.IntToMoney(total3);
+			LSL.CocainBuy.Text = "Commander ~g~" + LsFunctions.FormatMetric(LSL.cocaine.Value, "~g~") + " ~s~pour $" + LsFunctions.IntToMoney(total3);
 		}
 	}
 
@@ -1221,18 +1221,18 @@ internal static class LsMenus
 		}
 		else if ((object)item == LSL.putWeedOzStash)
 		{
-			LSL.HouseHandler.CurrentHouse.Weed += LsFunctions.LegacyPacksToGrams(LSL.putWeedOzStash.Value);
-			LsFunctions.pWeedOunce -= LSL.putWeedOzStash.Value;
+			LSL.HouseHandler.CurrentHouse.Weed += LSL.putWeedOzStash.Value);
+			LsFunctions.pWeedGrams -= LSL.putWeedOzStash.Value;
 		}
 		else if ((object)item == LSL.putCrackOzStash)
 		{
-			LSL.HouseHandler.CurrentHouse.Crack += LsFunctions.LegacyPacksToGrams(LSL.putCrackOzStash.Value);
-			LsFunctions.pCrackOunce -= LSL.putCrackOzStash.Value;
+			LSL.HouseHandler.CurrentHouse.Crack += LSL.putCrackOzStash.Value);
+			LsFunctions.pCrackGrams -= LSL.putCrackOzStash.Value;
 		}
 		else if ((object)item == LSL.putCocainOzStash)
 		{
-			LSL.HouseHandler.CurrentHouse.Cocain += LsFunctions.LegacyPacksToGrams(LSL.putCocainOzStash.Value);
-			LsFunctions.pCocaineOunce -= LSL.putCocainOzStash.Value;
+			LSL.HouseHandler.CurrentHouse.Cocain += LSL.putCocainOzStash.Value);
+			LsFunctions.pCocaineGrams -= LSL.putCocainOzStash.Value;
 		}
 		else if ((object)item == LSL.putArmourStash)
 		{
