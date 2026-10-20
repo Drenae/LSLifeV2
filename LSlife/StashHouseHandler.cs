@@ -355,9 +355,9 @@ public class StashHouseHandler
 		LSL.takeCrackStash.Maximum = _house.Crack;
 		LSL.takeCocainStash.Maximum = _house.Cocain;
 		LSL.takeMoneyStash.Maximum = _house.Money;
-		((UIMenuItem)LSL.takeWeedStash).Text = "Cannabis " + LsFunctions.GramsToOz(_house.Weed);
-		((UIMenuItem)LSL.takeCrackStash).Text = "Crack " + LsFunctions.GramsToOz(_house.Crack);
-		((UIMenuItem)LSL.takeCocainStash).Text = "Cocaïne " + LsFunctions.GramsToOz(_house.Cocain);
+		((UIMenuItem)LSL.takeWeedStash).Text = "Cannabis " + LsFunctions.FormatMetric(_house.Weed);
+		((UIMenuItem)LSL.takeCrackStash).Text = "Crack " + LsFunctions.FormatMetric(_house.Crack);
+		((UIMenuItem)LSL.takeCocainStash).Text = "Cocaïne " + LsFunctions.FormatMetric(_house.Cocain);
 		((UIMenuItem)LSL.takeMoneyStash).Text = "Argent $" + LsFunctions.IntToMoney(_house.Money);
 		LSL.takeWeaponStash.Items = _house.Weps;
 		LSL.takeWeaponStash.Index = 0;
@@ -373,9 +373,9 @@ public class StashHouseHandler
 		LSL.putCrackGramsStash.Maximum = LsFunctions.pCrackGrams;
 		LSL.putCocainGramsStash.Maximum = LsFunctions.pCocaineGrams;
 		LSL.putMoneyStash.Maximum = LSL.player.Money;
-		((UIMenuItem)LSL.putWeedStash).Text = "Cannabis " + LsFunctions.GramsToOz(LSL.PlayerInventory["Weed"]);
-		((UIMenuItem)LSL.putCrackStash).Text = "Crack " + LsFunctions.GramsToOz(LSL.PlayerInventory["Crack"]);
-		((UIMenuItem)LSL.putCocainStash).Text = "Cocaïne " + LsFunctions.GramsToOz(LSL.PlayerInventory["Cocaine"]);
+		((UIMenuItem)LSL.putWeedStash).Text = "Cannabis " + LsFunctions.FormatMetric(LSL.PlayerInventory["Weed"]);
+		((UIMenuItem)LSL.putCrackStash).Text = "Crack " + LsFunctions.FormatMetric(LSL.PlayerInventory["Crack"]);
+		((UIMenuItem)LSL.putCocainStash).Text = "Cocaïne " + LsFunctions.FormatMetric(LSL.PlayerInventory["Cocaine"]);
 		((UIMenuItem)LSL.putWeedGramsStash).Text = "Cannabis " + LsFunctions.FormatMetric(LsFunctions.pWeedGrams);
 		((UIMenuItem)LSL.putCrackGramsStash).Text = "Crack " + LsFunctions.FormatMetric(LsFunctions.pCrackGrams);
 		((UIMenuItem)LSL.putCocainGramsStash).Text = "Cocaïne " + LsFunctions.FormatMetric(LsFunctions.pCocaineGrams);

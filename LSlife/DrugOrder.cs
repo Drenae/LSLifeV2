@@ -207,7 +207,7 @@ public class DrugOrder
 
 	public bool PlayerCanPickup()
 	{
-		if (LsFunctions.TotalDrugs(LSL.PlayerInventory) + OrderSizeInGrams() < 7168)
+		if ((long)LsFunctions.TotalDrugs(LSL.PlayerInventory) + OrderSizeInGrams() <= 7000)
 		{
 			return true;
 		}

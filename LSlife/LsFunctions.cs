@@ -1244,9 +1244,9 @@ internal static class LsFunctions
 				int dWeed = LSL.weed1Price / 2 - Discount(LSL.weed1Price / 2);
 				int dCrack = LSL.crack1Price / 2 - Discount(LSL.crack1Price / 2);
 				int dCocaine = LSL.cocain1Price / 2 - Discount(LSL.cocain1Price / 2);
-				int finalWeed = checked((int)((decimal)weedMoney * 28m / dWeed));
-				int finalCrack = checked((int)((decimal)crackMoney * 28m / dCrack));
-				int finalCocain = checked((int)((decimal)cocainMoney * 28m / dCocaine));
+				int finalWeed = GramsForBudget((decimal)weedMoney, dWeed);
+				int finalCrack = GramsForBudget((decimal)crackMoney, dCrack);
+				int finalCocain = GramsForBudget((decimal)cocainMoney, dCocaine);
 				LSL.dealer1Weed += finalWeed;
 				LSL.dealer1Crack += finalCrack;
 				LSL.dealer1Cocain += finalCocain;
@@ -1299,9 +1299,9 @@ internal static class LsFunctions
 				int dWeed2 = LSL.weed1Price / 2 - Discount(LSL.weed1Price / 2);
 				int dCrack2 = LSL.crack1Price / 2 - Discount(LSL.crack1Price / 2);
 				int dCocaine2 = LSL.cocain1Price / 2 - Discount(LSL.cocain1Price / 2);
-				int finalWeed2 = checked((int)((decimal)weedMoney2 * 28m / dWeed2));
-				int finalCrack2 = checked((int)((decimal)crackMoney2 * 28m / dCrack2));
-				int finalCocain2 = checked((int)((decimal)cocainMoney2 * 28m / dCocaine2));
+				int finalWeed2 = GramsForBudget((decimal)weedMoney2, dWeed2);
+				int finalCrack2 = GramsForBudget((decimal)crackMoney2, dCrack2);
+				int finalCocain2 = GramsForBudget((decimal)cocainMoney2, dCocaine2);
 				LSL.dealer1Weed += finalWeed2;
 				LSL.dealer1Crack += finalCrack2;
 				LSL.dealer1Cocain += finalCocain2;
@@ -1961,11 +1961,17 @@ internal static class LsFunctions
 	}
 
 	// Toutes les quantites de produits sont maintenant stockees en grammes.
-	// Les tarifs historiques correspondent a 28 g ; les commandes sont libres au gramme.
-	public static int PriceForGrams(int grams, int priceFor28Grams)
+	// Tarifs pour 100 g ; commandes et stocks en grammes.
+	public static int PriceForGrams(int grams, int priceFor100Grams)
 	{
-		if (grams <= 0 || priceFor28Grams <= 0) return 0;
-		return checked((int)Math.Round((decimal)grams * priceFor28Grams / 28m, MidpointRounding.AwayFromZero));
+		if (grams <= 0 || priceFor100Grams <= 0) return 0;
+		return checked((int)Math.Round((decimal)grams * priceFor100Grams / 100m, MidpointRounding.AwayFromZero));
+	}
+
+	public static int GramsForBudget(decimal budget, int priceFor100Grams)
+	{
+		if (budget <= 0 || priceFor100Grams <= 0) return 0;
+		return checked((int)Math.Floor(budget * 100m / priceFor100Grams));
 	}
 
 	public static string FormatMetric(int grams, string color = "~g~")
@@ -1977,28 +1983,6 @@ internal static class LsFunctions
 		int kg = grams / 1000;
 		int remainder = grams % 1000;
 		return remainder == 0 ? color + kg + "~s~ kg" : color + kg + "~s~ kg " + color + remainder + "~s~ g";
-	}
-
-	// LSL V2 FR : chaque paquet de l'ancienne sauvegarde représente 28 g.
-	public static string GramsToOz(int _grams)
-	{
-		// LSL V2 FR : garder l'API existante pour ne pas casser les appels.
-		return FormatMetric(_grams);
-	}
-
-	public static void AddWeedOz(int _amount)
-	{
-		pWeedGrams += _amount;
-	}
-
-	public static void AddCrackOz(int _amount)
-	{
-		pCrackGrams += _amount;
-	}
-
-	public static void AddCocaineOz(int _amount)
-	{
-		pCocaineGrams += _amount;
 	}
 
 	public static void DbugString(string _string)

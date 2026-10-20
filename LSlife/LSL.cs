@@ -956,7 +956,9 @@ public class LSL : Script
 			if (element.Name == "playerInventory")
 			{
 				bool foundArmour = false;
-				bool foundOz = false;
+				bool foundWeedGrams = false;
+				bool foundCrackGrams = false;
+				bool foundCocaineGrams = false;
 				foreach (XElement e in element.Elements())
 				{
 					int number;
@@ -968,7 +970,7 @@ public class LSL : Script
 					if (e.Name == "weedGrams")
 					{
 						int.TryParse(e.Value, out LsFunctions.pWeedGrams);
-						foundOz = true;
+						foundWeedGrams = true;
 					}
 					if (e.Name == "crack")
 					{
@@ -978,7 +980,7 @@ public class LSL : Script
 					if (e.Name == "crackGrams")
 					{
 						int.TryParse(e.Value, out LsFunctions.pCrackGrams);
-						foundOz = true;
+						foundCrackGrams = true;
 					}
 					if (e.Name == "cocain")
 					{
@@ -988,7 +990,7 @@ public class LSL : Script
 					if (e.Name == "cocaineGrams")
 					{
 						int.TryParse(e.Value, out LsFunctions.pCocaineGrams);
-						foundOz = true;
+						foundCocaineGrams = true;
 					}
 					if (e.Name == "armour")
 					{
@@ -1001,11 +1003,11 @@ public class LSL : Script
 					element.Add(new XElement("armour", playerArmours.ToString()));
 					LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
 				}
-				if (!foundOz)
+				if (!foundWeedGrams) element.Add(new XElement("weedGrams", LsFunctions.pWeedGrams.ToString()));
+				if (!foundCrackGrams) element.Add(new XElement("crackGrams", LsFunctions.pCrackGrams.ToString()));
+				if (!foundCocaineGrams) element.Add(new XElement("cocaineGrams", LsFunctions.pCocaineGrams.ToString()));
+				if (!foundWeedGrams || !foundCrackGrams || !foundCocaineGrams)
 				{
-					element.Add(new XElement("weedGrams", LsFunctions.pWeedGrams.ToString()));
-					element.Add(new XElement("crackGrams", LsFunctions.pCrackGrams.ToString()));
-					element.Add(new XElement("cocaineGrams", LsFunctions.pCocaineGrams.ToString()));
 					LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
 				}
 			}

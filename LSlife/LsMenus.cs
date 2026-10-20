@@ -392,7 +392,7 @@ internal static class LsMenus
 
 	public static void onCocainMenuSelect(UIMenu sender, UIMenuItem item, int index)
 	{
-		if (item == LSL.CocainBuy && LSL.dealer1Cocain > 0)
+		if (item == LSL.CocainBuy && LSL.dealer1Cocain > 0 && LSL.cocaine.Value > 0)
 		{
 			int total = LsFunctions.PriceForGrams(LSL.cocaine.Value, LSL.cocain1Price - LsFunctions.Discount(LSL.cocain1Price));
 			LSL.NewOrder.OrderCocaine(LSL.cocaine.Value, total);
