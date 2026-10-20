@@ -216,7 +216,7 @@ public class DrugOrder
 
 	private int OrderSizeInGrams()
 	{
-		return checked(LsFunctions.LegacyPacksToGrams(weed) + LsFunctions.LegacyPacksToGrams(crack) + LsFunctions.LegacyPacksToGrams(cocaine));
+		return checked(weed + crack + cocaine);
 	}
 
 	internal bool OrderValid()
