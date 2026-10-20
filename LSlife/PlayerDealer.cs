@@ -423,7 +423,7 @@ public class PlayerDealer
 					break;
 				case Enums.PdStates.TalkToPlayer:
 					CurrentState = Enums.PdStates.TalkToPlayer;
-					Function.Call((Hash)(-8213159594590722974L), InputArgument.op_Implicit(Ped), InputArgument.op_Implicit("GENERIC_HOWS_IT_GOING"), InputArgument.op_Implicit("SPEECH_PARAMS_FORCE"));
+					Function.Call(unchecked((Hash)(-8213159594590722974L)), (Ped), ("GENERIC_HOWS_IT_GOING"), ("SPEECH_PARAMS_FORCE"));
 					break;
 				case Enums.PdStates.Work:
 					Working = true;
@@ -591,7 +591,7 @@ public class PlayerDealer
 							LSL.WorkerMainMenu.Visible = false;
 						}
 						NewState = Enums.PdStates.Work;
-						Function.Call((Hash)(-4137652152022615111L), InputArgument.op_Implicit(Ped), InputArgument.op_Implicit("GENERIC_BYE"), InputArgument.op_Implicit("SPEECH_PARAMS_FORCE"));
+						Function.Call(unchecked((Hash)(-4137652152022615111L)), (Ped), ("GENERIC_BYE"), ("SPEECH_PARAMS_FORCE"));
 					}
 					break;
 				case Enums.PdStates.Dealing:
@@ -600,7 +600,7 @@ public class PlayerDealer
 					{
 						NewState = Enums.PdStates.StopForPlayer;
 					}
-					else if (Pos.DistanceTo(Target) > 2.3f && Function.Call<bool>((Hash)1322919935073282825L, InputArgument.op_Implicit(Pos.X), InputArgument.op_Implicit(Pos.Y), InputArgument.op_Implicit(Pos.Z)))
+					else if (Pos.DistanceTo(Target) > 2.3f && Function.Call<bool>((Hash)1322919935073282825L, (Pos.X), (Pos.Y), (Pos.Z)))
 					{
 						NewState = Enums.PdStates.WalkToPath;
 					}
@@ -621,7 +621,7 @@ public class PlayerDealer
 						{
 							Ped.BlockPermanentEvents = false;
 							LSL.player.Character.CurrentPedGroup.Add(Ped, false);
-							Function.Call((Hash)3327951495314425415L, InputArgument.op_Implicit(((Entity)Ped).Handle), InputArgument.op_Implicit(LSL.player.Character.CurrentPedGroup.Handle), InputArgument.op_Implicit(false));
+							Function.Call((Hash)3327951495314425415L, (((Entity)Ped).Handle), (LSL.player.Character.CurrentPedGroup.Handle), (false));
 							NewState = Enums.PdStates.FollowingPlayer;
 							break;
 						}
@@ -629,7 +629,7 @@ public class PlayerDealer
 					if (LSL.player.Character.CurrentPedGroup == Ped.CurrentPedGroup)
 					{
 						Ped.BlockPermanentEvents = false;
-						Function.Call((Hash)3327951495314425415L, InputArgument.op_Implicit(((Entity)Ped).Handle), InputArgument.op_Implicit(LSL.player.Character.CurrentPedGroup.Handle), InputArgument.op_Implicit(false));
+						Function.Call((Hash)3327951495314425415L, (((Entity)Ped).Handle), (LSL.player.Character.CurrentPedGroup.Handle), (false));
 						NewState = Enums.PdStates.FollowingPlayer;
 					}
 					break;
@@ -656,7 +656,7 @@ public class PlayerDealer
 					bool playerUnarmed = (int)LSL.player.Character.Weapons.Current.Hash == -1569615261;
 					if (!pedUnarmed & playerUnarmed)
 					{
-						Ped.Weapons.Select((WeaponHash)(-1569615261), true);
+						Ped.Weapons.Select(unchecked((WeaponHash)(-1569615261)), true);
 						Ped.CanSwitchWeapons = false;
 					}
 					else if (pedUnarmed && !playerUnarmed)
@@ -847,7 +847,7 @@ public class PlayerDealer
 				if (Game.GameTime > time + 2000)
 				{
 					dealState = Enums.DealState.WalkingAway;
-					Function.Call((Hash)(-8213159594590722974L), InputArgument.op_Implicit(cPed), InputArgument.op_Implicit("GENERIC_THANKS"), InputArgument.op_Implicit("SPEECH_PARAMS_STANDARD"));
+					Function.Call(unchecked((Hash)(-8213159594590722974L)), (cPed), ("GENERIC_THANKS"), ("SPEECH_PARAMS_STANDARD"));
 					cPed.Task.WanderAround();
 					Ped.Task.GuardCurrentPosition();
 				}
@@ -886,11 +886,11 @@ public class PlayerDealer
 
 	private void SetAbilities()
 	{
-		Function.Call((Hash)(-4079649877180351064L), InputArgument.op_Implicit(Ped), InputArgument.op_Implicit(100));
-		Function.Call((Hash)5592521861259579479L, InputArgument.op_Implicit(Ped), InputArgument.op_Implicit(2));
+		Function.Call(unchecked((Hash)(-4079649877180351064L)), (Ped), (100));
+		Function.Call((Hash)5592521861259579479L, (Ped), (2));
 		Ped.Accuracy = 100;
 		Ped.ShootRate = 100;
-		Ped.FiringPattern = (FiringPattern)(-957453492);
+		Ped.FiringPattern = unchecked((FiringPattern)(-957453492));
 		Ped.CanWrithe = false;
 	}
 
@@ -911,7 +911,7 @@ public class PlayerDealer
 		if ((Entity)(object)Ped != (Entity)null)
 		{
 			LsFunctions.DbugString("Ped spawned at " + ((Entity)Ped).Position.X + ", " + ((Entity)Ped).Position.Y + ", " + ((Entity)Ped).Position.Z);
-			Function.Call((Hash)3327951495314425415L, InputArgument.op_Implicit(((Entity)Ped).Handle), InputArgument.op_Implicit(Game.Player.Character.CurrentPedGroup.Handle), InputArgument.op_Implicit(false));
+			Function.Call((Hash)3327951495314425415L, (((Entity)Ped).Handle), (Game.Player.Character.CurrentPedGroup.Handle), (false));
 			LsFunctions.SetImmuneToPlayer(Ped);
 			LsFunctions.AddBlip((Entity)(object)Ped, (BlipColor)3, "Dealer", _friend: true, _edge: true);
 			SetBlip();
@@ -927,7 +927,7 @@ public class PlayerDealer
 			if (CurrentState == Enums.PdStates.FollowPlayer && Game.Player.Character.CurrentPedGroup != Ped.CurrentPedGroup && LSL.playerPos.DistanceTo(((Entity)Ped).Position) < 100f)
 			{
 				Game.Player.Character.CurrentPedGroup.Add(Ped, false);
-				Function.Call((Hash)3327951495314425415L, InputArgument.op_Implicit(((Entity)Ped).Handle), InputArgument.op_Implicit(Game.Player.Character.CurrentPedGroup.Handle), InputArgument.op_Implicit(false));
+				Function.Call((Hash)3327951495314425415L, (((Entity)Ped).Handle), (Game.Player.Character.CurrentPedGroup.Handle), (false));
 			}
 			if (pData.Count > 0)
 			{

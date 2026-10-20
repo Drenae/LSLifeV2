@@ -167,7 +167,7 @@ public class Area
 
 	private float AddRandomAmount()
 	{
-		return Function.Call<float>((Hash)3547962977077129165L, InputArgument.op_Implicit(0f), InputArgument.op_Implicit(0.25f));
+		return Function.Call<float>((Hash)3547962977077129165L, (0f), (0.25f));
 	}
 
 	public void GetCustomer(List<Ped> peds)

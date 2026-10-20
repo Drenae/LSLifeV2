@@ -28,8 +28,8 @@ internal class EnemyHandler
 
 	private List<PedHash> pedHashes = new List<PedHash>
 	{
-		(PedHash)(-1676424299),
-		(PedHash)(-1863364300)
+		unchecked((PedHash)(-1676424299)),
+		unchecked((PedHash)(-1863364300))
 	};
 
 	private Random Rand = new Random();
@@ -88,18 +88,18 @@ internal class EnemyHandler
 			switch (pedIndex)
 			{
 			case 0:
-				enemy.Weapons.Give((WeaponHash)(-2084633992), 1000, true, true);
-				Function.Call((Hash)5592521861259579479L, InputArgument.op_Implicit(enemy), InputArgument.op_Implicit(2));
+				enemy.Weapons.Give(unchecked((WeaponHash)(-2084633992)), 1000, true, true);
+				Function.Call((Hash)5592521861259579479L, (enemy), (2));
 				break;
 			case 1:
 				enemy.Weapons.Give((WeaponHash)1119849093, 10000, true, true);
 				enemy.CanSufferCriticalHits = false;
 				((Entity)enemy).Health = 4000;
-				Function.Call((Hash)5592521861259579479L, InputArgument.op_Implicit(enemy), InputArgument.op_Implicit(3));
+				Function.Call((Hash)5592521861259579479L, (enemy), (3));
 				break;
 			}
-			Function.Call((Hash)(-4079649877180351064L), InputArgument.op_Implicit(enemy), InputArgument.op_Implicit(100));
-			enemy.FiringPattern = (FiringPattern)(-957453492);
+			Function.Call(unchecked((Hash)(-4079649877180351064L)), (enemy), (100));
+			enemy.FiringPattern = unchecked((FiringPattern)(-957453492));
 			enemy.CanWrithe = false;
 			enemy.Armor = 100;
 			enemy.AlwaysKeepTask = true;

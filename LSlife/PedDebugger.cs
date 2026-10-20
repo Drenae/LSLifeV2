@@ -62,7 +62,7 @@ public class PedDebugger
 					Vector2 tPos = LsFunctions.World3DToScreen2d(new Vector3(p2.GetBoneCoord((Bone)37193).X, p2.GetBoneCoord((Bone)37193).Y, p2.GetBoneCoord((Bone)37193).Z + 0.5f));
 					tPos.X = 1280f * tPos.X;
 					tPos.Y = 720f * tPos.Y;
-					new UIText(text, new Point((int)tPos.X, (int)tPos.Y), 0.2f, Color.WhiteSmoke, (Font)0, true, true, true).Draw();
+					new UIText(text, new Point((int)tPos.X, (int)tPos.Y), 0.2f, Color.WhiteSmoke, (GTA.Font)0, true, true, true).Draw();
 				}
 			}
 			else
@@ -75,7 +75,7 @@ public class PedDebugger
 			Vector2 tPos2 = LsFunctions.World3DToScreen2d(((Entity)LSL.pStashVehicle.drugCar).Position);
 			tPos2.X = 1280f * tPos2.X;
 			tPos2.Y = 720f * tPos2.Y;
-			new UIText(SetPedDebugtext((Entity)(object)LSL.pStashVehicle.drugCar, allowed: true), new Point((int)tPos2.X, (int)tPos2.Y), 0.2f, Color.WhiteSmoke, (Font)0, true, true, true).Draw();
+			new UIText(SetPedDebugtext((Entity)(object)LSL.pStashVehicle.drugCar, allowed: true), new Point((int)tPos2.X, (int)tPos2.Y), 0.2f, Color.WhiteSmoke, (GTA.Font)0, true, true, true).Draw();
 		}
 	}
 
@@ -113,7 +113,7 @@ public class PedDebugger
 			{
 				foreach (Enums.eTaskTypeIndex task in Enum.GetValues(typeof(Enums.eTaskTypeIndex)))
 				{
-					if (Function.Call<bool>((Hash)(-5731389963444272811L), InputArgument.op_Implicit(p), InputArgument.op_Implicit((int)task)))
+					if (Function.Call<bool>(unchecked((Hash)(-5731389963444272811L)), (p), ((int)task)))
 					{
 						return task.ToString();
 					}

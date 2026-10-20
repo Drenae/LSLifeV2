@@ -105,7 +105,7 @@ public class DrugOrder
 			{
 				Game.FadeScreenOut(1000);
 				Script.Wait(2000);
-				LSL.player.Character.SetIntoVehicle(stash.drugCar, (VehicleSeat)(-1));
+				LSL.player.Character.SetIntoVehicle(stash.drugCar, unchecked((VehicleSeat)(-1)));
 				if (weed > 0)
 				{
 					LSL.pStashVehicle.drugCarWeedOz += weed;

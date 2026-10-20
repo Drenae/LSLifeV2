@@ -41,7 +41,7 @@ internal static class Prison
 			//IL_0058: Unknown result type (might be due to invalid IL or missing references)
 			Script.Wait(10);
 			Model model = ((Entity)Prop).Model;
-			Function.Call((Hash)(-7272475972733243984L), InputArgument.op_Implicit(model.Hash), InputArgument.op_Implicit(((Entity)Prop).Position.X), InputArgument.op_Implicit(((Entity)Prop).Position.Y), InputArgument.op_Implicit(((Entity)Prop).Position.Z), InputArgument.op_Implicit(false), InputArgument.op_Implicit(0f), InputArgument.op_Implicit(50f), InputArgument.op_Implicit(0f));
+			Function.Call(unchecked((Hash)(-7272475972733243984L)), (model.Hash), (((Entity)Prop).Position.X), (((Entity)Prop).Position.Y), (((Entity)Prop).Position.Z), (false), (0f), (50f), (0f));
 		}
 
 		public void Lock()
@@ -53,7 +53,7 @@ internal static class Prison
 			//IL_0058: Unknown result type (might be due to invalid IL or missing references)
 			Script.Wait(10);
 			Model model = ((Entity)Prop).Model;
-			Function.Call((Hash)(-7272475972733243984L), InputArgument.op_Implicit(model.Hash), InputArgument.op_Implicit(((Entity)Prop).Position.X), InputArgument.op_Implicit(((Entity)Prop).Position.Y), InputArgument.op_Implicit(((Entity)Prop).Position.Z), InputArgument.op_Implicit(true), InputArgument.op_Implicit(0f), InputArgument.op_Implicit(50f), InputArgument.op_Implicit(0f));
+			Function.Call(unchecked((Hash)(-7272475972733243984L)), (model.Hash), (((Entity)Prop).Position.X), (((Entity)Prop).Position.Y), (((Entity)Prop).Position.Z), (true), (0f), (50f), (0f));
 		}
 	}
 
@@ -158,7 +158,7 @@ internal static class Prison
 				Vector3 playerPos = ((Entity)Game.Player.Character).Position;
 				OutputArgument outArgA = new OutputArgument();
 				OutputArgument outArgB = new OutputArgument();
-				if (Function.Call<bool>((Hash)(-70052395799280720L), InputArgument.op_Implicit(playerPos.X), InputArgument.op_Implicit(playerPos.Y), InputArgument.op_Implicit(playerPos.Z), (InputArgument)(object)outArgA, (InputArgument)(object)outArgB, InputArgument.op_Implicit(0), InputArgument.op_Implicit(1077936128), InputArgument.op_Implicit(0)))
+				if (Function.Call<bool>(unchecked((Hash)(-70052395799280720L)), (playerPos.X), (playerPos.Y), (playerPos.Z), (InputArgument)(object)outArgA, (InputArgument)(object)outArgB, (0), (1077936128), (0)))
 				{
 					float heading = outArgB.GetResult<float>();
 					Vector3 pos = outArgA.GetResult<Vector3>();
@@ -179,18 +179,18 @@ internal static class Prison
 				}
 				if ((Entity)(object)copCar != (Entity)null && (Entity)(object)cop != (Entity)null)
 				{
-					Function.Call((Hash)(-3189321952077349130L), InputArgument.op_Implicit("mp_arresting"));
-					while (!Function.Call<bool>((Hash)(-3444786327252301684L), InputArgument.op_Implicit("mp_arresting")))
+					Function.Call(unchecked((Hash)(-3189321952077349130L)), ("mp_arresting"));
+					while (!Function.Call<bool>(unchecked((Hash)(-3444786327252301684L)), ("mp_arresting")))
 					{
 						Script.Wait(100);
 					}
-					Function.Call((Hash)(-1565002832890405996L), InputArgument.op_Implicit(Game.Player.Character), InputArgument.op_Implicit("mp_arresting"), InputArgument.op_Implicit("idle"), InputArgument.op_Implicit(8f), InputArgument.op_Implicit(1f), InputArgument.op_Implicit(-1), InputArgument.op_Implicit(49), InputArgument.op_Implicit(0.1f), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0));
+					Function.Call(unchecked((Hash)(-1565002832890405996L)), (Game.Player.Character), ("mp_arresting"), ("idle"), (8f), (1f), (-1), (49), (0.1f), (0), (0), (0));
 					Game.Player.Character.Task.EnterVehicle(copCar, (VehicleSeat)2);
 					if (Function.Call<bool>((Hash)5315141875575487047L))
 					{
-						Function.Call((Hash)(-8272491852216909662L), InputArgument.op_Implicit(Game.Player.Handle), InputArgument.op_Implicit(false), InputArgument.op_Implicit(256));
+						Function.Call(unchecked((Hash)(-8272491852216909662L)), (Game.Player.Handle), (false), (256));
 					}
-					Function.Call((Hash)3479844549214047358L, InputArgument.op_Implicit(((Entity)cop).Handle), InputArgument.op_Implicit(((Entity)Game.Player.Character).Handle), InputArgument.op_Implicit(1), InputArgument.op_Implicit(1), InputArgument.op_Implicit(0), InputArgument.op_Implicit(1), InputArgument.op_Implicit(-1), InputArgument.op_Implicit(10), InputArgument.op_Implicit(true));
+					Function.Call((Hash)3479844549214047358L, (((Entity)cop).Handle), (((Entity)Game.Player.Character).Handle), (1), (1), (0), (1), (-1), (10), (true));
 					CurrentState = PrisonStates.None;
 					stateChanged = true;
 				}
@@ -200,12 +200,12 @@ internal static class Prison
 				cop.Task.ClearAll();
 				cop.AlwaysKeepTask = true;
 				cop.BlockPermanentEvents = true;
-				cop.Task.EnterVehicle(copCar, (VehicleSeat)(-1));
+				cop.Task.EnterVehicle(copCar, unchecked((VehicleSeat)(-1)));
 				CurrentState = PrisonStates.PlayerEnterCar;
 				stateChanged = true;
 				break;
 			case PrisonStates.CopEnterCar:
-				Function.Call((Hash)(-5650329060376590909L), InputArgument.op_Implicit(((Entity)cop).Handle), InputArgument.op_Implicit(100f));
+				Function.Call(unchecked((Hash)(-5650329060376590909L)), (((Entity)cop).Handle), (100f));
 				cop.Task.DriveTo(copCar, PrisonPos, 5f, Speed, 5);
 				CurrentState = PrisonStates.CopEnterCar;
 				stateChanged = true;
@@ -349,7 +349,7 @@ internal static class Prison
 	private static void PlayerExitPrison()
 	{
 		//IL_0072: Unknown result type (might be due to invalid IL or missing references)
-		Function.Call((Hash)(-8272491852216909662L), InputArgument.op_Implicit(Game.Player.Handle), InputArgument.op_Implicit(true), InputArgument.op_Implicit(256));
+		Function.Call(unchecked((Hash)(-8272491852216909662L)), (Game.Player.Handle), (true), (256));
 		Game.Player.CanControlCharacter = true;
 		LSL.entitiesCleanUp.Add((Entity)(object)copCar);
 		LSL.entitiesCleanUp.Add((Entity)(object)cop);

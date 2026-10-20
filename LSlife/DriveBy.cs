@@ -483,7 +483,7 @@ public class DriveBy
 
 	private void SpawnPeds()
 	{
-		SpawnPed((VehicleSeat)(-1), _leader: true);
+		SpawnPed(unchecked((VehicleSeat)(-1)), _leader: true);
 		if (pedamount <= 0)
 		{
 			return;
@@ -522,10 +522,10 @@ public class DriveBy
 			p.RelationshipGroup = LSL.rival_nutral;
 		}
 		LsFunctions.SetRandomCombatStats(p);
-		p.FiringPattern = (FiringPattern)(-753768974);
+		p.FiringPattern = unchecked((FiringPattern)(-753768974));
 		p.AlwaysKeepTask = true;
 		p.CanSwitchWeapons = true;
-		Function.Call((Hash)(-4079649877180351064L), InputArgument.op_Implicit(p), InputArgument.op_Implicit(100));
+		Function.Call(unchecked((Hash)(-4079649877180351064L)), (p), (100));
 		LsFunctions.SetRivalWeapons(p);
 		if (_leader)
 		{

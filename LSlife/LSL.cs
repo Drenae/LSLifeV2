@@ -93,10 +93,10 @@ public class LSL : Script
 			{
 				Locked = false;
 				Script.Wait(10);
-				Function.Call((Hash)3423943577717663365L, InputArgument.op_Implicit("BIG_SCORE_GOLD_CAGE_LOCK"), InputArgument.op_Implicit(0));
+				Function.Call((Hash)3423943577717663365L, ("BIG_SCORE_GOLD_CAGE_LOCK"), (0));
 				Game.PlaySound("0x08053C9C", "BIG_SCORE_GOLD_CAGE_LOCK");
 				model = ((Entity)Prop).Model;
-				Function.Call((Hash)(-7272475972733243984L), InputArgument.op_Implicit(model.Hash), InputArgument.op_Implicit(((Entity)Prop).Position.X), InputArgument.op_Implicit(((Entity)Prop).Position.Y), InputArgument.op_Implicit(((Entity)Prop).Position.Z), InputArgument.op_Implicit(false), InputArgument.op_Implicit(0f), InputArgument.op_Implicit(50f), InputArgument.op_Implicit(0f));
+				Function.Call(unchecked((Hash)(-7272475972733243984L)), (model.Hash), (((Entity)Prop).Position.X), (((Entity)Prop).Position.Y), (((Entity)Prop).Position.Z), (false), (0f), (50f), (0f));
 				if (DEBUG)
 				{
 					model = ((Entity)Prop).Model;
@@ -109,7 +109,7 @@ public class LSL : Script
 				Script.Wait(10);
 				Game.PlaySound("Bar_Lower_And_Lock", "DLC_IND_ROLLERCOASTER_SOUNDS");
 				model = ((Entity)Prop).Model;
-				Function.Call((Hash)(-7272475972733243984L), InputArgument.op_Implicit(model.Hash), InputArgument.op_Implicit(((Entity)Prop).Position.X), InputArgument.op_Implicit(((Entity)Prop).Position.Y), InputArgument.op_Implicit(((Entity)Prop).Position.Z), InputArgument.op_Implicit(true), InputArgument.op_Implicit(0f), InputArgument.op_Implicit(50f), InputArgument.op_Implicit(0f));
+				Function.Call(unchecked((Hash)(-7272475972733243984L)), (model.Hash), (((Entity)Prop).Position.X), (((Entity)Prop).Position.Y), (((Entity)Prop).Position.Z), (true), (0f), (50f), (0f));
 				if (DEBUG)
 				{
 					model = ((Entity)Prop).Model;
@@ -180,7 +180,7 @@ public class LSL : Script
 
 	public static int rival_enemy = World.AddRelationshipGroup("RIVAL_E");
 
-	public static int playerRelationship = Function.Call<int>((Hash)(-3292914402564945716L), InputArgument.op_Implicit("PLAYER"));
+	public static int playerRelationship = Function.Call<int>(unchecked((Hash)(-3292914402564945716L)), ("PLAYER"));
 
 	public PedDebugger PedDebugger = new PedDebugger();
 
@@ -619,7 +619,7 @@ public class LSL : Script
 		((Script)this).Aborted += OnAbort;
 		((Script)this).Tick += onTick;
 		((Script)this).KeyDown += onKeyDown;
-		((Script)this).Interval = 3;
+		Interval = 3;
 	}
 
 	private void Setup()
@@ -638,9 +638,9 @@ public class LSL : Script
 		//IL_0899: Unknown result type (might be due to invalid IL or missing references)
 		//IL_08a0: Expected I4, but got Unknown
 		//IL_08b1: Unknown result type (might be due to invalid IL or missing references)
-		lsDebug = Function.Call<uint>((Hash)(-3292914402564945716L), InputArgument.op_Implicit("lsdebug"));
-		areaDebug = Function.Call<uint>((Hash)(-3292914402564945716L), InputArgument.op_Implicit("areadebug"));
-		spawnP = Function.Call<uint>((Hash)(-3292914402564945716L), InputArgument.op_Implicit("spawnP"));
+		lsDebug = Function.Call<uint>(unchecked((Hash)(-3292914402564945716L)), ("lsdebug"));
+		areaDebug = Function.Call<uint>(unchecked((Hash)(-3292914402564945716L)), ("areadebug"));
+		spawnP = Function.Call<uint>(unchecked((Hash)(-3292914402564945716L)), ("spawnP"));
 		player = Game.Player;
 		player.Character.CurrentPedGroup.SeparationRange = 100f;
 		iniSettings = ScriptSettings.Load("scripts\\LSlife.ini");
@@ -812,11 +812,11 @@ public class LSL : Script
 		int i = 0;
 		foreach (WeaponHash weapon in Enum.GetValues(typeof(WeaponHash)))
 		{
-			if (!Function.Call<bool>((Hash)(-8220001501650343748L), InputArgument.op_Implicit(player.Character), InputArgument.op_Implicit((int)weapon)))
+			if (!Function.Call<bool>(unchecked((Hash)(-8220001501650343748L)), (player.Character), ((int)weapon)))
 			{
 				continue;
 			}
-			int ammunitionInWeapon = Function.Call<int>((Hash)97480644549409105L, InputArgument.op_Implicit(player.Character), InputArgument.op_Implicit((int)weapon));
+			int ammunitionInWeapon = Function.Call<int>((Hash)97480644549409105L, (player.Character), ((int)weapon));
 			XElement parentElement = new XElement("weapon");
 			parentElement.SetAttributeValue("id", i);
 			XElement weaponNameElement = new XElement("HASH", (object)weapon);
@@ -826,7 +826,7 @@ public class LSL : Script
 			parentElement.Add(weaponAmmoElement);
 			foreach (WeaponComponent component in Enum.GetValues(typeof(WeaponComponent)))
 			{
-				if (Function.Call<bool>((Hash)(-4209984786179366080L), InputArgument.op_Implicit(player.Character), InputArgument.op_Implicit((int)weapon), InputArgument.op_Implicit((int)component)))
+				if (Function.Call<bool>(unchecked((Hash)(-4209984786179366080L)), (player.Character), ((int)weapon), ((int)component)))
 				{
 					XElement weaponComponentElement = new XElement("COMPONENT", (object)component);
 					parentElement.Add(weaponComponentElement);
@@ -1252,7 +1252,7 @@ public class LSL : Script
 		DealerHandler = new PlayerDealerHandler();
 		HouseHandler = new StashHouseHandler();
 		LsFunctions.LoadSpawnLocations();
-		day = Function.Call<int>((Hash)(-2777906517671992481L));
+		day = Function.Call<int>(unchecked((Hash)(-2777906517671992481L)));
 		hour = Function.Call<int>((Hash)2675767815307398015L);
 		SlowTickTime = Game.GameTime;
 		randomAttackTimer = Game.GameTime;
@@ -1591,7 +1591,7 @@ public class LSL : Script
 			World.SetRelationshipBetweenGroups((Relationship)0, CustomerRel, rival_nutral);
 			World.SetRelationshipBetweenGroups((Relationship)0, CustomerRel, rival_enemy);
 			playerHeat = -100f;
-			Function.Call((Hash)2750315038012726912L, InputArgument.op_Implicit(player.Character), InputArgument.op_Implicit(9), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0));
+			Function.Call((Hash)2750315038012726912L, (player.Character), (9), (0), (0), (0));
 			playerHasBag = false;
 			canSprint = true;
 			playerArea = World.GetZoneNameLabel(playerPos);
@@ -1620,13 +1620,13 @@ public class LSL : Script
 			{
 				debugString = (areas[areaIndex].DemandBuff() - Game.GameTime).ToString();
 			}
-			myUIText = new UIText(debugString, new Point(10, 10), 0.4f, Color.WhiteSmoke, (Font)0, false);
+			myUIText = new UIText(debugString, new Point(10, 10), 0.4f, Color.WhiteSmoke, (GTA.Font)0, false);
 			myUIText.Draw();
 		}
 		if (Prison.Started && Prison.CurrentState > Prison.PrisonStates.ApproachBarrier)
 		{
-			Function.Call((Hash)(-7077668788463384353L), InputArgument.op_Implicit("restrictedareas"));
-			Function.Call((Hash)(-7077668788463384353L), InputArgument.op_Implicit("re_prison"));
+			Function.Call(unchecked((Hash)(-7077668788463384353L)), ("restrictedareas"));
+			Function.Call(unchecked((Hash)(-7077668788463384353L)), ("re_prison"));
 		}
 		if (LsMenuPool != null)
 		{
@@ -1860,7 +1860,7 @@ public class LSL : Script
 										}
 										if (random2.Next(0, 15 - rIntMax2) == 0)
 										{
-											PedHash hash2 = (PedHash)(-1954728090);
+											PedHash hash2 = unchecked((PedHash)(-1954728090));
 											if (LsFunctions.cHashes.Count > 0)
 											{
 												hash2 = LsFunctions.cHashes[rnd.Next(0, LsFunctions.cHashes.Count)];
@@ -1893,7 +1893,7 @@ public class LSL : Script
 										}
 										if (random3.Next(0, 15 - rIntMax3) == 0)
 										{
-											PedHash hash3 = (PedHash)(-1954728090);
+											PedHash hash3 = unchecked((PedHash)(-1954728090));
 											if (LsFunctions.cHashes.Count > 0)
 											{
 												hash3 = LsFunctions.cHashes[rnd.Next(0, LsFunctions.cHashes.Count)];
@@ -1926,7 +1926,7 @@ public class LSL : Script
 										}
 										if (random.Next(0, 15 - rIntMax) == 0)
 										{
-											PedHash hash = (PedHash)(-1954728090);
+											PedHash hash = unchecked((PedHash)(-1954728090));
 											if (LsFunctions.cHashes.Count > 0)
 											{
 												hash = LsFunctions.cHashes[rnd.Next(0, LsFunctions.cHashes.Count)];
@@ -2040,8 +2040,8 @@ public class LSL : Script
 								if (position.DistanceTo(playerPos) < 3f)
 								{
 									c.Ped.Task.ClearAll();
-									Function.Call((Hash)(-6974808092771143243L), InputArgument.op_Implicit(((Entity)c.Ped).Handle), InputArgument.op_Implicit(playerGroup));
-									Function.Call((Hash)(-8213159594590722974L), InputArgument.op_Implicit(c.Ped), InputArgument.op_Implicit("GENERIC_HI"), InputArgument.op_Implicit("SPEECH_PARAMS_STANDARD"));
+									Function.Call(unchecked((Hash)(-6974808092771143243L)), (((Entity)c.Ped).Handle), (playerGroup));
+									Function.Call(unchecked((Hash)(-8213159594590722974L)), (c.Ped), ("GENERIC_HI"), ("SPEECH_PARAMS_STANDARD"));
 									continue;
 								}
 								if (c.Ped.IsInVehicle())
@@ -2153,7 +2153,7 @@ public class LSL : Script
 						((Entity)wepDealer.ped).IsPersistent = false;
 						((Entity)wepDealer.vehicle).IsPersistent = false;
 						((Entity)wepDealer.vehicle).CurrentBlip.Remove();
-						Function.Call((Hash)5188501456062479616L, InputArgument.op_Implicit(((Entity)wepDealer.ped).Handle), InputArgument.op_Implicit(((Entity)wepDealer.vehicle).Handle), InputArgument.op_Implicit(20f), InputArgument.op_Implicit(786603));
+						Function.Call((Hash)5188501456062479616L, (((Entity)wepDealer.ped).Handle), (((Entity)wepDealer.vehicle).Handle), (20f), (786603));
 						wepDealer = null;
 					}
 					if (Game.IsControlJustPressed(2, (Control)51))
@@ -2252,7 +2252,7 @@ public class LSL : Script
 			newWepAmount = 0;
 			foreach (WeaponHash weapon in Enum.GetValues(typeof(WeaponHash)))
 			{
-				if (Function.Call<bool>((Hash)(-8220001501650343748L), InputArgument.op_Implicit(player.Character), InputArgument.op_Implicit((int)weapon)))
+				if (Function.Call<bool>(unchecked((Hash)(-8220001501650343748L)), (player.Character), ((int)weapon)))
 				{
 					newWepAmount++;
 					if (newWepAmount > playerWeapons.Count)
@@ -2272,8 +2272,8 @@ public class LSL : Script
 				int i = 0;
 				foreach (WeaponHash weapon2 in Enum.GetValues(typeof(WeaponHash)))
 				{
-					bool flag = Function.Call<bool>((Hash)(-8220001501650343748L), InputArgument.op_Implicit(player.Character), InputArgument.op_Implicit((int)weapon2));
-					int ammunitionInWeapon = Function.Call<int>((Hash)97480644549409105L, InputArgument.op_Implicit(player.Character), InputArgument.op_Implicit((int)weapon2));
+					bool flag = Function.Call<bool>(unchecked((Hash)(-8220001501650343748L)), (player.Character), ((int)weapon2));
+					int ammunitionInWeapon = Function.Call<int>((Hash)97480644549409105L, (player.Character), ((int)weapon2));
 					if (!flag)
 					{
 						continue;
@@ -2290,7 +2290,7 @@ public class LSL : Script
 					parentElement.Add(weaponAmmoElement);
 					foreach (WeaponComponent component in Enum.GetValues(typeof(WeaponComponent)))
 					{
-						if (Function.Call<bool>((Hash)(-4209984786179366080L), InputArgument.op_Implicit(player.Character), InputArgument.op_Implicit((int)weapon2), InputArgument.op_Implicit((int)component)))
+						if (Function.Call<bool>(unchecked((Hash)(-4209984786179366080L)), (player.Character), ((int)weapon2), ((int)component)))
 						{
 							XElement weaponComponentElement = new XElement("COMPONENT", (object)component);
 							parentElement.Add(weaponComponentElement);
@@ -2399,15 +2399,15 @@ public class LSL : Script
 		SlowTickTime = Game.GameTime;
 		player = Game.Player;
 		playerGroup = player.Character.CurrentPedGroup;
-		if (Function.Call<bool>((Hash)6160435850588389544L, InputArgument.op_Implicit(lsDebug)))
+		if (Function.Call<bool>((Hash)6160435850588389544L, (lsDebug)))
 		{
 			DEBUG = !DEBUG;
 		}
-		else if (Function.Call<bool>((Hash)6160435850588389544L, InputArgument.op_Implicit(areaDebug)))
+		else if (Function.Call<bool>((Hash)6160435850588389544L, (areaDebug)))
 		{
 			AreaDebug = !AreaDebug;
 		}
-		else if (Function.Call<bool>((Hash)6160435850588389544L, InputArgument.op_Implicit(spawnP)))
+		else if (Function.Call<bool>((Hash)6160435850588389544L, (spawnP)))
 		{
 			LsFunctions.SpawnDriveBy(player.Character, _agressive: false);
 		}
@@ -2528,9 +2528,9 @@ public class LSL : Script
 		goto IL_29de;
 		IL_252a:
 		Vector3 pos = ((Entity)wepDealer.vehicle).Position + ((Entity)wepDealer.vehicle).Velocity;
-		int NodeID = Function.Call<int>((Hash)2510518586829603349L, InputArgument.op_Implicit(pos.X), InputArgument.op_Implicit(pos.Y), InputArgument.op_Implicit(pos.Z), InputArgument.op_Implicit(1), InputArgument.op_Implicit(1), InputArgument.op_Implicit(1f), InputArgument.op_Implicit(0f));
+		int NodeID = Function.Call<int>((Hash)2510518586829603349L, (pos.X), (pos.Y), (pos.Z), (1), (1), (1f), (0f));
 		OutputArgument outArgA = new OutputArgument();
-		Function.Call((Hash)8084282276450675138L, InputArgument.op_Implicit(NodeID), (InputArgument)(object)outArgA);
+		Function.Call((Hash)8084282276450675138L, (NodeID), (InputArgument)(object)outArgA);
 		Vector3 parkPos = outArgA.GetResult<Vector3>();
 		wepDealer.destination = parkPos;
 		goto IL_25d6;
@@ -2544,7 +2544,7 @@ public class LSL : Script
 		{
 			attackerPickup.Delete();
 			attackerPickupSpawned = false;
-			WeaponHash weaponHash = (WeaponHash)(-1569615261);
+			WeaponHash weaponHash = unchecked((WeaponHash)(-1569615261));
 			int ammo = 0;
 			WeaponHash currentWep = player.Character.Weapons.Current.Hash;
 			foreach (XElement element in attackerWeapons)
@@ -2677,7 +2677,7 @@ public class LSL : Script
 					attacker.BlockPermanentEvents = true;
 					((Entity)attacker).IsPersistent = true;
 					LsFunctions.AddBlip((Entity)(object)attacker, (BlipColor)1, "Robber", _friend: false, _edge: false);
-					WeaponHash weaponHash2 = (WeaponHash)(-1569615261);
+					WeaponHash weaponHash2 = unchecked((WeaponHash)(-1569615261));
 					int ammo2 = 0;
 					player.Character.Weapons.RemoveAll();
 					attacker.Armor = 100;
@@ -2902,7 +2902,7 @@ public class LSL : Script
 		{
 			if (Function.Call<bool>((Hash)5315141875575487047L) && !Prison.Ready)
 			{
-				Function.Call((Hash)(-8272491852216909662L), InputArgument.op_Implicit(player.Handle), InputArgument.op_Implicit(false), InputArgument.op_Implicit(256));
+				Function.Call(unchecked((Hash)(-8272491852216909662L)), (player.Handle), (false), (256));
 				UI.Notify("READY");
 				Prison.Ready = true;
 			}
@@ -2938,8 +2938,8 @@ public class LSL : Script
 					attackCheckTime = Game.GameTime;
 					if (distance < 60f && LsFunctions.CanSee((Entity)(object)attacker, (Entity)(object)player.Character))
 					{
-						int EnemyRelationShipGroup = Function.Call<int>((Hash)(-3292914402564945716L), InputArgument.op_Implicit("HATES_PLAYER"));
-						Function.Call((Hash)(-4032282232082276974L), InputArgument.op_Implicit(attacker), InputArgument.op_Implicit(EnemyRelationShipGroup));
+						int EnemyRelationShipGroup = Function.Call<int>(unchecked((Hash)(-3292914402564945716L)), ("HATES_PLAYER"));
+						Function.Call(unchecked((Hash)(-4032282232082276974L)), (attacker), (EnemyRelationShipGroup));
 						attackerAttacking = true;
 						attacker.Task.ClearAll();
 						attacker.Task.FightAgainst(player.Character);
@@ -2996,11 +2996,11 @@ public class LSL : Script
 		{
 			if (canSprint)
 			{
-				Function.Call((Hash)(-6909787959634350604L), InputArgument.op_Implicit(player), InputArgument.op_Implicit(true));
+				Function.Call(unchecked((Hash)(-6909787959634350604L)), (player), (true));
 			}
 			else
 			{
-				Function.Call((Hash)(-6909787959634350604L), InputArgument.op_Implicit(player), InputArgument.op_Implicit(false));
+				Function.Call(unchecked((Hash)(-6909787959634350604L)), (player), (false));
 			}
 		}
 		if (player.WantedLevel > 0 && !playerWanted)
@@ -3094,7 +3094,7 @@ public class LSL : Script
 		else if (weaponDealer1.CurrentPedGroup != player.Character.CurrentPedGroup)
 		{
 			weaponDealer1.Task.ClearAll();
-			Function.Call((Hash)(-6974808092771143243L), InputArgument.op_Implicit(((Entity)weaponDealer1).Handle), InputArgument.op_Implicit(playerGroup));
+			Function.Call(unchecked((Hash)(-6974808092771143243L)), (((Entity)weaponDealer1).Handle), (playerGroup));
 		}
 		if (!ShotHandler.ShotOffers && weaponDealer1.IsStopped && distanceToPlayer <= 3f && player.Character.IsStopped && LsFunctions.IsCustomerNear() && PottentialWorker == null)
 		{
@@ -3159,9 +3159,9 @@ public class LSL : Script
 			{
 				wepDealer.doneTutorial = false;
 				Vector3 pos2 = wepDealer.destination;
-				int NodeID2 = Function.Call<int>((Hash)2510518586829603349L, InputArgument.op_Implicit(pos2.X), InputArgument.op_Implicit(pos2.Y), InputArgument.op_Implicit(pos2.Z), InputArgument.op_Implicit(1), InputArgument.op_Implicit(1), InputArgument.op_Implicit(1f), InputArgument.op_Implicit(0f));
+				int NodeID2 = Function.Call<int>((Hash)2510518586829603349L, (pos2.X), (pos2.Y), (pos2.Z), (1), (1), (1f), (0f));
 				OutputArgument outArgA2 = new OutputArgument();
-				Function.Call((Hash)8084282276450675138L, InputArgument.op_Implicit(NodeID2), (InputArgument)(object)outArgA2);
+				Function.Call((Hash)8084282276450675138L, (NodeID2), (InputArgument)(object)outArgA2);
 				Vector3 parkPos2 = outArgA2.GetResult<Vector3>();
 				wepDealer.ped.Task.DriveTo(wepDealer.vehicle, parkPos2, 2f, 6f, 786603);
 				wepDealer.destination = Vector3.Zero;
@@ -3294,10 +3294,10 @@ public class LSL : Script
 		//IL_009c: Unknown result type (might be due to invalid IL or missing references)
 		bool flag = Function.Call<bool>((Hash)7576188390707304864L);
 		bool SaveHud = UI.IsHudComponentActive((HudComponent)17);
-		bool StatSave = Function.Call<bool>((Hash)(-4920555325479993693L));
-		bool Paused = Function.Call<bool>((Hash)(-5763681587332382773L));
-		bool sPaused = Function.Call<bool>((Hash)(-1572002141673951856L));
-		bool Busy = Function.Call<bool>((Hash)(-5573887678010054197L));
+		bool StatSave = Function.Call<bool>(unchecked((Hash)(-4920555325479993693L)));
+		bool Paused = Function.Call<bool>(unchecked((Hash)(-5763681587332382773L)));
+		bool sPaused = Function.Call<bool>(unchecked((Hash)(-1572002141673951856L)));
+		bool Busy = Function.Call<bool>(unchecked((Hash)(-5573887678010054197L)));
 		if (flag | SaveHud | StatSave | Paused | sPaused | Busy)
 		{
 			pSaved = true;
@@ -3653,8 +3653,8 @@ public class LSL : Script
 				((Entity)pigCar).AddBlip();
 				((Entity)pigCar).CurrentBlip.Name = "Police Car";
 			}
-			Function.Call((Hash)(-823518585696636035L), InputArgument.op_Implicit(((Entity)pigCar).Handle), InputArgument.op_Implicit(true));
-			pigs.Add(new Pig(pigCar.CreatePedOnSeat((VehicleSeat)(-1), new Model(Enums.GetPolicePedType())), _leader: true));
+			Function.Call(unchecked((Hash)(-823518585696636035L)), (((Entity)pigCar).Handle), (true));
+			pigs.Add(new Pig(pigCar.CreatePedOnSeat(unchecked((VehicleSeat)(-1)), new Model(Enums.GetPolicePedType())), _leader: true));
 			pigs.Add(new Pig(pigCar.CreatePedOnSeat((VehicleSeat)0, new Model(Enums.GetPolicePedType())), _leader: false));
 		}
 		if (pigs.Count <= 0)
@@ -3665,7 +3665,7 @@ public class LSL : Script
 		{
 			if ((Entity)(object)p.Ped != (Entity)null)
 			{
-				Function.Call((Hash)(-4970914549772615683L), InputArgument.op_Implicit(p.Ped), InputArgument.op_Implicit(true));
+				Function.Call(unchecked((Hash)(-4970914549772615683L)), (p.Ped), (true));
 				if (areas[areaIndex].CopPresance < 10)
 				{
 					areas[areaIndex].CopPresance++;
@@ -3816,7 +3816,7 @@ public class LSL : Script
 		if (wepdealer)
 		{
 			Vector3 dealer1pos = World.GetNextPositionOnSidewalk(GenerateSpawnPos(playerPos.Around(60f), Nodetype.AnyRoad, sidewalk: true));
-			weaponDealer1 = World.CreatePed(new Model((PedHash)(-236444766)), GenerateSpawnPos(dealer1pos, Nodetype.AnyRoad, sidewalk: true));
+			weaponDealer1 = World.CreatePed(new Model(unchecked((PedHash)(-236444766))), GenerateSpawnPos(dealer1pos, Nodetype.AnyRoad, sidewalk: true));
 			while ((Entity)(object)weaponDealer1 == (Entity)null)
 			{
 				Script.Wait(0);
@@ -3829,7 +3829,7 @@ public class LSL : Script
 				weaponDealer1.CanSwitchWeapons = true;
 				weaponDealer1.Weapons.Give((WeaponHash)453432689, 9999, false, true);
 				weaponDealer1.Armor = 100;
-				Function.Call((Hash)(-4079649877180351064L), InputArgument.op_Implicit(weaponDealer1), InputArgument.op_Implicit(100));
+				Function.Call(unchecked((Hash)(-4079649877180351064L)), (weaponDealer1), (100));
 				readyToDeal = false;
 				Script.Wait(100);
 				weaponDealer1.Task.GoTo(pedTarget);
@@ -3943,7 +3943,7 @@ public class LSL : Script
 		{
 			TaskSequence val = new TaskSequence();
 			val.AddTask.GoTo(((Entity)vehicle).Position + ((Entity)vehicle).RightVector * 2f * -1f);
-			val.AddTask.EnterVehicle(vehicle, (VehicleSeat)(-1));
+			val.AddTask.EnterVehicle(vehicle, unchecked((VehicleSeat)(-1)));
 			val.AddTask.CruiseWithVehicle(vehicle, 20f, 5);
 			return val;
 		}
@@ -4128,11 +4128,11 @@ public class LSL : Script
 						}
 					}
 				}
-				if (!Function.Call<bool>((Hash)5176593366545292405L, InputArgument.op_Implicit(_ped)))
+				if (!Function.Call<bool>((Hash)5176593366545292405L, (_ped)))
 				{
 					return true;
 				}
-				int type = Function.Call<int>((Hash)(-70476366192974276L), InputArgument.op_Implicit(((Entity)_ped).Handle));
+				int type = Function.Call<int>(unchecked((Hash)(-70476366192974276L)), (((Entity)_ped).Handle));
 				if (type == 24 || type == 26)
 				{
 					return true;
@@ -4184,7 +4184,7 @@ public class LSL : Script
 		if (c.Target == target)
 		{
 			Vector3 position = ((Entity)c.Ped).Position;
-			if (position.DistanceTo(c.Target) > 20f || Function.Call<bool>((Hash)1322919935073282825L, InputArgument.op_Implicit(((Entity)c.Ped).Position.X), InputArgument.op_Implicit(((Entity)c.Ped).Position.Y), InputArgument.op_Implicit(((Entity)c.Ped).Position.Z)))
+			if (position.DistanceTo(c.Target) > 20f || Function.Call<bool>((Hash)1322919935073282825L, (((Entity)c.Ped).Position.X), (((Entity)c.Ped).Position.Y), (((Entity)c.Ped).Position.Z)))
 			{
 				c.Ped.Task.RunTo(c.Target);
 			}
@@ -4240,16 +4240,16 @@ public class LSL : Script
 		{
 			type = 3;
 		}
-		int NodeID = Function.Call<int>((Hash)2510518586829603349L, InputArgument.op_Implicit(desiredPos.X), InputArgument.op_Implicit(desiredPos.Y), InputArgument.op_Implicit(desiredPos.Z), InputArgument.op_Implicit(NodeNumber), InputArgument.op_Implicit(type), InputArgument.op_Implicit(200f), InputArgument.op_Implicit(200f));
+		int NodeID = Function.Call<int>((Hash)2510518586829603349L, (desiredPos.X), (desiredPos.Y), (desiredPos.Z), (NodeNumber), (type), (200f), (200f));
 		if (ForceOffroad)
 		{
-			while (!Function.Call<bool>((Hash)5715191804072465017L, InputArgument.op_Implicit(NodeID)))
+			while (!Function.Call<bool>((Hash)5715191804072465017L, (NodeID)))
 			{
-				NodeID = Function.Call<int>((Hash)2510518586829603349L, InputArgument.op_Implicit(desiredPos.X), InputArgument.op_Implicit(desiredPos.Y), InputArgument.op_Implicit(desiredPos.Z), InputArgument.op_Implicit(NodeNumber), InputArgument.op_Implicit(type), InputArgument.op_Implicit(200f), InputArgument.op_Implicit(200f));
+				NodeID = Function.Call<int>((Hash)2510518586829603349L, (desiredPos.X), (desiredPos.Y), (desiredPos.Z), (NodeNumber), (type), (200f), (200f));
 				NodeNumber++;
 			}
 		}
-		Function.Call((Hash)8084282276450675138L, InputArgument.op_Implicit(NodeID), (InputArgument)(object)outArgA);
+		Function.Call((Hash)8084282276450675138L, (NodeID), (InputArgument)(object)outArgA);
 		finalpos = outArgA.GetResult<Vector3>();
 		if (sidewalk)
 		{
@@ -4268,9 +4268,9 @@ public class LSL : Script
 		//IL_005c: Expected Obj, but got Unknown
 		//IL_0072: Unknown result type (might be due to invalid IL or missing references)
 		_ = Vector3.Zero;
-		int NodeID = Function.Call<int>((Hash)2510518586829603349L, InputArgument.op_Implicit(pos.X), InputArgument.op_Implicit(pos.Y), InputArgument.op_Implicit(pos.Z), InputArgument.op_Implicit(1), InputArgument.op_Implicit(1), InputArgument.op_Implicit(200f), InputArgument.op_Implicit(200f));
+		int NodeID = Function.Call<int>((Hash)2510518586829603349L, (pos.X), (pos.Y), (pos.Z), (1), (1), (200f), (200f));
 		OutputArgument outArgA = new OutputArgument();
-		Function.Call((Hash)8084282276450675138L, InputArgument.op_Implicit(NodeID), (InputArgument)(object)outArgA);
+		Function.Call((Hash)8084282276450675138L, (NodeID), (InputArgument)(object)outArgA);
 		return outArgA.GetResult<Vector3>();
 	}
 
@@ -4291,7 +4291,7 @@ public class LSL : Script
 		List<PathnodeFlags> pathnodesflags = new List<PathnodeFlags>();
 		OutputArgument outArgA = new OutputArgument();
 		OutputArgument outArgB = new OutputArgument();
-		if (Function.Call<bool>((Hash)389656384451763932L, InputArgument.op_Implicit(pos.X), InputArgument.op_Implicit(pos.Y), InputArgument.op_Implicit(pos.Z), (InputArgument)(object)outArgA, (InputArgument)(object)outArgB))
+		if (Function.Call<bool>((Hash)389656384451763932L, (pos.X), (pos.Y), (pos.Z), (InputArgument)(object)outArgA, (InputArgument)(object)outArgB))
 		{
 			outArgA.GetResult<int>();
 			int flags = outArgB.GetResult<int>();
@@ -4317,7 +4317,7 @@ public class LSL : Script
 		//IL_002b: Unknown result type (might be due to invalid IL or missing references)
 		OutputArgument outArgA = new OutputArgument();
 		OutputArgument outArgB = new OutputArgument();
-		if (Function.Call<bool>((Hash)389656384451763932L, InputArgument.op_Implicit(pos.X), InputArgument.op_Implicit(pos.Y), InputArgument.op_Implicit(pos.Z), (InputArgument)(object)outArgA, (InputArgument)(object)outArgB))
+		if (Function.Call<bool>((Hash)389656384451763932L, (pos.X), (pos.Y), (pos.Z), (InputArgument)(object)outArgA, (InputArgument)(object)outArgB))
 		{
 			outArgA.GetResult<int>();
 			if (((uint)outArgB.GetResult<int>() & (uint)flag) != 0)

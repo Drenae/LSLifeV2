@@ -93,7 +93,7 @@ internal static class LsMenus
 			if (LSL.wepDealer == null)
 			{
 				sender.Visible = !sender.Visible;
-				LSL.wepDealer = new Dealer(new Model((PedHash)(-412008429)), ((Entity)Game.Player.Character).Position + ((Entity)Game.Player.Character).ForwardVector * 2f, new Model("INGOT"), LSL.playerGroup);
+				LSL.wepDealer = new Dealer(new Model(unchecked((PedHash)(-412008429))), ((Entity)Game.Player.Character).Position + ((Entity)Game.Player.Character).ForwardVector * 2f, new Model("INGOT"), LSL.playerGroup);
 				if ((Entity)(object)LSL.wepDealer.ped != (Entity)null)
 				{
 					LsFunctions.TextMsg("ZEE", LSL.wepDealer.ped, "Work", "Sending someone to meet you.");
@@ -243,9 +243,9 @@ internal static class LsMenus
 						LsFunctions.UpdateSave();
 					}
 				}
-				else if (Game.Player.Character.Weapons.HasWeapon((WeaponHash)(-1716589765)))
+				else if (Game.Player.Character.Weapons.HasWeapon(unchecked((WeaponHash)(-1716589765))))
 				{
-					Game.Player.Character.Weapons.Select((WeaponHash)(-1716589765));
+					Game.Player.Character.Weapons.Select(unchecked((WeaponHash)(-1716589765)));
 					if (Game.Player.Money >= total2)
 					{
 						Player player4 = Game.Player;
@@ -264,9 +264,9 @@ internal static class LsMenus
 						LsFunctions.UpdateSave();
 					}
 				}
-				else if (Game.Player.Character.Weapons.HasWeapon((WeaponHash)(-771403250)))
+				else if (Game.Player.Character.Weapons.HasWeapon(unchecked((WeaponHash)(-771403250))))
 				{
-					Game.Player.Character.Weapons.Select((WeaponHash)(-771403250));
+					Game.Player.Character.Weapons.Select(unchecked((WeaponHash)(-771403250)));
 					if (Game.Player.Money >= total2)
 					{
 						Player player5 = Game.Player;
@@ -1495,7 +1495,7 @@ internal static class LsMenus
 		{
 			if (LSL.aDealer.DecidePlayerOffer(LSL.hireDealerOfferAmount.Value))
 			{
-				Function.Call((Hash)(-8213159594590722974L), InputArgument.op_Implicit(LSL.aDealer.dPed), InputArgument.op_Implicit("GENERIC_YES"), InputArgument.op_Implicit("SPEECH_PARAMS_FORCE"));
+				Function.Call(unchecked((Hash)(-8213159594590722974L)), (LSL.aDealer.dPed), ("GENERIC_YES"), ("SPEECH_PARAMS_FORCE"));
 				LsFunctions.ChangeAdealerToPdealer();
 				UI.ShowSubtitle("Sure i will work for you.", 4000);
 				Player player = Game.Player;
@@ -1510,7 +1510,7 @@ internal static class LsMenus
 			else if (LSL.rnd.Next(0, 3) == 0)
 			{
 				LSL.aDealer.NewState = Enums.DStates.AttackPlayer;
-				Function.Call((Hash)(-8213159594590722974L), InputArgument.op_Implicit(LSL.aDealer.dPed), InputArgument.op_Implicit("GENERIC_CURSE_HIGH"), InputArgument.op_Implicit("SPEECH_PARAMS_FORCE"));
+				Function.Call(unchecked((Hash)(-8213159594590722974L)), (LSL.aDealer.dPed), ("GENERIC_CURSE_HIGH"), ("SPEECH_PARAMS_FORCE"));
 				if (LSL.driveByHandler.AmountOfDriveBy(_agg: true) == 0 && LSL.rnd.Next(0, 5) == 0)
 				{
 					LsFunctions.SpawnDriveBy(LSL.player.Character, _agressive: true);
@@ -1518,7 +1518,7 @@ internal static class LsMenus
 			}
 			else
 			{
-				Function.Call((Hash)(-8213159594590722974L), InputArgument.op_Implicit(LSL.aDealer.dPed), InputArgument.op_Implicit("GENERIC_NO"), InputArgument.op_Implicit("SPEECH_PARAMS_FORCE"));
+				Function.Call(unchecked((Hash)(-8213159594590722974L)), (LSL.aDealer.dPed), ("GENERIC_NO"), ("SPEECH_PARAMS_FORCE"));
 				UI.ShowSubtitle("Your kidding me, Im worth more than that!", 4000);
 				LSL.aDealer.SetLastOfferAmount(LSL.hireDealerOfferAmount.Value);
 			}
@@ -1526,7 +1526,7 @@ internal static class LsMenus
 		else if (LSL.rnd.Next(0, 3) == 0)
 		{
 			LSL.aDealer.NewState = Enums.DStates.AttackPlayer;
-			Function.Call((Hash)(-8213159594590722974L), InputArgument.op_Implicit(LSL.aDealer.dPed), InputArgument.op_Implicit("GENERIC_CURSE_HIGH"), InputArgument.op_Implicit("SPEECH_PARAMS_FORCE"));
+			Function.Call(unchecked((Hash)(-8213159594590722974L)), (LSL.aDealer.dPed), ("GENERIC_CURSE_HIGH"), ("SPEECH_PARAMS_FORCE"));
 			UI.ShowSubtitle("Nah, im just gona kill you and take your money.", 4000);
 			if (LSL.driveByHandler.AmountOfDriveBy(_agg: true) == 0 && LSL.rnd.Next(0, 5) == 0)
 			{

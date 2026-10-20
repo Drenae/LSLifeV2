@@ -111,7 +111,7 @@ public class Shot
 				if (customer.Ped.CurrentPedGroup != LSL.player.Character.CurrentPedGroup && dist <= 10f)
 				{
 					customer.Ped.Task.ClearAll();
-					Function.Call((Hash)(-6974808092771143243L), InputArgument.op_Implicit(((Entity)customer.Ped).Handle), InputArgument.op_Implicit(LSL.playerGroup));
+					Function.Call(unchecked((Hash)(-6974808092771143243L)), (((Entity)customer.Ped).Handle), (LSL.playerGroup));
 					((Entity)customer.Ped).CurrentBlip.ShowRoute = false;
 				}
 				if (!LSL.LsMenuPool.IsAnyMenuOpen() && dist <= 2f)

@@ -220,11 +220,11 @@ public class StashHouse
 					{
 						(PedHash)1581098148,
 						(PedHash)368603149,
-						(PedHash)(-1920001264),
-						(PedHash)(-1614285257),
-						(PedHash)(-277793362),
+						unchecked((PedHash)(-1920001264)),
+						unchecked((PedHash)(-1614285257)),
+						unchecked((PedHash)(-277793362)),
 						(PedHash)1096929346,
-						(PedHash)(-1320879687)
+						unchecked((PedHash)(-1320879687))
 					}.Contains(hash) && !LsFunctions.cHashes.Contains(hash))
 					{
 						LsFunctions.cHashes.Add(hash);
@@ -281,7 +281,7 @@ public class StashHouse
 		else
 		{
 			pickupSpawned = true;
-			healthPickup = World.CreatePickup((PickupType)(-1888453608), houseHealthPickPos, Vector3.Zero, new Model("prop_ld_health_pack"), 100);
+			healthPickup = World.CreatePickup(unchecked((PickupType)(-1888453608)), houseHealthPickPos, Vector3.Zero, new Model("prop_ld_health_pack"), 100);
 			LsFunctions.DbugString("Spawned Health");
 		}
 		if (!LSL.LsMenuPool.IsAnyMenuOpen() && LSL.playerPos.DistanceTo(stashPos) <= 1f)

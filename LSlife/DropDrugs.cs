@@ -36,7 +36,7 @@ internal static class DropDrugs
 		case 0:
 		{
 			Vector3 forwardPos = LSL.playerPos + ((Entity)LSL.player.Character).ForwardVector * 2f;
-			Function.Call<Vector3>((Hash)7932734660826570736L, InputArgument.op_Implicit(forwardPos.X), InputArgument.op_Implicit(forwardPos.Y), InputArgument.op_Implicit(forwardPos.Z), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0));
+			Function.Call<Vector3>((Hash)7932734660826570736L, (forwardPos.X), (forwardPos.Y), (forwardPos.Z), (0), (0));
 			RaycastResult ray = World.Raycast(LSL.playerPos, forwardPos, (IntersectOptions)1);
 			if (ray.DitHitAnything)
 			{

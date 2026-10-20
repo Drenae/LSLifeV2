@@ -72,8 +72,8 @@ public class Pig
 		((Entity)Ped).IsPersistent = true;
 		Ped.AlwaysKeepTask = true;
 		Ped.BlockPermanentEvents = true;
-		Function.Call((Hash)(-4970914549772615683L), InputArgument.op_Implicit(Ped), InputArgument.op_Implicit(true));
-		Function.Call((Hash)(-5650329060376590909L), InputArgument.op_Implicit(Ped), InputArgument.op_Implicit(100));
+		Function.Call(unchecked((Hash)(-4970914549772615683L)), (Ped), (true));
+		Function.Call(unchecked((Hash)(-5650329060376590909L)), (Ped), (100));
 	}
 
 	private Vector3 StopPosition()
@@ -203,7 +203,7 @@ public class Pig
 						if (Game.GameTime > time + 3000)
 						{
 							time = Game.GameTime;
-							Function.Call((Hash)1986128932158055094L, InputArgument.op_Implicit(((Entity)Vehicle).Handle));
+							Function.Call((Hash)1986128932158055094L, (((Entity)Vehicle).Handle));
 						}
 						if (!seenPlayer && LsFunctions.CanSee((Entity)(object)Ped, (Entity)(object)Game.Player.Character))
 						{
@@ -243,13 +243,13 @@ public class Pig
 			{
 				if (!SirenActive)
 				{
-					Function.Call((Hash)(-823518585696636035L), InputArgument.op_Implicit(((Entity)Vehicle).Handle), InputArgument.op_Implicit(true));
+					Function.Call(unchecked((Hash)(-823518585696636035L)), (((Entity)Vehicle).Handle), (true));
 					SirenActive = true;
 				}
 				if (SirenSoundActive)
 				{
 					SirenSoundActive = false;
-					Function.Call((Hash)(-2880880930286931340L), InputArgument.op_Implicit(((Entity)Vehicle).Handle), InputArgument.op_Implicit(true));
+					Function.Call(unchecked((Hash)(-2880880930286931340L)), (((Entity)Vehicle).Handle), (true));
 				}
 			}
 			break;
@@ -334,7 +334,7 @@ public class Pig
 			if (!sayWait && !Ped.IsInVehicle() && Ped.IsWalking && LSL.playerPos.DistanceTo(((Entity)Ped).Position) < 10f)
 			{
 				sayWait = true;
-				Function.Call((Hash)(-8213159594590722974L), InputArgument.op_Implicit(Ped), InputArgument.op_Implicit("WAIT"), InputArgument.op_Implicit("SPEECH_PARAMS_STANDARD"));
+				Function.Call(unchecked((Hash)(-8213159594590722974L)), (Ped), ("WAIT"), ("SPEECH_PARAMS_STANDARD"));
 			}
 			break;
 		}

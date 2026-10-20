@@ -33,7 +33,7 @@ internal static class LsFunctions
 	public static Dictionary<string, PedHash> PedModels = new Dictionary<string, PedHash> { 
 	{
 		"ZEE",
-		(PedHash)(-236444766)
+		unchecked((PedHash)(-236444766))
 	} };
 
 	private static List<int> AllowedInteriors = new List<int> { 118018, 271617, 92674, 275201, 233729 };
@@ -328,12 +328,12 @@ internal static class LsFunctions
 
 	public static bool CanSee(Entity _ent, Entity _targetEnt)
 	{
-		return Function.Call<bool>((Hash)173335856089985402L, InputArgument.op_Implicit(_ent), InputArgument.op_Implicit(_targetEnt));
+		return Function.Call<bool>((Hash)173335856089985402L, (_ent), (_targetEnt));
 	}
 
 	public static bool CanHearPlayer(Ped _ped)
 	{
-		return Function.Call<bool>((Hash)(-966241770451121623L), InputArgument.op_Implicit(Game.Player.Character), InputArgument.op_Implicit(_ped));
+		return Function.Call<bool>(unchecked((Hash)(-966241770451121623L)), (Game.Player.Character), (_ped));
 	}
 
 	public static bool IsPolice(Ped p)
@@ -341,7 +341,7 @@ internal static class LsFunctions
 		bool cop = false;
 		foreach (Enums.LawEnforcePed lawEnforce in Enum.GetValues(typeof(Enums.LawEnforcePed)))
 		{
-			if (Function.Call<int>((Hash)(-70476366192974276L), InputArgument.op_Implicit(((Entity)p).Handle)) == (int)lawEnforce)
+			if (Function.Call<int>(unchecked((Hash)(-70476366192974276L)), (((Entity)p).Handle)) == (int)lawEnforce)
 			{
 				cop = true;
 				break;
@@ -392,7 +392,7 @@ internal static class LsFunctions
 		for (int i = 0; i < 16; i++)
 		{
 			newSpawnPos.Z = World.GetGroundHeight(newSpawnPos);
-			if (Function.Call<bool>((Hash)1322919935073282825L, InputArgument.op_Implicit(newSpawnPos.X), InputArgument.op_Implicit(newSpawnPos.Y), InputArgument.op_Implicit(newSpawnPos.Z)) || newSpawnPos.DistanceTo(spawnPos) < newSpawnPos.DistanceTo(directionPos))
+			if (Function.Call<bool>((Hash)1322919935073282825L, (newSpawnPos.X), (newSpawnPos.Y), (newSpawnPos.Z)) || newSpawnPos.DistanceTo(spawnPos) < newSpawnPos.DistanceTo(directionPos))
 			{
 				oldSpawnPos = newSpawnPos;
 				newSpawnPos += directionFromSpawn * 0.5f;
@@ -411,11 +411,11 @@ internal static class LsFunctions
 
 	public static void NotImmuneToPlayer(Ped ped)
 	{
-		Function.Call((Hash)(-2148903261299834599L), InputArgument.op_Implicit(ped), InputArgument.op_Implicit(true), InputArgument.op_Implicit(LSL.playerRelationship));
+		Function.Call(unchecked((Hash)(-2148903261299834599L)), (ped), (true), (LSL.playerRelationship));
 		ped.CanBeTargetted = true;
 		ped.CanBeShotInVehicle = true;
-		Function.Call((Hash)7400957295976475254L, InputArgument.op_Implicit(ped), InputArgument.op_Implicit(LSL.player), InputArgument.op_Implicit(true));
-		Function.Call((Hash)7202820943940500141L, InputArgument.op_Implicit(ped), InputArgument.op_Implicit(true));
+		Function.Call((Hash)7400957295976475254L, (ped), (LSL.player), (true));
+		Function.Call((Hash)7202820943940500141L, (ped), (true));
 	}
 
 	public static Vector2 World3DToScreen2d(Vector3 pos)
@@ -430,7 +430,7 @@ internal static class LsFunctions
 		//IL_0049: Unknown result type (might be due to invalid IL or missing references)
 		OutputArgument x2dp = new OutputArgument();
 		OutputArgument y2dp = new OutputArgument();
-		Function.Call((Hash)3812348786834502901L, InputArgument.op_Implicit(pos.X), InputArgument.op_Implicit(pos.Y), InputArgument.op_Implicit(pos.Z), (InputArgument)(object)x2dp, (InputArgument)(object)y2dp);
+		Function.Call((Hash)3812348786834502901L, (pos.X), (pos.Y), (pos.Z), (InputArgument)(object)x2dp, (InputArgument)(object)y2dp);
 		return new Vector2(x2dp.GetResult<float>(), y2dp.GetResult<float>());
 	}
 
@@ -520,8 +520,8 @@ internal static class LsFunctions
 				break;
 			}
 		}
-		int NodeID = Function.Call<int>((Hash)2510518586829603349L, InputArgument.op_Implicit(pos.X), InputArgument.op_Implicit(pos.Y), InputArgument.op_Implicit(pos.Z), InputArgument.op_Implicit(1), InputArgument.op_Implicit(1), InputArgument.op_Implicit(200f), InputArgument.op_Implicit(200f));
-		if (Function.Call<bool>((Hash)5715191804072465017L, InputArgument.op_Implicit(NodeID)))
+		int NodeID = Function.Call<int>((Hash)2510518586829603349L, (pos.X), (pos.Y), (pos.Z), (1), (1), (200f), (200f));
+		if (Function.Call<bool>((Hash)5715191804072465017L, (NodeID)))
 		{
 			speed = ((!((speed * 0.5f > 9f) & shouldSpeed)) ? 9f : (speed * 0.5f));
 		}
@@ -538,7 +538,7 @@ internal static class LsFunctions
 		//IL_0055: Unknown result type (might be due to invalid IL or missing references)
 		//IL_004f: Unknown result type (might be due to invalid IL or missing references)
 		OutputArgument outArgA = new OutputArgument();
-		if (Function.Call<bool>((Hash)2596914974566212883L, InputArgument.op_Implicit(pos.X), InputArgument.op_Implicit(pos.Y), InputArgument.op_Implicit(pos.Z), (InputArgument)(object)outArgA, InputArgument.op_Implicit(1), InputArgument.op_Implicit(3f), InputArgument.op_Implicit(0)))
+		if (Function.Call<bool>((Hash)2596914974566212883L, (pos.X), (pos.Y), (pos.Z), (InputArgument)(object)outArgA, (1), (3f), (0)))
 		{
 			return outArgA.GetResult<Vector3>();
 		}
@@ -567,20 +567,20 @@ internal static class LsFunctions
 		switch (RanRange(0, (int)(1f + LSL.areas[LSL.areaIndex].GangPresance * 0.5f)))
 		{
 		case 5:
-			p.Weapons.Give((WeaponHash)(-1074790547), 500, false, true);
+			p.Weapons.Give(unchecked((WeaponHash)(-1074790547)), 500, false, true);
 			p.Weapons.Give((WeaponHash)324215364, 500, true, true);
 			break;
 		case 4:
 			p.Weapons.Give((WeaponHash)1649403952, 500, false, true);
-			p.Weapons.Give((WeaponHash)(-1121678507), 500, true, true);
+			p.Weapons.Give(unchecked((WeaponHash)(-1121678507)), 500, true, true);
 			break;
 		case 3:
 			p.Weapons.Give((WeaponHash)1649403952, 500, false, true);
-			p.Weapons.Give((WeaponHash)(-619010992), 500, true, true);
+			p.Weapons.Give(unchecked((WeaponHash)(-619010992)), 500, true, true);
 			break;
 		case 2:
 			p.Weapons.Give((WeaponHash)487013001, 500, false, true);
-			p.Weapons.Give((WeaponHash)(-619010992), 500, true, true);
+			p.Weapons.Give(unchecked((WeaponHash)(-619010992)), 500, true, true);
 			break;
 		case 1:
 			p.Weapons.Give((WeaponHash)2017895192, 500, false, true);
@@ -636,9 +636,9 @@ internal static class LsFunctions
 			((Entity)ped).Delete();
 		}
 		Game.PlaySound("Text_Arrive_Tone", "Phone_SoundSet_Default");
-		Function.Call((Hash)2316831480196236324L, InputArgument.op_Implicit("CELL_EMAIL_BCON"));
-		Function.Call((Hash)7789129354908300458L, InputArgument.op_Implicit(_msg));
-		Function.Call((Hash)2075484565200204495L, InputArgument.op_Implicit(HeadShotHandler.headShots[_name].Texture), InputArgument.op_Implicit(HeadShotHandler.headShots[_name].Texture), InputArgument.op_Implicit(true), InputArgument.op_Implicit(1), InputArgument.op_Implicit(_title), InputArgument.op_Implicit(_name));
+		Function.Call((Hash)2316831480196236324L, ("CELL_EMAIL_BCON"));
+		Function.Call((Hash)7789129354908300458L, (_msg));
+		Function.Call((Hash)2075484565200204495L, (HeadShotHandler.headShots[_name].Texture), (HeadShotHandler.headShots[_name].Texture), (true), (1), (_title), (_name));
 		Script.Yield();
 	}
 
@@ -663,9 +663,9 @@ internal static class LsFunctions
 			HeadShotHandler.MugShot(_ped, _name);
 		}
 		Game.PlaySound("Text_Arrive_Tone", "Phone_SoundSet_Default");
-		Function.Call((Hash)2316831480196236324L, InputArgument.op_Implicit("CELL_EMAIL_BCON"));
-		Function.Call((Hash)7789129354908300458L, InputArgument.op_Implicit(_msg));
-		Function.Call((Hash)2075484565200204495L, InputArgument.op_Implicit(HeadShotHandler.headShots[_name].Texture), InputArgument.op_Implicit(HeadShotHandler.headShots[_name].Texture), InputArgument.op_Implicit(true), InputArgument.op_Implicit(1), InputArgument.op_Implicit(_title), InputArgument.op_Implicit(_name));
+		Function.Call((Hash)2316831480196236324L, ("CELL_EMAIL_BCON"));
+		Function.Call((Hash)7789129354908300458L, (_msg));
+		Function.Call((Hash)2075484565200204495L, (HeadShotHandler.headShots[_name].Texture), (HeadShotHandler.headShots[_name].Texture), (true), (1), (_title), (_name));
 		Script.Yield();
 	}
 
@@ -701,35 +701,35 @@ internal static class LsFunctions
 		{
 			if (FreeMode)
 			{
-				Function.Call((Hash)2750315038012726912L, InputArgument.op_Implicit(ped), InputArgument.op_Implicit(5), InputArgument.op_Implicit(81), InputArgument.op_Implicit(0), InputArgument.op_Implicit(1));
+				Function.Call((Hash)2750315038012726912L, (ped), (5), (81), (0), (1));
 			}
 			else
 			{
-				Function.Call((Hash)2750315038012726912L, InputArgument.op_Implicit(ped), InputArgument.op_Implicit(9), InputArgument.op_Implicit(1), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0));
+				Function.Call((Hash)2750315038012726912L, (ped), (9), (1), (0), (0));
 			}
 		}
 		else if (FreeMode)
 		{
-			Function.Call((Hash)2750315038012726912L, InputArgument.op_Implicit(ped), InputArgument.op_Implicit(5), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, (ped), (5), (0), (0), (1));
 		}
 		else
 		{
-			Function.Call((Hash)2750315038012726912L, InputArgument.op_Implicit(ped), InputArgument.op_Implicit(9), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0));
+			Function.Call((Hash)2750315038012726912L, (ped), (9), (0), (0), (0));
 		}
 	}
 
 	public static void DisplayHelpText(string text)
 	{
-		InputArgument[] arguments = new InputArgument[1] { InputArgument.op_Implicit("STRING") };
-		Function.Call((Hash)(-8860350453193909743L), arguments);
-		InputArgument[] argumentArray2 = new InputArgument[1] { InputArgument.op_Implicit(text) };
+		InputArgument[] arguments = new InputArgument[1] { ("STRING") };
+		Function.Call(unchecked((Hash)(-8860350453193909743L)), arguments);
+		InputArgument[] argumentArray2 = new InputArgument[1] { (text) };
 		Function.Call((Hash)7789129354908300458L, argumentArray2);
 		InputArgument[] argumentArray3 = new InputArgument[4]
 		{
-			InputArgument.op_Implicit(0),
-			InputArgument.op_Implicit(0),
-			InputArgument.op_Implicit(1),
-			InputArgument.op_Implicit(-1)
+			(0),
+			(0),
+			(1),
+			(-1)
 		};
 		Function.Call((Hash)2562546386151446694L, argumentArray3);
 	}
@@ -771,7 +771,7 @@ internal static class LsFunctions
 	{
 		if ((Entity)(object)ped.LastVehicle == (Entity)(object)LSL.player.Character.LastVehicle)
 		{
-			Function.Call((Hash)(-4932030039357269829L), InputArgument.op_Implicit(ped));
+			Function.Call(unchecked((Hash)(-4932030039357269829L)), (ped));
 		}
 		Blip currentBlip = ((Entity)ped).CurrentBlip;
 		if (currentBlip != null)
@@ -802,7 +802,7 @@ internal static class LsFunctions
 
 	public static bool IsInInterior(Entity _entity)
 	{
-		int interior = Function.Call<int>((Hash)2380075781929936571L, InputArgument.op_Implicit(_entity));
+		int interior = Function.Call<int>((Hash)2380075781929936571L, (_entity));
 		foreach (int allowedInterior in AllowedInteriors)
 		{
 			if (allowedInterior == interior)
@@ -926,11 +926,11 @@ internal static class LsFunctions
 		List<XElement> weps = new List<XElement>();
 		foreach (WeaponHash weapon in Enum.GetValues(typeof(WeaponHash)))
 		{
-			if (!Function.Call<bool>((Hash)(-8220001501650343748L), InputArgument.op_Implicit(_ped), InputArgument.op_Implicit((int)weapon)))
+			if (!Function.Call<bool>(unchecked((Hash)(-8220001501650343748L)), (_ped), ((int)weapon)))
 			{
 				continue;
 			}
-			int ammunitionInWeapon = Function.Call<int>((Hash)97480644549409105L, InputArgument.op_Implicit(_ped), InputArgument.op_Implicit((int)weapon));
+			int ammunitionInWeapon = Function.Call<int>((Hash)97480644549409105L, (_ped), ((int)weapon));
 			if (ammunitionInWeapon < 500)
 			{
 				ammunitionInWeapon = 500;
@@ -942,7 +942,7 @@ internal static class LsFunctions
 			parentElement.Add(weaponAmmoElement);
 			foreach (WeaponComponent component in Enum.GetValues(typeof(WeaponComponent)))
 			{
-				if (Function.Call<bool>((Hash)(-4209984786179366080L), InputArgument.op_Implicit(_ped), InputArgument.op_Implicit((int)weapon), InputArgument.op_Implicit((int)component)))
+				if (Function.Call<bool>(unchecked((Hash)(-4209984786179366080L)), (_ped), ((int)weapon), ((int)component)))
 				{
 					XElement weaponComponentElement = new XElement("COMPONENT", (object)component);
 					parentElement.Add(weaponComponentElement);
@@ -987,7 +987,7 @@ internal static class LsFunctions
 		foreach (XElement _weapon in _weapons)
 		{
 			bool hasWeapon = false;
-			WeaponHash weapon = (WeaponHash)(-1569615261);
+			WeaponHash weapon = unchecked((WeaponHash)(-1569615261));
 			foreach (XElement ele in _weapon.Elements())
 			{
 				if (ele.Name == "HASH")
@@ -1338,11 +1338,11 @@ internal static class LsFunctions
 		{
 			TimeChanged = false;
 		}
-		if (Function.Call<int>((Hash)(-2777906517671992481L)) == LSL.day)
+		if (Function.Call<int>(unchecked((Hash)(-2777906517671992481L))) == LSL.day)
 		{
 			return;
 		}
-		LSL.day = Function.Call<int>((Hash)(-2777906517671992481L));
+		LSL.day = Function.Call<int>(unchecked((Hash)(-2777906517671992481L)));
 		LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
 		if (LSL.dealer1Money > 1200000)
 		{
@@ -1592,7 +1592,7 @@ internal static class LsFunctions
 		//IL_0035: Unknown result type (might be due to invalid IL or missing references)
 		//IL_005a: Unknown result type (might be due to invalid IL or missing references)
 		Vector3 position = ((Entity)p).Position;
-		if (position.DistanceTo(target) > 20f || Function.Call<bool>((Hash)1322919935073282825L, InputArgument.op_Implicit(target.X), InputArgument.op_Implicit(target.Y), InputArgument.op_Implicit(target.Z)))
+		if (position.DistanceTo(target) > 20f || Function.Call<bool>((Hash)1322919935073282825L, (target.X), (target.Y), (target.Z)))
 		{
 			p.Task.RunTo(target);
 		}
@@ -1665,7 +1665,7 @@ internal static class LsFunctions
 		if (!inCar)
 		{
 			Game.Player.Character.Task.TurnTo((Entity)(object)p);
-			Function.Call((Hash)(-8213159594590722974L), InputArgument.op_Implicit(p), InputArgument.op_Implicit("GENERIC_HOWS_IT_GOING"), InputArgument.op_Implicit("SPEECH_PARAMS_STANDARD"), InputArgument.op_Implicit(0));
+			Function.Call(unchecked((Hash)(-8213159594590722974L)), (p), ("GENERIC_HOWS_IT_GOING"), ("SPEECH_PARAMS_STANDARD"), (0));
 			Script.Wait(1000);
 			p.Task.PlayAnimation("switch@franklin@002110_04_magd_3_weed_exchange", "002110_04_magd_3_weed_exchange_franklin", 8f, 3000, (AnimationFlags)16);
 			Game.Player.Character.Task.PlayAnimation("switch@franklin@002110_04_magd_3_weed_exchange", "002110_04_magd_3_weed_exchange_shopkeeper", 8f, 3000, (AnimationFlags)16);
@@ -1677,7 +1677,7 @@ internal static class LsFunctions
 			LSL.PlayerInventory[c.Drug.Name] -= c.amount;
 			PlayTheSound();
 			UI.Notify("Sold " + c.Drug.Name + " " + GramsToOz(c.amount) + ", you got " + GramsToOz(LSL.PlayerInventory[c.Drug.Name]) + " left. Gained ~g~" + repEarned + " ~s~rep, total rep ~g~" + LSL.areas[LSL.areaIndex].Reputation + "~s~ in " + LSL.areas[LSL.areaIndex].Name);
-			Function.Call((Hash)(-8213159594590722974L), InputArgument.op_Implicit(p), InputArgument.op_Implicit("GENERIC_THANKS"), InputArgument.op_Implicit("SPEECH_PARAMS_STANDARD"), InputArgument.op_Implicit(0));
+			Function.Call(unchecked((Hash)(-8213159594590722974L)), (p), ("GENERIC_THANKS"), ("SPEECH_PARAMS_STANDARD"), (0));
 			if ((Entity)(object)c.Vehicle != (Entity)null && ((Entity)c.Vehicle).Exists())
 			{
 				c.Ped.Task.PerformSequence(LSL.PerformTaskSeq(1, c.Vehicle, Vector3.Zero));
@@ -1693,7 +1693,7 @@ internal static class LsFunctions
 		}
 		else
 		{
-			Function.Call((Hash)(-8213159594590722974L), InputArgument.op_Implicit(p), InputArgument.op_Implicit("GENERIC_HOWS_IT_GOING"), InputArgument.op_Implicit("SPEECH_PARAMS_STANDARD"), InputArgument.op_Implicit(0));
+			Function.Call(unchecked((Hash)(-8213159594590722974L)), (p), ("GENERIC_HOWS_IT_GOING"), ("SPEECH_PARAMS_STANDARD"), (0));
 			Script.Wait(1000);
 			p.Task.PlayAnimation("switch@franklin@002110_04_magd_3_weed_exchange", "002110_04_magd_3_weed_exchange_franklin", 8f, 3000, (AnimationFlags)16);
 			Script.Wait(3000);
@@ -1704,7 +1704,7 @@ internal static class LsFunctions
 			LSL.PlayerInventory[c.Drug.Name] -= c.amount;
 			PlayTheSound();
 			UI.Notify("Sold " + c.Drug.Name + " " + GramsToOz(c.amount) + ", you got " + GramsToOz(LSL.PlayerInventory[c.Drug.Name]) + " left. Gained ~g~" + repEarned + " ~s~rep, total rep ~g~" + LSL.areas[LSL.areaIndex].Reputation + "~s~ in " + LSL.areas[LSL.areaIndex].Name);
-			Function.Call((Hash)(-8213159594590722974L), InputArgument.op_Implicit(p), InputArgument.op_Implicit("GENERIC_THANKS"), InputArgument.op_Implicit("SPEECH_PARAMS_STANDARD"), InputArgument.op_Implicit(0));
+			Function.Call(unchecked((Hash)(-8213159594590722974L)), (p), ("GENERIC_THANKS"), ("SPEECH_PARAMS_STANDARD"), (0));
 			if ((Entity)(object)c.Vehicle != (Entity)null && ((Entity)c.Vehicle).Exists())
 			{
 				c.Ped.Task.PerformSequence(LSL.PerformTaskSeq(1, c.Vehicle, Vector3.Zero));
@@ -1785,7 +1785,7 @@ internal static class LsFunctions
 		{
 			if (LSL.DEBUG)
 			{
-				UI.Notify(police.Count + " | " + Function.Call<int>((Hash)(-70476366192974276L), InputArgument.op_Implicit(((Entity)pol).Handle)) + " | " + IsPolice(pol));
+				UI.Notify(police.Count + " | " + Function.Call<int>(unchecked((Hash)(-70476366192974276L)), (((Entity)pol).Handle)) + " | " + IsPolice(pol));
 			}
 			if (CanSee((Entity)(object)pol, (Entity)(object)Game.Player.Character))
 			{
@@ -1842,7 +1842,7 @@ internal static class LsFunctions
 		{
 			if (LSL.DEBUG)
 			{
-				UI.Notify(police.Count + " | " + Function.Call<int>((Hash)(-70476366192974276L), InputArgument.op_Implicit(((Entity)pol).Handle)) + " | " + IsPolice(pol));
+				UI.Notify(police.Count + " | " + Function.Call<int>(unchecked((Hash)(-70476366192974276L)), (((Entity)pol).Handle)) + " | " + IsPolice(pol));
 			}
 			position = ((Entity)pol).Position;
 			if (position.DistanceTo(LSL.playerPos) < 40f && CanSee((Entity)(object)pol, (Entity)(object)Game.Player.Character))
@@ -2052,8 +2052,8 @@ internal static class LsFunctions
 		Dictionary<int, Tuple<int, int>> pedData = new Dictionary<int, Tuple<int, int>>();
 		foreach (int id in list)
 		{
-			int item = Function.Call<int>((Hash)7490462606036423932L, InputArgument.op_Implicit(_ped), InputArgument.op_Implicit(id));
-			int textureID = Function.Call<int>((Hash)334205219021784294L, InputArgument.op_Implicit(_ped), InputArgument.op_Implicit(id));
+			int item = Function.Call<int>((Hash)7490462606036423932L, (_ped), (id));
+			int textureID = Function.Call<int>((Hash)334205219021784294L, (_ped), (id));
 			Tuple<int, int> data = new Tuple<int, int>(item, textureID);
 			pedData.Add(id, data);
 		}
@@ -2072,7 +2072,7 @@ internal static class LsFunctions
 			11
 		})
 		{
-			Function.Call((Hash)2750315038012726912L, InputArgument.op_Implicit(_ped), InputArgument.op_Implicit(id), InputArgument.op_Implicit(_pData[id].Item1), InputArgument.op_Implicit(_pData[id].Item2), InputArgument.op_Implicit(0));
+			Function.Call((Hash)2750315038012726912L, (_ped), (id), (_pData[id].Item1), (_pData[id].Item2), (0));
 		}
 	}
 }

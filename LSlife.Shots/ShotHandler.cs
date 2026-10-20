@@ -118,7 +118,7 @@ internal static class ShotHandler
 		}
 		for (int j = 0; j < 100; j++)
 		{
-			if (!Function.Call<bool>((Hash)1322919935073282825L, InputArgument.op_Implicit(spawnPos.X), InputArgument.op_Implicit(spawnPos.Y), InputArgument.op_Implicit(spawnPos.Z)))
+			if (!Function.Call<bool>((Hash)1322919935073282825L, (spawnPos.X), (spawnPos.Y), (spawnPos.Z)))
 			{
 				break;
 			}

@@ -45,15 +45,13 @@ public class AreaDealer
 		dPed = p;
 		((Entity)dPed).IsPersistent = true;
 		dPed.Armor = 100;
-		WeaponHash[] array = new WeaponHash[4];
-		RuntimeHelpers.InitializeArray(array, __ldtoken(_003CPrivateImplementationDetails_003E._2DCBDDCA284576F0288ABC533C1295A8A5E2E8CAFDF0C853E4145C53C0960676));
-		WeaponHash[] weaponHashes = array;
+		WeaponHash[] weaponHashes = { WeaponHash.Pistol, WeaponHash.MicroSMG, WeaponHash.SMG, WeaponHash.AssaultRifle };
 		dPed.Weapons.Give(weaponHashes[LSL.rnd.Next(0, weaponHashes.Count())], 100, false, true);
 		dPed.RelationshipGroup = LSL.rival_nutral;
 		LsFunctions.SetRandomCombatStats(dPed);
-		dPed.FiringPattern = (FiringPattern)(-957453492);
+		dPed.FiringPattern = unchecked((FiringPattern)(-957453492));
 		dPed.CanSwitchWeapons = true;
-		Function.Call((Hash)(-4079649877180351064L), InputArgument.op_Implicit(dPed), InputArgument.op_Implicit(100));
+		Function.Call(unchecked((Hash)(-4079649877180351064L)), (dPed), (100));
 		if (dPed.IsInVehicle())
 		{
 			Vehicle = dPed.CurrentVehicle;
@@ -182,7 +180,7 @@ public class AreaDealer
 			if (!playerNear())
 			{
 				NewState = Enums.DStates.Normal;
-				Function.Call((Hash)(-4137652152022615111L), InputArgument.op_Implicit(dPed), InputArgument.op_Implicit("GENERIC_BYE"), InputArgument.op_Implicit("SPEECH_PARAMS_FORCE"));
+				Function.Call(unchecked((Hash)(-4137652152022615111L)), (dPed), ("GENERIC_BYE"), ("SPEECH_PARAMS_FORCE"));
 			}
 			if (ShouldAttackPlayer())
 			{
@@ -278,7 +276,7 @@ public class AreaDealer
 					CurrentState = Enums.DStates.LookAtPlayer;
 					break;
 				case Enums.DStates.TalkToPlayer:
-					Function.Call((Hash)(-8213159594590722974L), InputArgument.op_Implicit(dPed), InputArgument.op_Implicit("GENERIC_HOWS_IT_GOING"), InputArgument.op_Implicit("SPEECH_PARAMS_FORCE"));
+					Function.Call(unchecked((Hash)(-8213159594590722974L)), (dPed), ("GENERIC_HOWS_IT_GOING"), ("SPEECH_PARAMS_FORCE"));
 					CurrentState = Enums.DStates.TalkToPlayer;
 					break;
 				case Enums.DStates.AttackPlayer:
@@ -540,7 +538,7 @@ public class AreaDealer
 				if (Game.GameTime > time + 2000)
 				{
 					dealState = Enums.DealState.WalkingAway;
-					Function.Call((Hash)(-8213159594590722974L), InputArgument.op_Implicit(cPed), InputArgument.op_Implicit("GENERIC_THANKS"), InputArgument.op_Implicit("SPEECH_PARAMS_STANDARD"));
+					Function.Call(unchecked((Hash)(-8213159594590722974L)), (cPed), ("GENERIC_THANKS"), ("SPEECH_PARAMS_STANDARD"));
 					cPed.Task.WanderAround();
 					dPed.Task.GuardCurrentPosition();
 				}

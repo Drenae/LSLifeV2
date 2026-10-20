@@ -21,7 +21,7 @@ internal static class HeadShotHandler
 			{
 				DeleteHeadShot(headShot.Handle);
 			}
-			else if (!Function.Call<bool>((Hash)8107924672780253799L, InputArgument.op_Implicit(headShot.Handle)) || !Function.Call<bool>((Hash)(-6869846991849838174L), InputArgument.op_Implicit(headShot.Handle)))
+			else if (!Function.Call<bool>((Hash)8107924672780253799L, (headShot.Handle)) || !Function.Call<bool>(unchecked((Hash)(-6869846991849838174L)), (headShot.Handle)))
 			{
 				DeleteHeadShot(headShot.Handle);
 			}
@@ -30,19 +30,19 @@ internal static class HeadShotHandler
 
 	public static void DeleteHeadShot(string _name)
 	{
-		Function.Call((Hash)(-7588224396357745921L), InputArgument.op_Implicit(headShots[_name].Handle));
+		Function.Call(unchecked((Hash)(-7588224396357745921L)), (headShots[_name].Handle));
 		headShots.Remove(_name);
 	}
 
 	private static void DeleteHeadShot(int _handle)
 	{
-		Function.Call((Hash)(-7588224396357745921L), InputArgument.op_Implicit(_handle));
+		Function.Call(unchecked((Hash)(-7588224396357745921L)), (_handle));
 		headShots.Remove(headShots.First((KeyValuePair<string, HeadShot> r) => r.Value.Handle == _handle).Key);
 	}
 
 	public static bool HeadShotValid(HeadShot _h)
 	{
-		if (Function.Call<bool>((Hash)8107924672780253799L, InputArgument.op_Implicit(_h.Handle)) && Function.Call<bool>((Hash)(-6869846991849838174L), InputArgument.op_Implicit(_h.Handle)))
+		if (Function.Call<bool>((Hash)8107924672780253799L, (_h.Handle)) && Function.Call<bool>(unchecked((Hash)(-6869846991849838174L)), (_h.Handle)))
 		{
 			return true;
 		}
@@ -53,12 +53,12 @@ internal static class HeadShotHandler
 	{
 		//IL_0066: Unknown result type (might be due to invalid IL or missing references)
 		//IL_006b: Unknown result type (might be due to invalid IL or missing references)
-		int handle = Function.Call<int>((Hash)4927612575077781622L, InputArgument.op_Implicit(_ped));
-		while (!Function.Call<bool>((Hash)8107924672780253799L, InputArgument.op_Implicit(handle)) || !Function.Call<bool>((Hash)(-6869846991849838174L), InputArgument.op_Implicit(handle)))
+		int handle = Function.Call<int>((Hash)4927612575077781622L, (_ped));
+		while (!Function.Call<bool>((Hash)8107924672780253799L, (handle)) || !Function.Call<bool>(unchecked((Hash)(-6869846991849838174L)), (handle)))
 		{
 			Script.Yield();
 		}
-		string texture = Function.Call<string>((Hash)(-2643985901783720597L), InputArgument.op_Implicit(handle));
+		string texture = Function.Call<string>(unchecked((Hash)(-2643985901783720597L)), (handle));
 		Dictionary<string, HeadShot> dictionary = headShots;
 		Model model = ((Entity)_ped).Model;
 		dictionary.Add(_name, new HeadShot(handle, texture, (PedHash)model.Hash));

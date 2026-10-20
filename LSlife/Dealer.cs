@@ -67,15 +67,15 @@ public class Dealer
 			Script.Wait(0);
 		}
 		((Entity)ped).IsPersistent = true;
-		ped.SetIntoVehicle(vehicle, (VehicleSeat)(-1));
-		Function.Call((Hash)(-5650329060376590909L), InputArgument.op_Implicit(((Entity)ped).Handle), InputArgument.op_Implicit(100f));
-		Function.Call((Hash)(-5348838930497642877L), InputArgument.op_Implicit(((Entity)vehicle).Handle), InputArgument.op_Implicit(((Entity)ped).Handle));
+		ped.SetIntoVehicle(vehicle, unchecked((VehicleSeat)(-1)));
+		Function.Call(unchecked((Hash)(-5650329060376590909L)), (((Entity)ped).Handle), (100f));
+		Function.Call(unchecked((Hash)(-5348838930497642877L)), (((Entity)vehicle).Handle), (((Entity)ped).Handle));
 		destination = World.GetNextPositionOnStreet(pos, true);
 		ped.Task.DriveTo(vehicle, destination, 5f, 25f, 5);
 		state = States.Driving;
 		ped.StaysInVehicleWhenJacked = true;
 		ped.BlockPermanentEvents = true;
-		maxSpeed = Function.Call<float>((Hash)(-858003554332316349L), InputArgument.op_Implicit(vehicle)) * 0.8f;
+		maxSpeed = Function.Call<float>(unchecked((Hash)(-858003554332316349L)), (vehicle)) * 0.8f;
 	}
 
 	internal void SetSpeed()

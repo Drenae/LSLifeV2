@@ -1087,7 +1087,7 @@ public class StashVehicle
 		parentElement.Add(new XElement("CanTiresBurst", veh.CanTiresBurst));
 		parentElement.Add(new XElement("Fuel", veh.FuelLevel));
 		parentElement.Add(new XElement("Livery", veh.Livery));
-		if (Function.Call<bool>((Hash)(-5507252750051666468L), InputArgument.op_Implicit(((Entity)veh).Handle), InputArgument.op_Implicit(23)))
+		if (Function.Call<bool>(unchecked((Hash)(-5507252750051666468L)), (((Entity)veh).Handle), (23)))
 		{
 			parentElement.Add(new XElement("CustomTire", true));
 		}
@@ -1198,8 +1198,8 @@ public class StashVehicle
 		int i = 0;
 		foreach (WeaponHash weapon in Enum.GetValues(typeof(WeaponHash)))
 		{
-			bool flag = Function.Call<bool>((Hash)(-8220001501650343748L), InputArgument.op_Implicit(LSL.player.Character), InputArgument.op_Implicit((int)weapon));
-			int ammunitionInWeapon = Function.Call<int>((Hash)97480644549409105L, InputArgument.op_Implicit(LSL.player.Character), InputArgument.op_Implicit((int)weapon));
+			bool flag = Function.Call<bool>(unchecked((Hash)(-8220001501650343748L)), (LSL.player.Character), ((int)weapon));
+			int ammunitionInWeapon = Function.Call<int>((Hash)97480644549409105L, (LSL.player.Character), ((int)weapon));
 			if (!flag)
 			{
 				continue;
@@ -1212,7 +1212,7 @@ public class StashVehicle
 			parentElement.Add(weaponAmmoElement);
 			foreach (WeaponComponent component in Enum.GetValues(typeof(WeaponComponent)))
 			{
-				if (Function.Call<bool>((Hash)(-4209984786179366080L), InputArgument.op_Implicit(LSL.player.Character), InputArgument.op_Implicit((int)weapon), InputArgument.op_Implicit((int)component)))
+				if (Function.Call<bool>(unchecked((Hash)(-4209984786179366080L)), (LSL.player.Character), ((int)weapon), ((int)component)))
 				{
 					XElement weaponComponentElement = new XElement("COMPONENT", (object)component);
 					parentElement.Add(weaponComponentElement);

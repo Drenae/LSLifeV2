@@ -118,7 +118,7 @@ public class DrugDealer
 				DealState = DrugDealSates.Payed;
 				EnterState = true;
 				Ready = false;
-				Function.Call((Hash)(-8213159594590722974L), InputArgument.op_Implicit(lieut), InputArgument.op_Implicit("GENERIC_THANKS"), InputArgument.op_Implicit("SPEECH_PARAMS_STANDARD"), InputArgument.op_Implicit(0));
+				Function.Call(unchecked((Hash)(-8213159594590722974L)), (lieut), ("GENERIC_THANKS"), ("SPEECH_PARAMS_STANDARD"), (0));
 			}
 			break;
 		case DrugDealSates.Payed:
@@ -226,7 +226,7 @@ public class DrugDealer
 			}
 			if ((Entity)(object)goon == (Entity)null && (Entity)(object)dealerCar != (Entity)null)
 			{
-				SpawnPed((VehicleSeat)(-1), _leader: false);
+				SpawnPed(unchecked((VehicleSeat)(-1)), _leader: false);
 				if ((Entity)(object)dealerCar.Driver != (Entity)null)
 				{
 					goon = dealerCar.Driver;
@@ -361,7 +361,7 @@ public class DrugDealer
 		case DrugDealSates.PickedUp:
 			if (EnterState)
 			{
-				Function.Call((Hash)(-8213159594590722974L), InputArgument.op_Implicit(lieut), InputArgument.op_Implicit("GENERIC_BYE"), InputArgument.op_Implicit("SPEECH_PARAMS_STANDARD"), InputArgument.op_Implicit(0));
+				Function.Call(unchecked((Hash)(-8213159594590722974L)), (lieut), ("GENERIC_BYE"), ("SPEECH_PARAMS_STANDARD"), (0));
 				EnterState = false;
 			}
 			else
@@ -379,7 +379,7 @@ public class DrugDealer
 				if (doesExists)
 				{
 					lieut.Task.EnterVehicle(dealerCar, (VehicleSeat)0);
-					goon.Task.EnterVehicle(dealerCar, (VehicleSeat)(-1));
+					goon.Task.EnterVehicle(dealerCar, unchecked((VehicleSeat)(-1)));
 				}
 			}
 			else if (doesExists)
@@ -498,10 +498,10 @@ public class DrugDealer
 		//IL_0016: Unknown result type (might be due to invalid IL or missing references)
 		//IL_0017: Unknown result type (might be due to invalid IL or missing references)
 		//IL_000e: Unknown result type (might be due to invalid IL or missing references)
-		PedHash pedHash = (PedHash)(-412008429);
+		PedHash pedHash = unchecked((PedHash)(-412008429));
 		if (!_leader)
 		{
-			pedHash = (PedHash)(-984709238);
+			pedHash = unchecked((PedHash)(-984709238));
 		}
 		Ped p = dealerCar.CreatePedOnSeat(_seat, LsFunctions.RequestModel(pedHash));
 		if ((Entity)(object)p != (Entity)null && ((Entity)p).Exists())
@@ -509,28 +509,28 @@ public class DrugDealer
 			((Entity)p).IsPersistent = true;
 			p.RelationshipGroup = LSL.playerRelationship;
 			LsFunctions.SetRandomCombatStats(p);
-			p.FiringPattern = (FiringPattern)(-753768974);
+			p.FiringPattern = unchecked((FiringPattern)(-753768974));
 			p.AlwaysKeepTask = true;
 			p.CanSwitchWeapons = true;
 			p.BlockPermanentEvents = true;
-			Function.Call((Hash)(-4079649877180351064L), InputArgument.op_Implicit(p), InputArgument.op_Implicit(100));
+			Function.Call(unchecked((Hash)(-4079649877180351064L)), (p), (100));
 			switch (LsFunctions.RanRange(0, (int)(1f + LSL.areas[LSL.areaIndex].GangPresance * 0.5f)))
 			{
 			case 5:
-				p.Weapons.Give((WeaponHash)(-1074790547), 500, false, true);
+				p.Weapons.Give(unchecked((WeaponHash)(-1074790547)), 500, false, true);
 				p.Weapons.Give((WeaponHash)324215364, 500, true, true);
 				break;
 			case 4:
 				p.Weapons.Give((WeaponHash)1649403952, 500, false, true);
-				p.Weapons.Give((WeaponHash)(-1121678507), 500, true, true);
+				p.Weapons.Give(unchecked((WeaponHash)(-1121678507)), 500, true, true);
 				break;
 			case 3:
 				p.Weapons.Give((WeaponHash)1649403952, 500, false, true);
-				p.Weapons.Give((WeaponHash)(-619010992), 500, true, true);
+				p.Weapons.Give(unchecked((WeaponHash)(-619010992)), 500, true, true);
 				break;
 			case 2:
 				p.Weapons.Give((WeaponHash)487013001, 500, false, true);
-				p.Weapons.Give((WeaponHash)(-619010992), 500, true, true);
+				p.Weapons.Give(unchecked((WeaponHash)(-619010992)), 500, true, true);
 				break;
 			case 1:
 				p.Weapons.Give((WeaponHash)2017895192, 500, false, true);
