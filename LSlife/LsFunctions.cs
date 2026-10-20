@@ -1994,7 +1994,7 @@ internal static class LsFunctions
 		return FormatMetric(LegacyPacksToGrams(packs), color);
 	}
 
-	public static string FormatMetric(int _grams)
+	public static string GramsToOz(int _grams)
 	{
 		// LSL V2 FR : garder l'API existante pour ne pas casser les appels.
 		return FormatMetric(_grams);
