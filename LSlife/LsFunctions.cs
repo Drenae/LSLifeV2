@@ -286,7 +286,7 @@ internal static class LsFunctions
 	}
 
 	// LSL V2 FR : format compact pour les descriptions NativeUI étroites.
-	// La quantité reste stockée en paquets historiques de 28 g.
+	// Toutes les quantites sont exprimees en grammes.
 	public static string FormatOrderPacks(int grams)
 	{
 		return FormatMetric(grams);
@@ -686,7 +686,7 @@ internal static class LsFunctions
 		{
 			totalDrugs += _drugs[_drug.Key];
 		}
-		return totalDrugs + (pWeedGrams) + pCrackGrams) + pCocaineGrams));
+		return totalDrugs + pWeedGrams + pCrackGrams + pCocaineGrams;
 	}
 
 	public static void PedBag(Ped ped, bool give)
