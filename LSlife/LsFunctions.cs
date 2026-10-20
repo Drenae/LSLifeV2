@@ -693,7 +693,7 @@ internal static class LsFunctions
 		{
 			totalDrugs += _drugs[_drug.Key];
 		}
-		return totalDrugs + (pWeedOunce * 28 + pCrackOunce * 28 + pCocaineOunce * 28);
+		return totalDrugs + (LegacyPacksToGrams(pWeedOunce) + LegacyPacksToGrams(pCrackOunce) + LegacyPacksToGrams(pCocaineOunce));
 	}
 
 	public static void PedBag(Ped ped, bool give)
