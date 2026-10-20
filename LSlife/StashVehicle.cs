@@ -83,7 +83,7 @@ public class StashVehicle
 				{
 					int.TryParse(e.Value, out drugCarCocain);
 				}
-				if (e.Name == "cocainGrams")
+				if (e.Name == "cocaineGrams")
 				{
 					int.TryParse(e.Value, out drugCarCocainGrams);
 					foundOz = true;
@@ -107,7 +107,7 @@ public class StashVehicle
 			{
 				element.Add(new XElement("weedGrams", 0));
 				element.Add(new XElement("crackGrams", 0));
-				element.Add(new XElement("cocainGrams", 0));
+				element.Add(new XElement("cocaineGrams", 0));
 				LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
 			}
 		}
