@@ -1221,17 +1221,17 @@ internal static class LsMenus
 		}
 		else if ((object)item == LSL.putWeedOzStash)
 		{
-			LSL.HouseHandler.CurrentHouse.Weed += LSL.putWeedOzStash.Value);
+			LSL.HouseHandler.CurrentHouse.Weed += LSL.putWeedOzStash.Value;
 			LsFunctions.pWeedGrams -= LSL.putWeedOzStash.Value;
 		}
 		else if ((object)item == LSL.putCrackOzStash)
 		{
-			LSL.HouseHandler.CurrentHouse.Crack += LSL.putCrackOzStash.Value);
+			LSL.HouseHandler.CurrentHouse.Crack += LSL.putCrackOzStash.Value;
 			LsFunctions.pCrackGrams -= LSL.putCrackOzStash.Value;
 		}
 		else if ((object)item == LSL.putCocainOzStash)
 		{
-			LSL.HouseHandler.CurrentHouse.Cocain += LSL.putCocainOzStash.Value);
+			LSL.HouseHandler.CurrentHouse.Cocain += LSL.putCocainOzStash.Value;
 			LsFunctions.pCocaineGrams -= LSL.putCocainOzStash.Value;
 		}
 		else if ((object)item == LSL.putArmourStash)
