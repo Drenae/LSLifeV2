@@ -907,7 +907,7 @@ public class PlayerDealer
 		//IL_00ef: Unknown result type (might be due to invalid IL or missing references)
 		//IL_021c: Unknown result type (might be due to invalid IL or missing references)
 		LsFunctions.DbugString("Spawning Ped at" + Pos.X + ", " + Pos.Y + ", " + Pos.Z);
-		Ped = World.CreatePed(Model.op_Implicit(pHash), Pos);
+		Ped = World.CreatePed(new Model(pHash), Pos);
 		if ((Entity)(object)Ped != (Entity)null)
 		{
 			LsFunctions.DbugString("Ped spawned at " + ((Entity)Ped).Position.X + ", " + ((Entity)Ped).Position.Y + ", " + ((Entity)Ped).Position.Z);
