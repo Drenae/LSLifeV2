@@ -397,7 +397,7 @@ public class LSL : Script
 
 	public static UIMenuListItem vehTakeMultiplier;
 
-	public static readonly List<dynamic> multiplier = new List<object> { 1, 10, 28, 100, 280, 1000, 2800, 10000, 100000 }; // Valeurs historiques conservees pour les curseurs.
+	public static readonly List<dynamic> multiplier = new List<object> { 1, 5, 10, 25, 50, 100, 250, 500, 1000 };
 
 	public static UIMenu customerMainMenu;
 
@@ -1252,7 +1252,7 @@ public class LSL : Script
 		{
 			weedMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
 		}
-		bushWeed = new UIMenuSliderItem("Cannabis (28 g) $" + LsFunctions.IntToMoney(weed1Price - LsFunctions.Discount(weed1Price)));
+		bushWeed = new UIMenuSliderItem("Cannabis (prix/100 g) $" + LsFunctions.IntToMoney(LsFunctions.PriceForGrams(100, weed1Price - LsFunctions.Discount(weed1Price))));
 		weedMenu.AddItem((UIMenuItem)(object)bushWeed);
 		bushWeed.Maximum = dealer1Weed;
 		bushWeed.Multiplier = 1;
@@ -1268,7 +1268,7 @@ public class LSL : Script
 		{
 			crackMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
 		}
-		crack = new UIMenuSliderItem("Crack (28 g) $" + LsFunctions.IntToMoney(crack1Price - LsFunctions.Discount(crack1Price)));
+		crack = new UIMenuSliderItem("Crack (prix/100 g) $" + LsFunctions.IntToMoney(LsFunctions.PriceForGrams(100, crack1Price - LsFunctions.Discount(crack1Price))));
 		crackMenu.AddItem((UIMenuItem)(object)crack);
 		crack.Maximum = dealer1Crack;
 		crack.Multiplier = 1;
@@ -1284,7 +1284,7 @@ public class LSL : Script
 		{
 			cocainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
 		}
-		cocaine = new UIMenuSliderItem("Cocaïne (28 g) $" + LsFunctions.IntToMoney(cocain1Price - LsFunctions.Discount(cocain1Price)));
+		cocaine = new UIMenuSliderItem("Cocaïne (prix/100 g) $" + LsFunctions.IntToMoney(LsFunctions.PriceForGrams(100, cocain1Price - LsFunctions.Discount(cocain1Price))));
 		cocainMenu.AddItem((UIMenuItem)(object)cocaine);
 		cocaine.Maximum = dealer1Cocain;
 		cocaine.Multiplier = 1;
