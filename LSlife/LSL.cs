@@ -1546,7 +1546,7 @@ public class LSL : Script
 		LsMenuPool.FormatDescriptions = true;
 		LsMenuPool.RefreshIndex();
 		iFruit = new CustomiFruit();
-		contactZee = new iFruitContact("Zee");
+		contactZee = new iFruitContact("Rafael Mendoza");
 		contactZee.Answered += LsFunctions.ContactAnswered;
 		contactZee.DialTimeout = 1000;
 		contactZee.Active = true;
