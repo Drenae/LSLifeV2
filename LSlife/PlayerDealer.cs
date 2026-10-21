@@ -1078,7 +1078,7 @@ public class PlayerDealer
 		{
 			Function.Call((Hash)7023634693725934496L);
 			LSL.displayHelpTimer = Game.GameTime;
-			LsFunctions.DisplayHelpText("Press ~INPUT_CONTEXT~ to Talk to this person.");
+			LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour parler à cette personne.");
 		}
 		if (Game.IsControlJustReleased(2, (Control)51))
 		{
@@ -1104,7 +1104,7 @@ public class PlayerDealer
 			{
 				Function.Call((Hash)7023634693725934496L);
 				LSL.displayHelpTimer = Game.GameTime;
-				LsFunctions.DisplayHelpText("Press ~INPUT_VEH_HORN~ to make your dealer Follow you");
+				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_VEH_HORN~ pour que ton dealer te suive.");
 			}
 			if (Game.IsControlJustPressed(2, (Control)86))
 			{
