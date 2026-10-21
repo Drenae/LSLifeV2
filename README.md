@@ -10,7 +10,7 @@ Redonner vie à un mod qui n'était plus maintenu : le faire fonctionner, corrig
 
 - Base historique restaurée et fonctionnelle en jeu sur `main` (retour utilisateur).
 - Référence stable : `v1.0.0-legacy-stable` / commit `957c680`.
-- Conversion vers le système métrique engagée ; vérifier précisément son avancement dans le code avant toute nouvelle modification.
+- Conversion vers le système métrique engagée ; **chantier à reprendre en tout dernier**, après traduction, corrections de bugs et personnalisation légère.
 - La traduction française et les corrections de bugs restent des chantiers prioritaires.
 
 ## Environnement
