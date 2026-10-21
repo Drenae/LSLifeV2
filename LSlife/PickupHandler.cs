@@ -99,7 +99,7 @@ public class PickupHandler
 					RemoveBag(bag);
 					if (LSL.DEBUG)
 					{
-						LsFunctions.SendTextMsg("A bag was removed for being too old.");
+						LsFunctions.SendTextMsg("Un sac a disparu car il était resté trop longtemps au sol.");
 					}
 				}
 			}
