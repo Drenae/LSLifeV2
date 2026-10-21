@@ -50,11 +50,11 @@ internal static class DropDrugs
 		}
 		case 1:
 			LSL.pStashVehicle.AddDrugs();
-			LsFunctions.SendTextMsg("Transfered drugs to vehicle");
+			LsFunctions.SendTextMsg("Drogue transférée dans le véhicule.");
 			break;
 		case 2:
 			LSL.HouseHandler.CurrentHouse.AddDrugs();
-			LsFunctions.SendTextMsg("Transfered drugs to stash");
+			LsFunctions.SendTextMsg("Drogue transférée dans la planque.");
 			break;
 		}
 	}
