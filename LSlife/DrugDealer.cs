@@ -75,7 +75,7 @@ public class DrugDealer
 						blip.ShowRoute = true;
 						LsFunctions.DbugString("dealer car spawned");
 						string areaName = World.GetZoneName(dealerSpawn.Position);
-						LsFunctions.TextMsg("ZEE", "Order", "Ok go meet my people in ~y~" + areaName + " ~s~, they will sort you out.");
+						LsFunctions.TextMsg("ZEE", "Commande", "OK, retrouve mes gars à ~y~" + areaName + " ~s~, ils s'occuperont de toi.");
 					}
 					else
 					{
@@ -95,7 +95,7 @@ public class DrugDealer
 		}
 		else
 		{
-			LsFunctions.TextMsg("ZEE", "Order", "We havent got anyone around there.");
+			LsFunctions.TextMsg("ZEE", "Commande", "On n'a personne dans ce quartier.");
 			DealState = DrugDealSates.Destroy;
 		}
 	}
@@ -454,7 +454,7 @@ public class DrugDealer
 		if (!LSL.LsMenuPool.IsAnyMenuOpen() && (float)Game.GameTime > LSL.displayHelpTimer + 6000f)
 		{
 			LSL.displayHelpTimer = Game.GameTime;
-			LsFunctions.DisplayHelpText("Press ~INPUT_CONTEXT~ to pickup the Drugs");
+			LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour récupérer la drogue.");
 		}
 	}
 
@@ -471,11 +471,11 @@ public class DrugDealer
 			LSL.displayHelpTimer = Game.GameTime;
 			if (PlayerOrder.CanPayBill())
 			{
-				LsFunctions.DisplayHelpText("Press ~INPUT_CONTEXT~ to do the deal");
+				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour conclure la transaction.");
 			}
 			else
 			{
-				LsFunctions.DisplayHelpText("You do not have enough credit or cash to cover the price.");
+				LsFunctions.DisplayHelpText("Tu n'as pas assez d'argent ni de crédit pour payer.");
 			}
 		}
 	}
