@@ -2220,7 +2220,7 @@ public class LSL : Script
 							UI.Notify("dealer1 drive-by");
 						}
 						LsFunctions.SpawnDriveBy(player.Character, _agressive: true);
-						LsFunctions.TextMsg("ZEE", "Debt", "Rembourse ta dette et je les rappellerai.");
+						LsFunctions.TextMsg("ZEE", "Dette", "Rembourse ta dette et je les rappellerai.");
 					}
 				}
 				if (entitiesCleanUp.Count > 0)
@@ -2668,7 +2668,7 @@ public class LSL : Script
 				Ped p4 = (Ped)(object)((killer3 is Ped) ? killer3 : null);
 				if (p4 != null && (Entity)(object)p4 != (Entity)null && p4.IsHuman && !p4.IsPlayer && !LsFunctions.IsPolice(p4) && (Entity)(object)attacker == (Entity)null)
 				{
-					LsFunctions.TextMsg("ZEE", "info", "J'ai retrouvé cette personne. Je t'ai envoyé sa position.");
+					LsFunctions.TextMsg("ZEE", "Information", "J'ai retrouvé cette personne. Je t'ai envoyé sa position.");
 					attacker = p4;
 					((Entity)attacker).IsPersistent = true;
 					attackerMoney = player.Money - (int)((double)player.Money * 0.1);
@@ -3216,7 +3216,7 @@ public class LSL : Script
 		{
 			wepDealer.ped.Task.DriveTo(wepDealer.vehicle, wepDealer.destination, 4f, 50f, 6);
 			wepDealer.state = Dealer.States.Fast;
-			UI.ShowSubtitle("Ok, putting my foot down.", 2000);
+			UI.ShowSubtitle("OK, j'accélère.", 2000);
 			wepDealer.canSpeed = true;
 		}
 		if (wepDealer.state == Dealer.States.Slower)
@@ -3792,7 +3792,7 @@ public class LSL : Script
 				}
 				else
 				{
-					UI.Notify("you must be in a vehicle to add a position");
+					UI.Notify("Tu dois être dans un véhicule pour ajouter une position.");
 				}
 			}
 			if (DEBUG)
@@ -3894,7 +3894,7 @@ public class LSL : Script
 			}
 			else
 			{
-				LsFunctions.SendTextMsg("~r~Spawning Weapon Dealer Failed");
+				LsFunctions.SendTextMsg("~r~Impossible de faire apparaître le vendeur d'armes.");
 			}
 		}
 		else if (ZeesDealers == null && NewOrder != null)
@@ -3907,7 +3907,7 @@ public class LSL : Script
 		}
 		else
 		{
-			LsFunctions.TextMsg("ZEE", "Order", "Je leur dirai que tu ne viens pas.");
+			LsFunctions.TextMsg("ZEE", "Commande", "Je leur dirai que tu ne viens pas.");
 			ZeesDealers.Dismiss();
 			if (NewOrder != null)
 			{
