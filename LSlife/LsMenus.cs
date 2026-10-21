@@ -1685,7 +1685,7 @@ internal static class LsMenus
 							LSL.wWeapons.Index = 0;
 							if (LSL.DEBUG)
 							{
-								UI.Notify("Enregistrement de l'arme du dealer : " + ((object)wep/*cast due to constrained. prefix*/).ToString() + " ammo:" + ammo);
+								UI.Notify("Enregistrement de l'arme du dealer : " + ((object)wep/*cast due to constrained. prefix*/).ToString() + " munitions : " + ammo);
 							}
 							break;
 						}
