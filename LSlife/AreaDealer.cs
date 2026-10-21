@@ -307,7 +307,7 @@ public class AreaDealer
 		}
 		else
 		{
-			UI.Notify("~r~Area Dealer Ped NULL something wrong");
+			UI.Notify("~r~Erreur : personnage du dealer de quartier introuvable");
 		}
 	}
 
@@ -366,7 +366,7 @@ public class AreaDealer
 			{
 				Function.Call((Hash)7023634693725934496L);
 				LSL.displayHelpTimer = Game.GameTime;
-				LsFunctions.DisplayHelpText("Press ~INPUT_SPRINT~ to Talk to this person.");
+				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour parler à cette personne.");
 			}
 			if (Game.IsControlJustPressed(2, (Control)21))
 			{
@@ -450,14 +450,14 @@ public class AreaDealer
 				cPed = null;
 				if (DEBUG)
 				{
-					UI.Notify("aDealer Customer doesnt exist");
+					UI.Notify("Le client du dealer de quartier n'existe pas");
 				}
 			}
 			if ((Entity)(object)cPed == (Entity)null)
 			{
 				if (DEBUG)
 				{
-					UI.Notify("aDealer Getting Customer");
+					UI.Notify("Recherche d'un client pour le dealer de quartier");
 				}
 				List<Ped> peds = LSL.lPeds.GetPeds;
 				if (peds.ToList().Count > 0)
@@ -481,7 +481,7 @@ public class AreaDealer
 				}
 				if (DEBUG)
 				{
-					UI.Notify("aDealer found no peds");
+					UI.Notify("Aucun personnage trouvé pour le dealer de quartier");
 				}
 				cTimer.Reset();
 				return;
@@ -566,7 +566,7 @@ public class AreaDealer
 		{
 			if (DEBUG)
 			{
-				UI.Notify("aDealer Removing Customer to Far Away");
+				UI.Notify("Client du dealer de quartier supprimé : trop éloigné");
 			}
 			LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
 			cPed = null;
