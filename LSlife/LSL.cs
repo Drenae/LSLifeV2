@@ -2284,7 +2284,7 @@ public class LSL : Script
 			{
 				if (DEBUG)
 				{
-					UI.Notify("Player weapon change detected");
+					UI.Notify("Changement d'arme du joueur détecté");
 				}
 				playerWeps.Clear();
 				playerWeapons.Clear();
@@ -2302,7 +2302,7 @@ public class LSL : Script
 					XElement weaponNameElement = new XElement("HASH", (object)weapon2);
 					if (DEBUG)
 					{
-						UI.Notify("Added " + ((object)weapon2/*cast due to constrained. prefix*/).ToString() + " to playerWeapons list.");
+						UI.Notify("Arme ajoutée : " + ((object)weapon2/*cast due to constrained. prefix*/).ToString() + " (liste playerWeapons).");
 					}
 					XElement weaponAmmoElement = new XElement("AMMO", ammunitionInWeapon);
 					parentElement.Add(weaponNameElement);
@@ -2729,7 +2729,7 @@ public class LSL : Script
 					attacker.DropsWeaponsOnDeath = false;
 					if (DEBUG)
 					{
-						UI.Notify("Killer has equiped " + attacker.Weapons.Current.Name + " & and has equiped Body Armour");
+						UI.Notify("L'assaillant est équipé de " + attacker.Weapons.Current.Name + " et d'un gilet pare-balles");
 					}
 					attackerWeed = PlayerInventory["Weed"];
 					attackerCrack = PlayerInventory["Crack"];
