@@ -964,6 +964,7 @@ public class LSL : Script
 		weedMenu.AddItem(WeedBuy);
 		bushWeed.OnSliderChanged += LsMenus.onSliderChange;
 		weedMenu.OnItemSelect += LsMenus.onWeedMenuSelect;
+		weedMenu.OnMenuOpen += DrugStockMenu_OnMenuOpen;
 		crackMenu = LsMenuPool.AddSubMenu(OrderDrugs, "Crack");
 		if (UseSprites)
 		{
@@ -978,6 +979,7 @@ public class LSL : Script
 		crackMenu.AddItem(CrackBuy);
 		crack.OnSliderChanged += LsMenus.onSliderChange;
 		crackMenu.OnItemSelect += LsMenus.onCrackMenuSelect;
+		crackMenu.OnMenuOpen += DrugStockMenu_OnMenuOpen;
 		cocainMenu = LsMenuPool.AddSubMenu(OrderDrugs, "Cocaine");
 		if (UseSprites)
 		{
@@ -992,6 +994,7 @@ public class LSL : Script
 		cocainMenu.AddItem(CocainBuy);
 		cocaine.OnSliderChanged += LsMenus.onSliderChange;
 		cocainMenu.OnItemSelect += LsMenus.onCocainMenuSelect;
+		cocainMenu.OnMenuOpen += DrugStockMenu_OnMenuOpen;
 		PlaceOrder = new UIMenuItem("Commander pour $" + LsFunctions.IntToMoney(0));
 		OrderDrugs.AddItem(PlaceOrder);
 		OrderDrugs.OnItemSelect += LsMenus.OnOrderDrugsMenuSelect;
@@ -1257,6 +1260,22 @@ public class LSL : Script
 		SlowTickTime = Game.GameTime;
 		randomAttackTimer = Game.GameTime;
 		reloadTimer = Game.GameTime;
+	}
+
+	private void DrugStockMenu_OnMenuOpen(UIMenu sender)
+	{
+		if (sender == weedMenu)
+		{
+			((UIText)weedMenu.Subtitle).Caption = "Stock disponible : " + dealer1Weed + " oz";
+		}
+		else if (sender == crackMenu)
+		{
+			((UIText)crackMenu.Subtitle).Caption = "Stock disponible : " + dealer1Crack + " oz";
+		}
+		else if (sender == cocainMenu)
+		{
+			((UIText)cocainMenu.Subtitle).Caption = "Stock disponible : " + dealer1Cocain + " oz";
+		}
 	}
 
 	private void OrderDrugs_OnMenuOpen(UIMenu sender)
