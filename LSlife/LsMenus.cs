@@ -1685,7 +1685,7 @@ internal static class LsMenus
 							LSL.wWeapons.Index = 0;
 							if (LSL.DEBUG)
 							{
-								UI.Notify("Saving Dealer Weapon " + ((object)wep/*cast due to constrained. prefix*/).ToString() + " ammo:" + ammo);
+								UI.Notify("Enregistrement de l'arme du dealer : " + ((object)wep/*cast due to constrained. prefix*/).ToString() + " ammo:" + ammo);
 							}
 							break;
 						}
@@ -1694,12 +1694,12 @@ internal static class LsMenus
 				}
 				if (LSL.DEBUG)
 				{
-					UI.Notify("No match found in playerWeapons");
+					UI.Notify("Aucune correspondance dans playerWeapons");
 				}
 			}
 			else if (LSL.DEBUG)
 			{
-				UI.Notify("No such Hash found " + LSL.playerWeps[LSL.wWeapons.Index]);
+				UI.Notify("Identifiant d'arme introuvable : " + LSL.playerWeps[LSL.wWeapons.Index]);
 			}
 		}
 		else if (LSL.DEBUG)
