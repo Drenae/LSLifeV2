@@ -376,7 +376,7 @@ public class PlayerDealerHandler
 				allocatedIDs.Add(id2);
 				if (LSL.DEBUG)
 				{
-					UI.Notify("Added " + id2 + " to allocated ID's, Size of pool =" + allocatedIDs.Count);
+					UI.Notify("Identifiant " + id2 + " attribué, taille du groupe = " + allocatedIDs.Count);
 				}
 				if (dealers.FindAll((PlayerDealer d) =>
 				{
@@ -392,7 +392,7 @@ public class PlayerDealerHandler
 				}
 				if (LSL.DEBUG)
 				{
-					UI.Notify("Loaded dealer" + id2);
+					UI.Notify("Dealer chargé : " + id2);
 				}
 			}
 		}
@@ -534,7 +534,7 @@ public class PlayerDealerHandler
 		}
 		if (LSL.DEBUG)
 		{
-			UI.Notify("New ID " + id);
+			UI.Notify("Nouvel identifiant : " + id);
 		}
 		allocatedIDs.Add(id);
 		return id;
