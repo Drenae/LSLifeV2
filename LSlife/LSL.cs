@@ -1264,7 +1264,7 @@ public class LSL : Script
 		if (dealer1ReloadOrder)
 		{
 			Enum.TryParse<Enums.DayGTA>(dealer1ReloadDay.ToString(), out var mDay);
-			LsFunctions.TextMsg("ZEE", "Reload", "La commande devrait arriver " + mDay.ToString() + " à " + dealer1ReloadHour + ":00");
+			LsFunctions.TextMsg("ZEE", "Réassort", "La commande devrait arriver " + mDay.ToString() + " à " + dealer1ReloadHour + ":00");
 		}
 		if (!NewOrder.Placed)
 		{
