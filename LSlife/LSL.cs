@@ -838,27 +838,27 @@ public class LSL : Script
 		}
 		LsMenuPool = new MenuPool();
 		Color.FromArgb(114, 204, 114);
-		zeeMenu = new UIMenu("Zee", "What you want?");
+		zeeMenu = new UIMenu("Zee", "Tu veux quoi ?");
 		if (UseSprites)
 		{
 			zeeMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
 		}
 		LsMenuPool.Add(zeeMenu);
-		startDealing = LsMenuPool.AddSubMenu(zeeMenu, "Dealing.");
+		startDealing = LsMenuPool.AddSubMenu(zeeMenu, "Deal");
 		if (UseSprites)
 		{
 			startDealing.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
 		}
-		sellWeed = new UIMenuCheckboxItem("Sell Weed", check: true);
-		sellCrack = new UIMenuCheckboxItem("Sell Crack", check: true);
-		sellCocaine = new UIMenuCheckboxItem("Sell Cocaine", check: true);
-		StartDeal = new UIMenuItem("Start Dealing.");
+		sellWeed = new UIMenuCheckboxItem("Vendre de la beuh", check: true);
+		sellCrack = new UIMenuCheckboxItem("Vendre du crack", check: true);
+		sellCocaine = new UIMenuCheckboxItem("Vendre de la cocaïne", check: true);
+		StartDeal = new UIMenuItem("Commencer à dealer");
 		startDealing.AddItem(sellWeed);
 		startDealing.AddItem(sellCrack);
 		startDealing.AddItem(sellCocaine);
 		startDealing.AddItem(StartDeal);
 		startDealing.OnItemSelect += LsMenus.OnstartDealSelect;
-		OrderDrugs = LsMenuPool.AddSubMenu(zeeMenu, "Order Drugs.");
+		OrderDrugs = LsMenuPool.AddSubMenu(zeeMenu, "Commander de la drogue");
 		if (UseSprites)
 		{
 			OrderDrugs.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
@@ -868,31 +868,31 @@ public class LSL : Script
 		OrderDrugs.Title.Outline = true;
 		((UIText)OrderDrugs.Title).Shadow = true;
 		OrderDrugs.OnMenuOpen += OrderDrugs_OnMenuOpen;
-		buyWeapons = new UIMenuItem("Buy Weapons.");
+		buyWeapons = new UIMenuItem("Acheter des armes");
 		zeeMenu.AddItem(buyWeapons);
-		buyLift = new UIMenuItem("Ask for a Lift.");
+		buyLift = new UIMenuItem("Demander à être déposé");
 		zeeMenu.AddItem(buyLift);
-		payDebt = new UIMenuItem("Pay Debt");
+		payDebt = new UIMenuItem("Rembourser la dette");
 		zeeMenu.AddItem(payDebt);
 		zeeMenu.OnItemSelect += LsMenus.OnZeeMenuSelect;
-		hireDealerMainMenu = new UIMenu("Hire Dealer", "Select an option");
+		hireDealerMainMenu = new UIMenu("Recruter un dealer", "Choisis une option");
 		if (UseSprites)
 		{
 			hireDealerMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_dealer.png");
 		}
 		LsMenuPool.Add(hireDealerMainMenu);
-		hireDealerOfferAmount = new UIMenuSliderItem("Offer Amount");
+		hireDealerOfferAmount = new UIMenuSliderItem("Montant proposé");
 		hireDealerOfferAmount.Maximum = player.Money;
 		hireDealerOfferAmount.Multiplier = 1000;
-		hireDealerMakeOffer = new UIMenuItem("Make Offer");
-		hireDealerFollowButton = new UIMenuItem("Cancel Offer");
+		hireDealerMakeOffer = new UIMenuItem("Faire une offre");
+		hireDealerFollowButton = new UIMenuItem("Annuler l'offre");
 		hireDealerMainMenu.AddItem(hireDealerOfferAmount);
 		hireDealerMainMenu.AddItem(hireDealerMakeOffer);
 		hireDealerMainMenu.AddItem(hireDealerFollowButton);
 		hireDealerOfferAmount.OnSliderChanged += LsMenus.HireDealerOfferAmount_OnSliderChanged;
 		hireDealerMakeOffer.Activated += LsMenus.HireDealerOfferSelect;
 		hireDealerFollowButton.Activated += LsMenus.HireDealerFollowSelect;
-		WorkerMainMenu = new UIMenu("Worker", "Give stuff to your Dealer");
+		WorkerMainMenu = new UIMenu("Employé", "Donner du stock au dealer");
 		if (UseSprites)
 		{
 			WorkerMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_worker.png");
@@ -904,13 +904,13 @@ public class LSL : Script
 		wCrack.Maximum = PlayerInventory["Crack"];
 		wCocaine = new UIMenuSliderItem("Coke " + LsFunctions.GramsToOz(0));
 		wCocaine.Maximum = PlayerInventory["Cocaine"];
-		wMultiplier = new UIMenuListItem("Multiplier", multiplier, 0);
-		wConfirm = new UIMenuItem("Confirm");
-		wCollect = new UIMenuItem("Collect");
-		List<object> orders = new List<object> { "Nothing" };
-		wOrder = new UIMenuListItem("Orders", orders, 0);
-		wArmour = new UIMenuItem("Give Armour");
-		wWeapons = new UIMenuListItem("Give weapon", playerWeps, 0);
+		wMultiplier = new UIMenuListItem("Multiplicateur", multiplier, 0);
+		wConfirm = new UIMenuItem("Confirmer");
+		wCollect = new UIMenuItem("Récupérer");
+		List<object> orders = new List<object> { "Rien" };
+		wOrder = new UIMenuListItem("Commandes", orders, 0);
+		wArmour = new UIMenuItem("Donner un gilet");
+		wWeapons = new UIMenuListItem("Donner une arme", playerWeps, 0);
 		WorkerMainMenu.AddItem(wWeed);
 		WorkerMainMenu.AddItem(wCrack);
 		WorkerMainMenu.AddItem(wCocaine);
@@ -931,24 +931,24 @@ public class LSL : Script
 		wWeapons.Activated += LsMenus.WWeapons_Activated;
 		int mWprice = meleePrice[0] - LsFunctions.Discount(meleePrice[0]);
 		int pWprice = pistolPrice[0] - LsFunctions.Discount(pistolPrice[0]);
-		wepMenu = new UIMenu("Wepons", "What you want?");
+		wepMenu = new UIMenu("Armes", "Tu veux quoi ?");
 		if (UseSprites)
 		{
 			wepMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_dealer.png");
 		}
 		LsMenuPool.Add(wepMenu);
-		melee = new UIMenuListItem("Melee $" + LsFunctions.IntToMoney(mWprice), meleeWeps, 0);
+		melee = new UIMenuListItem("Arme blanche $" + LsFunctions.IntToMoney(mWprice), meleeWeps, 0);
 		wepMenu.AddItem(melee);
-		pistol = new UIMenuListItem("Pistol $" + LsFunctions.IntToMoney(pWprice), pistolWeps, 0);
+		pistol = new UIMenuListItem("Pistolet $" + LsFunctions.IntToMoney(pWprice), pistolWeps, 0);
 		wepMenu.AddItem(pistol);
-		armour = new UIMenuItem("Armour $" + LsFunctions.IntToMoney(250 - LsFunctions.Discount(250)));
+		armour = new UIMenuItem("Gilet $" + LsFunctions.IntToMoney(250 - LsFunctions.Discount(250)));
 		wepMenu.AddItem(armour);
-		dismiss = new UIMenuItem("Dismiss");
+		dismiss = new UIMenuItem("Renvoyer");
 		wepMenu.AddItem(dismiss);
 		wepMenu.OnItemSelect += LsMenus.OnWepMenuSelect;
 		melee.OnListChanged += LsMenus.onListChange;
 		pistol.OnListChanged += LsMenus.onListChange;
-		OrderMultipliers = new UIMenuListItem("Multiplier", multiplier, 0);
+		OrderMultipliers = new UIMenuListItem("Multiplicateur", multiplier, 0);
 		OrderMultipliers.OnListChanged += DMultiplier_OnListChanged;
 		weedMenu = LsMenuPool.AddSubMenu(OrderDrugs, "Weed");
 		if (UseSprites)
@@ -960,7 +960,7 @@ public class LSL : Script
 		bushWeed.Maximum = dealer1Weed;
 		bushWeed.Multiplier = 1;
 		weedMenu.AddItem(OrderMultipliers);
-		WeedBuy = new UIMenuItem("Order: " + bushWeed.Value);
+		WeedBuy = new UIMenuItem("Commander : " + bushWeed.Value);
 		weedMenu.AddItem(WeedBuy);
 		bushWeed.OnSliderChanged += LsMenus.onSliderChange;
 		weedMenu.OnItemSelect += LsMenus.onWeedMenuSelect;
@@ -974,7 +974,7 @@ public class LSL : Script
 		crack.Maximum = dealer1Crack;
 		crack.Multiplier = 1;
 		crackMenu.AddItem(OrderMultipliers);
-		CrackBuy = new UIMenuItem("Buy: " + crack.Value);
+		CrackBuy = new UIMenuItem("Acheter : " + crack.Value);
 		crackMenu.AddItem(CrackBuy);
 		crack.OnSliderChanged += LsMenus.onSliderChange;
 		crackMenu.OnItemSelect += LsMenus.onCrackMenuSelect;
@@ -988,25 +988,25 @@ public class LSL : Script
 		cocaine.Maximum = dealer1Cocain;
 		cocaine.Multiplier = 1;
 		cocainMenu.AddItem(OrderMultipliers);
-		CocainBuy = new UIMenuItem("Buy: " + cocaine.Value);
+		CocainBuy = new UIMenuItem("Acheter : " + cocaine.Value);
 		cocainMenu.AddItem(CocainBuy);
 		cocaine.OnSliderChanged += LsMenus.onSliderChange;
 		cocainMenu.OnItemSelect += LsMenus.onCocainMenuSelect;
-		PlaceOrder = new UIMenuItem("Place Order $" + LsFunctions.IntToMoney(0));
+		PlaceOrder = new UIMenuItem("Commander pour $" + LsFunctions.IntToMoney(0));
 		OrderDrugs.AddItem(PlaceOrder);
 		OrderDrugs.OnItemSelect += LsMenus.OnOrderDrugsMenuSelect;
-		stashMainMenu = new UIMenu("Safehouse Stash", "Select an option.");
+		stashMainMenu = new UIMenu("Stockage de la planque", "Choisis une option.");
 		if (UseSprites)
 		{
 			stashMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
 		}
 		LsMenuPool.Add(stashMainMenu);
-		stashTakeMenu = LsMenuPool.AddSubMenu(stashMainMenu, "Take");
+		stashTakeMenu = LsMenuPool.AddSubMenu(stashMainMenu, "Retirer");
 		if (UseSprites)
 		{
 			stashTakeMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
 		}
-		stashPutMenu = LsMenuPool.AddSubMenu(stashMainMenu, "Stash");
+		stashPutMenu = LsMenuPool.AddSubMenu(stashMainMenu, "Déposer");
 		if (UseSprites)
 		{
 			stashPutMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
@@ -1056,20 +1056,20 @@ public class LSL : Script
 		putCocainOzStash.Maximum = LsFunctions.pCocaineOunce;
 		putCocainStash.Multiplier = 1;
 		putCocainStash.OnSliderChanged += LsMenus.onSliderChange;
-		putMoneyStash = new UIMenuSliderItem("Money $");
+		putMoneyStash = new UIMenuSliderItem("Argent $");
 		stashPutMenu.AddItem(putMoneyStash);
 		putMoneyStash.Maximum = player.Money;
 		putMoneyStash.Multiplier = 100;
-		takeMoneyStash = new UIMenuSliderItem("Money $");
+		takeMoneyStash = new UIMenuSliderItem("Argent $");
 		stashTakeMenu.AddItem(takeMoneyStash);
 		takeMoneyStash.Maximum = 0;
 		takeMoneyStash.Multiplier = 100;
 		putMoneyStash.OnSliderChanged += LsMenus.onSliderChange;
 		takeMoneyStash.OnSliderChanged += LsMenus.onSliderChange;
-		stashPutMultiplier = new UIMenuListItem("Multiplier", multiplier, 0);
+		stashPutMultiplier = new UIMenuListItem("Multiplicateur", multiplier, 0);
 		stashPutMenu.AddItem(stashPutMultiplier);
 		stashPutMultiplier.OnListChanged += LsMenus.onListChange;
-		stashTakeMultiplier = new UIMenuListItem("Multiplier", multiplier, 0);
+		stashTakeMultiplier = new UIMenuListItem("Multiplicateur", multiplier, 0);
 		stashTakeMenu.AddItem(stashTakeMultiplier);
 		stashTakeMultiplier.OnListChanged += LsMenus.onListChange;
 		InventoryText.Innit();
@@ -1077,10 +1077,10 @@ public class LSL : Script
 		string mWeed = "Weed. ";
 		string mCrack = "Crack. ";
 		string mCocaine = "Cocaine. ";
-		string mGrams = "Grams of ";
-		string mOunce = "Oz's of ";
-		string mSell = "Ready to sell on the streets or give to a dealer.";
-		string mStash = "Must be deposited in a Stash house before it can be sold.";
+		string mGrams = "Grammes de ";
+		string mOunce = "Oz de ";
+		string mSell = "Prêt à vendre dans la rue ou à confier à un dealer.";
+		string mStash = "À déposer dans une planque avant la vente.";
 		takeWeedStash.Description = mGrams + mWeed + mSell;
 		takeCrackStash.Description = mGrams + mCrack + mSell;
 		takeCocainStash.Description = mGrams + mCocaine + mSell;
@@ -1095,38 +1095,38 @@ public class LSL : Script
 		{
 			pArm.Add(t);
 		}
-		putArmourStash = new UIMenuListItem("Stash Armour", pArm, 0);
+		putArmourStash = new UIMenuListItem("Déposer un gilet", pArm, 0);
 		stashPutMenu.AddItem(putArmourStash);
 		List<object> sArm = new List<object>();
 		for (int j = 0; j < 1; j++)
 		{
 			sArm.Add(j);
 		}
-		takeArmourStash = new UIMenuListItem("Take Armour", sArm, 0);
+		takeArmourStash = new UIMenuListItem("Retirer un gilet", sArm, 0);
 		stashTakeMenu.AddItem(takeArmourStash);
 		if (playerWeapons.Count > 0)
 		{
-			putWeaponStash = new UIMenuListItem("Stash Weapon: ", playerWeps, 0);
+			putWeaponStash = new UIMenuListItem("Déposer une arme : ", playerWeps, 0);
 			stashPutMenu.AddItem(putWeaponStash);
 			putWeaponStash.OnListChanged += LsMenus.onListChange;
-			takeWeaponStash = new UIMenuListItem("Take Weapon:", playerWeps, 0);
+			takeWeaponStash = new UIMenuListItem("Retirer une arme :", playerWeps, 0);
 			stashTakeMenu.AddItem(takeWeaponStash);
 			takeWeaponStash.OnListChanged += LsMenus.onListChange;
 		}
 		stashPutMenu.OnItemSelect += LsMenus.onStashMenuSelect;
 		stashTakeMenu.OnItemSelect += LsMenus.onPlayerMenuSelect;
-		vehStashMainMenu = new UIMenu("Vehicle Stash", "Select");
+		vehStashMainMenu = new UIMenu("Stockage du véhicule", "Choisir");
 		if (UseSprites)
 		{
 			vehStashMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
 		}
 		LsMenuPool.Add(vehStashMainMenu);
-		vehStashTakeMenu = LsMenuPool.AddSubMenu(vehStashMainMenu, "Take");
+		vehStashTakeMenu = LsMenuPool.AddSubMenu(vehStashMainMenu, "Retirer");
 		if (UseSprites)
 		{
 			vehStashTakeMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
 		}
-		vehStashPutMenu = LsMenuPool.AddSubMenu(vehStashMainMenu, "Stash");
+		vehStashPutMenu = LsMenuPool.AddSubMenu(vehStashMainMenu, "Déposer");
 		if (UseSprites)
 		{
 			vehStashPutMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
@@ -1191,7 +1191,7 @@ public class LSL : Script
 		takeCocainOzVeh.Multiplier = 1;
 		putCocainOzVeh.OnSliderChanged += LsMenus.onSliderChange;
 		takeCocainOzVeh.OnSliderChanged += LsMenus.onSliderChange;
-		putMoneyVeh = new UIMenuSliderItem("Money $" + LsFunctions.IntToMoney(player.Money));
+		putMoneyVeh = new UIMenuSliderItem("Argent $" + LsFunctions.IntToMoney(player.Money));
 		vehStashPutMenu.AddItem(putMoneyVeh);
 		putMoneyVeh.Maximum = player.Money;
 		putMoneyVeh.Multiplier = 100;
@@ -1201,16 +1201,16 @@ public class LSL : Script
 		takeMoneyVeh.Multiplier = 100;
 		putMoneyVeh.OnSliderChanged += LsMenus.onSliderChange;
 		takeMoneyVeh.OnSliderChanged += LsMenus.onSliderChange;
-		vehPutMultiplier = new UIMenuListItem("Multiplier", multiplier, 0);
+		vehPutMultiplier = new UIMenuListItem("Multiplicateur", multiplier, 0);
 		vehStashPutMenu.AddItem(vehPutMultiplier);
 		vehPutMultiplier.OnListChanged += LsMenus.onListChange;
-		vehTakeMultiplier = new UIMenuListItem("Multiplier", multiplier, 0);
+		vehTakeMultiplier = new UIMenuListItem("Multiplicateur", multiplier, 0);
 		vehStashTakeMenu.AddItem(vehTakeMultiplier);
 		vehTakeMultiplier.OnListChanged += LsMenus.onListChange;
-		takeWeaponVeh = new UIMenuListItem("Take Weapon :", new List<object> { "EROaR!" }, 0);
+		takeWeaponVeh = new UIMenuListItem("Retirer une arme :", new List<object> { "EROaR!" }, 0);
 		vehStashTakeMenu.AddItem(takeWeaponVeh);
 		takeWeaponVeh.OnListChanged += LsMenus.onListChange;
-		putArmourVeh = new UIMenuListItem("Stash Armour", pArm, 0);
+		putArmourVeh = new UIMenuListItem("Déposer un gilet", pArm, 0);
 		vehStashPutMenu.AddItem(putArmourVeh);
 		putArmourVeh.Activated += PutArmourVeh_Activated;
 		List<object> vArm = new List<object>();
@@ -1218,18 +1218,18 @@ public class LSL : Script
 		{
 			vArm.Add(k);
 		}
-		takeArmourVeh = new UIMenuListItem("Take Armour", vArm, 0);
+		takeArmourVeh = new UIMenuListItem("Retirer un gilet", vArm, 0);
 		vehStashTakeMenu.AddItem(takeArmourVeh);
 		takeArmourVeh.Activated += TakeArmourVeh_Activated;
 		if (playerWeapons.Count > 0)
 		{
-			putWeaponVeh = new UIMenuListItem("Stash Weapon: ", playerWeps, 0);
+			putWeaponVeh = new UIMenuListItem("Déposer une arme : ", playerWeps, 0);
 			vehStashPutMenu.AddItem(putWeaponVeh);
 			putWeaponVeh.OnListChanged += LsMenus.onListChange;
 		}
 		vehStashPutMenu.OnItemSelect += LsMenus.onPutVehicleMenuSelect;
 		vehStashTakeMenu.OnItemSelect += LsMenus.onTakeVehicleMenuSelect;
-		customerMainMenu = new UIMenu("Customer", "Select an option");
+		customerMainMenu = new UIMenu("Client", "Choisis une option");
 		if (UseSprites)
 		{
 			customerMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_customer.png");
@@ -1237,7 +1237,7 @@ public class LSL : Script
 		LsMenuPool.Add(customerMainMenu);
 		sell = new UIMenuItem("drug");
 		customerMainMenu.AddItem(sell);
-		turnAway = new UIMenuItem("cya");
+		turnAway = new UIMenuItem("À plus");
 		customerMainMenu.AddItem(turnAway);
 		customerMainMenu.OnItemSelect += LsMenus.onCustomerMenuSelect;
 		LsMenuPool.FormatDescriptions = true;
@@ -1264,11 +1264,11 @@ public class LSL : Script
 		if (dealer1ReloadOrder)
 		{
 			Enum.TryParse<Enums.DayGTA>(dealer1ReloadDay.ToString(), out var mDay);
-			LsFunctions.TextMsg("ZEE", "Reload", "Order should be here " + mDay.ToString() + " at " + dealer1ReloadHour + ":00");
+			LsFunctions.TextMsg("ZEE", "Reload", "La commande devrait arriver " + mDay.ToString() + " à " + dealer1ReloadHour + ":00");
 		}
 		if (!NewOrder.Placed)
 		{
-			PlaceOrder.Text = "Place Order $" + LsFunctions.IntToMoney(NewOrder.Bill);
+			PlaceOrder.Text = "Commander pour $" + LsFunctions.IntToMoney(NewOrder.Bill);
 			LsFunctions.UpdateOrderMenuDesc();
 		}
 	}
