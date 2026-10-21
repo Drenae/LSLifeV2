@@ -100,7 +100,7 @@ public class LSL : Script
 				if (DEBUG)
 				{
 					model = ((Entity)Prop).Model;
-					UI.Notify(model.Hash + " Door unlocked " + ((object)((Entity)Prop).Position/*cast due to constrained. prefix*/).ToString());
+					UI.Notify(model.Hash + " Porte déverrouillée " + ((object)((Entity)Prop).Position/*cast due to constrained. prefix*/).ToString());
 				}
 			}
 			else
@@ -113,7 +113,7 @@ public class LSL : Script
 				if (DEBUG)
 				{
 					model = ((Entity)Prop).Model;
-					UI.Notify(model.Hash + " Door locked " + ((object)((Entity)Prop).Position/*cast due to constrained. prefix*/).ToString());
+					UI.Notify(model.Hash + " Porte verrouillée " + ((object)((Entity)Prop).Position/*cast due to constrained. prefix*/).ToString());
 				}
 			}
 		}
@@ -1595,7 +1595,7 @@ public class LSL : Script
 				LoadAreaData();
 			}
 			UI.Notify("~g~LsLife: " + vNumber);
-			UI.Notify("~g~LsLife: " + areas.Count + " Areas loaded");
+			UI.Notify("~g~LsLife: " + areas.Count + " zones chargées");
 			lPeds = new LsLPeds();
 			World.SetRelationshipBetweenGroups((Relationship)3, playerRelationship, CustomerRel);
 			World.SetRelationshipBetweenGroups((Relationship)3, playerRelationship, rival_nutral);
@@ -1622,7 +1622,7 @@ public class LSL : Script
 				}
 				else
 				{
-					UI.Notify("~r~LsLife - Error getting area type for Area " + playerArea);
+					UI.Notify("~r~LsLife - Impossible de déterminer le type du quartier : " + playerArea);
 				}
 			}
 			Area cArea = areas.Find((Area a) => a.Name == playerArea);
@@ -2342,7 +2342,7 @@ public class LSL : Script
 					}
 					else
 					{
-						UI.Notify("~r~LsLife - Error getting area type for Area " + playerArea);
+						UI.Notify("~r~LsLife - Impossible de déterminer le type du quartier : " + playerArea);
 					}
 					int aIndex = 0;
 					foreach (Area area2 in areas)
@@ -2486,7 +2486,7 @@ public class LSL : Script
 					}
 					if (DEBUG)
 					{
-						UI.Notify("Was seen killing dealer");
+						UI.Notify("Tu as été vu en train de tuer un dealer.");
 					}
 				}
 				Ped dKiller2 = null;
@@ -3301,7 +3301,7 @@ public class LSL : Script
 				}
 				else
 				{
-					UI.Notify("~r~LsLife - Error getting area type for Area " + name);
+					UI.Notify("~r~LsLife - Impossible de déterminer le type du quartier : " + name);
 				}
 				areas.Add(new Area(name, LsFunctions.LsDrugs(), type, cStr, gstr, heat, rep));
 			}
@@ -3641,7 +3641,7 @@ public class LSL : Script
 				pig.DeletePig();
 				if (DEBUG)
 				{
-					UI.Notify("Removed spawned Cop");
+					UI.Notify("Policier généré supprimé");
 				}
 				goto IL_008c;
 			}
@@ -3668,7 +3668,7 @@ public class LSL : Script
 		{
 			if (DEBUG)
 			{
-				UI.Notify("COP SPAWNED");
+				UI.Notify("Policier généré");
 				((Entity)pigCar).AddBlip();
 				((Entity)pigCar).CurrentBlip.Name = "Police Car";
 			}
@@ -3788,7 +3788,7 @@ public class LSL : Script
 					ePos.Add(new XElement("h", vHead));
 					xDocument.Root.Add(ePos);
 					xDocument.Save("scripts\\LSLife\\LSLife_Spawns.xml");
-					UI.Notify("position added to xml");
+					UI.Notify("Position ajoutée au fichier XML");
 				}
 				else
 				{
