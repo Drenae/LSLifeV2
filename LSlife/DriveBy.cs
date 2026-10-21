@@ -477,7 +477,7 @@ public class DriveBy
 		}
 		else if (LSL.DEBUG)
 		{
-			UI.Notify("~r~Spawning DriveBy Failed");
+			UI.Notify("~r~Impossible de faire apparaître l'attaque en voiture.");
 		}
 	}
 
