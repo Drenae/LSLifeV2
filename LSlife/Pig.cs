@@ -159,7 +159,7 @@ public class Pig
 			{
 				if (DEBUG)
 				{
-					UI.Notify("Bag gone");
+					UI.Notify("Sac disparu");
 				}
 				NewState = States.Destroy;
 			}
@@ -298,7 +298,7 @@ public class Pig
 			{
 				if (leader)
 				{
-					UI.ShowSubtitle("Your busted.", 3000);
+					UI.ShowSubtitle("Tu es en état d'arrestation.", 3000);
 					Game.Player.WantedLevel = 2;
 				}
 				NewState = States.Destroy;
@@ -306,7 +306,7 @@ public class Pig
 			}
 			if (leader)
 			{
-				UI.ShowSubtitle("Ok we got our eye on you, we suggest you get outa ~y~" + World.GetZoneName(LSL.playerPos) + "~n~.", 4000);
+				UI.ShowSubtitle("On t'a à l'œil. Tu ferais mieux de quitter ~y~" + World.GetZoneName(LSL.playerPos) + "~n~.", 4000);
 			}
 			LSL.areas[LSL.areaIndex].HeatDecay();
 			Game.Player.Character.Task.ClearAll();
@@ -391,7 +391,7 @@ public class Pig
 		}
 		if (DEBUG)
 		{
-			UI.Notify("Police new State " + NewState);
+			UI.Notify("Nouvel état de la police : " + NewState);
 		}
 		switch (NewState)
 		{
@@ -403,7 +403,7 @@ public class Pig
 			}
 			if (DEBUG)
 			{
-				UI.Notify("Getting bag");
+				UI.Notify("Récupération du sac");
 			}
 			Ped.Task.GoTo(Bag.pos);
 			CurrentState = NewState;
@@ -456,7 +456,7 @@ public class Pig
 			CurrentState = States.Normal;
 			if (DEBUG)
 			{
-				UI.Notify("Changing to normal");
+				UI.Notify("Retour à l'état normal");
 			}
 			break;
 		case States.WatchPlayer:
@@ -469,7 +469,7 @@ public class Pig
 			{
 				if (leader)
 				{
-					UI.ShowSubtitle("Sir, please step out of the vehicle.", 4000);
+					UI.ShowSubtitle("Monsieur, veuillez sortir du véhicule.", 4000);
 				}
 				AskPlayerToComply = true;
 			}
@@ -477,13 +477,13 @@ public class Pig
 			{
 				if (leader)
 				{
-					UI.ShowSubtitle("Get down on the ground", 4000);
+					UI.ShowSubtitle("À terre !", 4000);
 				}
 				AskPlayerToComply = true;
 			}
 			if (DEBUG)
 			{
-				UI.Notify("Changing to watch");
+				UI.Notify("Passage en surveillance");
 			}
 			break;
 		case States.ApproachPlayer:
