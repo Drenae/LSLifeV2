@@ -750,7 +750,7 @@ public class PlayerDealer
 				cPed = null;
 				if (LSL.DEBUG)
 				{
-					UI.Notify("pDealer Customer doesnt exist");
+					UI.Notify("Le client du dealer n'existe pas");
 				}
 			}
 			if ((Entity)(object)cPed != (Entity)null && ((Entity)cPed).Exists() && ((Entity)cPed).IsDead)
@@ -759,7 +759,7 @@ public class PlayerDealer
 				cPed = null;
 				if (LSL.DEBUG)
 				{
-					UI.Notify("pDealer Customer doesnt exist");
+					UI.Notify("Le client du dealer n'existe pas");
 				}
 			}
 			if ((Entity)(object)cPed == (Entity)null)
@@ -770,7 +770,7 @@ public class PlayerDealer
 				}
 				if (LSL.DEBUG)
 				{
-					UI.Notify("pDealer Getting Customer");
+					UI.Notify("Recherche d'un client pour le dealer");
 				}
 				List<Ped> peds = LSL.lPeds.GetPeds;
 				if (peds.ToList().Count > 0)
@@ -835,7 +835,7 @@ public class PlayerDealer
 				{
 					if (LSL.DEBUG)
 					{
-						UI.Notify("Doing Deal");
+						UI.Notify("Transaction en cours");
 					}
 					dealState = Enums.DealState.DoingDeal;
 					cPed.Task.PlayAnimation("switch@franklin@002110_04_magd_3_weed_exchange", "002110_04_magd_3_weed_exchange_franklin", 8f, 3000, (AnimationFlags)16);
@@ -859,7 +859,7 @@ public class PlayerDealer
 					dealState = Enums.DealState.GetNear;
 					if (LSL.DEBUG)
 					{
-						UI.Notify("Deal Finished");
+						UI.Notify("Transaction terminée");
 					}
 					LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
 					((Entity)cPed).CurrentBlip.Remove();
@@ -873,7 +873,7 @@ public class PlayerDealer
 		{
 			if (LSL.DEBUG)
 			{
-				UI.Notify("aDealer Removing Customer to Far Away");
+				UI.Notify("Client supprimé : trop éloigné du dealer");
 			}
 			LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
 			cPed = null;
@@ -960,7 +960,7 @@ public class PlayerDealer
 			LsFunctions.NotImmuneToPlayer(Ped);
 			if (LSL.DEBUG)
 			{
-				UI.Notify("Dealer DESPAWNED");
+				UI.Notify("Dealer retiré du monde");
 			}
 			Pos = ((Entity)Ped).Position;
 			RemoveBlip();
