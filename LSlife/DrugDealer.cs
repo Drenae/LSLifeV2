@@ -79,7 +79,7 @@ public class DrugDealer
 					}
 					else
 					{
-						LsFunctions.SendTextMsg("LsLife: ~r~Failed to create blip");
+						LsFunctions.SendTextMsg("LsLife : ~r~Impossible de créer le repère sur la carte");
 						Destroy();
 					}
 				}
@@ -89,7 +89,7 @@ public class DrugDealer
 			}
 			else
 			{
-				LsFunctions.SendTextMsg("LsLife: Error Order is null");
+				LsFunctions.SendTextMsg("LsLife : erreur, la commande est absente");
 				Destroy();
 			}
 		}
