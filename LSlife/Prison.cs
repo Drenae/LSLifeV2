@@ -169,7 +169,7 @@ internal static class Prison
 						((Entity)copCar).CurrentBlip.Sprite = (BlipSprite)672;
 						if (DEBUG)
 						{
-							UI.Notify("transport Spawned" + (object)copCar);
+							UI.Notify("Transport généré : " + (object)copCar);
 						}
 					}
 				}
@@ -280,7 +280,7 @@ internal static class Prison
 				((Entity)PriGate1.Prop).FreezePosition = false;
 				NewState = PrisonStates.ApproachGate2;
 				Model model = ((Entity)pGate1()).Model;
-				UI.Notify("Gate Found " + model.Hash);
+				UI.Notify("Portail trouvé : " + model.Hash);
 			}
 			break;
 		case PrisonStates.ApproachGate2:
