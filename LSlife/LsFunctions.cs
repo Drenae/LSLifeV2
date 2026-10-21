@@ -1156,7 +1156,7 @@ internal static class LsFunctions
 					timeTodeliver -= 12;
 					amPm = "PM";
 				}
-				TextMsg("ZEE", "Reload", "Réassort commandé, livraison prévue " + mDay.ToString() + " at " + timeTodeliver + ":00" + amPm);
+				TextMsg("ZEE", "Réassort", "Réassort commandé, livraison prévue " + mDay.ToString() + " à " + timeTodeliver + ":00" + amPm);
 			}
 			int timeReduction = 0;
 			timeReduction = ((!(CurrentRepLvl(LSL.dealer1Rep) > 36.0)) ? ((int)CurrentRepLvl(LSL.dealer1Rep) * 10000) : 360000);
@@ -1200,7 +1200,7 @@ internal static class LsFunctions
 					{
 						LSL.dealer1Debt = 0;
 					}
-					TextMsg("ZEE", "Debt", "J'ai ajouté $" + IntToMoney((int)intrestAmount) + " à ta dette. Elle s'élève maintenant à $" + IntToMoney(LSL.dealer1Debt));
+					TextMsg("ZEE", "Dette", "J'ai ajouté $" + IntToMoney((int)intrestAmount) + " à ta dette. Elle s'élève maintenant à $" + IntToMoney(LSL.dealer1Debt));
 				}
 				if (LSL.hardMode)
 				{
@@ -1262,7 +1262,7 @@ internal static class LsFunctions
 					{
 						LSL.dealer1Debt = 0;
 					}
-					TextMsg("ZEE", "Debt", "J'ai ajouté $" + IntToMoney((int)intrestAmount2) + " à ta dette. Elle s'élève maintenant à $" + IntToMoney(LSL.dealer1Debt));
+					TextMsg("ZEE", "Dette", "J'ai ajouté $" + IntToMoney((int)intrestAmount2) + " à ta dette. Elle s'élève maintenant à $" + IntToMoney(LSL.dealer1Debt));
 				}
 				if (LSL.dealer1Money < 10000)
 				{
