@@ -2220,7 +2220,7 @@ public class LSL : Script
 							UI.Notify("dealer1 drive-by");
 						}
 						LsFunctions.SpawnDriveBy(player.Character, _agressive: true);
-						LsFunctions.TextMsg("ZEE", "Debt", "Pay your debt and i will call them off.");
+						LsFunctions.TextMsg("ZEE", "Debt", "Rembourse ta dette et je les rappellerai.");
 					}
 				}
 				if (entitiesCleanUp.Count > 0)
@@ -2668,7 +2668,7 @@ public class LSL : Script
 				Ped p4 = (Ped)(object)((killer3 is Ped) ? killer3 : null);
 				if (p4 != null && (Entity)(object)p4 != (Entity)null && p4.IsHuman && !p4.IsPlayer && !LsFunctions.IsPolice(p4) && (Entity)(object)attacker == (Entity)null)
 				{
-					LsFunctions.TextMsg("ZEE", "info", "I found that person for you, i sent you his location.");
+					LsFunctions.TextMsg("ZEE", "info", "J'ai retrouvé cette personne. Je t'ai envoyé sa position.");
 					attacker = p4;
 					((Entity)attacker).IsPersistent = true;
 					attackerMoney = player.Money - (int)((double)player.Money * 0.1);
@@ -2759,7 +2759,7 @@ public class LSL : Script
 				}
 				if ((Entity)(object)attacker == (Entity)null && AmountOfDrugs > 0)
 				{
-					LsFunctions.SendTextMsg("They took $" + LsFunctions.IntToMoney(player.Money) + ", all your Drugs and Weapons.");
+					LsFunctions.SendTextMsg("Ils ont pris $" + LsFunctions.IntToMoney(player.Money) + ", ainsi que toute ta drogue et tes armes.");
 					player.Character.Weapons.RemoveAll();
 					Player val3 = player;
 					val3.Money -= player.Money;
@@ -2802,7 +2802,7 @@ public class LSL : Script
 				if ((Entity)(object)attacker == (Entity)null && TotalDrugsCarried() > 0)
 				{
 					player.Character.Weapons.RemoveAll();
-					LsFunctions.SendTextMsg("Police confisated $" + LsFunctions.IntToMoney(player.Money) + ", all your Drugs and Weapons.");
+					LsFunctions.SendTextMsg("La police a confisqué $" + LsFunctions.IntToMoney(player.Money) + ", ainsi que toute ta drogue et tes armes.");
 					Player val4 = player;
 					val4.Money -= player.Money;
 					if (PlayerInventory.Keys.ToList().Count > 0)
@@ -3156,7 +3156,7 @@ public class LSL : Script
 			((Entity)weaponDealer1).IsPersistent = false;
 			((Entity)weaponDealer1).CurrentBlip.Remove();
 			((Entity)weaponDealer1).MarkAsNoLongerNeeded();
-			LsFunctions.SendTextMsg("Dealer is dead!");
+			LsFunctions.SendTextMsg("Le dealer est mort !");
 			weaponDealer1 = null;
 			readyToDeal = false;
 		}
@@ -3716,7 +3716,7 @@ public class LSL : Script
 			{
 				if (pStashVehicle != null && (Entity)(object)pStashVehicle.drugCar != (Entity)null)
 				{
-					LsFunctions.SendTextMsg(pStashVehicle.drugCar.DisplayName + " is no longer a stash Vehicle.");
+					LsFunctions.SendTextMsg(pStashVehicle.drugCar.DisplayName + " n'est plus un véhicule de stockage.");
 					pStashVehicle.RemoveOldCar();
 					pStashVehicle = null;
 				}
@@ -3737,7 +3737,7 @@ public class LSL : Script
 									model = ((Entity)player.Character.CurrentVehicle).Model;
 									if (!model.IsPlane)
 									{
-										LsFunctions.SendTextMsg("You can not use this vehicle as a stash.");
+										LsFunctions.SendTextMsg("Tu ne peux pas utiliser ce véhicule comme stockage.");
 										goto IL_0180;
 									}
 								}
@@ -3748,7 +3748,7 @@ public class LSL : Script
 					pStashVehicle.VehicleSave(player.Character.CurrentVehicle);
 					if ((Entity)(object)pStashVehicle.drugCar != (Entity)null)
 					{
-						LsFunctions.SendTextMsg(pStashVehicle.drugCar.DisplayName + " is now youre Stash Vehicle.");
+						LsFunctions.SendTextMsg(pStashVehicle.drugCar.DisplayName + " est maintenant ton véhicule de stockage.");
 					}
 				}
 			}
@@ -3764,11 +3764,11 @@ public class LSL : Script
 			if (isDealing)
 			{
 				isDealing = false;
-				LsFunctions.SendTextMsg("Street dealing cancel");
+				LsFunctions.SendTextMsg("Vente de rue annulée.");
 			}
 			else if (!isDealing)
 			{
-				LsFunctions.SendTextMsg("Street dealing is not in progress.");
+				LsFunctions.SendTextMsg("Aucune vente de rue en cours.");
 			}
 		}
 		if (e.KeyCode == Keys.J && !started)
@@ -3907,7 +3907,7 @@ public class LSL : Script
 		}
 		else
 		{
-			LsFunctions.TextMsg("ZEE", "Order", "I'll let them know your not coming.");
+			LsFunctions.TextMsg("ZEE", "Order", "Je leur dirai que tu ne viens pas.");
 			ZeesDealers.Dismiss();
 			if (NewOrder != null)
 			{
