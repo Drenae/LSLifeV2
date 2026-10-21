@@ -1156,7 +1156,7 @@ internal static class LsFunctions
 					timeTodeliver -= 12;
 					amPm = "PM";
 				}
-				TextMsg("ZEE", "Reload", "order in, should come " + mDay.ToString() + " at " + timeTodeliver + ":00" + amPm);
+				TextMsg("ZEE", "Reload", "Réassort commandé, livraison prévue " + mDay.ToString() + " at " + timeTodeliver + ":00" + amPm);
 			}
 			int timeReduction = 0;
 			timeReduction = ((!(CurrentRepLvl(LSL.dealer1Rep) > 36.0)) ? ((int)CurrentRepLvl(LSL.dealer1Rep) * 10000) : 360000);
@@ -1200,7 +1200,7 @@ internal static class LsFunctions
 					{
 						LSL.dealer1Debt = 0;
 					}
-					TextMsg("ZEE", "Debt", "added $" + IntToMoney((int)intrestAmount) + " to your bill, its now $" + IntToMoney(LSL.dealer1Debt));
+					TextMsg("ZEE", "Debt", "J'ai ajouté $" + IntToMoney((int)intrestAmount) + " à ta dette. Elle s'élève maintenant à $" + IntToMoney(LSL.dealer1Debt));
 				}
 				if (LSL.hardMode)
 				{
@@ -1262,7 +1262,7 @@ internal static class LsFunctions
 					{
 						LSL.dealer1Debt = 0;
 					}
-					TextMsg("ZEE", "Debt", "added $" + IntToMoney((int)intrestAmount2) + " to your bill, its now $" + IntToMoney(LSL.dealer1Debt));
+					TextMsg("ZEE", "Debt", "J'ai ajouté $" + IntToMoney((int)intrestAmount2) + " à ta dette. Elle s'élève maintenant à $" + IntToMoney(LSL.dealer1Debt));
 				}
 				if (LSL.dealer1Money < 10000)
 				{
@@ -1789,7 +1789,7 @@ internal static class LsFunctions
 			}
 			if (CanSee((Entity)(object)pol, (Entity)(object)Game.Player.Character))
 			{
-				SendTextMsg("They spotted you dealing, your gona be hot round there now.");
+				SendTextMsg("Ils t'ont vu dealer. Tu vas attirer l'attention dans ce quartier.");
 				LSL.areas[LSL.areaIndex].Heat++;
 				Game.Player.WantedLevel = 1;
 				break;
@@ -1847,7 +1847,7 @@ internal static class LsFunctions
 			position = ((Entity)pol).Position;
 			if (position.DistanceTo(LSL.playerPos) < 40f && CanSee((Entity)(object)pol, (Entity)(object)Game.Player.Character))
 			{
-				SendTextMsg("They spotted you dealing, your gona be hot round there now.");
+				SendTextMsg("Ils t'ont vu dealer. Tu vas attirer l'attention dans ce quartier.");
 				LSL.areas[LSL.areaIndex].Heat += 200f;
 				Game.Player.WantedLevel = 1;
 				break;
