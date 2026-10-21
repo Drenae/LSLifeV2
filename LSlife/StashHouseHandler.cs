@@ -19,7 +19,7 @@ public class StashHouseHandler
 		LoadHouses();
 		if (LSL.DEBUG)
 		{
-			UI.Notify("Loaded " + Houses.Count + " houses");
+			UI.Notify("Planques chargées : " + Houses.Count);
 		}
 	}
 
@@ -62,7 +62,7 @@ public class StashHouseHandler
 		//IL_0807: Unknown result type (might be due to invalid IL or missing references)
 		if (!File.Exists("scripts\\LSLife\\LSLife_StashHouses.xml"))
 		{
-			UI.Notify("~r~Missing StashHouses.xml");
+			UI.Notify("~r~Fichier StashHouses.xml manquant");
 			return;
 		}
 		XDocument StashDoc = XDocument.Load("scripts\\LSLife\\LSLife_StashHouses.xml");
@@ -202,7 +202,7 @@ public class StashHouseHandler
 							int.TryParse(ele5.Value, out weed);
 							if (LSL.DEBUG)
 							{
-								UI.Notify("~y~Weed" + weed);
+								UI.Notify("~y~Weed : " + weed);
 							}
 						}
 					}
