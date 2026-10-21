@@ -701,11 +701,11 @@ public class PlayerDealerHandler
 					teams.Add(new PedTeam(_dealer, LSL.playerArea));
 					return true;
 				}
-				LsFunctions.SendTextMsg("You need to earn more reputation in this area before putting a team on patrol here.");
+				LsFunctions.SendTextMsg("Tu dois gagner davantage de réputation dans ce quartier avant d'y envoyer une équipe en patrouille.");
 			}
 			else
 			{
-				LsFunctions.SendTextMsg("There is a team in this area already");
+				LsFunctions.SendTextMsg("Une équipe patrouille déjà dans ce quartier.");
 			}
 		}
 		return false;
