@@ -346,7 +346,7 @@ public class PlayerDealer
 		{
 			if (Ped.RelationshipGroup != LSL.playerRelationship)
 			{
-				UI.Notify("~r~Worker was removed from companion group, putting them back in");
+				UI.Notify("~r~Employé retiré du groupe de compagnons : réintégration");
 				Ped.RelationshipGroup = LSL.playerRelationship;
 			}
 			if (!isFollowing() && LSL.driveByHandler.AmountOfDriveBy(_agg: true) > 0 && !playerNear())
@@ -793,7 +793,7 @@ public class PlayerDealer
 				}
 				if (LSL.DEBUG)
 				{
-					UI.Notify("pDealer found no peds");
+					UI.Notify("Aucun personnage trouvé pour le dealer");
 				}
 				return;
 			}
@@ -987,11 +987,11 @@ public class PlayerDealer
 			}
 			else
 			{
-				UI.Notify("~r~LsLife - Error getting area type for Area " + this.area);
+				UI.Notify("~r~LsLife - Impossible de déterminer le type du quartier : " + this.area);
 			}
 			if (LSL.DEBUG)
 			{
-				UI.Notify("~r~Added area for dealer " + this.area);
+				UI.Notify("~r~Quartier ajouté au dealer : " + this.area);
 			}
 		}
 		if (pArea == null || pArea.Drugs.Count <= 0)
