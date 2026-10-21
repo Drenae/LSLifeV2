@@ -2106,14 +2106,14 @@ public class LSL : Script
 							{
 								Function.Call((Hash)7023634693725934496L);
 								displayHelpTimer = Game.GameTime;
-								LsFunctions.DisplayHelpText("~INPUT_SPRINT~ to sell from car.");
+								LsFunctions.DisplayHelpText("~INPUT_SPRINT~ pour vendre depuis le véhicule.");
 							}
 							if (Game.IsControlJustPressed(2, (Control)21))
 							{
 								Function.Call((Hash)7023634693725934496L);
 								customerSellTo = nCustomer;
 								sell.Text = "Sell " + LsFunctions.GramsToOz(customerSellTo.amount) + " of " + customerSellTo.Drug.Name + "?";
-								((UIText)customerMainMenu.Subtitle).Caption = "You have " + LsFunctions.GramsToOz(PlayerInventory[customerSellTo.Drug.Name]) + " of " + customerSellTo.Drug.Name;
+								((UIText)customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.GramsToOz(PlayerInventory[customerSellTo.Drug.Name]) + " de " + customerSellTo.Drug.Name;
 								customerMainMenu.Visible = !customerMainMenu.Visible;
 								customerMainMenu.CurrentSelection = 0;
 							}
@@ -2124,14 +2124,14 @@ public class LSL : Script
 							{
 								Function.Call((Hash)7023634693725934496L);
 								displayHelpTimer = Game.GameTime;
-								LsFunctions.DisplayHelpText("Press ~INPUT_SPRINT~ to sell to this person.");
+								LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour vendre à cette personne.");
 							}
 							if (Game.IsControlJustPressed(2, (Control)21) && !LsMenuPool.IsAnyMenuOpen())
 							{
 								Function.Call((Hash)7023634693725934496L);
 								customerSellTo = nCustomer;
 								sell.Text = "Sell " + LsFunctions.GramsToOz(customerSellTo.amount) + " of " + customerSellTo.Drug.Name + "?";
-								((UIText)customerMainMenu.Subtitle).Caption = "You have " + LsFunctions.GramsToOz(PlayerInventory[customerSellTo.Drug.Name]) + " of " + customerSellTo.Drug.Name;
+								((UIText)customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.GramsToOz(PlayerInventory[customerSellTo.Drug.Name]) + " de " + customerSellTo.Drug.Name;
 								customerMainMenu.Visible = !customerMainMenu.Visible;
 								customerMainMenu.CurrentSelection = 0;
 							}
@@ -3129,7 +3129,7 @@ public class LSL : Script
 				if ((float)Game.GameTime > displayHelpTimer + 5000f)
 				{
 					displayHelpTimer = Game.GameTime;
-					LsFunctions.DisplayHelpText("Find some where quiter.");
+					LsFunctions.DisplayHelpText("Trouve un endroit plus tranquille.");
 				}
 				readyToDeal = false;
 				if (wepMenu.Visible)
