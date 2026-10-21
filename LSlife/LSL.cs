@@ -2246,7 +2246,7 @@ public class LSL : Script
 								entitiesCleanUp.Remove(ent);
 								if (DEBUG)
 								{
-									UI.Notify("stoped delete attacker");
+									UI.Notify("Assaillant supprimé après l'arrêt de l'attaque");
 								}
 								continue;
 							}
@@ -2602,7 +2602,7 @@ public class LSL : Script
 					}
 					if (DEBUG)
 					{
-						UI.Notify("Gave " + ((object)weaponHash/*cast due to constrained. prefix*/).ToString() + " ammo = " + ammo);
+						UI.Notify("Munitions données pour " + ((object)weaponHash/*cast due to constrained. prefix*/).ToString() + " : " + ammo);
 					}
 				}
 			}
