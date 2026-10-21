@@ -145,7 +145,7 @@ internal static class LsFunctions
 		}
 		else
 		{
-			UI.Notify("~r~LsLife_LSSA.xml not found");
+			UI.Notify("~r~Fichier LsLife_LSSA.xml introuvable");
 		}
 		if (!LSL.LCRWMAP)
 		{
@@ -182,7 +182,7 @@ internal static class LsFunctions
 		}
 		else
 		{
-			UI.Notify("~r~LsLife_LCRW.xml not found");
+			UI.Notify("~r~Fichier LsLife_LCRW.xml introuvable");
 		}
 	}
 
