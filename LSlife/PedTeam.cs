@@ -33,7 +33,7 @@ public class PedTeam
 		}
 		else
 		{
-			LsFunctions.SendTextMsg("Max Team size reached.");
+			LsFunctions.SendTextMsg("Taille maximale de l'équipe atteinte.");
 		}
 	}
 }
