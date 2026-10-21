@@ -124,12 +124,12 @@ public class DrugOrder
 			}
 			else
 			{
-				UI.ShowSubtitle("Your Vehicle needs to be closer.");
+				UI.ShowSubtitle("Ton véhicule doit être plus proche.");
 			}
 		}
 		else
 		{
-			UI.ShowSubtitle("You need a stash vehicle to pickup an order this big.");
+			UI.ShowSubtitle("Il te faut un véhicule de stockage pour récupérer une commande aussi importante.");
 		}
 		if (pickedUp)
 		{
