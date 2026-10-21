@@ -112,7 +112,7 @@ internal static class ShotHandler
 		{
 			if (LSL.DEBUG)
 			{
-				UI.Notify("spawning new job, that one guy was found.");
+				UI.Notify("Nouvelle livraison créée : client trouvé.");
 			}
 			spawnPos = LSL.GenerateSpawnPos(LSL.playerPos.Around(200f), LSL.Nodetype.Offroad, sidewalk: true);
 		}
@@ -142,7 +142,7 @@ internal static class ShotHandler
 				val = spawnPos;
 				string text = ((object)val/*cast due to constrained. prefix*/).ToString();
 				val = ((Entity)newPed).Position;
-				UI.Notify("shotPos:" + text + " pedPos:" + ((object)val/*cast due to constrained. prefix*/).ToString());
+				UI.Notify("Position livraison : " + text + " ; position client : " + ((object)val/*cast due to constrained. prefix*/).ToString());
 			}
 			if (!((Entity)(object)newPed != (Entity)null))
 			{
