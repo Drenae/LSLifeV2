@@ -227,7 +227,7 @@ public class DrugOrder
 	{
 		if (weed == 0 && crack == 0 && cocaine == 0)
 		{
-			LsFunctions.TextMsg("ZEE", "Order", "Your order is empty");
+			LsFunctions.TextMsg("ZEE", "Commande", "Ta commande est vide.");
 			return false;
 		}
 		return true;
