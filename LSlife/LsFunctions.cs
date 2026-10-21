@@ -547,7 +547,7 @@ internal static class LsFunctions
 
 	public static void SetWorkerMenuHealth(Ped p)
 	{
-		((UIText)LSL.WorkerMainMenu.Subtitle).Caption = "Health:" + ((Entity)p).Health + " Armour:" + p.Armor;
+		((UIText)LSL.WorkerMainMenu.Subtitle).Caption = "Santé : " + ((Entity)p).Health + " Protection :" + p.Armor;
 	}
 
 	public static void SetRandomCombatStats(Ped p)
@@ -902,7 +902,7 @@ internal static class LsFunctions
 			LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
 			if (LSL.DEBUG)
 			{
-				UI.Notify("Save Changed");
+				UI.Notify("Sauvegarde modifiée");
 			}
 		}
 	}
@@ -1556,11 +1556,11 @@ internal static class LsFunctions
 		{
 			if (LSL.isDealing)
 			{
-				LSL.StartDeal.Text = "Stop Dealing";
+				LSL.StartDeal.Text = "Arrêter de dealer";
 			}
 			else
 			{
-				LSL.StartDeal.Text = " Start Dealing";
+				LSL.StartDeal.Text = " Commencer à dealer";
 			}
 			LSL.zeeMenu.Visible = !LSL.zeeMenu.Visible;
 			UpdateDealerInventory();
@@ -1571,8 +1571,8 @@ internal static class LsFunctions
 
 	private static void UpdateDealerInventory()
 	{
-		((UIText)LSL.zeeMenu.Subtitle).Caption = "Rep:" + IntToMoney((int)LSL.dealer1Rep) + " Level:~g~" + (int)CurrentRepLvl(LSL.dealer1Rep);
-		LSL.payDebt.Text = "Pay Debt $" + IntToMoney(LSL.dealer1Debt);
+		((UIText)LSL.zeeMenu.Subtitle).Caption = "Réputation : " + IntToMoney((int)LSL.dealer1Rep) + " Niveau :~g~" + (int)CurrentRepLvl(LSL.dealer1Rep);
+		LSL.payDebt.Text = "Rembourser la dette $" + IntToMoney(LSL.dealer1Debt);
 		LSL.bushWeed.Maximum = LSL.dealer1Weed;
 		LSL.bushWeed.Value = 0;
 		LSL.crack.Maximum = LSL.dealer1Crack;
@@ -1676,7 +1676,7 @@ internal static class LsFunctions
 			ped2.Money -= price;
 			LSL.PlayerInventory[c.Drug.Name] -= c.amount;
 			PlayTheSound();
-			UI.Notify("Sold " + c.Drug.Name + " " + GramsToOz(c.amount) + ", you got " + GramsToOz(LSL.PlayerInventory[c.Drug.Name]) + " left. Gained ~g~" + repEarned + " ~s~rep, total rep ~g~" + LSL.areas[LSL.areaIndex].Reputation + "~s~ in " + LSL.areas[LSL.areaIndex].Name);
+			UI.Notify("Vendu : " + c.Drug.Name + " " + GramsToOz(c.amount) + ", il te reste " + GramsToOz(LSL.PlayerInventory[c.Drug.Name]) + " . Réputation gagnée : ~g~" + repEarned + " ~s~, réputation totale ~g~" + LSL.areas[LSL.areaIndex].Reputation + "~s~ à " + LSL.areas[LSL.areaIndex].Name);
 			Function.Call(unchecked((Hash)(-8213159594590722974L)), (p), ("GENERIC_THANKS"), ("SPEECH_PARAMS_STANDARD"), (0));
 			if ((Entity)(object)c.Vehicle != (Entity)null && ((Entity)c.Vehicle).Exists())
 			{
@@ -1703,7 +1703,7 @@ internal static class LsFunctions
 			ped3.Money -= price;
 			LSL.PlayerInventory[c.Drug.Name] -= c.amount;
 			PlayTheSound();
-			UI.Notify("Sold " + c.Drug.Name + " " + GramsToOz(c.amount) + ", you got " + GramsToOz(LSL.PlayerInventory[c.Drug.Name]) + " left. Gained ~g~" + repEarned + " ~s~rep, total rep ~g~" + LSL.areas[LSL.areaIndex].Reputation + "~s~ in " + LSL.areas[LSL.areaIndex].Name);
+			UI.Notify("Vendu : " + c.Drug.Name + " " + GramsToOz(c.amount) + ", il te reste " + GramsToOz(LSL.PlayerInventory[c.Drug.Name]) + " . Réputation gagnée : ~g~" + repEarned + " ~s~, réputation totale ~g~" + LSL.areas[LSL.areaIndex].Reputation + "~s~ à " + LSL.areas[LSL.areaIndex].Name);
 			Function.Call(unchecked((Hash)(-8213159594590722974L)), (p), ("GENERIC_THANKS"), ("SPEECH_PARAMS_STANDARD"), (0));
 			if ((Entity)(object)c.Vehicle != (Entity)null && ((Entity)c.Vehicle).Exists())
 			{
@@ -1752,7 +1752,7 @@ internal static class LsFunctions
 			double gangStr = LSL.areas[LSL.areaIndex].GangPresance * 1.5f;
 			if (RanRange(0, 8 + (int)gangStr) == 0)
 			{
-				UI.ShowSubtitle("Hey thought you might like to know, ~r~someone ~w~else selling over on ~y~" + World.GetStreetName(((Entity)LSL.aDealer.dPed).Position) + "~w~.", 6000);
+				UI.ShowSubtitle("Hé, pour info, ~r~quelqu'un ~w~d'autre vend vers ~y~" + World.GetStreetName(((Entity)LSL.aDealer.dPed).Position) + "~w~.", 6000);
 				AddBlip((Entity)(object)LSL.aDealer.dPed, (BlipColor)1, "Dealer", _friend: false, _edge: false);
 				LSL.aDealer.Detected = true;
 				tip = true;
@@ -1760,7 +1760,7 @@ internal static class LsFunctions
 		}
 		if (!tip && LSL.pigs.Count > 0 && !tip && !LSL.pigs[0].detected && RanRange(0, 5 + (int)LSL.areas[LSL.areaIndex].GangPresance) == 0)
 		{
-			UI.ShowSubtitle("I hear ~r~Police ~w~are over on ~y~" + World.GetStreetName(((Entity)LSL.pigs[0].Ped).Position) + "~w~. They heading this way.", 6000);
+			UI.ShowSubtitle("J'ai entendu que les ~r~flics ~w~sont vers ~y~" + World.GetStreetName(((Entity)LSL.pigs[0].Ped).Position) + "~w~. Ils viennent par ici.", 6000);
 			LSL.pigs[0].detected = true;
 			tip = true;
 		}
@@ -1772,7 +1772,7 @@ internal static class LsFunctions
 			{
 				Hire = true;
 				LSL.PottentialWorker = new HirePed(c.Ped);
-				UI.ShowSubtitle("You taking on any workers?", 6000);
+				UI.ShowSubtitle("Tu recrutes du monde ?", 6000);
 				tip = true;
 			}
 		}
