@@ -251,7 +251,7 @@ public class StashHouse
 				}
 				else
 				{
-					UI.ShowSubtitle("You do not have enough money to purchase this property");
+					UI.ShowSubtitle("Tu n'as pas assez d'argent pour acheter cette propriété.");
 				}
 			}
 			return;
