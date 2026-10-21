@@ -526,7 +526,7 @@ public class AreaDealer
 				{
 					if (DEBUG)
 					{
-						UI.Notify("Doing Deal");
+						UI.Notify("Transaction en cours");
 					}
 					dealState = Enums.DealState.DoingDeal;
 					cPed.Task.PlayAnimation("switch@franklin@002110_04_magd_3_weed_exchange", "002110_04_magd_3_weed_exchange_franklin", 8f, 3000, (AnimationFlags)16);
@@ -551,7 +551,7 @@ public class AreaDealer
 					dealState = Enums.DealState.GetNear;
 					if (DEBUG)
 					{
-						UI.Notify("Deal Finished");
+						UI.Notify("Transaction terminée");
 					}
 					LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
 					((Entity)cPed).CurrentBlip.Remove();
