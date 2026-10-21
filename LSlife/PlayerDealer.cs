@@ -1049,11 +1049,11 @@ public class PlayerDealer
 		{
 			if (startMoney != Money)
 			{
-				UI.Notify("Made $~g~" + (Money - startMoney));
+				UI.Notify("Gains : $~g~" + (Money - startMoney));
 			}
 			else
 			{
-				UI.Notify("Made nothing");
+				UI.Notify("Aucun gain");
 			}
 		}
 	}
@@ -1125,11 +1125,11 @@ public class PlayerDealer
 	{
 		if (LSL.playerArmours == 0)
 		{
-			LSL.wArmour.Text = "No armour left";
+			LSL.wArmour.Text = "Plus de gilet disponible";
 		}
 		else
 		{
-			LSL.wArmour.Text = "Give armour";
+			LSL.wArmour.Text = "Donner un gilet";
 		}
 	}
 
@@ -1139,17 +1139,17 @@ public class PlayerDealer
 		LSL.wWeed.Maximum = LSL.PlayerInventory["Weed"];
 		LSL.wCrack.Maximum = LSL.PlayerInventory["Crack"];
 		LSL.wCocaine.Maximum = LSL.PlayerInventory["Cocaine"];
-		LSL.wWeed.Description = "Has " + LsFunctions.GramsToOz(Drugs["Weed"]) + " Weed.";
-		LSL.wCrack.Description = "Has " + LsFunctions.GramsToOz(Drugs["Crack"]) + " Crack.";
-		LSL.wCocaine.Description = "Has " + LsFunctions.GramsToOz(Drugs["Cocaine"]) + " Cocaine.";
+		LSL.wWeed.Description = "Stock : " + LsFunctions.GramsToOz(Drugs["Weed"]) + " Weed.";
+		LSL.wCrack.Description = "Stock : " + LsFunctions.GramsToOz(Drugs["Crack"]) + " Crack.";
+		LSL.wCocaine.Description = "Stock : " + LsFunctions.GramsToOz(Drugs["Cocaine"]) + " Cocaine.";
 		int cMoney = Money - Money / 100 * 20;
 		if (Money > 100)
 		{
-			LSL.wCollect.Description = "Dealer has $" + LsFunctions.IntToMoney(Money) + " gets 20% cut, Collect $" + LsFunctions.IntToMoney(cMoney) + ".";
+			LSL.wCollect.Description = "Le dealer a $" + LsFunctions.IntToMoney(Money) + " ; il garde 20 %. À récupérer : $" + LsFunctions.IntToMoney(cMoney) + ".";
 		}
 		else
 		{
-			LSL.wCollect.Description = "Dealer hasnt made any money yet";
+			LSL.wCollect.Description = "Le dealer n'a encore rien gagné";
 		}
 	}
 
