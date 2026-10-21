@@ -33,7 +33,7 @@ internal static class InventoryText
 		InventoryPosY = new UIMenuSliderItem("PosY: ~g~" + posY);
 		InventoryPosY.Maximum = 1080;
 		InventoryPosY.Value = posY;
-		Save = new UIMenuItem("Save config");
+		Save = new UIMenuItem("Enregistrer les réglages");
 		Options.AddItem(InventoryPosX);
 		Options.AddItem(InventoryPosY);
 		Options.AddItem(Save);
