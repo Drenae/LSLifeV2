@@ -1020,7 +1020,7 @@ internal static class LsFunctions
 					current2.Ammo += ammo;
 					if (LSL.DEBUG)
 					{
-						UI.Notify("Gave ped" + ((object)weapon/*cast due to constrained. prefix*/).ToString());
+						UI.Notify("Arme donnée au personnage : " + ((object)weapon/*cast due to constrained. prefix*/).ToString());
 					}
 				}
 				if (ele.Name == "COMPONENT" && !hasWeapon && Enum.TryParse<WeaponComponent>(ele.Value, out WeaponComponent wepcomp) && _ped != null)
