@@ -653,7 +653,7 @@ public class StashVehicle
 		{
 			return;
 		}
-		LsFunctions.SendTextMsg("Storage Vehicle has been confiscated, and its contents destroyed");
+		LsFunctions.SendTextMsg("Le véhicule de stockage a été confisqué et son contenu détruit.");
 		drugCarDestroyed = true;
 		XDocument veh = XDocument.Load("scripts\\LSLife\\LSLife_Vehicles.xml");
 		foreach (XElement element in veh.Descendants())
