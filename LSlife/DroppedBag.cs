@@ -96,7 +96,7 @@ public class DroppedBag
 		{
 			LsFunctions.GivePedWeapons(Game.Player.Character, weapons);
 		}
-		UI.ShowSubtitle("You picked up " + LsFunctions.GramsToOz(weed) + " Weed, " + LsFunctions.GramsToOz(crack) + " Crack, " + LsFunctions.GramsToOz(cocaine) + " Cocaine and $~g~" + money, 5000);
+		UI.ShowSubtitle("Tu as ramassé " + LsFunctions.GramsToOz(weed) + " de weed, " + LsFunctions.GramsToOz(crack) + " de crack, " + LsFunctions.GramsToOz(cocaine) + " de cocaïne et $~g~" + money, 5000);
 		LsFunctions.UpdateInventory();
 	}
 
