@@ -2151,7 +2151,7 @@ public class LSL : Script
 						{
 							Function.Call((Hash)7023634693725934496L);
 							displayHelpTimer = Game.GameTime;
-							LsFunctions.DisplayHelpText("Press ~INPUT_VEH_EXIT~ to enter.");
+							LsFunctions.DisplayHelpText("Appuie sur ~INPUT_VEH_EXIT~ pour entrer.");
 						}
 						if (Game.IsControlJustPressed(2, (Control)75))
 						{
@@ -2209,7 +2209,7 @@ public class LSL : Script
 					{
 						if (DEBUG)
 						{
-							UI.Notify("poor area drive-by");
+							UI.Notify("Attaque en voiture dans un quartier défavorisé");
 						}
 						LsFunctions.SpawnDriveBy(player.Character, _agressive: true);
 					}
@@ -2398,7 +2398,7 @@ public class LSL : Script
 								if (DEBUG)
 								{
 									model = ((Entity)p3).Model;
-									UI.Notify("Area Dealer Spawned using ~g~" + ((object)model/*cast due to constrained. prefix*/).ToString());
+									UI.Notify("Dealer de quartier généré avec ~g~" + ((object)model/*cast due to constrained. prefix*/).ToString());
 								}
 								break;
 							}
@@ -3142,7 +3142,7 @@ public class LSL : Script
 				if ((float)Game.GameTime > displayHelpTimer + 5000f)
 				{
 					displayHelpTimer = Game.GameTime;
-					LsFunctions.DisplayHelpText("Press ~INPUT_CONTEXT~ to interact");
+					LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour interagir");
 				}
 				readyToDeal = true;
 			}
@@ -3194,7 +3194,7 @@ public class LSL : Script
 				Function.Call((Hash)7023634693725934496L);
 				wepDealer.doneTutorial = true;
 				displayHelpTimer = Game.GameTime;
-				LsFunctions.DisplayHelpText("Press ~INPUT_CONTEXT~to interact or ~INPUT_CONTEXT_SECONDARY~to dismiss.");
+				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour interagir ou sur ~INPUT_CONTEXT_SECONDARY~ pour renvoyer.");
 			}
 			if (Game.IsWaypointActive && wepDealer.destination != World.GetNextPositionOnStreet(World.GetWaypointPosition()))
 			{
