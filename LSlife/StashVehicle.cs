@@ -324,7 +324,7 @@ public class StashVehicle
 				if ((float)Game.GameTime > LSL.displayHelpTimer + 5000f && !LSL.LsMenuPool.IsAnyMenuOpen() && LSL.player.Character.IsStopped)
 				{
 					LSL.displayHelpTimer = Game.GameTime;
-					LsFunctions.DisplayHelpText("~INPUT_SPRINT~ to open trunk.");
+					LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour ouvrir le coffre.");
 				}
 				if (Game.IsControlJustPressed(2, (Control)21) && !LSL.LsMenuPool.IsAnyMenuOpen() && LSL.player.Character.IsStopped)
 				{
@@ -357,7 +357,7 @@ public class StashVehicle
 				if ((float)Game.GameTime > LSL.displayHelpTimer + 5000f && !LSL.LsMenuPool.IsAnyMenuOpen() && LSL.player.Character.IsStopped)
 				{
 					LSL.displayHelpTimer = Game.GameTime;
-					LsFunctions.DisplayHelpText("~INPUT_SPRINT~ to close trunk.");
+					LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour fermer le coffre.");
 				}
 				if (Game.IsControlJustPressed(2, (Control)21) && !LSL.LsMenuPool.IsAnyMenuOpen() && LSL.player.Character.IsStopped)
 				{
@@ -370,7 +370,7 @@ public class StashVehicle
 			if ((float)Game.GameTime > LSL.displayHelpTimer + 3000f)
 			{
 				LSL.displayHelpTimer = Game.GameTime;
-				LsFunctions.DisplayHelpText("~INPUT_SPRINT~ to back doors.");
+				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour ouvrir les portes arrière.");
 			}
 			if (Game.IsControlJustPressed(2, (Control)21) && !LSL.LsMenuPool.IsAnyMenuOpen() && LSL.player.Character.IsStopped)
 			{
@@ -404,7 +404,7 @@ public class StashVehicle
 			if ((float)Game.GameTime > LSL.displayHelpTimer + 3000f && !LSL.LsMenuPool.IsAnyMenuOpen() && LSL.player.Character.IsStopped)
 			{
 				LSL.displayHelpTimer = Game.GameTime;
-				LsFunctions.DisplayHelpText("~INPUT_SPRINT~ to close back doors.");
+				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour fermer les portes arrière.");
 			}
 			if (Game.IsControlJustPressed(2, (Control)21) && !LSL.LsMenuPool.IsAnyMenuOpen() && LSL.player.Character.IsStopped)
 			{
