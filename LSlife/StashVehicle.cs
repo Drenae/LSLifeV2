@@ -477,7 +477,7 @@ public class StashVehicle
 				{
 					if (LSL.DEBUG)
 					{
-						UI.Notify("Trying to load vehicle");
+						UI.Notify("Tentative de chargement du véhicule");
 					}
 					VehicleLoad();
 				}
@@ -993,7 +993,7 @@ public class StashVehicle
 				return;
 			}
 		}
-		UI.Notify("~r~Failed to load vehicle");
+		UI.Notify("~r~Échec du chargement du véhicule");
 	}
 
 	public void VehicleSave(Vehicle veh)
