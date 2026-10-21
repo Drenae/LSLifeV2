@@ -1483,7 +1483,7 @@ internal static class LsFunctions
 			lastHour = currentHour;
 			if (LSL.DEBUG)
 			{
-				UI.Notify("Hours Passed " + hoursPassed);
+				UI.Notify("Heures écoulées : " + hoursPassed);
 			}
 		}
 		return hoursPassed;
@@ -1522,7 +1522,7 @@ internal static class LsFunctions
 					}
 					if (LSL.DEBUG)
 					{
-						UI.Notify("Door found");
+						UI.Notify("Porte trouvée");
 					}
 					break;
 				}
@@ -1533,7 +1533,7 @@ internal static class LsFunctions
 			prop = World.CreateProp(new Model(doorHash), pos, new Vector3(0f, 0f, 0f), false, false);
 			if (LSL.DEBUG)
 			{
-				UI.Notify("Didnt find a door spawning one");
+				UI.Notify("Aucune porte trouvée, création d'une porte");
 			}
 		}
 		return prop;
@@ -1876,7 +1876,7 @@ internal static class LsFunctions
 		if (LSL.driveByHandler.GetDriveBies.Where((DriveBy r) => CanSee((Entity)(object)r.Leader, (Entity)(object)LSL.player.Character)).Count() > 0)
 		{
 			LSL.driveByHandler.SetAgressiveTarget(_agg: true, LSL.player.Character);
-			UI.Notify("Driveby saw deal");
+			UI.Notify("Vente repérée depuis un véhicule");
 		}
 	}
 
