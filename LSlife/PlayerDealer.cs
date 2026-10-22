@@ -1049,7 +1049,7 @@ public class PlayerDealer
 		{
 			if (startMoney != Money)
 			{
-				UI.Notify("Gains : $~g~" + (Money - startMoney));
+				UI.Notify("Gains : " + LsFunctions.IntToMoney(Money - startMoney) + " $");
 			}
 			else
 			{
