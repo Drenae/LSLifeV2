@@ -185,8 +185,8 @@ internal static class InventoryText
 		DrawHudBackground(left, top, width, height);
 
 		// L'argent affiché ici est celui du joueur, sans changer son montant.
-		DrawHudText("ARGENT", left + 65, top + 12, 0.30f, Color.WhiteSmoke);
-		DrawHudText(LsFunctions.IntToMoney(LSL.player.Money) + " $", left + 277, top + 12, 0.36f, Color.White);
+		DrawHudText("ARGENT", left + 82, top + 12, 0.30f, Color.WhiteSmoke);
+		DrawHudText(LsFunctions.IntToMoney(LSL.player.Money) + " $", left + 294, top + 12, 0.36f, Color.White);
 
 		string[] names = { "Cannabis", "Crack", "Cocaïne" };
 		string[] ready =
@@ -204,14 +204,14 @@ internal static class InventoryText
 
 		for (int i = 0; i < 3; i++)
 		{
-			int x = left + 73 + i * 109;
+			int x = left + 90 + i * 109;
 			DrawHudText(names[i], x, top + 52, 0.30f, Color.WhiteSmoke);
 			DrawHudText(ready[i], x, top + 80, 0.32f, Color.LightGreen);
 			DrawHudText(raw[i], x, top + 106, 0.32f, Color.LightCoral);
 		}
 
-		DrawHudText("MODE VENTE", left + 89, top + 137, 0.29f, Color.WhiteSmoke);
-		DrawHudText(LSL.isDealing ? "ACTIVÉ" : "DÉSACTIVÉ", left + 290, top + 137, 0.29f,
+		DrawHudText("MODE VENTE", left + 106, top + 137, 0.29f, Color.WhiteSmoke);
+		DrawHudText(LSL.isDealing ? "ACTIVÉ" : "DÉSACTIVÉ", left + 307, top + 137, 0.29f,
 			LSL.isDealing ? Color.LightGreen : Color.LightCoral);
 
 		// Masquer uniquement le compteur natif pendant l'affichage du panneau.
