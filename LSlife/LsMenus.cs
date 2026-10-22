@@ -1734,7 +1734,7 @@ internal static class LsMenus
 			LSL.DealerHandler.dealers[i].Drugs["Weed"] += LSL.wWeed.Value;
 			LSL.PlayerInventory["Weed"] -= LSL.wWeed.Value;
 			LSL.wWeed.Value = 0;
-			LSL.wWeed.Text = "Weed " + LsFunctions.GramsToOz(LSL.wWeed.Value);
+			LSL.wWeed.Text = "Cannabis " + LsFunctions.GramsToOz(LSL.wWeed.Value);
 			change = true;
 		}
 		if (LSL.wCrack.Value > 0)
@@ -1750,7 +1750,7 @@ internal static class LsMenus
 			LSL.DealerHandler.dealers[i].Drugs["Cocaine"] += LSL.wCocaine.Value;
 			LSL.PlayerInventory["Cocaine"] -= LSL.wCocaine.Value;
 			LSL.wCocaine.Value = 0;
-			LSL.wCocaine.Text = "Coke " + LsFunctions.GramsToOz(LSL.wCocaine.Value);
+			LSL.wCocaine.Text = "Cocaïne " + LsFunctions.GramsToOz(LSL.wCocaine.Value);
 			change = true;
 		}
 		if (change)
@@ -1783,7 +1783,7 @@ internal static class LsMenus
 
 	public static void WCocaine_OnSliderChanged(UIMenuSliderItem sender, int newIndex)
 	{
-		LSL.wCocaine.Text = "Coke " + LsFunctions.GramsToOz(sender.Value);
+		LSL.wCocaine.Text = "Cocaïne " + LsFunctions.GramsToOz(sender.Value);
 	}
 
 	public static void WCrack_OnSliderChanged(UIMenuSliderItem sender, int newIndex)
@@ -1793,6 +1793,6 @@ internal static class LsMenus
 
 	public static void WWeed_OnSliderChanged(UIMenuSliderItem sender, int newIndex)
 	{
-		LSL.wWeed.Text = "Weed " + LsFunctions.GramsToOz(sender.Value);
+		LSL.wWeed.Text = "Cannabis " + LsFunctions.GramsToOz(sender.Value);
 	}
 }
