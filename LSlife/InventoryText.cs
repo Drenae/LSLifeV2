@@ -119,66 +119,47 @@ internal static class InventoryText
 		}
 	}
 
+	private static void DrawHudText(string caption, int x, int y, float scale, Color color)
+	{
+		UIResText text = new UIResText(caption, new Point(x, y), scale, color, (GTA.Font)0, UIResText.Alignment.Centered);
+		text.DropShadow = true;
+		((UIText)text).Draw();
+	}
+
 	public static void InventoryGui()
 	{
-		Point UIpos = new Point(posX, posY);
-		UIResText UIWeedtxt = new UIResText("CANNABIS", UIpos, 0.4f, Color.WhiteSmoke, (GTA.Font)7, UIResText.Alignment.Right);
-		UIWeedtxt.DropShadow = true;
-		((UIText)UIWeedtxt).Shadow = true;
-		UIWeedtxt.Outline = true;
-		UIResText UIWeed = new UIResText("", new Point(UIpos.X, UIpos.Y + 20), 0.5f, Color.WhiteSmoke, (GTA.Font)7, UIResText.Alignment.Right);
-		((UIText)UIWeed).Enabled = true;
-		UIWeed.DropShadow = true;
-		((UIText)UIWeed).Shadow = true;
-		UIWeed.Outline = true;
-		UIResText UIweed = new UIResText("", new Point(UIpos.X, UIpos.Y + 45), 0.5f, Color.WhiteSmoke, (GTA.Font)7, UIResText.Alignment.Right);
-		((UIText)UIweed).Enabled = true;
-		UIweed.DropShadow = true;
-		((UIText)UIweed).Shadow = true;
-		UIweed.Outline = true;
-		UIResText UICracktxt = new UIResText("CRACK", new Point(UIpos.X, UIpos.Y + 80), 0.4f, Color.WhiteSmoke, (GTA.Font)7, UIResText.Alignment.Right);
-		UICracktxt.DropShadow = true;
-		((UIText)UICracktxt).Shadow = true;
-		UICracktxt.Outline = true;
-		UIResText UICrack = new UIResText("", new Point(UIpos.X, UIpos.Y + 80 + 20), 0.5f, Color.WhiteSmoke, (GTA.Font)7, UIResText.Alignment.Right);
-		((UIText)UICrack).Enabled = true;
-		UICrack.DropShadow = true;
-		((UIText)UICrack).Shadow = true;
-		UICrack.Outline = true;
-		UIResText UIcrack = new UIResText("", new Point(UIpos.X, UIpos.Y + 100 + 25), 0.5f, Color.WhiteSmoke, (GTA.Font)7, UIResText.Alignment.Right);
-		((UIText)UIcrack).Enabled = true;
-		UIcrack.DropShadow = true;
-		((UIText)UIcrack).Shadow = true;
-		UIcrack.Outline = true;
-		UIResText UICocainetxt = new UIResText("COCAÏNE", new Point(UIpos.X, UIpos.Y + 160), 0.4f, Color.WhiteSmoke, (GTA.Font)7, UIResText.Alignment.Right);
-		UICocainetxt.DropShadow = true;
-		((UIText)UICocainetxt).Shadow = true;
-		UICocainetxt.Outline = true;
-		UIResText UICocaine = new UIResText("", new Point(UIpos.X, UIpos.Y + 160 + 20), 0.5f, Color.WhiteSmoke, (GTA.Font)7, UIResText.Alignment.Right);
-		((UIText)UICocaine).Enabled = true;
-		UICocaine.DropShadow = true;
-		((UIText)UICocaine).Shadow = true;
-		UICocaine.Outline = true;
-		UIResText uIResText = new UIResText("", new Point(UIpos.X, UIpos.Y + 160 + 20 + 25), 0.5f, Color.WhiteSmoke, (GTA.Font)7, UIResText.Alignment.Right);
-		((UIText)uIResText).Enabled = true;
-		uIResText.DropShadow = true;
-		((UIText)uIResText).Shadow = true;
-		uIResText.Outline = true;
-		((UIText)UIWeed).Caption = "~r~" + LsFunctions.pWeedOunce + "~s~z";
-		((UIText)UIweed).Caption = LsFunctions.GramsToOz(LSL.PlayerInventory["Weed"]) ?? "";
-		((UIText)UICrack).Caption = "~r~" + LsFunctions.pCrackOunce + "~s~z";
-		((UIText)UIcrack).Caption = LsFunctions.GramsToOz(LSL.PlayerInventory["Crack"]) ?? "";
-		((UIText)UICocaine).Caption = "~r~" + LsFunctions.pCocaineOunce + "~s~z";
-		((UIText)uIResText).Caption = LsFunctions.GramsToOz(LSL.PlayerInventory["Cocaine"]) ?? "";
-		((UIText)UIWeedtxt).Draw();
-		((UIText)UIWeed).Draw();
-		((UIText)UIweed).Draw();
-		((UIText)UICracktxt).Draw();
-		((UIText)UICrack).Draw();
-		((UIText)UIcrack).Draw();
-		((UIText)UICocainetxt).Draw();
-		((UIText)UICocaine).Draw();
-		((UIText)uIResText).Draw();
+		// posX reste le bord droit du HUD pour préserver les réglages existants.
+		const int width = 330;
+		const int height = 112;
+		int left = posX - width;
+		int top = posY;
+		UIContainer background = new UIContainer(new Point(left, top), new Size(width, height), Color.FromArgb(65, Color.Black));
+		((UIRectangle)background).Draw();
+
+		DrawHudText("STOCK", left + 42, top + 5, 0.30f, Color.WhiteSmoke);
+		DrawHudText("ACTIF", left + width - 38, top + 5, 0.28f, Color.LightGreen);
+
+		string[] names = { "Cannabis", "Crack", "Cocaïne" };
+		string[] ready =
+		{
+			LsFunctions.GramsToOz(LSL.PlayerInventory["Weed"]) ?? "",
+			LsFunctions.GramsToOz(LSL.PlayerInventory["Crack"]) ?? "",
+			LsFunctions.GramsToOz(LSL.PlayerInventory["Cocaine"]) ?? ""
+		};
+		string[] raw =
+		{
+			LsFunctions.pWeedOunce + " oz",
+			LsFunctions.pCrackOunce + " oz",
+			LsFunctions.pCocaineOunce + " oz"
+		};
+
+		for (int i = 0; i < 3; i++)
+		{
+			int x = left + 55 + i * 110;
+			DrawHudText(names[i], x, top + 29, 0.30f, Color.WhiteSmoke);
+			DrawHudText(ready[i], x, top + 52, 0.32f, Color.LightGreen);
+			DrawHudText(raw[i], x, top + 75, 0.32f, Color.LightCoral);
+		}
 		UI.ShowHudComponentThisFrame((HudComponent)3);
 	}
 }
