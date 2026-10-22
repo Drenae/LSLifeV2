@@ -1054,7 +1054,7 @@ public class LSL : Script
 		putCrackOzStash.Maximum = LsFunctions.pCrackOunce;
 		putCrackOzStash.Multiplier = 1;
 		putCrackStash.OnSliderChanged += LsMenus.onSliderChange;
-		putCocainOzStash = new UIMenuSliderItem("Cocaïne Oz");
+		putCocainOzStash = new UIMenuSliderItem("Cocaïne oz");
 		stashPutMenu.AddItem(putCocainOzStash);
 		putCocainOzStash.Maximum = LsFunctions.pCocaineOunce;
 		putCocainStash.Multiplier = 1;
@@ -1081,7 +1081,7 @@ public class LSL : Script
 		string mCrack = "Crack. ";
 		string mCocaine = "cocaïne. ";
 		string mGrams = "Grammes de ";
-		string mOunce = "Oz de ";
+		string mOunce = "Onces de ";
 		string mSell = "Prêt à vendre dans la rue ou à confier à un dealer.";
 		string mStash = "À déposer dans une planque avant la vente.";
 		takeWeedStash.Description = mGrams + mWeed + mSell;
@@ -2112,8 +2112,8 @@ public class LSL : Script
 							{
 								Function.Call((Hash)7023634693725934496L);
 								customerSellTo = nCustomer;
-								sell.Text = "Vendre " + LsFunctions.GramsToOz(customerSellTo.amount) + " de " + customerSellTo.Drug.Name + "?";
-								((UIText)customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.GramsToOz(PlayerInventory[customerSellTo.Drug.Name]) + " de " + customerSellTo.Drug.Name;
+								sell.Text = "Vendre " + LsFunctions.GramsToOz(customerSellTo.amount) + " de " + LsFunctions.DrugDisplayName(customerSellTo.Drug.Name) + "?";
+								((UIText)customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.GramsToOz(PlayerInventory[customerSellTo.Drug.Name]) + " de " + LsFunctions.DrugDisplayName(customerSellTo.Drug.Name);
 								customerMainMenu.Visible = !customerMainMenu.Visible;
 								customerMainMenu.CurrentSelection = 0;
 							}
@@ -2130,8 +2130,8 @@ public class LSL : Script
 							{
 								Function.Call((Hash)7023634693725934496L);
 								customerSellTo = nCustomer;
-								sell.Text = "Vendre " + LsFunctions.GramsToOz(customerSellTo.amount) + " de " + customerSellTo.Drug.Name + "?";
-								((UIText)customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.GramsToOz(PlayerInventory[customerSellTo.Drug.Name]) + " de " + customerSellTo.Drug.Name;
+								sell.Text = "Vendre " + LsFunctions.GramsToOz(customerSellTo.amount) + " de " + LsFunctions.DrugDisplayName(customerSellTo.Drug.Name) + "?";
+								((UIText)customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.GramsToOz(PlayerInventory[customerSellTo.Drug.Name]) + " de " + LsFunctions.DrugDisplayName(customerSellTo.Drug.Name);
 								customerMainMenu.Visible = !customerMainMenu.Visible;
 								customerMainMenu.CurrentSelection = 0;
 							}
@@ -3435,13 +3435,13 @@ public class LSL : Script
 		UIText dealers = new UIText("nDealer:" + areas[areaIndex].Dealers(), new Point(2, 62), 0.2f);
 		UIText demandMet = new UIText("dMet:" + areas[areaIndex].DemandMet(), new Point(2, 72), 0.2f);
 		UIText aRep = new UIText("aRep:" + areas[areaIndex].Reputation + " Lvl :" + (int)LsFunctions.CurrentRepLvl(areas[areaIndex].Reputation), new Point(2, 82), 0.2f);
-		UIText drug0H = new UIText("--" + areas[areaIndex].Drugs[0].Name + "--", new Point(2, 92), 0.2f);
+		UIText drug0H = new UIText("--" + LsFunctions.DrugDisplayName(areas[areaIndex].Drugs[0].Name) + "--", new Point(2, 92), 0.2f);
 		UIText drug0D = new UIText("Dem:" + areas[areaIndex].Drugs[0].Demand, new Point(2, 102), 0.2f);
 		UIText drug0S = new UIText("Sup:" + areas[areaIndex].Drugs[0].Supplied, new Point(2, 112), 0.2f);
-		UIText drug1H = new UIText("--" + areas[areaIndex].Drugs[1].Name + "--", new Point(2, 122), 0.2f);
+		UIText drug1H = new UIText("--" + LsFunctions.DrugDisplayName(areas[areaIndex].Drugs[1].Name) + "--", new Point(2, 122), 0.2f);
 		UIText drug1D = new UIText("Dem:" + areas[areaIndex].Drugs[1].Demand, new Point(2, 132), 0.2f);
 		UIText drug1S = new UIText("Sup:" + areas[areaIndex].Drugs[1].Supplied, new Point(2, 142), 0.2f);
-		UIText drug2H = new UIText("--" + areas[areaIndex].Drugs[2].Name + "--", new Point(2, 152), 0.2f);
+		UIText drug2H = new UIText("--" + LsFunctions.DrugDisplayName(areas[areaIndex].Drugs[2].Name) + "--", new Point(2, 152), 0.2f);
 		UIText drug2D = new UIText("Dem:" + areas[areaIndex].Drugs[2].Demand, new Point(2, 162), 0.2f);
 		UIText drug2S = new UIText("Sup:" + areas[areaIndex].Drugs[2].Supplied, new Point(2, 172), 0.2f);
 		val.Items.Add((UIElement)(object)aHeader);
