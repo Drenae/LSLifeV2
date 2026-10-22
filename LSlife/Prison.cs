@@ -238,7 +238,7 @@ internal static class Prison
 			}
 			if (stateChanged)
 			{
-				UI.Notify("Switching to state " + NewState);
+				UI.Notify("Passage à l'état " + NewState);
 			}
 			return;
 		}
@@ -378,7 +378,7 @@ internal static class Prison
 				if (model.Hash == doorHash)
 				{
 					prop = p;
-					UI.Notify("Gate1 found");
+					UI.Notify("Portail 1 trouvé");
 					break;
 				}
 			}
@@ -403,7 +403,7 @@ internal static class Prison
 				if (model.Hash == doorHash)
 				{
 					prop = p;
-					UI.Notify("Gate2 found");
+					UI.Notify("Portail 2 trouvé");
 					break;
 				}
 			}
