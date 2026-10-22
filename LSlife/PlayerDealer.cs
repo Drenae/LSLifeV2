@@ -1139,7 +1139,7 @@ public class PlayerDealer
 		LSL.wWeed.Maximum = LSL.PlayerInventory["Weed"];
 		LSL.wCrack.Maximum = LSL.PlayerInventory["Crack"];
 		LSL.wCocaine.Maximum = LSL.PlayerInventory["Cocaine"];
-		LSL.wWeed.Description = "Stock : " + LsFunctions.GramsToOz(Drugs["Weed"]) + " de weed.";
+		LSL.wWeed.Description = "Stock : " + LsFunctions.GramsToOz(Drugs["Weed"]) + " de cannabis.";
 		LSL.wCrack.Description = "Stock : " + LsFunctions.GramsToOz(Drugs["Crack"]) + " de crack.";
 		LSL.wCocaine.Description = "Stock : " + LsFunctions.GramsToOz(Drugs["Cocaine"]) + " de cocaïne.";
 		int cMoney = Money - Money / 100 * 20;
