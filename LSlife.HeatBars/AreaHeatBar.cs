@@ -5,7 +5,7 @@ namespace LSlife.HeatBars;
 
 internal static class AreaHeatBar
 {
-	private static BarTimerBar aBar = new BarTimerBar("Area");
+	private static BarTimerBar aBar = new BarTimerBar("Quartier");
 
 	public static bool Displayed = false;
 
