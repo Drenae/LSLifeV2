@@ -1012,7 +1012,7 @@ public class LSL : Script
 		OrderSummaryMenu = LsMenuPool.AddSubMenu(OrderDrugs, "Récapitulatif");
 		if (UseSprites)
 		{
-			OrderSummaryMenu.SetBannerType("scripts\\\\LSLife\\\\sprites\\\\banner_zee.png");
+			OrderSummaryMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
 		}
 		OrderSummaryWeed = new UIMenuItem("Cannabis");
 		OrderSummaryCrack = new UIMenuItem("Crack");
