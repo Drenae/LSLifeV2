@@ -126,16 +126,25 @@ internal static class InventoryText
 		((UIText)text).Draw();
 	}
 
+	private static void DrawRoundedHudBackground(int left, int top, int width, int height)
+	{
+		// Coins arrondis simulés par bandes NativeUI, sans texture ni dépendance.
+		Color shade = Color.FromArgb(155, 0, 0, 0);
+		const int radius = 9;
+		new UIResRectangle(new Point(left + radius, top), new Size(width - radius * 2, height), shade).Draw();
+		new UIResRectangle(new Point(left, top + radius), new Size(width, height - radius * 2), shade).Draw();
+		new UIResRectangle(new Point(left + 4, top + 3), new Size(width - 8, height - 6), shade).Draw();
+		new UIResRectangle(new Point(left + 2, top + 5), new Size(width - 4, height - 10), shade).Draw();
+	}
+
 	public static void InventoryGui()
 	{
 		// Coordonnées en espace NativeUI 1920 x 1080, comme les réglages existants.
 		const int width = 330;
 		const int height = 139;
 		int left = posX - width;
-		int top = posY;
-		// UIContainer ne dessinait pas de fond : dessiner un vrai rectangle NativeUI.
-		UIResRectangle background = new UIResRectangle(new Point(left, top), new Size(width, height), Color.FromArgb(105, 0, 0, 0));
-		background.Draw();
+		int top = System.Math.Max(0, posY - 25);
+		DrawRoundedHudBackground(left, top, width, height);
 
 		// L'argent affiché ici est celui du joueur, sans changer son montant.
 		DrawHudText("ARGENT", left + 50, top + 7, 0.30f, Color.WhiteSmoke);
