@@ -141,7 +141,7 @@ internal static class LsFunctions
 				Tuple<LSL.AreaType, LSL.jurisdictionType> zData = new Tuple<LSL.AreaType, LSL.jurisdictionType>(wealth, police);
 				LSL.zoneData.Add(zoneName, zData);
 			}
-			DbugString("LosSantos data loaded " + i + " areas added");
+			DbugString("Données de Los Santos chargées : " + i + " quartiers ajoutés");
 		}
 		else
 		{
@@ -178,7 +178,7 @@ internal static class LsFunctions
 				Tuple<LSL.AreaType, LSL.jurisdictionType> zData2 = new Tuple<LSL.AreaType, LSL.jurisdictionType>(wealth2, police2);
 				LSL.zoneData.Add(zoneName2, zData2);
 			}
-			DbugString("LibertyCity Rewind data loaded " + i2 + " areas added");
+			DbugString("Données de Liberty City Rewind chargées : " + i2 + " quartiers ajoutés");
 		}
 		else
 		{
@@ -1863,7 +1863,7 @@ internal static class LsFunctions
 			position = ((Entity)LSL.aDealer.dPed).Position;
 			if (position.DistanceTo(LSL.playerPos) < 40f && CanSee((Entity)(object)LSL.aDealer.dPed, (Entity)(object)Game.Player.Character) && LSL.rnd.Next(0, 2) == 0 && LSL.driveByHandler.AmountOfDriveBy(_agg: true) == 0)
 			{
-				DbugString("Spawning Driveby, player seen doing deal.");
+				DbugString("Attaque en voiture déclenchée : joueur surpris en pleine transaction.");
 				SpawnDriveBy(LSL.player.Character, _agressive: true);
 			}
 		}
