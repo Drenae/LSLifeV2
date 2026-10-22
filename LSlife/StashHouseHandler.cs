@@ -357,7 +357,7 @@ public class StashHouseHandler
 		LSL.takeWeedStash.Text = "Cannabis " + LsFunctions.GramsToOz(_house.Weed);
 		LSL.takeCrackStash.Text = "Crack " + LsFunctions.GramsToOz(_house.Crack);
 		LSL.takeCocainStash.Text = "Cocaïne " + LsFunctions.GramsToOz(_house.Cocain);
-		LSL.takeMoneyStash.Text = "Argent $" + LsFunctions.IntToMoney(_house.Money);
+		LSL.takeMoneyStash.Text = "Argent " + LsFunctions.IntToMoney(_house.Money) + " $";
 		LSL.takeWeaponStash.Items = _house.Weps;
 		LSL.takeWeaponStash.Index = 0;
 		LSL.takeArmourStash.Items = new List<object>();
@@ -378,7 +378,7 @@ public class StashHouseHandler
 		LSL.putWeedOzStash.Text = "Cannabis ~r~" + LsFunctions.pWeedOunce + "~s~z";
 		LSL.putCrackOzStash.Text = "Crack ~r~" + LsFunctions.pCrackOunce + "~s~z";
 		LSL.putCocainOzStash.Text = "Cocaïne ~r~" + LsFunctions.pCocaineOunce + "~s~z";
-		LSL.putMoneyStash.Text = "Argent $" + LsFunctions.IntToMoney(LSL.player.Money);
+		LSL.putMoneyStash.Text = "Argent " + LsFunctions.IntToMoney(LSL.player.Money) + " $";
 		LSL.putWeaponStash.Index = 0;
 		LSL.putWeaponStash.Items = LSL.playerWeps;
 		LSL.putArmourStash.Items = new List<object>();
