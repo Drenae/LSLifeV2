@@ -128,16 +128,18 @@ internal static class InventoryText
 
 	public static void InventoryGui()
 	{
-		// posX reste le bord droit du HUD pour préserver les réglages existants.
+		// Coordonnées en espace NativeUI 1920 x 1080, comme les réglages existants.
 		const int width = 330;
-		const int height = 112;
+		const int height = 139;
 		int left = posX - width;
 		int top = posY;
-		UIContainer background = new UIContainer(new Point(left, top), new Size(width, height), Color.FromArgb(65, Color.Black));
-		((UIRectangle)background).Draw();
+		// UIContainer ne dessinait pas de fond : dessiner un vrai rectangle NativeUI.
+		UIResRectangle background = new UIResRectangle(new Point(left, top), new Size(width, height), Color.FromArgb(105, 0, 0, 0));
+		background.Draw();
 
-		DrawHudText("STOCK", left + 42, top + 5, 0.30f, Color.WhiteSmoke);
-		DrawHudText("ACTIF", left + width - 38, top + 5, 0.28f, Color.LightGreen);
+		// L'argent affiché ici est celui du joueur, sans changer son montant.
+		DrawHudText("ARGENT", left + 50, top + 7, 0.30f, Color.WhiteSmoke);
+		DrawHudText(LsFunctions.IntToMoney(LSL.player.Money) + " $", left + 240, top + 7, 0.36f, Color.White);
 
 		string[] names = { "Cannabis", "Crack", "Cocaïne" };
 		string[] ready =
@@ -156,10 +158,17 @@ internal static class InventoryText
 		for (int i = 0; i < 3; i++)
 		{
 			int x = left + 55 + i * 110;
-			DrawHudText(names[i], x, top + 29, 0.30f, Color.WhiteSmoke);
-			DrawHudText(ready[i], x, top + 52, 0.32f, Color.LightGreen);
-			DrawHudText(raw[i], x, top + 75, 0.32f, Color.LightCoral);
+			DrawHudText(names[i], x, top + 40, 0.30f, Color.WhiteSmoke);
+			DrawHudText(ready[i], x, top + 62, 0.32f, Color.LightGreen);
+			DrawHudText(raw[i], x, top + 84, 0.32f, Color.LightCoral);
 		}
-		UI.ShowHudComponentThisFrame((HudComponent)3);
+
+		DrawHudText("MODE VENTE", left + 70, top + 113, 0.29f, Color.WhiteSmoke);
+		DrawHudText(LSL.isDealing ? "ACTIVÉ" : "DÉSACTIVÉ", left + 246, top + 113, 0.29f,
+			LSL.isDealing ? Color.LightGreen : Color.LightCoral);
+
+		// Masquer uniquement le compteur natif pendant l'affichage du panneau.
+		// Il reste disponible normalement lorsque le panneau du mod n'est pas affiché.
+		UI.HideHudComponentThisFrame((HudComponent)3);
 	}
 }
