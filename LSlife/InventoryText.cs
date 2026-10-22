@@ -132,6 +132,12 @@ internal static class InventoryText
 		}
 	}
 
+	private static string CleanHudText(string caption)
+	{
+		// Les codes de mise en forme GTA (~g~, ~r~, ~s~, etc.) ne sont pas interprétés par GDI+.
+		return System.Text.RegularExpressions.Regex.Replace(caption ?? "", @"~[^~]*~", "");
+	}
+
 	private static void DrawHudText(Graphics graphics, string caption, int x, int y, float size, Color color)
 	{
 		using (System.Drawing.Font font = new System.Drawing.Font("Segoe UI", size, FontStyle.Regular, GraphicsUnit.Pixel))
@@ -139,8 +145,8 @@ internal static class InventoryText
 		using (Brush shadow = new SolidBrush(Color.FromArgb(190, 0, 0, 0)))
 		using (StringFormat format = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Near })
 		{
-			graphics.DrawString(caption, font, shadow, new PointF(x + 1, y + 1), format);
-			graphics.DrawString(caption, font, brush, new PointF(x, y), format);
+			graphics.DrawString(CleanHudText(caption), font, shadow, new PointF(x + 1, y + 1), format);
+			graphics.DrawString(CleanHudText(caption), font, brush, new PointF(x, y), format);
 		}
 	}
 
@@ -167,18 +173,18 @@ internal static class InventoryText
 					graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
 					graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
 					graphics.DrawImage(background, 0, 0, width, height);
-					DrawHudText(graphics, "ARGENT", 90, 10, 15f, Color.WhiteSmoke);
-					DrawHudText(graphics, money, 310, 8, 17f, Color.White);
+					DrawHudText(graphics, "ARGENT", 90, 10, 19f, Color.WhiteSmoke);
+					DrawHudText(graphics, money, 310, 8, 20f, Color.White);
 					string[] names = { "Cannabis", "Crack", "Cocaïne" };
 					for (int i = 0; i < 3; i++)
 					{
 						int x = 95 + i * 109;
-						DrawHudText(graphics, names[i], x, 45, 15f, Color.WhiteSmoke);
-						DrawHudText(graphics, ready[i], x, 70, 16f, Color.LightGreen);
-						DrawHudText(graphics, raw[i], x, 100, 16f, Color.LightCoral);
+						DrawHudText(graphics, names[i], x, 45, 19f, Color.WhiteSmoke);
+						DrawHudText(graphics, ready[i], x, 70, 19f, Color.LightGreen);
+						DrawHudText(graphics, raw[i], x, 100, 19f, Color.LightCoral);
 					}
-					DrawHudText(graphics, "MODE VENTE", 106, 135, 14f, Color.WhiteSmoke);
-					DrawHudText(graphics, selling ? "ACTIVÉ" : "DÉSACTIVÉ", 310, 135, 14f,
+					DrawHudText(graphics, "MODE VENTE", 106, 135, 18f, Color.WhiteSmoke);
+					DrawHudText(graphics, selling ? "ACTIVÉ" : "DÉSACTIVÉ", 310, 135, 18f,
 						selling ? Color.LightGreen : Color.LightCoral);
 					// Nom distinct : DrawTexture peut conserver en cache les chemins déjà chargés.
 					string next = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(hudBackgroundPath),
