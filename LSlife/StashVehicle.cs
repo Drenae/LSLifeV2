@@ -1185,8 +1185,8 @@ public class StashVehicle
 		LSL.takeCrackOzVeh.Text = "Crack ~r~" + drugCarCrackOz + "~s~oz";
 		LSL.putCocainOzVeh.Text = "Cocaïne ~r~" + LsFunctions.pCocaineOunce + "~s~oz";
 		LSL.takeCocainOzVeh.Text = "Cocaïne ~r~" + drugCarCocainOz + "~s~oz";
-		LSL.putMoneyVeh.Text = "Argent $" + LsFunctions.IntToMoney(LSL.player.Money);
-		LSL.takeMoneyVeh.Text = "Argent $" + LsFunctions.IntToMoney(drugCarMoney);
+		LSL.putMoneyVeh.Text = "Argent " + LsFunctions.IntToMoney(LSL.player.Money) + " $";
+		LSL.takeMoneyVeh.Text = "Argent " + LsFunctions.IntToMoney(drugCarMoney) + " $";
 		LSL.takeMoneyStash.Maximum = drugCarMoney;
 		if (LSL.DEBUG)
 		{
