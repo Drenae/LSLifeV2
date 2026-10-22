@@ -183,8 +183,8 @@ internal static class InventoryText
 						DrawHudText(graphics, ready[i], x, 70, 19f, Color.LightGreen);
 						DrawHudText(graphics, raw[i], x, 100, 19f, Color.LightCoral);
 					}
-					DrawHudText(graphics, "MODE VENTE", 70, 135, 19f, Color.WhiteSmoke);
-					DrawHudText(graphics, selling ? "ACTIVÉ" : "DÉSACTIVÉ", 290, 135, 19f,
+					DrawHudText(graphics, "MODE VENTE", 80, 130, 19f, Color.WhiteSmoke);
+					DrawHudText(graphics, selling ? "ACTIVÉ" : "DÉSACTIVÉ", 290, 130, 19f,
 						selling ? Color.LightGreen : Color.LightCoral);
 					// Nom distinct : DrawTexture peut conserver en cache les chemins déjà chargés.
 					string next = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(hudBackgroundPath),
