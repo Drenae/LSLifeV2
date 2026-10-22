@@ -173,12 +173,12 @@ internal static class InventoryText
 					graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
 					graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
 					graphics.DrawImage(background, 0, 0, width, height);
-					DrawHudText(graphics, "ARGENT", 80, 8, 19f, Color.WhiteSmoke);
-					DrawHudText(graphics, money, 300, 8, 20f, Color.White);
+					DrawHudText(graphics, "ARGENT", 60, 8, 19f, Color.White);
+					DrawHudText(graphics, money, 290, 8, 19f, Color.LightGreen);
 					string[] names = { "Cannabis", "Crack", "Cocaïne" };
 					for (int i = 0; i < 3; i++)
 					{
-						int x = 95 + i * 109;
+						int x = 85 + i * 109;
 						DrawHudText(graphics, names[i], x, 45, 19f, Color.WhiteSmoke);
 						DrawHudText(graphics, ready[i], x, 70, 19f, Color.LightGreen);
 						DrawHudText(graphics, raw[i], x, 100, 19f, Color.LightCoral);
