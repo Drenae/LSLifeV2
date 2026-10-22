@@ -844,7 +844,7 @@ public class LSL : Script
 			zeeMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
 		}
 		LsMenuPool.Add(zeeMenu);
-		startDealing = LsMenuPool.AddSubMenu(zeeMenu, "Deal");
+		startDealing = LsMenuPool.AddSubMenu(zeeMenu, "Dealer");
 		if (UseSprites)
 		{
 			startDealing.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
@@ -2046,7 +2046,7 @@ public class LSL : Script
 								position = ((Entity)c.Ped).Position;
 								if (position.DistanceTo(playerPos) > 80f)
 								{
-									LsFunctions.DbugString("Customer deleted out of range");
+									LsFunctions.DbugString("Client supprimé : hors de portée");
 									customers.Remove(c);
 									LsFunctions.RemovePedFromWorld(c.Ped, clearTask: true);
 									break;
@@ -3493,7 +3493,7 @@ public class LSL : Script
 		Size size = new Size(80, 104);
 		UIContainer val = new UIContainer(point, size, Color.FromArgb(100, Color.Black));
 		UIText aHeader = new UIText("--Zee--", new Point(2, 2), 0.2f);
-		UIText money = new UIText("money:" + dealer1Money, new Point(2, 12), 0.2f);
+		UIText money = new UIText("argent : " + dealer1Money, new Point(2, 12), 0.2f);
 		UIText reload = new UIText("reload:" + dealer1ReloadOrder, new Point(2, 22), 0.2f);
 		UIText reloaded = new UIText("reloaded:" + dealer1Reloaded, new Point(2, 32), 0.2f);
 		UIText weed = new UIText("weed:" + dealer1Weed, new Point(2, 42), 0.2f);
@@ -3598,9 +3598,9 @@ public class LSL : Script
 		UIContainer val = new UIContainer(point, size, Color.FromArgb(100, Color.Black));
 		UIText aHeader = new UIText("--Gang--", new Point(2, 2), 0.2f);
 		UIText gName = new UIText("name:" + gang.Name, new Point(2, 12), 0.2f);
-		UIText gMoney = new UIText("money:" + gang.Money, new Point(2, 22), 0.2f);
+		UIText gMoney = new UIText("argent : " + gang.Money, new Point(2, 22), 0.2f);
 		UIText gMax = new UIText("max:" + gang.MaxMembers, new Point(2, 32), 0.2f);
-		UIText gTotal = new UIText("total:" + gang.TotalMembers, new Point(2, 42), 0.2f);
+		UIText gTotal = new UIText("total : " + gang.TotalMembers, new Point(2, 42), 0.2f);
 		UIText gThreat = new UIText("threats:" + gang.ThreatHandler.ThreatCount, new Point(2, 52), 0.2f);
 		UIText gFree = new UIText("free:" + GangUtilities.AllocatedMemberCount(gang), new Point(2, 62), 0.2f);
 		UIText night = new UIText("night:" + IsNight(), new Point(2, 72), 0.2f);
@@ -3670,7 +3670,7 @@ public class LSL : Script
 			{
 				UI.Notify("Policier généré");
 				((Entity)pigCar).AddBlip();
-				((Entity)pigCar).CurrentBlip.Name = "Police Car";
+				((Entity)pigCar).CurrentBlip.Name = "Voiture de police";
 			}
 			Function.Call(unchecked((Hash)(-823518585696636035L)), (((Entity)pigCar).Handle), (true));
 			pigs.Add(new Pig(pigCar.CreatePedOnSeat(unchecked((VehicleSeat)(-1)), new Model(Enums.GetPolicePedType())), _leader: true));
