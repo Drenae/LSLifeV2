@@ -1198,7 +1198,7 @@ public class LSL : Script
 		vehStashPutMenu.AddItem(putMoneyVeh);
 		putMoneyVeh.Maximum = player.Money;
 		putMoneyVeh.Multiplier = 100;
-		takeMoneyVeh = new UIMenuSliderItem("Money $drugCarMoney");
+		takeMoneyVeh = new UIMenuSliderItem("Argent $drugCarMoney");
 		vehStashTakeMenu.AddItem(takeMoneyVeh);
 		takeMoneyVeh.Maximum = 0;
 		takeMoneyVeh.Multiplier = 100;
@@ -1238,7 +1238,7 @@ public class LSL : Script
 			customerMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_customer.png");
 		}
 		LsMenuPool.Add(customerMainMenu);
-		sell = new UIMenuItem("drug");
+		sell = new UIMenuItem("Drogue");
 		customerMainMenu.AddItem(sell);
 		turnAway = new UIMenuItem("À plus");
 		customerMainMenu.AddItem(turnAway);
@@ -1715,7 +1715,7 @@ public class LSL : Script
 				{
 					Function.Call((Hash)7023634693725934496L);
 					displayHelpTimer = Game.GameTime;
-					LsFunctions.DisplayHelpText("~INPUT_CONTEXT~ to comply.");
+					LsFunctions.DisplayHelpText("~INPUT_CONTEXT~ pour obtempérer.");
 				}
 				if (Game.IsControlJustPressed(2, (Control)51))
 				{
@@ -2112,7 +2112,7 @@ public class LSL : Script
 							{
 								Function.Call((Hash)7023634693725934496L);
 								customerSellTo = nCustomer;
-								sell.Text = "Sell " + LsFunctions.GramsToOz(customerSellTo.amount) + " of " + customerSellTo.Drug.Name + "?";
+								sell.Text = "Vendre " + LsFunctions.GramsToOz(customerSellTo.amount) + " de " + customerSellTo.Drug.Name + "?";
 								((UIText)customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.GramsToOz(PlayerInventory[customerSellTo.Drug.Name]) + " de " + customerSellTo.Drug.Name;
 								customerMainMenu.Visible = !customerMainMenu.Visible;
 								customerMainMenu.CurrentSelection = 0;
@@ -2130,7 +2130,7 @@ public class LSL : Script
 							{
 								Function.Call((Hash)7023634693725934496L);
 								customerSellTo = nCustomer;
-								sell.Text = "Sell " + LsFunctions.GramsToOz(customerSellTo.amount) + " of " + customerSellTo.Drug.Name + "?";
+								sell.Text = "Vendre " + LsFunctions.GramsToOz(customerSellTo.amount) + " de " + customerSellTo.Drug.Name + "?";
 								((UIText)customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.GramsToOz(PlayerInventory[customerSellTo.Drug.Name]) + " de " + customerSellTo.Drug.Name;
 								customerMainMenu.Visible = !customerMainMenu.Visible;
 								customerMainMenu.CurrentSelection = 0;
@@ -3202,7 +3202,7 @@ public class LSL : Script
 				((Entity)wepDealer.vehicle).IsInvincible = true;
 				wepDealer.ped.Task.ClearAll();
 				wepDealer.ped.Task.DriveTo(wepDealer.vehicle, wepDealer.destination, 1f, 10f, 786603);
-				UI.ShowSubtitle("Ok, we heading to ~y~" + World.GetStreetName(wepDealer.destination));
+				UI.ShowSubtitle("OK, on se rend à ~y~" + World.GetStreetName(wepDealer.destination));
 				wepDealer.state = Dealer.States.Leaving;
 			}
 		}
