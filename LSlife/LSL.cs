@@ -937,11 +937,11 @@ public class LSL : Script
 			wepMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_dealer.png");
 		}
 		LsMenuPool.Add(wepMenu);
-		melee = new UIMenuListItem("Arme blanche $" + LsFunctions.IntToMoney(mWprice), meleeWeps, 0);
+		melee = new UIMenuListItem("Arme blanche " + LsFunctions.IntToMoney(mWprice) + " $", meleeWeps, 0);
 		wepMenu.AddItem(melee);
-		pistol = new UIMenuListItem("Pistolet $" + LsFunctions.IntToMoney(pWprice), pistolWeps, 0);
+		pistol = new UIMenuListItem("Pistolet " + LsFunctions.IntToMoney(pWprice) + " $", pistolWeps, 0);
 		wepMenu.AddItem(pistol);
-		armour = new UIMenuItem("Gilet $" + LsFunctions.IntToMoney(250 - LsFunctions.Discount(250)));
+		armour = new UIMenuItem("Gilet " + LsFunctions.IntToMoney(250 - LsFunctions.Discount(250)) + " $");
 		wepMenu.AddItem(armour);
 		dismiss = new UIMenuItem("Renvoyer");
 		wepMenu.AddItem(dismiss);
@@ -955,7 +955,7 @@ public class LSL : Script
 		{
 			weedMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
 		}
-		bushWeed = new UIMenuSliderItem("Cannabis $" + LsFunctions.IntToMoney(weed1Price - LsFunctions.Discount(weed1Price)) + "oz");
+		bushWeed = new UIMenuSliderItem("Cannabis " + LsFunctions.IntToMoney(weed1Price - LsFunctions.Discount(weed1Price)) + " $" + "oz");
 		weedMenu.AddItem(bushWeed);
 		bushWeed.Maximum = dealer1Weed;
 		bushWeed.Multiplier = 1;
@@ -970,7 +970,7 @@ public class LSL : Script
 		{
 			crackMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
 		}
-		crack = new UIMenuSliderItem("Crack $" + LsFunctions.IntToMoney(crack1Price - LsFunctions.Discount(crack1Price)) + "oz");
+		crack = new UIMenuSliderItem("Crack " + LsFunctions.IntToMoney(crack1Price - LsFunctions.Discount(crack1Price)) + " $" + "oz");
 		crackMenu.AddItem(crack);
 		crack.Maximum = dealer1Crack;
 		crack.Multiplier = 1;
@@ -985,7 +985,7 @@ public class LSL : Script
 		{
 			cocainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
 		}
-		cocaine = new UIMenuSliderItem("Cocaïne $" + LsFunctions.IntToMoney(cocain1Price - LsFunctions.Discount(cocain1Price)) + "oz");
+		cocaine = new UIMenuSliderItem("Cocaïne " + LsFunctions.IntToMoney(cocain1Price - LsFunctions.Discount(cocain1Price)) + " $" + "oz");
 		cocainMenu.AddItem(cocaine);
 		cocaine.Maximum = dealer1Cocain;
 		cocaine.Multiplier = 1;
@@ -995,7 +995,7 @@ public class LSL : Script
 		cocaine.OnSliderChanged += LsMenus.onSliderChange;
 		cocainMenu.OnItemSelect += LsMenus.onCocainMenuSelect;
 		cocainMenu.OnMenuOpen += DrugStockMenu_OnMenuOpen;
-		PlaceOrder = new UIMenuItem("Commander pour $" + LsFunctions.IntToMoney(0));
+		PlaceOrder = new UIMenuItem("Commander pour " + LsFunctions.IntToMoney(0) + " $");
 		OrderDrugs.AddItem(PlaceOrder);
 		OrderDrugs.OnItemSelect += LsMenus.OnOrderDrugsMenuSelect;
 		stashMainMenu = new UIMenu("Stockage de la planque", "Choisis une option.");
@@ -1059,11 +1059,11 @@ public class LSL : Script
 		putCocainOzStash.Maximum = LsFunctions.pCocaineOunce;
 		putCocainStash.Multiplier = 1;
 		putCocainStash.OnSliderChanged += LsMenus.onSliderChange;
-		putMoneyStash = new UIMenuSliderItem("Argent $");
+		putMoneyStash = new UIMenuSliderItem("Argent");
 		stashPutMenu.AddItem(putMoneyStash);
 		putMoneyStash.Maximum = player.Money;
 		putMoneyStash.Multiplier = 100;
-		takeMoneyStash = new UIMenuSliderItem("Argent $");
+		takeMoneyStash = new UIMenuSliderItem("Argent");
 		stashTakeMenu.AddItem(takeMoneyStash);
 		takeMoneyStash.Maximum = 0;
 		takeMoneyStash.Multiplier = 100;
@@ -1194,11 +1194,11 @@ public class LSL : Script
 		takeCocainOzVeh.Multiplier = 1;
 		putCocainOzVeh.OnSliderChanged += LsMenus.onSliderChange;
 		takeCocainOzVeh.OnSliderChanged += LsMenus.onSliderChange;
-		putMoneyVeh = new UIMenuSliderItem("Argent $" + LsFunctions.IntToMoney(player.Money));
+		putMoneyVeh = new UIMenuSliderItem("Argent " + LsFunctions.IntToMoney(player.Money) + " $");
 		vehStashPutMenu.AddItem(putMoneyVeh);
 		putMoneyVeh.Maximum = player.Money;
 		putMoneyVeh.Multiplier = 100;
-		takeMoneyVeh = new UIMenuSliderItem("Argent $drugCarMoney");
+		takeMoneyVeh = new UIMenuSliderItem("Argent");
 		vehStashTakeMenu.AddItem(takeMoneyVeh);
 		takeMoneyVeh.Maximum = 0;
 		takeMoneyVeh.Multiplier = 100;
@@ -1287,7 +1287,7 @@ public class LSL : Script
 		}
 		if (!NewOrder.Placed)
 		{
-			PlaceOrder.Text = "Commander pour $" + LsFunctions.IntToMoney(NewOrder.Bill);
+			PlaceOrder.Text = "Commander pour " + LsFunctions.IntToMoney(NewOrder.Bill) + " $";
 			LsFunctions.UpdateOrderMenuDesc();
 		}
 	}
@@ -2759,7 +2759,7 @@ public class LSL : Script
 				}
 				if ((Entity)(object)attacker == (Entity)null && AmountOfDrugs > 0)
 				{
-					LsFunctions.SendTextMsg("Ils ont pris $" + LsFunctions.IntToMoney(player.Money) + ", ainsi que toute ta drogue et tes armes.");
+					LsFunctions.SendTextMsg("Ils ont pris " + LsFunctions.IntToMoney(player.Money) + " $" + ", ainsi que toute ta drogue et tes armes.");
 					player.Character.Weapons.RemoveAll();
 					Player val3 = player;
 					val3.Money -= player.Money;
@@ -2802,7 +2802,7 @@ public class LSL : Script
 				if ((Entity)(object)attacker == (Entity)null && TotalDrugsCarried() > 0)
 				{
 					player.Character.Weapons.RemoveAll();
-					LsFunctions.SendTextMsg("La police a confisqué $" + LsFunctions.IntToMoney(player.Money) + ", ainsi que toute ta drogue et tes armes.");
+					LsFunctions.SendTextMsg("La police a confisqué " + LsFunctions.IntToMoney(player.Money) + " $" + ", ainsi que toute ta drogue et tes armes.");
 					Player val4 = player;
 					val4.Money -= player.Money;
 					if (PlayerInventory.Keys.ToList().Count > 0)
