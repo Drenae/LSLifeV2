@@ -1210,7 +1210,7 @@ internal static class LsFunctions
 					{
 						LSL.dealer1Debt = 0;
 					}
-					TextMsg("ZEE", "Dette", "J'ai ajouté $" + IntToMoney((int)intrestAmount) + " à ta dette. Elle s'élève maintenant à $" + IntToMoney(LSL.dealer1Debt));
+					TextMsg("ZEE", "Dette", "J'ai ajouté " + IntToMoney((int)intrestAmount) + " $" + " à ta dette. Elle s'élève maintenant à " + IntToMoney(LSL.dealer1Debt) + " $");
 				}
 				if (LSL.hardMode)
 				{
@@ -1272,7 +1272,7 @@ internal static class LsFunctions
 					{
 						LSL.dealer1Debt = 0;
 					}
-					TextMsg("ZEE", "Dette", "J'ai ajouté $" + IntToMoney((int)intrestAmount2) + " à ta dette. Elle s'élève maintenant à $" + IntToMoney(LSL.dealer1Debt));
+					TextMsg("ZEE", "Dette", "J'ai ajouté " + IntToMoney((int)intrestAmount2) + " $" + " à ta dette. Elle s'élève maintenant à " + IntToMoney(LSL.dealer1Debt) + " $");
 				}
 				if (LSL.dealer1Money < 10000)
 				{
@@ -1582,7 +1582,7 @@ internal static class LsFunctions
 	private static void UpdateDealerInventory()
 	{
 		((UIText)LSL.zeeMenu.Subtitle).Caption = "Réputation : " + IntToMoney((int)LSL.dealer1Rep) + " Niveau :~g~" + (int)CurrentRepLvl(LSL.dealer1Rep);
-		LSL.payDebt.Text = "Rembourser la dette $" + IntToMoney(LSL.dealer1Debt);
+		LSL.payDebt.Text = "Rembourser la dette " + IntToMoney(LSL.dealer1Debt) + " $";
 		LSL.bushWeed.Maximum = LSL.dealer1Weed;
 		LSL.bushWeed.Value = 0;
 		LSL.crack.Maximum = LSL.dealer1Crack;
