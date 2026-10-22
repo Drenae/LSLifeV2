@@ -271,7 +271,7 @@ public class Pig
 			{
 				if ((Entity)(object)Game.Player.Character.CurrentVehicle != (Entity)null && !Game.Player.Character.CurrentVehicle.IsStopped)
 				{
-					LsFunctions.DbugString("Wanted level for not stopping for police in vehicle");
+					LsFunctions.DbugString("Indice de recherche augmenté : refus d'obtempérer en véhicule");
 					Game.Player.WantedLevel = 1;
 					LSL.areas[LSL.areaIndex].Heat += 200f;
 					break;
@@ -320,7 +320,7 @@ public class Pig
 			}
 			if (Game.Player.WantedLevel < 1 && LSL.playerPos.DistanceTo(pPos) > 8f)
 			{
-				LsFunctions.DbugString("Wanted level for not stopping for police");
+				LsFunctions.DbugString("Indice de recherche augmenté : refus d'obtempérer");
 				Game.Player.WantedLevel = 2;
 				LSL.areas[LSL.areaIndex].Heat += 200f;
 				break;
