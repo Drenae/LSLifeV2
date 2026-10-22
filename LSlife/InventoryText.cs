@@ -25,6 +25,14 @@ internal static class InventoryText
 
 	private static bool hudSpriteReady;
 
+	private static string renderedHudPath;
+
+	private static string lastHudState;
+
+	private static int hudRenderNumber;
+
+	private static readonly System.Collections.Generic.Queue<string> oldHudImages = new System.Collections.Generic.Queue<string>();
+
 	private const int MaxY = 1080;
 
 	public static void Innit()
@@ -124,11 +132,77 @@ internal static class InventoryText
 		}
 	}
 
-	private static void DrawHudText(string caption, int x, int y, float scale, Color color)
+	private static void DrawHudText(Graphics graphics, string caption, int x, int y, float size, Color color)
 	{
-		UIResText text = new UIResText(caption, new Point(x, y), scale, color, (GTA.Font)0, UIResText.Alignment.Centered);
-		text.DropShadow = true;
-		((UIText)text).Draw();
+		using (Font font = new Font("Segoe UI", size, FontStyle.Regular, GraphicsUnit.Pixel))
+		using (Brush brush = new SolidBrush(color))
+		using (Brush shadow = new SolidBrush(Color.FromArgb(190, 0, 0, 0)))
+		using (StringFormat format = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Near })
+		{
+			graphics.DrawString(caption, font, shadow, new PointF(x + 1, y + 1), format);
+			graphics.DrawString(caption, font, brush, new PointF(x, y), format);
+		}
+	}
+
+	private static void DrawHudBackground(int left, int top, int width, int height, string money,
+		string[] ready, string[] raw, bool selling)
+	{
+		if (!hudSpriteReady)
+		{
+			new UIResRectangle(new Point(left, top), new Size(width, height), Color.FromArgb(115, 0, 0, 0)).Draw();
+			return;
+		}
+
+		// Une seule texture Direct3D pour le fond ET les textes : pas de superposition.
+		string state = money + "|" + string.Join("|", ready) + "|" + string.Join("|", raw) + "|" + selling;
+		if (state != lastHudState || renderedHudPath == null)
+		{
+			try
+			{
+				using (Bitmap bitmap = new Bitmap(width, height, PixelFormat.Format32bppArgb))
+				using (Graphics graphics = Graphics.FromImage(bitmap))
+				using (Image background = Image.FromFile(hudBackgroundPath))
+				{
+					graphics.SmoothingMode = SmoothingMode.AntiAlias;
+					graphics.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+					graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+					graphics.DrawImage(background, 0, 0, width, height);
+					DrawHudText(graphics, "ARGENT", 90, 10, 15f, Color.WhiteSmoke);
+					DrawHudText(graphics, money, 310, 8, 17f, Color.White);
+					string[] names = { "Cannabis", "Crack", "Cocaïne" };
+					for (int i = 0; i < 3; i++)
+					{
+						int x = 95 + i * 109;
+						DrawHudText(graphics, names[i], x, 45, 15f, Color.WhiteSmoke);
+						DrawHudText(graphics, ready[i], x, 70, 16f, Color.LightGreen);
+						DrawHudText(graphics, raw[i], x, 100, 16f, Color.LightCoral);
+					}
+					DrawHudText(graphics, "MODE VENTE", 106, 135, 14f, Color.WhiteSmoke);
+					DrawHudText(graphics, selling ? "ACTIVÉ" : "DÉSACTIVÉ", 310, 135, 14f,
+						selling ? Color.LightGreen : Color.LightCoral);
+					// Nom distinct : DrawTexture peut conserver en cache les chemins déjà chargés.
+					string next = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(hudBackgroundPath),
+						"hud_render_" + (++hudRenderNumber) + ".png");
+					bitmap.Save(next, ImageFormat.Png);
+					if (renderedHudPath != null)
+						oldHudImages.Enqueue(renderedHudPath);
+					renderedHudPath = next;
+					lastHudState = state;
+					// Nettoyage des fichiers temporaires sur disque.
+					while (oldHudImages.Count > 8)
+					{
+						string old = oldHudImages.Dequeue();
+						try { System.IO.File.Delete(old); } catch (System.IO.IOException) { }
+					}
+				}
+			}
+			catch (System.Exception)
+			{
+					// En cas d'échec de création, conserver le dernier rendu valide.
+			}
+		}
+		if (renderedHudPath != null)
+			NativeUI.Sprite.DrawTexture(renderedHudPath, new Point(left, top), new Size(width, height));
 	}
 
 	private static void PrepareHudSprite()
@@ -175,6 +249,33 @@ internal static class InventoryText
 		}
 	}
 
+	public static void InventoryGui()
+	{
+		// Coordonnées en espace NativeUI 1920 x 1080, comme les réglages existants.
+		const int width = 365;
+		const int height = 164;
+		int left = posX - width;
+		int top = System.Math.Max(0, posY - 25);
+		string money = LsFunctions.IntToMoney(LSL.player.Money) + " $";
+		string[] ready =
+		{
+			LsFunctions.GramsToOz(LSL.PlayerInventory["Weed"]) ?? "",
+			LsFunctions.GramsToOz(LSL.PlayerInventory["Crack"]) ?? "",
+			LsFunctions.GramsToOz(LSL.PlayerInventory["Cocaine"]) ?? ""
+		};
+		string[] raw =
+		{
+			LsFunctions.pWeedOunce + " oz",
+			LsFunctions.pCrackOunce + " oz",
+			LsFunctions.pCocaineOunce + " oz"
+		};
+		DrawHudBackground(left, top, width, height, money, ready, raw, LSL.isDealing);
+
+		// Masquer uniquement le compteur natif pendant l'affichage du panneau.
+		// Il reste disponible normalement lorsque le panneau du mod n'est pas affiché.
+		UI.HideHudComponentThisFrame((HudComponent)3);
+	}
+}
 	public static void InventoryGui()
 	{
 		// Coordonnées en espace NativeUI 1920 x 1080, comme les réglages existants.
