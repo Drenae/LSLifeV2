@@ -126,29 +126,26 @@ internal static class InventoryText
 		((UIText)text).Draw();
 	}
 
-	private static void DrawRoundedHudBackground(int left, int top, int width, int height)
+	private static void DrawHudBackground(int left, int top, int width, int height)
 	{
-		// Coins arrondis simulés par bandes NativeUI, sans texture ni dépendance.
-		Color shade = Color.FromArgb(155, 0, 0, 0);
-		const int radius = 9;
-		new UIResRectangle(new Point(left + radius, top), new Size(width - radius * 2, height), shade).Draw();
-		new UIResRectangle(new Point(left, top + radius), new Size(width, height - radius * 2), shade).Draw();
-		new UIResRectangle(new Point(left + 4, top + 3), new Size(width - 8, height - 6), shade).Draw();
-		new UIResRectangle(new Point(left + 2, top + 5), new Size(width - 4, height - 10), shade).Draw();
+		// Fond uniforme : évite les angles en escalier et les superpositions opaques.
+		// Un véritable arrondi nécessitera une texture adaptée.
+		new UIResRectangle(new Point(left, top), new Size(width, height),
+			Color.FromArgb(115, 0, 0, 0)).Draw();
 	}
 
 	public static void InventoryGui()
 	{
 		// Coordonnées en espace NativeUI 1920 x 1080, comme les réglages existants.
-		const int width = 330;
-		const int height = 139;
+		const int width = 365;
+		const int height = 164;
 		int left = posX - width;
 		int top = System.Math.Max(0, posY - 25);
-		DrawRoundedHudBackground(left, top, width, height);
+		DrawHudBackground(left, top, width, height);
 
 		// L'argent affiché ici est celui du joueur, sans changer son montant.
-		DrawHudText("ARGENT", left + 50, top + 7, 0.30f, Color.WhiteSmoke);
-		DrawHudText(LsFunctions.IntToMoney(LSL.player.Money) + " $", left + 240, top + 7, 0.36f, Color.White);
+		DrawHudText("ARGENT", left + 53, top + 12, 0.30f, Color.WhiteSmoke);
+		DrawHudText(LsFunctions.IntToMoney(LSL.player.Money) + " $", left + 265, top + 12, 0.36f, Color.White);
 
 		string[] names = { "Cannabis", "Crack", "Cocaïne" };
 		string[] ready =
@@ -166,14 +163,14 @@ internal static class InventoryText
 
 		for (int i = 0; i < 3; i++)
 		{
-			int x = left + 55 + i * 110;
-			DrawHudText(names[i], x, top + 40, 0.30f, Color.WhiteSmoke);
-			DrawHudText(ready[i], x, top + 62, 0.32f, Color.LightGreen);
-			DrawHudText(raw[i], x, top + 84, 0.32f, Color.LightCoral);
+			int x = left + 61 + i * 121;
+			DrawHudText(names[i], x, top + 52, 0.30f, Color.WhiteSmoke);
+			DrawHudText(ready[i], x, top + 80, 0.32f, Color.LightGreen);
+			DrawHudText(raw[i], x, top + 106, 0.32f, Color.LightCoral);
 		}
 
-		DrawHudText("MODE VENTE", left + 70, top + 113, 0.29f, Color.WhiteSmoke);
-		DrawHudText(LSL.isDealing ? "ACTIVÉ" : "DÉSACTIVÉ", left + 246, top + 113, 0.29f,
+		DrawHudText("MODE VENTE", left + 77, top + 137, 0.29f, Color.WhiteSmoke);
+		DrawHudText(LSL.isDealing ? "ACTIVÉ" : "DÉSACTIVÉ", left + 280, top + 137, 0.29f,
 			LSL.isDealing ? Color.LightGreen : Color.LightCoral);
 
 		// Masquer uniquement le compteur natif pendant l'affichage du panneau.
