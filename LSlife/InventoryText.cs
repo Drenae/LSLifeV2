@@ -178,13 +178,13 @@ internal static class InventoryText
 					string[] names = { "Cannabis", "Crack", "Cocaïne" };
 					for (int i = 0; i < 3; i++)
 					{
-						int x = 85 + i * 109;
+						int x = 75 + i * 109;
 						DrawHudText(graphics, names[i], x, 45, 19f, Color.WhiteSmoke);
 						DrawHudText(graphics, ready[i], x, 70, 19f, Color.LightGreen);
 						DrawHudText(graphics, raw[i], x, 100, 19f, Color.LightCoral);
 					}
-					DrawHudText(graphics, "MODE VENTE", 106, 135, 18f, Color.WhiteSmoke);
-					DrawHudText(graphics, selling ? "ACTIVÉ" : "DÉSACTIVÉ", 310, 135, 18f,
+					DrawHudText(graphics, "MODE VENTE", 60, 135, 18f, Color.WhiteSmoke);
+					DrawHudText(graphics, selling ? "ACTIVÉ" : "DÉSACTIVÉ", 290, 135, 18f,
 						selling ? Color.LightGreen : Color.LightCoral);
 					// Nom distinct : DrawTexture peut conserver en cache les chemins déjà chargés.
 					string next = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(hudBackgroundPath),
