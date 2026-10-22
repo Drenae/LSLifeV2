@@ -137,7 +137,7 @@ internal static class InventoryText
 		try
 		{
 			string folder = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,
-				"scripts", "LSLife", "sprites");
+				"LSLife", "sprites");
 			System.IO.Directory.CreateDirectory(folder);
 			hudBackgroundPath = System.IO.Path.Combine(folder, "hud_background.png");
 			using (System.IO.Stream resource = typeof(InventoryText).Assembly.GetManifestResourceStream("LSlife.HudBackground"))
