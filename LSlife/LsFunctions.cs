@@ -284,6 +284,14 @@ internal static class LsFunctions
 		return new Random().Next(start, end);
 	}
 
+	public static string DrugDisplayName(string name)
+	{
+		if (name == "Weed") return "cannabis";
+		if (name == "Cocaine") return "cocaïne";
+		if (name == "Crack") return "crack";
+		return name;
+	}
+
 	public static string OrderMenuDesc()
 	{
 		string mWeed = "Cannabis : ~g~" + LSL.NewOrder.weed + "~s~oz";
@@ -1676,7 +1684,7 @@ internal static class LsFunctions
 			ped2.Money -= price;
 			LSL.PlayerInventory[c.Drug.Name] -= c.amount;
 			PlayTheSound();
-			UI.Notify("Vendu : " + c.Drug.Name + " " + GramsToOz(c.amount) + ", il te reste " + GramsToOz(LSL.PlayerInventory[c.Drug.Name]) +". Réputation gagnée : ~g~" + repEarned + " ~s~, réputation totale ~g~" + LSL.areas[LSL.areaIndex].Reputation + "~s~ à " + LSL.areas[LSL.areaIndex].Name);
+			UI.Notify("Vendu : " + DrugDisplayName(c.Drug.Name) + " " + GramsToOz(c.amount) + ", il te reste " + GramsToOz(LSL.PlayerInventory[c.Drug.Name]) +". Réputation gagnée : ~g~" + repEarned + " ~s~, réputation totale ~g~" + LSL.areas[LSL.areaIndex].Reputation + "~s~ à " + LSL.areas[LSL.areaIndex].Name);
 			Function.Call(unchecked((Hash)(-8213159594590722974L)), (p), ("GENERIC_THANKS"), ("SPEECH_PARAMS_STANDARD"), (0));
 			if ((Entity)(object)c.Vehicle != (Entity)null && ((Entity)c.Vehicle).Exists())
 			{
@@ -1703,7 +1711,7 @@ internal static class LsFunctions
 			ped3.Money -= price;
 			LSL.PlayerInventory[c.Drug.Name] -= c.amount;
 			PlayTheSound();
-			UI.Notify("Vendu : " + c.Drug.Name + " " + GramsToOz(c.amount) + ", il te reste " + GramsToOz(LSL.PlayerInventory[c.Drug.Name]) +". Réputation gagnée : ~g~" + repEarned + " ~s~, réputation totale ~g~" + LSL.areas[LSL.areaIndex].Reputation + "~s~ à " + LSL.areas[LSL.areaIndex].Name);
+			UI.Notify("Vendu : " + DrugDisplayName(c.Drug.Name) + " " + GramsToOz(c.amount) + ", il te reste " + GramsToOz(LSL.PlayerInventory[c.Drug.Name]) +". Réputation gagnée : ~g~" + repEarned + " ~s~, réputation totale ~g~" + LSL.areas[LSL.areaIndex].Reputation + "~s~ à " + LSL.areas[LSL.areaIndex].Name);
 			Function.Call(unchecked((Hash)(-8213159594590722974L)), (p), ("GENERIC_THANKS"), ("SPEECH_PARAMS_STANDARD"), (0));
 			if ((Entity)(object)c.Vehicle != (Entity)null && ((Entity)c.Vehicle).Exists())
 			{
