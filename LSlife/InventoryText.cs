@@ -21,10 +21,15 @@ internal static class InventoryText
 
 	private const int MaxX = 1920;
 
+	private static string hudBackgroundPath;
+
+	private static bool hudSpriteReady;
+
 	private const int MaxY = 1080;
 
 	public static void Innit()
 	{
+		PrepareHudSprite();
 		LoadInvConfig();
 		Options = LSL.LsMenuPool.AddSubMenu(LSL.zeeMenu, "Options");
 		InventoryPosX = new UIMenuSliderItem("PosX: ~g~" + posX);
@@ -126,12 +131,48 @@ internal static class InventoryText
 		((UIText)text).Draw();
 	}
 
+	private static void PrepareHudSprite()
+	{
+		// Sprite embarqué dans la DLL : aucune installation manuelle de PNG.
+		try
+		{
+			string folder = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,
+				"scripts", "LSLife", "sprites");
+			System.IO.Directory.CreateDirectory(folder);
+			hudBackgroundPath = System.IO.Path.Combine(folder, "hud_background.png");
+			using (System.IO.Stream resource = typeof(InventoryText).Assembly.GetManifestResourceStream("LSlife.HudBackground"))
+			{
+				if (resource == null)
+					return;
+				using (System.IO.MemoryStream memory = new System.IO.MemoryStream())
+				{
+					resource.CopyTo(memory);
+					byte[] png = memory.ToArray();
+					if (!System.IO.File.Exists(hudBackgroundPath) ||
+						!System.Linq.Enumerable.SequenceEqual(System.IO.File.ReadAllBytes(hudBackgroundPath), png))
+						System.IO.File.WriteAllBytes(hudBackgroundPath, png);
+				}
+			}
+			hudSpriteReady = true;
+		}
+		catch (System.Exception)
+		{
+			// Ne pas empêcher le fonctionnement du mod si le PNG est inaccessible.
+			hudSpriteReady = false;
+		}
+	}
+
 	private static void DrawHudBackground(int left, int top, int width, int height)
 	{
-		// Fond uniforme : évite les angles en escalier et les superpositions opaques.
-		// Un véritable arrondi nécessitera une texture adaptée.
-		new UIResRectangle(new Point(left, top), new Size(width, height),
-			Color.FromArgb(115, 0, 0, 0)).Draw();
+		if (hudSpriteReady)
+		{
+			NativeUI.Sprite.DrawTexture(hudBackgroundPath, new Point(left, top), new Size(width, height));
+		}
+		else
+		{
+			new UIResRectangle(new Point(left, top), new Size(width, height),
+				Color.FromArgb(115, 0, 0, 0)).Draw();
+		}
 	}
 
 	public static void InventoryGui()
