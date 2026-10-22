@@ -133,7 +133,7 @@ internal static class LsMenus
 			player.Money -= toPay;
 			LSL.dealer1Money += toPay;
 			LsFunctions.Dealer1AddRep(LsFunctions.MoneyToRep(toPay, _debt: true));
-			LSL.payDebt.Text = "Rembourser la dette $" + LsFunctions.IntToMoney(LSL.dealer1Debt);
+			LSL.payDebt.Text = "Rembourser la dette " + LsFunctions.IntToMoney(LSL.dealer1Debt) + " $";
 			LsFunctions.PlayTheSound();
 			LsFunctions.SaveDealer();
 			Script.Wait(500);
@@ -366,8 +366,8 @@ internal static class LsMenus
 			LSL.NewOrder.OrderWeed(LSL.bushWeed.Value, total);
 			LSL.bushWeed.Maximum -= LSL.bushWeed.Value;
 			LSL.dealer1Weed = LSL.bushWeed.Maximum;
-			LSL.WeedBuy.Text = "Commander ~g~" + LSL.bushWeed.Value + " ~s~pour $" + LsFunctions.IntToMoney(total);
-			LSL.PlaceOrder.Text = "Commander pour $" + LsFunctions.IntToMoney(LSL.NewOrder.Bill);
+			LSL.WeedBuy.Text = "Commander ~g~" + LSL.bushWeed.Value + " ~s~pour " + LsFunctions.IntToMoney(total) + " $";
+			LSL.PlaceOrder.Text = "Commander pour " + LsFunctions.IntToMoney(LSL.NewOrder.Bill) + " $";
 			LsFunctions.DbugString("Weed Order changed");
 			LsFunctions.UpdateOrderMenuDesc();
 		}
@@ -381,8 +381,8 @@ internal static class LsMenus
 			LSL.NewOrder.OrderCrack(LSL.crack.Value, total);
 			LSL.crack.Maximum -= LSL.crack.Value;
 			LSL.dealer1Crack = LSL.crack.Maximum;
-			LSL.CrackBuy.Text = "Commander ~g~" + LSL.crack.Value + " ~w~pour $~g~" + LsFunctions.IntToMoney(total);
-			LSL.PlaceOrder.Text = "Commander pour $" + LsFunctions.IntToMoney(LSL.NewOrder.Bill);
+			LSL.CrackBuy.Text = "Commander ~g~" + LSL.crack.Value + " ~w~pour " + LsFunctions.IntToMoney(total) + " $";
+			LSL.PlaceOrder.Text = "Commander pour " + LsFunctions.IntToMoney(LSL.NewOrder.Bill) + " $";
 			LsFunctions.DbugString("Crack Order changed");
 			LsFunctions.UpdateOrderMenuDesc();
 		}
@@ -396,8 +396,8 @@ internal static class LsMenus
 			LSL.NewOrder.OrderCocaine(LSL.cocaine.Value, total);
 			LSL.cocaine.Maximum -= LSL.cocaine.Value;
 			LSL.dealer1Cocain = LSL.cocaine.Maximum;
-			LSL.CocainBuy.Text = "Commander ~g~" + LSL.cocaine.Value + " ~w~pour $~g~" + LsFunctions.IntToMoney(total);
-			LSL.PlaceOrder.Text = "Commander pour $" + LsFunctions.IntToMoney(LSL.NewOrder.Bill);
+			LSL.CocainBuy.Text = "Commander ~g~" + LSL.cocaine.Value + " ~w~pour " + LsFunctions.IntToMoney(total) + " $";
+			LSL.PlaceOrder.Text = "Commander pour " + LsFunctions.IntToMoney(LSL.NewOrder.Bill) + " $";
 			LsFunctions.DbugString("Cocaine Order changed");
 			LsFunctions.UpdateOrderMenuDesc();
 		}
@@ -1044,11 +1044,11 @@ internal static class LsMenus
 		}
 		else if (sender == LSL.putMoneyVeh)
 		{
-			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer $" + LsFunctions.IntToMoney(LSL.putMoneyVeh.Value);
+			((UIText)LSL.vehStashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.IntToMoney(LSL.putMoneyVeh.Value) + " $";
 		}
 		else if (sender == LSL.takeMoneyVeh)
 		{
-			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer $" + LsFunctions.IntToMoney(LSL.takeMoneyVeh.Value);
+			((UIText)LSL.vehStashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.IntToMoney(LSL.takeMoneyVeh.Value) + " $";
 		}
 		else if (sender == LSL.takeWeedStash)
 		{
@@ -1076,7 +1076,7 @@ internal static class LsMenus
 		}
 		else if (sender == LSL.takeMoneyStash)
 		{
-			((UIText)LSL.stashTakeMenu.Subtitle).Caption = "Retirer $" + LsFunctions.IntToMoney(LSL.takeMoneyStash.Value);
+			((UIText)LSL.stashTakeMenu.Subtitle).Caption = "Retirer " + LsFunctions.IntToMoney(LSL.takeMoneyStash.Value) + " $";
 		}
 		else if (sender == LSL.putWeedOzStash)
 		{
@@ -1092,22 +1092,22 @@ internal static class LsMenus
 		}
 		else if (sender == LSL.putMoneyStash)
 		{
-			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer $" + LsFunctions.IntToMoney(LSL.putMoneyStash.Value);
+			((UIText)LSL.stashPutMenu.Subtitle).Caption = "Déposer " + LsFunctions.IntToMoney(LSL.putMoneyStash.Value) + " $";
 		}
 		else if (sender == LSL.bushWeed)
 		{
 			int total = LSL.bushWeed.Value * (LSL.weed1Price - LsFunctions.Discount(LSL.weed1Price));
-			LSL.WeedBuy.Text = "Commander ~g~" + LSL.bushWeed.Value + " ~s~pour $" + LsFunctions.IntToMoney(total);
+			LSL.WeedBuy.Text = "Commander ~g~" + LSL.bushWeed.Value + " ~s~pour " + LsFunctions.IntToMoney(total) + " $";
 		}
 		else if (sender == LSL.crack)
 		{
 			int total2 = LSL.crack.Value * (LSL.crack1Price - LsFunctions.Discount(LSL.crack1Price));
-			LSL.CrackBuy.Text = "Commander ~g~" + LSL.crack.Value + " ~s~pour $" + LsFunctions.IntToMoney(total2);
+			LSL.CrackBuy.Text = "Commander ~g~" + LSL.crack.Value + " ~s~pour " + LsFunctions.IntToMoney(total2) + " $";
 		}
 		else if (sender == LSL.cocaine)
 		{
 			int total3 = LSL.cocaine.Value * (LSL.cocain1Price - LsFunctions.Discount(LSL.cocain1Price));
-			LSL.CocainBuy.Text = "Commander ~g~" + LSL.cocaine.Value + " ~s~pour $" + LsFunctions.IntToMoney(total3);
+			LSL.CocainBuy.Text = "Commander ~g~" + LSL.cocaine.Value + " ~s~pour " + LsFunctions.IntToMoney(total3) + " $";
 		}
 	}
 
@@ -1168,11 +1168,11 @@ internal static class LsMenus
 		}
 		else if (sender == LSL.melee)
 		{
-			LSL.melee.Text = "Arme blanche $" + LsFunctions.IntToMoney(LSL.meleePrice[LSL.melee.Index] - LsFunctions.Discount(LSL.meleePrice[LSL.melee.Index]));
+			LSL.melee.Text = "Arme blanche " + LsFunctions.IntToMoney(LSL.meleePrice[LSL.melee.Index] - LsFunctions.Discount(LSL.meleePrice[LSL.melee.Index])) + " $";
 		}
 		else if (sender == LSL.pistol)
 		{
-			LSL.pistol.Text = "Pistolet $" + LsFunctions.IntToMoney(LSL.pistolPrice[LSL.pistol.Index] - LsFunctions.Discount(LSL.pistolPrice[LSL.pistol.Index]));
+			LSL.pistol.Text = "Pistolet " + LsFunctions.IntToMoney(LSL.pistolPrice[LSL.pistol.Index] - LsFunctions.Discount(LSL.pistolPrice[LSL.pistol.Index])) + " $";
 		}
 	}
 
@@ -1541,7 +1541,7 @@ internal static class LsMenus
 
 	public static void HireDealerOfferAmount_OnSliderChanged(UIMenuSliderItem sender, int newIndex)
 	{
-		LSL.hireDealerMakeOffer.Text = "Offre : $" + LsFunctions.IntToMoney(sender.Value);
+		LSL.hireDealerMakeOffer.Text = "Offre : " + LsFunctions.IntToMoney(sender.Value) + " $";
 	}
 
 	public static void WArmour_Activated(UIMenu sender, UIMenuItem selectedItem)
