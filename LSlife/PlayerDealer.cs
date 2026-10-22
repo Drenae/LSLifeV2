@@ -1145,7 +1145,7 @@ public class PlayerDealer
 		int cMoney = Money - Money / 100 * 20;
 		if (Money > 100)
 		{
-			LSL.wCollect.Description = "Le dealer a $" + LsFunctions.IntToMoney(Money) + " ; il garde 20 %. À récupérer : $" + LsFunctions.IntToMoney(cMoney) + ".";
+			LSL.wCollect.Description = "Le dealer a " + LsFunctions.IntToMoney(Money) + " $" + " ; il garde 20 %. À récupérer : " + LsFunctions.IntToMoney(cMoney) + " $" + ".";
 		}
 		else
 		{
