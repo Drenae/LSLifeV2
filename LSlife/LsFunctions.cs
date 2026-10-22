@@ -294,30 +294,21 @@ internal static class LsFunctions
 
 	public static string OrderMenuDesc()
 	{
-		// Les quantités sont en onces, comme dans le menu de commande.
-		// Libellés courts pour éviter le retour automatique à la ligne de NativeUI.
-		return string.Join("\n", new string[]
-		{
-			"Cannabis : ~g~" + LSL.NewOrder.weed + "~s~",
-			"Crack : ~g~" + LSL.NewOrder.crack + "~s~",
-			"Cocaïne : ~g~" + LSL.NewOrder.cocaine + "~s~",
-			"Facture : " + IntToMoney(LSL.NewOrder.Bill) + " $",
-			"Dette : " + IntToMoney(LSL.dealer1Debt) + " $",
-			"Plafond crédit : " + IntToMoney(zeeDebtCap()) + " $"
-		});
+		// Une seule ligne : NativeUI gère lui-même le retour automatique.
+		return "Facture : " + IntToMoney(LSL.NewOrder.Bill) + " $";
 	}
 
 	public static void UpdateOrderMenuDesc()
 	{
-		string desc = OrderMenuDesc();
-		LSL.PlaceOrder.Description = desc;
-		LSL.bushWeed.Description = desc;
-		LSL.crack.Description = desc;
-		LSL.cocaine.Description = desc;
-		LSL.WeedBuy.Description = desc;
-		LSL.CrackBuy.Description = desc;
-		LSL.CocainBuy.Description = desc;
-		LSL.LsMenuPool.FormatDescriptions = true;
+		// Ne plus utiliser de description multiligne : NativeUI coupe
+		// automatiquement les textes, même lorsqu'ils contiennent des '\\n'.
+		LSL.PlaceOrder.Description = OrderMenuDesc();
+		LSL.bushWeed.Description = "Cannabis commandé : " + LSL.NewOrder.weed + " oz";
+		LSL.crack.Description = "Crack commandé : " + LSL.NewOrder.crack + " oz";
+		LSL.cocaine.Description = "Cocaïne commandée : " + LSL.NewOrder.cocaine + " oz";
+		LSL.WeedBuy.Description = "Dette actuelle : " + IntToMoney(LSL.dealer1Debt) + " $";
+		LSL.CrackBuy.Description = "Dette actuelle : " + IntToMoney(LSL.dealer1Debt) + " $";
+		LSL.CocainBuy.Description = "Plafond de crédit : " + IntToMoney(zeeDebtCap()) + " $";
 		LSL.LsMenuPool.RefreshIndex();
 	}
 
