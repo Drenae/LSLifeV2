@@ -254,6 +254,20 @@ public class LSL : Script
 
 	public static UIMenuItem PlaceOrder;
 
+	public static UIMenu OrderSummaryMenu;
+
+	public static UIMenuItem OrderSummaryWeed;
+
+	public static UIMenuItem OrderSummaryCrack;
+
+	public static UIMenuItem OrderSummaryCocaine;
+
+	public static UIMenuItem OrderSummaryBill;
+
+	public static UIMenuItem OrderSummaryDebt;
+
+	public static UIMenuItem OrderSummaryCredit;
+
 	public static UIMenuItem buyWeapons;
 
 	public static UIMenuItem buyLift;
@@ -995,6 +1009,24 @@ public class LSL : Script
 		cocaine.OnSliderChanged += LsMenus.onSliderChange;
 		cocainMenu.OnItemSelect += LsMenus.onCocainMenuSelect;
 		cocainMenu.OnMenuOpen += DrugStockMenu_OnMenuOpen;
+		OrderSummaryMenu = LsMenuPool.AddSubMenu(OrderDrugs, "Récapitulatif");
+		if (UseSprites)
+		{
+			OrderSummaryMenu.SetBannerType("scripts\\\\LSLife\\\\sprites\\\\banner_zee.png");
+		}
+		OrderSummaryWeed = new UIMenuItem("Cannabis");
+		OrderSummaryCrack = new UIMenuItem("Crack");
+		OrderSummaryCocaine = new UIMenuItem("Cocaïne");
+		OrderSummaryBill = new UIMenuItem("Facture");
+		OrderSummaryDebt = new UIMenuItem("Dette");
+		OrderSummaryCredit = new UIMenuItem("Plafond de crédit");
+		OrderSummaryMenu.AddItem(OrderSummaryWeed);
+		OrderSummaryMenu.AddItem(OrderSummaryCrack);
+		OrderSummaryMenu.AddItem(OrderSummaryCocaine);
+		OrderSummaryMenu.AddItem(OrderSummaryBill);
+		OrderSummaryMenu.AddItem(OrderSummaryDebt);
+		OrderSummaryMenu.AddItem(OrderSummaryCredit);
+		OrderSummaryMenu.OnMenuOpen += (UIMenu sender) => LsFunctions.UpdateOrderMenuDesc();
 		PlaceOrder = new UIMenuItem("Commander pour " + LsFunctions.IntToMoney(0) + " $");
 		OrderDrugs.AddItem(PlaceOrder);
 		OrderDrugs.OnItemSelect += LsMenus.OnOrderDrugsMenuSelect;
