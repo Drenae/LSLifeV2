@@ -955,7 +955,7 @@ public class LSL : Script
 		{
 			weedMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
 		}
-		bushWeed = new UIMenuSliderItem("Cannabis " + LsFunctions.IntToMoney(weed1Price - LsFunctions.Discount(weed1Price)) + " $" + "oz");
+		bushWeed = new UIMenuSliderItem("Cannabis " + LsFunctions.IntToMoney(weed1Price - LsFunctions.Discount(weed1Price)) + " $/oz");
 		weedMenu.AddItem(bushWeed);
 		bushWeed.Maximum = dealer1Weed;
 		bushWeed.Multiplier = 1;
@@ -970,7 +970,7 @@ public class LSL : Script
 		{
 			crackMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
 		}
-		crack = new UIMenuSliderItem("Crack " + LsFunctions.IntToMoney(crack1Price - LsFunctions.Discount(crack1Price)) + " $" + "oz");
+		crack = new UIMenuSliderItem("Crack " + LsFunctions.IntToMoney(crack1Price - LsFunctions.Discount(crack1Price)) + " $/oz");
 		crackMenu.AddItem(crack);
 		crack.Maximum = dealer1Crack;
 		crack.Multiplier = 1;
@@ -985,7 +985,7 @@ public class LSL : Script
 		{
 			cocainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
 		}
-		cocaine = new UIMenuSliderItem("Cocaïne " + LsFunctions.IntToMoney(cocain1Price - LsFunctions.Discount(cocain1Price)) + " $" + "oz");
+		cocaine = new UIMenuSliderItem("Cocaïne " + LsFunctions.IntToMoney(cocain1Price - LsFunctions.Discount(cocain1Price)) + " $/oz");
 		cocainMenu.AddItem(cocaine);
 		cocaine.Maximum = dealer1Cocain;
 		cocaine.Multiplier = 1;
@@ -2759,7 +2759,7 @@ public class LSL : Script
 				}
 				if ((Entity)(object)attacker == (Entity)null && AmountOfDrugs > 0)
 				{
-					LsFunctions.SendTextMsg("Ils ont pris " + LsFunctions.IntToMoney(player.Money) + " $" + ", ainsi que toute ta drogue et tes armes.");
+					LsFunctions.SendTextMsg("Ils ont pris " + LsFunctions.IntToMoney(player.Money) + " $, ainsi que toute ta drogue et tes armes.");
 					player.Character.Weapons.RemoveAll();
 					Player val3 = player;
 					val3.Money -= player.Money;
@@ -2802,7 +2802,7 @@ public class LSL : Script
 				if ((Entity)(object)attacker == (Entity)null && TotalDrugsCarried() > 0)
 				{
 					player.Character.Weapons.RemoveAll();
-					LsFunctions.SendTextMsg("La police a confisqué " + LsFunctions.IntToMoney(player.Money) + " $" + ", ainsi que toute ta drogue et tes armes.");
+					LsFunctions.SendTextMsg("La police a confisqué " + LsFunctions.IntToMoney(player.Money) + " $, ainsi que toute ta drogue et tes armes.");
 					Player val4 = player;
 					val4.Money -= player.Money;
 					if (PlayerInventory.Keys.ToList().Count > 0)
