@@ -134,7 +134,7 @@ internal static class InventoryText
 
 	private static void DrawHudText(Graphics graphics, string caption, int x, int y, float size, Color color)
 	{
-		using (Font font = new Font("Segoe UI", size, FontStyle.Regular, GraphicsUnit.Pixel))
+		using (System.Drawing.Font font = new System.Drawing.Font("Segoe UI", size, FontStyle.Regular, GraphicsUnit.Pixel))
 		using (Brush brush = new SolidBrush(color))
 		using (Brush shadow = new SolidBrush(Color.FromArgb(190, 0, 0, 0)))
 		using (StringFormat format = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Near })
@@ -159,13 +159,13 @@ internal static class InventoryText
 		{
 			try
 			{
-				using (Bitmap bitmap = new Bitmap(width, height, PixelFormat.Format32bppArgb))
+				using (Bitmap bitmap = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
 				using (Graphics graphics = Graphics.FromImage(bitmap))
 				using (Image background = Image.FromFile(hudBackgroundPath))
 				{
-					graphics.SmoothingMode = SmoothingMode.AntiAlias;
-					graphics.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
-					graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+					graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+					graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
+					graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
 					graphics.DrawImage(background, 0, 0, width, height);
 					DrawHudText(graphics, "ARGENT", 90, 10, 15f, Color.WhiteSmoke);
 					DrawHudText(graphics, money, 310, 8, 17f, Color.White);
@@ -183,7 +183,7 @@ internal static class InventoryText
 					// Nom distinct : DrawTexture peut conserver en cache les chemins déjà chargés.
 					string next = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(hudBackgroundPath),
 						"hud_render_" + (++hudRenderNumber) + ".png");
-					bitmap.Save(next, ImageFormat.Png);
+					bitmap.Save(next, System.Drawing.Imaging.ImageFormat.Png);
 					if (renderedHudPath != null)
 						oldHudImages.Enqueue(renderedHudPath);
 					renderedHudPath = next;
