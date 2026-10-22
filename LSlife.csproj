@@ -13,7 +13,9 @@
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
   </PropertyGroup>
   <PropertyGroup />
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="assets\\hud_background.png" LogicalName="LSlife.HudBackground" />
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="ScriptHookVDotNet2">
       <HintPath>$(GtaVPath)\ScriptHookVDotNet2.dll</HintPath>
