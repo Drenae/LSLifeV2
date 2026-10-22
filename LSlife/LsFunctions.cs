@@ -294,14 +294,16 @@ internal static class LsFunctions
 
 	public static string OrderMenuDesc()
 	{
+		// Les quantités sont en onces, comme dans le menu de commande.
+		// Libellés courts pour éviter le retour automatique à la ligne de NativeUI.
 		return string.Join("\n", new string[]
 		{
-			"Cannabis : ~g~" + LSL.NewOrder.weed + "~s~ oz",
-			"Crack : ~g~" + LSL.NewOrder.crack + "~s~ oz",
-			"Cocaïne : ~g~" + LSL.NewOrder.cocaine + "~s~ oz",
+			"Cannabis : ~g~" + LSL.NewOrder.weed + "~s~",
+			"Crack : ~g~" + LSL.NewOrder.crack + "~s~",
+			"Cocaïne : ~g~" + LSL.NewOrder.cocaine + "~s~",
 			"Facture : " + IntToMoney(LSL.NewOrder.Bill) + " $",
 			"Dette : " + IntToMoney(LSL.dealer1Debt) + " $",
-			"Crédit : " + IntToMoney(zeeDebtCap()) + " $"
+			"Plafond crédit : " + IntToMoney(zeeDebtCap()) + " $"
 		});
 	}
 
