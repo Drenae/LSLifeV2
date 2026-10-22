@@ -185,8 +185,8 @@ internal static class InventoryText
 		DrawHudBackground(left, top, width, height);
 
 		// L'argent affiché ici est celui du joueur, sans changer son montant.
-		DrawHudText("ARGENT", left + 90, top + 10, 0.30f, Color.WhiteSmoke);
-		DrawHudText(LsFunctions.IntToMoney(LSL.player.Money) + " $", left + 310, top + 8, 0.36f, Color.White);
+		DrawHudText("ARGENT", left + 90, top + 10, 0.50f, Color.WhiteSmoke);
+		DrawHudText(LsFunctions.IntToMoney(LSL.player.Money) + " $", left + 310, top + 8, 0.50f, Color.White);
 
 		string[] names = { "Cannabis", "Crack", "Cocaïne" };
 		string[] ready =
@@ -204,7 +204,7 @@ internal static class InventoryText
 
 		for (int i = 0; i < 3; i++)
 		{
-			int x = left + 90 + i * 109;
+			int x = left + 95 + i * 109;
 			DrawHudText(names[i], x, top + 45, 0.30f, Color.WhiteSmoke);
 			DrawHudText(ready[i], x, top + 70, 0.32f, Color.LightGreen);
 			DrawHudText(raw[i], x, top + 100, 0.32f, Color.LightCoral);
