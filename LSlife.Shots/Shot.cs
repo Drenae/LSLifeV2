@@ -128,7 +128,7 @@ public class Shot
 						{
 							Function.Call((Hash)7023634693725934496L);
 							LSL.customerSellTo = customer;
-							LSL.sell.Text = "Sell " + LsFunctions.GramsToOz(customer.amount) + " de " + customer.Drug.Name + "?";
+							LSL.sell.Text = "Vendre " + LsFunctions.GramsToOz(customer.amount) + " de " + customer.Drug.Name + "?";
 							((UIText)LSL.customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.GramsToOz(LSL.PlayerInventory[customer.Drug.Name]) + " de " + customer.Drug.Name;
 							LSL.customerMainMenu.Visible = !LSL.customerMainMenu.Visible;
 							LSL.customerMainMenu.CurrentSelection = 0;
@@ -146,7 +146,7 @@ public class Shot
 						{
 							Function.Call((Hash)7023634693725934496L);
 							LSL.customerSellTo = customer;
-							LSL.sell.Text = "Sell " + LsFunctions.GramsToOz(customer.amount) + " de " + customer.Drug.Name + "?";
+							LSL.sell.Text = "Vendre " + LsFunctions.GramsToOz(customer.amount) + " de " + customer.Drug.Name + "?";
 							((UIText)LSL.customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.GramsToOz(LSL.PlayerInventory[customer.Drug.Name]) + " de " + customer.Drug.Name;
 							LSL.customerMainMenu.Visible = !LSL.customerMainMenu.Visible;
 							LSL.customerMainMenu.CurrentSelection = 0;
