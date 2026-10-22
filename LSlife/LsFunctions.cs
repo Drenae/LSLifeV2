@@ -294,13 +294,15 @@ internal static class LsFunctions
 
 	public static string OrderMenuDesc()
 	{
-		string mWeed = "Cannabis : ~g~" + LSL.NewOrder.weed + "~s~oz";
-		string mCrack = "\nCrack : ~g~" + LSL.NewOrder.crack + "~s~oz";
-		string mCoke = "\nCocaïne : ~g~" + LSL.NewOrder.cocaine + "~s~oz";
-		string mBill = "\nFacture : $" + IntToMoney(LSL.NewOrder.Bill);
-		string mDebt = "\nDette : $" + IntToMoney(LSL.dealer1Debt);
-		string mLimit = "\nCrédit : $" + IntToMoney(zeeDebtCap());
-		return mWeed + mCrack + mCoke + mBill + mDebt + mLimit;
+		return string.Join("\n", new string[]
+		{
+			"Cannabis : ~g~" + LSL.NewOrder.weed + "~s~ oz",
+			"Crack : ~g~" + LSL.NewOrder.crack + "~s~ oz",
+			"Cocaïne : ~g~" + LSL.NewOrder.cocaine + "~s~ oz",
+			"Facture : " + IntToMoney(LSL.NewOrder.Bill) + " $",
+			"Dette : " + IntToMoney(LSL.dealer1Debt) + " $",
+			"Crédit : " + IntToMoney(zeeDebtCap()) + " $"
+		});
 	}
 
 	public static void UpdateOrderMenuDesc()
@@ -1994,9 +1996,7 @@ internal static class LsFunctions
 
 	public static string IntToMoney(int _money)
 	{
-		StringBuilder stringBuilder = new StringBuilder("~g~" + _money.ToString("#,##0") + "~s~");
-		stringBuilder.Replace(",", "~s~,~g~");
-		return stringBuilder.ToString();
+		return "~g~" + _money.ToString("#,##0", System.Globalization.CultureInfo.InvariantCulture).Replace(",", " ") + "~s~";
 	}
 
 	public static bool zeeClose()
