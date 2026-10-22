@@ -899,7 +899,7 @@ public class StashVehicle
 		{
 			UI.Notify(vehicles.Count.ToString() ?? "");
 			Vector3 currentPosition = CurrentPosition;
-			UI.Notify("~r~expected cord:" + ((object)currentPosition/*cast due to constrained. prefix*/).ToString());
+			UI.Notify("~r~Coordonnées attendues : " + ((object)currentPosition/*cast due to constrained. prefix*/).ToString());
 		}
 		if (vehicles.Count == 0)
 		{
@@ -1185,8 +1185,8 @@ public class StashVehicle
 		LSL.takeCrackOzVeh.Text = "Crack ~r~" + drugCarCrackOz + "~s~z";
 		LSL.putCocainOzVeh.Text = "Cocaine ~r~" + LsFunctions.pCocaineOunce + "~s~z";
 		LSL.takeCocainOzVeh.Text = "Cocaine ~r~" + drugCarCocainOz + "~s~z";
-		LSL.putMoneyVeh.Text = "Money $" + LsFunctions.IntToMoney(LSL.player.Money);
-		LSL.takeMoneyVeh.Text = "Money $" + LsFunctions.IntToMoney(drugCarMoney);
+		LSL.putMoneyVeh.Text = "Argent $" + LsFunctions.IntToMoney(LSL.player.Money);
+		LSL.takeMoneyVeh.Text = "Argent $" + LsFunctions.IntToMoney(drugCarMoney);
 		LSL.takeMoneyStash.Maximum = drugCarMoney;
 		if (LSL.DEBUG)
 		{
