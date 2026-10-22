@@ -309,6 +309,15 @@ internal static class LsFunctions
 		LSL.WeedBuy.Description = "Dette actuelle : " + IntToMoney(LSL.dealer1Debt) + " $";
 		LSL.CrackBuy.Description = "Dette actuelle : " + IntToMoney(LSL.dealer1Debt) + " $";
 		LSL.CocainBuy.Description = "Plafond de crédit : " + IntToMoney(zeeDebtCap()) + " $";
+		if (LSL.OrderSummaryMenu != null)
+		{
+			LSL.OrderSummaryWeed.Text = "Cannabis : " + LSL.NewOrder.weed + " oz";
+			LSL.OrderSummaryCrack.Text = "Crack : " + LSL.NewOrder.crack + " oz";
+			LSL.OrderSummaryCocaine.Text = "Cocaïne : " + LSL.NewOrder.cocaine + " oz";
+			LSL.OrderSummaryBill.Text = "Facture : " + IntToMoney(LSL.NewOrder.Bill) + " $";
+			LSL.OrderSummaryDebt.Text = "Dette : " + IntToMoney(LSL.dealer1Debt) + " $";
+			LSL.OrderSummaryCredit.Text = "Plafond de crédit : " + IntToMoney(zeeDebtCap()) + " $";
+		}
 		LSL.LsMenuPool.RefreshIndex();
 	}
 
