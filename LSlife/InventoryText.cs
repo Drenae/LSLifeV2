@@ -122,7 +122,7 @@ internal static class InventoryText
 	public static void InventoryGui()
 	{
 		Point UIpos = new Point(posX, posY);
-		UIResText UIWeedtxt = new UIResText("-CANNABIS-", UIpos, 0.4f, Color.WhiteSmoke, (GTA.Font)7, UIResText.Alignment.Right);
+		UIResText UIWeedtxt = new UIResText("CANNABIS", UIpos, 0.4f, Color.WhiteSmoke, (GTA.Font)7, UIResText.Alignment.Right);
 		UIWeedtxt.DropShadow = true;
 		((UIText)UIWeedtxt).Shadow = true;
 		UIWeedtxt.Outline = true;
@@ -136,7 +136,7 @@ internal static class InventoryText
 		UIweed.DropShadow = true;
 		((UIText)UIweed).Shadow = true;
 		UIweed.Outline = true;
-		UIResText UICracktxt = new UIResText("-CRACK-", new Point(UIpos.X, UIpos.Y + 80), 0.4f, Color.WhiteSmoke, (GTA.Font)7, UIResText.Alignment.Right);
+		UIResText UICracktxt = new UIResText("CRACK", new Point(UIpos.X, UIpos.Y + 80), 0.4f, Color.WhiteSmoke, (GTA.Font)7, UIResText.Alignment.Right);
 		UICracktxt.DropShadow = true;
 		((UIText)UICracktxt).Shadow = true;
 		UICracktxt.Outline = true;
@@ -150,7 +150,7 @@ internal static class InventoryText
 		UIcrack.DropShadow = true;
 		((UIText)UIcrack).Shadow = true;
 		UIcrack.Outline = true;
-		UIResText UICocainetxt = new UIResText("-COCAÏNE-", new Point(UIpos.X, UIpos.Y + 160), 0.4f, Color.WhiteSmoke, (GTA.Font)7, UIResText.Alignment.Right);
+		UIResText UICocainetxt = new UIResText("COCAÏNE", new Point(UIpos.X, UIpos.Y + 160), 0.4f, Color.WhiteSmoke, (GTA.Font)7, UIResText.Alignment.Right);
 		UICocainetxt.DropShadow = true;
 		((UIText)UICocainetxt).Shadow = true;
 		UICocainetxt.Outline = true;
