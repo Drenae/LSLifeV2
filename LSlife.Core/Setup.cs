@@ -494,7 +494,7 @@ public partial class LSL
 		stashTakeMultiplier = new UIMenuListItem("Multiplicateur", multiplier, 0);
 		stashTakeMenu.AddItem(stashTakeMultiplier);
 		stashTakeMultiplier.OnListChanged += LsMenus.onListChange;
-		InventoryText.Innit();
+		Hud.Innit();
 		stashMainMenu.FormatDescriptions = true;
 		string mWeed = "cannabis. ";
 		string mCrack = "Crack. ";

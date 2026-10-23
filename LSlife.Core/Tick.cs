@@ -288,7 +288,7 @@ public partial class LSL
 			HandlePotentialWorker();
 			if (showInventory)
 			{
-				InventoryText.InventoryGui();
+				Hud.Draw();
 				if (AreaDebug && !LsMenuPool.IsAnyMenuOpen())
 				{
 					areaInfoUI();
@@ -297,26 +297,11 @@ public partial class LSL
 					GangUI();
 				}
 				player.GetTargetedEntity();
-				if (!AreaHeatBar.Displayed)
-				{
-					AreaHeatBar.Toggle();
-				}
-				if (!PlayerHeatBar.Displayed)
-				{
-					PlayerHeatBar.Toggle();
-				}
-				BarHandler.Tick();
+
 			}
 			else
 			{
-				if (AreaHeatBar.Displayed)
-				{
-					AreaHeatBar.Toggle();
-				}
-				if (PlayerHeatBar.Displayed)
-				{
-					PlayerHeatBar.Toggle();
-				}
+				Hud.Hide();
 			}
 			if (pigs.Count > 0 && pigs[0].AskPlayerToComply)
 			{

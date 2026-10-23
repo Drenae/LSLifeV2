@@ -276,7 +276,7 @@ public partial class LSL
 	}
 }
 
-internal static class InventoryText
+internal static class Hud
 {
 	public static UIMenu Options;
 
@@ -396,6 +396,45 @@ internal static class InventoryText
 			(GTA.Font)0, UIResText.Alignment.Centered);
 		text.DropShadow = true;
 		((UIText)text).Draw();
+	}
+
+	// Apparence et affichage des deux barres : tout est personnalisable ici.
+	private static readonly BarTimerBar AreaBar = new BarTimerBar("Quartier");
+	private static readonly BarTimerBar PlayerBar = new BarTimerBar("Joueur");
+	private static bool barsDisplayed;
+
+	public static void Draw()
+	{
+		InventoryGui();
+		DrawHeatBars();
+	}
+
+	private static void DrawHeatBars()
+	{
+		if (!barsDisplayed)
+		{
+			AreaBar.BackgroundColor = Color.Black;
+			PlayerBar.BackgroundColor = Color.Black;
+			BarHandler.AddBar(AreaBar);
+			BarHandler.AddBar(PlayerBar);
+			barsDisplayed = true;
+		}
+
+		AreaBar.Percentage = AreaHeatBar.GetPercentage();
+		PlayerBar.Percentage = PlayerHeatBar.GetPercentage();
+		BarHandler.Pool.Draw();
+	}
+
+	public static void Hide()
+	{
+		if (!barsDisplayed)
+		{
+			return;
+		}
+
+		BarHandler.RemoveBar(AreaBar);
+		BarHandler.RemoveBar(PlayerBar);
+		barsDisplayed = false;
 	}
 
 	public static void InventoryGui()
