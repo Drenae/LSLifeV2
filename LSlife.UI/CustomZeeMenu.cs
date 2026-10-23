@@ -10,34 +10,74 @@ namespace LSlife;
 internal static class CustomZeeMenu
 {
     private static CustomMenu menu;
+    private static CustomMenu dealerMenu;
+    private static CustomMenu activeMenu;
+    private static bool dealerWeed, dealerCrack, dealerCocaine, dealerDeliveries;
     private static bool returningFromSubmenu;
     private static bool submenuSeen;
 
-    public static bool Visible => menu != null && menu.Visible;
+    public static bool Visible => activeMenu != null && activeMenu.Visible;
 
     public static void Toggle()
     {
-        if (Visible) { menu.Close(); return; }
+        if (Visible) { activeMenu.Close(); activeMenu = null; return; }
         if (LSL.LsMenuPool.IsAnyMenuOpen()) return;
         if (menu == null) Create();
         menu.Subtitle = "REPUTATION  " + (int)LSL.dealer1Rep +
                         "    |    NIVEAU  " + (int)LsFunctions.CurrentRepLvl(LSL.dealer1Rep);
+        activeMenu = menu;
         menu.Open();
     }
 
     private static void Create()
     {
         menu = new CustomMenu("ZEE", "");
-        menu.Add("Dealer", () => OpenSubmenu(LSL.startDealing));
+        menu.Add("Dealer", OpenDealer);
         menu.Add("Commander de la drogue", () => OpenSubmenu(LSL.OrderDrugs));
         menu.Add("Acheter des armes", () => RunExisting(LSL.buyWeapons));
         menu.Add("Demander a etre depose", () => RunExisting(LSL.buyLift));
         menu.Add("Rembourser la dette", () => RunExisting(LSL.payDebt), () => LSL.dealer1Debt > 0);
     }
 
+    private static void OpenDealer()
+    {
+        dealerWeed = LSL.sellWeed.Checked;
+        dealerCrack = LSL.sellCrack.Checked;
+        dealerCocaine = LSL.sellCocaine.Checked;
+        dealerDeliveries = LSL.allowDeliveries.Checked;
+        if (dealerMenu == null)
+        {
+            dealerMenu = new CustomMenu("DEALER", "ZEE / ACTIVITE");
+            dealerMenu.Add("Vendre du cannabis", () => dealerWeed = !dealerWeed);
+            dealerMenu.Add("Vendre du crack", () => dealerCrack = !dealerCrack);
+            dealerMenu.Add("Vendre de la cocaine", () => dealerCocaine = !dealerCocaine);
+            dealerMenu.Add("Livraisons", () => dealerDeliveries = !dealerDeliveries);
+            dealerMenu.Add("Commencer a dealer", StartDealer);
+        }
+        menu.Close();
+        activeMenu = dealerMenu;
+        dealerMenu.Open();
+    }
+
+    private static void StartDealer()
+    {
+        LSL.sellWeed.Checked = dealerWeed;
+        LSL.sellCrack.Checked = dealerCrack;
+        LSL.sellCocaine.Checked = dealerCocaine;
+        LSL.allowDeliveries.Checked = dealerDeliveries;
+        LsMenus.OnstartDealSelect(LSL.startDealing, LSL.StartDeal, 4);
+        LSL.startDealing.Visible = false;
+        if (LSL.isDealing)
+        {
+            dealerMenu.Close();
+            activeMenu = null;
+        }
+    }
+
     private static void OpenSubmenu(NativeUI.UIMenu target)
     {
-        menu.Close();
+        activeMenu.Close();
+        activeMenu = null;
         returningFromSubmenu = true;
         submenuSeen = false;
         target.Visible = true;
@@ -63,7 +103,7 @@ internal static class CustomZeeMenu
                 returningFromSubmenu = false;
                 submenuSeen = false;
                 // Retour au menu pilote apres fermeture du sous-menu NativeUI.
-                if (menu != null) menu.Open();
+                if (menu != null) { activeMenu = menu; menu.Open(); }
             }
         }
 
@@ -77,10 +117,15 @@ internal static class CustomZeeMenu
             Function.Call(Hash.DISABLE_CONTROL_ACTION, 2, control, true);
         }
 
-        if (DisabledJustPressed(172)) menu.Move(-1);
-        else if (DisabledJustPressed(173)) menu.Move(1);
-        else if (DisabledJustPressed(201)) menu.Activate();
-        else if (DisabledJustPressed(202)) menu.Close();
+        if (DisabledJustPressed(172)) activeMenu.Move(-1);
+        else if (DisabledJustPressed(173)) activeMenu.Move(1);
+        else if (DisabledJustPressed(201)) activeMenu.Activate();
+        else if (DisabledJustPressed(202))
+        {
+            activeMenu.Close();
+            if (activeMenu == dealerMenu) { activeMenu = menu; menu.Open(); }
+            else activeMenu = null;
+        }
 
         if (Visible) Draw();
     }
@@ -101,7 +146,8 @@ internal static class CustomZeeMenu
         const float left = x - width / 2f;
 
         // Panneau principal et filet dore (rectangles fins, sans textures externes).
-        float height = 0.155f + menu.Entries.Count * 0.043f;
+        CustomMenu displayed = activeMenu;
+        float height = 0.155f + displayed.Entries.Count * 0.043f;
         Rect(x, top + height / 2f, width, height, 13, 16, 20, 238);
         Rect(x, top, width, 0.002f, 194, 156, 88, 255);
         Rect(x, top + height, width, 0.002f, 194, 156, 88, 255);
@@ -111,22 +157,22 @@ internal static class CustomZeeMenu
         // Bandeau de marque.
         Rect(x, top + 0.046f, width - 0.004f, 0.090f, 22, 25, 29, 240);
         Rect(left + 0.008f, top + 0.046f, 0.003f, 0.062f, 194, 156, 88, 255);
-        TextCenteredVertically("ZEE", left + 0.023f, top, 0.090f, 0.67f, 234, 207, 151, 255);
-        TextCenteredVertically("CONTACT  /  SERVICES", left + 0.116f, top, 0.090f, 0.25f, 170, 159, 138, 255);
+        TextCenteredVertically(displayed.Title, left + 0.023f, top, 0.090f, 0.67f, 234, 207, 151, 255);
+        TextCenteredVertically(displayed == dealerMenu ? "ZEE / ACTIVITE" : "CONTACT  /  SERVICES", left + 0.116f, top, 0.090f, 0.25f, 170, 159, 138, 255);
         Rect(x, top + 0.091f, width - 0.019f, 0.0015f, 171, 133, 73, 235);
 
         // Informations de progression.
         Rect(x, top + 0.117f, width - 0.013f, 0.045f, 28, 30, 33, 232);
-        TextCenteredVertically(menu.Subtitle, left + 0.016f, top + 0.0945f, 0.045f, 0.275f, 226, 206, 167, 255);
+        TextCenteredVertically(displayed == dealerMenu ? "CHOISIR LES OPTIONS" : displayed.Subtitle, left + 0.016f, top + 0.0945f, 0.045f, 0.275f, 226, 206, 167, 255);
         // Separateur dore entre les informations et les actions.
         Rect(x, top + 0.144f, width - 0.019f, 0.0015f, 171, 133, 73, 235);
 
         // Liste : selection lumineuse mais sans surcharge.
-        for (int i = 0; i < menu.Entries.Count; i++)
+        for (int i = 0; i < displayed.Entries.Count; i++)
         {
             float y = top + 0.151f + i * 0.043f;
-            bool selected = i == menu.SelectedIndex;
-            bool debtEntry = i == menu.Entries.Count - 1;
+            bool selected = i == displayed.SelectedIndex;
+            bool debtEntry = displayed == menu && i == displayed.Entries.Count - 1;
             bool debtFree = debtEntry && LSL.dealer1Debt <= 0;
             Rect(x, y + 0.0205f, width - 0.012f, 0.040f,
                 selected ? 65 : 25, selected ? 55 : 28,
@@ -137,7 +183,7 @@ internal static class CustomZeeMenu
                 Rect(x, y + 0.001f, width - 0.012f, 0.001f, 172, 137, 78, 225);
                 Rect(x, y + 0.041f, width - 0.012f, 0.001f, 172, 137, 78, 225);
             }
-            TextCenteredVertically(debtFree ? "Aucune dette en cours" : menu.Entries[i].Label,
+            TextCenteredVertically(debtFree ? "Aucune dette en cours" : displayed.Entries[i].Label,
                 left + 0.019f, y + 0.0005f, 0.040f,
                 0.315f, debtFree ? 133 : (selected ? 255 : 226),
                 debtFree ? 135 : (selected ? 247 : 227),
@@ -150,7 +196,15 @@ internal static class CustomZeeMenu
                 TextRightCenteredVertically(amount, left + width - 0.018f,
                     y + 0.0005f, 0.040f, 0.305f, 218, 176, 101, 255);
             }
-            if (i < 2)
+            if (displayed == dealerMenu && i < 4)
+            {
+                bool check = i == 0 ? dealerWeed : i == 1 ? dealerCrack :
+                    i == 2 ? dealerCocaine : dealerDeliveries;
+                TextRightCenteredVertically(check ? "ON" : "OFF",
+                    left + width - 0.018f, y + 0.0005f, 0.040f, 0.305f,
+                    check ? 218 : 145, check ? 176 : 145, check ? 101 : 145, 255);
+            }
+            if (displayed == menu && i < 2)
                 TextCenteredVertically(">", left + width - 0.027f, y + 0.0005f, 0.040f, 0.33f,
                     204, 168, 102, 255);
         }
