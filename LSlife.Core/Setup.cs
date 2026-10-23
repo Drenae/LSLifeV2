@@ -240,16 +240,8 @@ public partial class LSL
 		LsMenuPool = new MenuPool();
 		Color.FromArgb(114, 204, 114);
 		zeeMenu = new UIMenu("Zee", "Tu veux quoi ?");
-		if (UseSprites)
-		{
-			zeeMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
-		}
 		LsMenuPool.Add(zeeMenu);
 		startDealing = LsMenuPool.AddSubMenu(zeeMenu, "Dealer");
-		if (UseSprites)
-		{
-			startDealing.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
-		}
 		sellWeed = new UIMenuCheckboxItem("Vendre du cannabis", check: true);
 		sellCrack = new UIMenuCheckboxItem("Vendre du crack", check: true);
 		sellCocaine = new UIMenuCheckboxItem("Vendre de la cocaïne", check: true);
@@ -262,10 +254,6 @@ public partial class LSL
 		startDealing.AddItem(StartDeal);
 		startDealing.OnItemSelect += LsMenus.OnstartDealSelect;
 		OrderDrugs = LsMenuPool.AddSubMenu(zeeMenu, "Commander de la drogue");
-		if (UseSprites)
-		{
-			OrderDrugs.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
-		}
 		OrderDrugs.BannerSprite.Color = Color.Black;
 		OrderDrugs.Title.DropShadow = true;
 		OrderDrugs.Title.Outline = true;
@@ -279,10 +267,6 @@ public partial class LSL
 		zeeMenu.AddItem(payDebt);
 		zeeMenu.OnItemSelect += LsMenus.OnZeeMenuSelect;
 		hireDealerMainMenu = new UIMenu("Recruter un dealer", "Choisis une option");
-		if (UseSprites)
-		{
-			hireDealerMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_dealer.png");
-		}
 		LsMenuPool.Add(hireDealerMainMenu);
 		hireDealerOfferAmount = new UIMenuSliderItem("Montant proposé");
 		hireDealerOfferAmount.Maximum = player.Money;
@@ -296,10 +280,6 @@ public partial class LSL
 		hireDealerMakeOffer.Activated += LsMenus.HireDealerOfferSelect;
 		hireDealerFollowButton.Activated += LsMenus.HireDealerFollowSelect;
 		WorkerMainMenu = new UIMenu("Employé", "Donner du stock au dealer");
-		if (UseSprites)
-		{
-			WorkerMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_worker.png");
-		}
 		LsMenuPool.Add(WorkerMainMenu);
 		wWeed = new UIMenuSliderItem("Cannabis " + LsFunctions.GramsToOz(0));
 		wWeed.Maximum = PlayerInventory["Weed"];
@@ -335,10 +315,6 @@ public partial class LSL
 		int mWprice = meleePrice[0] - LsFunctions.Discount(meleePrice[0]);
 		int pWprice = pistolPrice[0] - LsFunctions.Discount(pistolPrice[0]);
 		wepMenu = new UIMenu("Armes", "Tu veux quoi ?");
-		if (UseSprites)
-		{
-			wepMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_dealer.png");
-		}
 		LsMenuPool.Add(wepMenu);
 		melee = new UIMenuListItem("Arme blanche " + LsFunctions.IntToMoney(mWprice) + " $", meleeWeps, 0);
 		wepMenu.AddItem(melee);
@@ -354,10 +330,6 @@ public partial class LSL
 		OrderMultipliers = new UIMenuListItem("Multiplicateur", multiplier, 0);
 		OrderMultipliers.OnListChanged += DMultiplier_OnListChanged;
 		weedMenu = LsMenuPool.AddSubMenu(OrderDrugs, "Cannabis");
-		if (UseSprites)
-		{
-			weedMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
-		}
 		bushWeed = new UIMenuSliderItem("Cannabis " + LsFunctions.IntToMoney(weed1Price - LsFunctions.Discount(weed1Price)) + " $/oz");
 		weedMenu.AddItem(bushWeed);
 		bushWeed.Maximum = dealer1Weed;
@@ -369,10 +341,6 @@ public partial class LSL
 		weedMenu.OnItemSelect += LsMenus.onWeedMenuSelect;
 		weedMenu.OnMenuOpen += DrugStockMenu_OnMenuOpen;
 		crackMenu = LsMenuPool.AddSubMenu(OrderDrugs, "Crack");
-		if (UseSprites)
-		{
-			crackMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
-		}
 		crack = new UIMenuSliderItem("Crack " + LsFunctions.IntToMoney(crack1Price - LsFunctions.Discount(crack1Price)) + " $/oz");
 		crackMenu.AddItem(crack);
 		crack.Maximum = dealer1Crack;
@@ -384,10 +352,6 @@ public partial class LSL
 		crackMenu.OnItemSelect += LsMenus.onCrackMenuSelect;
 		crackMenu.OnMenuOpen += DrugStockMenu_OnMenuOpen;
 		cocainMenu = LsMenuPool.AddSubMenu(OrderDrugs, "Cocaïne");
-		if (UseSprites)
-		{
-			cocainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
-		}
 		cocaine = new UIMenuSliderItem("Cocaïne " + LsFunctions.IntToMoney(cocain1Price - LsFunctions.Discount(cocain1Price)) + " $/oz");
 		cocainMenu.AddItem(cocaine);
 		cocaine.Maximum = dealer1Cocain;
@@ -399,10 +363,6 @@ public partial class LSL
 		cocainMenu.OnItemSelect += LsMenus.onCocainMenuSelect;
 		cocainMenu.OnMenuOpen += DrugStockMenu_OnMenuOpen;
 		OrderSummaryMenu = LsMenuPool.AddSubMenu(OrderDrugs, "Récapitulatif");
-		if (UseSprites)
-		{
-			OrderSummaryMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
-		}
 		OrderSummaryWeed = new UIMenuItem("Cannabis");
 		OrderSummaryCrack = new UIMenuItem("Crack");
 		OrderSummaryCocaine = new UIMenuItem("Cocaïne");
@@ -420,21 +380,9 @@ public partial class LSL
 		OrderDrugs.AddItem(PlaceOrder);
 		OrderDrugs.OnItemSelect += LsMenus.OnOrderDrugsMenuSelect;
 		stashMainMenu = new UIMenu("Stockage de la planque", "Choisis une option.");
-		if (UseSprites)
-		{
-			stashMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
-		}
 		LsMenuPool.Add(stashMainMenu);
 		stashTakeMenu = LsMenuPool.AddSubMenu(stashMainMenu, "Retirer");
-		if (UseSprites)
-		{
-			stashTakeMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
-		}
 		stashPutMenu = LsMenuPool.AddSubMenu(stashMainMenu, "Déposer");
-		if (UseSprites)
-		{
-			stashPutMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
-		}
 		putWeedStash = new UIMenuSliderItem("Cannabis");
 		stashPutMenu.AddItem(putWeedStash);
 		putWeedStash.Maximum = PlayerInventory["Weed"];
@@ -540,21 +488,9 @@ public partial class LSL
 		stashPutMenu.OnItemSelect += LsMenus.onStashMenuSelect;
 		stashTakeMenu.OnItemSelect += LsMenus.onPlayerMenuSelect;
 		vehStashMainMenu = new UIMenu("Stockage du véhicule", "Choisir");
-		if (UseSprites)
-		{
-			vehStashMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
-		}
 		LsMenuPool.Add(vehStashMainMenu);
 		vehStashTakeMenu = LsMenuPool.AddSubMenu(vehStashMainMenu, "Retirer");
-		if (UseSprites)
-		{
-			vehStashTakeMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
-		}
 		vehStashPutMenu = LsMenuPool.AddSubMenu(vehStashMainMenu, "Déposer");
-		if (UseSprites)
-		{
-			vehStashPutMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
-		}
 		putWeedVeh = new UIMenuSliderItem("Cannabis " + LsFunctions.GramsToOz(PlayerInventory["Weed"]));
 		vehStashPutMenu.AddItem(putWeedVeh);
 		putWeedVeh.Maximum = PlayerInventory["Weed"];
@@ -654,17 +590,13 @@ public partial class LSL
 		vehStashPutMenu.OnItemSelect += LsMenus.onPutVehicleMenuSelect;
 		vehStashTakeMenu.OnItemSelect += LsMenus.onTakeVehicleMenuSelect;
 		customerMainMenu = new UIMenu("Client", "Choisis une option");
-		if (UseSprites)
-		{
-			customerMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_customer.png");
-		}
 		LsMenuPool.Add(customerMainMenu);
 		sell = new UIMenuItem("Drogue");
 		customerMainMenu.AddItem(sell);
 		turnAway = new UIMenuItem("À plus");
 		customerMainMenu.AddItem(turnAway);
 		customerMainMenu.OnItemSelect += LsMenus.onCustomerMenuSelect;
-		// Style commun : bandeau sobre, sans image, pour tous les menus NativeUI.
+		// Style commun : bandeau natif anthracite, sans PNG personnalise.
 		// Centralise ici pour conserver la navigation et les actions existantes.
 		zeeMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
 		startDealing.BannerSprite.Color = Color.FromArgb(28, 34, 39);
