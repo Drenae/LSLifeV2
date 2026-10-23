@@ -666,23 +666,23 @@ public partial class LSL
 		customerMainMenu.OnItemSelect += LsMenus.onCustomerMenuSelect;
 		// Style commun : bandeau sobre, sans image, pour tous les menus NativeUI.
 		// Centralise ici pour conserver la navigation et les actions existantes.
-		zeeMenu.SetBannerType(Color.FromArgb(28, 34, 39));
-		startDealing.SetBannerType(Color.FromArgb(28, 34, 39));
-		OrderDrugs.SetBannerType(Color.FromArgb(28, 34, 39));
-		hireDealerMainMenu.SetBannerType(Color.FromArgb(28, 34, 39));
-		WorkerMainMenu.SetBannerType(Color.FromArgb(28, 34, 39));
-		wepMenu.SetBannerType(Color.FromArgb(28, 34, 39));
-		weedMenu.SetBannerType(Color.FromArgb(28, 34, 39));
-		crackMenu.SetBannerType(Color.FromArgb(28, 34, 39));
-		cocainMenu.SetBannerType(Color.FromArgb(28, 34, 39));
-		OrderSummaryMenu.SetBannerType(Color.FromArgb(28, 34, 39));
-		stashMainMenu.SetBannerType(Color.FromArgb(28, 34, 39));
-		stashTakeMenu.SetBannerType(Color.FromArgb(28, 34, 39));
-		stashPutMenu.SetBannerType(Color.FromArgb(28, 34, 39));
-		vehStashMainMenu.SetBannerType(Color.FromArgb(28, 34, 39));
-		vehStashTakeMenu.SetBannerType(Color.FromArgb(28, 34, 39));
-		vehStashPutMenu.SetBannerType(Color.FromArgb(28, 34, 39));
-		customerMainMenu.SetBannerType(Color.FromArgb(28, 34, 39));
+		zeeMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
+		startDealing.BannerSprite.Color = Color.FromArgb(28, 34, 39);
+		OrderDrugs.BannerSprite.Color = Color.FromArgb(28, 34, 39);
+		hireDealerMainMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
+		WorkerMainMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
+		wepMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
+		weedMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
+		crackMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
+		cocainMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
+		OrderSummaryMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
+		stashMainMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
+		stashTakeMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
+		stashPutMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
+		vehStashMainMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
+		vehStashTakeMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
+		vehStashPutMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
+		customerMainMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
 		
 		LsMenuPool.FormatDescriptions = true;
 		LsMenuPool.RefreshIndex();
