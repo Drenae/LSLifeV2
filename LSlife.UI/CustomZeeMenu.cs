@@ -17,6 +17,7 @@ internal static class CustomZeeMenu
     private static bool dealerWeed, dealerCrack, dealerCocaine, dealerDeliveries;
     private static bool returningFromSubmenu;
     private static bool submenuSeen;
+    private static CustomMenu submenuReturnMenu;
 
     public static bool Visible => activeMenu != null && activeMenu.Visible;
 
@@ -137,6 +138,7 @@ internal static class CustomZeeMenu
 
     private static void OpenSubmenu(NativeUI.UIMenu target)
     {
+        submenuReturnMenu = activeMenu;
         activeMenu.Close();
         activeMenu = null;
         returningFromSubmenu = true;
@@ -164,7 +166,7 @@ internal static class CustomZeeMenu
                 returningFromSubmenu = false;
                 submenuSeen = false;
                 // Retour au menu pilote apres fermeture du sous-menu NativeUI.
-                if (menu != null) { activeMenu = menu; menu.Open(); }
+                if (submenuReturnMenu != null) { activeMenu = submenuReturnMenu; submenuReturnMenu.Open(); }
             }
         }
 
