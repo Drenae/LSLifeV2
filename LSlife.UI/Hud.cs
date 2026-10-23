@@ -417,7 +417,7 @@ internal static class Hud
 	private const int TopHudDefaultY = 100;
 
 	// HUD inférieur : un seul panneau, même fond que le HUD supérieur.
-	private const int BarsX = 1535;
+	private const int BarsX = 1635;
 	private const int BarsY = 980;
 	private const int BarsWidth = 365;
 	private const int BarsRowHeight = 43;
