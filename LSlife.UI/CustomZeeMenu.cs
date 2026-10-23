@@ -111,13 +111,13 @@ internal static class CustomZeeMenu
         // Bandeau de marque.
         Rect(x, top + 0.046f, width - 0.004f, 0.090f, 22, 25, 29, 240);
         Rect(left + 0.008f, top + 0.046f, 0.003f, 0.062f, 194, 156, 88, 255);
-        Text("ZEE", left + 0.023f, top + 0.011f, 0.67f, 234, 207, 151, 255);
-        Text("CONTACT  /  SERVICES", left + 0.116f, top + 0.030f, 0.25f, 170, 159, 138, 255);
+        TextCenteredVertically("ZEE", left + 0.023f, top, 0.090f, 0.67f, 234, 207, 151, 255);
+        TextCenteredVertically("CONTACT  /  SERVICES", left + 0.116f, top, 0.090f, 0.25f, 170, 159, 138, 255);
         Rect(x, top + 0.091f, width - 0.019f, 0.0015f, 171, 133, 73, 235);
 
         // Informations de progression.
         Rect(x, top + 0.117f, width - 0.013f, 0.045f, 28, 30, 33, 232);
-        Text(menu.Subtitle, left + 0.016f, top + 0.102f, 0.275f, 226, 206, 167, 255);
+        TextCenteredVertically(menu.Subtitle, left + 0.016f, top + 0.0945f, 0.045f, 0.275f, 226, 206, 167, 255);
 
         // Liste : selection lumineuse mais sans surcharge.
         for (int i = 0; i < menu.Entries.Count; i++)
@@ -133,14 +133,27 @@ internal static class CustomZeeMenu
                 Rect(x, y + 0.001f, width - 0.012f, 0.001f, 172, 137, 78, 225);
                 Rect(x, y + 0.050f, width - 0.012f, 0.001f, 172, 137, 78, 225);
             }
-            Text(menu.Entries[i].Label, left + 0.019f, y + 0.014f,
+            TextCenteredVertically(menu.Entries[i].Label, left + 0.019f, y + 0.0015f, 0.049f,
                 0.315f, selected ? 255 : 226, selected ? 247 : 227,
                 selected ? 226 : 229, 255);
             if (i < 2)
-                Text(">", left + width - 0.027f, y + 0.014f, 0.33f,
+                TextCenteredVertically(">", left + width - 0.027f, y + 0.0015f, 0.049f, 0.33f,
                     204, 168, 102, 255);
         }
 
+    }
+
+    // Centre le texte dans une zone verticale en utilisant la hauteur
+    // reelle du caractere calculee par GTA pour la police et l'echelle.
+    // Les dimensions des zones peuvent changer sans ajuster les offsets.
+    private static void TextCenteredVertically(string value, float x, float zoneTop,
+        float zoneHeight, float scale, int r, int g, int b, int a)
+    {
+        const int font = 0;
+        float textHeight = Function.Call<float>(
+            unchecked((Hash)0xDB88A37483346780UL), scale, font);
+        float textY = zoneTop + (zoneHeight - textHeight) / 2f;
+        Text(value, x, textY, scale, r, g, b, a);
     }
 
     private static void Rect(float x, float y, float w, float h, int r, int g, int b, int a)
