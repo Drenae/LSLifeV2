@@ -101,7 +101,7 @@ internal static class CustomZeeMenu
         const float left = x - width / 2f;
 
         // Panneau principal et filet dore (rectangles fins, sans textures externes).
-        float height = 0.183f + menu.Entries.Count * 0.052f;
+        float height = 0.155f + menu.Entries.Count * 0.043f;
         Rect(x, top + height / 2f, width, height, 13, 16, 20, 238);
         Rect(x, top, width, 0.002f, 194, 156, 88, 255);
         Rect(x, top + height, width, 0.002f, 194, 156, 88, 255);
@@ -118,26 +118,28 @@ internal static class CustomZeeMenu
         // Informations de progression.
         Rect(x, top + 0.117f, width - 0.013f, 0.045f, 28, 30, 33, 232);
         TextCenteredVertically(menu.Subtitle, left + 0.016f, top + 0.0945f, 0.045f, 0.275f, 226, 206, 167, 255);
+        // Separateur dore entre les informations et les actions.
+        Rect(x, top + 0.144f, width - 0.019f, 0.0015f, 171, 133, 73, 235);
 
         // Liste : selection lumineuse mais sans surcharge.
         for (int i = 0; i < menu.Entries.Count; i++)
         {
-            float y = top + 0.162f + i * 0.052f;
+            float y = top + 0.151f + i * 0.043f;
             bool selected = i == menu.SelectedIndex;
-            Rect(x, y + 0.026f, width - 0.012f, 0.049f,
+            Rect(x, y + 0.0205f, width - 0.012f, 0.040f,
                 selected ? 65 : 25, selected ? 55 : 28,
                 selected ? 40 : 32, selected ? 248 : 229);
             if (selected)
             {
-                Rect(left + 0.008f, y + 0.026f, 0.0035f, 0.047f, 218, 176, 101, 255);
+                Rect(left + 0.008f, y + 0.0205f, 0.0035f, 0.038f, 218, 176, 101, 255);
                 Rect(x, y + 0.001f, width - 0.012f, 0.001f, 172, 137, 78, 225);
-                Rect(x, y + 0.050f, width - 0.012f, 0.001f, 172, 137, 78, 225);
+                Rect(x, y + 0.041f, width - 0.012f, 0.001f, 172, 137, 78, 225);
             }
-            TextCenteredVertically(menu.Entries[i].Label, left + 0.019f, y + 0.0015f, 0.049f,
+            TextCenteredVertically(menu.Entries[i].Label, left + 0.019f, y + 0.0005f, 0.040f,
                 0.315f, selected ? 255 : 226, selected ? 247 : 227,
                 selected ? 226 : 229, 255);
             if (i < 2)
-                TextCenteredVertically(">", left + width - 0.027f, y + 0.0015f, 0.049f, 0.33f,
+                TextCenteredVertically(">", left + width - 0.027f, y + 0.0005f, 0.040f, 0.33f,
                     204, 168, 102, 255);
         }
 
