@@ -398,43 +398,42 @@ internal static class Hud
 		((UIText)text).Draw();
 	}
 
-	// Apparence et affichage des deux barres : tout est personnalisable ici.
-	private static readonly BarTimerBar AreaBar = new BarTimerBar("Quartier");
-	private static readonly BarTimerBar PlayerBar = new BarTimerBar("Joueur");
-	private static bool barsDisplayed;
+	// Coordonnées et style des barres en espace NativeUI 1920 x 1080.
+	private const int BarsX = 1580;
+	private const int BarsY = 914;
+	private const int BarsWidth = 305;
+	private const int BarsHeight = 24;
+	private const int BarsGap = 12;
+	private static readonly Color BarsBackground = Color.FromArgb(175, 0, 0, 0);
+	private static readonly Color BarsTrack = Color.FromArgb(220, 45, 45, 45);
+	private static readonly Color BarsFill = Color.FromArgb(240, 194, 69, 65);
 
 	public static void Draw()
 	{
 		InventoryGui();
-		DrawHeatBars();
+		DrawBar("Joueur", PlayerHeatBar.GetPercentage(), BarsY);
+		DrawBar("Quartier", AreaHeatBar.GetPercentage(), BarsY + BarsHeight + BarsGap);
 	}
 
-	private static void DrawHeatBars()
+	private static void DrawBar(string label, float percentage, int y)
 	{
-		if (!barsDisplayed)
+		float progress = System.Math.Max(0f, System.Math.Min(1f, percentage));
+		int trackX = BarsX + 90;
+		int trackWidth = BarsWidth - 100;
+		new UIResRectangle(new Point(BarsX, y), new Size(BarsWidth, BarsHeight), BarsBackground).Draw();
+		new UIResText(label, new Point(BarsX + 8, y + 2), 0.28f, Color.White,
+			(GTA.Font)0, UIResText.Alignment.Left).Draw();
+		new UIResRectangle(new Point(trackX, y + 8), new Size(trackWidth, 8), BarsTrack).Draw();
+		int fillWidth = (int)(trackWidth * progress);
+		if (fillWidth > 0)
 		{
-			AreaBar.BackgroundColor = Color.Black;
-			PlayerBar.BackgroundColor = Color.Black;
-			BarHandler.AddBar(AreaBar);
-			BarHandler.AddBar(PlayerBar);
-			barsDisplayed = true;
+			new UIResRectangle(new Point(trackX, y + 8), new Size(fillWidth, 8), BarsFill).Draw();
 		}
-
-		AreaBar.Percentage = AreaHeatBar.GetPercentage();
-		PlayerBar.Percentage = PlayerHeatBar.GetPercentage();
-		BarHandler.Pool.Draw();
 	}
 
+	// Les rectangles ne sont affichés que pendant les frames où Draw() est appelé.
 	public static void Hide()
 	{
-		if (!barsDisplayed)
-		{
-			return;
-		}
-
-		BarHandler.RemoveBar(AreaBar);
-		BarHandler.RemoveBar(PlayerBar);
-		barsDisplayed = false;
 	}
 
 	public static void InventoryGui()
