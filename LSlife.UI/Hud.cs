@@ -286,9 +286,9 @@ internal static class Hud
 
 	private static UIMenuItem Save;
 
-	private static int posX = 1900;
+	private static int posX = TopHudDefaultX;
 
-	private static int posY = 100;
+	private static int posY = TopHudDefaultY;
 
 	private const int MaxX = 1920;
 
@@ -298,10 +298,10 @@ internal static class Hud
 	{
 		LoadInvConfig();
 		Options = LSL.LsMenuPool.AddSubMenu(LSL.zeeMenu, "Options");
-		InventoryPosX = new UIMenuSliderItem("PosX: ~g~" + posX);
+		InventoryPosX = new UIMenuSliderItem("HUD haut X: ~g~" + posX);
 		InventoryPosX.Maximum = 1920;
 		InventoryPosX.Value = posX;
-		InventoryPosY = new UIMenuSliderItem("PosY: ~g~" + posY);
+		InventoryPosY = new UIMenuSliderItem("HUD haut Y: ~g~" + posY);
 		InventoryPosY.Maximum = 1080;
 		InventoryPosY.Value = posY;
 		Save = new UIMenuItem("Enregistrer les réglages");
@@ -381,12 +381,12 @@ internal static class Hud
 		if (sender == InventoryPosX)
 		{
 			posX = sender.Value;
-			sender.Text = "PosX: ~g~" + posX;
+			sender.Text = "HUD haut X: ~g~" + posX;
 		}
 		if (sender == InventoryPosY)
 		{
 			posY = sender.Value;
-			sender.Text = "PosY: ~g~" + posY;
+			sender.Text = "HUD haut Y: ~g~" + posY;
 		}
 	}
 
@@ -398,42 +398,59 @@ internal static class Hud
 		((UIText)text).Draw();
 	}
 
-	// Coordonnées et style des barres en espace NativeUI 1920 x 1080.
-	private const int BarsX = 1580;
+	// Position par défaut du HUD supérieur (coin supérieur droit).
+	// Les curseurs du menu Options peuvent aussi modifier ces coordonnées et les sauvegarder.
+	private const int TopHudDefaultX = 1900;
+	private const int TopHudDefaultY = 100;
+
+	// HUD inférieur : un seul panneau, même fond que le HUD supérieur.
+	private const int BarsX = 1535;
 	private const int BarsY = 914;
-	private const int BarsWidth = 305;
-	private const int BarsHeight = 40;
-	private const int BarsGap = 20;
-	private static readonly Color BarsBackground = Color.FromArgb(175, 0, 0, 0);
+	private const int BarsWidth = 365;
+	private const int BarsRowHeight = 43;
+	private const int BarsProgressHeight = 16;
+	private const int BarsProgressWidth = 230;
+	private const int BarsProgressOffsetX = 120;
+	private static readonly Color HudBackground = Color.FromArgb(165, 0, 0, 0);
+	private static readonly Color HudSeparator = Color.FromArgb(115, 210, 210, 210);
 	private static readonly Color BarsTrack = Color.FromArgb(220, 45, 45, 45);
 	private static readonly Color BarsFill = Color.FromArgb(240, 194, 69, 65);
 
 	public static void Draw()
 	{
 		InventoryGui();
-		DrawBar("Joueur", PlayerHeatBar.GetPercentage(), BarsY);
-		DrawBar("Quartier", AreaHeatBar.GetPercentage(), BarsY + BarsHeight + BarsGap);
+		DrawHeatBars();
 	}
 
-	private static void DrawBar(string label, float percentage, int y)
+	private static void DrawHeatBars()
+	{
+		new UIResRectangle(new Point(BarsX, BarsY),
+			new Size(BarsWidth, BarsRowHeight * 2), HudBackground).Draw();
+		new UIResRectangle(new Point(BarsX + 12, BarsY + BarsRowHeight),
+			new Size(BarsWidth - 24, 1), HudSeparator).Draw();
+		DrawBarRow("Joueur", PlayerHeatBar.GetPercentage(), BarsY);
+		DrawBarRow("Quartier", AreaHeatBar.GetPercentage(), BarsY + BarsRowHeight);
+	}
+
+	private static void DrawBarRow(string label, float percentage, int y)
 	{
 		float progress = System.Math.Max(0f, System.Math.Min(1f, percentage));
-		int trackX = BarsX + 90;
-		int trackWidth = BarsWidth - 100;
-		new UIResRectangle(new Point(BarsX, y), new Size(BarsWidth, BarsHeight), BarsBackground).Draw();
-		new UIResText(label, new Point(BarsX + 8, y + 2), 0.28f, Color.White,
-			(GTA.Font)0, UIResText.Alignment.Left).Draw();
-		new UIResRectangle(new Point(trackX, y + 8), new Size(trackWidth, 8), BarsTrack).Draw();
-		int fillWidth = (int)(trackWidth * progress);
-		if (fillWidth > 0)
+		int progressX = BarsX + BarsProgressOffsetX;
+		int progressY = y + (BarsRowHeight - BarsProgressHeight) / 2;
+		DrawHudText(label, BarsX + 58, y + 10, 0.30f, Color.WhiteSmoke);
+		new UIResRectangle(new Point(progressX, progressY),
+			new Size(BarsProgressWidth, BarsProgressHeight), BarsTrack).Draw();
+		int filled = (int)(BarsProgressWidth * progress);
+		if (filled > 0)
 		{
-			new UIResRectangle(new Point(trackX, y + 8), new Size(fillWidth, 8), BarsFill).Draw();
+			new UIResRectangle(new Point(progressX, progressY),
+				new Size(filled, BarsProgressHeight), BarsFill).Draw();
 		}
 	}
 
-	// Les rectangles ne sont affichés que pendant les frames où Draw() est appelé.
 	public static void Hide()
 	{
+		// Aucun élément persistant : les rectangles cessent d'être dessinés.
 	}
 
 	public static void InventoryGui()
@@ -445,9 +462,9 @@ internal static class Hud
 		int top = System.Math.Max(0, posY - 25);
 		// Fond et textes utilisent tous deux les primitives natives GTA/NativeUI.
 		new UIResRectangle(new Point(left, top), new Size(width, height),
-			Color.FromArgb(165, 0, 0, 0)).Draw();
+			HudBackground).Draw();
 
-				new UIResRectangle(new Point(left + 12, top + 36), new Size(width - 24, 1), Color.FromArgb(115, 210, 210, 210)).Draw();
+				new UIResRectangle(new Point(left + 12, top + 36), new Size(width - 24, 1), HudSeparator).Draw();
 		DrawHudText("ARGENT", left + 60, top + 8, 0.30f, Color.White);
 		DrawHudText(LsFunctions.IntToMoney(LSL.player.Money) + " $", left + 290, top + 8, 0.30f, Color.LightGreen);
 		string[] names = { "Cannabis", "Crack", "Cocaïne" };
