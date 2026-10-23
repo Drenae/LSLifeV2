@@ -596,25 +596,76 @@ public partial class LSL
 		turnAway = new UIMenuItem("À plus");
 		customerMainMenu.AddItem(turnAway);
 		customerMainMenu.OnItemSelect += LsMenus.onCustomerMenuSelect;
-		// Style commun : bandeau natif anthracite, sans PNG personnalise.
+		// Bandeaux d'origine conserves en attendant la refonte complete du theme.
 		// Centralise ici pour conserver la navigation et les actions existantes.
-		zeeMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
-		startDealing.BannerSprite.Color = Color.FromArgb(28, 34, 39);
-		OrderDrugs.BannerSprite.Color = Color.FromArgb(28, 34, 39);
-		hireDealerMainMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
-		WorkerMainMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
-		wepMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
-		weedMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
-		crackMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
-		cocainMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
-		OrderSummaryMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
-		stashMainMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
-		stashTakeMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
-		stashPutMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
-		vehStashMainMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
-		vehStashTakeMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
-		vehStashPutMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
-		customerMainMenu.BannerSprite.Color = Color.FromArgb(28, 34, 39);
+		if (UseSprites)
+		{
+			zeeMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
+		}
+		if (UseSprites)
+		{
+			startDealing.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
+		}
+		if (UseSprites)
+		{
+			OrderDrugs.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
+		}
+		if (UseSprites)
+		{
+			hireDealerMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_dealer.png");
+		}
+		if (UseSprites)
+		{
+			WorkerMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_worker.png");
+		}
+		if (UseSprites)
+		{
+			wepMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_dealer.png");
+		}
+		if (UseSprites)
+		{
+			weedMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
+		}
+		if (UseSprites)
+		{
+			crackMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
+		}
+		if (UseSprites)
+		{
+			cocainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
+		}
+		if (UseSprites)
+		{
+			OrderSummaryMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_zee.png");
+		}
+		if (UseSprites)
+		{
+			stashMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
+		}
+		if (UseSprites)
+		{
+			stashTakeMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
+		}
+		if (UseSprites)
+		{
+			stashPutMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
+		}
+		if (UseSprites)
+		{
+			vehStashMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
+		}
+		if (UseSprites)
+		{
+			vehStashTakeMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
+		}
+		if (UseSprites)
+		{
+			vehStashPutMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_stash.png");
+		}
+		if (UseSprites)
+		{
+			customerMainMenu.SetBannerType("scripts\\LSLife\\sprites\\banner_customer.png");
+		}
 		
 		LsMenuPool.FormatDescriptions = true;
 		LsMenuPool.RefreshIndex();
