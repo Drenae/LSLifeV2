@@ -92,7 +92,7 @@ internal static partial class LsFunctions
 			{
 				LSL.StartDeal.Text = " Commencer à dealer";
 			}
-			LSL.zeeMenu.Visible = !LSL.zeeMenu.Visible;
+			CustomZeeMenu.Toggle();
 			UpdateDealerInventory();
 			LSL.zeeMenu.CurrentSelection = 0;
 		}
