@@ -152,7 +152,9 @@ internal static class CustomZeeMenu
         const int font = 0;
         float textHeight = Function.Call<float>(
             unchecked((Hash)0xDB88A37483346780UL), scale, font);
-        float textY = zoneTop + (zoneHeight - textHeight) / 2f;
+        // Compensation proportionnelle de l'espace interne de la police GTA.
+        float textY = zoneTop + (zoneHeight - textHeight) / 2f
+                    + textHeight * 0.30f;
         Text(value, x, textY, scale, r, g, b, a);
     }
 
