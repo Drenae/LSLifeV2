@@ -402,7 +402,7 @@ internal static class Hud
 	private const int BarsX = 1580;
 	private const int BarsY = 914;
 	private const int BarsWidth = 305;
-	private const int BarsHeight = 24;
+	private const int BarsHeight = 40;
 	private const int BarsGap = 12;
 	private static readonly Color BarsBackground = Color.FromArgb(175, 0, 0, 0);
 	private static readonly Color BarsTrack = Color.FromArgb(220, 45, 45, 45);
