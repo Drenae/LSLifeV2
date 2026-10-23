@@ -108,11 +108,13 @@ internal static class CustomZeeMenu
 
     private static void ChangeCannabisMultiplier(int direction)
     {
-        int count = LSL.OrderMultipliers.Items.Count;
-        if (count == 0) return;
-        int next = (LSL.OrderMultipliers.Index + direction + count) % count;
-        LSL.OrderMultipliers.Index = next;
-        int multiplier = (int)LSL.OrderMultipliers.Items[next];
+        // Le multiplicateur NativeUI est prive : utiliser les valeurs du controle
+        // de quantite, sans acceder au menu NativeUI.
+        int[] multipliers = { 1, 5, 10, 25, 50, 100 };
+        int current = Array.IndexOf(multipliers, LSL.bushWeed.Multiplier);
+        if (current < 0) current = 0;
+        int next = (current + direction + multipliers.Length) % multipliers.Length;
+        int multiplier = multipliers[next];
         LSL.bushWeed.Multiplier = multiplier;
         LSL.crack.Multiplier = multiplier;
         LSL.cocaine.Multiplier = multiplier;
