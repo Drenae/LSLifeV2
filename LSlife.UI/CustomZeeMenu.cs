@@ -47,7 +47,9 @@ internal static class CustomZeeMenu
     private static void RunExisting(NativeUI.UIMenuItem item)
     {
         // Reutilise les traitements metier du menu Zee original.
-        LsMenus.OnZeeMenuSelect(LSL.zeeMenu, item, 0);
+        LSL.zeeMenu.Visible = true;
+        try { LsMenus.OnZeeMenuSelect(LSL.zeeMenu, item, 0); }
+        finally { LSL.zeeMenu.Visible = false; }
         menu.Close();
     }
 
@@ -67,15 +69,15 @@ internal static class CustomZeeMenu
 
         if (!Visible) return;
 
-        for (int control = 172; control <= 173; control++)
-            Function.Call(Hash.DISABLE_CONTROL_ACTION, 0, control, true);
-        Function.Call(Hash.DISABLE_CONTROL_ACTION, 0, 201, true);
-        Function.Call(Hash.DISABLE_CONTROL_ACTION, 0, 202, true);
-
         if (Game.IsControlJustPressed(2, (Control)172)) menu.Move(-1);
         if (Game.IsControlJustPressed(2, (Control)173)) menu.Move(1);
         if (Game.IsControlJustPressed(2, (Control)201)) menu.Activate();
         if (Game.IsControlJustPressed(2, (Control)202)) menu.Close();
+
+        for (int control = 172; control <= 173; control++)
+            Function.Call(Hash.DISABLE_CONTROL_ACTION, 0, control, true);
+        Function.Call(Hash.DISABLE_CONTROL_ACTION, 0, 201, true);
+        Function.Call(Hash.DISABLE_CONTROL_ACTION, 0, 202, true);
 
         if (Visible) Draw();
     }
