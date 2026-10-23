@@ -259,6 +259,7 @@ public partial class LSL
 		if (LsMenuPool != null)
 		{
 			LsMenuPool.ProcessMenus();
+			CustomZeeMenu.Tick();
 		}
 		iFruit.Update();
 		if (Game.IsControlPressed(2, (Control)76) && Game.IsControlJustPressed(2, (Control)26))
