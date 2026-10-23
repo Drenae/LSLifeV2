@@ -708,6 +708,11 @@ public partial class LSL
 								customerSellTo = nCustomer;
 								sell.Text = "Vendre " + LsFunctions.GramsToOz(customerSellTo.amount) + " de " + LsFunctions.DrugDisplayName(customerSellTo.Drug.Name) + "?";
 								((UIText)customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.GramsToOz(PlayerInventory[customerSellTo.Drug.Name]) + " de " + LsFunctions.DrugDisplayName(customerSellTo.Drug.Name);
+								sell.Enabled = PlayerInventory[customerSellTo.Drug.Name] >= customerSellTo.amount;
+								if (!sell.Enabled)
+								{
+									LsFunctions.DisplayHelpText("Stock insuffisant pour cette vente.");
+								}
 								customerMainMenu.Visible = !customerMainMenu.Visible;
 								customerMainMenu.CurrentSelection = 0;
 							}
@@ -726,6 +731,11 @@ public partial class LSL
 								customerSellTo = nCustomer;
 								sell.Text = "Vendre " + LsFunctions.GramsToOz(customerSellTo.amount) + " de " + LsFunctions.DrugDisplayName(customerSellTo.Drug.Name) + "?";
 								((UIText)customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.GramsToOz(PlayerInventory[customerSellTo.Drug.Name]) + " de " + LsFunctions.DrugDisplayName(customerSellTo.Drug.Name);
+								sell.Enabled = PlayerInventory[customerSellTo.Drug.Name] >= customerSellTo.amount;
+								if (!sell.Enabled)
+								{
+									LsFunctions.DisplayHelpText("Stock insuffisant pour cette vente.");
+								}
 								customerMainMenu.Visible = !customerMainMenu.Visible;
 								customerMainMenu.CurrentSelection = 0;
 							}

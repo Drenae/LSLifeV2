@@ -125,6 +125,8 @@ internal static partial class LsMenus
 		{
 			if (LSL.PlayerInventory[LSL.customerSellTo.Drug.Name] < LSL.customerSellTo.amount)
 			{
+				LSL.sell.Enabled = false;
+				LsFunctions.DisplayHelpText("Stock insuffisant pour cette vente.");
 				return;
 			}
 			foreach (Drug d in LSL.areas[LSL.areaIndex].Drugs)
