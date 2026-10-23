@@ -138,6 +138,7 @@ internal static class InventoryText
 		new UIResRectangle(new Point(left, top), new Size(width, height),
 			Color.FromArgb(165, 0, 0, 0)).Draw();
 
+				new UIResRectangle(new Point(left + 12, top + 36), new Size(width - 24, 1), Color.FromArgb(115, 210, 210, 210)).Draw();
 		DrawHudText("ARGENT", left + 60, top + 8, 0.30f, Color.White);
 		DrawHudText(LsFunctions.IntToMoney(LSL.player.Money) + " $", left + 290, top + 8, 0.30f, Color.LightGreen);
 		string[] names = { "Cannabis", "Crack", "Cocaïne" };
@@ -160,6 +161,7 @@ internal static class InventoryText
 			DrawHudText(ready[i], x, top + 70, 0.30f, Color.LightGreen);
 			DrawHudText(raw[i], x, top + 100, 0.30f, Color.LightCoral);
 		}
+				new UIResRectangle(new Point(left + 12, top + 125), new Size(width - 24, 1), Color.FromArgb(115, 210, 210, 210)).Draw();
 		DrawHudText("MODE VENTE", left + 80, top + 130, 0.30f, Color.WhiteSmoke);
 		DrawHudText(LSL.isDealing ? "ACTIVÉ" : "DÉSACTIVÉ", left + 290, top + 130, 0.30f,
 			LSL.isDealing ? Color.LightGreen : Color.LightCoral);
