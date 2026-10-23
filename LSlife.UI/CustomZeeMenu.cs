@@ -32,7 +32,7 @@ internal static class CustomZeeMenu
         menu.Add("Commander de la drogue", () => OpenSubmenu(LSL.OrderDrugs));
         menu.Add("Acheter des armes", () => RunExisting(LSL.buyWeapons));
         menu.Add("Demander a etre depose", () => RunExisting(LSL.buyLift));
-        menu.Add("Rembourser la dette", () => RunExisting(LSL.payDebt));
+        menu.Add("Rembourser la dette", () => RunExisting(LSL.payDebt), () => LSL.dealer1Debt > 0);
     }
 
     private static void OpenSubmenu(NativeUI.UIMenu target)
@@ -126,6 +126,8 @@ internal static class CustomZeeMenu
         {
             float y = top + 0.151f + i * 0.043f;
             bool selected = i == menu.SelectedIndex;
+            bool debtEntry = i == menu.Entries.Count - 1;
+            bool debtFree = debtEntry && LSL.dealer1Debt <= 0;
             Rect(x, y + 0.0205f, width - 0.012f, 0.040f,
                 selected ? 65 : 25, selected ? 55 : 28,
                 selected ? 40 : 32, selected ? 248 : 229);
@@ -135,9 +137,19 @@ internal static class CustomZeeMenu
                 Rect(x, y + 0.001f, width - 0.012f, 0.001f, 172, 137, 78, 225);
                 Rect(x, y + 0.041f, width - 0.012f, 0.001f, 172, 137, 78, 225);
             }
-            TextCenteredVertically(menu.Entries[i].Label, left + 0.019f, y + 0.0005f, 0.040f,
-                0.315f, selected ? 255 : 226, selected ? 247 : 227,
-                selected ? 226 : 229, 255);
+            TextCenteredVertically(debtFree ? "Aucune dette en cours" : menu.Entries[i].Label,
+                left + 0.019f, y + 0.0005f, 0.040f,
+                0.315f, debtFree ? 133 : (selected ? 255 : 226),
+                debtFree ? 135 : (selected ? 247 : 227),
+                debtFree ? 138 : (selected ? 226 : 229), 255);
+            if (debtEntry && !debtFree)
+            {
+                // Valeur lue en direct : toute nouvelle dette ou tout remboursement
+                // se repercute automatiquement sur la ligne.
+                string amount = LsFunctions.IntToMoney(LSL.dealer1Debt) + " $";
+                TextRightCenteredVertically(amount, left + width - 0.018f,
+                    y + 0.0005f, 0.040f, 0.305f, 218, 176, 101, 255);
+            }
             if (i < 2)
                 TextCenteredVertically(">", left + width - 0.027f, y + 0.0005f, 0.040f, 0.33f,
                     204, 168, 102, 255);
@@ -159,6 +171,27 @@ internal static class CustomZeeMenu
         float textY = zoneTop + (zoneHeight - textHeight) / 2f
                     - textHeight * 0.15f;
         Text(value, x, textY, scale, r, g, b, a);
+    }
+
+    // Aligne les montants a droite tout en reutilisant le meme centrage vertical.
+    private static void TextRightCenteredVertically(string value, float right, float zoneTop,
+        float zoneHeight, float scale, int r, int g, int b, int a)
+    {
+        const int font = 0;
+        float textHeight = Function.Call<float>(
+            unchecked((Hash)0xDB88A37483346780UL), scale, font);
+        float textY = zoneTop + (zoneHeight - textHeight) / 2f
+                    - textHeight * 0.15f;
+        Function.Call(Hash.SET_TEXT_FONT, font);
+        Function.Call(Hash.SET_TEXT_SCALE, 0f, scale);
+        Function.Call(Hash.SET_TEXT_COLOUR, r, g, b, a);
+        Function.Call(Hash.SET_TEXT_OUTLINE);
+        Function.Call(Hash.SET_TEXT_RIGHT_JUSTIFY, true);
+        Function.Call(Hash.SET_TEXT_WRAP, 0f, right);
+        Function.Call(unchecked((Hash)0x25FBB336DF1804CBUL), "STRING");
+        Function.Call(unchecked((Hash)0x6C188BE134E074AAUL), value);
+        Function.Call(unchecked((Hash)0xCD015E5BB0D96A57UL), right, textY);
+        Function.Call(Hash.SET_TEXT_RIGHT_JUSTIFY, false);
     }
 
     private static void Rect(float x, float y, float w, float h, int r, int g, int b, int a)
