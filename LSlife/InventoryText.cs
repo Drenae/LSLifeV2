@@ -25,7 +25,6 @@ internal static class InventoryText
 
 	public static void Innit()
 	{
-		PrepareHudSprite();
 		LoadInvConfig();
 		Options = LSL.LsMenuPool.AddSubMenu(LSL.zeeMenu, "Options");
 		InventoryPosX = new UIMenuSliderItem("PosX: ~g~" + posX);
