@@ -333,6 +333,11 @@ internal static class Hud
 						int.TryParse(e.Value, out posY);
 					}
 				}
+				// Migrer une seule fois les anciennes coordonnées (bord droit).
+				if (element.Element("hudPosVersion") == null)
+				{
+					posX = System.Math.Max(0, posX - 365);
+				}
 				break;
 			}
 		}
@@ -359,6 +364,13 @@ internal static class Hud
 					e.Value = posY.ToString();
 				}
 			}
+			XElement version = element.Element("hudPosVersion");
+			if (version == null)
+			{
+				version = new XElement("hudPosVersion");
+				element.Add(version);
+			}
+			version.Value = "2";
 			break;
 		}
 		if (!found)
@@ -370,6 +382,7 @@ internal static class Hud
 			invPosY.Value = posY.ToString();
 			config.Add(invPosX);
 			config.Add(invPosY);
+			config.Add(new XElement("hudPosVersion", "2"));
 			LSL.LSLifeSave.Root.Add(config);
 		}
 		LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
@@ -400,7 +413,7 @@ internal static class Hud
 
 	// Position par défaut du HUD supérieur (coin supérieur droit).
 	// Les curseurs du menu Options peuvent aussi modifier ces coordonnées et les sauvegarder.
-	private const int TopHudDefaultX = 1900;
+	private const int TopHudDefaultX = 1535;
 	private const int TopHudDefaultY = 100;
 
 	// HUD inférieur : un seul panneau, même fond que le HUD supérieur.
@@ -458,7 +471,7 @@ internal static class Hud
 		// Coordonnées en espace NativeUI 1920 x 1080, comme les réglages existants.
 		const int width = 365;
 		const int height = 164;
-		int left = posX - width;
+		int left = posX;
 		int top = System.Math.Max(0, posY - 25);
 		// Fond et textes utilisent tous deux les primitives natives GTA/NativeUI.
 		new UIResRectangle(new Point(left, top), new Size(width, height),
