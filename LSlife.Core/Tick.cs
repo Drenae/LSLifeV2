@@ -1289,7 +1289,11 @@ public partial class LSL
 					}
 					attacker.BlockPermanentEvents = true;
 					((Entity)attacker).IsPersistent = true;
-					LsFunctions.AddBlip((Entity)(object)attacker, (BlipColor)1, "Robber", _friend: false, _edge: false);
+					LsFunctions.AddBlip((Entity)(object)attacker, (BlipColor)1, "Voleur", _friend: false, _edge: false);
+					if (((Entity)attacker).CurrentBlip != null && ((Entity)attacker).CurrentBlip.Exists())
+					{
+						((Entity)attacker).CurrentBlip.Scale = 1.3f;
+					}
 					WeaponHash weaponHash2 = unchecked((WeaponHash)(-1569615261));
 					int ammo2 = 0;
 					player.Character.Weapons.RemoveAll();
@@ -1525,7 +1529,11 @@ public partial class LSL
 		{
 			if (((Entity)attacker).CurrentBlip == (Blip)null || !((Entity)attacker).CurrentBlip.Exists())
 			{
-				LsFunctions.AddBlip((Entity)(object)attacker, (BlipColor)1, "Robber", _friend: false, _edge: false);
+				LsFunctions.AddBlip((Entity)(object)attacker, (BlipColor)1, "Voleur", _friend: false, _edge: false);
+					if (((Entity)attacker).CurrentBlip != null && ((Entity)attacker).CurrentBlip.Exists())
+					{
+						((Entity)attacker).CurrentBlip.Scale = 1.3f;
+					}
 			}
 			if (((Entity)attacker).IsDead)
 			{
