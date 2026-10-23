@@ -664,6 +664,26 @@ public partial class LSL
 		turnAway = new UIMenuItem("À plus");
 		customerMainMenu.AddItem(turnAway);
 		customerMainMenu.OnItemSelect += LsMenus.onCustomerMenuSelect;
+		// Style commun : bandeau sobre, sans image, pour tous les menus NativeUI.
+		// Centralise ici pour conserver la navigation et les actions existantes.
+		zeeMenu.SetBannerType(Color.FromArgb(28, 34, 39));
+		startDealing.SetBannerType(Color.FromArgb(28, 34, 39));
+		OrderDrugs.SetBannerType(Color.FromArgb(28, 34, 39));
+		hireDealerMainMenu.SetBannerType(Color.FromArgb(28, 34, 39));
+		WorkerMainMenu.SetBannerType(Color.FromArgb(28, 34, 39));
+		wepMenu.SetBannerType(Color.FromArgb(28, 34, 39));
+		weedMenu.SetBannerType(Color.FromArgb(28, 34, 39));
+		crackMenu.SetBannerType(Color.FromArgb(28, 34, 39));
+		cocainMenu.SetBannerType(Color.FromArgb(28, 34, 39));
+		OrderSummaryMenu.SetBannerType(Color.FromArgb(28, 34, 39));
+		stashMainMenu.SetBannerType(Color.FromArgb(28, 34, 39));
+		stashTakeMenu.SetBannerType(Color.FromArgb(28, 34, 39));
+		stashPutMenu.SetBannerType(Color.FromArgb(28, 34, 39));
+		vehStashMainMenu.SetBannerType(Color.FromArgb(28, 34, 39));
+		vehStashTakeMenu.SetBannerType(Color.FromArgb(28, 34, 39));
+		vehStashPutMenu.SetBannerType(Color.FromArgb(28, 34, 39));
+		customerMainMenu.SetBannerType(Color.FromArgb(28, 34, 39));
+		
 		LsMenuPool.FormatDescriptions = true;
 		LsMenuPool.RefreshIndex();
 		iFruit = new CustomiFruit();
