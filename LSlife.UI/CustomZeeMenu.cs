@@ -133,11 +133,11 @@ internal static class CustomZeeMenu
                 Rect(x, y + 0.001f, width - 0.012f, 0.001f, 172, 137, 78, 225);
                 Rect(x, y + 0.050f, width - 0.012f, 0.001f, 172, 137, 78, 225);
             }
-            Text(menu.Entries[i].Label, left + 0.019f, y + 0.008f,
+            Text(menu.Entries[i].Label, left + 0.019f, y + 0.014f,
                 0.315f, selected ? 255 : 226, selected ? 247 : 227,
                 selected ? 226 : 229, 255);
             if (i < 2)
-                Text(">", left + width - 0.027f, y + 0.008f, 0.33f,
+                Text(">", left + width - 0.027f, y + 0.014f, 0.33f,
                     204, 168, 102, 255);
         }
 
