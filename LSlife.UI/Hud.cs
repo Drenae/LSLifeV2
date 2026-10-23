@@ -413,11 +413,11 @@ internal static class Hud
 
 	// Position par défaut du HUD supérieur (coin supérieur droit).
 	// Les curseurs du menu Options peuvent aussi modifier ces coordonnées et les sauvegarder.
-	private const int TopHudDefaultX = 1570;
+	private const int TopHudDefaultX = 1580;
 	private const int TopHudDefaultY = 100;
 
 	// HUD inférieur : un seul panneau, même fond que le HUD supérieur.
-	private const int BarsX = 1570;
+	private const int BarsX = 1580;
 	private const int BarsY = 980;
 	private const int BarsWidth = 365;
 	private const int BarsRowHeight = 43;
