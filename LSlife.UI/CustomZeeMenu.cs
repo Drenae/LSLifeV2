@@ -101,7 +101,7 @@ internal static class CustomZeeMenu
         const float left = x - width / 2f;
 
         // Panneau principal et filet dore (rectangles fins, sans textures externes).
-        float height = 0.183f + menu.Entries.Count * 0.052f + 0.054f;
+        float height = 0.183f + menu.Entries.Count * 0.052f;
         Rect(x, top + height / 2f, width, height, 13, 16, 20, 238);
         Rect(x, top, width, 0.002f, 194, 156, 88, 255);
         Rect(x, top + height, width, 0.002f, 194, 156, 88, 255);
@@ -133,10 +133,7 @@ internal static class CustomZeeMenu
                 Rect(x, y + 0.001f, width - 0.012f, 0.001f, 172, 137, 78, 225);
                 Rect(x, y + 0.050f, width - 0.012f, 0.001f, 172, 137, 78, 225);
             }
-            Text((i + 1).ToString("00"), left + 0.019f, y + 0.010f,
-                0.255f, selected ? 231 : 152, selected ? 194 : 129,
-                selected ? 130 : 89, 255);
-            Text(menu.Entries[i].Label, left + 0.051f, y + 0.008f,
+            Text(menu.Entries[i].Label, left + 0.019f, y + 0.008f,
                 0.315f, selected ? 255 : 226, selected ? 247 : 227,
                 selected ? 226 : 229, 255);
             if (i < 2)
@@ -144,11 +141,6 @@ internal static class CustomZeeMenu
                     204, 168, 102, 255);
         }
 
-        // Pied de menu : commandes, sans ajout de nouvelles actions.
-        float footer = top + 0.174f + menu.Entries.Count * 0.052f;
-        Rect(x, footer + 0.014f, width - 0.012f, 0.0015f, 158, 126, 77, 220);
-        Text("ENTREE  VALIDER      ECHAP  RETOUR", left + 0.018f,
-            footer + 0.020f, 0.255f, 191, 178, 153, 255);
     }
 
     private static void Rect(float x, float y, float w, float h, int r, int g, int b, int a)
