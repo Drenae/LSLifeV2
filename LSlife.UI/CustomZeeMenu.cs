@@ -121,8 +121,8 @@ internal static class CustomZeeMenu
         Function.Call(Hash.SET_TEXT_SCALE, 0f, scale);
         Function.Call(Hash.SET_TEXT_COLOUR, r, g, b, a);
         Function.Call(Hash.SET_TEXT_OUTLINE);
-        Function.Call(Hash.BEGIN_TEXT_COMMAND_DISPLAY_TEXT, "STRING");
-        Function.Call(Hash.ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME, value);
-        Function.Call(Hash.END_TEXT_COMMAND_DISPLAY_TEXT, x, y);
+        Function.Call(unchecked((Hash)0x25FBB336DF1804CBUL), "STRING");
+        Function.Call(unchecked((Hash)0x6C188BE134E074AAUL), value);
+        Function.Call(unchecked((Hash)0xCD015E5BB0D96A57UL), x, y);
     }
 }
