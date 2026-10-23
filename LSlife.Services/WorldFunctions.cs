@@ -197,7 +197,7 @@ internal static partial class LsFunctions
 	public static void AddBlip(Entity _ent, BlipColor _col, string _name, bool _friend, bool _edge)
 	{
 		//IL_002a: Unknown result type (might be due to invalid IL or missing references)
-		if (!_ent.CurrentBlip.Exists())
+		if (_ent.CurrentBlip == null || !_ent.CurrentBlip.Exists())
 		{
 			_ent.AddBlip();
 		}
