@@ -69,17 +69,27 @@ internal static class CustomZeeMenu
 
         if (!Visible) return;
 
-        if (Game.IsControlJustPressed(2, (Control)172)) menu.Move(-1);
-        if (Game.IsControlJustPressed(2, (Control)173)) menu.Move(1);
-        if (Game.IsControlJustPressed(2, (Control)201)) menu.Activate();
-        if (Game.IsControlJustPressed(2, (Control)202)) menu.Close();
-
-        for (int control = 172; control <= 173; control++)
+        // Bloquer d'abord les commandes GTA (dont l'ouverture du telephone).
+        // Lire ensuite les commandes desactivees pour conserver la navigation.
+        foreach (int control in new[] { 27, 172, 173, 201, 202 })
+        {
             Function.Call(Hash.DISABLE_CONTROL_ACTION, 0, control, true);
-        Function.Call(Hash.DISABLE_CONTROL_ACTION, 0, 201, true);
-        Function.Call(Hash.DISABLE_CONTROL_ACTION, 0, 202, true);
+            Function.Call(Hash.DISABLE_CONTROL_ACTION, 2, control, true);
+        }
+
+        if (DisabledJustPressed(172)) menu.Move(-1);
+        else if (DisabledJustPressed(173)) menu.Move(1);
+        else if (DisabledJustPressed(201)) menu.Activate();
+        else if (DisabledJustPressed(202)) menu.Close();
 
         if (Visible) Draw();
+    }
+
+    private static bool DisabledJustPressed(int control)
+    {
+        // IS_DISABLED_CONTROL_JUST_PRESSED : compatible avec les controles
+        // desactives et avec la version SHVDN2 du projet.
+        return Function.Call<bool>(unchecked((Hash)0x91AEF906BCA88877UL), 2, control);
     }
 
     private static void Draw()
