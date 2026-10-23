@@ -369,7 +369,7 @@ public partial class LSL
 						{
 							if (playerHeat < 100f)
 							{
-								playerHeat += timeDealing / 180000;
+								playerHeat += Math.Min(1f, timeDealing / 360000f);
 							}
 							if (playerHeat > 100f)
 							{
@@ -391,10 +391,10 @@ public partial class LSL
 				}
 				else if (playerHeat < 100f)
 				{
-					float heatThisTick = (float)((double)(timeDealing / 60000) + ((double)areas[areaIndex].Heat * 0.1 + (double)areas[areaIndex].CopPresance) * 0.5 + (double)PedsCanSeeDeal * 0.2 - Math.Min(10.0, LsFunctions.CurrentRepLvl((int)areas[areaIndex].Reputation)));
-					heatThisTick = Math.Max(heatThisTick, 1f);
-					heatThisTick = Math.Min(10f, heatThisTick);
-					heatThisTick *= 0.5f;
+					float heatThisTick = (float)((double)(timeDealing / 180000f) + ((double)areas[areaIndex].Heat * 0.1 + (double)areas[areaIndex].CopPresance) * 0.5 + (double)PedsCanSeeDeal * 0.2 - Math.Min(10.0, LsFunctions.CurrentRepLvl((int)areas[areaIndex].Reputation)));
+					heatThisTick = Math.Max(heatThisTick, 0.5f);
+					heatThisTick = Math.Min(6f, heatThisTick);
+					heatThisTick *= 0.25f;
 					float newRatChance = playerHeat + heatThisTick;
 					if (newRatChance > 100f)
 					{
@@ -424,7 +424,7 @@ public partial class LSL
 					{
 						mod = 0f;
 					}
-					areas[areaIndex].Heat += mod * 0.5f;
+					areas[areaIndex].Heat += mod * 0.25f;
 					if (areas[areaIndex].Heat > 1000f)
 					{
 						areas[areaIndex].Heat = 1000f;
@@ -1504,11 +1504,11 @@ public partial class LSL
 			{
 				PlayerComplied = false;
 			}
-			if (playerHeat > 50f && rnd.Next(0, 100) == 0)
+			if (playerHeat > 65f && rnd.Next(0, 200) == 0)
 			{
 				SpawnPigs();
 			}
-			if (playerHeat > 95f && rnd.Next(0, 10) == 0)
+			if (playerHeat > 95f && rnd.Next(0, 30) == 0)
 			{
 				SpawnPigs();
 			}
