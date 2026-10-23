@@ -95,9 +95,9 @@ internal static class CustomZeeMenu
     // Theme PaperNest : anthracite profond, or champagne et typographie sobre.
     private static void Draw()
     {
-        const float x = 0.153f;
+        const float x = 0.149f;
         const float width = 0.268f;
-        const float top = 0.178f;
+        const float top = 0.035f;
         const float left = x - width / 2f;
 
         // Panneau principal et filet dore (rectangles fins, sans textures externes).
