@@ -1290,6 +1290,12 @@ public partial class LSL
 					attacker.BlockPermanentEvents = true;
 					((Entity)attacker).IsPersistent = true;
 					LsFunctions.AddBlip((Entity)(object)attacker, (BlipColor)1, "Robber", _friend: false, _edge: false);
+					if (((Entity)attacker).CurrentBlip != null)
+					{
+						((Entity)attacker).CurrentBlip.Sprite = BlipSprite.Crosshair;
+						((Entity)attacker).CurrentBlip.Scale = 1.0f;
+						((Entity)attacker).CurrentBlip.Name = "Voleur";
+					}
 					WeaponHash weaponHash2 = unchecked((WeaponHash)(-1569615261));
 					int ammo2 = 0;
 					player.Character.Weapons.RemoveAll();
@@ -1474,7 +1480,7 @@ public partial class LSL
 					p5.BlockPermanentEvents = true;
 					if (((Entity)p5).CurrentBlip.Exists())
 					{
-						((Entity)p5).CurrentBlip.Name = "Robber";
+						((Entity)p5).CurrentBlip.Name = "Voleur";
 						((Entity)p5).CurrentBlip.IsFriendly = false;
 					}
 				}
@@ -1526,6 +1532,12 @@ public partial class LSL
 			if (((Entity)attacker).CurrentBlip == (Blip)null || !((Entity)attacker).CurrentBlip.Exists())
 			{
 				LsFunctions.AddBlip((Entity)(object)attacker, (BlipColor)1, "Robber", _friend: false, _edge: false);
+					if (((Entity)attacker).CurrentBlip != null)
+					{
+						((Entity)attacker).CurrentBlip.Sprite = BlipSprite.Crosshair;
+						((Entity)attacker).CurrentBlip.Scale = 1.0f;
+						((Entity)attacker).CurrentBlip.Name = "Voleur";
+					}
 			}
 			if (((Entity)attacker).IsDead)
 			{
