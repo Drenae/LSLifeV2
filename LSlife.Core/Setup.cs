@@ -253,10 +253,12 @@ public partial class LSL
 		sellWeed = new UIMenuCheckboxItem("Vendre du cannabis", check: true);
 		sellCrack = new UIMenuCheckboxItem("Vendre du crack", check: true);
 		sellCocaine = new UIMenuCheckboxItem("Vendre de la cocaïne", check: true);
+		allowDeliveries = new UIMenuCheckboxItem("Livraisons", check: true);
 		StartDeal = new UIMenuItem("Commencer à dealer");
 		startDealing.AddItem(sellWeed);
 		startDealing.AddItem(sellCrack);
 		startDealing.AddItem(sellCocaine);
+		startDealing.AddItem(allowDeliveries);
 		startDealing.AddItem(StartDeal);
 		startDealing.OnItemSelect += LsMenus.OnstartDealSelect;
 		OrderDrugs = LsMenuPool.AddSubMenu(zeeMenu, "Commander de la drogue");

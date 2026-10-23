@@ -93,6 +93,12 @@ internal static class ShotHandler
 				((Entity)shots[cIndex].customer.Ped).CurrentBlip.ShowRoute = true;
 			}
 		}
+		// Les livraisons sont facultatives ; les ventes de rue restent actives.
+		// Une livraison déjà acceptée peut toujours être terminée.
+		if (!LSL.deliveriesEnabled)
+		{
+			return;
+		}
 		if (Game.GameTime <= LastShotTime + 20000 || ShotOffers)
 		{
 			return;

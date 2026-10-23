@@ -104,6 +104,10 @@ public partial class LSL : Script
 
 	public static UIMenuCheckboxItem sellCocaine;
 
+	public static UIMenuCheckboxItem allowDeliveries;
+
+	public static bool deliveriesEnabled = true;
+
 	public static UIMenuItem StartDeal;
 
 	public static UIMenu Options;
