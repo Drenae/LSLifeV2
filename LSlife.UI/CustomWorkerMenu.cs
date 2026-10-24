@@ -14,6 +14,7 @@ internal static class CustomWorkerMenu
     private static int lastTickFrame = -1;
     private static int heldDirection;
     private static int nextRepeatAt;
+    private const int EquipmentVisibleRows = 8;
     public static bool Visible => activeMenu != null && activeMenu.Visible;
 
     public static void Open()
@@ -69,6 +70,14 @@ internal static class CustomWorkerMenu
     {
         switch (weapon.ToUpperInvariant())
         {
+            case "FIREEXTINGUISHER": return "Extincteur";
+            case "PETROLCAN": return "Bidon d'essence";
+            case "STUNGUN": return "Pistolet paralysant";
+            case "STICKYBOMB": return "Bombe collante";
+            case "MINIGUN": return "Minigun";
+            case "GOLFCLUB": return "Club de golf";
+            case "HAMMER": return "Marteau";
+            case "GUSENBERG": return "Mitraillette Gusenberg";
             case "PISTOL": return "Pistolet";
             case "COMBATPISTOL": return "Pistolet de combat";
             case "APPISTOL": return "Pistolet automatique";
@@ -302,8 +311,11 @@ internal static class CustomWorkerMenu
         bool main = activeMenu == workerMenu;
         bool supply = activeMenu == workerSupplyMenu;
         bool equipment = activeMenu == workerEquipmentMenu;
-        float height = 0.102f + activeMenu.Entries.Count * 0.043f +
-            (main ? 0.168f : supply ? 0.126f : 0.067f);
+        int visibleRows = equipment
+            ? Math.Min(EquipmentVisibleRows, activeMenu.Entries.Count)
+            : activeMenu.Entries.Count;
+        float height = 0.102f + visibleRows * 0.043f +
+            (main ? 0.168f : supply ? 0.126f : 0.090f);
         CustomMenuRenderer.Rect(x, top + height / 2f, width, height, 13, 16, 20, 238);
         CustomMenuRenderer.Rect(x, top, width, 0.002f, 194, 156, 88, 255);
         CustomMenuRenderer.Rect(x, top + height, width, 0.002f, 194, 156, 88, 255);
@@ -317,9 +329,13 @@ internal static class CustomWorkerMenu
             CustomMenuRenderer.TextRightCenteredVertically("DEALER #" + LSL.DealerHandler.currentDealer.ID,
                 left + width - 0.018f, top, 0.090f, 0.270f, 218, 176, 101, 255);
         CustomMenuRenderer.Rect(x, top + 0.091f, width - 0.019f, 0.0015f, 171, 133, 73, 235);
-        for (int i = 0; i < activeMenu.Entries.Count; i++)
+        int firstVisible = equipment
+            ? Math.Max(0, Math.Min(activeMenu.SelectedIndex - EquipmentVisibleRows + 1,
+                activeMenu.Entries.Count - visibleRows))
+            : 0;
+        for (int i = firstVisible; i < firstVisible + visibleRows; i++)
         {
-            float y = top + 0.098f + i * 0.043f;
+            float y = top + 0.098f + (i - firstVisible) * 0.043f;
             bool selected = i == activeMenu.SelectedIndex;
             CustomMenuRenderer.Rect(x, y + 0.0205f, width - 0.012f, 0.040f,
                 selected ? 65 : 25, selected ? 55 : 28,
@@ -363,9 +379,17 @@ internal static class CustomWorkerMenu
         // Espace entre la derniere action et le panneau de stock.
         if (equipment)
         {
-            CustomMenuRenderer.TextCenteredVertically("GILETS DISPONIBLES : " + LSL.playerArmours,
-                left + 0.020f, top + 0.098f + activeMenu.Entries.Count * 0.043f,
-                0.035f, 0.265f, 234, 207, 151, 255);
+            float footerTop = top + 0.098f + visibleRows * 0.043f;
+            CustomMenuRenderer.Separator(x, footerTop, width - 0.019f, 0.006f);
+            CustomMenuRenderer.TextCenteredVertically(
+                "Gilets : " + LSL.playerArmours + "    Armes : " +
+                Math.Max(0, activeMenu.Entries.Count - 1),
+                left + 0.019f, footerTop + 0.015f,
+                0.030f, 0.270f, 234, 207, 151, 255);
+            CustomMenuRenderer.TextRightCenteredVertically(
+                (activeMenu.SelectedIndex + 1) + "/" + activeMenu.Entries.Count,
+                left + width - 0.019f, footerTop + 0.015f,
+                0.030f, 0.270f, 111, 216, 139, 255);
             return;
         }
         float detailY = top + 0.102f + activeMenu.Entries.Count * 0.043f;
@@ -373,7 +397,7 @@ internal static class CustomWorkerMenu
         CustomMenuRenderer.Rect(x, detailY + (main ? 0.082f : 0.056f), innerWidth,
             main ? 0.153f : 0.112f, 25, 29, 33, 248);
         // Separateur autonome, juste sous la derniere action.
-        CustomMenuRenderer.Rect(x, detailY - (supply ? 0.003f : 0.006f), innerWidth, 0.001f, 171, 133, 73, 235);
+        CustomMenuRenderer.Separator(x, detailY - (supply ? 0.009f : 0.012f), innerWidth, 0.006f);
         if (main && LSL.DealerHandler.currentDealer != null)
         {
             PlayerDealer worker = LSL.DealerHandler.currentDealer;
