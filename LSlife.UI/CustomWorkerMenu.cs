@@ -12,6 +12,8 @@ internal static class CustomWorkerMenu
     private static readonly int[] supplySteps = { 1, 5, 10, 25, 50, 100 };
     private static bool waitForRelease;
     private static int lastTickFrame = -1;
+    private static int heldDirection;
+    private static int nextRepeatAt;
     public static bool Visible => activeMenu != null && activeMenu.Visible;
 
     public static void Open()
@@ -47,6 +49,7 @@ internal static class CustomWorkerMenu
         if (LSL.DealerHandler.currentDealer == null) return;
         supplyWeed = supplyCrack = supplyCocaine = 0;
         supplyStep = 1;
+        heldDirection = 0;
         if (workerSupplyMenu == null)
         {
             workerSupplyMenu = new CustomMenu("APPROVISIONNER", "");
@@ -146,18 +149,13 @@ internal static class CustomWorkerMenu
             if (Visible) Draw();
             return;
         }
-        if (activeMenu == workerSupplyMenu && DisabledJustPressed(174))
+        if (activeMenu == workerSupplyMenu && activeMenu.SelectedIndex < 4 &&
+            HandleSupplyHorizontalInput())
         {
-            if (activeMenu.SelectedIndex < 3) ChangeSupply(activeMenu.SelectedIndex, -1);
-            else if (activeMenu.SelectedIndex == 3) ChangeSupplyStep(-1);
+            // Une impulsion initiale, puis repetition temporisee pendant le maintien.
         }
-        else if (activeMenu == workerSupplyMenu && DisabledJustPressed(175))
-        {
-            if (activeMenu.SelectedIndex < 3) ChangeSupply(activeMenu.SelectedIndex, 1);
-            else if (activeMenu.SelectedIndex == 3) ChangeSupplyStep(1);
-        }
-        else if (DisabledJustPressed(172)) activeMenu.Move(-1);
-        else if (DisabledJustPressed(173)) activeMenu.Move(1);
+        else if (DisabledJustPressed(172)) { heldDirection = 0; activeMenu.Move(-1); }
+        else if (DisabledJustPressed(173)) { heldDirection = 0; activeMenu.Move(1); }
         else if (DisabledJustPressed(201))
         {
             CustomMenu before = activeMenu;
@@ -178,6 +176,33 @@ internal static class CustomWorkerMenu
         if (Visible) Draw();
     }
 
+    private static bool HandleSupplyHorizontalInput()
+    {
+        bool left = Function.Call<bool>(Hash.IS_DISABLED_CONTROL_PRESSED, 2, 174);
+        bool right = Function.Call<bool>(Hash.IS_DISABLED_CONTROL_PRESSED, 2, 175);
+        int direction = left == right ? 0 : (right ? 1 : -1);
+        if (direction == 0)
+        {
+            heldDirection = 0;
+            return false;
+        }
+        int now = Game.GameTime;
+        if (heldDirection != direction)
+        {
+            heldDirection = direction;
+            nextRepeatAt = now + 350;
+        }
+        else
+        {
+            if (now < nextRepeatAt) return false;
+            nextRepeatAt = now + 65;
+        }
+        if (activeMenu.SelectedIndex < 3)
+            ChangeSupply(activeMenu.SelectedIndex, direction);
+        else ChangeSupplyStep(direction);
+        return true;
+    }
+
     private static bool DisabledJustPressed(int control)
     {
         return Function.Call<bool>(unchecked((Hash)0x91AEF906BCA88877UL), 2, control);
@@ -189,7 +214,7 @@ internal static class CustomWorkerMenu
         const float left = x - width / 2f;
         bool main = activeMenu == workerMenu;
         float height = 0.102f + activeMenu.Entries.Count * 0.043f +
-            (main ? 0.168f : 0.142f);
+            (main ? 0.168f : 0.158f);
         Rect(x, top + height / 2f, width, height, 13, 16, 20, 238);
         Rect(x, top, width, 0.002f, 194, 156, 88, 255);
         Rect(x, top + height, width, 0.002f, 194, 156, 88, 255);
@@ -231,10 +256,10 @@ internal static class CustomWorkerMenu
                 int available = SupplyAvailable(i == 0 ? "Weed" : i == 1 ? "Crack" : "Cocaine");
                 float barLeft = left + 0.116f, barWidth = 0.085f;
                 float fraction = available > 0 ? Math.Min(1f, (float)selectedAmount / available) : 0f;
-                Rect(barLeft + barWidth / 2f, y + 0.033f, barWidth, 0.004f, 66, 68, 70, 255);
+                Rect(barLeft + barWidth / 2f, y + 0.0205f, barWidth, 0.008f, 66, 68, 70, 255);
                 if (fraction > 0f)
-                    Rect(barLeft + barWidth * fraction / 2f, y + 0.033f,
-                        barWidth * fraction, 0.004f, 111, 216, 139, 255);
+                    Rect(barLeft + barWidth * fraction / 2f, y + 0.0205f,
+                        barWidth * fraction, 0.008f, 111, 216, 139, 255);
             }
             if (!main && i < 3)
             {
@@ -246,7 +271,8 @@ internal static class CustomWorkerMenu
                 TextRightCenteredVertically("< x" + supplyStep + " >", left + width - 0.018f,
                     y + 0.0005f, 0.040f, 0.305f, 218, 176, 101, 255);
         }
-        float detailY = top + 0.102f + activeMenu.Entries.Count * 0.043f;
+        // Espace entre la derniere action et le panneau de stock.
+        float detailY = top + 0.102f + activeMenu.Entries.Count * 0.043f + (main ? 0f : 0.016f);
         float innerLeft = left + 0.009f, innerWidth = width - 0.018f;
         Rect(x, detailY + (main ? 0.082f : 0.048f), innerWidth,
             main ? 0.153f : 0.134f, 25, 29, 33, 248);
