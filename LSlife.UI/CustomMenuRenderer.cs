@@ -42,6 +42,13 @@ internal static class CustomMenuRenderer
         Function.Call(Hash.SET_TEXT_RIGHT_JUSTIFY, false);
     }
 
+    // Separateur horizontal avec marges symetriques. Retourne la hauteur occupee.
+    public static float Separator(float x, float top, float width, float spacing = 0.006f)
+    {
+        Rect(x, top + spacing, width, 0.001f, 171, 133, 73, 235);
+        return spacing * 2f + 0.001f;
+    }
+
     public static void Rect(float x, float y, float w, float h, int r, int g, int b, int a)
     {
         Function.Call(Hash.DRAW_RECT, x, y, w, h, r, g, b, a);
