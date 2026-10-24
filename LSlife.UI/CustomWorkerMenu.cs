@@ -317,8 +317,70 @@ internal static class CustomWorkerMenu
         return Function.Call<bool>(unchecked((Hash)0x91AEF906BCA88877UL), 2, control);
     }
 
+    // Premiere migration : seul le menu principal EMPLOYE utilise le flux vertical.
+    // Les sous-menus restent sur leur rendu valide tant que le nouveau rendu
+    // n'a pas ete teste dans GTA V.
+    private static void DrawWorkerMainFlow()
+    {
+        PlayerDealer worker = LSL.DealerHandler.currentDealer;
+        if (worker == null) return;
+
+        var layout = new CustomMenuLayout();
+        layout.Header(workerMenu.Title, "DEALER #" + worker.ID, titleScale: 0.67f);
+        // Pas de coordonnees Y : le separateur reserve son espace.
+        layout.Separator(0.004f);
+        for (int i = 0; i < workerMenu.Entries.Count; i++)
+        {
+            string value = null;
+            if (i == 1)
+            {
+                int money = worker.Money;
+                value = LsFunctions.IntToMoney(money - (money / 100) * 20) + " $";
+            }
+            layout.Row(workerMenu.Entries[i].Label, i == workerMenu.SelectedIndex,
+                value, enabled: workerMenu.Entries[i].Enabled);
+        }
+        layout.Separator(0.006f);
+        layout.Block(0.029f, y =>
+        {
+            int hp = worker.Ped != null ? Math.Max(0, worker.Ped.Health) : 0;
+            int armor = worker.Ped != null ? Math.Max(0, worker.Ped.Armor) : 0;
+            CustomMenuRenderer.TextCenteredVertically("SANTE  " + hp + "     ARMURE  " + armor,
+                layout.Left + 0.021f, y, 0.029f, 0.275f, 226, 206, 167, 255);
+        });
+        string[] names = { "Cannabis", "Crack", "Cocaïne" };
+        string[] keys = { "Weed", "Crack", "Cocaine" };
+        for (int i = 0; i < names.Length; i++)
+        {
+            string label = names[i];
+            string key = keys[i];
+            layout.Block(0.023f, y =>
+            {
+                int amount = worker.Drugs.ContainsKey(key) ? worker.Drugs[key] : 0;
+                CustomMenuRenderer.TextCenteredVertically(label, layout.Left + 0.021f,
+                    y, 0.023f, 0.270f, 226, 227, 229, 255);
+                CustomMenuRenderer.TextRightCenteredVertically(LsFunctions.GramsToOz(amount),
+                    layout.Right - 0.019f, y, 0.023f, 0.295f, 111, 216, 139, 255);
+            });
+        }
+        layout.Block(0.029f, y =>
+        {
+            int net = worker.Money - (worker.Money / 100) * 20;
+            CustomMenuRenderer.TextCenteredVertically("A RECOLTER", layout.Left + 0.021f,
+                y, 0.029f, 0.275f, 234, 207, 151, 255);
+            CustomMenuRenderer.TextRightCenteredVertically(LsFunctions.IntToMoney(net) + " $",
+                layout.Right - 0.019f, y, 0.029f, 0.300f, 218, 176, 101, 255);
+        });
+        layout.Render();
+    }
+
     private static void Draw()
     {
+        if (activeMenu == workerMenu)
+        {
+            DrawWorkerMainFlow();
+            return;
+        }
         const float x = 0.149f, width = 0.268f, top = 0.035f;
         const float left = x - width / 2f;
         bool main = activeMenu == workerMenu;
