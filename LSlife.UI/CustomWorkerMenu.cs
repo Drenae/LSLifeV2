@@ -38,7 +38,7 @@ internal static class CustomWorkerMenu
 
     // Instructions utilisateur distinctes des états techniques (TalkToPlayer, etc.).
     private static readonly string[] instructionStates = { "None", "FollowingPlayer", "Work" };
-    private static readonly string[] instructionLabels = { "Ne rien faire", "Me suivre", "Travailler (vendre)" };
+    private static readonly string[] instructionLabels = { "Ne rien faire", "Me suivre", "Travailler" };
     private static readonly System.Collections.Generic.Dictionary<int, int> selectedInstructions =
         new System.Collections.Generic.Dictionary<int, int>();
 
@@ -70,7 +70,6 @@ internal static class CustomWorkerMenu
         dealer.NewState = state;
         selectedInstructions[dealer.ID] = index;
         LSL.DealerHandler.needsSave = true;
-        GTA.UI.Notify("Instruction : " + instructionLabels[index]);
     }
 
     private static void OpenWorkerEquipment()
@@ -392,8 +391,6 @@ internal static class CustomWorkerMenu
             int armor = worker.Ped != null ? Math.Max(0, worker.Ped.Armor) : 0;
             CustomMenuRenderer.TextCenteredVertically("SANTE  " + hp + "     ARMURE  " + armor,
                 layout.Left + 0.021f, y, 0.029f, 0.255f, 226, 206, 167, 255);
-            CustomMenuRenderer.TextRightCenteredVertically("INSTRUCTION  " + CurrentWorkerRole(),
-                layout.Right - 0.019f, y, 0.029f, 0.255f, 218, 176, 101, 255);
         });
         string[] names = { "Cannabis", "Crack", "Cocaïne" };
         string[] keys = { "Weed", "Crack", "Cocaine" };
