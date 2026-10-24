@@ -271,6 +271,7 @@ public class PlayerDealer
 
 	public void OnTick()
 	{
+		CustomWorkerMenu.TickOncePerFrame();
 		if ((Entity)(object)Ped != (Entity)null)
 		{
 			Enums.PdStates currentState = CurrentState;
