@@ -1,55 +1,55 @@
 # Roadmap — LS Life V2
 
-Ce document décrit les **priorités**, pas une liste de fonctionnalités déjà livrées. Vérifier le code et les tests en jeu avant de déclarer une tâche terminée.
+> Branche de migration : `feature/custom-zee-menu`. `main` reste la référence stable. Ne déclarer une fonctionnalité terminée qu'après validation en jeu.
 
-## P0 — Préserver la version fonctionnelle
+## P0 — Stabilité et correctifs
 
-- [x] Retrouver une base stable compilable et fonctionnelle en jeu.
-- [x] Conserver `main` comme référence stable.
-- [ ] Vérifier la compilation après chaque modification.
-- [ ] Tester en jeu les fonctions touchées et contrôler les logs/erreurs.
+- [x] Retrouver une base fonctionnelle.
+- [x] Valider les nouveaux panneaux à hauteur automatique et les séparateurs à marges réelles.
+- [x] Harmoniser les boutons sélectionnés et inactifs.
+- [ ] **Corriger Échap clavier** : revenir au menu précédent sans ouvrir le menu pause de GTA V. Vérifier les contrôles désactivés et leur ordre d'exécution, sans casser la manette.
+- [ ] Compiler et tester en jeu chaque étape ; vérifier les logs et les régressions.
 
-## P1 — Traduction française
+## P1 — Migration NativeUI → CustomMenu (C#)
 
-- [ ] Recenser les textes visibles en jeu : menus, notifications, descriptions, aides et dialogues.
-- [ ] Traduire de manière cohérente, sans modifier les identifiants techniques ni la logique.
-- [ ] Vérifier accents, longueurs de texte et affichage dans NativeUI.
-- [ ] Tester les principaux parcours en jeu.
+Objectif : menus et sous-menus autonomes, rendus via `CustomMenuRenderer` et `CustomMenuLayout`. Préserver les traitements métier existants. Supprimer NativeUI uniquement après audit complet de ses références.
 
-## P2 — Corrections de bugs
+- [x] **Zee** : menus et sous-menus personnalisés validés visuellement.
+- [x] **Worker / Employé(e)s** : menu principal.
+- [x] **Worker / Approvisionner**.
+- [x] **Worker / Équipement**.
+- [ ] **Worker / Instructions** : implémentation CustomMenu envoyée ; compilation et validation en jeu à effectuer (choix disponibles, application des ordres, retour).
+- [ ] **Stash / Planque** : inventorier les actions et migrer.
+- [ ] **Customer / Clients** : inventorier les actions et migrer.
+- [ ] **Audit final** : recenser tous les autres menus, dialogues, sélecteurs et dépendances NativeUI ; migrer les éléments restants.
+- [ ] Supprimer les références et la dépendance NativeUI seulement lorsque plus aucun code ne l'utilise.
 
-- [ ] Relever les bugs réellement reproduits.
-- [ ] Corriger par priorité : crashs, blocages, pertes de données, logique de gameplay, puis affichage.
-- [ ] Pour chaque correction, documenter le symptôme, la cause vérifiée et le test de non-régression.
-- [ ] Éviter les refactorisations sans lien avec le problème.
+## P2 — Améliorations après migration
 
-## P3 — Personnalisation légère
+- [ ] **Équipement Worker** : donner une nouvelle arme et récupérer automatiquement l'ancienne ; gérer inventaire, munitions, composants, sauvegarde et cas limites.
+- [ ] **HUD** : refonte visuelle cohérente avec les menus CustomMenu.
+- [ ] **HUD / Session** : afficher les bénéfices de la session actuelle, avec une définition claire des revenus et dépenses comptabilisés.
+- [ ] **Livre des comptes** (étude de faisabilité) : historique des transactions, bénéfices, dépenses et synthèses par session ; évaluer persistance et performances avant développement.
 
-- [ ] Améliorer les menus existants avec **NativeUI 1.9.1**, sans créer de bibliothèque alternative.
-- [ ] Ajuster les propriétés accessibles (position, largeur, bannières, présentation) si utile.
-- [ ] Évaluer les améliorations de confort de jeu une par une.
+## P3 — Traduction française et fiabilisation
 
-## P4 — Finaliser la conversion métrique
+- [ ] Compléter la traduction des textes visibles, notifications et instructions.
+- [ ] Vérifier les libellés des armes, équipements et actions.
+- [ ] Corriger les bugs reproduits, sans modifier inutilement le gameplay.
+- [ ] Vérifier les sauvegardes et les parcours principaux.
 
-- [ ] Auditer le code actuel pour distinguer les conversions déjà réalisées de celles restant à faire.
-- [ ] Uniformiser les unités affichées, calculées et sauvegardées lorsque nécessaire.
-- [ ] Vérifier achats, ventes, stocks, commandes, quantités et inventaires.
-- [ ] Tester avec une nouvelle sauvegarde du mod, puis documenter les éventuelles incompatibilités.
-- [ ] Supprimer les anciennes unités uniquement après validation de leur remplacement.
+## P4 — Conversion métrique finale
 
-**À traiter en dernier**, après traduction, corrections de bugs et personnalisation légère.
+- [ ] Auditer les unités de stockage, d'affichage et de calcul.
+- [ ] Planifier la conversion complète et la compatibilité des sauvegardes.
+- [ ] Tester les stocks, ventes, achats, commandes et transferts.
 
-## Hors périmètre
-
-- Migration SHVDN3 / LemonUI.
-- Fork, recompilation ou remplacement de NativeUI.
-- Réécriture complète du mod.
-- Ajout massif de fonctionnalités sans rapport avec la remise en état.
+**Conversion métrique à traiter en dernier**, conformément à la décision du projet.
 
 ## Méthode
 
-1. Lire le code réel de `main`.
-2. Définir un ensemble cohérent de corrections.
-3. Modifier uniquement les fichiers nécessaires.
-4. Compiler et tester.
-5. Mettre à jour cette roadmap après validation.
+1. Lire le code réel de la branche avant modification.
+2. Migrer un ensemble cohérent de menus sans modifier les traitements métier non concernés.
+3. Centraliser les éléments de rendu réutilisables.
+4. Compiler, tester dans GTA V et corriger les régressions.
+5. Valider chaque menu avant de passer au suivant.
