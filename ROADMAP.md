@@ -18,15 +18,15 @@ Objectif : menus et sous-menus autonomes, rendus via `CustomMenuRenderer` et `Cu
 - [x] **Worker / Employé(e)s** : menu principal.
 - [x] **Worker / Approvisionner**.
 - [x] **Worker / Équipement**.
-- [ ] **Worker / Instruction** : sélection gauche/droite directement dans le menu principal (Ne rien faire / Me suivre / Travailler (vendre)), sans états techniques ; confirmation visuelle ajoutée. Compilation et validation en jeu à effectuer.
-- [ ] **Stash / Planque** : inventorier les actions et migrer.
+- [x] **Worker / Instruction** : sélection gauche/droite dans le menu principal (Ne rien faire / Me suivre / Travailler), validée en jeu ; conserver la fermeture historique lors du passage au travail.
+- [ ] **Stash / Planque (maison)** : migrer menu, retrait, dépôt, argent, armes, gilets ; source de vérité : `LSL.HouseHandler.CurrentHouse` (Weed/Crack/Cocain/Money/Armor/Weapons), sauvegarde de maison. Ne jamais mélanger avec le coffre de voiture.\n- [ ] **Stash / Coffre de voiture** : migrer indépendamment menu, retrait, dépôt, argent, armes, gilets ; auditer son propre inventaire, ses limites et sa sauvegarde avant modification. Ne jamais utiliser `CurrentHouse` pour le coffre.\n- [ ] **Stash / Vérification** : tester les transferts dans les deux sens, les quantités limites et la persistance de chaque stockage séparément.
 - [ ] **Customer / Clients** : inventorier les actions et migrer.
 - [ ] **Audit final** : recenser tous les autres menus, dialogues, sélecteurs et dépendances NativeUI ; migrer les éléments restants.
 - [ ] Supprimer les références et la dépendance NativeUI seulement lorsque plus aucun code ne l'utilise.
 
 ## P2 — Améliorations après migration
 
-- [ ] **Équipement Worker** : donner une nouvelle arme et récupérer automatiquement l'ancienne ; gérer inventaire, munitions, composants, sauvegarde et cas limites.
+- [ ] **Alertes de réapprovisionnement Worker** : SMS de l’employé lorsque Cannabis, Crack ou Cocaïne est épuisé ; message spécifique lorsque tout le stock est vide. Prévoir anti-spam, seuils et déclenchement uniquement lors d’un changement de stock.\n- [ ] **Alerte recette Worker** : SMS lorsque la somme à récolter dépasse un seuil configurable ; éviter les répétitions jusqu’à la récolte.\n- [ ] **Équipement Worker** : donner une nouvelle arme et récupérer automatiquement l'ancienne ; gérer inventaire, munitions, composants, sauvegarde et cas limites.
 - [ ] **HUD** : refonte visuelle cohérente avec les menus CustomMenu.
 - [ ] **HUD / Session** : afficher les bénéfices de la session actuelle, avec une définition claire des revenus et dépenses comptabilisés.
 - [ ] **Livre des comptes** (étude de faisabilité) : historique des transactions, bénéfices, dépenses et synthèses par session ; évaluer persistance et performances avant développement.
