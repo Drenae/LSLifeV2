@@ -109,18 +109,18 @@ internal static class CustomStashMenu
             // Stock voiture en grammes et en onces : inventaires distincts.
             var car = LSL.pStashVehicle;
             if (car == null) { Close(); return; }
-            layout.TextPair("Cannabis", car.drugCarWeed + "g  /  " + car.drugCarWeedOz + "oz");
-            layout.TextPair("Crack", car.drugCarCrack + "g  /  " + car.drugCarCrackOz + "oz");
-            layout.TextPair("Cocaine", car.drugCarCocain + "g  /  " + car.drugCarCocainOz + "oz");
+            layout.TextPair("Cannabis", LsFunctions.GramsToOz(car.drugCarWeed) + " / " + car.drugCarWeedOz + "oz");
+            layout.TextPair("Crack", LsFunctions.GramsToOz(car.drugCarCrack) + " / " + car.drugCarCrackOz + "oz");
+            layout.TextPair("Cocaine", LsFunctions.GramsToOz(car.drugCarCocain) + " / " + car.drugCarCocainOz + "oz");
             layout.TextPair("Argent", LsFunctions.IntToMoney(car.drugCarMoney) + " $");
         }
         else
         {
             var house = LSL.HouseHandler.CurrentHouse;
             if (house == null) { Close(); return; }
-            layout.TextPair("Cannabis", house.Weed + "g");
-            layout.TextPair("Crack", house.Crack + "g");
-            layout.TextPair("Cocaine", house.Cocain + "g");
+            layout.TextPair("Cannabis", LsFunctions.GramsToOz(house.Weed));
+            layout.TextPair("Crack", LsFunctions.GramsToOz(house.Crack));
+            layout.TextPair("Cocaine", LsFunctions.GramsToOz(house.Cocain));
             layout.TextPair("Argent", LsFunctions.IntToMoney(house.Money) + " $");
         }
         layout.Render();
