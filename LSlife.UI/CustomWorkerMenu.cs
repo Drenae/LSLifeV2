@@ -453,7 +453,14 @@ internal static class CustomWorkerMenu
                 });
             }
         }
-        if (instructions)\n        {\n            layout.Render();\n            return;\n        }\n        layout.Separator(0.006f);\n        if (equipment)\n        {
+        if (instructions)
+        {
+            layout.Render();
+            return;
+        }
+        layout.Separator(0.006f);
+        if (equipment)
+        {
             layout.Block(0.026f, y =>
                 CustomMenuRenderer.TextCenteredVertically("EQUIPEMENT DU DEALER",
                     layout.Left + 0.019f, y, 0.026f, 0.265f, 234, 207, 151, 255));
