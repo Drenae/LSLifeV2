@@ -7,7 +7,7 @@ namespace LSlife;
 // Navigation et rendu propres aux employes. Aucun etat de menu partage avec Zee.
 internal static class CustomWorkerMenu
 {
-    private static CustomMenu workerMenu, workerSupplyMenu, workerEquipmentMenu, workerInstructionsMenu, activeMenu;
+    private static CustomMenu workerMenu, workerSupplyMenu, workerEquipmentMenu, activeMenu;
     private static int supplyWeed, supplyCrack, supplyCocaine, supplyStep = 1;
     private static readonly int[] supplySteps = { 1, 5, 10, 25, 50, 100 };
     private static bool waitForRelease;
@@ -29,47 +29,49 @@ internal static class CustomWorkerMenu
                 () => LSL.DealerHandler.currentDealer != null &&
                     LSL.DealerHandler.currentDealer.Money >= 100);
             workerMenu.Add("Equipement", OpenWorkerEquipment);
-            workerMenu.Add("Instructions", OpenWorkerInstructions);
+            workerMenu.Add("Rôle", () => ChangeWorkerRole(1));
         }
         activeMenu = workerMenu;
         workerMenu.Open();
         waitForRelease = true;
     }
 
-    // Instructions : meme logique metier que l'ancien WOrder, sans menu NativeUI.
-    private static void OpenWorkerInstructions()
+    // Le rôle est sélectionné directement dans le menu principal.
+    // Les options proviennent de Orders() : elles dépendent de l'état réel du dealer.
+    private static string WorkerRoleLabel(string state)
     {
-        PlayerDealer dealer = LSL.DealerHandler.currentDealer;
-        if (dealer == null) return;
-        workerInstructionsMenu = new CustomMenu("INSTRUCTIONS", "");
-        foreach (var order in dealer.Orders())
+        switch (state)
         {
-            string instruction = order.ToString();
-            workerInstructionsMenu.Add(instruction, () => ApplyWorkerInstruction(instruction));
+            case "None": return "Inactif";
+            case "Follow": return "Suivre";
+            case "Work": return "Travailler";
+            default: return state;
         }
-        workerMenu.Close();
-        activeMenu = workerInstructionsMenu;
-        workerInstructionsMenu.Open();
-        waitForRelease = true;
     }
 
-    private static void ApplyWorkerInstruction(string instruction)
+    private static string CurrentWorkerRole()
+    {
+        PlayerDealer dealer = LSL.DealerHandler.currentDealer;
+        return dealer == null ? "" : WorkerRoleLabel(dealer.NewState.ToString());
+    }
+
+    private static void ChangeWorkerRole(int direction)
     {
         PlayerDealer dealer = LSL.DealerHandler.currentDealer;
         if (dealer == null) return;
+        var options = dealer.Orders();
+        if (options == null || options.Count == 0) return;
+        string current = dealer.NewState.ToString();
+        int index = -1;
+        for (int i = 0; i < options.Count; i++)
+            if (options[i].ToString() == current) { index = i; break; }
+        int next = index < 0 ? (direction > 0 ? 0 : options.Count - 1) :
+            (index + direction + options.Count) % options.Count;
         Enums.PdStates state;
-        if (!Enum.TryParse(instruction, out state)) return;
+        if (!Enum.TryParse(options[next].ToString(), out state)) return;
         dealer.NewState = state;
         LSL.DealerHandler.needsSave = true;
-        // Les instructions disponibles dependent de l'etat du dealer.
-        OpenWorkerInstructionsRefresh();
-    }
-
-    private static void OpenWorkerInstructionsRefresh()
-    {
-        if (workerInstructionsMenu != null) workerInstructionsMenu.Close();
-        activeMenu = workerMenu;
-        OpenWorkerInstructions();
+        heldDirection = 0;
     }
 
     private static void OpenWorkerEquipment()
@@ -267,7 +269,7 @@ internal static class CustomWorkerMenu
             if (Visible) Draw();
             return;
         }
-        if (activeMenu == workerEquipmentMenu && activeMenu.SelectedIndex == 1 &&
+        if (activeMenu == workerMenu && activeMenu.SelectedIndex == 3 && HandleWorkerRoleInput())\n        {\n        }\n        else if (activeMenu == workerEquipmentMenu && activeMenu.SelectedIndex == 1 &&
             HandleEquipmentHorizontalInput())
         {
         }
@@ -287,7 +289,7 @@ internal static class CustomWorkerMenu
         else if (DisabledJustPressed(202))
         {
             activeMenu.Close();
-            if (activeMenu == workerSupplyMenu || activeMenu == workerEquipmentMenu || activeMenu == workerInstructionsMenu)
+            if (activeMenu == workerSupplyMenu || activeMenu == workerEquipmentMenu)
             {
                 activeMenu = workerMenu;
                 workerMenu.Open();
@@ -296,6 +298,19 @@ internal static class CustomWorkerMenu
             else activeMenu = null;
         }
         if (Visible) Draw();
+    }
+
+    private static bool HandleWorkerRoleInput()
+    {
+        bool left = Function.Call<bool>(Hash.IS_DISABLED_CONTROL_PRESSED, 2, 174);
+        bool right = Function.Call<bool>(Hash.IS_DISABLED_CONTROL_PRESSED, 2, 175);
+        int direction = left == right ? 0 : (right ? 1 : -1);
+        if (direction == 0) { heldDirection = 0; return false; }
+        int now = Game.GameTime;
+        if (heldDirection != direction) { heldDirection = direction; nextRepeatAt = now + 350; }
+        else { if (now < nextRepeatAt) return false; nextRepeatAt = now + 250; }
+        ChangeWorkerRole(direction);
+        return true;
     }
 
     private static bool HandleEquipmentHorizontalInput()
@@ -359,6 +374,7 @@ internal static class CustomWorkerMenu
         for (int i = 0; i < workerMenu.Entries.Count; i++)
         {
             string value = null;
+            if (i == 3) value = "< " + CurrentWorkerRole() + " >";
             if (i == 1)
             {
                 int money = worker.Money;
@@ -410,7 +426,6 @@ internal static class CustomWorkerMenu
         }
         bool supply = activeMenu == workerSupplyMenu;
         bool equipment = activeMenu == workerEquipmentMenu;
-        bool instructions = activeMenu == workerInstructionsMenu;
         PlayerDealer dealer = LSL.DealerHandler.currentDealer;
         if (dealer == null) return;
 
@@ -452,11 +467,6 @@ internal static class CustomWorkerMenu
                             barWidth * fraction, 0.008f, 111, 216, 139, 255);
                 });
             }
-        }
-        if (instructions)
-        {
-            layout.Render();
-            return;
         }
         layout.Separator(0.006f);
         if (equipment)
