@@ -71,7 +71,6 @@ internal static class CustomWorkerMenu
         if (!Enum.TryParse(options[next].ToString(), out state)) return;
         dealer.NewState = state;
         LSL.DealerHandler.needsSave = true;
-        heldDirection = 0;
     }
 
     private static void OpenWorkerEquipment()
