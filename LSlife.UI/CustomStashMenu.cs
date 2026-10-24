@@ -112,12 +112,25 @@ internal static class CustomStashMenu
                 layout.Left + 0.019f, y, 0.031f, 0.28f, 226, 206, 167, 255));
         if (vehicle)
         {
-            // Stock voiture en grammes et en onces : inventaires distincts.
+            // Deux stocks distincts : produits en grammes et lots en onces.
+            // Les donnees et la logique metier restent strictement inchangees.
             var car = LSL.pStashVehicle;
             if (car == null) { Close(); return; }
-            layout.TextPair("Cannabis", LsFunctions.GramsToOz(car.drugCarWeed) + " / " + car.drugCarWeedOz + "oz");
-            layout.TextPair("Crack", LsFunctions.GramsToOz(car.drugCarCrack) + " / " + car.drugCarCrackOz + "oz");
-            layout.TextPair("Cocaine", LsFunctions.GramsToOz(car.drugCarCocain) + " / " + car.drugCarCocainOz + "oz");
+            layout.Separator(0.004f);
+            layout.Block(0.029f, y =>
+                CustomMenuRenderer.TextCenteredVertically("STOCK EN VRAC",
+                    layout.Left + 0.019f, y, 0.029f, 0.28f, 226, 206, 167, 255));
+            layout.TextPair("Cannabis", LsFunctions.GramsToOz(car.drugCarWeed));
+            layout.TextPair("Crack", LsFunctions.GramsToOz(car.drugCarCrack));
+            layout.TextPair("Cocaine", LsFunctions.GramsToOz(car.drugCarCocain));
+            layout.Separator(0.005f);
+            layout.Block(0.029f, y =>
+                CustomMenuRenderer.TextCenteredVertically("STOCK CONDITIONNE",
+                    layout.Left + 0.019f, y, 0.029f, 0.28f, 226, 206, 167, 255));
+            layout.TextPair("Cannabis", car.drugCarWeedOz + " oz");
+            layout.TextPair("Crack", car.drugCarCrackOz + " oz");
+            layout.TextPair("Cocaine", car.drugCarCocainOz + " oz");
+            layout.Separator(0.005f);
             layout.TextPair("Argent", LsFunctions.IntToMoney(car.drugCarMoney) + " $");
         }
         else
