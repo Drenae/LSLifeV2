@@ -45,7 +45,7 @@ internal static class CustomMenuRenderer
     // Separateur horizontal avec marges symetriques. Retourne la hauteur occupee.
     public static float Separator(float x, float top, float width, float spacing = 0.015f)
     {
-        Rect(x, top + spacing, width, 0.002f, 171, 133, 73, 235);
+        Rect(x, top + spacing, width, 0.001f, 171, 133, 73, 235);
         return spacing * 2f + 0.001f;
     }
 
