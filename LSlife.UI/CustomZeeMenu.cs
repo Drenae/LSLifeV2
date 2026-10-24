@@ -17,6 +17,9 @@ internal static class CustomZeeMenu
     private static CustomMenu cocaineMenu;
     private static CustomMenu activeMenu;
     private static CustomMenu workerMenu;
+    private static CustomMenu workerSupplyMenu;
+    private static int supplyWeed, supplyCrack, supplyCocaine, supplyStep = 1;
+    private static readonly int[] supplySteps = { 1, 5, 10, 25, 50, 100 };
     private static bool dealerWeed, dealerCrack, dealerCocaine, dealerDeliveries;
     private static bool returningFromSubmenu;
     private static bool submenuSeen;
@@ -44,13 +47,77 @@ internal static class CustomZeeMenu
         if (workerMenu == null)
         {
             workerMenu = new CustomMenu("EMPLOYE", "");
-            workerMenu.Add("Approvisionner", () => OpenSubmenu(LSL.WorkerMainMenu));
+            workerMenu.Add("Approvisionner", OpenWorkerSupply);
             workerMenu.Add("Recolter la recette", CollectWorker,
                 () => LSL.DealerHandler.currentDealer != null &&
                     LSL.DealerHandler.currentDealer.Money >= 100);
             workerMenu.Add("Equipement", () => OpenSubmenu(LSL.WorkerMainMenu));
             workerMenu.Add("Instructions", () => OpenSubmenu(LSL.WorkerMainMenu));
         }
+        activeMenu = workerMenu;
+        workerMenu.Open();
+    }
+
+    private static void OpenWorkerSupply()
+    {
+        if (LSL.DealerHandler.currentDealer == null) return;
+        supplyWeed = supplyCrack = supplyCocaine = 0;
+        supplyStep = 1;
+        if (workerSupplyMenu == null)
+        {
+            workerSupplyMenu = new CustomMenu("APPROVISIONNER", "");
+            workerSupplyMenu.Add("Cannabis", () => ChangeSupply(0, 1));
+            workerSupplyMenu.Add("Crack", () => ChangeSupply(1, 1));
+            workerSupplyMenu.Add("Cocaïne", () => ChangeSupply(2, 1));
+            workerSupplyMenu.Add("Pas de reglage", () => ChangeSupplyStep(1));
+            workerSupplyMenu.Add("Confirmer le transfert", ConfirmWorkerSupply,
+                () => supplyWeed + supplyCrack + supplyCocaine > 0);
+        }
+        workerMenu.Close();
+        activeMenu = workerSupplyMenu;
+        workerSupplyMenu.Open();
+    }
+
+    private static int SupplyAvailable(string key)
+    {
+        int value;
+        return LSL.PlayerInventory.TryGetValue(key, out value) ? Math.Max(0, value) : 0;
+    }
+
+    private static void ChangeSupply(int index, int direction)
+    {
+        string key = index == 0 ? "Weed" : index == 1 ? "Crack" : "Cocaine";
+        int value = index == 0 ? supplyWeed : index == 1 ? supplyCrack : supplyCocaine;
+        value = Math.Max(0, Math.Min(SupplyAvailable(key), value + direction * supplyStep));
+        if (index == 0) supplyWeed = value;
+        else if (index == 1) supplyCrack = value;
+        else supplyCocaine = value;
+    }
+
+    private static void ChangeSupplyStep(int direction)
+    {
+        int index = Array.IndexOf(supplySteps, supplyStep);
+        supplyStep = supplySteps[(index + direction + supplySteps.Length) % supplySteps.Length];
+    }
+
+    private static void ConfirmWorkerSupply()
+    {
+        PlayerDealer worker = LSL.DealerHandler.currentDealer;
+        if (worker == null || worker.Ped == null) return;
+        if (supplyWeed + supplyCrack + supplyCocaine <= 0 ||
+            supplyWeed > SupplyAvailable("Weed") ||
+            supplyCrack > SupplyAvailable("Crack") ||
+            supplyCocaine > SupplyAvailable("Cocaine")) return;
+
+        LsFunctions.HandOverGoods(LSL.player.Character, worker.Ped);
+        if (supplyWeed > 0) { worker.Drugs["Weed"] += supplyWeed; LSL.PlayerInventory["Weed"] -= supplyWeed; }
+        if (supplyCrack > 0) { worker.Drugs["Crack"] += supplyCrack; LSL.PlayerInventory["Crack"] -= supplyCrack; }
+        if (supplyCocaine > 0) { worker.Drugs["Cocaine"] += supplyCocaine; LSL.PlayerInventory["Cocaine"] -= supplyCocaine; }
+        LsFunctions.UpdateInventory();
+        worker.SetDrugDesc();
+        LSL.DealerHandler.needsSave = true;
+        supplyWeed = supplyCrack = supplyCocaine = 0;
+        workerSupplyMenu.Close();
         activeMenu = workerMenu;
         workerMenu.Open();
     }
@@ -284,7 +351,7 @@ internal static class CustomZeeMenu
         }
 
         if (!Visible) return;
-        if (WorkerVisible && LSL.DealerHandler.currentDealer == null)
+        if ((WorkerVisible || activeMenu == workerSupplyMenu) && LSL.DealerHandler.currentDealer == null)
         { workerMenu.Close(); activeMenu = null; return; }
 
         // Bloquer d'abord les commandes GTA (dont l'ouverture du telephone).
@@ -300,7 +367,17 @@ internal static class CustomZeeMenu
             Function.Call(Hash.DISABLE_CONTROL_ACTION, 2, control, true);
         }
 
-        if (IsDrugMenu(activeMenu) && activeMenu.SelectedIndex < 2 &&
+        if (activeMenu == workerSupplyMenu && DisabledJustPressed(174))
+        {
+            if (activeMenu.SelectedIndex < 3) ChangeSupply(activeMenu.SelectedIndex, -1);
+            else if (activeMenu.SelectedIndex == 3) ChangeSupplyStep(-1);
+        }
+        else if (activeMenu == workerSupplyMenu && DisabledJustPressed(175))
+        {
+            if (activeMenu.SelectedIndex < 3) ChangeSupply(activeMenu.SelectedIndex, 1);
+            else if (activeMenu.SelectedIndex == 3) ChangeSupplyStep(1);
+        }
+        else if (IsDrugMenu(activeMenu) && activeMenu.SelectedIndex < 2 &&
             DisabledJustPressed(174))
         {
             if (activeMenu.SelectedIndex == 0)
@@ -320,7 +397,8 @@ internal static class CustomZeeMenu
         else if (DisabledJustPressed(202))
         {
             activeMenu.Close();
-            if (IsDrugMenu(activeMenu)) { activeMenu = orderMenu; orderMenu.Open(); }
+            if (activeMenu == workerSupplyMenu) { activeMenu = workerMenu; workerMenu.Open(); }
+            else if (IsDrugMenu(activeMenu)) { activeMenu = orderMenu; orderMenu.Open(); }
             else if (activeMenu == orderMenu || activeMenu == dealerMenu)
             { activeMenu = menu; menu.Open(); }
             else activeMenu = null;
@@ -347,9 +425,12 @@ internal static class CustomZeeMenu
         // Panneau principal et filet dore (rectangles fins, sans textures externes).
         CustomMenu displayed = activeMenu;
         bool showWorker = displayed == workerMenu;
+        bool showSupply = displayed == workerSupplyMenu;
+        bool compactHeader = showWorker || showSupply;
+        float headerOffset = compactHeader ? -0.053f : 0f;
         bool showOrderDetails = displayed == orderMenu || IsDrugMenu(displayed);
-        float height = 0.155f + displayed.Entries.Count * 0.043f +
-            (showWorker ? 0.191f : displayed == orderMenu ? 0.122f : showOrderDetails ? 0.094f : 0f);
+        float height = 0.155f + headerOffset + displayed.Entries.Count * 0.043f +
+            (showWorker ? 0.168f : showSupply ? 0.094f : displayed == orderMenu ? 0.122f : showOrderDetails ? 0.094f : 0f);
         Rect(x, top + height / 2f, width, height, 13, 16, 20, 238);
         Rect(x, top, width, 0.002f, 194, 156, 88, 255);
         Rect(x, top + height, width, 0.002f, 194, 156, 88, 255);
@@ -360,7 +441,7 @@ internal static class CustomZeeMenu
         Rect(x, top + 0.046f, width - 0.004f, 0.090f, 22, 25, 29, 240);
         Rect(left + 0.008f, top + 0.046f, 0.003f, 0.062f, 194, 156, 88, 255);
         TextCenteredVertically(displayed.Title, left + 0.023f, top, 0.090f, 0.67f, 234, 207, 151, 255);
-        if (showWorker && LSL.DealerHandler.currentDealer != null)
+        if (compactHeader && LSL.DealerHandler.currentDealer != null)
             TextRightCenteredVertically("DEALER #" + LSL.DealerHandler.currentDealer.ID,
                 left + width - 0.018f, top, 0.090f, 0.270f, 218, 176, 101, 255);
         TextCenteredVertically(IsDrugMenu(displayed) || displayed == orderMenu ? "" :
@@ -371,6 +452,8 @@ internal static class CustomZeeMenu
         Rect(x, top + 0.091f, width - 0.019f, 0.0015f, 171, 133, 73, 235);
 
         // Informations de progression.
+        if (!compactHeader)
+        {
         Rect(x, top + 0.117f, width - 0.013f, 0.045f, 28, 30, 33, 232);
         TextCenteredVertically(showWorker ? "" :
             displayed == dealerMenu ? "CHOISIR LES OPTIONS" :
@@ -380,11 +463,12 @@ internal static class CustomZeeMenu
             displayed.Subtitle, left + 0.016f, top + 0.0945f, 0.045f, 0.275f, 226, 206, 167, 255);
         // Separateur dore entre les informations et les actions.
         Rect(x, top + 0.144f, width - 0.019f, 0.0015f, 171, 133, 73, 235);
+        }
 
         // Liste : selection lumineuse mais sans surcharge.
         for (int i = 0; i < displayed.Entries.Count; i++)
         {
-            float y = top + 0.151f + i * 0.043f;
+            float y = top + 0.151f + headerOffset + i * 0.043f;
             bool selected = i == displayed.SelectedIndex;
             bool debtEntry = displayed == menu && i == displayed.Entries.Count - 1;
             bool debtFree = debtEntry && LSL.dealer1Debt <= 0;
@@ -436,6 +520,15 @@ internal static class CustomZeeMenu
                     left + width - 0.018f, y + 0.0005f, 0.040f, 0.305f,
                     218, 176, 101, 255);
             }
+            if (showSupply && i < 3)
+            {
+                int amount = i == 0 ? supplyWeed : i == 1 ? supplyCrack : supplyCocaine;
+                TextRightCenteredVertically(amount + " g", left + width - 0.018f,
+                    y + 0.0005f, 0.040f, 0.305f, 111, 216, 139, 255);
+            }
+            if (showSupply && i == 3)
+                TextRightCenteredVertically("< x" + supplyStep + " >", left + width - 0.018f,
+                    y + 0.0005f, 0.040f, 0.305f, 218, 176, 101, 255);
             if (showWorker && i == 1 && LSL.DealerHandler.currentDealer != null)
             {
                 int money = LSL.DealerHandler.currentDealer.Money;
@@ -472,13 +565,13 @@ internal static class CustomZeeMenu
         if (showWorker && LSL.DealerHandler.currentDealer != null)
         {
             PlayerDealer worker = LSL.DealerHandler.currentDealer;
-            float y = top + 0.155f + displayed.Entries.Count * 0.043f;
+            float y = top + 0.155f + headerOffset + displayed.Entries.Count * 0.043f;
             float innerLeft = left + 0.009f;
             float innerWidth = width - 0.018f;
 
             // Panneau compact : noms complets et valeurs alignees sur des lignes distinctes.
             // Les informations financieres detaillees restent dans la logique existante.
-            Rect(x, y + 0.094f, innerWidth, 0.177f, 25, 29, 33, 248);
+            Rect(x, y + 0.082f, innerWidth, 0.153f, 25, 29, 33, 248);
             Rect(x, y + 0.004f, innerWidth, 0.001f, 171, 133, 73, 235);
 
             int hp = worker.Ped != null ? Math.Max(0, worker.Ped.Health) : 0;
@@ -489,25 +582,37 @@ internal static class CustomZeeMenu
             int weed = worker.Drugs.ContainsKey("Weed") ? worker.Drugs["Weed"] : 0;
             int crack = worker.Drugs.ContainsKey("Crack") ? worker.Drugs["Crack"] : 0;
             int cocaine = worker.Drugs.ContainsKey("Cocaine") ? worker.Drugs["Cocaine"] : 0;
-            TextCenteredVertically("Cannabis", innerLeft + 0.012f, y + 0.044f,
+            TextCenteredVertically("Cannabis", innerLeft + 0.012f, y + 0.039f,
                 0.026f, 0.270f, 226, 227, 229, 255);
             TextRightCenteredVertically(weed + " g", left + width - 0.019f,
-                y + 0.044f, 0.026f, 0.295f, 111, 216, 139, 255);
-            TextCenteredVertically("Crack", innerLeft + 0.012f, y + 0.070f,
+                y + 0.039f, 0.026f, 0.295f, 111, 216, 139, 255);
+            TextCenteredVertically("Crack", innerLeft + 0.012f, y + 0.062f,
                 0.026f, 0.270f, 226, 227, 229, 255);
             TextRightCenteredVertically(crack + " g", left + width - 0.019f,
-                y + 0.070f, 0.026f, 0.295f, 111, 216, 139, 255);
-            TextCenteredVertically("Cocaïne", innerLeft + 0.012f, y + 0.096f,
+                y + 0.062f, 0.026f, 0.295f, 111, 216, 139, 255);
+            TextCenteredVertically("Cocaïne", innerLeft + 0.012f, y + 0.085f,
                 0.026f, 0.270f, 226, 227, 229, 255);
             TextRightCenteredVertically(cocaine + " g", left + width - 0.019f,
-                y + 0.096f, 0.026f, 0.295f, 111, 216, 139, 255);
+                y + 0.085f, 0.026f, 0.295f, 111, 216, 139, 255);
 
             int net = worker.Money - (worker.Money / 100) * 20;
             TextCenteredVertically("A RECOLTER", innerLeft + 0.012f,
-                y + 0.133f, 0.029f, 0.275f, 234, 207, 151, 255);
+                y + 0.113f, 0.029f, 0.275f, 234, 207, 151, 255);
             TextRightCenteredVertically(LsFunctions.IntToMoney(net) + " $",
-                left + width - 0.019f, y + 0.133f, 0.029f,
+                left + width - 0.019f, y + 0.113f, 0.029f,
                 0.300f, 218, 176, 101, 255);
+        }
+
+        if (showSupply)
+        {
+            float y = top + 0.155f + headerOffset + displayed.Entries.Count * 0.043f;
+            Rect(x, y + 0.006f, width - 0.019f, 0.0015f, 171, 133, 73, 235);
+            TextCenteredVertically("STOCK JOUEUR", left + 0.016f, y + 0.012f,
+                0.024f, 0.270f, 234, 207, 151, 255);
+            TextCenteredVertically("Cannabis " + SupplyAvailable("Weed") + " g   /   Crack " + SupplyAvailable("Crack") + " g",
+                left + 0.016f, y + 0.036f, 0.024f, 0.245f, 226, 227, 229, 255);
+            TextCenteredVertically("Cocaïne " + SupplyAvailable("Cocaine") + " g",
+                left + 0.016f, y + 0.060f, 0.024f, 0.245f, 226, 227, 229, 255);
         }
 
         if (showOrderDetails)
