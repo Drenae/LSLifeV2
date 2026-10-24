@@ -309,52 +309,39 @@ internal static class CustomZeeMenu
     // Theme PaperNest : anthracite profond, or champagne et typographie sobre.
     private static void Draw()
     {
-        const float x = 0.149f;
-        const float width = 0.268f;
-        const float top = 0.035f;
-        const float left = x - width / 2f;
-
-        // Panneau principal et filet dore (rectangles fins, sans textures externes).
         CustomMenu displayed = activeMenu;
         bool showOrderDetails = displayed == orderMenu || IsDrugMenu(displayed);
-        float height = 0.155f + displayed.Entries.Count * 0.043f +
-            (displayed == orderMenu ? 0.122f : showOrderDetails ? 0.094f : 0f);
-        CustomMenuRenderer.Rect(x, top + height / 2f, width, height, 13, 16, 20, 238);
-        CustomMenuRenderer.Rect(x, top, width, 0.002f, 194, 156, 88, 255);
-        CustomMenuRenderer.Rect(x, top + height, width, 0.002f, 194, 156, 88, 255);
-        CustomMenuRenderer.Rect(left, top + height / 2f, 0.0015f, height, 151, 119, 69, 220);
-        CustomMenuRenderer.Rect(left + width, top + height / 2f, 0.0015f, height, 151, 119, 69, 220);
-
-        // Bandeau de marque.
-        CustomMenuRenderer.Rect(x, top + 0.046f, width - 0.004f, 0.090f, 22, 25, 29, 240);
-        CustomMenuRenderer.Rect(left + 0.008f, top + 0.046f, 0.003f, 0.062f, 194, 156, 88, 255);
-        CustomMenuRenderer.TextCenteredVertically(displayed.Title, left + 0.023f, top, 0.090f, 0.67f, 234, 207, 151, 255);
-        CustomMenuRenderer.TextCenteredVertically(IsDrugMenu(displayed) || displayed == orderMenu ? "" :
-            displayed == dealerMenu ? "ZEE / ACTIVITE" :
-            displayed == orderMenu ? "ZEE / COMMANDES" :
-            "CONTACT  /  SERVICES", left + 0.116f, top, 0.090f, 0.25f, 170, 159, 138, 255);
-        CustomMenuRenderer.Separator(x, top + 0.091f - 0.0065f, width - 0.019f);
-
-        // Informations de progression.
-        CustomMenuRenderer.Rect(x, top + 0.117f, width - 0.013f, 0.045f, 28, 30, 33, 232);
-        CustomMenuRenderer.TextCenteredVertically(displayed == dealerMenu ? "CHOISIR LES OPTIONS" :
-            displayed == orderMenu ? "SELECTION DES PRODUITS" :
-            IsDrugMenu(displayed) ? "STOCK " + DrugStock(displayed) + " OZ  |  " +
-                LsFunctions.IntToMoney(DrugUnitPrice(displayed)) + " $/OZ" :
-            displayed.Subtitle, left + 0.016f, top + 0.0945f, 0.045f, 0.275f, 226, 206, 167, 255);
-        // Separateur dore entre les informations et les actions.
-        CustomMenuRenderer.Separator(x, top + 0.144f - 0.0065f, width - 0.019f);
-
-        // Liste : selection lumineuse mais sans surcharge.
-        for (int i = 0; i < displayed.Entries.Count; i++)
+        var layout = new CustomMenuLayout();
+        string subtitle = IsDrugMenu(displayed) || displayed == orderMenu ? "" :
+            displayed == dealerMenu ? "ZEE / ACTIVITE" : "CONTACT  /  SERVICES";
+        layout.Header(displayed.Title, subtitle, titleScale: 0.67f);
+        layout.Separator(0.004f);
+        layout.Block(0.045f, y =>
         {
-            float y = top + 0.151f + i * 0.043f;
+            CustomMenuRenderer.Rect(0.149f, y + 0.0225f, 0.255f, 0.045f, 28, 30, 33, 232);
+            CustomMenuRenderer.TextCenteredVertically(displayed == dealerMenu ? "CHOISIR LES OPTIONS" :
+                displayed == orderMenu ? "SELECTION DES PRODUITS" :
+                IsDrugMenu(displayed) ? "STOCK " + DrugStock(displayed) + " OZ  |  " +
+                    LsFunctions.IntToMoney(DrugUnitPrice(displayed)) + " $/OZ" :
+                displayed.Subtitle, layout.Left + 0.016f, y, 0.045f,
+                0.275f, 226, 206, 167, 255);
+        });
+        layout.Separator(0.004f);
+        for (int index = 0; index < displayed.Entries.Count; index++)
+        {
+            int entryIndex = index;
+            layout.Block(0.043f, rowTop =>
+            {
+                int i = entryIndex;
+                float y = rowTop;
+                const float x = 0.149f, width = 0.268f;
+                float left = layout.Left;
             bool selected = i == displayed.SelectedIndex;
             bool debtEntry = displayed == menu && i == displayed.Entries.Count - 1;
             bool debtFree = debtEntry && LSL.dealer1Debt <= 0;
             CustomMenuRenderer.Rect(x, y + 0.0205f, width - 0.012f, 0.040f,
-                selected ? 65 : 25, selected ? 55 : 28,
-                selected ? 40 : 32, selected ? 248 : 229);
+                selected ? 65 : 39, selected ? 55 : 43,
+                selected ? 40 : 48, selected ? 248 : 245);
             if (selected)
             {
                 CustomMenuRenderer.Rect(left + 0.008f, y + 0.0205f, 0.0035f, 0.038f, 218, 176, 101, 255);
@@ -424,12 +411,16 @@ internal static class CustomZeeMenu
             if ((displayed == menu && i < 2) || (displayed == orderMenu && i < 3))
                 CustomMenuRenderer.TextCenteredVertically(">", left + width - 0.027f, y + 0.0005f, 0.040f, 0.33f,
                     204, 168, 102, 255);
+            });
         }
-
         if (showOrderDetails)
         {
-            float y = top + 0.155f + displayed.Entries.Count * 0.043f;
-            CustomMenuRenderer.Separator(x, y + 0.006f - 0.0065f, width - 0.019f);
+            layout.Separator(0.006f);
+            layout.Block(displayed == orderMenu ? 0.110f : 0.082f, detailTop =>
+            {
+                float y = detailTop;
+                float left = layout.Left;
+                const float width = 0.268f;
             if (displayed == orderMenu)
             {
                 CustomMenuRenderer.TextCenteredVertically("CANNABIS  " + LSL.NewOrder.weed + " OZ",
@@ -461,9 +452,8 @@ internal static class CustomZeeMenu
             CustomMenuRenderer.TextRightCenteredVertically(LsFunctions.IntToMoney(LSL.NewOrder.Bill) + " $",
                 left + width - 0.018f, totalY, 0.022f,
                 0.265f, 234, 207, 151, 255);
+            });
         }
-
+        layout.Render();
     }
-
-
 }
