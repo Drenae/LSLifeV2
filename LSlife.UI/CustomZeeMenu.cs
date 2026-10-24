@@ -319,31 +319,31 @@ internal static class CustomZeeMenu
         bool showOrderDetails = displayed == orderMenu || IsDrugMenu(displayed);
         float height = 0.155f + displayed.Entries.Count * 0.043f +
             (displayed == orderMenu ? 0.122f : showOrderDetails ? 0.094f : 0f);
-        Rect(x, top + height / 2f, width, height, 13, 16, 20, 238);
-        Rect(x, top, width, 0.002f, 194, 156, 88, 255);
-        Rect(x, top + height, width, 0.002f, 194, 156, 88, 255);
-        Rect(left, top + height / 2f, 0.0015f, height, 151, 119, 69, 220);
-        Rect(left + width, top + height / 2f, 0.0015f, height, 151, 119, 69, 220);
+        CustomMenuRenderer.Rect(x, top + height / 2f, width, height, 13, 16, 20, 238);
+        CustomMenuRenderer.Rect(x, top, width, 0.002f, 194, 156, 88, 255);
+        CustomMenuRenderer.Rect(x, top + height, width, 0.002f, 194, 156, 88, 255);
+        CustomMenuRenderer.Rect(left, top + height / 2f, 0.0015f, height, 151, 119, 69, 220);
+        CustomMenuRenderer.Rect(left + width, top + height / 2f, 0.0015f, height, 151, 119, 69, 220);
 
         // Bandeau de marque.
-        Rect(x, top + 0.046f, width - 0.004f, 0.090f, 22, 25, 29, 240);
-        Rect(left + 0.008f, top + 0.046f, 0.003f, 0.062f, 194, 156, 88, 255);
-        TextCenteredVertically(displayed.Title, left + 0.023f, top, 0.090f, 0.67f, 234, 207, 151, 255);
-        TextCenteredVertically(IsDrugMenu(displayed) || displayed == orderMenu ? "" :
+        CustomMenuRenderer.Rect(x, top + 0.046f, width - 0.004f, 0.090f, 22, 25, 29, 240);
+        CustomMenuRenderer.Rect(left + 0.008f, top + 0.046f, 0.003f, 0.062f, 194, 156, 88, 255);
+        CustomMenuRenderer.TextCenteredVertically(displayed.Title, left + 0.023f, top, 0.090f, 0.67f, 234, 207, 151, 255);
+        CustomMenuRenderer.TextCenteredVertically(IsDrugMenu(displayed) || displayed == orderMenu ? "" :
             displayed == dealerMenu ? "ZEE / ACTIVITE" :
             displayed == orderMenu ? "ZEE / COMMANDES" :
             "CONTACT  /  SERVICES", left + 0.116f, top, 0.090f, 0.25f, 170, 159, 138, 255);
-        Rect(x, top + 0.091f, width - 0.019f, 0.0015f, 171, 133, 73, 235);
+        CustomMenuRenderer.Rect(x, top + 0.091f, width - 0.019f, 0.0015f, 171, 133, 73, 235);
 
         // Informations de progression.
-        Rect(x, top + 0.117f, width - 0.013f, 0.045f, 28, 30, 33, 232);
-        TextCenteredVertically(displayed == dealerMenu ? "CHOISIR LES OPTIONS" :
+        CustomMenuRenderer.Rect(x, top + 0.117f, width - 0.013f, 0.045f, 28, 30, 33, 232);
+        CustomMenuRenderer.TextCenteredVertically(displayed == dealerMenu ? "CHOISIR LES OPTIONS" :
             displayed == orderMenu ? "SELECTION DES PRODUITS" :
             IsDrugMenu(displayed) ? "STOCK " + DrugStock(displayed) + " OZ  |  " +
                 LsFunctions.IntToMoney(DrugUnitPrice(displayed)) + " $/OZ" :
             displayed.Subtitle, left + 0.016f, top + 0.0945f, 0.045f, 0.275f, 226, 206, 167, 255);
         // Separateur dore entre les informations et les actions.
-        Rect(x, top + 0.144f, width - 0.019f, 0.0015f, 171, 133, 73, 235);
+        CustomMenuRenderer.Rect(x, top + 0.144f, width - 0.019f, 0.0015f, 171, 133, 73, 235);
 
         // Liste : selection lumineuse mais sans surcharge.
         for (int i = 0; i < displayed.Entries.Count; i++)
@@ -352,16 +352,16 @@ internal static class CustomZeeMenu
             bool selected = i == displayed.SelectedIndex;
             bool debtEntry = displayed == menu && i == displayed.Entries.Count - 1;
             bool debtFree = debtEntry && LSL.dealer1Debt <= 0;
-            Rect(x, y + 0.0205f, width - 0.012f, 0.040f,
+            CustomMenuRenderer.Rect(x, y + 0.0205f, width - 0.012f, 0.040f,
                 selected ? 65 : 25, selected ? 55 : 28,
                 selected ? 40 : 32, selected ? 248 : 229);
             if (selected)
             {
-                Rect(left + 0.008f, y + 0.0205f, 0.0035f, 0.038f, 218, 176, 101, 255);
-                Rect(x, y + 0.001f, width - 0.012f, 0.001f, 172, 137, 78, 225);
-                Rect(x, y + 0.041f, width - 0.012f, 0.001f, 172, 137, 78, 225);
+                CustomMenuRenderer.Rect(left + 0.008f, y + 0.0205f, 0.0035f, 0.038f, 218, 176, 101, 255);
+                CustomMenuRenderer.Rect(x, y + 0.001f, width - 0.012f, 0.001f, 172, 137, 78, 225);
+                CustomMenuRenderer.Rect(x, y + 0.041f, width - 0.012f, 0.001f, 172, 137, 78, 225);
             }
-            TextCenteredVertically(debtFree ? "Aucune dette en cours" :
+            CustomMenuRenderer.TextCenteredVertically(debtFree ? "Aucune dette en cours" :
                 IsDrugMenu(displayed) && i == 0 ? "Quantite" :
                 displayed.Entries[i].Label,
                 left + 0.019f, y + 0.0005f, 0.040f,
@@ -373,7 +373,7 @@ internal static class CustomZeeMenu
                 // Valeur lue en direct : toute nouvelle dette ou tout remboursement
                 // se repercute automatiquement sur la ligne.
                 string amount = LsFunctions.IntToMoney(LSL.dealer1Debt) + " $";
-                TextRightCenteredVertically(amount, left + width - 0.018f,
+                CustomMenuRenderer.TextRightCenteredVertically(amount, left + width - 0.018f,
                     y + 0.0005f, 0.040f, 0.305f, 218, 176, 101, 255);
             }
             if (IsDrugMenu(displayed) && i == 0)
@@ -383,33 +383,33 @@ internal static class CustomZeeMenu
                 float barWidth = 0.072f;
                 float ratio = DrugStock(displayed) > 0 ?
                     Math.Max(0f, Math.Min(1f, (float)DrugSlider(displayed).Value / DrugStock(displayed))) : 0f;
-                Rect(barLeft + barWidth / 2f, y + 0.0205f, barWidth, 0.006f,
+                CustomMenuRenderer.Rect(barLeft + barWidth / 2f, y + 0.0205f, barWidth, 0.006f,
                     67, 65, 61, 255);
                 if (ratio > 0f)
-                    Rect(barLeft + barWidth * ratio / 2f, y + 0.0205f,
+                    CustomMenuRenderer.Rect(barLeft + barWidth * ratio / 2f, y + 0.0205f,
                         barWidth * ratio, 0.006f, 218, 176, 101, 255);
-                Rect(barLeft + barWidth * ratio, y + 0.0205f,
+                CustomMenuRenderer.Rect(barLeft + barWidth * ratio, y + 0.0205f,
                     0.004f, 0.013f, 234, 207, 151, 255);
-                TextRightCenteredVertically(DrugSlider(displayed).Value + " OZ",
+                CustomMenuRenderer.TextRightCenteredVertically(DrugSlider(displayed).Value + " OZ",
                     left + width - 0.018f, y + 0.0005f, 0.040f, 0.305f,
                     218, 176, 101, 255);
             }
             if (IsDrugMenu(displayed) && i == 1)
             {
-                TextRightCenteredVertically("< x" + DrugSlider(displayed).Multiplier + " >",
+                CustomMenuRenderer.TextRightCenteredVertically("< x" + DrugSlider(displayed).Multiplier + " >",
                     left + width - 0.018f, y + 0.0005f, 0.040f, 0.305f,
                     218, 176, 101, 255);
             }
             if (displayed == orderMenu && i == 3)
             {
-                TextRightCenteredVertically(LsFunctions.IntToMoney(LSL.NewOrder.Bill) + " $",
+                CustomMenuRenderer.TextRightCenteredVertically(LsFunctions.IntToMoney(LSL.NewOrder.Bill) + " $",
                     left + width - 0.018f, y + 0.0005f, 0.040f, 0.305f,
                     218, 176, 101, 255);
             }
             if (IsDrugMenu(displayed) && i == 2)
             {
                 int price = DrugSlider(displayed).Value * DrugUnitPrice(displayed);
-                TextRightCenteredVertically(LsFunctions.IntToMoney(price) + " $",
+                CustomMenuRenderer.TextRightCenteredVertically(LsFunctions.IntToMoney(price) + " $",
                     left + width - 0.018f, y + 0.0005f, 0.040f, 0.305f,
                     218, 176, 101, 255);
             }
@@ -417,28 +417,28 @@ internal static class CustomZeeMenu
             {
                 bool check = i == 0 ? dealerWeed : i == 1 ? dealerCrack :
                     i == 2 ? dealerCocaine : dealerDeliveries;
-                TextRightCenteredVertically(check ? "ON" : "OFF",
+                CustomMenuRenderer.TextRightCenteredVertically(check ? "ON" : "OFF",
                     left + width - 0.018f, y + 0.0005f, 0.040f, 0.305f,
                     check ? 218 : 145, check ? 176 : 145, check ? 101 : 145, 255);
             }
             if ((displayed == menu && i < 2) || (displayed == orderMenu && i < 3))
-                TextCenteredVertically(">", left + width - 0.027f, y + 0.0005f, 0.040f, 0.33f,
+                CustomMenuRenderer.TextCenteredVertically(">", left + width - 0.027f, y + 0.0005f, 0.040f, 0.33f,
                     204, 168, 102, 255);
         }
 
         if (showOrderDetails)
         {
             float y = top + 0.155f + displayed.Entries.Count * 0.043f;
-            Rect(x, y + 0.006f, width - 0.019f, 0.0015f, 171, 133, 73, 235);
+            CustomMenuRenderer.Rect(x, y + 0.006f, width - 0.019f, 0.0015f, 171, 133, 73, 235);
             if (displayed == orderMenu)
             {
-                TextCenteredVertically("CANNABIS  " + LSL.NewOrder.weed + " OZ",
+                CustomMenuRenderer.TextCenteredVertically("CANNABIS  " + LSL.NewOrder.weed + " OZ",
                     left + 0.016f, y + 0.012f, 0.022f,
                     0.255f, 202, 195, 180, 255);
-                TextCenteredVertically("CRACK  " + LSL.NewOrder.crack + " OZ",
+                CustomMenuRenderer.TextCenteredVertically("CRACK  " + LSL.NewOrder.crack + " OZ",
                     left + 0.016f, y + 0.035f, 0.022f,
                     0.255f, 202, 195, 180, 255);
-                TextCenteredVertically("COCAINE  " + LSL.NewOrder.cocaine + " OZ",
+                CustomMenuRenderer.TextCenteredVertically("COCAINE  " + LSL.NewOrder.cocaine + " OZ",
                     left + 0.016f, y + 0.058f, 0.022f,
                     0.255f, 202, 195, 180, 255);
             }
@@ -446,75 +446,24 @@ internal static class CustomZeeMenu
             {
                 int ordered = displayed == cannabisMenu ? LSL.NewOrder.weed :
                     displayed == crackMenu ? LSL.NewOrder.crack : LSL.NewOrder.cocaine;
-                TextCenteredVertically("DEJA AJOUTE  " + ordered + " OZ",
+                CustomMenuRenderer.TextCenteredVertically("DEJA AJOUTE  " + ordered + " OZ",
                     left + 0.016f, y + 0.012f, 0.022f,
                     0.255f, 202, 195, 180, 255);
-                TextCenteredVertically("PRIX SELECTION  " +
+                CustomMenuRenderer.TextCenteredVertically("PRIX SELECTION  " +
                     LsFunctions.IntToMoney(DrugSlider(displayed).Value *
                         DrugUnitPrice(displayed)) + " $",
                     left + 0.016f, y + 0.035f, 0.022f,
                     0.255f, 202, 195, 180, 255);
             }
             float totalY = displayed == orderMenu ? y + 0.086f : y + 0.058f;
-            TextCenteredVertically("TOTAL COMMANDE", left + 0.016f,
+            CustomMenuRenderer.TextCenteredVertically("TOTAL COMMANDE", left + 0.016f,
                 totalY, 0.022f, 0.265f, 234, 207, 151, 255);
-            TextRightCenteredVertically(LsFunctions.IntToMoney(LSL.NewOrder.Bill) + " $",
+            CustomMenuRenderer.TextRightCenteredVertically(LsFunctions.IntToMoney(LSL.NewOrder.Bill) + " $",
                 left + width - 0.018f, totalY, 0.022f,
                 0.265f, 234, 207, 151, 255);
         }
 
     }
 
-    // Centre le texte dans une zone verticale en utilisant la hauteur
-    // reelle du caractere calculee par GTA pour la police et l'echelle.
-    // Les dimensions des zones peuvent changer sans ajuster les offsets.
-    private static void TextCenteredVertically(string value, float x, float zoneTop,
-        float zoneHeight, float scale, int r, int g, int b, int a)
-    {
-        const int font = 0;
-        float textHeight = Function.Call<float>(
-            unchecked((Hash)0xDB88A37483346780UL), scale, font);
-        // GTA ancre DRAW_TEXT au sommet de la ligne de police.
-        // Utiliser une compensation negative pour remonter le rendu visuel.
-        float textY = zoneTop + (zoneHeight - textHeight) / 2f
-                    - textHeight * 0.15f;
-        Text(value, x, textY, scale, r, g, b, a);
-    }
 
-    // Aligne les montants a droite tout en reutilisant le meme centrage vertical.
-    private static void TextRightCenteredVertically(string value, float right, float zoneTop,
-        float zoneHeight, float scale, int r, int g, int b, int a)
-    {
-        const int font = 0;
-        float textHeight = Function.Call<float>(
-            unchecked((Hash)0xDB88A37483346780UL), scale, font);
-        float textY = zoneTop + (zoneHeight - textHeight) / 2f
-                    - textHeight * 0.15f;
-        Function.Call(Hash.SET_TEXT_FONT, font);
-        Function.Call(Hash.SET_TEXT_SCALE, 0f, scale);
-        Function.Call(Hash.SET_TEXT_COLOUR, r, g, b, a);
-        Function.Call(Hash.SET_TEXT_OUTLINE);
-        Function.Call(Hash.SET_TEXT_RIGHT_JUSTIFY, true);
-        Function.Call(Hash.SET_TEXT_WRAP, 0f, right);
-        Function.Call(unchecked((Hash)0x25FBB336DF1804CBUL), "STRING");
-        Function.Call(unchecked((Hash)0x6C188BE134E074AAUL), value);
-        Function.Call(unchecked((Hash)0xCD015E5BB0D96A57UL), right, textY);
-        Function.Call(Hash.SET_TEXT_RIGHT_JUSTIFY, false);
-    }
-
-    private static void Rect(float x, float y, float w, float h, int r, int g, int b, int a)
-    {
-        Function.Call(Hash.DRAW_RECT, x, y, w, h, r, g, b, a);
-    }
-
-    private static void Text(string value, float x, float y, float scale, int r, int g, int b, int a)
-    {
-        Function.Call(Hash.SET_TEXT_FONT, 0);
-        Function.Call(Hash.SET_TEXT_SCALE, 0f, scale);
-        Function.Call(Hash.SET_TEXT_COLOUR, r, g, b, a);
-        Function.Call(Hash.SET_TEXT_OUTLINE);
-        Function.Call(unchecked((Hash)0x25FBB336DF1804CBUL), "STRING");
-        Function.Call(unchecked((Hash)0x6C188BE134E074AAUL), value);
-        Function.Call(unchecked((Hash)0xCD015E5BB0D96A57UL), x, y);
-    }
 }
