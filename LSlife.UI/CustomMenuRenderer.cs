@@ -46,7 +46,7 @@ internal static class CustomMenuRenderer
     public static float Separator(float x, float top, float width, float spacing = 0.015f)
     {
         Rect(x, top + spacing, width, 0.002f, 171, 133, 73, 235);
-        return spacing * 2f + 0.002f;
+        return spacing * 2f + 0.001f;
     }
 
     public static void Rect(float x, float y, float w, float h, int r, int g, int b, int a)
