@@ -366,7 +366,7 @@ public class PlayerDealer
 			{
 				bool dFarAway = Pos.DistanceTo(LSL.playerPos) > 3f;
 				bool dNotTalking = CurrentState != Enums.PdStates.TalkToPlayer && CurrentState != Enums.PdStates.FollowPlayer && CurrentState != Enums.PdStates.FollowingPlayer;
-				bool flag = !LSL.WorkerMainMenu.Visible && !CustomZeeMenu.WorkerVisible;
+				bool flag = !LSL.WorkerMainMenu.Visible && !CustomWorkerMenu.Visible;
 				bool vMoving = Ped.IsInVehicle() && Ped.CurrentVehicle.Speed > 0f;
 				if (flag | dNotTalking | dFarAway | vMoving)
 				{
@@ -586,7 +586,7 @@ public class PlayerDealer
 				case Enums.PdStates.TalkToPlayer:
 					if (!playerNear())
 					{
-						if (LSL.DealerHandler.currentDealer == this && (LSL.WorkerMainMenu.Visible || CustomZeeMenu.WorkerVisible))
+						if (LSL.DealerHandler.currentDealer == this && (LSL.WorkerMainMenu.Visible || CustomWorkerMenu.Visible))
 						{
 							LSL.WorkerMainMenu.Visible = false;
 						}
@@ -1070,7 +1070,7 @@ public class PlayerDealer
 	private void PromtPlayerToTalk()
 	{
 		//IL_004c: Unknown result type (might be due to invalid IL or missing references)
-		if (LSL.LsMenuPool.IsAnyMenuOpen() || LsFunctions.zeeClose() || ShotHandler.ShotOffers || LSL.PottentialWorker != null || !LSL.player.Character.IsStopped || !(LSL.playerPos.DistanceTo(((Entity)Ped).Position) < 2.5f) || !LsFunctions.IsCustomerNear())
+		if (CustomWorkerMenu.Visible || LSL.LsMenuPool.IsAnyMenuOpen() || LsFunctions.zeeClose() || ShotHandler.ShotOffers || LSL.PottentialWorker != null || !LSL.player.Character.IsStopped || !(LSL.playerPos.DistanceTo(((Entity)Ped).Position) < 2.5f) || !LsFunctions.IsCustomerNear())
 		{
 			return;
 		}
@@ -1088,7 +1088,7 @@ public class PlayerDealer
 			SetDrugDesc();
 			SetDealerOrders();
 			SetArmourButton();
-			CustomZeeMenu.OpenWorker();
+			CustomWorkerMenu.Open();
 		}
 	}
 
