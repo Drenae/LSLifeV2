@@ -11,11 +11,12 @@ internal static class CustomWorkerMenu
     private static int supplyWeed, supplyCrack, supplyCocaine, supplyStep = 1;
     private static readonly int[] supplySteps = { 1, 5, 10, 25, 50, 100 };
     private static bool waitForRelease;
+    private static int lastTickFrame = -1;
     public static bool Visible => activeMenu != null && activeMenu.Visible;
 
     public static void Open()
     {
-        if (Visible || CustomZeeMenu.Visible || LSL.LsMenuPool.IsAnyMenuOpen()) return;
+        if (Visible || LSL.LsMenuPool.IsAnyMenuOpen()) return;
         if (LSL.DealerHandler.currentDealer == null) return;
         if (workerMenu == null)
         {
@@ -52,7 +53,7 @@ internal static class CustomWorkerMenu
             workerSupplyMenu.Add("Cannabis", () => ChangeSupply(0, 1));
             workerSupplyMenu.Add("Crack", () => ChangeSupply(1, 1));
             workerSupplyMenu.Add("Cocaïne", () => ChangeSupply(2, 1));
-            workerSupplyMenu.Add("Pas de reglage", () => ChangeSupplyStep(1));
+            workerSupplyMenu.Add("Multiplicateur", () => ChangeSupplyStep(1));
             workerSupplyMenu.Add("Confirmer le transfert", ConfirmWorkerSupply,
                 () => supplyWeed + supplyCrack + supplyCocaine > 0);
         }
@@ -113,7 +114,15 @@ internal static class CustomWorkerMenu
     }
 
 
-    public static void Tick()
+    public static void TickOncePerFrame()
+    {
+        int frame = Game.GameTime;
+        if (lastTickFrame == frame) return;
+        lastTickFrame = frame;
+        Tick();
+    }
+
+    private static void Tick()
     {
         if (!Visible) return;
         if (LSL.DealerHandler.currentDealer == null)
@@ -180,7 +189,7 @@ internal static class CustomWorkerMenu
         const float left = x - width / 2f;
         bool main = activeMenu == workerMenu;
         float height = 0.102f + activeMenu.Entries.Count * 0.043f +
-            (main ? 0.168f : 0.094f);
+            (main ? 0.168f : 0.142f);
         Rect(x, top + height / 2f, width, height, 13, 16, 20, 238);
         Rect(x, top, width, 0.002f, 194, 156, 88, 255);
         Rect(x, top + height, width, 0.002f, 194, 156, 88, 255);
@@ -218,6 +227,17 @@ internal static class CustomWorkerMenu
             }
             if (!main && i < 3)
             {
+                int selectedAmount = i == 0 ? supplyWeed : i == 1 ? supplyCrack : supplyCocaine;
+                int available = SupplyAvailable(i == 0 ? "Weed" : i == 1 ? "Crack" : "Cocaine");
+                float barLeft = left + 0.116f, barWidth = 0.085f;
+                float fraction = available > 0 ? Math.Min(1f, (float)selectedAmount / available) : 0f;
+                Rect(barLeft + barWidth / 2f, y + 0.033f, barWidth, 0.004f, 66, 68, 70, 255);
+                if (fraction > 0f)
+                    Rect(barLeft + barWidth * fraction / 2f, y + 0.033f,
+                        barWidth * fraction, 0.004f, 111, 216, 139, 255);
+            }
+            if (!main && i < 3)
+            {
                 int amount = i == 0 ? supplyWeed : i == 1 ? supplyCrack : supplyCocaine;
                 TextRightCenteredVertically(amount + " g", left + width - 0.018f,
                     y + 0.0005f, 0.040f, 0.305f, 111, 216, 139, 255);
@@ -229,7 +249,7 @@ internal static class CustomWorkerMenu
         float detailY = top + 0.102f + activeMenu.Entries.Count * 0.043f;
         float innerLeft = left + 0.009f, innerWidth = width - 0.018f;
         Rect(x, detailY + (main ? 0.082f : 0.048f), innerWidth,
-            main ? 0.153f : 0.086f, 25, 29, 33, 248);
+            main ? 0.153f : 0.134f, 25, 29, 33, 248);
         Rect(x, detailY + 0.004f, innerWidth, 0.001f, 171, 133, 73, 235);
         if (main && LSL.DealerHandler.currentDealer != null)
         {
@@ -258,14 +278,19 @@ internal static class CustomWorkerMenu
         }
         else if (!main)
         {
-            TextCenteredVertically("STOCK JOUEUR", innerLeft + 0.012f, detailY + 0.010f,
-                0.024f, 0.270f, 234, 207, 151, 255);
-            TextCenteredVertically("Cannabis " + SupplyAvailable("Weed") + " g   /   Crack " +
-                SupplyAvailable("Crack") + " g", innerLeft + 0.012f,
-                detailY + 0.034f, 0.024f, 0.245f, 226, 227, 229, 255);
-            TextCenteredVertically("Cocaïne " + SupplyAvailable("Cocaine") + " g",
-                innerLeft + 0.012f, detailY + 0.058f,
-                0.024f, 0.245f, 226, 227, 229, 255);
+            TextCenteredVertically("STOCK JOUEUR", innerLeft + 0.012f,
+                detailY + 0.009f, 0.024f, 0.270f, 234, 207, 151, 255);
+            string[] labels = { "Cannabis", "Crack", "Cocaïne" };
+            string[] keys = { "Weed", "Crack", "Cocaine" };
+            for (int i = 0; i < 3; i++)
+            {
+                float lineY = detailY + 0.037f + i * 0.026f;
+                TextCenteredVertically(labels[i], innerLeft + 0.012f,
+                    lineY, 0.026f, 0.270f, 226, 227, 229, 255);
+                TextRightCenteredVertically(SupplyAvailable(keys[i]) + " g",
+                    left + width - 0.019f, lineY, 0.026f,
+                    0.295f, 111, 216, 139, 255);
+            }
         }
     }
 
