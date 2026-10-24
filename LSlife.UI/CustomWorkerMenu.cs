@@ -37,7 +37,7 @@ internal static class CustomWorkerMenu
     }
 
     // Instructions utilisateur distinctes des états techniques (TalkToPlayer, etc.).
-    private static readonly string[] instructionStates = { "None", "Follow", "Work" };
+    private static readonly string[] instructionStates = { "None", "FollowingPlayer", "Work" };
     private static readonly string[] instructionLabels = { "Ne rien faire", "Me suivre", "Travailler (vendre)" };
     private static readonly System.Collections.Generic.Dictionary<int, int> selectedInstructions =
         new System.Collections.Generic.Dictionary<int, int>();
