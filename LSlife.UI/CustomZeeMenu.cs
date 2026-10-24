@@ -72,7 +72,6 @@ internal static class CustomZeeMenu
             orderMenu.Add("Cannabis", OpenCannabis);
             orderMenu.Add("Crack", OpenCrack);
             orderMenu.Add("Cocaine", OpenCocaine);
-            orderMenu.Add("Recapitulatif", () => OpenSubmenu(LSL.OrderSummaryMenu));
             orderMenu.Add("Valider la commande", PlaceExistingOrder);
         }
         menu.Close();
@@ -312,7 +311,9 @@ internal static class CustomZeeMenu
 
         // Panneau principal et filet dore (rectangles fins, sans textures externes).
         CustomMenu displayed = activeMenu;
-        float height = 0.155f + displayed.Entries.Count * 0.043f;
+        bool showOrderDetails = displayed == orderMenu || IsDrugMenu(displayed);
+        float height = 0.155f + displayed.Entries.Count * 0.043f +
+            (showOrderDetails ? 0.094f : 0f);
         Rect(x, top + height / 2f, width, height, 13, 16, 20, 238);
         Rect(x, top, width, 0.002f, 194, 156, 88, 255);
         Rect(x, top + height, width, 0.002f, 194, 156, 88, 255);
@@ -394,7 +395,7 @@ internal static class CustomZeeMenu
                     left + width - 0.018f, y + 0.0005f, 0.040f, 0.305f,
                     218, 176, 101, 255);
             }
-            if (displayed == orderMenu && i == 4)
+            if (displayed == orderMenu && i == 3)
             {
                 TextRightCenteredVertically(LsFunctions.IntToMoney(LSL.NewOrder.Bill) + " $",
                     left + width - 0.018f, y + 0.0005f, 0.040f, 0.305f,
@@ -415,9 +416,42 @@ internal static class CustomZeeMenu
                     left + width - 0.018f, y + 0.0005f, 0.040f, 0.305f,
                     check ? 218 : 145, check ? 176 : 145, check ? 101 : 145, 255);
             }
-            if ((displayed == menu && i < 2) || (displayed == orderMenu && i < 4))
+            if ((displayed == menu && i < 2) || (displayed == orderMenu && i < 3))
                 TextCenteredVertically(">", left + width - 0.027f, y + 0.0005f, 0.040f, 0.33f,
                     204, 168, 102, 255);
+        }
+
+        if (showOrderDetails)
+        {
+            float y = top + 0.155f + displayed.Entries.Count * 0.043f;
+            Rect(x, y + 0.006f, width - 0.019f, 0.0015f, 171, 133, 73, 235);
+            if (displayed == orderMenu)
+            {
+                TextCenteredVertically("CANNABIS  " + LSL.NewOrder.weed + " OZ  |  CRACK  " +
+                    LSL.NewOrder.crack + " OZ", left + 0.016f,
+                    y + 0.012f, 0.022f, 0.255f, 202, 195, 180, 255);
+                TextCenteredVertically("COCAINE  " + LSL.NewOrder.cocaine + " OZ",
+                    left + 0.016f, y + 0.035f, 0.022f,
+                    0.255f, 202, 195, 180, 255);
+            }
+            else
+            {
+                int ordered = displayed == cannabisMenu ? LSL.NewOrder.weed :
+                    displayed == crackMenu ? LSL.NewOrder.crack : LSL.NewOrder.cocaine;
+                TextCenteredVertically("DEJA AJOUTE  " + ordered + " OZ",
+                    left + 0.016f, y + 0.012f, 0.022f,
+                    0.255f, 202, 195, 180, 255);
+                TextCenteredVertically("PRIX SELECTION  " +
+                    LsFunctions.IntToMoney(DrugSlider(displayed).Value *
+                        DrugUnitPrice(displayed)) + " $",
+                    left + 0.016f, y + 0.035f, 0.022f,
+                    0.255f, 202, 195, 180, 255);
+            }
+            TextCenteredVertically("TOTAL COMMANDE", left + 0.016f,
+                y + 0.058f, 0.022f, 0.265f, 234, 207, 151, 255);
+            TextRightCenteredVertically(LsFunctions.IntToMoney(LSL.NewOrder.Bill) + " $",
+                left + width - 0.018f, y + 0.058f, 0.022f,
+                0.265f, 234, 207, 151, 255);
         }
 
     }
