@@ -349,7 +349,7 @@ internal static class CustomZeeMenu
         bool showWorker = displayed == workerMenu;
         bool showOrderDetails = displayed == orderMenu || IsDrugMenu(displayed);
         float height = 0.155f + displayed.Entries.Count * 0.043f +
-            (showWorker ? 0.125f : displayed == orderMenu ? 0.122f : showOrderDetails ? 0.094f : 0f);
+            (showWorker ? 0.191f : displayed == orderMenu ? 0.122f : showOrderDetails ? 0.094f : 0f);
         Rect(x, top + height / 2f, width, height, 13, 16, 20, 238);
         Rect(x, top, width, 0.002f, 194, 156, 88, 255);
         Rect(x, top + height, width, 0.002f, 194, 156, 88, 255);
@@ -360,6 +360,9 @@ internal static class CustomZeeMenu
         Rect(x, top + 0.046f, width - 0.004f, 0.090f, 22, 25, 29, 240);
         Rect(left + 0.008f, top + 0.046f, 0.003f, 0.062f, 194, 156, 88, 255);
         TextCenteredVertically(displayed.Title, left + 0.023f, top, 0.090f, 0.67f, 234, 207, 151, 255);
+        if (showWorker && LSL.DealerHandler.currentDealer != null)
+            TextRightCenteredVertically("DEALER #" + LSL.DealerHandler.currentDealer.ID,
+                left + width - 0.018f, top, 0.090f, 0.270f, 218, 176, 101, 255);
         TextCenteredVertically(IsDrugMenu(displayed) || displayed == orderMenu ? "" :
             displayed == workerMenu ? "" :
             displayed == dealerMenu ? "ZEE / ACTIVITE" :
@@ -369,7 +372,7 @@ internal static class CustomZeeMenu
 
         // Informations de progression.
         Rect(x, top + 0.117f, width - 0.013f, 0.045f, 28, 30, 33, 232);
-        TextCenteredVertically(showWorker ? "DEALER  #" + LSL.DealerHandler.currentDealer.ID :
+        TextCenteredVertically(showWorker ? "" :
             displayed == dealerMenu ? "CHOISIR LES OPTIONS" :
             displayed == orderMenu ? "SELECTION DES PRODUITS" :
             IsDrugMenu(displayed) ? "STOCK " + DrugStock(displayed) + " OZ  |  " +
@@ -473,9 +476,9 @@ internal static class CustomZeeMenu
             float innerLeft = left + 0.009f;
             float innerWidth = width - 0.018f;
 
-            // Panneau compact : une ligne par categorie, sans jauges ni blocs imbriques.
+            // Panneau compact : noms complets et valeurs alignees sur des lignes distinctes.
             // Les informations financieres detaillees restent dans la logique existante.
-            Rect(x, y + 0.061f, innerWidth, 0.111f, 25, 29, 33, 248);
+            Rect(x, y + 0.094f, innerWidth, 0.177f, 25, 29, 33, 248);
             Rect(x, y + 0.004f, innerWidth, 0.001f, 171, 133, 73, 235);
 
             int hp = worker.Ped != null ? Math.Max(0, worker.Ped.Health) : 0;
@@ -486,14 +489,24 @@ internal static class CustomZeeMenu
             int weed = worker.Drugs.ContainsKey("Weed") ? worker.Drugs["Weed"] : 0;
             int crack = worker.Drugs.ContainsKey("Crack") ? worker.Drugs["Crack"] : 0;
             int cocaine = worker.Drugs.ContainsKey("Cocaine") ? worker.Drugs["Cocaine"] : 0;
-            TextCenteredVertically("STOCK  C " + weed + " g   /   CR " + crack + " g   /   CO " + cocaine + " g",
-                innerLeft + 0.012f, y + 0.044f, 0.029f, 0.255f, 226, 227, 229, 255);
+            TextCenteredVertically("Cannabis", innerLeft + 0.012f, y + 0.044f,
+                0.026f, 0.270f, 226, 227, 229, 255);
+            TextRightCenteredVertically(weed + " g", left + width - 0.019f,
+                y + 0.044f, 0.026f, 0.295f, 111, 216, 139, 255);
+            TextCenteredVertically("Crack", innerLeft + 0.012f, y + 0.070f,
+                0.026f, 0.270f, 226, 227, 229, 255);
+            TextRightCenteredVertically(crack + " g", left + width - 0.019f,
+                y + 0.070f, 0.026f, 0.295f, 111, 216, 139, 255);
+            TextCenteredVertically("Cocaïne", innerLeft + 0.012f, y + 0.096f,
+                0.026f, 0.270f, 226, 227, 229, 255);
+            TextRightCenteredVertically(cocaine + " g", left + width - 0.019f,
+                y + 0.096f, 0.026f, 0.295f, 111, 216, 139, 255);
 
             int net = worker.Money - (worker.Money / 100) * 20;
             TextCenteredVertically("A RECOLTER", innerLeft + 0.012f,
-                y + 0.077f, 0.029f, 0.275f, 234, 207, 151, 255);
+                y + 0.133f, 0.029f, 0.275f, 234, 207, 151, 255);
             TextRightCenteredVertically(LsFunctions.IntToMoney(net) + " $",
-                left + width - 0.019f, y + 0.077f, 0.029f,
+                left + width - 0.019f, y + 0.133f, 0.029f,
                 0.300f, 218, 176, 101, 255);
         }
 
