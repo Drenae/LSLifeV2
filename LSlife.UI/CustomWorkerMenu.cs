@@ -319,7 +319,7 @@ internal static class CustomWorkerMenu
 
     private static void Draw()
     {
-        const float x = 0.149f, width = 0.268f, top = 0.035f;
+        const float x = CustomMenuRenderer.MenuX, width = CustomMenuRenderer.MenuWidth, top = CustomMenuRenderer.MenuTop;
         const float left = x - width / 2f;
         bool main = activeMenu == workerMenu;
         bool supply = activeMenu == workerSupplyMenu;
@@ -327,33 +327,16 @@ internal static class CustomWorkerMenu
         int visibleRows = activeMenu.Entries.Count;
         float height = 0.102f + visibleRows * 0.043f +
             (main ? 0.168f : supply ? 0.126f : 0.122f);
-        CustomMenuRenderer.Rect(x, top + height / 2f, width, height, 13, 16, 20, 238);
-        CustomMenuRenderer.Rect(x, top, width, 0.002f, 194, 156, 88, 255);
-        CustomMenuRenderer.Rect(x, top + height, width, 0.002f, 194, 156, 88, 255);
-        CustomMenuRenderer.Rect(left, top + height / 2f, 0.0015f, height, 151, 119, 69, 220);
-        CustomMenuRenderer.Rect(left + width, top + height / 2f, 0.0015f, height, 151, 119, 69, 220);
-        CustomMenuRenderer.Rect(x, top + 0.046f, width - 0.004f, 0.090f, 22, 25, 29, 240);
-        CustomMenuRenderer.Rect(left + 0.008f, top + 0.046f, 0.003f, 0.062f, 194, 156, 88, 255);
-        CustomMenuRenderer.TextCenteredVertically(activeMenu.Title, left + 0.023f, top, 0.090f,
-            main ? 0.67f : 0.46f, 234, 207, 151, 255);
-        if (LSL.DealerHandler.currentDealer != null)
-            CustomMenuRenderer.TextRightCenteredVertically("DEALER #" + LSL.DealerHandler.currentDealer.ID,
-                left + width - 0.018f, top, 0.090f, 0.270f, 218, 176, 101, 255);
-        CustomMenuRenderer.Separator(x, top + 0.091f - 0.0065f, width - 0.019f);
+        CustomMenuRenderer.Frame(height);
+        string dealerTag = LSL.DealerHandler.currentDealer == null ? null :
+            "DEALER #" + LSL.DealerHandler.currentDealer.ID;
+        CustomMenuRenderer.Header(activeMenu.Title, main ? 0.67f : 0.46f, dealerTag);
         int firstVisible = 0;
         for (int i = firstVisible; i < firstVisible + visibleRows; i++)
         {
             float y = top + 0.098f + (i - firstVisible) * 0.043f;
             bool selected = i == activeMenu.SelectedIndex;
-            CustomMenuRenderer.Rect(x, y + 0.0205f, width - 0.012f, 0.040f,
-                selected ? 65 : 25, selected ? 55 : 28,
-                selected ? 40 : 32, selected ? 248 : 229);
-            if (selected)
-            {
-                CustomMenuRenderer.Rect(left + 0.008f, y + 0.0205f, 0.0035f, 0.038f, 218, 176, 101, 255);
-                CustomMenuRenderer.Rect(x, y + 0.001f, width - 0.012f, 0.001f, 172, 137, 78, 225);
-                CustomMenuRenderer.Rect(x, y + 0.041f, width - 0.012f, 0.001f, 172, 137, 78, 225);
-            }
+            CustomMenuRenderer.Row(y, selected);
             CustomMenuRenderer.TextCenteredVertically(activeMenu.Entries[i].Label, left + 0.019f,
                 y + 0.0005f, 0.040f, 0.315f, selected ? 255 : 226,
                 selected ? 247 : 227, selected ? 226 : 229, 255);
