@@ -349,7 +349,7 @@ internal static class CustomZeeMenu
         bool showWorker = displayed == workerMenu;
         bool showOrderDetails = displayed == orderMenu || IsDrugMenu(displayed);
         float height = 0.155f + displayed.Entries.Count * 0.043f +
-            (showWorker ? 0.340f : displayed == orderMenu ? 0.122f : showOrderDetails ? 0.094f : 0f);
+            (showWorker ? 0.125f : displayed == orderMenu ? 0.122f : showOrderDetails ? 0.094f : 0f);
         Rect(x, top + height / 2f, width, height, 13, 16, 20, 238);
         Rect(x, top, width, 0.002f, 194, 156, 88, 255);
         Rect(x, top + height, width, 0.002f, 194, 156, 88, 255);
@@ -472,67 +472,29 @@ internal static class CustomZeeMenu
             float y = top + 0.155f + displayed.Entries.Count * 0.043f;
             float innerLeft = left + 0.009f;
             float innerWidth = width - 0.018f;
-            int gross = worker.Money;
-            // Calcul identique a GiveMoneyToPlayer() : division entiere.
-            int commission = (gross / 100) * 20;
-            int net = gross - commission;
 
-            // En-tete d'identite et jauges d'etat.
-            Rect(x, y + 0.037f, innerWidth, 0.067f, 25, 29, 33, 248);
-            Rect(innerLeft + 0.003f, y + 0.004f, 0.003f, 0.057f, 194, 156, 88, 255);
-            TextCenteredVertically("ETAT DU DEALER", innerLeft + 0.012f,
-                y + 0.002f, 0.022f, 0.270f, 234, 207, 151, 255);
-            int hp = Math.Max(0, worker.Ped.Health);
-            int armor = Math.Max(0, worker.Ped.Armor);
-            WorkerGauge("SANTE", hp, 200, innerLeft + 0.012f, y + 0.025f, 0.108f);
-            WorkerGauge("ARMURE", armor, 200, innerLeft + 0.132f, y + 0.025f, 0.108f);
+            // Panneau compact : une ligne par categorie, sans jauges ni blocs imbriques.
+            // Les informations financieres detaillees restent dans la logique existante.
+            Rect(x, y + 0.061f, innerWidth, 0.111f, 25, 29, 33, 248);
+            Rect(x, y + 0.004f, innerWidth, 0.001f, 171, 133, 73, 235);
 
-            // Stock : trois colonnes alignees avec quantites en evidence.
-            float stockTop = y + 0.077f;
-            Rect(x, stockTop + 0.055f, innerWidth, 0.105f, 25, 29, 33, 248);
-            TextCenteredVertically("STOCK DISPONIBLE", innerLeft + 0.012f,
-                stockTop + 0.003f, 0.023f, 0.270f, 234, 207, 151, 255);
-            float cardW = (innerWidth - 0.028f) / 3f;
-            string[] labels = { "CANNABIS", "CRACK", "COCAINE" };
-            string[] keys = { "Weed", "Crack", "Cocaine" };
-            for (int i = 0; i < 3; i++)
-            {
-                float cx = innerLeft + 0.008f + i * (cardW + 0.006f);
-                Rect(cx + cardW / 2f, stockTop + 0.065f,
-                    cardW, 0.061f, 36, 39, 42, 255);
-                Rect(cx + cardW / 2f, stockTop + 0.035f,
-                    cardW, 0.002f, 151, 119, 69, 245);
-                TextCenteredVertically(labels[i], cx + 0.005f,
-                    stockTop + 0.039f, 0.018f, 0.225f, 184, 179, 168, 255);
-                TextCenteredVertically(worker.Drugs[keys[i]] + " g",
-                    cx + 0.005f, stockTop + 0.060f, 0.029f, 0.340f,
-                    239, 225, 196, 255);
-            }
+            int hp = worker.Ped != null ? Math.Max(0, worker.Ped.Health) : 0;
+            int armor = worker.Ped != null ? Math.Max(0, worker.Ped.Armor) : 0;
+            TextCenteredVertically("SANTE  " + hp + "     ARMURE  " + armor,
+                innerLeft + 0.012f, y + 0.011f, 0.029f, 0.275f, 226, 206, 167, 255);
 
-            // Recette : detail du brut, commission, puis montant net.
-            float financeTop = y + 0.195f;
-            Rect(x, financeTop + 0.050f, innerWidth, 0.093f, 25, 29, 33, 248);
-            TextCenteredVertically("BILAN DES VENTES", innerLeft + 0.012f,
-                financeTop + 0.002f, 0.022f, 0.270f, 234, 207, 151, 255);
-            TextCenteredVertically("Recette brute", innerLeft + 0.012f,
-                financeTop + 0.027f, 0.023f, 0.260f, 197, 196, 192, 255);
-            TextRightCenteredVertically(LsFunctions.IntToMoney(gross) + " $",
-                left + width - 0.019f, financeTop + 0.027f, 0.023f,
-                0.265f, 231, 224, 209, 255);
-            TextCenteredVertically("Commission (20 %)", innerLeft + 0.012f,
-                financeTop + 0.052f, 0.023f, 0.260f, 197, 196, 192, 255);
-            TextRightCenteredVertically("-" + LsFunctions.IntToMoney(commission) + " $",
-                left + width - 0.019f, financeTop + 0.052f, 0.023f,
-                0.265f, 197, 196, 192, 255);
-            float netTop = financeTop + 0.103f;
-            Rect(x, netTop + 0.016f, innerWidth, 0.037f, 59, 49, 34, 255);
-            Rect(innerLeft + 0.002f, netTop + 0.016f,
-                0.003f, 0.035f, 218, 176, 101, 255);
+            int weed = worker.Drugs.ContainsKey("Weed") ? worker.Drugs["Weed"] : 0;
+            int crack = worker.Drugs.ContainsKey("Crack") ? worker.Drugs["Crack"] : 0;
+            int cocaine = worker.Drugs.ContainsKey("Cocaine") ? worker.Drugs["Cocaine"] : 0;
+            TextCenteredVertically("STOCK  C " + weed + " g   /   CR " + crack + " g   /   CO " + cocaine + " g",
+                innerLeft + 0.012f, y + 0.044f, 0.029f, 0.255f, 226, 227, 229, 255);
+
+            int net = worker.Money - (worker.Money / 100) * 20;
             TextCenteredVertically("A RECOLTER", innerLeft + 0.012f,
-                netTop, 0.032f, 0.290f, 234, 207, 151, 255);
+                y + 0.077f, 0.029f, 0.275f, 234, 207, 151, 255);
             TextRightCenteredVertically(LsFunctions.IntToMoney(net) + " $",
-                left + width - 0.019f, netTop, 0.032f,
-                0.330f, 250, 230, 184, 255);
+                left + width - 0.019f, y + 0.077f, 0.029f,
+                0.300f, 218, 176, 101, 255);
         }
 
         if (showOrderDetails)
