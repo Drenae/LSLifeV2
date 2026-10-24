@@ -54,7 +54,7 @@ internal static class CustomWorkerMenu
             () => LSL.playerArmours > 0 && LSL.DealerHandler.currentDealer != null &&
                   LSL.DealerHandler.currentDealer.Ped != null &&
                   LSL.DealerHandler.currentDealer.Ped.Armor < 200);
-        workerEquipmentMenu.Add("Donner une arme", () => GiveWorkerWeapon(equipmentWeaponIndex),
+        workerEquipmentMenu.Add("Arme", () => GiveWorkerWeapon(equipmentWeaponIndex),
             () => LSL.playerWeps.Count > 0);
         workerMenu.Close();
         activeMenu = workerEquipmentMenu;
@@ -339,7 +339,7 @@ internal static class CustomWorkerMenu
         if (LSL.DealerHandler.currentDealer != null)
             CustomMenuRenderer.TextRightCenteredVertically("DEALER #" + LSL.DealerHandler.currentDealer.ID,
                 left + width - 0.018f, top, 0.090f, 0.270f, 218, 176, 101, 255);
-        CustomMenuRenderer.Rect(x, top + 0.091f, width - 0.019f, 0.0015f, 171, 133, 73, 235);
+        CustomMenuRenderer.Separator(x, top + 0.091f - 0.0065f, width - 0.019f);
         int firstVisible = 0;
         for (int i = firstVisible; i < firstVisible + visibleRows; i++)
         {
