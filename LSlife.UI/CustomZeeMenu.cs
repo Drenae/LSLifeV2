@@ -333,7 +333,7 @@ internal static class CustomZeeMenu
             displayed == dealerMenu ? "ZEE / ACTIVITE" :
             displayed == orderMenu ? "ZEE / COMMANDES" :
             "CONTACT  /  SERVICES", left + 0.116f, top, 0.090f, 0.25f, 170, 159, 138, 255);
-        CustomMenuRenderer.Rect(x, top + 0.091f, width - 0.019f, 0.0015f, 171, 133, 73, 235);
+        CustomMenuRenderer.Separator(x, top + 0.091f - 0.0065f, width - 0.019f);
 
         // Informations de progression.
         CustomMenuRenderer.Rect(x, top + 0.117f, width - 0.013f, 0.045f, 28, 30, 33, 232);
@@ -343,7 +343,7 @@ internal static class CustomZeeMenu
                 LsFunctions.IntToMoney(DrugUnitPrice(displayed)) + " $/OZ" :
             displayed.Subtitle, left + 0.016f, top + 0.0945f, 0.045f, 0.275f, 226, 206, 167, 255);
         // Separateur dore entre les informations et les actions.
-        CustomMenuRenderer.Rect(x, top + 0.144f, width - 0.019f, 0.0015f, 171, 133, 73, 235);
+        CustomMenuRenderer.Separator(x, top + 0.144f - 0.0065f, width - 0.019f);
 
         // Liste : selection lumineuse mais sans surcharge.
         for (int i = 0; i < displayed.Entries.Count; i++)
@@ -429,7 +429,7 @@ internal static class CustomZeeMenu
         if (showOrderDetails)
         {
             float y = top + 0.155f + displayed.Entries.Count * 0.043f;
-            CustomMenuRenderer.Rect(x, y + 0.006f, width - 0.019f, 0.0015f, 171, 133, 73, 235);
+            CustomMenuRenderer.Separator(x, y + 0.006f - 0.0065f, width - 0.019f);
             if (displayed == orderMenu)
             {
                 CustomMenuRenderer.TextCenteredVertically("CANNABIS  " + LSL.NewOrder.weed + " OZ",
