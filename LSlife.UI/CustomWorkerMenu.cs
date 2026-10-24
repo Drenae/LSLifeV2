@@ -381,149 +381,72 @@ internal static class CustomWorkerMenu
             DrawWorkerMainFlow();
             return;
         }
-        const float x = 0.149f, width = 0.268f, top = 0.035f;
-        const float left = x - width / 2f;
-        bool main = activeMenu == workerMenu;
         bool supply = activeMenu == workerSupplyMenu;
         bool equipment = activeMenu == workerEquipmentMenu;
-        int visibleRows = activeMenu.Entries.Count;
-        float height = 0.102f + visibleRows * 0.043f +
-            (main ? 0.168f : supply ? 0.126f : 0.122f);
-        CustomMenuRenderer.Rect(x, top + height / 2f, width, height, 13, 16, 20, 238);
-        CustomMenuRenderer.Rect(x, top, width, 0.002f, 194, 156, 88, 255);
-        CustomMenuRenderer.Rect(x, top + height, width, 0.002f, 194, 156, 88, 255);
-        CustomMenuRenderer.Rect(left, top + height / 2f, 0.0015f, height, 151, 119, 69, 220);
-        CustomMenuRenderer.Rect(left + width, top + height / 2f, 0.0015f, height, 151, 119, 69, 220);
-        CustomMenuRenderer.Rect(x, top + 0.046f, width - 0.004f, 0.090f, 22, 25, 29, 240);
-        CustomMenuRenderer.Rect(left + 0.008f, top + 0.046f, 0.003f, 0.062f, 194, 156, 88, 255);
-        CustomMenuRenderer.TextCenteredVertically(activeMenu.Title, left + 0.023f, top, 0.090f,
-            main ? 0.67f : 0.46f, 234, 207, 151, 255);
-        if (LSL.DealerHandler.currentDealer != null)
-            CustomMenuRenderer.TextRightCenteredVertically("DEALER #" + LSL.DealerHandler.currentDealer.ID,
-                left + width - 0.018f, top, 0.090f, 0.270f, 218, 176, 101, 255);
-        CustomMenuRenderer.Separator(x, top + 0.091f - 0.0065f, width - 0.019f);
-        int firstVisible = 0;
-        for (int i = firstVisible; i < firstVisible + visibleRows; i++)
-        {
-            float y = top + 0.098f + (i - firstVisible) * 0.043f;
-            bool selected = i == activeMenu.SelectedIndex;
-            CustomMenuRenderer.Rect(x, y + 0.0205f, width - 0.012f, 0.040f,
-                selected ? 65 : 25, selected ? 55 : 28,
-                selected ? 40 : 32, selected ? 248 : 229);
-            if (selected)
-            {
-                CustomMenuRenderer.Rect(left + 0.008f, y + 0.0205f, 0.0035f, 0.038f, 218, 176, 101, 255);
-                CustomMenuRenderer.Rect(x, y + 0.001f, width - 0.012f, 0.001f, 172, 137, 78, 225);
-                CustomMenuRenderer.Rect(x, y + 0.041f, width - 0.012f, 0.001f, 172, 137, 78, 225);
-            }
+        PlayerDealer dealer = LSL.DealerHandler.currentDealer;
+        if (dealer == null) return;
 
-            CustomMenuRenderer.TextCenteredVertically(activeMenu.Entries[i].Label, left + 0.019f,
-                y + 0.0005f, 0.040f, 0.315f, selected ? 255 : 226,
-                selected ? 247 : 227, selected ? 226 : 229, 255);
-            if (main && i == 1 && LSL.DealerHandler.currentDealer != null)
-            {
-                int money = LSL.DealerHandler.currentDealer.Money;
-                CustomMenuRenderer.TextRightCenteredVertically(LsFunctions.IntToMoney(money - (money / 100) * 20) + " $",
-                    left + width - 0.018f, y + 0.0005f, 0.040f, 0.305f, 111, 216, 139, 255);
-            }
-            if (supply && i < 3)
-            {
-                int selectedAmount = i == 0 ? supplyWeed : i == 1 ? supplyCrack : supplyCocaine;
-                int available = SupplyAvailable(i == 0 ? "Weed" : i == 1 ? "Crack" : "Cocaine");
-                float barLeft = left + 0.116f, barWidth = 0.085f;
-                float fraction = available > 0 ? Math.Min(1f, (float)selectedAmount / available) : 0f;
-                CustomMenuRenderer.Rect(barLeft + barWidth / 2f, y + 0.0205f, barWidth, 0.008f, 66, 68, 70, 255);
-                if (fraction > 0f)
-                    CustomMenuRenderer.Rect(barLeft + barWidth * fraction / 2f, y + 0.0205f,
-                        barWidth * fraction, 0.008f, 111, 216, 139, 255);
-            }
+        var layout = new CustomMenuLayout();
+        layout.Header(activeMenu.Title, "DEALER #" + dealer.ID);
+        layout.Separator(0.004f);
+        for (int i = 0; i < activeMenu.Entries.Count; i++)
+        {
+            int index = i;
+            bool selected = i == activeMenu.SelectedIndex;
+            string value = null;
             if (supply && i < 3)
             {
                 int amount = i == 0 ? supplyWeed : i == 1 ? supplyCrack : supplyCocaine;
-                CustomMenuRenderer.TextRightCenteredVertically(LsFunctions.GramsToOz(amount), left + width - 0.018f,
-                    y + 0.0005f, 0.040f, 0.305f, 111, 216, 139, 255);
+                value = LsFunctions.GramsToOz(amount);
             }
-            if (equipment && i == 1)
+            else if (supply && i == 3)
+                value = "< x" + supplyStep + " >";
+            else if (equipment && i == 1)
             {
                 string weapon = LSL.playerWeps.Count == 0 ? "Aucune" :
                     FrenchWeaponName(LSL.playerWeps[Math.Min(equipmentWeaponIndex, LSL.playerWeps.Count - 1)]);
-                CustomMenuRenderer.TextRightCenteredVertically("< " + weapon + " >", left + width - 0.018f,
-                    y + 0.0005f, 0.040f, 0.270f, 218, 176, 101, 255);
+                value = "< " + weapon + " >";
             }
-            if (supply && i == 3)
-                CustomMenuRenderer.TextRightCenteredVertically("< x" + supplyStep + " >", left + width - 0.018f,
-                    y + 0.0005f, 0.040f, 0.305f, 218, 176, 101, 255);
+            layout.Row(activeMenu.Entries[i].Label, selected, value,
+                enabled: activeMenu.Entries[i].Enabled);
+            if (supply && i < 3)
+            {
+                layout.Block(0f, y =>
+                {
+                    int amount = index == 0 ? supplyWeed : index == 1 ? supplyCrack : supplyCocaine;
+                    int available = SupplyAvailable(index == 0 ? "Weed" : index == 1 ? "Crack" : "Cocaine");
+                    float fraction = available > 0 ? Math.Min(1f, (float)amount / available) : 0f;
+                    float barLeft = layout.Left + 0.116f, barWidth = 0.085f;
+                    float barY = y - 0.043f / 2f;
+                    CustomMenuRenderer.Rect(barLeft + barWidth / 2f, barY, barWidth, 0.008f, 66, 68, 70, 255);
+                    if (fraction > 0f)
+                        CustomMenuRenderer.Rect(barLeft + barWidth * fraction / 2f, barY,
+                            barWidth * fraction, 0.008f, 111, 216, 139, 255);
+                });
+            }
         }
-        // Espace entre la derniere action et le panneau de stock.
+        layout.Separator(0.006f);
         if (equipment)
         {
-            PlayerDealer dealer = LSL.DealerHandler.currentDealer;
-            float footerTop = top + 0.098f + visibleRows * 0.043f;
-            CustomMenuRenderer.Separator(x, footerTop, width - 0.019f);
+            layout.Block(0.026f, y =>
+                CustomMenuRenderer.TextCenteredVertically("EQUIPEMENT DU DEALER",
+                    layout.Left + 0.019f, y, 0.026f, 0.265f, 234, 207, 151, 255));
             int protection = dealer.Ped != null ? dealer.Ped.Armor : dealer.dArmour;
-            CustomMenuRenderer.TextCenteredVertically("EQUIPEMENT DU DEALER", left + 0.019f,
-                footerTop + 0.015f, 0.026f, 0.265f, 234, 207, 151, 255);
-            CustomMenuRenderer.TextCenteredVertically("Protection", left + 0.019f,
-                footerTop + 0.040f, 0.025f, 0.280f, 226, 227, 229, 255);
-            CustomMenuRenderer.TextRightCenteredVertically(protection.ToString(), left + width - 0.019f,
-                footerTop + 0.040f, 0.025f, 0.280f, 111, 216, 139, 255);
+            layout.TextPair("Protection", protection.ToString());
             string equipped = "Aucune";
             if (dealer.Ped != null && dealer.Ped.Weapons != null)
                 equipped = FrenchWeaponName(dealer.Ped.Weapons.Current.Hash.ToString());
-            CustomMenuRenderer.TextCenteredVertically("Arme actuelle", left + 0.019f,
-                footerTop + 0.065f, 0.025f, 0.280f, 226, 227, 229, 255);
-            CustomMenuRenderer.TextRightCenteredVertically(equipped, left + width - 0.019f,
-                footerTop + 0.065f, 0.025f, 0.270f, 111, 216, 139, 255);
-            return;
+            layout.TextPair("Arme actuelle", equipped);
         }
-        float detailY = top + 0.102f + activeMenu.Entries.Count * 0.043f;
-        float innerLeft = left + 0.009f, innerWidth = width - 0.018f;
-        CustomMenuRenderer.Rect(x, detailY + (main ? 0.082f : 0.056f), innerWidth,
-            main ? 0.153f : 0.112f, 25, 29, 33, 248);
-        // Separateur autonome, juste sous la derniere action.
-        CustomMenuRenderer.Separator(x, detailY - (supply ? 0.009f : 0.012f), innerWidth, 0.006f);
-        if (main && LSL.DealerHandler.currentDealer != null)
+        else
         {
-            PlayerDealer worker = LSL.DealerHandler.currentDealer;
-            int hp = worker.Ped != null ? Math.Max(0, worker.Ped.Health) : 0;
-            int armor = worker.Ped != null ? Math.Max(0, worker.Ped.Armor) : 0;
-            CustomMenuRenderer.TextCenteredVertically("SANTE  " + hp + "     ARMURE  " + armor,
-                innerLeft + 0.012f, detailY + 0.011f, 0.029f, 0.275f, 226, 206, 167, 255);
-            string[] names = { "Cannabis", "Crack", "Cocaïne" };
-            string[] keys = { "Weed", "Crack", "Cocaine" };
-            for (int i = 0; i < 3; i++)
-            {
-                float lineY = detailY + 0.039f + i * 0.023f;
-                int amount = worker.Drugs.ContainsKey(keys[i]) ? worker.Drugs[keys[i]] : 0;
-                CustomMenuRenderer.TextCenteredVertically(names[i], innerLeft + 0.012f, lineY,
-                    0.026f, 0.270f, 226, 227, 229, 255);
-                CustomMenuRenderer.TextRightCenteredVertically(LsFunctions.GramsToOz(amount), left + width - 0.019f,
-                    lineY, 0.026f, 0.295f, 111, 216, 139, 255);
-            }
-            int net = worker.Money - (worker.Money / 100) * 20;
-            CustomMenuRenderer.TextCenteredVertically("A RECOLTER", innerLeft + 0.012f, detailY + 0.113f,
-                0.029f, 0.275f, 234, 207, 151, 255);
-            CustomMenuRenderer.TextRightCenteredVertically(LsFunctions.IntToMoney(net) + " $",
-                left + width - 0.019f, detailY + 0.113f,
-                0.029f, 0.300f, 218, 176, 101, 255);
+            layout.Block(0.026f, y =>
+                CustomMenuRenderer.TextCenteredVertically("STOCK JOUEUR",
+                    layout.Left + 0.019f, y, 0.026f, 0.270f, 234, 207, 151, 255));
+            layout.TextPair("Cannabis", LsFunctions.GramsToOz(SupplyAvailable("Weed")));
+            layout.TextPair("Crack", LsFunctions.GramsToOz(SupplyAvailable("Crack")));
+            layout.TextPair("Cocaïne", LsFunctions.GramsToOz(SupplyAvailable("Cocaine")));
         }
-        else if (!main)
-        {
-            CustomMenuRenderer.TextCenteredVertically("STOCK JOUEUR", innerLeft + 0.012f,
-                detailY + 0.004f, 0.024f, 0.270f, 234, 207, 151, 255);
-            string[] labels = { "Cannabis", "Crack", "Cocaïne" };
-            string[] keys = { "Weed", "Crack", "Cocaine" };
-            for (int i = 0; i < 3; i++)
-            {
-                float lineY = detailY + 0.028f + i * 0.023f;
-                CustomMenuRenderer.TextCenteredVertically(labels[i], innerLeft + 0.012f,
-                    lineY, 0.026f, 0.270f, 226, 227, 229, 255);
-                CustomMenuRenderer.TextRightCenteredVertically(LsFunctions.GramsToOz(SupplyAvailable(keys[i])),
-                    left + width - 0.019f, lineY, 0.026f,
-                    0.295f, 111, 216, 139, 255);
-            }
-        }
+        layout.Render();
     }
-
-
 }
