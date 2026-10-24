@@ -18,7 +18,7 @@ Objectif : menus et sous-menus autonomes, rendus via `CustomMenuRenderer` et `Cu
 - [x] **Worker / Employé(e)s** : menu principal.
 - [x] **Worker / Approvisionner**.
 - [x] **Worker / Équipement**.
-- [ ] **Worker / Instructions** : implémentation CustomMenu envoyée ; compilation et validation en jeu à effectuer (choix disponibles, application des ordres, retour).
+- [ ] **Worker / Rôle** : sélection gauche/droite directement dans le menu principal (Inactif / Suivre / Travailler selon les choix autorisés par `Orders()`) ; code envoyé, compilation et validation en jeu à effectuer. Aucun sous-menu Instructions.
 - [ ] **Stash / Planque** : inventorier les actions et migrer.
 - [ ] **Customer / Clients** : inventorier les actions et migrer.
 - [ ] **Audit final** : recenser tous les autres menus, dialogues, sélecteurs et dépendances NativeUI ; migrer les éléments restants.
