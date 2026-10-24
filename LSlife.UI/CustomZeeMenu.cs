@@ -349,7 +349,7 @@ internal static class CustomZeeMenu
         bool showWorker = displayed == workerMenu;
         bool showOrderDetails = displayed == orderMenu || IsDrugMenu(displayed);
         float height = 0.155f + displayed.Entries.Count * 0.043f +
-            (showWorker ? 0.307f : displayed == orderMenu ? 0.122f : showOrderDetails ? 0.094f : 0f);
+            (showWorker ? 0.340f : displayed == orderMenu ? 0.122f : showOrderDetails ? 0.094f : 0f);
         Rect(x, top + height / 2f, width, height, 13, 16, 20, 238);
         Rect(x, top, width, 0.002f, 194, 156, 88, 255);
         Rect(x, top + height, width, 0.002f, 194, 156, 88, 255);
