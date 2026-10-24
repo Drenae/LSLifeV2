@@ -25,8 +25,8 @@ internal static class CustomStashMenu
         if (houseMenu == null)
         {
             houseMenu = new CustomMenu("PLANQUE", "");
-            houseMenu.Add("Deposer", () => { });
-            houseMenu.Add("Retirer", () => { });
+            houseMenu.Add("Deposer", () => OpenLegacy(LSL.stashPutMenu));
+            houseMenu.Add("Retirer", () => OpenLegacy(LSL.stashTakeMenu));
         }
         activeMenu = houseMenu;
         activeMenu.Open();
@@ -40,12 +40,21 @@ internal static class CustomStashMenu
         if (vehicleMenu == null)
         {
             vehicleMenu = new CustomMenu("COFFRE", "");
-            vehicleMenu.Add("Deposer", () => { });
-            vehicleMenu.Add("Retirer", () => { });
+            vehicleMenu.Add("Deposer", () => OpenLegacy(LSL.vehStashPutMenu));
+            vehicleMenu.Add("Retirer", () => OpenLegacy(LSL.vehStashTakeMenu));
         }
         activeMenu = vehicleMenu;
         activeMenu.Open();
         waitForRelease = true;
+    }
+
+    // Conserver provisoirement les sous-menus et transferts historiques NativeUI.
+    private static void OpenLegacy(NativeUI.UIMenu target)
+    {
+        if (target == null) return;
+        Close();
+        target.CurrentSelection = 0;
+        target.Visible = true;
     }
 
     public static void Close()
