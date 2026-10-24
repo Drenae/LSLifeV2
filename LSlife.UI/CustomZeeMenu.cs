@@ -309,9 +309,9 @@ internal static class CustomZeeMenu
     // Theme PaperNest : anthracite profond, or champagne et typographie sobre.
     private static void Draw()
     {
-        const float x = CustomMenuRenderer.MenuX;
-        const float width = CustomMenuRenderer.MenuWidth;
-        const float top = CustomMenuRenderer.MenuTop;
+        const float x = 0.149f;
+        const float width = 0.268f;
+        const float top = 0.035f;
         const float left = x - width / 2f;
 
         // Panneau principal et filet dore (rectangles fins, sans textures externes).
@@ -319,10 +319,21 @@ internal static class CustomZeeMenu
         bool showOrderDetails = displayed == orderMenu || IsDrugMenu(displayed);
         float height = 0.155f + displayed.Entries.Count * 0.043f +
             (displayed == orderMenu ? 0.122f : showOrderDetails ? 0.094f : 0f);
-        CustomMenuRenderer.Frame(height);
-        string headerSubtitle = IsDrugMenu(displayed) || displayed == orderMenu ? "" :
-            displayed == dealerMenu ? "ZEE / ACTIVITE" : "CONTACT  /  SERVICES";
-        CustomMenuRenderer.Header(displayed.Title, 0.67f, null, headerSubtitle);
+        CustomMenuRenderer.Rect(x, top + height / 2f, width, height, 13, 16, 20, 238);
+        CustomMenuRenderer.Rect(x, top, width, 0.002f, 194, 156, 88, 255);
+        CustomMenuRenderer.Rect(x, top + height, width, 0.002f, 194, 156, 88, 255);
+        CustomMenuRenderer.Rect(left, top + height / 2f, 0.0015f, height, 151, 119, 69, 220);
+        CustomMenuRenderer.Rect(left + width, top + height / 2f, 0.0015f, height, 151, 119, 69, 220);
+
+        // Bandeau de marque.
+        CustomMenuRenderer.Rect(x, top + 0.046f, width - 0.004f, 0.090f, 22, 25, 29, 240);
+        CustomMenuRenderer.Rect(left + 0.008f, top + 0.046f, 0.003f, 0.062f, 194, 156, 88, 255);
+        CustomMenuRenderer.TextCenteredVertically(displayed.Title, left + 0.023f, top, 0.090f, 0.67f, 234, 207, 151, 255);
+        CustomMenuRenderer.TextCenteredVertically(IsDrugMenu(displayed) || displayed == orderMenu ? "" :
+            displayed == dealerMenu ? "ZEE / ACTIVITE" :
+            displayed == orderMenu ? "ZEE / COMMANDES" :
+            "CONTACT  /  SERVICES", left + 0.116f, top, 0.090f, 0.25f, 170, 159, 138, 255);
+        CustomMenuRenderer.Separator(x, top + 0.091f - 0.0065f, width - 0.019f);
 
         // Informations de progression.
         CustomMenuRenderer.Rect(x, top + 0.117f, width - 0.013f, 0.045f, 28, 30, 33, 232);
@@ -341,7 +352,15 @@ internal static class CustomZeeMenu
             bool selected = i == displayed.SelectedIndex;
             bool debtEntry = displayed == menu && i == displayed.Entries.Count - 1;
             bool debtFree = debtEntry && LSL.dealer1Debt <= 0;
-            CustomMenuRenderer.Row(y, selected);
+            CustomMenuRenderer.Rect(x, y + 0.0205f, width - 0.012f, 0.040f,
+                selected ? 65 : 25, selected ? 55 : 28,
+                selected ? 40 : 32, selected ? 248 : 229);
+            if (selected)
+            {
+                CustomMenuRenderer.Rect(left + 0.008f, y + 0.0205f, 0.0035f, 0.038f, 218, 176, 101, 255);
+                CustomMenuRenderer.Rect(x, y + 0.001f, width - 0.012f, 0.001f, 172, 137, 78, 225);
+                CustomMenuRenderer.Rect(x, y + 0.041f, width - 0.012f, 0.001f, 172, 137, 78, 225);
+            }
             CustomMenuRenderer.TextCenteredVertically(debtFree ? "Aucune dette en cours" :
                 IsDrugMenu(displayed) && i == 0 ? "Quantite" :
                 displayed.Entries[i].Label,
