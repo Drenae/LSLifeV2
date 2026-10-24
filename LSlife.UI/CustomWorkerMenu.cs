@@ -7,7 +7,7 @@ namespace LSlife;
 // Navigation et rendu propres aux employes. Aucun etat de menu partage avec Zee.
 internal static class CustomWorkerMenu
 {
-    private static CustomMenu workerMenu, workerSupplyMenu, activeMenu;
+    private static CustomMenu workerMenu, workerSupplyMenu, workerEquipmentMenu, activeMenu;
     private static int supplyWeed, supplyCrack, supplyCocaine, supplyStep = 1;
     private static readonly int[] supplySteps = { 1, 5, 10, 25, 50, 100 };
     private static bool waitForRelease;
@@ -27,7 +27,7 @@ internal static class CustomWorkerMenu
             workerMenu.Add("Recolter la recette", CollectWorker,
                 () => LSL.DealerHandler.currentDealer != null &&
                     LSL.DealerHandler.currentDealer.Money >= 100);
-            workerMenu.Add("Equipement", () => OpenNativeSubmenu());
+            workerMenu.Add("Equipement", OpenWorkerEquipment);
             workerMenu.Add("Instructions", () => OpenNativeSubmenu());
         }
         activeMenu = workerMenu;
@@ -42,6 +42,93 @@ internal static class CustomWorkerMenu
         activeMenu = null;
         LSL.WorkerMainMenu.Visible = true;
         LSL.WorkerMainMenu.CurrentSelection = 0;
+    }
+
+    private static void OpenWorkerEquipment()
+    {
+        if (LSL.DealerHandler.currentDealer == null) return;
+        workerEquipmentMenu = new CustomMenu("EQUIPEMENT", "");
+        workerEquipmentMenu.Add("Donner un gilet pare-balles", GiveWorkerArmour,
+            () => LSL.playerArmours > 0 && LSL.DealerHandler.currentDealer != null &&
+                  LSL.DealerHandler.currentDealer.Ped != null &&
+                  LSL.DealerHandler.currentDealer.Ped.Armor < 200);
+        // Liste reconstruite a chaque ouverture : le stock peut avoir change.
+        for (int i = 0; i < LSL.playerWeps.Count; i++)
+        {
+            int weaponIndex = i;
+            string weaponId = LSL.playerWeps[i];
+            workerEquipmentMenu.Add(FrenchWeaponName(weaponId), () => GiveWorkerWeapon(weaponIndex),
+                () => weaponIndex < LSL.playerWeps.Count);
+        }
+        workerMenu.Close();
+        activeMenu = workerEquipmentMenu;
+        workerEquipmentMenu.Open();
+    }
+
+    private static string FrenchWeaponName(string weapon)
+    {
+        switch (weapon.ToUpperInvariant())
+        {
+            case "PISTOL": return "Pistolet";
+            case "COMBATPISTOL": return "Pistolet de combat";
+            case "APPISTOL": return "Pistolet automatique";
+            case "PISTOL50": return "Pistolet calibre .50";
+            case "SNSPISTOL": return "Pistolet compact";
+            case "HEAVYPISTOL": return "Pistolet lourd";
+            case "VINTAGEPISTOL": return "Pistolet vintage";
+            case "MICROSMG": return "Micro-mitraillette";
+            case "SMG": return "Mitraillette";
+            case "ASSAULTSMG": return "Mitraillette d'assaut";
+            case "COMBATPDW": return "ADP de combat";
+            case "ASSAULTRIFLE": return "Fusil d'assaut";
+            case "CARBINERIFLE": return "Carabine";
+            case "ADVANCEDRIFLE": return "Fusil avance";
+            case "SPECIALCARBINE": return "Carabine speciale";
+            case "BULLPUPRIFLE": return "Fusil bullpup";
+            case "PUMPSHOTGUN": return "Fusil a pompe";
+            case "SAWNOFFSHOTGUN": return "Fusil a canon scie";
+            case "ASSAULTSHOTGUN": return "Fusil a pompe d'assaut";
+            case "HEAVYSHOTGUN": return "Fusil a pompe lourd";
+            case "SNIPERRIFLE": return "Fusil de precision";
+            case "HEAVYSNIPER": return "Fusil de precision lourd";
+            case "MG": return "Mitrailleuse";
+            case "COMBATMG": return "Mitrailleuse de combat";
+            default: return weapon;
+        }
+    }
+
+    private static void GiveWorkerArmour()
+    {
+        PlayerDealer dealer = LSL.DealerHandler.currentDealer;
+        if (dealer == null || dealer.Ped == null || dealer.Ped.Armor >= 200 ||
+            LSL.playerArmours <= 0) return;
+        LsFunctions.HandOverGoods(LSL.player.Character, dealer.Ped);
+        dealer.Ped.Armor = 200;
+        dealer.dArmour = 200;
+        LSL.playerArmours--;
+        LsFunctions.PlayTheSound();
+        LsFunctions.UpdateInventory();
+        LSL.DealerHandler.needsSave = true;
+    }
+
+    private static void GiveWorkerWeapon(int index)
+    {
+        if (LSL.DealerHandler.currentDealer == null || index < 0 ||
+            index >= LSL.playerWeps.Count) return;
+        // Reutilise provisoirement la logique historique de transfert et de sauvegarde,
+        // sans ouvrir de menu NativeUI. La migration du traitement viendra ensuite.
+        LSL.wWeapons.Index = index;
+        LsMenus.WWeapons_Activated(LSL.WorkerMainMenu, LSL.wWeapons);
+        if (activeMenu == workerEquipmentMenu)
+            OpenWorkerEquipmentRefresh();
+    }
+
+    private static void OpenWorkerEquipmentRefresh()
+    {
+        workerEquipmentMenu.Close();
+        activeMenu = workerMenu;
+        OpenWorkerEquipment();
+        waitForRelease = true;
     }
 
     private static void OpenWorkerSupply()
@@ -165,7 +252,7 @@ internal static class CustomWorkerMenu
         else if (DisabledJustPressed(202))
         {
             activeMenu.Close();
-            if (activeMenu == workerSupplyMenu)
+            if (activeMenu == workerSupplyMenu || activeMenu == workerEquipmentMenu)
             {
                 activeMenu = workerMenu;
                 workerMenu.Open();
@@ -213,8 +300,10 @@ internal static class CustomWorkerMenu
         const float x = 0.149f, width = 0.268f, top = 0.035f;
         const float left = x - width / 2f;
         bool main = activeMenu == workerMenu;
+        bool supply = activeMenu == workerSupplyMenu;
+        bool equipment = activeMenu == workerEquipmentMenu;
         float height = 0.102f + activeMenu.Entries.Count * 0.043f +
-            (main ? 0.168f : 0.126f);
+            (main ? 0.168f : supply ? 0.126f : 0.067f);
         CustomMenuRenderer.Rect(x, top + height / 2f, width, height, 13, 16, 20, 238);
         CustomMenuRenderer.Rect(x, top, width, 0.002f, 194, 156, 88, 255);
         CustomMenuRenderer.Rect(x, top + height, width, 0.002f, 194, 156, 88, 255);
@@ -250,7 +339,7 @@ internal static class CustomWorkerMenu
                 CustomMenuRenderer.TextRightCenteredVertically(LsFunctions.IntToMoney(money - (money / 100) * 20) + " $",
                     left + width - 0.018f, y + 0.0005f, 0.040f, 0.305f, 111, 216, 139, 255);
             }
-            if (!main && i < 3)
+            if (supply && i < 3)
             {
                 int selectedAmount = i == 0 ? supplyWeed : i == 1 ? supplyCrack : supplyCocaine;
                 int available = SupplyAvailable(i == 0 ? "Weed" : i == 1 ? "Crack" : "Cocaine");
@@ -267,17 +356,24 @@ internal static class CustomWorkerMenu
                 CustomMenuRenderer.TextRightCenteredVertically(LsFunctions.GramsToOz(amount), left + width - 0.018f,
                     y + 0.0005f, 0.040f, 0.305f, 111, 216, 139, 255);
             }
-            if (!main && i == 3)
+            if (supply && i == 3)
                 CustomMenuRenderer.TextRightCenteredVertically("< x" + supplyStep + " >", left + width - 0.018f,
                     y + 0.0005f, 0.040f, 0.305f, 218, 176, 101, 255);
         }
         // Espace entre la derniere action et le panneau de stock.
+        if (equipment)
+        {
+            CustomMenuRenderer.TextCenteredVertically("GILETS DISPONIBLES : " + LSL.playerArmours,
+                left + 0.020f, top + 0.098f + activeMenu.Entries.Count * 0.043f,
+                0.035f, 0.265f, 234, 207, 151, 255);
+            return;
+        }
         float detailY = top + 0.102f + activeMenu.Entries.Count * 0.043f;
         float innerLeft = left + 0.009f, innerWidth = width - 0.018f;
         CustomMenuRenderer.Rect(x, detailY + (main ? 0.082f : 0.056f), innerWidth,
             main ? 0.153f : 0.112f, 25, 29, 33, 248);
         // Separateur autonome, juste sous la derniere action.
-        CustomMenuRenderer.Rect(x, detailY - 0.006f, innerWidth, 0.001f, 171, 133, 73, 235);
+        CustomMenuRenderer.Rect(x, detailY - (supply ? 0.003f : 0.006f), innerWidth, 0.001f, 171, 133, 73, 235);
         if (main && LSL.DealerHandler.currentDealer != null)
         {
             PlayerDealer worker = LSL.DealerHandler.currentDealer;
