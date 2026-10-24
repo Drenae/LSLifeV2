@@ -86,8 +86,8 @@ internal sealed class CustomMenuLayout
         {
             CustomMenuRenderer.Rect(centerX, y + height / 2f,
                 width - 0.012f, height - 0.003f,
-                selected ? 65 : 25, selected ? 55 : 28,
-                selected ? 40 : 32, selected ? 248 : 229);
+                selected ? 65 : 39, selected ? 55 : 43,
+                selected ? 40 : 48, selected ? 248 : 245);
             if (selected)
             {
                 CustomMenuRenderer.Rect(Left + 0.008f, y + height / 2f,
