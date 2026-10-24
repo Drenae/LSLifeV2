@@ -22,8 +22,6 @@ internal static class CustomZeeMenu
     private static CustomMenu submenuReturnMenu;
 
     public static bool Visible => activeMenu != null && activeMenu.Visible;
-    public static bool WorkerVisible => CustomWorkerMenu.Visible;
-    public static void OpenWorker() => CustomWorkerMenu.Open();
 
     public static void Toggle()
     {
@@ -245,7 +243,6 @@ internal static class CustomZeeMenu
 
     public static void Tick()
     {
-        CustomWorkerMenu.Tick();
         if (returningFromSubmenu)
         {
             if (LSL.LsMenuPool.IsAnyMenuOpen()) submenuSeen = true;
