@@ -366,7 +366,7 @@ public class PlayerDealer
 			{
 				bool dFarAway = Pos.DistanceTo(LSL.playerPos) > 3f;
 				bool dNotTalking = CurrentState != Enums.PdStates.TalkToPlayer && CurrentState != Enums.PdStates.FollowPlayer && CurrentState != Enums.PdStates.FollowingPlayer;
-				bool flag = !LSL.WorkerMainMenu.Visible;
+				bool flag = !LSL.WorkerMainMenu.Visible && !CustomZeeMenu.WorkerVisible;
 				bool vMoving = Ped.IsInVehicle() && Ped.CurrentVehicle.Speed > 0f;
 				if (flag | dNotTalking | dFarAway | vMoving)
 				{
@@ -586,7 +586,7 @@ public class PlayerDealer
 				case Enums.PdStates.TalkToPlayer:
 					if (!playerNear())
 					{
-						if (LSL.DealerHandler.currentDealer == this && LSL.WorkerMainMenu.Visible)
+						if (LSL.DealerHandler.currentDealer == this && (LSL.WorkerMainMenu.Visible || CustomZeeMenu.WorkerVisible))
 						{
 							LSL.WorkerMainMenu.Visible = false;
 						}
@@ -1088,10 +1088,7 @@ public class PlayerDealer
 			SetDrugDesc();
 			SetDealerOrders();
 			SetArmourButton();
-			if (!LSL.WorkerMainMenu.Visible)
-			{
-				LSL.WorkerMainMenu.Visible = true;
-			}
+			CustomZeeMenu.OpenWorker();
 		}
 	}
 
