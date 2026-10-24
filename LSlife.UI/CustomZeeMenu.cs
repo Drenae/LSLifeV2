@@ -259,7 +259,12 @@ internal static class CustomZeeMenu
 
         // Bloquer d'abord les commandes GTA (dont l'ouverture du telephone).
         // Lire ensuite les commandes desactivees pour conserver la navigation.
-        foreach (int control in new[] { 27, 172, 173, 174, 175, 201, 202 })
+        // B / O sert aussi aux attaques au corps-a-corps dans GTA V.
+        // Neutraliser ces actions pendant qu'un menu personnalise est ouvert.
+        foreach (int control in new[] {
+            27, 172, 173, 174, 175, 201, 202,
+            24, 140, 141, 142, 257, 263, 264
+        })
         {
             Function.Call(Hash.DISABLE_CONTROL_ACTION, 0, control, true);
             Function.Call(Hash.DISABLE_CONTROL_ACTION, 2, control, true);
@@ -313,7 +318,7 @@ internal static class CustomZeeMenu
         CustomMenu displayed = activeMenu;
         bool showOrderDetails = displayed == orderMenu || IsDrugMenu(displayed);
         float height = 0.155f + displayed.Entries.Count * 0.043f +
-            (showOrderDetails ? 0.094f : 0f);
+            (displayed == orderMenu ? 0.122f : showOrderDetails ? 0.094f : 0f);
         Rect(x, top + height / 2f, width, height, 13, 16, 20, 238);
         Rect(x, top, width, 0.002f, 194, 156, 88, 255);
         Rect(x, top + height, width, 0.002f, 194, 156, 88, 255);
@@ -324,7 +329,7 @@ internal static class CustomZeeMenu
         Rect(x, top + 0.046f, width - 0.004f, 0.090f, 22, 25, 29, 240);
         Rect(left + 0.008f, top + 0.046f, 0.003f, 0.062f, 194, 156, 88, 255);
         TextCenteredVertically(displayed.Title, left + 0.023f, top, 0.090f, 0.67f, 234, 207, 151, 255);
-        TextCenteredVertically(IsDrugMenu(displayed) ? "" :
+        TextCenteredVertically(IsDrugMenu(displayed) || displayed == orderMenu ? "" :
             displayed == dealerMenu ? "ZEE / ACTIVITE" :
             displayed == orderMenu ? "ZEE / COMMANDES" :
             "CONTACT  /  SERVICES", left + 0.116f, top, 0.090f, 0.25f, 170, 159, 138, 255);
@@ -427,11 +432,14 @@ internal static class CustomZeeMenu
             Rect(x, y + 0.006f, width - 0.019f, 0.0015f, 171, 133, 73, 235);
             if (displayed == orderMenu)
             {
-                TextCenteredVertically("CANNABIS  " + LSL.NewOrder.weed + " OZ  |  CRACK  " +
-                    LSL.NewOrder.crack + " OZ", left + 0.016f,
-                    y + 0.012f, 0.022f, 0.255f, 202, 195, 180, 255);
-                TextCenteredVertically("COCAINE  " + LSL.NewOrder.cocaine + " OZ",
+                TextCenteredVertically("CANNABIS  " + LSL.NewOrder.weed + " OZ",
+                    left + 0.016f, y + 0.012f, 0.022f,
+                    0.255f, 202, 195, 180, 255);
+                TextCenteredVertically("CRACK  " + LSL.NewOrder.crack + " OZ",
                     left + 0.016f, y + 0.035f, 0.022f,
+                    0.255f, 202, 195, 180, 255);
+                TextCenteredVertically("COCAINE  " + LSL.NewOrder.cocaine + " OZ",
+                    left + 0.016f, y + 0.058f, 0.022f,
                     0.255f, 202, 195, 180, 255);
             }
             else
@@ -447,10 +455,11 @@ internal static class CustomZeeMenu
                     left + 0.016f, y + 0.035f, 0.022f,
                     0.255f, 202, 195, 180, 255);
             }
+            float totalY = displayed == orderMenu ? y + 0.086f : y + 0.058f;
             TextCenteredVertically("TOTAL COMMANDE", left + 0.016f,
-                y + 0.058f, 0.022f, 0.265f, 234, 207, 151, 255);
+                totalY, 0.022f, 0.265f, 234, 207, 151, 255);
             TextRightCenteredVertically(LsFunctions.IntToMoney(LSL.NewOrder.Bill) + " $",
-                left + width - 0.018f, y + 0.058f, 0.022f,
+                left + width - 0.018f, totalY, 0.022f,
                 0.265f, 234, 207, 151, 255);
         }
 
