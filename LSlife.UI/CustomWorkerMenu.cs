@@ -214,7 +214,7 @@ internal static class CustomWorkerMenu
         const float left = x - width / 2f;
         bool main = activeMenu == workerMenu;
         float height = 0.102f + activeMenu.Entries.Count * 0.043f +
-            (main ? 0.168f : 0.158f);
+            (main ? 0.168f : 0.142f);
         Rect(x, top + height / 2f, width, height, 13, 16, 20, 238);
         Rect(x, top, width, 0.002f, 194, 156, 88, 255);
         Rect(x, top + height, width, 0.002f, 194, 156, 88, 255);
@@ -264,7 +264,7 @@ internal static class CustomWorkerMenu
             if (!main && i < 3)
             {
                 int amount = i == 0 ? supplyWeed : i == 1 ? supplyCrack : supplyCocaine;
-                TextRightCenteredVertically(amount + " g", left + width - 0.018f,
+                TextRightCenteredVertically(LsFunctions.GramsToOz(amount), left + width - 0.018f,
                     y + 0.0005f, 0.040f, 0.305f, 111, 216, 139, 255);
             }
             if (!main && i == 3)
@@ -272,7 +272,7 @@ internal static class CustomWorkerMenu
                     y + 0.0005f, 0.040f, 0.305f, 218, 176, 101, 255);
         }
         // Espace entre la derniere action et le panneau de stock.
-        float detailY = top + 0.102f + activeMenu.Entries.Count * 0.043f + (main ? 0f : 0.016f);
+        float detailY = top + 0.102f + activeMenu.Entries.Count * 0.043f;
         float innerLeft = left + 0.009f, innerWidth = width - 0.018f;
         Rect(x, detailY + (main ? 0.082f : 0.048f), innerWidth,
             main ? 0.153f : 0.134f, 25, 29, 33, 248);
@@ -292,7 +292,7 @@ internal static class CustomWorkerMenu
                 int amount = worker.Drugs.ContainsKey(keys[i]) ? worker.Drugs[keys[i]] : 0;
                 TextCenteredVertically(names[i], innerLeft + 0.012f, lineY,
                     0.026f, 0.270f, 226, 227, 229, 255);
-                TextRightCenteredVertically(amount + " g", left + width - 0.019f,
+                TextRightCenteredVertically(LsFunctions.GramsToOz(amount), left + width - 0.019f,
                     lineY, 0.026f, 0.295f, 111, 216, 139, 255);
             }
             int net = worker.Money - (worker.Money / 100) * 20;
@@ -313,7 +313,7 @@ internal static class CustomWorkerMenu
                 float lineY = detailY + 0.037f + i * 0.026f;
                 TextCenteredVertically(labels[i], innerLeft + 0.012f,
                     lineY, 0.026f, 0.270f, 226, 227, 229, 255);
-                TextRightCenteredVertically(SupplyAvailable(keys[i]) + " g",
+                TextRightCenteredVertically(LsFunctions.GramsToOz(SupplyAvailable(keys[i])),
                     left + width - 0.019f, lineY, 0.026f,
                     0.295f, 111, 216, 139, 255);
             }
