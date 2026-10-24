@@ -82,9 +82,15 @@ internal static class CustomStashMenu
         }
         if (JustPressed(172)) activeMenu.Move(-1);
         else if (JustPressed(173)) activeMenu.Move(1);
-        else if (JustPressed(201)) activeMenu.Activate();
+        else if (JustPressed(201))
+        {
+            activeMenu.Activate();
+            // L'action peut fermer le menu pour ouvrir un sous-menu NativeUI.
+            // Ne jamais dessiner activeMenu apres cette transition.
+            if (!Visible) return;
+        }
         else if (JustPressed(202)) { Close(); return; }
-        Draw();
+        if (Visible) Draw();
     }
 
     private static bool Pressed(int control) =>
