@@ -268,7 +268,10 @@ internal static class CustomWorkerMenu
             if (Visible) Draw();
             return;
         }
-        if (activeMenu == workerMenu && activeMenu.SelectedIndex == 3 && HandleWorkerRoleInput())\n        {\n        }\n        else if (activeMenu == workerEquipmentMenu && activeMenu.SelectedIndex == 1 &&
+        if (activeMenu == workerMenu && activeMenu.SelectedIndex == 3 && HandleWorkerRoleInput())
+        {
+        }
+        else if (activeMenu == workerEquipmentMenu && activeMenu.SelectedIndex == 1 &&
             HandleEquipmentHorizontalInput())
         {
         }
@@ -388,7 +391,9 @@ internal static class CustomWorkerMenu
             int hp = worker.Ped != null ? Math.Max(0, worker.Ped.Health) : 0;
             int armor = worker.Ped != null ? Math.Max(0, worker.Ped.Armor) : 0;
             CustomMenuRenderer.TextCenteredVertically("SANTE  " + hp + "     ARMURE  " + armor,
-                layout.Left + 0.021f, y, 0.029f, 0.275f, 226, 206, 167, 255);
+                layout.Left + 0.021f, y, 0.029f, 0.255f, 226, 206, 167, 255);
+            CustomMenuRenderer.TextRightCenteredVertically("ETAT  " + CurrentWorkerRole(),
+                layout.Right - 0.019f, y, 0.029f, 0.255f, 218, 176, 101, 255);
         });
         string[] names = { "Cannabis", "Crack", "Cocaïne" };
         string[] keys = { "Weed", "Crack", "Cocaine" };
