@@ -16,12 +16,14 @@ internal static class CustomZeeMenu
     private static CustomMenu crackMenu;
     private static CustomMenu cocaineMenu;
     private static CustomMenu activeMenu;
+    private static CustomMenu workerMenu;
     private static bool dealerWeed, dealerCrack, dealerCocaine, dealerDeliveries;
     private static bool returningFromSubmenu;
     private static bool submenuSeen;
     private static CustomMenu submenuReturnMenu;
 
     public static bool Visible => activeMenu != null && activeMenu.Visible;
+    public static bool WorkerVisible => Visible && activeMenu == workerMenu;
 
     public static void Toggle()
     {
@@ -32,6 +34,32 @@ internal static class CustomZeeMenu
                         "    |    NIVEAU  " + (int)LsFunctions.CurrentRepLvl(LSL.dealer1Rep);
         activeMenu = menu;
         menu.Open();
+    }
+
+    // Appele depuis l'interaction existante avec le dealer recrute.
+    public static void OpenWorker()
+    {
+        if (Visible || LSL.LsMenuPool.IsAnyMenuOpen()) return;
+        if (LSL.DealerHandler.currentDealer == null) return;
+        if (workerMenu == null)
+        {
+            workerMenu = new CustomMenu("EMPLOYE", "");
+            workerMenu.Add("Approvisionner", () => OpenSubmenu(LSL.WorkerMainMenu));
+            workerMenu.Add("Recolter la recette", CollectWorker,
+                () => LSL.DealerHandler.currentDealer != null &&
+                    LSL.DealerHandler.currentDealer.Money >= 100);
+            workerMenu.Add("Equipement", () => OpenSubmenu(LSL.WorkerMainMenu));
+            workerMenu.Add("Instructions", () => OpenSubmenu(LSL.WorkerMainMenu));
+        }
+        activeMenu = workerMenu;
+        workerMenu.Open();
+    }
+
+    private static void CollectWorker()
+    {
+        if (LSL.DealerHandler.currentDealer == null ||
+            LSL.DealerHandler.currentDealer.Money < 100) return;
+        LsMenus.WCollect_Activated(LSL.WorkerMainMenu, LSL.wCollect);
     }
 
     private static void Create()
@@ -256,6 +284,8 @@ internal static class CustomZeeMenu
         }
 
         if (!Visible) return;
+        if (WorkerVisible && LSL.DealerHandler.currentDealer == null)
+        { workerMenu.Close(); activeMenu = null; return; }
 
         // Bloquer d'abord les commandes GTA (dont l'ouverture du telephone).
         // Lire ensuite les commandes desactivees pour conserver la navigation.
@@ -316,9 +346,10 @@ internal static class CustomZeeMenu
 
         // Panneau principal et filet dore (rectangles fins, sans textures externes).
         CustomMenu displayed = activeMenu;
+        bool showWorker = displayed == workerMenu;
         bool showOrderDetails = displayed == orderMenu || IsDrugMenu(displayed);
         float height = 0.155f + displayed.Entries.Count * 0.043f +
-            (displayed == orderMenu ? 0.122f : showOrderDetails ? 0.094f : 0f);
+            (showWorker ? 0.235f : displayed == orderMenu ? 0.122f : showOrderDetails ? 0.094f : 0f);
         Rect(x, top + height / 2f, width, height, 13, 16, 20, 238);
         Rect(x, top, width, 0.002f, 194, 156, 88, 255);
         Rect(x, top + height, width, 0.002f, 194, 156, 88, 255);
@@ -330,6 +361,7 @@ internal static class CustomZeeMenu
         Rect(left + 0.008f, top + 0.046f, 0.003f, 0.062f, 194, 156, 88, 255);
         TextCenteredVertically(displayed.Title, left + 0.023f, top, 0.090f, 0.67f, 234, 207, 151, 255);
         TextCenteredVertically(IsDrugMenu(displayed) || displayed == orderMenu ? "" :
+            displayed == workerMenu ? "GESTION DU DEALER" :
             displayed == dealerMenu ? "ZEE / ACTIVITE" :
             displayed == orderMenu ? "ZEE / COMMANDES" :
             "CONTACT  /  SERVICES", left + 0.116f, top, 0.090f, 0.25f, 170, 159, 138, 255);
@@ -337,7 +369,8 @@ internal static class CustomZeeMenu
 
         // Informations de progression.
         Rect(x, top + 0.117f, width - 0.013f, 0.045f, 28, 30, 33, 232);
-        TextCenteredVertically(displayed == dealerMenu ? "CHOISIR LES OPTIONS" :
+        TextCenteredVertically(showWorker ? "STOCK  /  RECETTE  /  EQUIPEMENT" :
+            displayed == dealerMenu ? "CHOISIR LES OPTIONS" :
             displayed == orderMenu ? "SELECTION DES PRODUITS" :
             IsDrugMenu(displayed) ? "STOCK " + DrugStock(displayed) + " OZ  |  " +
                 LsFunctions.IntToMoney(DrugUnitPrice(displayed)) + " $/OZ" :
@@ -400,6 +433,13 @@ internal static class CustomZeeMenu
                     left + width - 0.018f, y + 0.0005f, 0.040f, 0.305f,
                     218, 176, 101, 255);
             }
+            if (showWorker && i == 1 && LSL.DealerHandler.currentDealer != null)
+            {
+                int money = LSL.DealerHandler.currentDealer.Money;
+                TextRightCenteredVertically(LsFunctions.IntToMoney(money - (money / 100) * 20) + " $",
+                    left + width - 0.018f, y + 0.0005f, 0.040f, 0.305f,
+                    218, 176, 101, 255);
+            }
             if (displayed == orderMenu && i == 3)
             {
                 TextRightCenteredVertically(LsFunctions.IntToMoney(LSL.NewOrder.Bill) + " $",
@@ -424,6 +464,37 @@ internal static class CustomZeeMenu
             if ((displayed == menu && i < 2) || (displayed == orderMenu && i < 3))
                 TextCenteredVertically(">", left + width - 0.027f, y + 0.0005f, 0.040f, 0.33f,
                     204, 168, 102, 255);
+        }
+
+        if (showWorker && LSL.DealerHandler.currentDealer != null)
+        {
+            PlayerDealer worker = LSL.DealerHandler.currentDealer;
+            float y = top + 0.155f + displayed.Entries.Count * 0.043f;
+            int gross = worker.Money;
+            // Reproduit le calcul du jeu (division entiere avant la commission).
+            int commission = (gross / 100) * 20;
+            int net = gross - commission;
+            Rect(x, y + 0.006f, width - 0.019f, 0.0015f, 171, 133, 73, 235);
+            TextCenteredVertically("SANTE  " + worker.Ped.Health +
+                "    |    PROTECTION  " + worker.Ped.Armor,
+                left + 0.016f, y + 0.009f, 0.027f, 0.265f, 202, 195, 180, 255);
+            TextCenteredVertically("CANNABIS  " + worker.Drugs["Weed"] + " g",
+                left + 0.016f, y + 0.038f, 0.025f, 0.265f, 202, 195, 180, 255);
+            TextCenteredVertically("CRACK  " + worker.Drugs["Crack"] + " g",
+                left + 0.016f, y + 0.065f, 0.025f, 0.265f, 202, 195, 180, 255);
+            TextCenteredVertically("COCAINE  " + worker.Drugs["Cocaine"] + " g",
+                left + 0.016f, y + 0.092f, 0.025f, 0.265f, 202, 195, 180, 255);
+            Rect(x, y + 0.126f, width - 0.019f, 0.0015f, 171, 133, 73, 235);
+            TextCenteredVertically("VENTES  " + LsFunctions.IntToMoney(gross) + " $",
+                left + 0.016f, y + 0.133f, 0.026f, 0.265f, 202, 195, 180, 255);
+            TextCenteredVertically("COMMISSION 20 %  -" +
+                LsFunctions.IntToMoney(commission) + " $",
+                left + 0.016f, y + 0.159f, 0.026f, 0.265f, 202, 195, 180, 255);
+            TextCenteredVertically("A RECOLTER",
+                left + 0.016f, y + 0.190f, 0.026f, 0.275f, 234, 207, 151, 255);
+            TextRightCenteredVertically(LsFunctions.IntToMoney(net) + " $",
+                left + width - 0.018f, y + 0.190f, 0.026f,
+                0.275f, 234, 207, 151, 255);
         }
 
         if (showOrderDetails)
