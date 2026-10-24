@@ -122,6 +122,21 @@ internal sealed class CustomMenuLayout
         cursor += height;
     }
 
+    // Ligne informative avec couleur de valeur configurable, sans impact sur les autres menus.
+    public void ColoredTextPair(string label, string value, int r, int g, int b, float height = 0.025f)
+    {
+        if (height <= 0f) throw new ArgumentOutOfRangeException(nameof(height));
+        float y = cursor;
+        draws.Add(() =>
+        {
+            CustomMenuRenderer.TextCenteredVertically(label, Left + 0.019f,
+                y, height, 0.265f, 226, 227, 229, 255);
+            CustomMenuRenderer.TextRightCenteredVertically(value, Right - 0.019f,
+                y, height, 0.265f, r, g, b, 255);
+        });
+        cursor += height;
+    }
+
     // Fond dessine avant les elements, sans calcul manuel de hauteur.
     public void Render(float bottomPadding = 0.009f)
     {
