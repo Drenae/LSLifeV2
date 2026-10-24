@@ -214,40 +214,40 @@ internal static class CustomWorkerMenu
         const float left = x - width / 2f;
         bool main = activeMenu == workerMenu;
         float height = 0.102f + activeMenu.Entries.Count * 0.043f +
-            (main ? 0.168f : 0.142f);
-        Rect(x, top + height / 2f, width, height, 13, 16, 20, 238);
-        Rect(x, top, width, 0.002f, 194, 156, 88, 255);
-        Rect(x, top + height, width, 0.002f, 194, 156, 88, 255);
-        Rect(left, top + height / 2f, 0.0015f, height, 151, 119, 69, 220);
-        Rect(left + width, top + height / 2f, 0.0015f, height, 151, 119, 69, 220);
-        Rect(x, top + 0.046f, width - 0.004f, 0.090f, 22, 25, 29, 240);
-        Rect(left + 0.008f, top + 0.046f, 0.003f, 0.062f, 194, 156, 88, 255);
-        TextCenteredVertically(activeMenu.Title, left + 0.023f, top, 0.090f,
+            (main ? 0.168f : 0.126f);
+        CustomMenuRenderer.Rect(x, top + height / 2f, width, height, 13, 16, 20, 238);
+        CustomMenuRenderer.Rect(x, top, width, 0.002f, 194, 156, 88, 255);
+        CustomMenuRenderer.Rect(x, top + height, width, 0.002f, 194, 156, 88, 255);
+        CustomMenuRenderer.Rect(left, top + height / 2f, 0.0015f, height, 151, 119, 69, 220);
+        CustomMenuRenderer.Rect(left + width, top + height / 2f, 0.0015f, height, 151, 119, 69, 220);
+        CustomMenuRenderer.Rect(x, top + 0.046f, width - 0.004f, 0.090f, 22, 25, 29, 240);
+        CustomMenuRenderer.Rect(left + 0.008f, top + 0.046f, 0.003f, 0.062f, 194, 156, 88, 255);
+        CustomMenuRenderer.TextCenteredVertically(activeMenu.Title, left + 0.023f, top, 0.090f,
             main ? 0.67f : 0.46f, 234, 207, 151, 255);
         if (LSL.DealerHandler.currentDealer != null)
-            TextRightCenteredVertically("DEALER #" + LSL.DealerHandler.currentDealer.ID,
+            CustomMenuRenderer.TextRightCenteredVertically("DEALER #" + LSL.DealerHandler.currentDealer.ID,
                 left + width - 0.018f, top, 0.090f, 0.270f, 218, 176, 101, 255);
-        Rect(x, top + 0.091f, width - 0.019f, 0.0015f, 171, 133, 73, 235);
+        CustomMenuRenderer.Rect(x, top + 0.091f, width - 0.019f, 0.0015f, 171, 133, 73, 235);
         for (int i = 0; i < activeMenu.Entries.Count; i++)
         {
             float y = top + 0.098f + i * 0.043f;
             bool selected = i == activeMenu.SelectedIndex;
-            Rect(x, y + 0.0205f, width - 0.012f, 0.040f,
+            CustomMenuRenderer.Rect(x, y + 0.0205f, width - 0.012f, 0.040f,
                 selected ? 65 : 25, selected ? 55 : 28,
                 selected ? 40 : 32, selected ? 248 : 229);
             if (selected)
             {
-                Rect(left + 0.008f, y + 0.0205f, 0.0035f, 0.038f, 218, 176, 101, 255);
-                Rect(x, y + 0.001f, width - 0.012f, 0.001f, 172, 137, 78, 225);
-                Rect(x, y + 0.041f, width - 0.012f, 0.001f, 172, 137, 78, 225);
+                CustomMenuRenderer.Rect(left + 0.008f, y + 0.0205f, 0.0035f, 0.038f, 218, 176, 101, 255);
+                CustomMenuRenderer.Rect(x, y + 0.001f, width - 0.012f, 0.001f, 172, 137, 78, 225);
+                CustomMenuRenderer.Rect(x, y + 0.041f, width - 0.012f, 0.001f, 172, 137, 78, 225);
             }
-            TextCenteredVertically(activeMenu.Entries[i].Label, left + 0.019f,
+            CustomMenuRenderer.TextCenteredVertically(activeMenu.Entries[i].Label, left + 0.019f,
                 y + 0.0005f, 0.040f, 0.315f, selected ? 255 : 226,
                 selected ? 247 : 227, selected ? 226 : 229, 255);
             if (main && i == 1 && LSL.DealerHandler.currentDealer != null)
             {
                 int money = LSL.DealerHandler.currentDealer.Money;
-                TextRightCenteredVertically(LsFunctions.IntToMoney(money - (money / 100) * 20) + " $",
+                CustomMenuRenderer.TextRightCenteredVertically(LsFunctions.IntToMoney(money - (money / 100) * 20) + " $",
                     left + width - 0.018f, y + 0.0005f, 0.040f, 0.305f, 111, 216, 139, 255);
             }
             if (!main && i < 3)
@@ -256,33 +256,34 @@ internal static class CustomWorkerMenu
                 int available = SupplyAvailable(i == 0 ? "Weed" : i == 1 ? "Crack" : "Cocaine");
                 float barLeft = left + 0.116f, barWidth = 0.085f;
                 float fraction = available > 0 ? Math.Min(1f, (float)selectedAmount / available) : 0f;
-                Rect(barLeft + barWidth / 2f, y + 0.0205f, barWidth, 0.008f, 66, 68, 70, 255);
+                CustomMenuRenderer.Rect(barLeft + barWidth / 2f, y + 0.0205f, barWidth, 0.008f, 66, 68, 70, 255);
                 if (fraction > 0f)
-                    Rect(barLeft + barWidth * fraction / 2f, y + 0.0205f,
+                    CustomMenuRenderer.Rect(barLeft + barWidth * fraction / 2f, y + 0.0205f,
                         barWidth * fraction, 0.008f, 111, 216, 139, 255);
             }
             if (!main && i < 3)
             {
                 int amount = i == 0 ? supplyWeed : i == 1 ? supplyCrack : supplyCocaine;
-                TextRightCenteredVertically(LsFunctions.GramsToOz(amount), left + width - 0.018f,
+                CustomMenuRenderer.TextRightCenteredVertically(LsFunctions.GramsToOz(amount), left + width - 0.018f,
                     y + 0.0005f, 0.040f, 0.305f, 111, 216, 139, 255);
             }
             if (!main && i == 3)
-                TextRightCenteredVertically("< x" + supplyStep + " >", left + width - 0.018f,
+                CustomMenuRenderer.TextRightCenteredVertically("< x" + supplyStep + " >", left + width - 0.018f,
                     y + 0.0005f, 0.040f, 0.305f, 218, 176, 101, 255);
         }
         // Espace entre la derniere action et le panneau de stock.
         float detailY = top + 0.102f + activeMenu.Entries.Count * 0.043f;
         float innerLeft = left + 0.009f, innerWidth = width - 0.018f;
-        Rect(x, detailY + (main ? 0.082f : 0.048f), innerWidth,
-            main ? 0.153f : 0.134f, 25, 29, 33, 248);
-        Rect(x, detailY + 0.004f, innerWidth, 0.001f, 171, 133, 73, 235);
+        CustomMenuRenderer.Rect(x, detailY + (main ? 0.082f : 0.056f), innerWidth,
+            main ? 0.153f : 0.112f, 25, 29, 33, 248);
+        // Separateur autonome, juste sous la derniere action.
+        CustomMenuRenderer.Rect(x, detailY - 0.006f, innerWidth, 0.001f, 171, 133, 73, 235);
         if (main && LSL.DealerHandler.currentDealer != null)
         {
             PlayerDealer worker = LSL.DealerHandler.currentDealer;
             int hp = worker.Ped != null ? Math.Max(0, worker.Ped.Health) : 0;
             int armor = worker.Ped != null ? Math.Max(0, worker.Ped.Armor) : 0;
-            TextCenteredVertically("SANTE  " + hp + "     ARMURE  " + armor,
+            CustomMenuRenderer.TextCenteredVertically("SANTE  " + hp + "     ARMURE  " + armor,
                 innerLeft + 0.012f, detailY + 0.011f, 0.029f, 0.275f, 226, 206, 167, 255);
             string[] names = { "Cannabis", "Crack", "Cocaïne" };
             string[] keys = { "Weed", "Crack", "Cocaine" };
@@ -290,86 +291,35 @@ internal static class CustomWorkerMenu
             {
                 float lineY = detailY + 0.039f + i * 0.023f;
                 int amount = worker.Drugs.ContainsKey(keys[i]) ? worker.Drugs[keys[i]] : 0;
-                TextCenteredVertically(names[i], innerLeft + 0.012f, lineY,
+                CustomMenuRenderer.TextCenteredVertically(names[i], innerLeft + 0.012f, lineY,
                     0.026f, 0.270f, 226, 227, 229, 255);
-                TextRightCenteredVertically(LsFunctions.GramsToOz(amount), left + width - 0.019f,
+                CustomMenuRenderer.TextRightCenteredVertically(LsFunctions.GramsToOz(amount), left + width - 0.019f,
                     lineY, 0.026f, 0.295f, 111, 216, 139, 255);
             }
             int net = worker.Money - (worker.Money / 100) * 20;
-            TextCenteredVertically("A RECOLTER", innerLeft + 0.012f, detailY + 0.113f,
+            CustomMenuRenderer.TextCenteredVertically("A RECOLTER", innerLeft + 0.012f, detailY + 0.113f,
                 0.029f, 0.275f, 234, 207, 151, 255);
-            TextRightCenteredVertically(LsFunctions.IntToMoney(net) + " $",
+            CustomMenuRenderer.TextRightCenteredVertically(LsFunctions.IntToMoney(net) + " $",
                 left + width - 0.019f, detailY + 0.113f,
                 0.029f, 0.300f, 218, 176, 101, 255);
         }
         else if (!main)
         {
-            TextCenteredVertically("STOCK JOUEUR", innerLeft + 0.012f,
-                detailY + 0.009f, 0.024f, 0.270f, 234, 207, 151, 255);
+            CustomMenuRenderer.TextCenteredVertically("STOCK JOUEUR", innerLeft + 0.012f,
+                detailY + 0.004f, 0.024f, 0.270f, 234, 207, 151, 255);
             string[] labels = { "Cannabis", "Crack", "Cocaïne" };
             string[] keys = { "Weed", "Crack", "Cocaine" };
             for (int i = 0; i < 3; i++)
             {
-                float lineY = detailY + 0.037f + i * 0.026f;
-                TextCenteredVertically(labels[i], innerLeft + 0.012f,
+                float lineY = detailY + 0.028f + i * 0.023f;
+                CustomMenuRenderer.TextCenteredVertically(labels[i], innerLeft + 0.012f,
                     lineY, 0.026f, 0.270f, 226, 227, 229, 255);
-                TextRightCenteredVertically(LsFunctions.GramsToOz(SupplyAvailable(keys[i])),
+                CustomMenuRenderer.TextRightCenteredVertically(LsFunctions.GramsToOz(SupplyAvailable(keys[i])),
                     left + width - 0.019f, lineY, 0.026f,
                     0.295f, 111, 216, 139, 255);
             }
         }
     }
 
-    // Centre le texte dans une zone verticale en utilisant la hauteur
-    // reelle du caractere calculee par GTA pour la police et l'echelle.
-    // Les dimensions des zones peuvent changer sans ajuster les offsets.
-    private static void TextCenteredVertically(string value, float x, float zoneTop,
-        float zoneHeight, float scale, int r, int g, int b, int a)
-    {
-        const int font = 0;
-        float textHeight = Function.Call<float>(
-            unchecked((Hash)0xDB88A37483346780UL), scale, font);
-        // GTA ancre DRAW_TEXT au sommet de la ligne de police.
-        // Utiliser une compensation negative pour remonter le rendu visuel.
-        float textY = zoneTop + (zoneHeight - textHeight) / 2f
-                    - textHeight * 0.15f;
-        Text(value, x, textY, scale, r, g, b, a);
-    }
 
-    // Aligne les montants a droite tout en reutilisant le meme centrage vertical.
-    private static void TextRightCenteredVertically(string value, float right, float zoneTop,
-        float zoneHeight, float scale, int r, int g, int b, int a)
-    {
-        const int font = 0;
-        float textHeight = Function.Call<float>(
-            unchecked((Hash)0xDB88A37483346780UL), scale, font);
-        float textY = zoneTop + (zoneHeight - textHeight) / 2f
-                    - textHeight * 0.15f;
-        Function.Call(Hash.SET_TEXT_FONT, font);
-        Function.Call(Hash.SET_TEXT_SCALE, 0f, scale);
-        Function.Call(Hash.SET_TEXT_COLOUR, r, g, b, a);
-        Function.Call(Hash.SET_TEXT_OUTLINE);
-        Function.Call(Hash.SET_TEXT_RIGHT_JUSTIFY, true);
-        Function.Call(Hash.SET_TEXT_WRAP, 0f, right);
-        Function.Call(unchecked((Hash)0x25FBB336DF1804CBUL), "STRING");
-        Function.Call(unchecked((Hash)0x6C188BE134E074AAUL), value);
-        Function.Call(unchecked((Hash)0xCD015E5BB0D96A57UL), right, textY);
-        Function.Call(Hash.SET_TEXT_RIGHT_JUSTIFY, false);
-    }
-
-    private static void Rect(float x, float y, float w, float h, int r, int g, int b, int a)
-    {
-        Function.Call(Hash.DRAW_RECT, x, y, w, h, r, g, b, a);
-    }
-
-    private static void Text(string value, float x, float y, float scale, int r, int g, int b, int a)
-    {
-        Function.Call(Hash.SET_TEXT_FONT, 0);
-        Function.Call(Hash.SET_TEXT_SCALE, 0f, scale);
-        Function.Call(Hash.SET_TEXT_COLOUR, r, g, b, a);
-        Function.Call(Hash.SET_TEXT_OUTLINE);
-        Function.Call(unchecked((Hash)0x25FBB336DF1804CBUL), "STRING");
-        Function.Call(unchecked((Hash)0x6C188BE134E074AAUL), value);
-        Function.Call(unchecked((Hash)0xCD015E5BB0D96A57UL), x, y);
-    }
 }
