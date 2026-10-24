@@ -42,58 +42,8 @@ internal static class CustomMenuRenderer
         Function.Call(Hash.SET_TEXT_RIGHT_JUSTIFY, false);
     }
 
-    public const float MenuX = 0.149f;
-    public const float MenuWidth = 0.268f;
-    public const float MenuTop = 0.035f;
-    public const float RowHeight = 0.043f;
-    public const float HeaderHeight = 0.090f;
-
-    public static void Frame(float height)
-    {
-        float x = MenuX, width = MenuWidth, top = MenuTop;
-        float left = x - width / 2f;
-        Rect(x, top + height / 2f, width, height, 13, 16, 20, 238);
-        Rect(x, top, width, 0.002f, 194, 156, 88, 255);
-        Rect(x, top + height, width, 0.002f, 194, 156, 88, 255);
-        Rect(left, top + height / 2f, 0.0015f, height, 151, 119, 69, 220);
-        Rect(left + width, top + height / 2f, 0.0015f, height, 151, 119, 69, 220);
-    }
-
-    public static void Header(string title, float titleScale, string rightText = null,
-        string subtitle = null, float subtitleScale = 0.25f)
-    {
-        float x = MenuX, width = MenuWidth, top = MenuTop;
-        float left = x - width / 2f;
-        Rect(x, top + 0.046f, width - 0.004f, HeaderHeight, 22, 25, 29, 240);
-        Rect(left + 0.008f, top + 0.046f, 0.003f, 0.062f, 194, 156, 88, 255);
-        TextCenteredVertically(title, left + 0.023f, top, HeaderHeight,
-            titleScale, 234, 207, 151, 255);
-        if (!string.IsNullOrEmpty(rightText))
-            TextRightCenteredVertically(rightText, left + width - 0.018f,
-                top, HeaderHeight, 0.270f, 218, 176, 101, 255);
-        if (!string.IsNullOrEmpty(subtitle))
-            TextCenteredVertically(subtitle, left + 0.116f, top, HeaderHeight,
-                subtitleScale, 170, 159, 138, 255);
-        Separator(x, top + 0.091f - 0.0065f, width - 0.019f);
-    }
-
-    public static void Row(float y, bool selected)
-    {
-        float x = MenuX, width = MenuWidth;
-        float left = x - width / 2f;
-        Rect(x, y + 0.0205f, width - 0.012f, 0.040f,
-            selected ? 65 : 25, selected ? 55 : 28,
-            selected ? 40 : 32, selected ? 248 : 229);
-        if (selected)
-        {
-            Rect(left + 0.008f, y + 0.0205f, 0.0035f, 0.038f, 218, 176, 101, 255);
-            Rect(x, y + 0.001f, width - 0.012f, 0.001f, 172, 137, 78, 225);
-            Rect(x, y + 0.041f, width - 0.012f, 0.001f, 172, 137, 78, 225);
-        }
-    }
-
     // Separateur horizontal avec marges symetriques. Retourne la hauteur occupee.
-    public static float Separator(float x, float top, float width, float spacing = 0.015f)
+    public static float Separator(float x, float top, float width, float spacing = 0.006f)
     {
         Rect(x, top + spacing, width, 0.001f, 171, 133, 73, 235);
         return spacing * 2f + 0.001f;
