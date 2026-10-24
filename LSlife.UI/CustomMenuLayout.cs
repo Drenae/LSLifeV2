@@ -31,6 +31,15 @@ internal sealed class CustomMenuLayout
         cursor = top;
     }
 
+    // Reserve une zone et laisse le composant la dessiner a sa position calculee.
+    public void Block(float height, Action<float> draw)
+    {
+        if (height < 0f) throw new ArgumentOutOfRangeException(nameof(height));
+        float y = cursor;
+        if (draw != null) draws.Add(() => draw(y));
+        cursor += height;
+    }
+
     public void Space(float height)
     {
         if (height < 0f) throw new ArgumentOutOfRangeException(nameof(height));
@@ -80,11 +89,18 @@ internal sealed class CustomMenuLayout
                 selected ? 65 : 25, selected ? 55 : 28,
                 selected ? 40 : 32, selected ? 248 : 229);
             if (selected)
+            {
                 CustomMenuRenderer.Rect(Left + 0.008f, y + height / 2f,
                     0.0035f, height - 0.005f, 218, 176, 101, 255);
+                CustomMenuRenderer.Rect(centerX, y + 0.001f, width - 0.012f,
+                    0.001f, 172, 137, 78, 225);
+                CustomMenuRenderer.Rect(centerX, y + height - 0.002f, width - 0.012f,
+                    0.001f, 172, 137, 78, 225);
+            }
             int color = enabled ? 234 : 133;
             CustomMenuRenderer.TextCenteredVertically(label, Left + 0.019f,
-                y, height, 0.28f, color, color, color, 255);
+                y, height, 0.315f, selected ? 255 : color,
+                selected ? 247 : color, selected ? 226 : color, 255);
             if (!string.IsNullOrEmpty(value))
                 CustomMenuRenderer.TextRightCenteredVertically(value, Right - 0.019f,
                     y, height, 0.27f, 111, 216, 139, 255);
