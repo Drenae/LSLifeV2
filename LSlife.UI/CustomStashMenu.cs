@@ -106,10 +106,7 @@ internal static class CustomStashMenu
         layout.Separator(0.004f);
         for (int i = 0; i < activeMenu.Entries.Count; i++)
             layout.Row(activeMenu.Entries[i].Label, activeMenu.SelectedIndex == i);
-        layout.Separator(0.006f);
-        layout.Block(0.031f, y =>
-            CustomMenuRenderer.TextCenteredVertically("STOCK ENTREPOSE",
-                layout.Left + 0.019f, y, 0.031f, 0.28f, 226, 206, 167, 255));
+
         if (vehicle)
         {
             // Deux stocks distincts : produits en grammes et lots en onces.
@@ -127,14 +124,15 @@ internal static class CustomStashMenu
             layout.Block(0.029f, y =>
                 CustomMenuRenderer.TextCenteredVertically("STOCK CONDITIONNE",
                     layout.Left + 0.019f, y, 0.029f, 0.28f, 226, 206, 167, 255));
-            layout.TextPair("Cannabis", car.drugCarWeedOz + " oz");
-            layout.TextPair("Crack", car.drugCarCrackOz + " oz");
-            layout.TextPair("Cocaine", car.drugCarCocainOz + " oz");
+            layout.ColoredTextPair("Cannabis", car.drugCarWeedOz + " oz", 226, 85, 85);
+            layout.ColoredTextPair("Crack", car.drugCarCrackOz + " oz", 226, 85, 85);
+            layout.ColoredTextPair("Cocaine", car.drugCarCocainOz + " oz", 226, 85, 85);
             layout.Separator(0.005f);
             layout.TextPair("Argent", LsFunctions.IntToMoney(car.drugCarMoney) + " $");
         }
         else
         {
+            layout.Separator(0.006f);
             var house = LSL.HouseHandler.CurrentHouse;
             if (house == null) { Close(); return; }
             layout.TextPair("Cannabis", LsFunctions.GramsToOz(house.Weed));
