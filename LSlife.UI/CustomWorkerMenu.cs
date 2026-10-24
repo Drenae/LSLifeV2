@@ -7,7 +7,7 @@ namespace LSlife;
 // Navigation et rendu propres aux employes. Aucun etat de menu partage avec Zee.
 internal static class CustomWorkerMenu
 {
-    private static CustomMenu workerMenu, workerSupplyMenu, workerEquipmentMenu, activeMenu;
+    private static CustomMenu workerMenu, workerSupplyMenu, workerEquipmentMenu, workerInstructionsMenu, activeMenu;
     private static int supplyWeed, supplyCrack, supplyCocaine, supplyStep = 1;
     private static readonly int[] supplySteps = { 1, 5, 10, 25, 50, 100 };
     private static bool waitForRelease;
@@ -29,20 +29,47 @@ internal static class CustomWorkerMenu
                 () => LSL.DealerHandler.currentDealer != null &&
                     LSL.DealerHandler.currentDealer.Money >= 100);
             workerMenu.Add("Equipement", OpenWorkerEquipment);
-            workerMenu.Add("Instructions", () => OpenNativeSubmenu());
+            workerMenu.Add("Instructions", OpenWorkerInstructions);
         }
         activeMenu = workerMenu;
         workerMenu.Open();
         waitForRelease = true;
     }
 
-    // Transition explicite : la touche ayant ouvert le menu ne peut pas le refermer.
-    private static void OpenNativeSubmenu()
+    // Instructions : meme logique metier que l'ancien WOrder, sans menu NativeUI.
+    private static void OpenWorkerInstructions()
     {
-        activeMenu.Close();
-        activeMenu = null;
-        LSL.WorkerMainMenu.Visible = true;
-        LSL.WorkerMainMenu.CurrentSelection = 0;
+        PlayerDealer dealer = LSL.DealerHandler.currentDealer;
+        if (dealer == null) return;
+        workerInstructionsMenu = new CustomMenu("INSTRUCTIONS", "");
+        foreach (var order in dealer.Orders())
+        {
+            string instruction = order.ToString();
+            workerInstructionsMenu.Add(instruction, () => ApplyWorkerInstruction(instruction));
+        }
+        workerMenu.Close();
+        activeMenu = workerInstructionsMenu;
+        workerInstructionsMenu.Open();
+        waitForRelease = true;
+    }
+
+    private static void ApplyWorkerInstruction(string instruction)
+    {
+        PlayerDealer dealer = LSL.DealerHandler.currentDealer;
+        if (dealer == null) return;
+        Enums.PdStates state;
+        if (!Enum.TryParse(instruction, out state)) return;
+        dealer.NewState = state;
+        LSL.DealerHandler.needsSave = true;
+        // Les instructions disponibles dependent de l'etat du dealer.
+        OpenWorkerInstructionsRefresh();
+    }
+
+    private static void OpenWorkerInstructionsRefresh()
+    {
+        if (workerInstructionsMenu != null) workerInstructionsMenu.Close();
+        activeMenu = workerMenu;
+        OpenWorkerInstructions();
     }
 
     private static void OpenWorkerEquipment()
@@ -260,7 +287,7 @@ internal static class CustomWorkerMenu
         else if (DisabledJustPressed(202))
         {
             activeMenu.Close();
-            if (activeMenu == workerSupplyMenu || activeMenu == workerEquipmentMenu)
+            if (activeMenu == workerSupplyMenu || activeMenu == workerEquipmentMenu || activeMenu == workerInstructionsMenu)
             {
                 activeMenu = workerMenu;
                 workerMenu.Open();
@@ -383,6 +410,7 @@ internal static class CustomWorkerMenu
         }
         bool supply = activeMenu == workerSupplyMenu;
         bool equipment = activeMenu == workerEquipmentMenu;
+        bool instructions = activeMenu == workerInstructionsMenu;
         PlayerDealer dealer = LSL.DealerHandler.currentDealer;
         if (dealer == null) return;
 
@@ -425,9 +453,7 @@ internal static class CustomWorkerMenu
                 });
             }
         }
-        layout.Separator(0.006f);
-        if (equipment)
-        {
+        if (instructions)\n        {\n            layout.Render();\n            return;\n        }\n        layout.Separator(0.006f);\n        if (equipment)\n        {
             layout.Block(0.026f, y =>
                 CustomMenuRenderer.TextCenteredVertically("EQUIPEMENT DU DEALER",
                     layout.Left + 0.019f, y, 0.026f, 0.265f, 234, 207, 151, 255));
