@@ -29,48 +29,48 @@ internal static class CustomWorkerMenu
                 () => LSL.DealerHandler.currentDealer != null &&
                     LSL.DealerHandler.currentDealer.Money >= 100);
             workerMenu.Add("Equipement", OpenWorkerEquipment);
-            workerMenu.Add("Rôle", () => ChangeWorkerRole(1));
+            workerMenu.Add("Instruction", () => ChangeWorkerRole(1));
         }
         activeMenu = workerMenu;
         workerMenu.Open();
         waitForRelease = true;
     }
 
-    // Le rôle est sélectionné directement dans le menu principal.
-    // Les options proviennent de Orders() : elles dépendent de l'état réel du dealer.
-    private static string WorkerRoleLabel(string state)
+    // Instructions utilisateur distinctes des états techniques (TalkToPlayer, etc.).
+    private static readonly string[] instructionStates = { "None", "Follow", "Work" };
+    private static readonly string[] instructionLabels = { "Ne rien faire", "Me suivre", "Travailler (vendre)" };
+    private static readonly System.Collections.Generic.Dictionary<int, int> selectedInstructions =
+        new System.Collections.Generic.Dictionary<int, int>();
+
+    private static int CurrentInstructionIndex(PlayerDealer dealer)
     {
-        switch (state)
-        {
-            case "None": return "Inactif";
-            case "Follow": return "Suivre";
-            case "Work": return "Travailler";
-            default: return state;
-        }
+        if (dealer == null) return 0;
+        int saved;
+        if (selectedInstructions.TryGetValue(dealer.ID, out saved)) return saved;
+        string state = dealer.NewState.ToString();
+        if (state == "Work" || state == "Working") return 2;
+        if (state == "Follow" || state == "FollowingPlayer") return 1;
+        return 0;
     }
 
     private static string CurrentWorkerRole()
     {
         PlayerDealer dealer = LSL.DealerHandler.currentDealer;
-        return dealer == null ? "" : WorkerRoleLabel(dealer.NewState.ToString());
+        return dealer == null ? "" : instructionLabels[CurrentInstructionIndex(dealer)];
     }
 
     private static void ChangeWorkerRole(int direction)
     {
         PlayerDealer dealer = LSL.DealerHandler.currentDealer;
         if (dealer == null) return;
-        var options = dealer.Orders();
-        if (options == null || options.Count == 0) return;
-        string current = dealer.NewState.ToString();
-        int index = -1;
-        for (int i = 0; i < options.Count; i++)
-            if (options[i].ToString() == current) { index = i; break; }
-        int next = index < 0 ? (direction > 0 ? 0 : options.Count - 1) :
-            (index + direction + options.Count) % options.Count;
+        int index = (CurrentInstructionIndex(dealer) + direction + instructionStates.Length) %
+            instructionStates.Length;
         Enums.PdStates state;
-        if (!Enum.TryParse(options[next].ToString(), out state)) return;
+        if (!Enum.TryParse(instructionStates[index], out state)) return;
         dealer.NewState = state;
+        selectedInstructions[dealer.ID] = index;
         LSL.DealerHandler.needsSave = true;
+        GTA.UI.Notify("Instruction : " + instructionLabels[index]);
     }
 
     private static void OpenWorkerEquipment()
@@ -392,7 +392,7 @@ internal static class CustomWorkerMenu
             int armor = worker.Ped != null ? Math.Max(0, worker.Ped.Armor) : 0;
             CustomMenuRenderer.TextCenteredVertically("SANTE  " + hp + "     ARMURE  " + armor,
                 layout.Left + 0.021f, y, 0.029f, 0.255f, 226, 206, 167, 255);
-            CustomMenuRenderer.TextRightCenteredVertically("ETAT  " + CurrentWorkerRole(),
+            CustomMenuRenderer.TextRightCenteredVertically("INSTRUCTION  " + CurrentWorkerRole(),
                 layout.Right - 0.019f, y, 0.029f, 0.255f, 218, 176, 101, 255);
         });
         string[] names = { "Cannabis", "Crack", "Cocaïne" };
