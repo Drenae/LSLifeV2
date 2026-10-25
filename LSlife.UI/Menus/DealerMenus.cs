@@ -302,7 +302,8 @@ internal static partial class LsMenus
 		if (item == LSL.dismiss && (Entity)(object)LSL.weaponDealer1 != (Entity)null)
 		{
 			((Entity)LSL.weaponDealer1).CurrentBlip.Remove();
-			LSL.wepMenu.Visible = !LSL.wepMenu.Visible;
+			LSL.wepMenu.Visible = false;
+			CustomWeaponDealerMenu.Close();
 			LSL.weaponDealer1.Task.WanderAround();
 			((Entity)LSL.weaponDealer1).MarkAsNoLongerNeeded();
 			LSL.weaponDealer1.LeaveGroup();
