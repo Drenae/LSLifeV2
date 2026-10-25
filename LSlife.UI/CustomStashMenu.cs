@@ -196,7 +196,9 @@ internal static class CustomStashMenu
         if (k <= 6)
         {
             int value = Slider(k).Value;
-            return k <= 2 ? LsFunctions.GramsToOz(value) : k <= 5 ? value + " oz" : LsFunctions.IntToMoney(value) + " $";
+            return k <= 2 ? LsFunctions.GramsToOz(value) + " / " + LsFunctions.GramsToOz(Slider(k).Maximum)
+                : k <= 5 ? value + " / " + Slider(k).Maximum + " oz"
+                : LsFunctions.IntToMoney(value) + " / " + LsFunctions.IntToMoney(Slider(k).Maximum) + " $";
         }
         var item = List(k);
         return item.Items.Count == 0 ? "Aucun" : k == 7 ? "< " + item.Index + " >" : "< " + CustomMenuShared.FrenchWeaponName(item.Items[item.Index].ToString()) + " >";
