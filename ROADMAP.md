@@ -14,6 +14,14 @@
 - **Dépendance NativeUI** : encore requise pour les menus, le HUD et des composants internes. Ne pas supprimer la DLL avant élimination des références.
 - **Compilations** : les changements récents du HUD n'ont pas été confirmés compilés ; tester avant de marquer terminés.
 
+## Retours HUD — réglages et lisibilité (25 octobre 2026)
+
+- [x] Structurer les options HUD : taille écran, stock, influence et pression, DEBUG conditionnel, enregistrer et retour.
+- [x] Afficher les options DEBUG seulement lorsque AREADEBUG est activé dans l'état courant du mod.
+- [x] Ajuster les coordonnées au pixel près, avec répétition automatique au maintien gauche/droite.
+- [x] Masquer les panneaux DEBUG lorsque les menus personnalisés sont ouverts pour éviter la superposition.
+- [ ] Compiler et tester en jeu les nouveaux réglages, l'alignement des panneaux, le maintien des touches et la réapparition du DEBUG après fermeture.
+
 ## Correctifs HUD — 25 octobre 2026
 
 - [x] Corriger la ligne Zee « Aucune dette en cours » : elle doit dépendre de la ligne de dette, et non du dernier élément du menu.
