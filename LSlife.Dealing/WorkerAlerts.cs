@@ -103,7 +103,7 @@ internal static class WorkerAlerts
             if (!empty && !HasUnnotifiedLowStock(worker, s)) s.StockChangedPending = false;
         }
 
-        if (worker.Money != s.Money && worker.Money >= revenueThreshold && !s.RevenueNotified)
+        if (worker.Money >= revenueThreshold && !s.RevenueNotified && (worker.Money != s.Money || s.Money >= revenueThreshold))
         {
             if (Send(worker, "J'ai " + LsFunctions.IntToMoney(worker.Money - (worker.Money / 100) * 20) + " $ de recette a recolter."))
                 s.RevenueNotified = true;
