@@ -345,7 +345,7 @@ internal static class CustomZeeMenu
                 const float x = 0.149f, width = 0.268f;
                 float left = layout.Left;
             bool selected = i == displayed.SelectedIndex;
-            bool debtEntry = displayed == menu && i == displayed.Entries.Count - 1;
+            bool debtEntry = displayed == menu && displayed.Entries[i].Label == "Rembourser la dette";
             bool debtFree = debtEntry && LSL.dealer1Debt <= 0;
             CustomMenuRenderer.Rect(x, y + 0.0205f, width - 0.012f, 0.040f,
                 selected ? 65 : 39, selected ? 55 : 43,
