@@ -294,10 +294,14 @@ public partial class LSL
 				ZeesDealers.OnTick();
 			}
 			HandlePotentialWorker();
+			Hud.DebugEnabled = AreaDebug;
 			if (showInventory)
 			{
 				Hud.Draw();
-				if (AreaDebug && !LsMenuPool.IsAnyMenuOpen())
+				if (AreaDebug && !LsMenuPool.IsAnyMenuOpen()
+                    && !CustomZeeMenu.Visible && !CustomHudOptionsMenu.Visible
+                    && !CustomStashMenu.Visible && !CustomCustomerMenu.Visible
+                    && !CustomWeaponDealerMenu.Visible && !CustomHireDealerMenu.Visible)
 				{
 					areaInfoUI();
 					ZeeInfoUI();
