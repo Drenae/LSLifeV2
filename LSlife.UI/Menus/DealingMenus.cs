@@ -112,12 +112,17 @@ internal static partial class LsMenus
 
 	public static void OnOrderDrugsMenuSelect(UIMenu sender, UIMenuItem item, int index)
 	{
-		if (item == LSL.PlaceOrder && LSL.NewOrder != null && LSL.NewOrder.OrderValid())
-		{
-			LSL.NewOrder.Placed = true;
-			LSL.callDealer(wepdealer: false);
-			LSL.LsMenuPool.CloseAllMenus();
-		}
+		if (item != LSL.PlaceOrder) return;
+		if (PlaceDrugOrder()) LSL.LsMenuPool.CloseAllMenus();
+	}
+
+	// Retour explicite pour que chaque interface gere sa propre fermeture.
+	internal static bool PlaceDrugOrder()
+	{
+		if (LSL.NewOrder == null || !LSL.NewOrder.OrderValid()) return false;
+		LSL.NewOrder.Placed = true;
+		LSL.callDealer(wepdealer: false);
+		return true;
 	}
 
 	public static void onCustomerMenuSelect(UIMenu sender, UIMenuItem item, int index)
