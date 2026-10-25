@@ -10,9 +10,9 @@
 - **Menus personnalisés** : Zee, employés, planque, clients, marchand d'armes et recrutement possèdent des interfaces CustomMenu ; plusieurs actions utilisent encore les objets ou événements NativeUI en arrière-plan.
 - **Marchand d'armes** : achats et notifications validés en jeu ; disposition à améliorer.
 - **Recrutement** : ouverture, offre acceptée, paiement et suivi du dealer validés en jeu. Repérage et contournement de réputation réservés à DEBUG.
-- **HUD** : `HudRender.cs` utilise désormais les natives GTA V pour le HUD principal, les pressions et les panneaux DEBUG ; `CustomHudOptionsMenu.cs` remplace les réglages NativeUI. **Rendu validé visuellement en jeu par captures utilisateur ; correctifs de positionnement et menu Zee encore à recompiler et retester.**
-- **Dépendance NativeUI** : encore requise pour les menus, le HUD et des composants internes. Ne pas supprimer la DLL avant élimination des références.
-- **Compilations** : les changements récents du HUD n'ont pas été confirmés compilés ; tester avant de marquer terminés.
+- **HUD** : `HudRender.cs` utilise désormais les natives GTA V pour le HUD principal, les pressions et les panneaux DEBUG ; `CustomHudOptionsMenu.cs` remplace les réglages NativeUI. **Rendu, positionnement, maintien des touches et DEBUG validés en jeu par l'utilisateur.**
+- **Dépendance NativeUI** : encore requise pour les menus historiques et des composants internes ; le HUD principal n'en dépend plus pour son rendu. Ne pas supprimer la DLL avant élimination des références.
+- **Tests** : HUD et options confirmés fonctionnels en jeu par l'utilisateur ; audit des dépendances restantes dans `AUDIT_NATIVEUI.md`.
 
 ## Retours HUD — réglages et lisibilité (25 octobre 2026)
 
@@ -20,13 +20,13 @@
 - [x] Afficher les options DEBUG seulement lorsque AREADEBUG est activé dans l'état courant du mod.
 - [x] Ajuster les coordonnées au pixel près, avec répétition automatique au maintien gauche/droite.
 - [x] Masquer les panneaux DEBUG lorsque les menus personnalisés sont ouverts pour éviter la superposition.
-- [ ] Compiler et tester en jeu les nouveaux réglages, l'alignement des panneaux, le maintien des touches et la réapparition du DEBUG après fermeture.
+- [x] Compiler et tester en jeu les nouveaux réglages, l'alignement des panneaux, le maintien des touches et la réapparition du DEBUG après fermeture (retour utilisateur : parfait).
 
 ## Correctifs HUD — 25 octobre 2026
 
 - [x] Corriger la ligne Zee « Aucune dette en cours » : elle doit dépendre de la ligne de dette, et non du dernier élément du menu.
 - [x] Ajouter trois groupes de positions indépendants : stocks, barres de pression et panneaux DEBUG, avec sauvegarde XML (`heatPosX/Y`, `debugPosX/Y`) et compatibilité des anciennes coordonnées.
-- [ ] Compiler et vérifier en jeu les six coordonnées, la sauvegarde/recharge et le menu Zee corrigé.
+- [x] Vérifier en jeu les réglages et le menu Zee corrigé (retour utilisateur positif ; persistance après redémarrage à recontrôler séparément).
 
 ## Priorité immédiate — Migrer réellement le HUD
 
@@ -57,13 +57,15 @@ Objectif : menus et sous-menus autonomes, rendus via `CustomMenuRenderer` et `Cu
 - [x] **Worker / Instruction** : sélection gauche/droite dans le menu principal (Ne rien faire / Me suivre / Travailler), validée en jeu ; conserver la fermeture historique lors du passage au travail.
 - [ ] **Stash / Planque (maison)** : menu principal CustomMenu raccordé à l'interaction en jeu (à compiler et valider) ; retrait et dépôt restent provisoirement NativeUI. Source de vérité : `LSL.HouseHandler.CurrentHouse` (Weed/Crack/Cocain/Money/Armor/Weapons), sauvegarde de maison. Ne jamais mélanger avec le coffre de voiture.\n- [ ] **Stash / Coffre de voiture** : menu principal CustomMenu raccordé à l'interaction en jeu (à compiler et valider) ; retrait et dépôt restent provisoirement NativeUI. Auditer son propre inventaire, ses limites et sa sauvegarde avant modification. Ne jamais utiliser `CurrentHouse` pour le coffre.\n- [ ] **Stash / Vérification** : tester les transferts dans les deux sens, les quantités limites et la persistance de chaque stockage séparément.
 - [x] **Customer / Clients** : interface personnalisée et interactions raccordées ; découplage NativeUI interne restant.
-- [ ] **Audit final** : recenser tous les autres menus, dialogues, sélecteurs et dépendances NativeUI ; migrer les éléments restants.
+- [x] **Audit statique NativeUI** : inventaire des fichiers et ordre de migration documentés dans `AUDIT_NATIVEUI.md`.
+- [ ] **Découplage métier** : extraire les traitements appelés avec des objets `UIMenu*`, notamment Zee et commandes.
+- [ ] **Audit final après migration** : vérifier l'absence totale de références NativeUI avant suppression de la DLL.
 - [ ] Supprimer les références et la dépendance NativeUI seulement lorsque plus aucun code ne l'utilise.
 
 ## P2 — Améliorations après migration
 
 - [ ] **Alertes de réapprovisionnement Worker** : SMS de l’employé lorsque Cannabis, Crack ou Cocaïne est épuisé ; message spécifique lorsque tout le stock est vide. Prévoir anti-spam, seuils et déclenchement uniquement lors d’un changement de stock.\n- [ ] **Alerte recette Worker** : SMS lorsque la somme à récolter dépasse un seuil configurable ; éviter les répétitions jusqu’à la récolte.\n- [ ] **Équipement Worker** : donner une nouvelle arme et récupérer automatiquement l'ancienne ; gérer inventaire, munitions, composants, sauvegarde et cas limites.
-- [ ] **HUD** : migration du rendu et des réglages vers natives GTA/CustomMenu implémentée, **non compilée ni validée en jeu** ; vérifier le résultat et l'absence de régression (voir ci-dessus).
+- [x] **HUD** : rendu et options personnalisés, validés en jeu ; surveiller les régressions lors du découplage final de NativeUI.
 - [ ] **HUD / Session** : afficher les bénéfices de la session actuelle, avec une définition claire des revenus et dépenses comptabilisés.
 - [ ] **Livre des comptes** (étude de faisabilité) : historique des transactions, bénéfices, dépenses et synthèses par session ; évaluer persistance et performances avant développement.
 
