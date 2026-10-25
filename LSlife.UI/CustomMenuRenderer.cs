@@ -57,9 +57,9 @@ internal static class CustomMenuRenderer
         Function.Call(unchecked((Hash)0x54CE8AC98E120CABUL), "STRING");
         Function.Call(unchecked((Hash)0x6C188BE134E074AAUL), suffix);
         float suffixWidth = Function.Call<float>(unchecked((Hash)0x85F061DA64ED2F67UL), true);
-        TextRightCenteredVertically(suffix, right, zoneTop, zoneHeight, scale,
+        TextRightCenteredVertically("~w~" + suffix, right, zoneTop, zoneHeight, scale,
             disabled ? 125 : 230, disabled ? 125 : 230, disabled ? 125 : 230, 255);
-        TextRightCenteredVertically(selected, right - suffixWidth, zoneTop, zoneHeight,
+        TextRightCenteredVertically((disabled ? "~c~" : r > g ? "~r~" : "~g~") + selected, right - suffixWidth, zoneTop, zoneHeight,
             scale, disabled ? 125 : r, disabled ? 125 : g, disabled ? 125 : b, 255);
     }
 
