@@ -105,10 +105,7 @@ internal static class CustomWorkerMenu
     {
         if (LSL.DealerHandler.currentDealer == null || index < 0 ||
             index >= LSL.playerWeps.Count) return;
-        // Reutilise provisoirement la logique historique de transfert et de sauvegarde,
-        // sans ouvrir de menu NativeUI. La migration du traitement viendra ensuite.
-        LSL.wWeapons.Index = index;
-        LsMenus.WWeapons_Activated(LSL.WorkerMainMenu, LSL.wWeapons);
+        LsMenus.GiveWeaponToWorker(index);
         if (activeMenu == workerEquipmentMenu)
             OpenWorkerEquipmentRefresh();
     }
