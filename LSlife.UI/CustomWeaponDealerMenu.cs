@@ -42,8 +42,51 @@ internal static class CustomWeaponDealerMenu
     private static void Purchase(NativeUI.UIMenuItem item)
     {
         if (LSL.weaponDealer1 == null) { Close(); return; }
-        // Le gestionnaire existant reste la source unique des transactions.
+
+        bool isMelee = item == LSL.melee;
+        bool isPistol = item == LSL.pistol;
+        bool isAmmo = isPistol && LSL.pistol.Index == 3;
+        if (isMelee || (isPistol && !isAmmo))
+        {
+            string weaponName = isMelee ? LSL.meleeWeps[LSL.melee.Index] : LSL.pistolWeps[LSL.pistol.Index];
+            WeaponHash weapon;
+            if (!Enum.TryParse<WeaponHash>(weaponName, true, out weapon))
+            {
+                GTA.UI.ShowSubtitle("Arme indisponible : " + weaponName, 3000);
+                return;
+            }
+            if (Game.Player.Character.Weapons.HasWeapon(weapon))
+            {
+                GTA.UI.ShowSubtitle("Tu possedes deja cette arme.", 2500);
+                return;
+            }
+        }
+
+        int moneyBefore = Game.Player.Money;
+        int debtBefore = LSL.dealer1Debt;
+        int armourBefore = Game.Player.Character.Armor;
+        int ammoBefore = Game.Player.Character.Weapons.Current.Ammo;
+        // La logique historique conserve le prix, le credit et la sauvegarde.
         LsMenus.OnWepMenuSelect(LSL.wepMenu, item, menu.SelectedIndex);
+        bool paid = Game.Player.Money < moneyBefore;
+        bool credit = LSL.dealer1Debt > debtBefore;
+        if (paid || credit)
+        {
+            LsFunctions.PlayTheSound();
+            GTA.UI.ShowSubtitle(credit ? "Achat effectue a credit." : "Achat effectue.", 2500);
+        }
+        else if (item == LSL.armour && Game.Player.Character.Armor != armourBefore)
+        {
+            GTA.UI.ShowSubtitle("Gilet pare-balles obtenu.", 2500);
+        }
+        else if (isAmmo && Game.Player.Character.Weapons.Current.Ammo != ammoBefore)
+        {
+            GTA.UI.ShowSubtitle("Munitions obtenues.", 2500);
+        }
+        else
+        {
+            GTA.UI.ShowSubtitle("Achat impossible : fonds insuffisants, plafond de credit ou inventaire plein.", 3500);
+        }
     }
 
     private static void Dismiss()
@@ -122,10 +165,10 @@ internal static class CustomWeaponDealerMenu
         layout.Separator(0.004f);
         layout.Row("Arme blanche", menu.SelectedIndex == 0,
             LsFunctions.IntToMoney(Price(LSL.melee.Index, true)) + " $");
-        layout.Row("‹ " + Choice(LSL.melee.Index, true) + " ›", false, height: 0.030f);
+        layout.Row("< " + Choice(LSL.melee.Index, true) + " >", false, height: 0.030f);
         layout.Row("Pistolet", menu.SelectedIndex == 1,
             LsFunctions.IntToMoney(Price(LSL.pistol.Index, false)) + " $");
-        layout.Row("‹ " + Choice(LSL.pistol.Index, false) + " ›", false, height: 0.030f);
+        layout.Row("< " + Choice(LSL.pistol.Index, false) + " >", false, height: 0.030f);
         layout.Row("Gilet pare-balles", menu.SelectedIndex == 2,
             LsFunctions.IntToMoney(250 - LsFunctions.Discount(250)) + " $");
         layout.Separator(0.005f);
