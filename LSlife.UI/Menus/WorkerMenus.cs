@@ -43,8 +43,16 @@ internal static partial class LsMenus
 		UI.ShowSubtitle("J'ai déjà assez de protection.", 4000);
 	}
 
-	public static void WWeapons_Activated(UIMenu sender, UIMenuItem selectedItem)
+		public static void WWeapons_Activated(UIMenu sender, UIMenuItem selectedItem)
 	{
+		GiveWeaponToWorker(LSL.wWeapons.Index);
+	}
+
+	public static void GiveWeaponToWorker(int index)
+	{
+		if (LSL.DealerHandler == null || LSL.DealerHandler.currentDealer == null ||
+			LSL.DealerHandler.currentDealer.Ped == null || index < 0 ||
+			index >= LSL.playerWeps.Count || index >= LSL.playerWeapons.Count) return;
 		//IL_0112: Unknown result type (might be due to invalid IL or missing references)
 		//IL_0118: Invalid comparison between Unknown and I4
 		//IL_03ac: Unknown result type (might be due to invalid IL or missing references)
@@ -55,17 +63,17 @@ internal static partial class LsMenus
 		{
 			UI.Notify("Transfert d'arme");
 		}
-		if (LSL.wWeapons.Items.Count > 0)
+		if (LSL.playerWeps.Count > 0)
 		{
 			LsFunctions.HandOverGoods(LSL.player.Character, LSL.DealerHandler.currentDealer.Ped);
 			WeaponHash wep = default;
-			if (Enum.TryParse(LSL.playerWeps[LSL.wWeapons.Index], out wep))
+			if (Enum.TryParse(LSL.playerWeps[index], out wep))
 			{
 				if ((int)wep == -1569615261)
 				{
 					return;
 				}
-				XElement w = LSL.playerWeapons[LSL.wWeapons.Index];
+				XElement w = LSL.playerWeapons[index];
 				if (w != null)
 				{
 					XDocument dealersDoc = XDocument.Load("scripts\\LSLife\\LSLife_Dealers.xml");
@@ -150,9 +158,7 @@ internal static partial class LsMenus
 							}
 							Game.Player.Character.Weapons.Remove(wep);
 							LSL.playerWeapons.Remove(w);
-							LSL.playerWeps.RemoveAt(LSL.wWeapons.Index);
-							LSL.wWeapons.Items = LSL.playerWeps;
-							LSL.wWeapons.Index = 0;
+							LSL.playerWeps.RemoveAt(index);
 							if (LSL.DEBUG)
 							{
 								UI.Notify("Enregistrement de l'arme du dealer : " + ((object)wep/*cast due to constrained. prefix*/).ToString() + " munitions : " + ammo);
@@ -169,7 +175,7 @@ internal static partial class LsMenus
 			}
 			else if (LSL.DEBUG)
 			{
-				UI.Notify("Identifiant d'arme introuvable : " + LSL.playerWeps[LSL.wWeapons.Index]);
+				UI.Notify("Identifiant d'arme introuvable : " + LSL.playerWeps[index]);
 			}
 		}
 		else if (LSL.DEBUG)
