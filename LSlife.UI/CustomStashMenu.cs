@@ -196,13 +196,22 @@ internal static class CustomStashMenu
         if (k <= 6)
         {
             int value = Slider(k).Value;
-            return k <= 2 ? LsFunctions.GramsToOz(value) + " / " + LsFunctions.GramsToOz(Slider(k).Maximum)
-                : k <= 5 ? value + " / " + Slider(k).Maximum + " oz"
-                : LsFunctions.IntToMoney(value) + " / " + LsFunctions.IntToMoney(Slider(k).Maximum) + " $";
+            return k <= 2 ? LsFunctions.GramsToOz(value).Replace(", ", " ").Replace(",", "")
+                : k <= 5 ? value + "oz"
+                : LsFunctions.IntToMoney(value) + "$";
         }
         var item = List(k);
         return item.Items.Count == 0 ? "Aucun" : k == 7 ? "< " + item.Index + " >" : "< " + CustomMenuShared.FrenchWeaponName(item.Items[item.Index].ToString()) + " >";
     }
+    private static string AvailableValue(int k)
+    {
+        if (k < 0 || k > 6) return null;
+        int maximum = Math.Max(0, Slider(k).Maximum);
+        return k <= 2 ? "/ " + LsFunctions.GramsToOz(maximum).Replace(", ", " ").Replace(",", "")
+            : k <= 5 ? "/ " + maximum + "oz"
+            : "/ " + LsFunctions.IntToMoney(maximum) + "$";
+    }
+
     private static void Section(CustomMenuLayout layout, string title)
     {
         layout.Block(0.028f, y => CustomMenuRenderer.TextCenteredVertically(title, layout.Left + 0.019f, y, 0.028f, 0.28f, 226, 206, 167, 255));
@@ -223,7 +232,7 @@ internal static class CustomStashMenu
                 (k == 7 ? List(k).Items.Count > 1 : List(k).Items.Count > 0));
             layout.Row(label, selected, Value(k), 0.040f, enabled: available,
                 redValue: k >= 3 && k <= 5, dimValue: !available,
-                emphasizeValue: selected && available);
+                emphasizeValue: selected && available, availableValue: AvailableValue(k));
             if (k >= 0 && k <= 6)
             {
                 // Barre dans la ligne, comme le menu Approvisionner de l'employe.
