@@ -3,7 +3,8 @@ using GTA.Native;
 
 namespace LSlife;
 
-// Réglages du HUD sans UIMenu, sliders ni MenuPool NativeUI.
+// Menu de configuration des trois groupes HUD, sans NativeUI.
+// Les lignes informatives et les separateurs ne sont pas selectionnables.
 internal static class CustomHudOptionsMenu
 {
     private static CustomMenu menu;
@@ -16,18 +17,19 @@ internal static class CustomHudOptionsMenu
     public static void Open()
     {
         if (Visible) return;
-        if (menu == null)
+        // Reconstruire pour tenir compte d'un changement de AREADEBUG a chaud.
+        menu = new CustomMenu("HUD", "POSITION / OPTIONS");
+        menu.Add("Stock X", () => { });
+        menu.Add("Stock Y", () => { });
+        menu.Add("Influence et pression X", () => { });
+        menu.Add("Influence et pression Y", () => { });
+        if (LSL.AreaDebug)
         {
-            menu = new CustomMenu("HUD", "POSITION / OPTIONS");
-            menu.Add("Stocks - position X", () => { });
-            menu.Add("Stocks - position Y", () => { });
-            menu.Add("Pression - position X", () => { });
-            menu.Add("Pression - position Y", () => { });
-            menu.Add("DEBUG - position X", () => { });
-            menu.Add("DEBUG - position Y", () => { });
-            menu.Add("Enregistrer", Save);
-            menu.Add("Retour", Close);
+            menu.Add("DEBUG X", () => { });
+            menu.Add("DEBUG Y", () => { });
         }
+        menu.Add("Enregistrer", Save);
+        menu.Add("Retour", Close);
         menu.Open();
         waitForRelease = true;
         repeat.Reset();
@@ -83,19 +85,21 @@ internal static class CustomHudOptionsMenu
             if (!Visible) return;
         }
 
-        if (menu.SelectedIndex <= 5)
+        int coordinateRows = LSL.AreaDebug ? 6 : 4;
+        if (menu.SelectedIndex < coordinateRows)
         {
-            int direction = repeat.Poll(110, 320);
+            // Premier appui : 1 pixel ; maintien : repetition automatique.
+            int direction = repeat.Poll(28, 220);
             if (direction != 0)
             {
                 switch (menu.SelectedIndex)
                 {
-                    case 0: Hud.Move(direction * 10, 0); break;
-                    case 1: Hud.Move(0, direction * 10); break;
-                    case 2: Hud.MoveBars(direction * 10, 0); break;
-                    case 3: Hud.MoveBars(0, direction * 10); break;
-                    case 4: Hud.MoveDebug(direction * 10, 0); break;
-                    case 5: Hud.MoveDebug(0, direction * 10); break;
+                    case 0: Hud.Move(direction, 0); break;
+                    case 1: Hud.Move(0, direction); break;
+                    case 2: Hud.MoveBars(direction, 0); break;
+                    case 3: Hud.MoveBars(0, direction); break;
+                    case 4: Hud.MoveDebug(direction, 0); break;
+                    case 5: Hud.MoveDebug(0, direction); break;
                 }
             }
         }
@@ -104,24 +108,43 @@ internal static class CustomHudOptionsMenu
         Draw();
     }
 
+    private static void Section(CustomMenuLayout layout, string title)
+    {
+        layout.Separator(0.005f);
+        layout.Block(0.029f, y =>
+            CustomMenuRenderer.TextCenteredVertically(title, layout.Left + 0.019f,
+                y, 0.029f, 0.29f, 218, 176, 101, 255));
+    }
+
     private static void Draw()
     {
         var layout = new CustomMenuLayout();
         layout.Header("HUD", "POSITION / OPTIONS");
-        layout.Separator(0.005f);
-        layout.TextPair("Coordonnees", "1920 x 1080");
-        layout.Row("Stocks X", menu.SelectedIndex == 0, Hud.PositionX.ToString());
-        layout.Row("Stocks Y", menu.SelectedIndex == 1, Hud.PositionY.ToString());
-        layout.Row("Pression X", menu.SelectedIndex == 2, Hud.BarsPositionX.ToString());
-        layout.Row("Pression Y", menu.SelectedIndex == 3, Hud.BarsPositionY.ToString());
-        layout.Row("DEBUG X", menu.SelectedIndex == 4, Hud.DebugX.ToString());
-        layout.Row("DEBUG Y", menu.SelectedIndex == 5, Hud.DebugY.ToString());
-        layout.Block(0.032f, y =>
-            CustomMenuRenderer.TextCenteredVertically("Gauche / droite : deplacer par 10 pixels",
-                layout.Left + 0.019f, y, 0.032f, 0.245f, 175, 177, 182, 255));
-        layout.Separator(0.004f);
-        layout.Row("Enregistrer", menu.SelectedIndex == 6);
-        layout.Row("Retour", menu.SelectedIndex == 7);
+        layout.TextPair("Taille ecran", "1920 x 1080", 0.032f);
+
+        Section(layout, "STOCK");
+        layout.Row("Position X", menu.SelectedIndex == 0, Hud.PositionX.ToString());
+        layout.Row("Position Y", menu.SelectedIndex == 1, Hud.PositionY.ToString());
+
+        Section(layout, "INFLUENCE ET PRESSION");
+        layout.Row("Position X", menu.SelectedIndex == 2, Hud.BarsPositionX.ToString());
+        layout.Row("Position Y", menu.SelectedIndex == 3, Hud.BarsPositionY.ToString());
+
+        if (LSL.AreaDebug)
+        {
+            Section(layout, "DEBUG");
+            layout.Row("Position X", menu.SelectedIndex == 4, Hud.DebugX.ToString());
+            layout.Row("Position Y", menu.SelectedIndex == 5, Hud.DebugY.ToString());
+        }
+
+        layout.Separator(0.006f);
+        layout.Block(0.029f, y =>
+            CustomMenuRenderer.TextCenteredVertically("Maintenir gauche / droite : deplacer (1 px)",
+                layout.Left + 0.019f, y, 0.029f, 0.245f, 175, 177, 182, 255));
+
+        int saveIndex = LSL.AreaDebug ? 6 : 4;
+        layout.Row("Enregistrer", menu.SelectedIndex == saveIndex);
+        layout.Row("Retour", menu.SelectedIndex == saveIndex + 1);
         layout.Render();
     }
 }
