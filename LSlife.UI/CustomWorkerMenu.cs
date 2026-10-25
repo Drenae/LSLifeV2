@@ -190,7 +190,12 @@ internal static class CustomWorkerMenu
     {
         if (LSL.DealerHandler.currentDealer == null ||
             LSL.DealerHandler.currentDealer.Money < 100) return;
-        LsMenus.WCollect_Activated(LSL.WorkerMainMenu, LSL.wCollect);
+        PlayerDealer worker = LSL.DealerHandler.currentDealer;
+        if (worker.Ped == null) return;
+        LsFunctions.HandOverGoods(LSL.player.Character, worker.Ped);
+        worker.GiveMoneyToPlayer();
+        worker.SetDrugDesc();
+        LSL.DealerHandler.needsSave = true;
     }
 
 
