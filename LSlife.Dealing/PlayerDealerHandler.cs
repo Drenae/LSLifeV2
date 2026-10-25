@@ -97,6 +97,7 @@ public class PlayerDealerHandler
 			}
 			if (dealer.CurrentState != Enums.PdStates.Dead && dealer.CurrentState != Enums.PdStates.FollowPlayer && dealer.CurrentState != Enums.PdStates.FollowingPlayer && LsFunctions.TimeChanged && LsFunctions.HoursPassed > 0)
 			{
+				WorkerAlerts.Observe(dealer);
 				dealer.SimulateSales(LsFunctions.HoursPassed);
 				needsSave = true;
 			}
