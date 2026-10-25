@@ -16,6 +16,9 @@ internal static class CustomMenuShared
             case "STUNGUN": return "Pistolet paralysant";
             case "STICKYBOMB": return "Bombe collante";
             case "MINIGUN": return "Minigun";
+            case "BAT": return "Batte de baseball";
+            case "KNIFE": return "Couteau";
+            case "DAGGER": return "Dague";
             case "GOLFCLUB": return "Club de golf";
             case "HAMMER": return "Marteau";
             case "GUSENBERG": return "Mitraillette Gusenberg";
