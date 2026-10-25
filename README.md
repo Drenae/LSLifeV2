@@ -53,3 +53,24 @@ La compilation exige que les dépendances indiquées dans `LSlife.csproj` soient
 ## Principe
 
 **Conserver ce qui marche, corriger ce qui ne marche pas et personnaliser seulement ce qui apporte une valeur réelle.**
+
+
+## Alertes des employés (nouveau — à tester en jeu)
+
+Les employés peuvent envoyer une notification avec le son SMS GTA V lorsqu'un produit passe sous le seuil de stock ou que la recette nette à récolter atteint le montant choisi. L'alerte « tout le stock est vide » remplace les trois alertes individuelles lorsqu'elles surviennent ensemble. Les alertes sont déclenchées sur les changements, pas à chaque frame ; la collecte réarme l'alerte recette, et le réapprovisionnement réarme l'alerte de stock.
+
+Paramètres facultatifs à ajouter dans `scripts\\LSlife.ini` (les valeurs par défaut s'appliquent si la section est absente) :
+
+```ini
+[WORKER_ALERTS]
+ENABLED = true
+STOCK_THRESHOLD = 0
+REVENUE_THRESHOLD = 10000
+COOLDOWN_SECONDS = 30
+```
+
+- `STOCK_THRESHOLD` : quantité en **grammes** ; `0` = alerter à l'épuisement.
+- `REVENUE_THRESHOLD` : montant en **dollars nets à récolter** (après commission de 20 %).
+- `COOLDOWN_SECONDS` : intervalle minimum entre deux notifications, tous employés confondus.
+- L'état initial d'un employé est observé sans générer d'alerte ; une transition ultérieure est nécessaire.
+- Les notifications utilisent le système historique `SendTextMsg` (son SMS + notification GTA), **pas un message persistant dans la boîte de réception du téléphone**.
