@@ -15,6 +15,7 @@ internal static class WorkerAlerts
         internal bool RevenueNotified;
         internal readonly HashSet<string> StockNotified = new HashSet<string>();
         internal bool AllEmptyNotified;
+        internal bool StockChangedPending;
     }
 
     private static readonly Dictionary<int, Snapshot> snapshots = new Dictionary<int, Snapshot>();
@@ -25,7 +26,7 @@ internal static class WorkerAlerts
     private static int stockThreshold;
     private static int revenueThreshold;
     private static int cooldownMs;
-    private static int lastMessageTime = int.MinValue;
+    private static int lastMessageTime = -1;
 
     private static void Configure()
     {
@@ -71,13 +72,15 @@ internal static class WorkerAlerts
 
         // Les notifications non emises (cooldown) restent eligibles au prochain passage,
         // mais seulement apres une transition de stock initiale.
-        if (changed)
+        if (changed) s.StockChangedPending = true;
+        if (s.StockChangedPending)
         {
             if (empty && !s.AllEmptyNotified)
             {
                 if (Send(worker, "Je n'ai plus aucune drogue a vendre !"))
                 {
                     s.AllEmptyNotified = true;
+                    s.StockChangedPending = false;
                     foreach (string key in keys) s.StockNotified.Add(key);
                 }
             }
@@ -89,11 +92,15 @@ internal static class WorkerAlerts
                     if (s.Stock[key] <= stockThreshold && !s.StockNotified.Contains(key))
                     {
                         if (Send(worker, "Mon stock de " + labels[i] + " est epuise ou trop bas."))
+                        {
                             s.StockNotified.Add(key);
+                            s.StockChangedPending = false;
+                        }
                         break;
                     }
                 }
             }
+            if (!empty && !HasUnnotifiedLowStock(worker, s)) s.StockChangedPending = false;
         }
 
         if (worker.Money != s.Money && worker.Money >= revenueThreshold && !s.RevenueNotified)
@@ -102,6 +109,13 @@ internal static class WorkerAlerts
                 s.RevenueNotified = true;
         }
         s.Money = worker.Money;
+    }
+
+    private static bool HasUnnotifiedLowStock(PlayerDealer worker, Snapshot s)
+    {
+        foreach (string key in keys)
+            if (Read(worker, key) <= stockThreshold && !s.StockNotified.Contains(key)) return true;
+        return false;
     }
 
     internal static void Forget(int id) { snapshots.Remove(id); }
@@ -121,7 +135,7 @@ internal static class WorkerAlerts
     private static bool Send(PlayerDealer worker, string message)
     {
         int now = Game.GameTime;
-        if (lastMessageTime != int.MinValue && unchecked(now - lastMessageTime) < cooldownMs) return false;
+        if (lastMessageTime >= 0 && now >= lastMessageTime && now - lastMessageTime < cooldownMs) return false;
         lastMessageTime = now;
         // Utilise le systeme de messages du mod : son SMS + notification GTA.
         LsFunctions.SendTextMsg("Employe #" + worker.ID + " : " + message);
