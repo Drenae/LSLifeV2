@@ -230,9 +230,19 @@ internal static class CustomStashMenu
             bool selected = activeMenu.SelectedIndex == i;
             bool available = k < 0 || (k <= 6 ? Slider(k).Maximum > 0 :
                 (k == 7 ? List(k).Items.Count > 1 : List(k).Items.Count > 0));
-            layout.Row(label, selected, Value(k), 0.040f, enabled: available,
-                redValue: k >= 3 && k <= 5, dimValue: !available,
-                emphasizeValue: selected && available, availableValue: AvailableValue(k));
+            // Valeurs dessinees ensemble, alignees a droite : aucune colonne flottante.
+            // Les codes GTA ~c~ gardent la disponibilite en gris.
+            string display = Value(k);
+            if (k >= 0 && k <= 6)
+                display = (available ? (k >= 3 && k <= 5 ? "~r~" : "~g~") : "~c~")
+                    + display + "~c~" + AvailableValue(k);
+            layout.Row(label, selected, k <= 6 && k >= 0 ? null : display,
+                0.040f, enabled: available, redValue: k >= 3 && k <= 5,
+                dimValue: !available, emphasizeValue: selected && available);
+            if (k >= 0 && k <= 6)
+                layout.Block(0f, y => CustomMenuRenderer.TextRightCenteredVertically(
+                    display, layout.Right - 0.019f, y - 0.040f, 0.040f,
+                    0.245f, 220, 220, 220, 255));
             if (k >= 0 && k <= 6)
             {
                 // Barre dans la ligne, comme le menu Approvisionner de l'employe.
@@ -241,8 +251,8 @@ internal static class CustomStashMenu
                 bool red = k >= 3 && k <= 5;
                 layout.Block(0f, y =>
                 {
-                    const float barWidth = 0.067f;
-                    float barLeft = layout.Left + 0.116f;
+                    const float barWidth = 0.043f;
+                    float barLeft = layout.Left + 0.101f;
                     float barY = y - 0.040f / 2f;
                     CustomMenuRenderer.Rect(barLeft + barWidth / 2f, barY, barWidth, 0.008f,
                         !available ? 47 : selected ? 108 : 66,
