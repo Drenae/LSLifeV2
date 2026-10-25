@@ -214,7 +214,7 @@ internal static class CustomStashMenu
             if (i == 1 && (put || vehicle)) Section(layout, "EN VRAC");
             if (k == 3) Section(layout, "CONDITIONNE");
             string label = k >= 0 && k <= 5 ? DrugName(k) : activeMenu.Entries[i].Label;
-            layout.Row(label, activeMenu.SelectedIndex == i, Value(k), 0.040f);
+            layout.Row(label, activeMenu.SelectedIndex == i, Value(k), 0.040f, redValue: k >= 3 && k <= 5);
             if (k >= 0 && k <= 6)
             {
                 var slider = Slider(k);
