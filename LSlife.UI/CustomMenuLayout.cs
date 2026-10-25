@@ -78,7 +78,7 @@ internal sealed class CustomMenuLayout
     }
 
     public void Row(string label, bool selected, string value = null,
-        float height = 0.043f, bool enabled = true)
+        float height = 0.043f, bool enabled = true, bool redValue = false)
     {
         if (height <= 0f) throw new ArgumentOutOfRangeException(nameof(height));
         float y = cursor;
@@ -103,7 +103,7 @@ internal sealed class CustomMenuLayout
                 selected ? 247 : color, selected ? 226 : color, 255);
             if (!string.IsNullOrEmpty(value))
                 CustomMenuRenderer.TextRightCenteredVertically(value, Right - 0.019f,
-                    y, height, 0.27f, 111, 216, 139, 255);
+                    y, height, 0.27f, redValue ? 226 : 111, redValue ? 85 : 216, redValue ? 85 : 139, 255);
         });
         cursor += height;
     }
