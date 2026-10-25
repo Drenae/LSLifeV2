@@ -349,7 +349,7 @@ public class AreaDealer
 
 	public void PromtPlayerToTalk()
 	{
-		if (LSL.LsMenuPool.IsAnyMenuOpen())
+		if (LSL.LsMenuPool.IsAnyMenuOpen() || CustomHireDealerMenu.Visible)
 		{
 			return;
 		}
@@ -371,10 +371,7 @@ public class AreaDealer
 			if (Game.IsControlJustPressed(2, (Control)21))
 			{
 				Function.Call((Hash)7023634693725934496L);
-				((UIText)LSL.hireDealerMainMenu.Subtitle).Caption = "Test";
-				LSL.hireDealerMainMenu.Visible = !LSL.hireDealerMainMenu.Visible;
-				LSL.hireDealerMainMenu.CurrentSelection = 0;
-				LSL.hireDealerOfferAmount.Maximum = Game.Player.Money;
+				CustomHireDealerMenu.Open();
 			}
 		}
 		else if ((float)Game.GameTime > LSL.displayHelpTimer + 4000f)
