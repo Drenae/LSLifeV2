@@ -285,7 +285,7 @@ internal static class Hud
 		int progressX = BarsX + BarsProgressOffsetX;
 		int progressY = y + (BarsRowHeight - BarsProgressHeight) / 2;
 		DrawHudText(label, BarsX + 58, y + 10, 0.30f, Color.WhiteSmoke);
-		HudRender.Rect(progressX, progressY, BarsProgressWidth, BarsProgressHeight, 53, 56, 60, 225);
+		HudRender.Progress(progressX, progressY, BarsProgressWidth, BarsProgressHeight, progress);
 
 	}
 
