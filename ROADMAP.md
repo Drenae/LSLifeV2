@@ -1,3 +1,14 @@
+## Lot Worker — alertes et découplage (25 octobre 2026)
+
+- [x] Sauvegarde de sécurité : `backup/pre-worker-alerts-20261025` au commit `177d7d2`.
+- [x] Alertes de stock Worker : cannabis, crack, cocaïne, et message prioritaire si tous les stocks sont vides.
+- [x] Détection des transitions, anti-répétition jusqu'au réapprovisionnement, délai global entre notifications.
+- [x] Alerte de recette nette à récolter, seuil configurable, réarmement après collecte.
+- [x] Configuration `[WORKER_ALERTS]` documentée dans README ; notifications GTA avec son SMS, sans boîte de réception persistante.
+- [x] Collecte de recette depuis CustomWorkerMenu sans callback NativeUI.
+- [ ] **À compiler et tester en jeu** : ventes simulées, stock épuisé, réapprovisionnement, collecte, cooldown, sauvegardes, iFruit et menus.
+- [ ] Suite du découplage NativeUI : sélecteurs et ajouts de commandes Zee, équipements Worker, services Zee.
+
 # Roadmap — LS Life V2
 
 > Branche de migration : `feature/custom-zee-menu`. `main` reste la référence stable. Ne déclarer une fonctionnalité terminée qu'après validation en jeu.
