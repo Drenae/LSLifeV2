@@ -12,8 +12,7 @@ internal static class CustomWorkerMenu
     private static readonly int[] supplySteps = { 1, 5, 10, 25, 50, 100 };
     private static bool waitForRelease;
     private static int lastTickFrame = -1;
-    private static int heldDirection;
-    private static int nextRepeatAt;
+    private static readonly CustomMenuShared.HorizontalRepeat horizontalRepeat = new CustomMenuShared.HorizontalRepeat();
     private static int equipmentWeaponIndex;
     public static bool Visible => activeMenu != null && activeMenu.Visible;
 
@@ -88,46 +87,6 @@ internal static class CustomWorkerMenu
         workerEquipmentMenu.Open();
     }
 
-    private static string FrenchWeaponName(string weapon)
-    {
-        switch (weapon.ToUpperInvariant())
-        {
-            case "FIREEXTINGUISHER": return "Extincteur";
-            case "PETROLCAN": return "Bidon d'essence";
-            case "STUNGUN": return "Pistolet paralysant";
-            case "STICKYBOMB": return "Bombe collante";
-            case "MINIGUN": return "Minigun";
-            case "GOLFCLUB": return "Club de golf";
-            case "HAMMER": return "Marteau";
-            case "GUSENBERG": return "Mitraillette Gusenberg";
-            case "PISTOL": return "Pistolet";
-            case "COMBATPISTOL": return "Pistolet de combat";
-            case "APPISTOL": return "Pistolet automatique";
-            case "PISTOL50": return "Pistolet calibre .50";
-            case "SNSPISTOL": return "Pistolet compact";
-            case "HEAVYPISTOL": return "Pistolet lourd";
-            case "VINTAGEPISTOL": return "Pistolet vintage";
-            case "MICROSMG": return "Micro-mitraillette";
-            case "SMG": return "Mitraillette";
-            case "ASSAULTSMG": return "Mitraillette d'assaut";
-            case "COMBATPDW": return "ADP de combat";
-            case "ASSAULTRIFLE": return "Fusil d'assaut";
-            case "CARBINERIFLE": return "Carabine";
-            case "ADVANCEDRIFLE": return "Fusil avance";
-            case "SPECIALCARBINE": return "Carabine speciale";
-            case "BULLPUPRIFLE": return "Fusil bullpup";
-            case "PUMPSHOTGUN": return "Fusil a pompe";
-            case "SAWNOFFSHOTGUN": return "Fusil a canon scie";
-            case "ASSAULTSHOTGUN": return "Fusil a pompe d'assaut";
-            case "HEAVYSHOTGUN": return "Fusil a pompe lourd";
-            case "SNIPERRIFLE": return "Fusil de precision";
-            case "HEAVYSNIPER": return "Fusil de precision lourd";
-            case "MG": return "Mitrailleuse";
-            case "COMBATMG": return "Mitrailleuse de combat";
-            default: return weapon;
-        }
-    }
-
     private static void GiveWorkerArmour()
     {
         PlayerDealer dealer = LSL.DealerHandler.currentDealer;
@@ -167,7 +126,7 @@ internal static class CustomWorkerMenu
         if (LSL.DealerHandler.currentDealer == null) return;
         supplyWeed = supplyCrack = supplyCocaine = 0;
         supplyStep = 1;
-        heldDirection = 0;
+        horizontalRepeat.Reset();
         if (workerSupplyMenu == null)
         {
             workerSupplyMenu = new CustomMenu("APPROVISIONNER", "");
@@ -279,8 +238,8 @@ internal static class CustomWorkerMenu
         {
             // Une impulsion initiale, puis repetition temporisee pendant le maintien.
         }
-        else if (DisabledJustPressed(172)) { heldDirection = 0; activeMenu.Move(-1); }
-        else if (DisabledJustPressed(173)) { heldDirection = 0; activeMenu.Move(1); }
+        else if (DisabledJustPressed(172)) { horizontalRepeat.Reset(); activeMenu.Move(-1); }
+        else if (DisabledJustPressed(173)) { horizontalRepeat.Reset(); activeMenu.Move(1); }
         else if (DisabledJustPressed(201))
         {
             CustomMenu before = activeMenu;
@@ -303,26 +262,16 @@ internal static class CustomWorkerMenu
 
     private static bool HandleWorkerRoleInput()
     {
-        bool left = Function.Call<bool>(Hash.IS_DISABLED_CONTROL_PRESSED, 2, 174);
-        bool right = Function.Call<bool>(Hash.IS_DISABLED_CONTROL_PRESSED, 2, 175);
-        int direction = left == right ? 0 : (right ? 1 : -1);
-        if (direction == 0) { heldDirection = 0; return false; }
-        int now = Game.GameTime;
-        if (heldDirection != direction) { heldDirection = direction; nextRepeatAt = now + 350; }
-        else { if (now < nextRepeatAt) return false; nextRepeatAt = now + 250; }
+        int direction = horizontalRepeat.Poll(250);
+        if (direction == 0) return false;
         ChangeWorkerRole(direction);
         return true;
     }
 
     private static bool HandleEquipmentHorizontalInput()
     {
-        bool left = Function.Call<bool>(Hash.IS_DISABLED_CONTROL_PRESSED, 2, 174);
-        bool right = Function.Call<bool>(Hash.IS_DISABLED_CONTROL_PRESSED, 2, 175);
-        int direction = left == right ? 0 : (right ? 1 : -1);
-        if (direction == 0) { heldDirection = 0; return false; }
-        int now = Game.GameTime;
-        if (heldDirection != direction) { heldDirection = direction; nextRepeatAt = now + 350; }
-        else { if (now < nextRepeatAt) return false; nextRepeatAt = now + 110; }
+        int direction = horizontalRepeat.Poll(110);
+        if (direction == 0) return false;
         int count = LSL.playerWeps.Count;
         if (count > 0) equipmentWeaponIndex = (equipmentWeaponIndex + direction + count) % count;
         return true;
@@ -330,27 +279,9 @@ internal static class CustomWorkerMenu
 
     private static bool HandleSupplyHorizontalInput()
     {
-        bool left = Function.Call<bool>(Hash.IS_DISABLED_CONTROL_PRESSED, 2, 174);
-        bool right = Function.Call<bool>(Hash.IS_DISABLED_CONTROL_PRESSED, 2, 175);
-        int direction = left == right ? 0 : (right ? 1 : -1);
-        if (direction == 0)
-        {
-            heldDirection = 0;
-            return false;
-        }
-        int now = Game.GameTime;
-        if (heldDirection != direction)
-        {
-            heldDirection = direction;
-            nextRepeatAt = now + 350;
-        }
-        else
-        {
-            if (now < nextRepeatAt) return false;
-            nextRepeatAt = now + 65;
-        }
-        if (activeMenu.SelectedIndex < 3)
-            ChangeSupply(activeMenu.SelectedIndex, direction);
+        int direction = horizontalRepeat.Poll(65);
+        if (direction == 0) return false;
+        if (activeMenu.SelectedIndex < 3) ChangeSupply(activeMenu.SelectedIndex, direction);
         else ChangeSupplyStep(direction);
         return true;
     }
@@ -448,7 +379,7 @@ internal static class CustomWorkerMenu
             else if (equipment && i == 1)
             {
                 string weapon = LSL.playerWeps.Count == 0 ? "Aucune" :
-                    FrenchWeaponName(LSL.playerWeps[Math.Min(equipmentWeaponIndex, LSL.playerWeps.Count - 1)]);
+                    CustomMenuShared.FrenchWeaponName(LSL.playerWeps[Math.Min(equipmentWeaponIndex, LSL.playerWeps.Count - 1)]);
                 value = "< " + weapon + " >";
             }
             layout.Row(activeMenu.Entries[i].Label, selected, value,
@@ -479,7 +410,7 @@ internal static class CustomWorkerMenu
             layout.TextPair("Protection", protection.ToString());
             string equipped = "Aucune";
             if (dealer.Ped != null && dealer.Ped.Weapons != null)
-                equipped = FrenchWeaponName(dealer.Ped.Weapons.Current.Hash.ToString());
+                equipped = CustomMenuShared.FrenchWeaponName(dealer.Ped.Weapons.Current.Hash.ToString());
             layout.TextPair("Arme actuelle", equipped);
         }
         else
