@@ -235,10 +235,16 @@ internal static class CustomStashMenu
                     const float barWidth = 0.067f;
                     float barLeft = layout.Left + 0.116f;
                     float barY = y - 0.040f / 2f;
-                    CustomMenuRenderer.Rect(barLeft + barWidth / 2f, barY, barWidth, 0.008f, 66, 68, 70, 255);
+                    CustomMenuRenderer.Rect(barLeft + barWidth / 2f, barY, barWidth, 0.008f,
+                        !available ? 47 : selected ? 108 : 66,
+                        !available ? 48 : selected ? 112 : 68,
+                        !available ? 50 : selected ? 115 : 70, 255);
                     if (fraction > 0f)
                         CustomMenuRenderer.Rect(barLeft + barWidth * fraction / 2f, barY,
-                            barWidth * fraction, 0.008f, red ? 226 : 111, red ? 85 : 216, red ? 85 : 139, 255);
+                            barWidth * fraction, 0.008f,
+                            red ? (selected ? 255 : 226) : (selected ? 155 : 111),
+                            red ? (selected ? 115 : 85) : (selected ? 255 : 216),
+                            red ? (selected ? 115 : 85) : (selected ? 175 : 139), 255);
                 });
             }
         }
