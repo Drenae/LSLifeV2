@@ -1004,6 +1004,7 @@ public partial class LSL
 							if (!CheckIfPedUsed(p3, _allowPolice: false, _allowVehicle: false))
 							{
 								aDealer = new AreaDealer(p3);
+								aDealer.UpdateRecruitmentDebugMarker(DEBUG);
 								if (DEBUG)
 								{
 									model = ((Entity)p3).Model;
@@ -1020,6 +1021,7 @@ public partial class LSL
 				LsFunctions.DbugString("Cant spawn dealer dead :" + areas[areaIndex].DealerKilled);
 			}
 		}
+		if (aDealer != null) aDealer.UpdateRecruitmentDebugMarker(DEBUG);
 		if (Game.GameTime <= SlowTickTime + 375)
 		{
 			return;
