@@ -26,7 +26,7 @@ public partial class LSL
 	private void areaInfoUI()
 	{
 		var area = areas[areaIndex];
-		HudRender.DebugPanel("QUARTIER", 10, 10, 340, new[]
+		HudRender.DebugPanel("QUARTIER", Hud.DebugX, Hud.DebugY, 340, new[]
 		{
 			"nom : " + area.Name,
 			"type : " + area.AreaType,
@@ -50,7 +50,7 @@ public partial class LSL
 
 	private void ZeeInfoUI()
 	{
-		HudRender.DebugPanel("ZEE", 10, 354, 340, new[]
+		HudRender.DebugPanel("ZEE", Hud.DebugX, Hud.DebugY + 344, 340, new[]
 		{
 			"argent : " + dealer1Money,
 			"reload : " + dealer1ReloadOrder,
@@ -79,13 +79,13 @@ public partial class LSL
 		}
 		int drvAmount = driveByHandler.GetDriveBies.Count;
 		if (drvAmount > 0) lines.Add("drvAmount : " + drvAmount);
-		HudRender.DebugPanel("JOUEUR", 10, 502, 340, lines.ToArray());
+		HudRender.DebugPanel("JOUEUR", Hud.DebugX, Hud.DebugY + 492, 340, lines.ToArray());
 	}
 
 	private void GangUI()
 	{
 		Gang gang = areas[areaIndex].Gang;
-		HudRender.DebugPanel("GANG", 10, 698, 340, new[]
+		HudRender.DebugPanel("GANG", Hud.DebugX, Hud.DebugY + 688, 340, new[]
 		{
 			"nom : " + gang.Name,
 			"argent : " + gang.Money,
@@ -103,6 +103,23 @@ internal static class Hud
 {
 	private static int posX = TopHudDefaultX;
 	private static int posY = TopHudDefaultY;
+	private static int debugX = 10;
+	private static int debugY = 10;
+	public static int BarsPositionX => barsX;
+	public static int BarsPositionY => barsY;
+	public static int DebugX => debugX;
+	public static int DebugY => debugY;
+	public static void MoveBars(int dx, int dy)
+	{
+		barsX = System.Math.Max(0, System.Math.Min(MaxX - BarsWidth, barsX + dx));
+		barsY = System.Math.Max(0, System.Math.Min(MaxY - BarsRowHeight * 2, barsY + dy));
+	}
+	public static void MoveDebug(int dx, int dy)
+	{
+		debugX = System.Math.Max(0, System.Math.Min(MaxX - 340, debugX + dx));
+		debugY = System.Math.Max(0, System.Math.Min(MaxY - 864, debugY + dy));
+	}
+
 	private const int MaxX = 1920;
 	private const int MaxY = 1080;
 
@@ -114,6 +131,10 @@ internal static class Hud
 		LoadInvConfig();
 		posX = System.Math.Max(0, System.Math.Min(MaxX, posX));
 		posY = System.Math.Max(25, System.Math.Min(MaxY - 164, posY));
+		barsX = System.Math.Max(0, System.Math.Min(MaxX - BarsWidth, barsX));
+		barsY = System.Math.Max(0, System.Math.Min(MaxY - BarsRowHeight * 2, barsY));
+		debugX = System.Math.Max(0, System.Math.Min(MaxX - 340, debugX));
+		debugY = System.Math.Max(0, System.Math.Min(MaxY - 864, debugY));
 	}
 
 	public static void Move(int dx, int dy)
@@ -141,6 +162,10 @@ internal static class Hud
 					{
 						int.TryParse(e.Value, out posY);
 					}
+					else if (e.Name == "heatPosX") int.TryParse(e.Value, out barsX);
+					else if (e.Name == "heatPosY") int.TryParse(e.Value, out barsY);
+					else if (e.Name == "debugPosX") int.TryParse(e.Value, out debugX);
+					else if (e.Name == "debugPosY") int.TryParse(e.Value, out debugY);
 				}
 				// Migrer une seule fois les anciennes coordonnées (bord droit).
 				if (element.Element("hudPosVersion") == null)
@@ -154,48 +179,31 @@ internal static class Hud
 
 	public static void SavePosition()
 	{
-		bool found = false;
-		foreach (XElement element in LSL.LSLifeSave.Descendants())
+		XElement config = LSL.LSLifeSave.Descendants("config").FirstOrDefault();
+		if (config == null)
 		{
-			if (!(element.Name == "config"))
-			{
-				continue;
-			}
-			found = true;
-			foreach (XElement e in element.Elements())
-			{
-				if (e.Name == "invPosX")
-				{
-					e.Value = posX.ToString();
-				}
-				else if (e.Name == "invPosY")
-				{
-					e.Value = posY.ToString();
-				}
-			}
-			XElement version = element.Element("hudPosVersion");
-			if (version == null)
-			{
-				version = new XElement("hudPosVersion");
-				element.Add(version);
-			}
-			version.Value = "2";
-			break;
-		}
-		if (!found)
-		{
-			XElement config = new XElement("config");
-			XElement invPosX = new XElement("invPosX");
-			invPosX.Value = posX.ToString();
-			XElement invPosY = new XElement("invPosY");
-			invPosY.Value = posY.ToString();
-			config.Add(invPosX);
-			config.Add(invPosY);
-			config.Add(new XElement("hudPosVersion", "2"));
+			config = new XElement("config");
 			LSL.LSLifeSave.Root.Add(config);
 		}
+		SetConfig(config, "invPosX", posX);
+		SetConfig(config, "invPosY", posY);
+		SetConfig(config, "heatPosX", barsX);
+		SetConfig(config, "heatPosY", barsY);
+		SetConfig(config, "debugPosX", debugX);
+		SetConfig(config, "debugPosY", debugY);
+		SetConfig(config, "hudPosVersion", 2);
 		LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
+	}
 
+	private static void SetConfig(XElement config, string key, int value)
+	{
+		XElement item = config.Element(key);
+		if (item == null)
+		{
+			item = new XElement(key);
+			config.Add(item);
+		}
+		item.Value = value.ToString();
 	}
 
 	private static void DrawHudText(string caption, int x, int y, float scale, Color color)
@@ -210,8 +218,8 @@ internal static class Hud
 
 	// Apparence harmonisee avec les menus personnalises : anthracite, or discret.
 	// Les deux panneaux conservent leurs emplacements et leurs dimensions.
-	private const int BarsX = 1580;
-	private const int BarsY = 940;
+	private static int barsX = 1580;
+	private static int barsY = 940;
 	private const int BarsWidth = 365;
 	private const int BarsRowHeight = 43;
 	private const int BarsProgressHeight = 12;
@@ -243,19 +251,19 @@ internal static class Hud
 
 	private static void DrawHeatBars()
 	{
-		HudRender.Rect(BarsX, BarsY, BarsWidth, BarsRowHeight * 2, 11, 13, 16, 190);
-		HudRender.Rect(BarsX, BarsY, 3, BarsRowHeight * 2, 187, 154, 82, 225);
-		HudRender.Rect(BarsX + 12, BarsY + BarsRowHeight, BarsWidth - 24, 1, 130, 103, 52, 155);
-		DrawBarRow("Joueur", PlayerHeatBar.GetPercentage(), BarsY);
-		DrawBarRow("Quartier", AreaHeatBar.GetPercentage(), BarsY + BarsRowHeight);
+		HudRender.Rect(barsX, barsY, BarsWidth, BarsRowHeight * 2, 11, 13, 16, 190);
+		HudRender.Rect(barsX, barsY, 3, BarsRowHeight * 2, 187, 154, 82, 225);
+		HudRender.Rect(barsX + 12, barsY + BarsRowHeight, BarsWidth - 24, 1, 130, 103, 52, 155);
+		DrawBarRow("Joueur", PlayerHeatBar.GetPercentage(), barsY);
+		DrawBarRow("Quartier", AreaHeatBar.GetPercentage(), barsY + BarsRowHeight);
 	}
 
 	private static void DrawBarRow(string label, float percentage, int y)
 	{
 		float progress = System.Math.Max(0f, System.Math.Min(1f, percentage));
-		int progressX = BarsX + BarsProgressOffsetX;
+		int progressX = barsX + BarsProgressOffsetX;
 		int progressY = y + (BarsRowHeight - BarsProgressHeight) / 2;
-		DrawHudText(label, BarsX + 58, y + 10, 0.30f, Color.WhiteSmoke);
+		DrawHudText(label, barsX + 58, y + 10, 0.30f, Color.WhiteSmoke);
 		HudRender.Progress(progressX, progressY, BarsProgressWidth, BarsProgressHeight, progress);
 
 	}
