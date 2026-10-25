@@ -102,13 +102,15 @@ public class PlayerDealerHandler
 			}
 			if (dealer.CurrentState == Enums.PdStates.Dead)
 			{
+				WorkerAlerts.Forget(dealer.ID);
 				DeleteDealer(dealer.ID);
 				dealers.Remove(dealer);
 				break;
 			}
 			if (dealer != null)
 			{
-				dealer?.OnSlowTick();
+				dealer.OnSlowTick();
+				WorkerAlerts.Observe(dealer);
 			}
 		}
 	}
