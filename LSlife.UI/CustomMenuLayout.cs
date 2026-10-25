@@ -78,7 +78,7 @@ internal sealed class CustomMenuLayout
     }
 
     public void Row(string label, bool selected, string value = null,
-        float height = 0.043f, bool enabled = true, bool redValue = false, bool dimValue = false, bool emphasizeValue = false)
+        float height = 0.043f, bool enabled = true, bool redValue = false, bool dimValue = false, bool emphasizeValue = false, string availableValue = null)
     {
         if (height <= 0f) throw new ArgumentOutOfRangeException(nameof(height));
         float y = cursor;
@@ -102,10 +102,13 @@ internal sealed class CustomMenuLayout
                 y, height, 0.315f, selected ? 255 : color,
                 selected ? 247 : color, selected ? 226 : color, 255);
             if (!string.IsNullOrEmpty(value))
-                CustomMenuRenderer.TextRightCenteredVertically(value, Right - 0.019f,
+                CustomMenuRenderer.TextRightCenteredVertically(value, string.IsNullOrEmpty(availableValue) ? Right - 0.019f : Right - 0.094f,
                     y, height, 0.27f, dimValue ? 120 : redValue ? (emphasizeValue ? 255 : 226) : (emphasizeValue ? 160 : 111),
                     dimValue ? 120 : redValue ? (emphasizeValue ? 120 : 85) : (emphasizeValue ? 255 : 216),
                     dimValue ? 120 : redValue ? (emphasizeValue ? 120 : 85) : (emphasizeValue ? 185 : 139), 255);
+            if (!string.IsNullOrEmpty(availableValue))
+                CustomMenuRenderer.TextRightCenteredVertically(availableValue, Right - 0.019f,
+                    y, height, 0.245f, dimValue ? 105 : 174, dimValue ? 105 : 176, dimValue ? 105 : 180, 255);
         });
         cursor += height;
     }
