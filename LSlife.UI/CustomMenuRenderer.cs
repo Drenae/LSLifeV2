@@ -42,6 +42,27 @@ internal static class CustomMenuRenderer
         Function.Call(Hash.SET_TEXT_RIGHT_JUSTIFY, false);
     }
 
+    // Affiche deux montants avec couleurs independantes, sans codes de couleur GTA.
+    // Les deux segments sont mesures pour rester alignes sur le bord droit.
+    public static void TextTwoColorsRight(string selected, string available, float right,
+        float zoneTop, float zoneHeight, float scale, int r, int g, int b, bool disabled = false)
+    {
+        const int font = 0;
+        float textHeight = Function.Call<float>(
+            unchecked((Hash)0xDB88A37483346780UL), scale, font);
+        float textY = zoneTop + (zoneHeight - textHeight) / 2f - textHeight * 0.15f;
+        string suffix = " / " + available;
+        Function.Call(Hash.SET_TEXT_FONT, font);
+        Function.Call(Hash.SET_TEXT_SCALE, 0f, scale);
+        Function.Call(unchecked((Hash)0x54CE8AC98E120CABUL), "STRING");
+        Function.Call(unchecked((Hash)0x6C188BE134E074AAUL), suffix);
+        float suffixWidth = Function.Call<float>(unchecked((Hash)0x85F061DA64ED2F67UL), true);
+        TextRightCenteredVertically(suffix, right, zoneTop, zoneHeight, scale,
+            disabled ? 125 : 230, disabled ? 125 : 230, disabled ? 125 : 230, 255);
+        TextRightCenteredVertically(selected, right - suffixWidth, zoneTop, zoneHeight,
+            scale, disabled ? 125 : r, disabled ? 125 : g, disabled ? 125 : b, 255);
+    }
+
     // Separateur horizontal avec marges symetriques. Retourne la hauteur occupee.
     public static float Separator(float x, float top, float width, float spacing = 0.006f)
     {
