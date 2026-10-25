@@ -23,7 +23,7 @@ internal static class CustomHudOptionsMenu
         menu.Add("Stock Y", () => { });
         menu.Add("Influence et pression X", () => { });
         menu.Add("Influence et pression Y", () => { });
-        if (LSL.AreaDebug)
+        if (Hud.DebugEnabled)
         {
             menu.Add("DEBUG X", () => { });
             menu.Add("DEBUG Y", () => { });
@@ -85,7 +85,7 @@ internal static class CustomHudOptionsMenu
             if (!Visible) return;
         }
 
-        int coordinateRows = LSL.AreaDebug ? 6 : 4;
+        int coordinateRows = Hud.DebugEnabled ? 6 : 4;
         if (menu.SelectedIndex < coordinateRows)
         {
             // Premier appui : 1 pixel ; maintien : repetition automatique.
@@ -130,7 +130,7 @@ internal static class CustomHudOptionsMenu
         layout.Row("Position X", menu.SelectedIndex == 2, Hud.BarsPositionX.ToString());
         layout.Row("Position Y", menu.SelectedIndex == 3, Hud.BarsPositionY.ToString());
 
-        if (LSL.AreaDebug)
+        if (Hud.DebugEnabled)
         {
             Section(layout, "DEBUG");
             layout.Row("Position X", menu.SelectedIndex == 4, Hud.DebugX.ToString());
@@ -142,7 +142,7 @@ internal static class CustomHudOptionsMenu
             CustomMenuRenderer.TextCenteredVertically("Maintenir gauche / droite : deplacer (1 px)",
                 layout.Left + 0.019f, y, 0.029f, 0.245f, 175, 177, 182, 255));
 
-        int saveIndex = LSL.AreaDebug ? 6 : 4;
+        int saveIndex = Hud.DebugEnabled ? 6 : 4;
         layout.Row("Enregistrer", menu.SelectedIndex == saveIndex);
         layout.Row("Retour", menu.SelectedIndex == saveIndex + 1);
         layout.Render();
