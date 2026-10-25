@@ -16,7 +16,6 @@ using LSlife.Gangs;
 using LSlife.HeatBars;
 using LSlife.OldCustomers;
 using LSlife.Shots;
-using NativeUI;
 
 
 namespace LSlife;
@@ -102,39 +101,25 @@ public partial class LSL
 
 internal static class Hud
 {
-	public static UIMenu Options;
-
-	public static UIMenuSliderItem InventoryPosX;
-
-	public static UIMenuSliderItem InventoryPosY;
-
-	private static UIMenuItem Save;
-
 	private static int posX = TopHudDefaultX;
-
 	private static int posY = TopHudDefaultY;
-
 	private const int MaxX = 1920;
-
 	private const int MaxY = 1080;
+
+	public static int PositionX => posX;
+	public static int PositionY => posY;
 
 	public static void Innit()
 	{
 		LoadInvConfig();
-		Options = LSL.LsMenuPool.AddSubMenu(LSL.zeeMenu, "Options");
-		InventoryPosX = new UIMenuSliderItem("HUD haut X: ~g~" + posX);
-		InventoryPosX.Maximum = 1920;
-		InventoryPosX.Value = posX;
-		InventoryPosY = new UIMenuSliderItem("HUD haut Y: ~g~" + posY);
-		InventoryPosY.Maximum = 1080;
-		InventoryPosY.Value = posY;
-		Save = new UIMenuItem("Enregistrer les réglages");
-		Options.AddItem(InventoryPosX);
-		Options.AddItem(InventoryPosY);
-		Options.AddItem(Save);
-		InventoryPosX.OnSliderChanged += InventoryPos_OnSliderChanged;
-		InventoryPosY.OnSliderChanged += InventoryPos_OnSliderChanged;
-		Save.Activated += Save_Activated;
+		posX = System.Math.Max(0, System.Math.Min(MaxX - 365, posX));
+		posY = System.Math.Max(25, System.Math.Min(MaxY - 164, posY));
+	}
+
+	public static void Move(int dx, int dy)
+	{
+		posX = System.Math.Max(0, System.Math.Min(MaxX - 365, posX + dx));
+		posY = System.Math.Max(25, System.Math.Min(MaxY - 164, posY + dy));
 	}
 
 	private static void LoadInvConfig()
@@ -167,7 +152,7 @@ internal static class Hud
 		}
 	}
 
-	private static void Save_Activated(UIMenu sender, UIMenuItem selectedItem)
+	public static void SavePosition()
 	{
 		bool found = false;
 		foreach (XElement element in LSL.LSLifeSave.Descendants())
@@ -210,21 +195,7 @@ internal static class Hud
 			LSL.LSLifeSave.Root.Add(config);
 		}
 		LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
-		LSL.LsMenuPool.CloseAllMenus();
-	}
 
-	private static void InventoryPos_OnSliderChanged(UIMenuSliderItem sender, int newIndex)
-	{
-		if (sender == InventoryPosX)
-		{
-			posX = sender.Value;
-			sender.Text = "HUD haut X: ~g~" + posX;
-		}
-		if (sender == InventoryPosY)
-		{
-			posY = sender.Value;
-			sender.Text = "HUD haut Y: ~g~" + posY;
-		}
 	}
 
 	private static void DrawHudText(string caption, int x, int y, float scale, Color color)
