@@ -416,18 +416,25 @@ internal static class Hud
 	private const int TopHudDefaultX = 1580;
 	private const int TopHudDefaultY = 100;
 
-	// HUD inférieur : un seul panneau, même fond que le HUD supérieur.
+	// Apparence harmonisee avec les menus personnalises : anthracite, or discret.
+	// Les deux panneaux conservent leurs emplacements et leurs dimensions.
 	private const int BarsX = 1580;
 	private const int BarsY = 940;
 	private const int BarsWidth = 365;
 	private const int BarsRowHeight = 43;
-	private const int BarsProgressHeight = 16;
+	private const int BarsProgressHeight = 12;
 	private const int BarsProgressWidth = 230;
 	private const int BarsProgressOffsetX = 120;
-	private static readonly Color HudBackground = Color.FromArgb(165, 0, 0, 0);
-	private static readonly Color HudSeparator = Color.FromArgb(115, 210, 210, 210);
-	private static readonly Color BarsTrack = Color.FromArgb(220, 45, 45, 45);
-	private static readonly Color BarsFill = Color.FromArgb(240, 194, 69, 65);
+	private static readonly Color HudBackground = Color.FromArgb(190, 11, 13, 16);
+	private static readonly Color HudSeparator = Color.FromArgb(155, 130, 103, 52);
+	private static readonly Color BarsTrack = Color.FromArgb(225, 53, 56, 60);
+	private static readonly Color AccentGold = Color.FromArgb(225, 187, 154, 82);
+
+	// Options visuelles : valeurs prudentes pour cette premiere version.
+	// Les stocks restent affiches par defaut, comme dans l'ancien HUD.
+	private const bool CompactWhenNotSelling = false;
+	private const bool ShowReputation = false;
+	private const bool ShowDealerCapacity = false;
 
 	public static void Draw()
 	{
@@ -435,10 +442,19 @@ internal static class Hud
 		DrawHeatBars();
 	}
 
+	private static Color PressureColor(float value)
+	{
+		if (value >= 0.70f) return Color.FromArgb(235, 213, 83, 78);
+		if (value >= 0.35f) return Color.FromArgb(235, 225, 160, 70);
+		return Color.FromArgb(235, 123, 187, 117);
+	}
+
 	private static void DrawHeatBars()
 	{
 		new UIResRectangle(new Point(BarsX, BarsY),
 			new Size(BarsWidth, BarsRowHeight * 2), HudBackground).Draw();
+		new UIResRectangle(new Point(BarsX, BarsY),
+			new Size(3, BarsRowHeight * 2), AccentGold).Draw();
 		new UIResRectangle(new Point(BarsX + 12, BarsY + BarsRowHeight),
 			new Size(BarsWidth - 24, 1), HudSeparator).Draw();
 		DrawBarRow("Joueur", PlayerHeatBar.GetPercentage(), BarsY);
@@ -457,7 +473,7 @@ internal static class Hud
 		if (filled > 0)
 		{
 			new UIResRectangle(new Point(progressX, progressY),
-				new Size(filled, BarsProgressHeight), BarsFill).Draw();
+				new Size(filled, BarsProgressHeight), PressureColor(progress)).Draw();
 		}
 	}
 
@@ -468,45 +484,67 @@ internal static class Hud
 
 	public static void InventoryGui()
 	{
-		// Coordonnées en espace NativeUI 1920 x 1080, comme les réglages existants.
+		// Coordonnees et sauvegarde existantes conservees (1920 x 1080).
 		const int width = 365;
-		const int height = 164;
+		bool compact = CompactWhenNotSelling && !LSL.isDealing;
+		int extraRows = (ShowReputation ? 1 : 0) + (ShowDealerCapacity ? 1 : 0);
+		int height = (compact ? 91 : 164) + extraRows * 21;
 		int left = posX;
 		int top = System.Math.Max(0, posY - 25);
-		// Fond et textes utilisent tous deux les primitives natives GTA/NativeUI.
-		new UIResRectangle(new Point(left, top), new Size(width, height),
-			HudBackground).Draw();
-
-				new UIResRectangle(new Point(left + 12, top + 36), new Size(width - 24, 1), HudSeparator).Draw();
+		new UIResRectangle(new Point(left, top), new Size(width, height), HudBackground).Draw();
+		new UIResRectangle(new Point(left, top), new Size(3, height), AccentGold).Draw();
+		new UIResRectangle(new Point(left + 12, top + 36),
+			new Size(width - 24, 1), HudSeparator).Draw();
 		DrawHudText("ARGENT", left + 60, top + 8, 0.30f, Color.White);
-		DrawHudText(LsFunctions.IntToMoney(LSL.player.Money) + " $", left + 290, top + 8, 0.30f, Color.LightGreen);
-		string[] names = { "Cannabis", "Crack", "Cocaïne" };
-		string[] ready =
-		{
-			LsFunctions.GramsToOz(LSL.PlayerInventory["Weed"]) ?? "",
-			LsFunctions.GramsToOz(LSL.PlayerInventory["Crack"]) ?? "",
-			LsFunctions.GramsToOz(LSL.PlayerInventory["Cocaine"]) ?? ""
-		};
-		string[] raw =
-		{
-			LsFunctions.pWeedOunce + " oz",
-			LsFunctions.pCrackOunce + " oz",
-			LsFunctions.pCocaineOunce + " oz"
-		};
-		for (int i = 0; i < 3; i++)
-		{
-			int x = left + 75 + i * 109;
-			DrawHudText(names[i], x, top + 45, 0.30f, Color.WhiteSmoke);
-			DrawHudText(ready[i], x, top + 70, 0.30f, Color.LightGreen);
-			DrawHudText(raw[i], x, top + 100, 0.30f, Color.LightCoral);
-		}
-				new UIResRectangle(new Point(left + 12, top + 125), new Size(width - 24, 1), Color.FromArgb(115, 210, 210, 210)).Draw();
-		DrawHudText("MODE VENTE", left + 80, top + 130, 0.30f, Color.WhiteSmoke);
-		DrawHudText(LSL.isDealing ? "ACTIVÉ" : "DÉSACTIVÉ", left + 290, top + 130, 0.30f,
-			LSL.isDealing ? Color.LightGreen : Color.LightCoral);
+		DrawHudText(LsFunctions.IntToMoney(LSL.player.Money) + " $",
+			left + 290, top + 8, 0.30f, Color.LightGreen);
 
-		// Masquer uniquement le compteur natif pendant l'affichage du panneau.
-		// Il reste disponible normalement lorsque le panneau du mod n'est pas affiché.
+		if (!compact)
+		{
+			string[] names = { "Cannabis", "Crack", "Cocaïne" };
+			string[] ready =
+			{
+				LsFunctions.GramsToOz(LSL.PlayerInventory["Weed"]) ?? "",
+				LsFunctions.GramsToOz(LSL.PlayerInventory["Crack"]) ?? "",
+				LsFunctions.GramsToOz(LSL.PlayerInventory["Cocaine"]) ?? ""
+			};
+			string[] raw =
+			{
+				LsFunctions.pWeedOunce + " oz",
+				LsFunctions.pCrackOunce + " oz",
+				LsFunctions.pCocaineOunce + " oz"
+			};
+			for (int i = 0; i < 3; i++)
+			{
+				int x = left + 75 + i * 109;
+				DrawHudText(names[i], x, top + 45, 0.30f, Color.WhiteSmoke);
+				DrawHudText(ready[i], x, top + 70, 0.30f, Color.LightGreen);
+				DrawHudText(raw[i], x, top + 100, 0.30f, Color.LightCoral);
+			}
+		}
+		int footerY = compact ? top + 47 : top + 125;
+		if (ShowReputation)
+		{
+			DrawHudText("REPUTATION", left + 80, footerY + 1, 0.27f, Color.WhiteSmoke);
+			DrawHudText("Niveau " + (int)LsFunctions.CurrentRepLvl(LSL.dealer1Rep),
+				left + 290, footerY + 1, 0.27f, Color.WhiteSmoke);
+			footerY += 21;
+		}
+		if (ShowDealerCapacity)
+		{
+			DrawHudText("DEALERS", left + 80, footerY + 1, 0.27f, Color.WhiteSmoke);
+			DrawHudText(LSL.DealerHandler.dealers.Count + " / " +
+				(int)LsFunctions.CurrentRepLvl(LSL.dealer1Rep),
+				left + 290, footerY + 1, 0.27f, Color.WhiteSmoke);
+			footerY += 21;
+		}
+		new UIResRectangle(new Point(left + 12, footerY),
+			new Size(width - 24, 1), HudSeparator).Draw();
+		DrawHudText("MODE VENTE", left + 80, footerY + 5, 0.30f, Color.WhiteSmoke);
+		DrawHudText(LSL.isDealing ? "ACTIVÉ" : "DÉSACTIVÉ",
+			left + 290, footerY + 5, 0.30f,
+			LSL.isDealing ? Color.LightGreen : Color.LightCoral);
 		UI.HideHudComponentThisFrame((HudComponent)3);
 	}
+
 }
