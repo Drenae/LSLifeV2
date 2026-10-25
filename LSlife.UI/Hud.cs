@@ -112,13 +112,13 @@ internal static class Hud
 	public static void Innit()
 	{
 		LoadInvConfig();
-		posX = System.Math.Max(0, System.Math.Min(MaxX - 365, posX));
+		posX = System.Math.Max(0, System.Math.Min(MaxX, posX));
 		posY = System.Math.Max(25, System.Math.Min(MaxY - 164, posY));
 	}
 
 	public static void Move(int dx, int dy)
 	{
-		posX = System.Math.Max(0, System.Math.Min(MaxX - 365, posX + dx));
+		posX = System.Math.Max(0, System.Math.Min(MaxX, posX + dx));
 		posY = System.Math.Max(25, System.Math.Min(MaxY - 164, posY + dy));
 	}
 
