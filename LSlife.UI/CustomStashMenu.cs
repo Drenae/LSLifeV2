@@ -16,6 +16,7 @@ internal static class CustomStashMenu
     private static readonly int[] steps = { 1, 5, 10, 25, 50, 100 };
     private static bool waitForRelease;
     private static int lastFrame = -1;
+    private static readonly CustomMenuShared.HorizontalRepeat horizontalRepeat = new CustomMenuShared.HorizontalRepeat();
 
     public static bool Visible => activeMenu != null && activeMenu.Visible;
 
@@ -54,6 +55,7 @@ internal static class CustomStashMenu
     private static void OpenTransfer(bool car, bool deposit)
     {
         vehicle = car; put = deposit; transfer = true; stepIndex = 0;
+        horizontalRepeat.Reset();
         var menu = new CustomMenu(deposit ? "DEPOSER" : "RETIRER", "");
         menu.Add("Multiplicateur", () => Change(1));
         for (int n = 0; n < 3; n++) { int k = n; menu.Add(DrugName(k), () => Commit(k)); }
@@ -197,7 +199,7 @@ internal static class CustomStashMenu
             return k <= 2 ? LsFunctions.GramsToOz(value) : k <= 5 ? value + " oz" : LsFunctions.IntToMoney(value) + " $";
         }
         var item = List(k);
-        return item.Items.Count == 0 ? "Aucun" : k == 7 ? "< " + item.Index + " >" : "< " + item.Items[item.Index] + " >";
+        return item.Items.Count == 0 ? "Aucun" : k == 7 ? "< " + item.Index + " >" : "< " + CustomMenuShared.FrenchWeaponName(item.Items[item.Index].ToString()) + " >";
     }
     private static void Section(CustomMenuLayout layout, string title)
     {
@@ -217,12 +219,20 @@ internal static class CustomStashMenu
             layout.Row(label, activeMenu.SelectedIndex == i, Value(k), 0.040f, redValue: k >= 3 && k <= 5);
             if (k >= 0 && k <= 6)
             {
+                // Barre dans la ligne, comme le menu Approvisionner de l'employe.
                 var slider = Slider(k);
-                float ratio = slider.Maximum > 0 ? (float)slider.Value / slider.Maximum : 0f;
-                int red = k >= 3 && k <= 5 ? 226 : 111;
-                int green = k >= 3 && k <= 5 ? 85 : 216;
-                layout.Block(0.005f, y => CustomMenuRenderer.Rect(layout.Left + 0.020f + ratio * 0.105f,
-                    y + 0.002f, Math.Max(0.001f, ratio * 0.21f), 0.003f, red, green, k >= 3 && k <= 5 ? 85 : 139, 230));
+                float fraction = slider.Maximum > 0 ? Math.Min(1f, (float)slider.Value / slider.Maximum) : 0f;
+                bool red = k >= 3 && k <= 5;
+                layout.Block(0f, y =>
+                {
+                    const float barWidth = 0.067f;
+                    float barLeft = layout.Left + 0.116f;
+                    float barY = y - 0.040f / 2f;
+                    CustomMenuRenderer.Rect(barLeft + barWidth / 2f, barY, barWidth, 0.008f, 66, 68, 70, 255);
+                    if (fraction > 0f)
+                        CustomMenuRenderer.Rect(barLeft + barWidth * fraction / 2f, barY,
+                            barWidth * fraction, 0.008f, red ? 226 : 111, red ? 85 : 216, red ? 85 : 139, 255);
+                });
             }
         }
         layout.Render();
@@ -232,6 +242,7 @@ internal static class CustomStashMenu
         if (activeMenu != null) activeMenu.Close();
         activeMenu = null;
         transfer = false;
+        horizontalRepeat.Reset();
     }
 
     public static void TickOncePerFrame()
@@ -251,9 +262,10 @@ internal static class CustomStashMenu
             if (transfer) DrawTransfer(); else Draw();
             return;
         }
-        if (transfer && (JustPressed(174) || JustPressed(175))) Change(JustPressed(175) ? 1 : -1);
-        else if (JustPressed(172)) activeMenu.Move(-1);
-        else if (JustPressed(173)) activeMenu.Move(1);
+        int horizontal = transfer ? horizontalRepeat.Poll(65) : 0;
+        if (transfer && horizontal != 0) Change(horizontal);
+        else if (JustPressed(172)) { horizontalRepeat.Reset(); activeMenu.Move(-1); }
+        else if (JustPressed(173)) { horizontalRepeat.Reset(); activeMenu.Move(1); }
         else if (JustPressed(201))
         {
             activeMenu.Activate();
