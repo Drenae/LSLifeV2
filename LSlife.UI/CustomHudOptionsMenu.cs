@@ -19,8 +19,12 @@ internal static class CustomHudOptionsMenu
         if (menu == null)
         {
             menu = new CustomMenu("HUD", "POSITION / OPTIONS");
-            menu.Add("Position horizontale", () => { });
-            menu.Add("Position verticale", () => { });
+            menu.Add("Stocks - position X", () => { });
+            menu.Add("Stocks - position Y", () => { });
+            menu.Add("Pression - position X", () => { });
+            menu.Add("Pression - position Y", () => { });
+            menu.Add("DEBUG - position X", () => { });
+            menu.Add("DEBUG - position Y", () => { });
             menu.Add("Enregistrer", Save);
             menu.Add("Retour", Close);
         }
@@ -79,13 +83,20 @@ internal static class CustomHudOptionsMenu
             if (!Visible) return;
         }
 
-        if (menu.SelectedIndex <= 1)
+        if (menu.SelectedIndex <= 5)
         {
             int direction = repeat.Poll(110, 320);
             if (direction != 0)
             {
-                if (menu.SelectedIndex == 0) Hud.Move(direction * 10, 0);
-                else Hud.Move(0, direction * 10);
+                switch (menu.SelectedIndex)
+                {
+                    case 0: Hud.Move(direction * 10, 0); break;
+                    case 1: Hud.Move(0, direction * 10); break;
+                    case 2: Hud.MoveBars(direction * 10, 0); break;
+                    case 3: Hud.MoveBars(0, direction * 10); break;
+                    case 4: Hud.MoveDebug(direction * 10, 0); break;
+                    case 5: Hud.MoveDebug(0, direction * 10); break;
+                }
             }
         }
         else repeat.Reset();
@@ -99,14 +110,18 @@ internal static class CustomHudOptionsMenu
         layout.Header("HUD", "POSITION / OPTIONS");
         layout.Separator(0.005f);
         layout.TextPair("Coordonnees", "1920 x 1080");
-        layout.Row("Position X", menu.SelectedIndex == 0, Hud.PositionX.ToString());
-        layout.Row("Position Y", menu.SelectedIndex == 1, Hud.PositionY.ToString());
+        layout.Row("Stocks X", menu.SelectedIndex == 0, Hud.PositionX.ToString());
+        layout.Row("Stocks Y", menu.SelectedIndex == 1, Hud.PositionY.ToString());
+        layout.Row("Pression X", menu.SelectedIndex == 2, Hud.BarsPositionX.ToString());
+        layout.Row("Pression Y", menu.SelectedIndex == 3, Hud.BarsPositionY.ToString());
+        layout.Row("DEBUG X", menu.SelectedIndex == 4, Hud.DebugX.ToString());
+        layout.Row("DEBUG Y", menu.SelectedIndex == 5, Hud.DebugY.ToString());
         layout.Block(0.032f, y =>
             CustomMenuRenderer.TextCenteredVertically("Gauche / droite : deplacer par 10 pixels",
                 layout.Left + 0.019f, y, 0.032f, 0.245f, 175, 177, 182, 255));
         layout.Separator(0.004f);
-        layout.Row("Enregistrer", menu.SelectedIndex == 2);
-        layout.Row("Retour", menu.SelectedIndex == 3);
+        layout.Row("Enregistrer", menu.SelectedIndex == 6);
+        layout.Row("Retour", menu.SelectedIndex == 7);
         layout.Render();
     }
 }
