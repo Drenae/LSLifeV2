@@ -266,6 +266,7 @@ public partial class LSL
 			CustomStashMenu.TickOncePerFrame();
 			CustomCustomerMenu.TickOncePerFrame();
 			CustomWeaponDealerMenu.TickOncePerFrame();
+			CustomHireDealerMenu.TickOncePerFrame();
 		}
 		if (Game.IsControlPressed(2, (Control)76) && Game.IsControlJustPressed(2, (Control)26))
 		{
