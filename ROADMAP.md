@@ -10,15 +10,15 @@
 - **Menus personnalisés** : Zee, employés, planque, clients, marchand d'armes et recrutement possèdent des interfaces CustomMenu ; plusieurs actions utilisent encore les objets ou événements NativeUI en arrière-plan.
 - **Marchand d'armes** : achats et notifications validés en jeu ; disposition à améliorer.
 - **Recrutement** : ouverture, offre acceptée, paiement et suivi du dealer validés en jeu. Repérage et contournement de réputation réservés à DEBUG.
-- **HUD** : nouvelle apparence anthracite/dorée introduite dans `Hud.cs`, **non encore validée en jeu et toujours dessinée avec NativeUI**. Ce n'est pas une migration technique.
+- **HUD** : `HudRender.cs` utilise désormais les natives GTA V pour le HUD principal, les pressions et les panneaux DEBUG ; `CustomHudOptionsMenu.cs` remplace les réglages NativeUI. **Code non encore compilé ni validé en jeu.**
 - **Dépendance NativeUI** : encore requise pour les menus, le HUD et des composants internes. Ne pas supprimer la DLL avant élimination des références.
 - **Compilations** : les changements récents du HUD n'ont pas été confirmés compilés ; tester avant de marquer terminés.
 
 ## Priorité immédiate — Migrer réellement le HUD
 
-- [ ] Auditer toutes les fonctions d'affichage du HUD principal, les barres de pression, les panneaux DEBUG, les paramètres de position et leurs sauvegardes.
-- [ ] Remplacer **tous** les dessins NativeUI du HUD (`UIResText`, `UIResRectangle`, `UIContainer`, `UIText`, `TimerBarPool` selon les usages réels) par le rendu natif GTA V / composants personnalisés, sans perte de données ni de fonctionnalités.
-- [ ] Migrer les réglages de position du HUD qui dépendent de `UIMenu*` ; conserver la compatibilité des positions sauvegardées.
+- [x] Auditer les fonctions d'affichage du HUD principal, les barres de pression, les panneaux DEBUG, les paramètres de position et leurs sauvegardes.
+- [x] Remplacer le rendu du HUD principal, des barres de pression et des quatre panneaux DEBUG par `HudRender.cs` utilisant les natives GTA V. **À compiler et valider en jeu**. Le `BarHandler` historique utilise encore `TimerBarPool` : vérifier ses appels avant de le retirer.
+- [x] Migrer les réglages de position vers `CustomHudOptionsMenu` accessible depuis Zee, sans `UIMenu*` dans `Hud.cs` ; sauvegarde XML et compatibilité `hudPosVersion` conservées. **À compiler et valider en jeu**.
 - [ ] Garder les emplacements actuels : argent/stocks/mode vente en haut à droite ; pression joueur/quartier en bas à droite. Conserver les valeurs et conditions d'affichage historiques.
 - [ ] Conserver le thème sombre avec accents dorés de la maquette approuvée ; mode compact, réputation et capacité des dealers restent des **options futures**, non activées par défaut.
 - [ ] Vérifier la compilation, les affichages avec/sans menu, les différentes résolutions, le téléphone iFruit et les modes DEBUG ; obtenir validation en jeu.
@@ -49,7 +49,7 @@ Objectif : menus et sous-menus autonomes, rendus via `CustomMenuRenderer` et `Cu
 ## P2 — Améliorations après migration
 
 - [ ] **Alertes de réapprovisionnement Worker** : SMS de l’employé lorsque Cannabis, Crack ou Cocaïne est épuisé ; message spécifique lorsque tout le stock est vide. Prévoir anti-spam, seuils et déclenchement uniquement lors d’un changement de stock.\n- [ ] **Alerte recette Worker** : SMS lorsque la somme à récolter dépasse un seuil configurable ; éviter les répétitions jusqu’à la récolte.\n- [ ] **Équipement Worker** : donner une nouvelle arme et récupérer automatiquement l'ancienne ; gérer inventaire, munitions, composants, sauvegarde et cas limites.
-- [ ] **HUD** : apparence initiale implémentée, **non validée** ; migration technique NativeUI vers rendu GTA natif prioritaire (voir ci-dessus).
+- [ ] **HUD** : migration du rendu et des réglages vers natives GTA/CustomMenu implémentée, **non compilée ni validée en jeu** ; vérifier le résultat et l'absence de régression (voir ci-dessus).
 - [ ] **HUD / Session** : afficher les bénéfices de la session actuelle, avec une définition claire des revenus et dépenses comptabilisés.
 - [ ] **Livre des comptes** (étude de faisabilité) : historique des transactions, bénéfices, dépenses et synthèses par session ; évaluer persistance et performances avant développement.
 
