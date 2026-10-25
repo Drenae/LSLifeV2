@@ -232,17 +232,17 @@ internal static class CustomStashMenu
                 (k == 7 ? List(k).Items.Count > 1 : List(k).Items.Count > 0));
             // Valeurs dessinees ensemble, alignees a droite : aucune colonne flottante.
             // Les codes GTA ~c~ gardent la disponibilite en gris.
-            string display = Value(k);
-            if (k >= 0 && k <= 6)
-                display = (available ? (k >= 3 && k <= 5 ? "~r~" : "~g~") : "~c~")
-                    + display + "~s~ / " + AvailableValue(k).Substring(2);
-            layout.Row(label, selected, k <= 6 && k >= 0 ? null : display,
+            bool quantity = k >= 0 && k <= 6;
+            layout.Row(label, selected, quantity ? null : Value(k),
                 0.040f, enabled: available, redValue: k >= 3 && k <= 5,
                 dimValue: !available, emphasizeValue: selected && available);
-            if (k >= 0 && k <= 6)
-                layout.Block(0f, y => CustomMenuRenderer.TextRightCenteredVertically(
-                    display, layout.Right - 0.019f, y - 0.040f, 0.040f,
-                    0.245f, 220, 220, 220, 255));
+            if (quantity)
+                layout.Block(0f, y => CustomMenuRenderer.TextTwoColorsRight(
+                    Value(k), AvailableValue(k).Substring(2), layout.Right - 0.019f,
+                    y - 0.040f, 0.040f, 0.245f,
+                    k >= 3 && k <= 5 ? 226 : 111,
+                    k >= 3 && k <= 5 ? 85 : 216,
+                    k >= 3 && k <= 5 ? 85 : 139, !available));
             if (k >= 0 && k <= 6)
             {
                 // Barre dans la ligne, comme le menu Approvisionner de l'employe.
