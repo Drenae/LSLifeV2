@@ -14,6 +14,13 @@
 - **Dépendance NativeUI** : encore requise pour les menus historiques et des composants internes ; le HUD principal n'en dépend plus pour son rendu. Ne pas supprimer la DLL avant élimination des références.
 - **Tests** : HUD et options confirmés fonctionnels en jeu par l'utilisateur ; audit des dépendances restantes dans `AUDIT_NATIVEUI.md`.
 
+## Sauvegarde et migration NativeUI — 25 octobre 2026
+
+- [x] Sauvegarde Git avant travaux : `backup/pre-nativeui-decoupling-20261025` (`bf9e174`).
+- [x] Extraire deux actions métier du menu Zee sans modifier les stocks ni les sauvegardes.
+- [ ] Compiler et tester en jeu : activer/désactiver le mode vente, valider une commande, vérifier le retour des menus et le téléphone.
+- [ ] Découpler les sliders, la sélection de produits et les services Zee de NativeUI.
+
 ## Retours HUD — réglages et lisibilité (25 octobre 2026)
 
 - [x] Structurer les options HUD : taille écran, stock, influence et pression, DEBUG conditionnel, enregistrer et retour.
@@ -58,7 +65,7 @@ Objectif : menus et sous-menus autonomes, rendus via `CustomMenuRenderer` et `Cu
 - [ ] **Stash / Planque (maison)** : menu principal CustomMenu raccordé à l'interaction en jeu (à compiler et valider) ; retrait et dépôt restent provisoirement NativeUI. Source de vérité : `LSL.HouseHandler.CurrentHouse` (Weed/Crack/Cocain/Money/Armor/Weapons), sauvegarde de maison. Ne jamais mélanger avec le coffre de voiture.\n- [ ] **Stash / Coffre de voiture** : menu principal CustomMenu raccordé à l'interaction en jeu (à compiler et valider) ; retrait et dépôt restent provisoirement NativeUI. Auditer son propre inventaire, ses limites et sa sauvegarde avant modification. Ne jamais utiliser `CurrentHouse` pour le coffre.\n- [ ] **Stash / Vérification** : tester les transferts dans les deux sens, les quantités limites et la persistance de chaque stockage séparément.
 - [x] **Customer / Clients** : interface personnalisée et interactions raccordées ; découplage NativeUI interne restant.
 - [x] **Audit statique NativeUI** : inventaire des fichiers et ordre de migration documentés dans `AUDIT_NATIVEUI.md`.
-- [ ] **Découplage métier** : extraire les traitements appelés avec des objets `UIMenu*`, notamment Zee et commandes.
+- [ ] **Découplage métier** : début effectué sur Zee : démarrage du mode vente (`StartDealing`) et validation de commande (`PlaceDrugOrder`) ne nécessitent plus d'objets `UIMenu*` depuis CustomZeeMenu. **À compiler et tester en jeu** ; sliders, ajout de produits, services et autres callbacks restent à migrer.
 - [ ] **Audit final après migration** : vérifier l'absence totale de références NativeUI avant suppression de la DLL.
 - [ ] Supprimer les références et la dépendance NativeUI seulement lorsque plus aucun code ne l'utilise.
 
