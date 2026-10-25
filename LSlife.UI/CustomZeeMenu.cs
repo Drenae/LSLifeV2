@@ -42,6 +42,14 @@ internal static class CustomZeeMenu
         menu.Add("Acheter des armes", () => RunExisting(LSL.buyWeapons));
         menu.Add("Demander a etre depose", () => RunExisting(LSL.buyLift));
         menu.Add("Rembourser la dette", () => RunExisting(LSL.payDebt), () => LSL.dealer1Debt > 0);
+        menu.Add("Options du HUD", OpenHudOptions);
+    }
+
+    private static void OpenHudOptions()
+    {
+        menu.Close();
+        activeMenu = null;
+        CustomHudOptionsMenu.Open();
     }
 
     private static void OpenDealer()
