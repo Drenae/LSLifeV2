@@ -37,6 +37,27 @@ public class AreaDealer
 
 	public int LastOffer { get; private set; }
 
+	private Blip recruitmentDebugBlip;
+
+	// Repere de test : actif uniquement lorsque DEBUG est active.
+	public void UpdateRecruitmentDebugMarker(bool enabled)
+	{
+		if (!enabled || (Entity)(object)dPed == (Entity)null || !((Entity)dPed).Exists() || !((Entity)dPed).IsAlive || CurrentState == Enums.DStates.AttackPlayer)
+		{
+			if (recruitmentDebugBlip != null && recruitmentDebugBlip.Exists()) recruitmentDebugBlip.Remove();
+			recruitmentDebugBlip = null;
+			return;
+		}
+		if (recruitmentDebugBlip != null && recruitmentDebugBlip.Exists()) return;
+		if (((Entity)dPed).CurrentBlip != null && ((Entity)dPed).CurrentBlip.Exists()) return;
+		recruitmentDebugBlip = ((Entity)dPed).AddBlip();
+		recruitmentDebugBlip.Name = "Dealer recrutable (DEBUG)";
+		recruitmentDebugBlip.Color = (BlipColor)2;
+		recruitmentDebugBlip.IsShortRange = false;
+		recruitmentDebugBlip.IsFriendly = false;
+	}
+
+
 	public AreaDealer(Ped p)
 	{
 		//IL_0008: Unknown result type (might be due to invalid IL or missing references)
@@ -280,6 +301,7 @@ public class AreaDealer
 					CurrentState = Enums.DStates.TalkToPlayer;
 					break;
 				case Enums.DStates.AttackPlayer:
+					UpdateRecruitmentDebugMarker(false);
 					dPed.RelationshipGroup = LSL.rival_enemy;
 					dPed.Task.ClearAll();
 					LsFunctions.AddBlip((Entity)(object)dPed, (BlipColor)1, "Rival Dealer", _friend: false, _edge: false);
