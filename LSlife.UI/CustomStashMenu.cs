@@ -235,7 +235,7 @@ internal static class CustomStashMenu
             string display = Value(k);
             if (k >= 0 && k <= 6)
                 display = (available ? (k >= 3 && k <= 5 ? "~r~" : "~g~") : "~c~")
-                    + display + "~c~" + AvailableValue(k);
+                    + display + "~s~ / " + AvailableValue(k).Substring(2);
             layout.Row(label, selected, k <= 6 && k >= 0 ? null : display,
                 0.040f, enabled: available, redValue: k >= 3 && k <= 5,
                 dimValue: !available, emphasizeValue: selected && available);
