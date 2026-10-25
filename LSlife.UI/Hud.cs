@@ -272,12 +272,9 @@ internal static class Hud
 
 	private static void DrawHeatBars()
 	{
-		new UIResRectangle(new Point(BarsX, BarsY),
-			new Size(BarsWidth, BarsRowHeight * 2), HudBackground).Draw();
-		new UIResRectangle(new Point(BarsX, BarsY),
-			new Size(3, BarsRowHeight * 2), AccentGold).Draw();
-		new UIResRectangle(new Point(BarsX + 12, BarsY + BarsRowHeight),
-			new Size(BarsWidth - 24, 1), HudSeparator).Draw();
+		HudRender.Rect(BarsX, BarsY, BarsWidth, BarsRowHeight * 2, 11, 13, 16, 190);
+		HudRender.Rect(BarsX, BarsY, 3, BarsRowHeight * 2, 187, 154, 82, 225);
+		HudRender.Rect(BarsX + 12, BarsY + BarsRowHeight, BarsWidth - 24, 1, 130, 103, 52, 155);
 		DrawBarRow("Joueur", PlayerHeatBar.GetPercentage(), BarsY);
 		DrawBarRow("Quartier", AreaHeatBar.GetPercentage(), BarsY + BarsRowHeight);
 	}
@@ -288,13 +285,8 @@ internal static class Hud
 		int progressX = BarsX + BarsProgressOffsetX;
 		int progressY = y + (BarsRowHeight - BarsProgressHeight) / 2;
 		DrawHudText(label, BarsX + 58, y + 10, 0.30f, Color.WhiteSmoke);
-		new UIResRectangle(new Point(progressX, progressY),
-			new Size(BarsProgressWidth, BarsProgressHeight), BarsTrack).Draw();
-		int filled = (int)(BarsProgressWidth * progress);
-		if (filled > 0)
-		{
-			HudRender.Progress(progressX, progressY, BarsProgressWidth, BarsProgressHeight, progress);
-		}
+		HudRender.Rect(progressX, progressY, BarsProgressWidth, BarsProgressHeight, 53, 56, 60, 225);
+
 	}
 
 	public static void Hide()
@@ -311,10 +303,9 @@ internal static class Hud
 		int height = (compact ? 91 : 164) + extraRows * 21;
 		int left = posX;
 		int top = System.Math.Max(0, posY - 25);
-		new UIResRectangle(new Point(left, top), new Size(width, height), HudBackground).Draw();
-		new UIResRectangle(new Point(left, top), new Size(3, height), AccentGold).Draw();
-		new UIResRectangle(new Point(left + 12, top + 36),
-			new Size(width - 24, 1), HudSeparator).Draw();
+		HudRender.Rect(left, top, width, height, 11, 13, 16, 190);
+		HudRender.Rect(left, top, 3, height, 187, 154, 82, 225);
+		HudRender.Rect(left + 12, top + 36, width - 24, 1, 130, 103, 52, 155);
 		DrawHudText("ARGENT", left + 60, top + 8, 0.30f, Color.White);
 		DrawHudText(LsFunctions.IntToMoney(LSL.player.Money) + " $",
 			left + 290, top + 8, 0.30f, Color.LightGreen);
@@ -358,8 +349,7 @@ internal static class Hud
 				left + 290, footerY + 1, 0.27f, Color.WhiteSmoke);
 			footerY += 21;
 		}
-		new UIResRectangle(new Point(left + 12, footerY),
-			new Size(width - 24, 1), HudSeparator).Draw();
+		HudRender.Rect(left + 12, footerY, width - 24, 1, 130, 103, 52, 155);
 		DrawHudText("MODE VENTE", left + 80, footerY + 5, 0.30f, Color.WhiteSmoke);
 		DrawHudText(LSL.isDealing ? "ACTIVÉ" : "DÉSACTIVÉ",
 			left + 290, footerY + 5, 0.30f,
