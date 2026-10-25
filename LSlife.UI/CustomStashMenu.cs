@@ -178,7 +178,7 @@ internal static class CustomStashMenu
             if (index < 0 || index >= house.Weapons.Count) return;
             var w = house.Weapons[index];
             var hash = w.Element("HASH");
-            GTA.WeaponHash weapon;
+            GTA.Native.WeaponHash weapon;
             if (hash == null || !Enum.TryParse(hash.Value, out weapon)) return;
             int ammo = 0; int.TryParse((string)w.Element("AMMO"), out ammo);
             Game.Player.Character.Weapons.Give(weapon, ammo, true, false);
