@@ -7,7 +7,10 @@
 - [x] Configuration `[WORKER_ALERTS]` documentée dans README ; notifications GTA avec son SMS, sans boîte de réception persistante.
 - [x] Collecte de recette depuis CustomWorkerMenu sans callback NativeUI.
 - [ ] **À compiler et tester en jeu** : ventes simulées, stock épuisé, réapprovisionnement, collecte, cooldown, sauvegardes, iFruit et menus.
-- [ ] Suite du découplage NativeUI : sélecteurs et ajouts de commandes Zee, équipements Worker, services Zee.
+- [x] Menu Worker : transfert d'armes appelé par index, sans dépendance au sélecteur NativeUI (ancien callback conservé pour compatibilité).
+- [ ] Menu Zee : commandes de drogues et services encore reliés aux contrôles/callbacks NativeUI ; migration non terminée.
+- [ ] Suppression complète de NativeUI : impossible tant que Setup.cs, LSL.cs et les anciens menus/callbacks le référencent.
+- [ ] Tester le transfert d'armes Worker, les munitions, composants, sauvegardes et l'inventaire après migration.
 
 # Roadmap — LS Life V2
 
