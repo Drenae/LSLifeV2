@@ -16,17 +16,19 @@ internal static partial class LsMenus
 {
 	public static void OnstartDealSelect(UIMenu sender, UIMenuItem item, int index)
 	{
-		//IL_00ee: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0102: Unknown result type (might be due to invalid IL or missing references)
-		//IL_010c: Unknown result type (might be due to invalid IL or missing references)
-		if (item != LSL.StartDeal)
-		{
-			return;
-		}
-		LSL.sellingWeed = LSL.sellWeed.Checked;
-		LSL.sellingCrack = LSL.sellCrack.Checked;
-		LSL.sellingCocaine = LSL.sellCocaine.Checked;
-		LSL.deliveriesEnabled = LSL.allowDeliveries.Checked;
+		if (item != LSL.StartDeal) return;
+		StartDealing(LSL.sellWeed.Checked, LSL.sellCrack.Checked,
+			LSL.sellCocaine.Checked, LSL.allowDeliveries.Checked);
+		if (sender != null && LSL.isDealing) sender.Visible = false;
+	}
+
+	// Traitement metier independant de NativeUI, partage avec CustomZeeMenu.
+	internal static void StartDealing(bool weed, bool crack, bool cocaine, bool deliveries)
+	{
+		LSL.sellingWeed = weed;
+		LSL.sellingCrack = crack;
+		LSL.sellingCocaine = cocaine;
+		LSL.deliveriesEnabled = deliveries;
 		if (!LSL.sellingWeed && !LSL.sellingCrack && !LSL.sellingCocaine)
 		{
 			LsFunctions.TextMsg("ZEE", "Travail", "Dis-moi d'abord ce que tu veux vendre.");
@@ -38,7 +40,7 @@ internal static partial class LsMenus
 			{
 				total += LSL.pStashVehicle.TotalDrugs();
 			}
-			sender.Visible = !sender.Visible;
+			// L'interface appelante gere sa propre visibilite.
 			if (LSL.playerHeat > 0f)
 			{
 				LsFunctions.TextMsg("ZEE", "Travail", "Tu attires trop l'attention dans ce quartier.");
