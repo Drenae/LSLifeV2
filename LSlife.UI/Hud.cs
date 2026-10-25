@@ -105,6 +105,7 @@ internal static class Hud
 	private static int posY = TopHudDefaultY;
 	private static int debugX = 10;
 	private static int debugY = 10;
+	public static bool DebugEnabled { get; set; }
 	public static int BarsPositionX => barsX;
 	public static int BarsPositionY => barsY;
 	public static int DebugX => debugX;
