@@ -261,6 +261,7 @@ public partial class LSL
 			LsMenuPool.ProcessMenus();
 			CustomZeeMenu.Tick();
 			CustomStashMenu.TickOncePerFrame();
+			CustomCustomerMenu.TickOncePerFrame();
 		}
 		iFruit.Update();
 		if (Game.IsControlPressed(2, (Control)76) && Game.IsControlJustPressed(2, (Control)26))
@@ -715,8 +716,7 @@ public partial class LSL
 								{
 									LsFunctions.DisplayHelpText("Stock insuffisant pour cette vente.");
 								}
-								customerMainMenu.Visible = !customerMainMenu.Visible;
-								customerMainMenu.CurrentSelection = 0;
+								CustomCustomerMenu.Open();
 							}
 						}
 						if (!player.Character.IsInVehicle() && player.Character.IsStopped && !player.Character.IsInCombat)
@@ -738,8 +738,7 @@ public partial class LSL
 								{
 									LsFunctions.DisplayHelpText("Stock insuffisant pour cette vente.");
 								}
-								customerMainMenu.Visible = !customerMainMenu.Visible;
-								customerMainMenu.CurrentSelection = 0;
+								CustomCustomerMenu.Open();
 							}
 						}
 					}
