@@ -8,11 +8,11 @@ Remettre en état LS Life pour GTA V Legacy : **fonctionnement, bugs, traduction
 
 - **GTA V Legacy**, mode histoire.
 - **ScriptHookVDotNet2**.
-- **NativeUI 1.9.1 d'origine**.
+- **NativeUI 1.9.1 d'origine** : dépendance temporaire pendant la migration vers CustomMenu ; ne la supprimer qu'après remplacement et validation de tous ses usages, HUD compris.
 - **iFruitAddon2**.
 - Projet C# / .NET Framework 4.8 / x64.
 
-Ne pas migrer vers SHVDN3, LemonUI, ni créer LSNativeUI sans nouvelle demande explicite.
+Ne pas migrer vers SHVDN3, LemonUI, ni créer LSNativeUI sans nouvelle demande explicite. La migration **NativeUI vers les interfaces CustomMenu et le rendu natif GTA V** est explicitement approuvée sur `feature/custom-zee-menu`.
 
 ## 3. Protection de la stabilité
 
@@ -23,6 +23,9 @@ Ne pas migrer vers SHVDN3, LemonUI, ni créer LSNativeUI sans nouvelle demande e
 - Prévoir un retour arrière simple pour toute modification risquée.
 
 ## 4. Vérifier avant de coder
+
+- **Lire `ROADMAP.md` et `REGLES.md` avant chaque intervention**, vérifier l'état réel du projet et mettre la roadmap à jour après tout jalon ou changement de priorité.
+- Distinguer **restylage visuel** et **suppression réelle de dépendance** : une interface qui appelle encore NativeUI n'est pas migrée.
 
 - Consulter directement le dépôt GitHub et les fichiers concernés.
 - Ne pas inventer d'API, de signatures, de chemins ni de fonctionnalités.
