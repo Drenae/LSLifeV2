@@ -256,6 +256,9 @@ public partial class LSL
 			Function.Call(unchecked((Hash)(-7077668788463384353L)), ("restrictedareas"));
 			Function.Call(unchecked((Hash)(-7077668788463384353L)), ("re_prison"));
 		}
+		// iFruit doit traiter le telephone avant que les menus personnalises
+		// ne lisent ou ne neutralisent les controles GTA de cette frame.
+		iFruit.Update();
 		if (LsMenuPool != null)
 		{
 			LsMenuPool.ProcessMenus();
@@ -264,7 +267,6 @@ public partial class LSL
 			CustomCustomerMenu.TickOncePerFrame();
 			CustomWeaponDealerMenu.TickOncePerFrame();
 		}
-		iFruit.Update();
 		if (Game.IsControlPressed(2, (Control)76) && Game.IsControlJustPressed(2, (Control)26))
 		{
 			DropDrugs.Drop();
