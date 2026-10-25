@@ -262,6 +262,7 @@ public partial class LSL
 			CustomZeeMenu.Tick();
 			CustomStashMenu.TickOncePerFrame();
 			CustomCustomerMenu.TickOncePerFrame();
+			CustomWeaponDealerMenu.TickOncePerFrame();
 		}
 		iFruit.Update();
 		if (Game.IsControlPressed(2, (Control)76) && Game.IsControlJustPressed(2, (Control)26))
@@ -330,7 +331,7 @@ public partial class LSL
 			HandleAreaDealers();
 			if (!LsMenuPool.IsAnyMenuOpen() && (Entity)(object)weaponDealer1 != (Entity)null && readyToDeal && Game.IsControlJustPressed(2, (Control)51) && LsMenuPool != null && !LsMenuPool.IsAnyMenuOpen())
 			{
-				wepMenu.Visible = !wepMenu.Visible;
+				CustomWeaponDealerMenu.Open();
 			}
 			if (pStashVehicle != null)
 			{
@@ -1745,9 +1746,9 @@ public partial class LSL
 					LsFunctions.DisplayHelpText("Trouve un endroit plus tranquille.");
 				}
 				readyToDeal = false;
-				if (wepMenu.Visible)
+				if (CustomWeaponDealerMenu.Visible)
 				{
-					wepMenu.Visible = !wepMenu.Visible;
+					CustomWeaponDealerMenu.Close();
 				}
 			}
 			else if (!readyToDeal && !LsMenuPool.IsAnyMenuOpen())
