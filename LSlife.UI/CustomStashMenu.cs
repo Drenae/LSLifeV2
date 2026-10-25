@@ -218,7 +218,12 @@ internal static class CustomStashMenu
             if (i == 1 && (put || vehicle)) Section(layout, "EN VRAC");
             if (k == 3) Section(layout, "CONDITIONNE");
             string label = k >= 0 && k <= 5 ? DrugName(k) : activeMenu.Entries[i].Label;
-            layout.Row(label, activeMenu.SelectedIndex == i, Value(k), 0.040f, redValue: k >= 3 && k <= 5);
+            bool selected = activeMenu.SelectedIndex == i;
+            bool available = k < 0 || (k <= 6 ? Slider(k).Maximum > 0 :
+                (k == 7 ? List(k).Items.Count > 1 : List(k).Items.Count > 0));
+            layout.Row(label, selected, Value(k), 0.040f, enabled: available,
+                redValue: k >= 3 && k <= 5, dimValue: !available,
+                emphasizeValue: selected && available);
             if (k >= 0 && k <= 6)
             {
                 // Barre dans la ligne, comme le menu Approvisionner de l'employe.
