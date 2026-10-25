@@ -48,7 +48,7 @@ internal static class WorkerAlerts
         {
             s = new Snapshot { Money = worker.Money };
             foreach (string key in keys) s.Stock[key] = Read(worker, key);
-            s.RevenueNotified = worker.Money >= revenueThreshold;
+            s.RevenueNotified = NetRevenue(worker.Money) >= revenueThreshold;
             s.AllEmptyNotified = AllEmpty(worker);
             for (int i = 0; i < keys.Length; i++)
                 if (s.Stock[keys[i]] <= stockThreshold) s.StockNotified.Add(keys[i]);
@@ -68,7 +68,7 @@ internal static class WorkerAlerts
 
         bool empty = AllEmpty(worker);
         if (!empty) s.AllEmptyNotified = false;
-        if (worker.Money < revenueThreshold) s.RevenueNotified = false;
+        if (NetRevenue(worker.Money) < revenueThreshold) s.RevenueNotified = false;
 
         // Les notifications non emises (cooldown) restent eligibles au prochain passage,
         // mais seulement apres une transition de stock initiale.
@@ -103,9 +103,9 @@ internal static class WorkerAlerts
             if (!empty && !HasUnnotifiedLowStock(worker, s)) s.StockChangedPending = false;
         }
 
-        if (worker.Money >= revenueThreshold && !s.RevenueNotified && (worker.Money != s.Money || s.Money >= revenueThreshold))
+        if (NetRevenue(worker.Money) >= revenueThreshold && !s.RevenueNotified && (worker.Money != s.Money || NetRevenue(s.Money) >= revenueThreshold))
         {
-            if (Send(worker, "J'ai " + LsFunctions.IntToMoney(worker.Money - (worker.Money / 100) * 20) + " $ de recette a recolter."))
+            if (Send(worker, "J'ai " + LsFunctions.IntToMoney(NetRevenue(worker.Money)) + " $ de recette a recolter."))
                 s.RevenueNotified = true;
         }
         s.Money = worker.Money;
@@ -119,6 +119,8 @@ internal static class WorkerAlerts
     }
 
     internal static void Forget(int id) { snapshots.Remove(id); }
+
+    private static int NetRevenue(int gross) { return gross - (gross / 100) * 20; }
 
     private static int Read(PlayerDealer worker, string key)
     {
