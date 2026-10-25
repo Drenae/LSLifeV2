@@ -377,7 +377,7 @@ public class AreaDealer
 		}
 		bool canHire = true;
 		string reason = "";
-		if (canHire && LSL.DealerHandler.dealers.Count >= (int)LsFunctions.CurrentRepLvl(LSL.dealer1Rep))
+		if (canHire && !LSL.DEBUG && LSL.DealerHandler.dealers.Count >= (int)LsFunctions.CurrentRepLvl(LSL.dealer1Rep))
 		{
 			canHire = false;
 			reason = "You need more rep before hiring more dealers.";
