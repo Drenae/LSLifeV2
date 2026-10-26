@@ -113,20 +113,7 @@ internal static class CustomWorkerMenu
 
     private static void ConfirmWorkerSupply()
     {
-        PlayerDealer worker = LSL.DealerHandler.currentDealer;
-        if (worker == null || worker.Ped == null) return;
-        if (supplyWeed + supplyCrack + supplyCocaine <= 0 ||
-            supplyWeed > SupplyAvailable("Weed") ||
-            supplyCrack > SupplyAvailable("Crack") ||
-            supplyCocaine > SupplyAvailable("Cocaine")) return;
-
-        LsFunctions.HandOverGoods(LSL.player.Character, worker.Ped);
-        if (supplyWeed > 0) { worker.Drugs["Weed"] += supplyWeed; LSL.PlayerInventory["Weed"] -= supplyWeed; }
-        if (supplyCrack > 0) { worker.Drugs["Crack"] += supplyCrack; LSL.PlayerInventory["Crack"] -= supplyCrack; }
-        if (supplyCocaine > 0) { worker.Drugs["Cocaine"] += supplyCocaine; LSL.PlayerInventory["Cocaine"] -= supplyCocaine; }
-        LsFunctions.UpdateInventory();
-        worker.SetDrugDesc();
-        LSL.DealerHandler.needsSave = true;
+        if (!WorkerSupplyTransfer.ConfirmWorkerSupply(supplyWeed, supplyCrack, supplyCocaine)) return;
         supplyWeed = supplyCrack = supplyCocaine = 0;
         workerSupplyMenu.Close();
         activeMenu = workerMenu;
