@@ -127,8 +127,17 @@ internal static partial class LsMenus
 
 	public static void onCustomerMenuSelect(UIMenu sender, UIMenuItem item, int index)
 	{
+		if (item != LSL.sell && item != LSL.turnAway) return;
+		if (HandleCustomerTransaction(item == LSL.sell))
+			LSL.customerMainMenu.Visible = !LSL.customerMainMenu.Visible;
+	}
+
+	// Same gameplay, independent of NativeUI item and menu visibility.
+	internal static bool HandleCustomerTransaction(bool sale)
+	{
+		if (LSL.customerSellTo == null) return false;
 		//IL_0247: Unknown result type (might be due to invalid IL or missing references)
-		if (item == LSL.sell)
+		if (sale)
 		{
 			if (LSL.PlayerInventory[LSL.customerSellTo.Drug.Name] < LSL.customerSellTo.amount)
 			{
@@ -146,19 +155,17 @@ internal static partial class LsMenus
 			if (Game.Player.Character.IsInVehicle())
 			{
 				LsFunctions.MakeStreetSale(LSL.customerSellTo, inCar: true);
-				LSL.customerMainMenu.Visible = !LSL.customerMainMenu.Visible;
 				LSL.lastTimeDealDone = Game.GameTime;
 			}
 			else
 			{
 				LsFunctions.MakeStreetSale(LSL.customerSellTo, inCar: false);
-				LSL.customerMainMenu.Visible = !LSL.customerMainMenu.Visible;
 				LSL.lastTimeDealDone = Game.GameTime;
 			}
 		}
 		else
 		{
-			if (item != LSL.turnAway)
+			if (sale)
 			{
 				return;
 			}
@@ -169,7 +176,6 @@ internal static partial class LsMenus
 					d2.Supplied = false;
 				}
 			}
-			LSL.customerMainMenu.Visible = !LSL.customerMainMenu.Visible;
 			if (LSL.customerSellTo.FarAway)
 			{
 				ShotHandler.RemoveShot(ShotHandler.shots.First((Shot s) => s.customer == LSL.customerSellTo));
@@ -186,5 +192,7 @@ internal static partial class LsMenus
 			OldCustomerHandler.AddCustomer(LSL.customerSellTo.Ped, LSL.customerSellTo.Vehicle, LSL.HouseHandler.Inside(), _canBeRival: true, new KeyValuePair<string, int>(LSL.customerSellTo.Drug.Name, LSL.customerSellTo.amount));
 			LSL.customerSellTo = null;
 		}
+		return true;
 	}
+
 }
