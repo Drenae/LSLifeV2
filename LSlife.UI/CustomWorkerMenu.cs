@@ -24,7 +24,7 @@ internal static class CustomWorkerMenu
         {
             workerMenu = new CustomMenu("EMPLOYE", "");
             workerMenu.Add("Approvisionner", OpenWorkerSupply);
-            workerMenu.Add("Recolter la recette", CollectWorker,
+            workerMenu.Add("Recolter la recette", WorkerRevenueCollection.CollectWorker,
                 () => LSL.DealerHandler.currentDealer != null &&
                     LSL.DealerHandler.currentDealer.Money >= 100);
             workerMenu.Add("Equipement", OpenWorkerEquipment);
@@ -168,19 +168,6 @@ internal static class CustomWorkerMenu
         activeMenu = workerMenu;
         workerMenu.Open();
     }
-
-    private static void CollectWorker()
-    {
-        if (LSL.DealerHandler.currentDealer == null ||
-            LSL.DealerHandler.currentDealer.Money < 100) return;
-        PlayerDealer worker = LSL.DealerHandler.currentDealer;
-        if (worker.Ped == null) return;
-        LsFunctions.HandOverGoods(LSL.player.Character, worker.Ped);
-        worker.GiveMoneyToPlayer();
-        worker.SetDrugDesc();
-        LSL.DealerHandler.needsSave = true;
-    }
-
 
     public static void TickOncePerFrame()
     {
