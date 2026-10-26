@@ -43,7 +43,7 @@ internal static class CustomHireDealerMenu
     private static void Cancel()
     {
         Close();
-        LsMenus.HireDealerFollowSelect(LSL.hireDealerMainMenu, LSL.hireDealerFollowButton);
+        LsMenus.CancelDealerRecruitment();
     }
 
     private static void Offer()
@@ -64,7 +64,7 @@ internal static class CustomHireDealerMenu
         Close();
         // Conserve l'acceptation aleatoire, les reactions du PNJ,
         // le paiement et la transformation en dealer employe.
-        LsMenus.HireDealerOfferSelect(LSL.hireDealerMainMenu, LSL.hireDealerMakeOffer);
+        LsMenus.SubmitDealerOffer(offer);
     }
 
     private static bool Pressed(int control) =>
