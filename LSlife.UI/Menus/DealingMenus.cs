@@ -165,7 +165,7 @@ internal static partial class LsMenus
 		}
 		else
 		{
-						foreach (Drug d2 in LSL.areas[LSL.areaIndex].Drugs)
+			foreach (Drug d2 in LSL.areas[LSL.areaIndex].Drugs)
 			{
 				if (d2.Name == LSL.customerSellTo.Drug.Name)
 				{
