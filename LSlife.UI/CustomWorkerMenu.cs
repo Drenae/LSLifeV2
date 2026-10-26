@@ -76,7 +76,7 @@ internal static class CustomWorkerMenu
         if (LSL.DealerHandler.currentDealer == null) return;
         equipmentWeaponIndex = 0;
         workerEquipmentMenu = new CustomMenu("EQUIPEMENT", "");
-        workerEquipmentMenu.Add("Donner un gilet pare-balles", GiveWorkerArmour,
+        workerEquipmentMenu.Add("Donner un gilet pare-balles", WorkerArmourTransfer.GiveWorkerArmour,
             () => LSL.playerArmours > 0 && LSL.DealerHandler.currentDealer != null &&
                   LSL.DealerHandler.currentDealer.Ped != null &&
                   LSL.DealerHandler.currentDealer.Ped.Armor < 200);
@@ -85,20 +85,6 @@ internal static class CustomWorkerMenu
         workerMenu.Close();
         activeMenu = workerEquipmentMenu;
         workerEquipmentMenu.Open();
-    }
-
-    private static void GiveWorkerArmour()
-    {
-        PlayerDealer dealer = LSL.DealerHandler.currentDealer;
-        if (dealer == null || dealer.Ped == null || dealer.Ped.Armor >= 200 ||
-            LSL.playerArmours <= 0) return;
-        LsFunctions.HandOverGoods(LSL.player.Character, dealer.Ped);
-        dealer.Ped.Armor = 200;
-        dealer.dArmour = 200;
-        LSL.playerArmours--;
-        LsFunctions.PlayTheSound();
-        LsFunctions.UpdateInventory();
-        LSL.DealerHandler.needsSave = true;
     }
 
     private static void GiveWorkerWeapon(int index)
