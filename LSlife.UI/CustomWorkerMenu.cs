@@ -9,7 +9,6 @@ internal static class CustomWorkerMenu
 {
     private static CustomMenu workerMenu, workerSupplyMenu, workerEquipmentMenu, activeMenu;
     private static int supplyWeed, supplyCrack, supplyCocaine, supplyStep = 1;
-    private static readonly int[] supplySteps = { 1, 5, 10, 25, 50, 100 };
     private static bool waitForRelease;
     private static int lastTickFrame = -1;
     private static readonly CustomMenuShared.HorizontalRepeat horizontalRepeat = new CustomMenuShared.HorizontalRepeat();
@@ -89,26 +88,17 @@ internal static class CustomWorkerMenu
         workerSupplyMenu.Open();
     }
 
-    private static int SupplyAvailable(string key)
-    {
-        int value;
-        return LSL.PlayerInventory.TryGetValue(key, out value) ? Math.Max(0, value) : 0;
-    }
-
     private static void ChangeSupply(int index, int direction)
     {
         string key = index == 0 ? "Weed" : index == 1 ? "Crack" : "Cocaine";
-        int value = index == 0 ? supplyWeed : index == 1 ? supplyCrack : supplyCocaine;
-        value = Math.Max(0, Math.Min(SupplyAvailable(key), value + direction * supplyStep));
-        if (index == 0) supplyWeed = value;
-        else if (index == 1) supplyCrack = value;
-        else supplyCocaine = value;
+        if (index == 0) supplyWeed = WorkerSupplyQuantities.ChangeAmount(supplyWeed, key, direction, supplyStep);
+        else if (index == 1) supplyCrack = WorkerSupplyQuantities.ChangeAmount(supplyCrack, key, direction, supplyStep);
+        else supplyCocaine = WorkerSupplyQuantities.ChangeAmount(supplyCocaine, key, direction, supplyStep);
     }
 
     private static void ChangeSupplyStep(int direction)
     {
-        int index = Array.IndexOf(supplySteps, supplyStep);
-        supplyStep = supplySteps[(index + direction + supplySteps.Length) % supplySteps.Length];
+        supplyStep = WorkerSupplyQuantities.ChangeStep(supplyStep, direction);
     }
 
     private static void ConfirmWorkerSupply()
@@ -317,7 +307,7 @@ internal static class CustomWorkerMenu
                 layout.Block(0f, y =>
                 {
                     int amount = index == 0 ? supplyWeed : index == 1 ? supplyCrack : supplyCocaine;
-                    int available = SupplyAvailable(index == 0 ? "Weed" : index == 1 ? "Crack" : "Cocaine");
+                    int available = WorkerSupplyTransfer.SupplyAvailable(index == 0 ? "Weed" : index == 1 ? "Crack" : "Cocaine");
                     float fraction = available > 0 ? Math.Min(1f, (float)amount / available) : 0f;
                     float barLeft = layout.Left + 0.116f, barWidth = 0.085f;
                     float barY = y - 0.043f / 2f;
@@ -346,9 +336,9 @@ internal static class CustomWorkerMenu
             layout.Block(0.026f, y =>
                 CustomMenuRenderer.TextCenteredVertically("STOCK JOUEUR",
                     layout.Left + 0.019f, y, 0.026f, 0.270f, 234, 207, 151, 255));
-            layout.TextPair("Cannabis", LsFunctions.GramsToOz(SupplyAvailable("Weed")));
-            layout.TextPair("Crack", LsFunctions.GramsToOz(SupplyAvailable("Crack")));
-            layout.TextPair("Cocaïne", LsFunctions.GramsToOz(SupplyAvailable("Cocaine")));
+            layout.TextPair("Cannabis", LsFunctions.GramsToOz(WorkerSupplyTransfer.SupplyAvailable("Weed")));
+            layout.TextPair("Crack", LsFunctions.GramsToOz(WorkerSupplyTransfer.SupplyAvailable("Crack")));
+            layout.TextPair("Cocaïne", LsFunctions.GramsToOz(WorkerSupplyTransfer.SupplyAvailable("Cocaine")));
         }
         layout.Render();
     }
