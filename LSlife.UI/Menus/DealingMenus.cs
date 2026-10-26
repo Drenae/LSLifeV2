@@ -65,51 +65,49 @@ internal static partial class LsMenus
 		}
 	}
 
-	// Shared transaction logic; custom menus do not need NativeUI controls.
-	internal static bool AddDrugOrder(string drug, int amount)
-	{
-		if (LSL.NewOrder == null || LSL.NewOrder.Placed || amount <= 0) return false;
-		int stock, price;
-		switch (drug)
-		{
-			case "Weed": stock = LSL.dealer1Weed; price = LSL.weed1Price; break;
-			case "Crack": stock = LSL.dealer1Crack; price = LSL.crack1Price; break;
-			case "Cocaine": stock = LSL.dealer1Cocain; price = LSL.cocain1Price; break;
-			default: return false;
-		}
-		if (amount > stock) return false;
-		int total = amount * (price - LsFunctions.Discount(price));
-		switch (drug)
-		{
-			case "Weed": LSL.NewOrder.OrderWeed(amount, total); LSL.dealer1Weed -= amount; break;
-			case "Crack": LSL.NewOrder.OrderCrack(amount, total); LSL.dealer1Crack -= amount; break;
-			case "Cocaine": LSL.NewOrder.OrderCocaine(amount, total); LSL.dealer1Cocain -= amount; break;
-		}
-		// Keep legacy menus in sync until their removal.
-		LSL.bushWeed.Maximum = LSL.dealer1Weed;
-		LSL.crack.Maximum = LSL.dealer1Crack;
-		LSL.cocaine.Maximum = LSL.dealer1Cocain;
-		LSL.PlaceOrder.Text = "Commander pour " + LsFunctions.IntToMoney(LSL.NewOrder.Bill) + " $";
-		LsFunctions.UpdateOrderMenuDesc();
-		return true;
-	}
-
 	public static void onWeedMenuSelect(UIMenu sender, UIMenuItem item, int index)
 	{
-		if (item == LSL.WeedBuy && AddDrugOrder("Weed", LSL.bushWeed.Value))
-			LSL.WeedBuy.Text = "Commander ~g~" + LSL.bushWeed.Value + " ~s~pour " + LsFunctions.IntToMoney(LSL.bushWeed.Value * (LSL.weed1Price - LsFunctions.Discount(LSL.weed1Price))) + " $";
+		if (item == LSL.WeedBuy && LSL.dealer1Weed > 0 && LSL.bushWeed.Value > 0)
+		{
+			int total = LSL.bushWeed.Value * (LSL.weed1Price - LsFunctions.Discount(LSL.weed1Price));
+			LSL.NewOrder.OrderWeed(LSL.bushWeed.Value, total);
+			LSL.bushWeed.Maximum -= LSL.bushWeed.Value;
+			LSL.dealer1Weed = LSL.bushWeed.Maximum;
+			LSL.WeedBuy.Text = "Commander ~g~" + LSL.bushWeed.Value + " ~s~pour " + LsFunctions.IntToMoney(total) + " $";
+			LSL.PlaceOrder.Text = "Commander pour " + LsFunctions.IntToMoney(LSL.NewOrder.Bill) + " $";
+			LsFunctions.DbugString("Weed Order changed");
+			LsFunctions.UpdateOrderMenuDesc();
+		}
 	}
 
 	public static void onCrackMenuSelect(UIMenu sender, UIMenuItem item, int index)
 	{
-		if (item == LSL.CrackBuy && AddDrugOrder("Crack", LSL.crack.Value))
-			LSL.CrackBuy.Text = "Commander ~g~" + LSL.crack.Value + " ~w~pour " + LsFunctions.IntToMoney(LSL.crack.Value * (LSL.crack1Price - LsFunctions.Discount(LSL.crack1Price))) + " $";
+		if (item == LSL.CrackBuy && LSL.dealer1Crack > 0 && LSL.crack.Value > 0)
+		{
+			int total = LSL.crack.Value * (LSL.crack1Price - LsFunctions.Discount(LSL.crack1Price));
+			LSL.NewOrder.OrderCrack(LSL.crack.Value, total);
+			LSL.crack.Maximum -= LSL.crack.Value;
+			LSL.dealer1Crack = LSL.crack.Maximum;
+			LSL.CrackBuy.Text = "Commander ~g~" + LSL.crack.Value + " ~w~pour " + LsFunctions.IntToMoney(total) + " $";
+			LSL.PlaceOrder.Text = "Commander pour " + LsFunctions.IntToMoney(LSL.NewOrder.Bill) + " $";
+			LsFunctions.DbugString("Crack Order changed");
+			LsFunctions.UpdateOrderMenuDesc();
+		}
 	}
 
 	public static void onCocainMenuSelect(UIMenu sender, UIMenuItem item, int index)
 	{
-		if (item == LSL.CocainBuy && AddDrugOrder("Cocaine", LSL.cocaine.Value))
-			LSL.CocainBuy.Text = "Commander ~g~" + LSL.cocaine.Value + " ~w~pour " + LsFunctions.IntToMoney(LSL.cocaine.Value * (LSL.cocain1Price - LsFunctions.Discount(LSL.cocain1Price))) + " $";
+		if (item == LSL.CocainBuy && LSL.dealer1Cocain > 0)
+		{
+			int total = LSL.cocaine.Value * (LSL.cocain1Price - LsFunctions.Discount(LSL.cocain1Price));
+			LSL.NewOrder.OrderCocaine(LSL.cocaine.Value, total);
+			LSL.cocaine.Maximum -= LSL.cocaine.Value;
+			LSL.dealer1Cocain = LSL.cocaine.Maximum;
+			LSL.CocainBuy.Text = "Commander ~g~" + LSL.cocaine.Value + " ~w~pour " + LsFunctions.IntToMoney(total) + " $";
+			LSL.PlaceOrder.Text = "Commander pour " + LsFunctions.IntToMoney(LSL.NewOrder.Bill) + " $";
+			LsFunctions.DbugString("Cocaine Order changed");
+			LsFunctions.UpdateOrderMenuDesc();
+		}
 	}
 
 	public static void OnOrderDrugsMenuSelect(UIMenu sender, UIMenuItem item, int index)
