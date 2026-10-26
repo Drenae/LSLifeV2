@@ -16,15 +16,15 @@ internal static partial class LsMenus
 {
 	public static void OnZeeMenuSelect(UIMenu sender, UIMenuItem item, int index)
 	{
-		//IL_00b0: Unknown result type (might be due to invalid IL or missing references)
-		//IL_00bf: Unknown result type (might be due to invalid IL or missing references)
-		//IL_00ce: Unknown result type (might be due to invalid IL or missing references)
-		//IL_00d8: Unknown result type (might be due to invalid IL or missing references)
-		//IL_00dd: Unknown result type (might be due to invalid IL or missing references)
-		//IL_00e7: Unknown result type (might be due to invalid IL or missing references)
-		if (item == LSL.buyWeapons)
+		if (item == LSL.buyWeapons) { CallWeaponDealer(); if (sender != null) sender.Visible = false; }
+		else if (item == LSL.buyLift) { CallLift(); if (sender != null) sender.Visible = false; }
+		else if (item == LSL.payDebt) PayZeeDebt();
+	}
+
+	// Actions metier accessibles sans creer ni ouvrir de menu NativeUI.
+	internal static void CallWeaponDealer()
+	{
 		{
-			sender.Visible = !sender.Visible;
 			if (LSL.playerHeat > 0f)
 			{
 				LsFunctions.TextMsg("ZEE", "Travail", "Non, tu attires trop l'attention.");
@@ -41,11 +41,14 @@ internal static partial class LsMenus
 				LsFunctions.TextMsg("ZEE", "Travail", "OK, je leur dis de rentrer.");
 			}
 		}
-		if (item == LSL.buyLift)
+
+	}
+
+	internal static void CallLift()
+	{
 		{
 			if (LSL.wepDealer == null)
 			{
-				sender.Visible = !sender.Visible;
 				LSL.wepDealer = new Dealer(new Model(unchecked((PedHash)(-412008429))), ((Entity)Game.Player.Character).Position + ((Entity)Game.Player.Character).ForwardVector * 2f, new Model("INGOT"), LSL.playerGroup);
 				if ((Entity)(object)LSL.wepDealer.ped != (Entity)null)
 				{
@@ -73,10 +76,11 @@ internal static partial class LsMenus
 				LsFunctions.TextMsg("ZEE", "Travail", "OK, je leur dis que tu ne peux pas venir.");
 			}
 		}
-		if (item != LSL.payDebt)
-		{
-			return;
-		}
+
+	}
+
+	internal static void PayZeeDebt()
+	{
 		if (LSL.player.Money > 0)
 		{
 			int toPay = 0;
