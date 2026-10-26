@@ -31,7 +31,6 @@ internal static class CustomStashMenu
             houseMenu.Add("Deposer", () => OpenTransfer(false, true));
             houseMenu.Add("Retirer", () => OpenTransfer(false, false));
         }
-        horizontalRepeat.Reset();
         activeMenu = houseMenu;
         activeMenu.Open();
         waitForRelease = true;
@@ -47,7 +46,6 @@ internal static class CustomStashMenu
             vehicleMenu.Add("Deposer", () => OpenTransfer(true, true));
             vehicleMenu.Add("Retirer", () => OpenTransfer(true, false));
         }
-        horizontalRepeat.Reset();
         activeMenu = vehicleMenu;
         activeMenu.Open();
         waitForRelease = true;
@@ -56,7 +54,6 @@ internal static class CustomStashMenu
 
     private static void OpenTransfer(bool car, bool deposit)
     {
-        horizontalRepeat.Reset();
         vehicle = car; put = deposit; transfer = true; stepIndex = 0;
         horizontalRepeat.Reset();
         var menu = new CustomMenu(deposit ? "DEPOSER" : "RETIRER", "");
@@ -286,12 +283,6 @@ internal static class CustomStashMenu
         if (lastFrame == frame) return;
         lastFrame = frame;
         if (!Visible) return;
-        if (vehicle ? LSL.pStashVehicle == null :
-            LSL.HouseHandler == null || LSL.HouseHandler.CurrentHouse == null)
-        {
-            Close();
-            return;
-        }
         foreach (int control in new[] { 27, 172, 173, 174, 175, 201, 202, 24, 140, 141, 142, 257, 263, 264 })
         {
             Function.Call(Hash.DISABLE_CONTROL_ACTION, 0, control, true);
