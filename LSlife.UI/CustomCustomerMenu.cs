@@ -43,19 +43,8 @@ internal static class CustomCustomerMenu
             LsFunctions.DisplayHelpText("Stock insuffisant pour cette vente.");
             return;
         }
-        // L'ancien gestionnaire controle la vente, la reputation, les animations,
-        // le depart du client et les sauvegardes. Son menu est masque ensuite.
         Close();
-        LSL.customerMainMenu.Visible = true;
-        try
-        {
-            LsMenus.onCustomerMenuSelect(LSL.customerMainMenu,
-                sale ? LSL.sell : LSL.turnAway, sale ? 0 : 1);
-        }
-        finally
-        {
-            LSL.customerMainMenu.Visible = false;
-        }
+        LsMenus.HandleCustomerTransaction(sale);
     }
 
     public static void Close()
