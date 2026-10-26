@@ -1,3 +1,12 @@
+## Priorité — iFruit au démarrage complet (26 octobre 2026)
+
+- [x] Audit de la chaîne d'appel : `LSL()` → `Setup()` → création `CustomiFruit` / contact Zee ; `onTick()` → test `Game.IsLoading` → `iFruit.Update()`.
+- [x] Problème d'ordre identifié : `Setup()` pouvait créer le téléphone avant la fin du chargement, tandis que `Reload()` intervient sur un jeu déjà chargé.
+- [x] Initialisation déplacée vers `onTick()` après `Game.IsLoading` et disponibilité du personnage ; création unique et mise à jour protégée.
+- [x] Aucun changement aux callbacks des contacts, à iFruitAddon2.dll, à l'argent, au HUD ou aux commandes.
+- [ ] **Validation indispensable : fermer complètement GTA V, redémarrer, vérifier téléphone du protagoniste, contact Zee, argent HUD et paiement ; répéter un Reload() pour comparer.**
+- [ ] Si le téléphone manque encore : récupérer `ScriptHookVDotNet.log` et identifier l'exception au démarrage (la cause exacte reste à confirmer en jeu).
+
 ## Lot groupé — recrutement et clients (26 octobre 2026)
 
 - [x] Recrutement : acceptation, refus, paiement et annulation accessibles par méthodes métier sans paramètres NativeUI ; menu personnalisé branché sur ces méthodes.
