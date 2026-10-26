@@ -318,6 +318,8 @@ internal static class CustomWorkerMenu
                 value, enabled: workerMenu.Entries[i].Enabled);
         }
         layout.Separator(0.006f);
+        layout.TextPair("Instruction", CurrentWorkerRole());
+        layout.TextPair("Recette brute", LsFunctions.IntToMoney(worker.Money) + " $");
         layout.Block(0.029f, y =>
         {
             int hp = worker.Ped != null ? Math.Max(0, worker.Ped.Health) : 0;
