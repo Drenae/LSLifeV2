@@ -197,6 +197,20 @@ public partial class LSL
 		{
 			return;
 		}
+		// Au lancement normal, le constructeur peut s'executer avant la fin du
+		// chargement du protagoniste et de son telephone. Reload() masque ce cas.
+		// Creer iFruit une seule fois, sur le thread Tick, apres Game.IsLoading.
+		if (iFruit == null && Game.Player != null &&
+			(Entity)(object)Game.Player.Character != (Entity)null && Game.Player.IsPlaying)
+		{
+			iFruit = new CustomiFruit();
+			contactZee = new iFruitContact("Zee");
+			contactZee.Answered += LsFunctions.ContactAnswered;
+			contactZee.DialTimeout = 1000;
+			contactZee.Active = true;
+			contactZee.Icon = ContactIcon.Blank;
+			iFruit.Contacts.Add(contactZee);
+		}
 		if (firstRun && (Entity)(object)player.Character != (Entity)null)
 		{
 			if (File.Exists("scripts\\LSLife\\LSLifeAreas.xml"))
@@ -258,7 +272,7 @@ public partial class LSL
 		}
 		// iFruit doit traiter le telephone avant que les menus personnalises
 		// ne lisent ou ne neutralisent les controles GTA de cette frame.
-		iFruit.Update();
+		if (iFruit != null) iFruit.Update();
 		if (LsMenuPool != null)
 		{
 			LsMenuPool.ProcessMenus();
