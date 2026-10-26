@@ -66,6 +66,7 @@ internal static class CustomZeeMenu
             dealerMenu.Add("Commencer a dealer", StartDealer);
         }
         menu.Close();
+        quantityRepeat.Reset();
         activeMenu = dealerMenu;
         dealerMenu.Open();
     }
@@ -81,6 +82,7 @@ internal static class CustomZeeMenu
             orderMenu.Add("Valider la commande", PlaceExistingOrder);
         }
         menu.Close();
+        quantityRepeat.Reset();
         activeMenu = orderMenu;
         orderMenu.Open();
     }
@@ -100,6 +102,7 @@ internal static class CustomZeeMenu
         LSL.bushWeed.Maximum = LSL.dealer1Weed;
         if (LSL.bushWeed.Value > LSL.bushWeed.Maximum)
             LSL.bushWeed.Value = LSL.bushWeed.Maximum;
+        quantityRepeat.Reset();
         activeMenu = cannabisMenu;
         cannabisMenu.Open();
     }
@@ -138,6 +141,7 @@ internal static class CustomZeeMenu
         orderMenu.Close();
         slider.Maximum = stock;
         if (slider.Value > slider.Maximum) slider.Value = slider.Maximum;
+        quantityRepeat.Reset();
         activeMenu = target;
         target.Open();
     }
