@@ -39,9 +39,9 @@ internal static class CustomZeeMenu
         menu = new CustomMenu("ZEE", "");
         menu.Add("Dealer", OpenDealer);
         menu.Add("Commander de la drogue", OpenOrders);
-        menu.Add("Acheter des armes", () => RunExisting(LSL.buyWeapons));
-        menu.Add("Demander a etre depose", () => RunExisting(LSL.buyLift));
-        menu.Add("Rembourser la dette", () => RunExisting(LSL.payDebt), () => LSL.dealer1Debt > 0);
+        menu.Add("Acheter des armes", () => RunZeeAction(LsMenus.CallWeaponDealer));
+        menu.Add("Demander a etre depose", () => RunZeeAction(LsMenus.CallLift));
+        menu.Add("Rembourser la dette", () => RunZeeAction(LsMenus.PayZeeDebt), () => LSL.dealer1Debt > 0);
         menu.Add("Options du HUD", OpenHudOptions);
     }
 
@@ -234,13 +234,11 @@ internal static class CustomZeeMenu
         target.CurrentSelection = 0;
     }
 
-    private static void RunExisting(NativeUI.UIMenuItem item)
+    private static void RunZeeAction(Action action)
     {
-        // Reutilise les traitements metier du menu Zee original.
-        LSL.zeeMenu.Visible = true;
-        try { LsMenus.OnZeeMenuSelect(LSL.zeeMenu, item, 0); }
-        finally { LSL.zeeMenu.Visible = false; }
+        action();
         menu.Close();
+        activeMenu = null;
     }
 
     public static void Tick()
