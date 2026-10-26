@@ -1,3 +1,12 @@
+## Lot groupé — recrutement et clients (26 octobre 2026)
+
+- [x] Recrutement : acceptation, refus, paiement et annulation accessibles par méthodes métier sans paramètres NativeUI ; menu personnalisé branché sur ces méthodes.
+- [x] Clients : vente et refus déplacés dans un traitement sans menu ni élément NativeUI ; le menu personnalisé n'ouvre plus artificiellement `customerMainMenu`.
+- [x] Compatibilité : callbacks NativeUI historiques conservés comme adaptateurs.
+- [x] Protection : aucun changement à iFruitAddon2, `Game.Player.Money`, au HUD financier ni aux commandes Zee validées.
+- [ ] **À compiler et tester** : recrutement (annulation, refus, acceptation, débit), clients (vente, refus, véhicule, client éloigné), sauvegardes, téléphone et argent.
+- [ ] **NativeUI.dll reste nécessaire** : équipement, planques, véhicules et initialisations historiques à migrer avant retrait final.
+
 ## Stabilisation Zee et iFruit — 26 octobre 2026
 
 - [x] Retour aux traitements de commande Zee précédemment validés après régression téléphone/argent (restaurés dans `CustomZeeMenu.cs` et `DealingMenus.cs`).
