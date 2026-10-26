@@ -1,3 +1,12 @@
+## Stabilisation Zee et iFruit — 26 octobre 2026
+
+- [x] Retour aux traitements de commande Zee précédemment validés après régression téléphone/argent (restaurés dans `CustomZeeMenu.cs` et `DealingMenus.cs`).
+- [x] Ajout du maintien gauche/droite dans les sous-menus Cannabis, Crack et Cocaïne, pour quantités et multiplicateurs (délai initial 320 ms, répétition 65 ms).
+- [x] Réinitialisation de la répétition lors des changements de menus, sélection et retour, pour éviter les mouvements parasites.
+- [x] Aucune modification de `iFruitAddon2`, du traitement iFruit dans `Tick`, de `Game.Player.Money`, ni des paiements des livreurs dans ce lot.
+- [ ] Compilation et test en jeu : téléphone et contacts, argent HUD, commandes et livraisons, appui prolongé gauche/droite sur les trois produits, retour menus.
+- [ ] Dépendances NativeUI restantes : à retirer uniquement après migration fonctionnelle complète et validation.
+
 ## Lot commandes Zee — 26 octobre 2026
 
 - [x] Migration des trois commandes Cannabis / Crack / Cocaïne : quantités, pas de sélection, prix, réservation de stock et validation via traitement commun indépendant des sliders NativeUI.
