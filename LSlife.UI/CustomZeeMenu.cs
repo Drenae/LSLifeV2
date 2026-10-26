@@ -5,8 +5,7 @@ using GTA.Native;
 
 namespace LSlife;
 
-// Prototype pilote : rendu GTA natif, sans controles graphiques NativeUI.
-// Les sous-menus et leurs traitements existants restent sous NativeUI.
+// Menu Zee personnalise : rendu natif GTA V.
 internal static class CustomZeeMenu
 {
     private static CustomMenu menu;
@@ -17,9 +16,6 @@ internal static class CustomZeeMenu
     private static CustomMenu cocaineMenu;
     private static CustomMenu activeMenu;
     private static bool dealerWeed, dealerCrack, dealerCocaine, dealerDeliveries;
-    private static bool returningFromSubmenu;
-    private static bool submenuSeen;
-    private static CustomMenu submenuReturnMenu;
 
     public static bool Visible => activeMenu != null && activeMenu.Visible;
 
@@ -223,17 +219,6 @@ internal static class CustomZeeMenu
         }
     }
 
-    private static void OpenSubmenu(NativeUI.UIMenu target)
-    {
-        submenuReturnMenu = activeMenu;
-        activeMenu.Close();
-        activeMenu = null;
-        returningFromSubmenu = true;
-        submenuSeen = false;
-        target.Visible = true;
-        target.CurrentSelection = 0;
-    }
-
     private static void RunZeeAction(Action action)
     {
         action();
@@ -243,18 +228,6 @@ internal static class CustomZeeMenu
 
     public static void Tick()
     {
-        if (returningFromSubmenu)
-        {
-            if (LSL.LsMenuPool.IsAnyMenuOpen()) submenuSeen = true;
-            else if (submenuSeen)
-            {
-                returningFromSubmenu = false;
-                submenuSeen = false;
-                // Retour au menu pilote apres fermeture du sous-menu NativeUI.
-                if (submenuReturnMenu != null) { activeMenu = submenuReturnMenu; submenuReturnMenu.Open(); }
-            }
-        }
-
         if (!Visible) return;
 
         // Bloquer d'abord les commandes GTA (dont l'ouverture du telephone).
