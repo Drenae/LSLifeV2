@@ -105,7 +105,7 @@ internal static class CustomWorkerMenu
     {
         if (LSL.DealerHandler.currentDealer == null || index < 0 ||
             index >= LSL.playerWeps.Count) return;
-        LsMenus.GiveWeaponToWorker(index);
+        WorkerWeaponTransfer.GiveWeaponToWorker(index);
         if (activeMenu == workerEquipmentMenu)
             OpenWorkerEquipmentRefresh();
     }
