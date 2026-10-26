@@ -143,7 +143,7 @@ internal static partial class LsMenus
 			{
 				LSL.sell.Enabled = false;
 				LsFunctions.DisplayHelpText("Stock insuffisant pour cette vente.");
-				return;
+				return false;
 			}
 			foreach (Drug d in LSL.areas[LSL.areaIndex].Drugs)
 			{
@@ -165,11 +165,7 @@ internal static partial class LsMenus
 		}
 		else
 		{
-			if (sale)
-			{
-				return;
-			}
-			foreach (Drug d2 in LSL.areas[LSL.areaIndex].Drugs)
+						foreach (Drug d2 in LSL.areas[LSL.areaIndex].Drugs)
 			{
 				if (d2.Name == LSL.customerSellTo.Drug.Name)
 				{
@@ -181,7 +177,7 @@ internal static partial class LsMenus
 				ShotHandler.RemoveShot(ShotHandler.shots.First((Shot s) => s.customer == LSL.customerSellTo));
 				LSL.lastTimeDealDone = Game.GameTime;
 				OldCustomerHandler.AddCustomer(LSL.customerSellTo.Ped, LSL.customerSellTo.Vehicle, LSL.HouseHandler.Inside(), _canBeRival: true, new KeyValuePair<string, int>(LSL.customerSellTo.Drug.Name, LSL.customerSellTo.amount));
-				return;
+				return true;
 			}
 			if ((Entity)(object)LSL.customerSellTo.Vehicle != (Entity)null && ((Entity)LSL.customerSellTo.Vehicle).Exists())
 			{
