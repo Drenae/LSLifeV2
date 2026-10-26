@@ -1,3 +1,11 @@
+## Régression téléphone après lot Employé/Stockage — 26 octobre 2026
+
+- [x] Retour de `CustomWorkerMenu.cs` et `CustomStashMenu.cs` à l'état `c8e1a5b` (dernier état avec téléphone confirmé fonctionnel par l'utilisateur).
+- [x] Correction d'initialisation différée d'iFruit dans `Setup.cs` et `Tick.cs` conservée intacte.
+- [ ] Vérifier **après fermeture complète et redémarrage** de GTA V ; ne pas se limiter à `Reload()`.
+- [ ] Si la régression subsiste, analyser `ScriptHookVDotNet.log` du démarrage concerné avant toute nouvelle modification.
+- [ ] Réintroduire les améliorations des menus progressivement après identification de la cause, sans modifier iFruitAddon2.
+
 ## Lot de stabilisation des menus personnalisés — 26 octobre 2026
 
 - [x] Menu employé : verrouillage de la session sur l'identifiant du dealer sélectionné ; fermeture si le dealer change ou si son PNJ disparaît.
