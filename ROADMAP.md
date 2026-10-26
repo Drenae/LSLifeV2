@@ -1,3 +1,14 @@
+## Lot de stabilisation des menus personnalisés — 26 octobre 2026
+
+- [x] Menu employé : verrouillage de la session sur l'identifiant du dealer sélectionné ; fermeture si le dealer change ou si son PNJ disparaît.
+- [x] Menu employé : réinitialisation des contrôles à l'ouverture, au retour et entre sous-menus ; prévention des répétitions horizontales parasites.
+- [x] Menu employé : affichage de l'identifiant, de l'instruction, de la recette brute, de la recette nette, du total à transférer et du multiplicateur.
+- [x] Menu employé : confirmation visuelle de l'approvisionnement et de la collecte, vérification de l'existence du PNJ et de l'index d'arme avant transfert.
+- [x] Menus planque/coffre : fermeture de l'interface si le stockage actif disparaît et remise à zéro de la répétition au changement de contexte.
+- [x] iFruit : **aucune modification** des fichiers `Setup.cs`, `Tick.cs`, de l'initialisation différée du téléphone ou des contacts ; NativeUI.dll conservée.
+- [ ] Compiler, puis tester en une session complète : téléphone à froid, contact Zee, HUD/argent, commandes, recrutement, vente client, employé (approvisionner, récolter, équiper, instructions), planque et coffre.
+- [ ] Poursuivre la migration NativeUI uniquement après validation du lot ; ne pas retirer la DLL tant que les appels historiques existent.
+
 ## Priorité — iFruit au démarrage complet (26 octobre 2026)
 
 - [x] Audit de la chaîne d'appel : `LSL()` → `Setup()` → création `CustomiFruit` / contact Zee ; `onTick()` → test `Game.IsLoading` → `iFruit.Update()`.
