@@ -1,3 +1,10 @@
+## Lot isolé 01 — affichage Employé (26 octobre 2026)
+
+- [x] Ajout de deux lignes **Instruction actuelle** et **Recette brute** dans le menu principal Employé uniquement (`CustomWorkerMenu.cs`).
+- [x] Aucune modification de `Tick`, des contrôles, des transferts, de la sauvegarde ou d'iFruit.
+- [ ] À valider en jeu : téléphone/contact Zee après démarrage complet, puis ouverture du menu Employé et vérification des deux nouvelles informations.
+- [ ] En cas de panne du téléphone, revert **uniquement** le commit `20d33c2` et examiner l'effet de cette modification visuelle isolée.
+
 ## Analyse différentielle de la régression téléphone — 26 octobre 2026
 
 État de référence : commit `c8e1a5b` (téléphone confirmé opérationnel après démarrage complet). Le retour des deux fichiers au contenu de cet état, dans `45e8859` et `c6df9ed`, a également été confirmé fonctionnel.
