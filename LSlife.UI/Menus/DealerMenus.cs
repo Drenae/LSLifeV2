@@ -324,10 +324,7 @@ internal static partial class LsMenus
 
 	internal static void CancelDealerRecruitment()
 	{
-		if (LSL.aDealer != null)
-		{
-			LSL.aDealer.NewState = Enums.DStates.Normal;
-		}
+		DealerRecruitmentActions.CancelDealerRecruitment();
 	}
 
 	public static void HireDealerOfferSelect(UIMenu sender, UIMenuItem selectedItem)
@@ -338,57 +335,7 @@ internal static partial class LsMenus
 
 	internal static void SubmitDealerOffer(int amount)
 	{
-		if (LSL.aDealer == null)
-		{
-			return;
-		}
-		LSL.aDealer.NewState = Enums.DStates.Normal;
-		if (LSL.aDealer.LastOffer < amount)
-		{
-			if (LSL.aDealer.DecidePlayerOffer(amount))
-			{
-				Function.Call(unchecked((Hash)(-8213159594590722974L)), (LSL.aDealer.dPed), ("GENERIC_YES"), ("SPEECH_PARAMS_FORCE"));
-				LsFunctions.ChangeAdealerToPdealer();
-				UI.ShowSubtitle("Ouais, je veux bien bosser pour toi.", 4000);
-				Player player = Game.Player;
-				player.Money -= amount;
-				LsFunctions.PlayTheSound();
-				LSL.hireDealerOfferAmount.Maximum = Game.Player.Money;
-				if (LSL.driveByHandler.AmountOfDriveBy(_agg: true) == 0 && LSL.rnd.Next(0, 5) == 0)
-				{
-					LsFunctions.SpawnDriveBy(LSL.player.Character, _agressive: true);
-				}
-			}
-			else if (LSL.rnd.Next(0, 3) == 0)
-			{
-				LSL.aDealer.NewState = Enums.DStates.AttackPlayer;
-				Function.Call(unchecked((Hash)(-8213159594590722974L)), (LSL.aDealer.dPed), ("GENERIC_CURSE_HIGH"), ("SPEECH_PARAMS_FORCE"));
-				if (LSL.driveByHandler.AmountOfDriveBy(_agg: true) == 0 && LSL.rnd.Next(0, 5) == 0)
-				{
-					LsFunctions.SpawnDriveBy(LSL.player.Character, _agressive: true);
-				}
-			}
-			else
-			{
-				Function.Call(unchecked((Hash)(-8213159594590722974L)), (LSL.aDealer.dPed), ("GENERIC_NO"), ("SPEECH_PARAMS_FORCE"));
-				UI.ShowSubtitle("Tu plaisantes ? Je vaux bien plus que ça !", 4000);
-				LSL.aDealer.SetLastOfferAmount(amount);
-			}
-		}
-		else if (LSL.rnd.Next(0, 3) == 0)
-		{
-			LSL.aDealer.NewState = Enums.DStates.AttackPlayer;
-			Function.Call(unchecked((Hash)(-8213159594590722974L)), (LSL.aDealer.dPed), ("GENERIC_CURSE_HIGH"), ("SPEECH_PARAMS_FORCE"));
-			UI.ShowSubtitle("Nan, je vais plutôt te buter et prendre ton fric.", 4000);
-			if (LSL.driveByHandler.AmountOfDriveBy(_agg: true) == 0 && LSL.rnd.Next(0, 5) == 0)
-			{
-				LsFunctions.SpawnDriveBy(LSL.player.Character, _agressive: true);
-			}
-		}
-		else
-		{
-			UI.ShowSubtitle("Propose plus et je réfléchirai.", 4000);
-		}
+		DealerRecruitmentActions.SubmitDealerOffer(amount);
 	}
 
 	public static void HireDealerOfferAmount_OnSliderChanged(UIMenuSliderItem sender, int newIndex)
