@@ -1,3 +1,10 @@
+## Nettoyage Zee — 26 octobre 2026
+
+- [x] Sauvegarde `backup/pre-zee-order-decoupling-20261026`.
+- [x] Suppression du pont de retour vers les anciens sous-menus NativeUI inutilisé dans `CustomZeeMenu`.
+- [ ] Extraction de l'état des quantités et de la validation des commandes : **non effectuée** ; les contrôles NativeUI restent nécessaires.
+- [ ] Compiler et vérifier la navigation Zee, les sous-menus et le téléphone après nettoyage.
+
 ## Migration Zee — services (26 octobre 2026)
 
 - [x] Sauvegarde : `backup/pre-zee-services-decoupling-20261026`.
