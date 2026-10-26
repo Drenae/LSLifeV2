@@ -14,7 +14,6 @@ internal static class CustomWorkerMenu
     private static int lastTickFrame = -1;
     private static readonly CustomMenuShared.HorizontalRepeat horizontalRepeat = new CustomMenuShared.HorizontalRepeat();
     private static int equipmentWeaponIndex;
-    private static int activeDealerId = -1;
     public static bool Visible => activeMenu != null && activeMenu.Visible;
 
     public static void Open()
@@ -31,8 +30,6 @@ internal static class CustomWorkerMenu
             workerMenu.Add("Equipement", OpenWorkerEquipment);
             workerMenu.Add("Instruction", () => ChangeWorkerRole(1));
         }
-        activeDealerId = LSL.DealerHandler.currentDealer.ID;
-        horizontalRepeat.Reset();
         activeMenu = workerMenu;
         workerMenu.Open();
         waitForRelease = true;
@@ -85,7 +82,6 @@ internal static class CustomWorkerMenu
                   LSL.DealerHandler.currentDealer.Ped.Armor < 200);
         workerEquipmentMenu.Add("Arme", () => GiveWorkerWeapon(equipmentWeaponIndex),
             () => LSL.playerWeps.Count > 0);
-        horizontalRepeat.Reset();
         workerMenu.Close();
         activeMenu = workerEquipmentMenu;
         workerEquipmentMenu.Open();
@@ -94,8 +90,7 @@ internal static class CustomWorkerMenu
     private static void GiveWorkerArmour()
     {
         PlayerDealer dealer = LSL.DealerHandler.currentDealer;
-        if (dealer == null || dealer.Ped == null ||
-            !((GTA.Entity)dealer.Ped).Exists() || dealer.Ped.Armor >= 200 ||
+        if (dealer == null || dealer.Ped == null || dealer.Ped.Armor >= 200 ||
             LSL.playerArmours <= 0) return;
         LsFunctions.HandOverGoods(LSL.player.Character, dealer.Ped);
         dealer.Ped.Armor = 200;
@@ -109,7 +104,7 @@ internal static class CustomWorkerMenu
     private static void GiveWorkerWeapon(int index)
     {
         if (LSL.DealerHandler.currentDealer == null || index < 0 ||
-            index >= LSL.playerWeps.Count || index >= LSL.playerWeapons.Count) return;
+            index >= LSL.playerWeps.Count) return;
         LsMenus.GiveWeaponToWorker(index);
         if (activeMenu == workerEquipmentMenu)
             OpenWorkerEquipmentRefresh();
@@ -139,7 +134,6 @@ internal static class CustomWorkerMenu
             workerSupplyMenu.Add("Confirmer le transfert", ConfirmWorkerSupply,
                 () => supplyWeed + supplyCrack + supplyCocaine > 0);
         }
-        horizontalRepeat.Reset();
         workerMenu.Close();
         activeMenu = workerSupplyMenu;
         workerSupplyMenu.Open();
@@ -170,8 +164,7 @@ internal static class CustomWorkerMenu
     private static void ConfirmWorkerSupply()
     {
         PlayerDealer worker = LSL.DealerHandler.currentDealer;
-        if (worker == null || worker.Ped == null ||
-            !((GTA.Entity)worker.Ped).Exists()) return;
+        if (worker == null || worker.Ped == null) return;
         if (supplyWeed + supplyCrack + supplyCocaine <= 0 ||
             supplyWeed > SupplyAvailable("Weed") ||
             supplyCrack > SupplyAvailable("Crack") ||
@@ -184,9 +177,7 @@ internal static class CustomWorkerMenu
         LsFunctions.UpdateInventory();
         worker.SetDrugDesc();
         LSL.DealerHandler.needsSave = true;
-        GTA.UI.ShowSubtitle("Approvisionnement transfere au dealer.", 2200);
         supplyWeed = supplyCrack = supplyCocaine = 0;
-        horizontalRepeat.Reset();
         workerSupplyMenu.Close();
         activeMenu = workerMenu;
         workerMenu.Open();
@@ -197,11 +188,10 @@ internal static class CustomWorkerMenu
         if (LSL.DealerHandler.currentDealer == null ||
             LSL.DealerHandler.currentDealer.Money < 100) return;
         PlayerDealer worker = LSL.DealerHandler.currentDealer;
-        if (worker.Ped == null || !((GTA.Entity)worker.Ped).Exists()) return;
+        if (worker.Ped == null) return;
         LsFunctions.HandOverGoods(LSL.player.Character, worker.Ped);
         worker.GiveMoneyToPlayer();
         worker.SetDrugDesc();
-        GTA.UI.ShowSubtitle("Recette recuperee.", 2200);
         LSL.DealerHandler.needsSave = true;
     }
 
@@ -217,15 +207,10 @@ internal static class CustomWorkerMenu
     private static void Tick()
     {
         if (!Visible) return;
-        if (LSL.DealerHandler.currentDealer == null ||
-            LSL.DealerHandler.currentDealer.ID != activeDealerId ||
-            LSL.DealerHandler.currentDealer.Ped == null ||
-            !((GTA.Entity)LSL.DealerHandler.currentDealer.Ped).Exists())
+        if (LSL.DealerHandler.currentDealer == null)
         {
             activeMenu.Close();
             activeMenu = null;
-            activeDealerId = -1;
-            horizontalRepeat.Reset();
             return;
         }
         foreach (int control in new[] { 27, 172, 173, 174, 175, 201, 202, 24, 140, 141, 142, 257, 263, 264 })
@@ -259,14 +244,12 @@ internal static class CustomWorkerMenu
         else if (DisabledJustPressed(173)) { horizontalRepeat.Reset(); activeMenu.Move(1); }
         else if (DisabledJustPressed(201))
         {
-            horizontalRepeat.Reset();
             CustomMenu before = activeMenu;
             activeMenu.Activate();
             if (before != activeMenu) waitForRelease = true;
         }
         else if (DisabledJustPressed(202))
         {
-            horizontalRepeat.Reset();
             activeMenu.Close();
             if (activeMenu == workerSupplyMenu || activeMenu == workerEquipmentMenu)
             {
@@ -274,7 +257,7 @@ internal static class CustomWorkerMenu
                 workerMenu.Open();
                 waitForRelease = true;
             }
-            else { activeMenu = null; activeDealerId = -1; }
+            else activeMenu = null;
         }
         if (Visible) Draw();
     }
@@ -335,8 +318,6 @@ internal static class CustomWorkerMenu
                 value, enabled: workerMenu.Entries[i].Enabled);
         }
         layout.Separator(0.006f);
-        layout.TextPair("Employe", "Dealer #" + worker.ID);
-        layout.TextPair("Instruction", CurrentWorkerRole());
         layout.Block(0.029f, y =>
         {
             int hp = worker.Ped != null ? Math.Max(0, worker.Ped.Health) : 0;
@@ -359,7 +340,6 @@ internal static class CustomWorkerMenu
                     layout.Right - 0.019f, y, 0.023f, 0.295f, 111, 216, 139, 255);
             });
         }
-        layout.TextPair("Recette brute", LsFunctions.IntToMoney(worker.Money) + " $");
         layout.Block(0.029f, y =>
         {
             int net = worker.Money - (worker.Money / 100) * 20;
@@ -443,9 +423,6 @@ internal static class CustomWorkerMenu
             layout.TextPair("Cannabis", LsFunctions.GramsToOz(SupplyAvailable("Weed")));
             layout.TextPair("Crack", LsFunctions.GramsToOz(SupplyAvailable("Crack")));
             layout.TextPair("Cocaïne", LsFunctions.GramsToOz(SupplyAvailable("Cocaine")));
-            layout.Separator(0.004f);
-            layout.TextPair("Transfert prevu", LsFunctions.GramsToOz(supplyWeed + supplyCrack + supplyCocaine));
-            layout.TextPair("Pas de reglage", "x" + supplyStep);
         }
         layout.Render();
     }
