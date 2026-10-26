@@ -1,3 +1,13 @@
+## Migration Zee — services (26 octobre 2026)
+
+- [x] Sauvegarde : `backup/pre-zee-services-decoupling-20261026`.
+- [x] Zee : actions marchand d'armes, chauffeur et remboursement extraites des callbacks NativeUI.
+- [x] Zee : menu personnalisé appelle directement ces actions, sans rendre `zeeMenu` visible artificiellement.
+- [x] Callback NativeUI historique conservé en adaptateur temporaire.
+- [ ] **À compiler et tester** : marchand d'armes (appel / renvoi), chauffeur (appel / annulation), remboursement partiel / total, contacts et menus.
+- [ ] Zee : commandes de drogue toujours synchronisées aux sliders NativeUI ; extraire l'état et les actions métier avant suppression.
+- [ ] Supprimer les définitions et dépendances NativeUI uniquement après migration des autres fonctionnalités (planques, véhicules, menus historiques).
+
 ## Lot Worker — alertes et découplage (25 octobre 2026)
 
 - [x] Sauvegarde de sécurité : `backup/pre-worker-alerts-20261025` au commit `177d7d2`.
