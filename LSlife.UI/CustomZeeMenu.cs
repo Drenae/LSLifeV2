@@ -16,17 +16,19 @@ internal static class CustomZeeMenu
     private static CustomMenu cocaineMenu;
     private static CustomMenu activeMenu;
     private static bool dealerWeed, dealerCrack, dealerCocaine, dealerDeliveries;
+    private static readonly CustomMenuShared.HorizontalRepeat quantityRepeat = new CustomMenuShared.HorizontalRepeat();
 
     public static bool Visible => activeMenu != null && activeMenu.Visible;
 
     public static void Toggle()
     {
-        if (Visible) { activeMenu.Close(); activeMenu = null; return; }
+        if (Visible) { activeMenu.Close(); activeMenu = null; quantityRepeat.Reset(); return; }
         if (LSL.LsMenuPool.IsAnyMenuOpen()) return;
         if (menu == null) Create();
         menu.Subtitle = "REPUTATION  " + (int)LSL.dealer1Rep +
                         "    |    NIVEAU  " + (int)LsFunctions.CurrentRepLvl(LSL.dealer1Rep);
         activeMenu = menu;
+        quantityRepeat.Reset();
         menu.Open();
     }
 
@@ -243,25 +245,22 @@ internal static class CustomZeeMenu
             Function.Call(Hash.DISABLE_CONTROL_ACTION, 2, control, true);
         }
 
-        if (IsDrugMenu(activeMenu) && activeMenu.SelectedIndex < 2 &&
-            DisabledJustPressed(174))
+        // Repeat only for editable drug rows. No phone or money API touched.
+        bool editingDrug = IsDrugMenu(activeMenu) && activeMenu.SelectedIndex < 2;
+        int horizontal = editingDrug ? quantityRepeat.Poll(65, 320) : 0;
+        if (!editingDrug) quantityRepeat.Reset();
+        if (horizontal != 0)
         {
             if (activeMenu.SelectedIndex == 0)
-                ChangeQuantity(DrugSlider(activeMenu), DrugStock(activeMenu), -1);
-            else ChangeCannabisMultiplier(-1);
+                ChangeQuantity(DrugSlider(activeMenu), DrugStock(activeMenu), horizontal);
+            else ChangeCannabisMultiplier(horizontal);
         }
-        else if (IsDrugMenu(activeMenu) && activeMenu.SelectedIndex < 2 &&
-                 DisabledJustPressed(175))
-        {
-            if (activeMenu.SelectedIndex == 0)
-                ChangeQuantity(DrugSlider(activeMenu), DrugStock(activeMenu), 1);
-            else ChangeCannabisMultiplier(1);
-        }
-        else if (DisabledJustPressed(172)) activeMenu.Move(-1);
-        else if (DisabledJustPressed(173)) activeMenu.Move(1);
-        else if (DisabledJustPressed(201)) activeMenu.Activate();
+        else if (DisabledJustPressed(172)) { quantityRepeat.Reset(); activeMenu.Move(-1); }
+        else if (DisabledJustPressed(173)) { quantityRepeat.Reset(); activeMenu.Move(1); }
+        else if (DisabledJustPressed(201)) { quantityRepeat.Reset(); activeMenu.Activate(); }
         else if (DisabledJustPressed(202))
         {
+            quantityRepeat.Reset();
             activeMenu.Close();
             if (IsDrugMenu(activeMenu)) { activeMenu = orderMenu; orderMenu.Open(); }
             else if (activeMenu == orderMenu || activeMenu == dealerMenu)
