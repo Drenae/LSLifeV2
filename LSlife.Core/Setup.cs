@@ -669,13 +669,8 @@ public partial class LSL
 		
 		LsMenuPool.FormatDescriptions = true;
 		LsMenuPool.RefreshIndex();
-		iFruit = new CustomiFruit();
-		contactZee = new iFruitContact("Zee");
-		contactZee.Answered += LsFunctions.ContactAnswered;
-		contactZee.DialTimeout = 1000;
-		contactZee.Active = true;
-		contactZee.Icon = ContactIcon.Blank;
-		iFruit.Contacts.Add(contactZee);
+		// iFruit est initialise apres le chargement de GTA dans Tick.
+		// Ne pas creer le telephone pendant le constructeur du script.
 		DealerHandler = new PlayerDealerHandler();
 		HouseHandler = new StashHouseHandler();
 		LsFunctions.LoadSpawnLocations();
