@@ -1,3 +1,22 @@
+## Analyse différentielle de la régression téléphone — 26 octobre 2026
+
+État de référence : commit `c8e1a5b` (téléphone confirmé opérationnel après démarrage complet). Le retour des deux fichiers au contenu de cet état, dans `45e8859` et `c6df9ed`, a également été confirmé fonctionnel.
+
+**Commits suspects examinés :**
+
+- `bb70c20` — `CustomWorkerMenu.cs` : ajout d'un ID de session du dealer, resets du contrôleur horizontal, deux appels à `GTA.UI.ShowSubtitle`, lignes d'information supplémentaires.
+- `087372f` — `CustomWorkerMenu.cs` : vérifications `((GTA.Entity)ped).Exists()`, validation d'index d'arme, affichage du total de transfert.
+- `b6f89bb` — `CustomStashMenu.cs` : resets horizontaux et garde sur l'existence de la planque/coffre dans `TickOncePerFrame()`.
+
+**Constats vérifiés dans les diffs :** ces commits ne changent ni `Setup.cs`, ni `Tick.cs`, ni `iFruitAddon2`. Les gardes supplémentaires se trouvent dans des chemins de menus qui commencent par `if (!Visible) return` ; le mécanisme exact de la panne au lancement n'est donc **pas identifié**. Le retour fonctionnel après revert établit la corrélation avec le lot, pas une ligne coupable.
+
+**Protocole de reprise :**
+1. Ne pas réintroduire le lot suspect tel quel.
+2. Préparer d'abord des modifications purement visuelles et sans nouvelle API GTA dans un seul menu ; éviter les changements d'initialisation, de Tick global et de contrôles tant que l'origine n'est pas prouvée.
+3. Compiler, fermer GTA entièrement, redémarrer et vérifier le téléphone/contact Zee **avant** d'ouvrir les menus.
+4. En cas de régression, conserver le log `ScriptHookVDotNet.log` du démarrage et examiner les exceptions de chargement/initialisation.
+5. Vérifier également la version de DLL réellement déployée et l'absence de copies en double dans `scripts`.
+
 ## Régression téléphone après lot Employé/Stockage — 26 octobre 2026
 
 - [x] Retour de `CustomWorkerMenu.cs` et `CustomStashMenu.cs` à l'état `c8e1a5b` (dernier état avec téléphone confirmé fonctionnel par l'utilisateur).
