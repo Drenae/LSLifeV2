@@ -1,3 +1,11 @@
+## Lot commandes Zee — 26 octobre 2026
+
+- [x] Migration des trois commandes Cannabis / Crack / Cocaïne : quantités, pas de sélection, prix, réservation de stock et validation via traitement commun indépendant des sliders NativeUI.
+- [x] Adaptateurs des anciens menus NativeUI conservés pour les autres appels historiques.
+- [x] Suppression des références directes aux sliders NativeUI dans `CustomZeeMenu`.
+- [ ] **À compiler et tester en jeu** : quantités et multiplicateurs des trois produits, prix et total, stock fournisseur, plusieurs ajouts, validation et livraison, sauvegarde et téléphone.
+- [ ] Suppression de la DLL NativeUI : **non effectuée** ; autres systèmes historiques toujours dépendants.
+
 ## Nettoyage Zee — 26 octobre 2026
 
 - [x] Sauvegarde `backup/pre-zee-order-decoupling-20261026`.
