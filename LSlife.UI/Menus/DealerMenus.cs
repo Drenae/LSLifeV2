@@ -319,6 +319,11 @@ internal static partial class LsMenus
 	public static void HireDealerFollowSelect(UIMenu sender, UIMenuItem selectedItem)
 	{
 		LSL.hireDealerMainMenu.Visible = false;
+		CancelDealerRecruitment();
+	}
+
+	internal static void CancelDealerRecruitment()
+	{
 		if (LSL.aDealer != null)
 		{
 			LSL.aDealer.NewState = Enums.DStates.Normal;
@@ -328,20 +333,25 @@ internal static partial class LsMenus
 	public static void HireDealerOfferSelect(UIMenu sender, UIMenuItem selectedItem)
 	{
 		LSL.hireDealerMainMenu.Visible = false;
+		SubmitDealerOffer(LSL.hireDealerOfferAmount.Value);
+	}
+
+	internal static void SubmitDealerOffer(int amount)
+	{
 		if (LSL.aDealer == null)
 		{
 			return;
 		}
 		LSL.aDealer.NewState = Enums.DStates.Normal;
-		if (LSL.aDealer.LastOffer < LSL.hireDealerOfferAmount.Value)
+		if (LSL.aDealer.LastOffer < amount)
 		{
-			if (LSL.aDealer.DecidePlayerOffer(LSL.hireDealerOfferAmount.Value))
+			if (LSL.aDealer.DecidePlayerOffer(amount))
 			{
 				Function.Call(unchecked((Hash)(-8213159594590722974L)), (LSL.aDealer.dPed), ("GENERIC_YES"), ("SPEECH_PARAMS_FORCE"));
 				LsFunctions.ChangeAdealerToPdealer();
 				UI.ShowSubtitle("Ouais, je veux bien bosser pour toi.", 4000);
 				Player player = Game.Player;
-				player.Money -= LSL.hireDealerOfferAmount.Value;
+				player.Money -= amount;
 				LsFunctions.PlayTheSound();
 				LSL.hireDealerOfferAmount.Maximum = Game.Player.Money;
 				if (LSL.driveByHandler.AmountOfDriveBy(_agg: true) == 0 && LSL.rnd.Next(0, 5) == 0)
@@ -362,7 +372,7 @@ internal static partial class LsMenus
 			{
 				Function.Call(unchecked((Hash)(-8213159594590722974L)), (LSL.aDealer.dPed), ("GENERIC_NO"), ("SPEECH_PARAMS_FORCE"));
 				UI.ShowSubtitle("Tu plaisantes ? Je vaux bien plus que ça !", 4000);
-				LSL.aDealer.SetLastOfferAmount(LSL.hireDealerOfferAmount.Value);
+				LSL.aDealer.SetLastOfferAmount(amount);
 			}
 		}
 		else if (LSL.rnd.Next(0, 3) == 0)
