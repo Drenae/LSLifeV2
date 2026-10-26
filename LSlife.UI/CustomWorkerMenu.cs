@@ -28,47 +28,11 @@ internal static class CustomWorkerMenu
                 () => LSL.DealerHandler.currentDealer != null &&
                     LSL.DealerHandler.currentDealer.Money >= 100);
             workerMenu.Add("Equipement", OpenWorkerEquipment);
-            workerMenu.Add("Instruction", () => ChangeWorkerRole(1));
+            workerMenu.Add("Instruction", () => WorkerInstructions.ChangeWorkerRole(1));
         }
         activeMenu = workerMenu;
         workerMenu.Open();
         waitForRelease = true;
-    }
-
-    // Instructions utilisateur distinctes des états techniques (TalkToPlayer, etc.).
-    private static readonly string[] instructionStates = { "None", "FollowingPlayer", "Work" };
-    private static readonly string[] instructionLabels = { "Ne rien faire", "Me suivre", "Travailler" };
-    private static readonly System.Collections.Generic.Dictionary<int, int> selectedInstructions =
-        new System.Collections.Generic.Dictionary<int, int>();
-
-    private static int CurrentInstructionIndex(PlayerDealer dealer)
-    {
-        if (dealer == null) return 0;
-        int saved;
-        if (selectedInstructions.TryGetValue(dealer.ID, out saved)) return saved;
-        string state = dealer.NewState.ToString();
-        if (state == "Work" || state == "Working") return 2;
-        if (state == "Follow" || state == "FollowingPlayer") return 1;
-        return 0;
-    }
-
-    private static string CurrentWorkerRole()
-    {
-        PlayerDealer dealer = LSL.DealerHandler.currentDealer;
-        return dealer == null ? "" : instructionLabels[CurrentInstructionIndex(dealer)];
-    }
-
-    private static void ChangeWorkerRole(int direction)
-    {
-        PlayerDealer dealer = LSL.DealerHandler.currentDealer;
-        if (dealer == null) return;
-        int index = (CurrentInstructionIndex(dealer) + direction + instructionStates.Length) %
-            instructionStates.Length;
-        Enums.PdStates state;
-        if (!Enum.TryParse(instructionStates[index], out state)) return;
-        dealer.NewState = state;
-        selectedInstructions[dealer.ID] = index;
-        LSL.DealerHandler.needsSave = true;
     }
 
     private static void OpenWorkerEquipment()
@@ -239,7 +203,7 @@ internal static class CustomWorkerMenu
     {
         int direction = horizontalRepeat.Poll(250);
         if (direction == 0) return false;
-        ChangeWorkerRole(direction);
+        WorkerInstructions.ChangeWorkerRole(direction);
         return true;
     }
 
@@ -281,7 +245,7 @@ internal static class CustomWorkerMenu
         for (int i = 0; i < workerMenu.Entries.Count; i++)
         {
             string value = null;
-            if (i == 3) value = "< " + CurrentWorkerRole() + " >";
+            if (i == 3) value = "< " + WorkerInstructions.CurrentWorkerRole() + " >";
             if (i == 1)
             {
                 int money = worker.Money;
@@ -291,7 +255,7 @@ internal static class CustomWorkerMenu
                 value, enabled: workerMenu.Entries[i].Enabled);
         }
         layout.Separator(0.006f);
-        layout.TextPair("Instruction", CurrentWorkerRole());
+        layout.TextPair("Instruction", WorkerInstructions.CurrentWorkerRole());
         layout.TextPair("Recette brute", LsFunctions.IntToMoney(worker.Money) + " $");
         layout.Block(0.029f, y =>
         {
