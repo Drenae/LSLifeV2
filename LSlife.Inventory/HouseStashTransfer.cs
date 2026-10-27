@@ -69,4 +69,46 @@ internal static class HouseStashTransfer
         LSL.HouseHandler.UpdateMenu(house);
         LSL.HouseHandler.SaveHouse(house);
     }
+
+    internal static void Withdraw(int kind, int requested)
+    {
+        var house = LSL.HouseHandler.CurrentHouse;
+        if (house == null || requested < 0) return;
+        int amount;
+        switch (kind)
+        {
+            case 0:
+                amount = Math.Min(requested, house.Weed);
+                house.Weed -= amount; LSL.PlayerInventory["Weed"] += amount;
+                break;
+            case 1:
+                amount = Math.Min(requested, house.Crack);
+                house.Crack -= amount; LSL.PlayerInventory["Crack"] += amount;
+                break;
+            case 2:
+                amount = Math.Min(requested, house.Cocain);
+                house.Cocain -= amount; LSL.PlayerInventory["Cocaine"] += amount;
+                break;
+            case 6:
+                amount = Math.Min(requested, house.Money);
+                house.Money -= amount; Game.Player.Money += amount;
+                break;
+            case 8:
+                if (requested >= house.Weapons.Count || requested >= house.Weps.Count) return;
+                XElement w = house.Weapons[requested];
+                XElement hash = w.Element("HASH");
+                if (hash == null || !Enum.TryParse(hash.Value, out WeaponHash weapon)) return;
+                int ammo = 0;
+                int.TryParse((string)w.Element("AMMO"), out ammo);
+                Game.Player.Character.Weapons.Give(weapon, ammo, true, false);
+                LSL.playerWeapons.Add(w);
+                LSL.playerWeps.Add(hash.Value);
+                house.Weapons.RemoveAt(requested);
+                house.Weps.RemoveAt(requested);
+                break;
+            default: return;
+        }
+        LsFunctions.UpdateInventory();
+        LSL.HouseHandler.SaveHouse(house);
+    }
 }
