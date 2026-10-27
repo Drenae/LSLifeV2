@@ -128,7 +128,7 @@ internal static class CustomStashMenu
                 if (put) LsMenus.onPutVehicleMenuSelect(LSL.vehStashPutMenu, item, 0);
                 else LsMenus.onTakeVehicleMenuSelect(LSL.vehStashTakeMenu, item, 0);
             }
-            else if (put) LsMenus.onStashMenuSelect(LSL.stashPutMenu, item, 0);
+            else if (put) HouseStashTransfer.Deposit(k, k <= 6 ? Slider(k).Value : List(k).Index);
             else TakeHouse(k);
             if (k <= 6) Slider(k).Value = 0;
         }
