@@ -116,7 +116,7 @@ internal static class CustomZeeMenu
             crackMenu.Add("Quantite", () => ChangeQuantity(LSL.crack, LSL.dealer1Crack, 1));
             crackMenu.Add("Multiplicateur", () => ChangeCannabisMultiplier(1));
             crackMenu.Add("Ajouter a la commande", () =>
-                LsMenus.onCrackMenuSelect(LSL.crackMenu, LSL.CrackBuy, 1),
+                ZeeDrugOrderActions.AddCrack(),
                 () => LSL.dealer1Crack > 0 && LSL.crack.Value > 0);
         }
         OpenDrugMenu(crackMenu, LSL.crack, LSL.dealer1Crack);
@@ -130,7 +130,7 @@ internal static class CustomZeeMenu
             cocaineMenu.Add("Quantite", () => ChangeQuantity(LSL.cocaine, LSL.dealer1Cocain, 1));
             cocaineMenu.Add("Multiplicateur", () => ChangeCannabisMultiplier(1));
             cocaineMenu.Add("Ajouter a la commande", () =>
-                LsMenus.onCocainMenuSelect(LSL.cocainMenu, LSL.CocainBuy, 1),
+                ZeeDrugOrderActions.AddCocaine(),
                 () => LSL.dealer1Cocain > 0 && LSL.cocaine.Value > 0);
         }
         OpenDrugMenu(cocaineMenu, LSL.cocaine, LSL.dealer1Cocain);
@@ -203,7 +203,7 @@ internal static class CustomZeeMenu
     private static void AddCannabis()
     {
         // Meme traitement que le bouton d'achat NativeUI.
-        LsMenus.onWeedMenuSelect(LSL.weedMenu, LSL.WeedBuy, 1);
+        ZeeDrugOrderActions.AddWeed();
     }
 
     private static void PlaceExistingOrder()
