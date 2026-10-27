@@ -23,6 +23,11 @@ namespace LSlife;
 
 public partial class LSL
 {
+	// Evite d'enregistrer le contact pendant une transition de personnage au chargement.
+	private int phoneStartupPedHandle = -1;
+	private int phoneStartupStableSince = -1;
+	private const int PhoneStartupStableMs = 6000;
+
 	private void onTick(object sender, EventArgs e)
 	{
 		//IL_02c5: Unknown result type (might be due to invalid IL or missing references)
@@ -197,19 +202,32 @@ public partial class LSL
 		{
 			return;
 		}
-		// Au lancement normal, le constructeur peut s'executer avant la fin du
-		// chargement du protagoniste et de son telephone. Reload() masque ce cas.
-		// Creer iFruit une seule fois, sur le thread Tick, apres Game.IsLoading.
-		if (iFruit == null && Game.Player != null &&
-			(Entity)(object)Game.Player.Character != (Entity)null && Game.Player.IsPlaying)
+		// Un Ped existant et IsPlaying ne suffisent pas : le protagoniste peut
+		// encore changer plusieurs fois pendant les premieres secondes.
+		if (iFruit == null)
 		{
-			iFruit = new CustomiFruit();
-			contactZee = new iFruitContact("Zee");
-			contactZee.Answered += LsFunctions.ContactAnswered;
-			contactZee.DialTimeout = 1000;
-			contactZee.Active = true;
-			contactZee.Icon = ContactIcon.Blank;
-			iFruit.Contacts.Add(contactZee);
+			Ped currentPed = Game.Player != null ? Game.Player.Character : null;
+			int currentHandle = currentPed != null && currentPed.Exists() &&
+				Game.Player.IsPlaying ? currentPed.Handle : -1;
+			if (currentHandle != phoneStartupPedHandle || currentHandle == -1)
+			{
+				phoneStartupPedHandle = currentHandle;
+				phoneStartupStableSince = currentHandle == -1 ? -1 : Game.GameTime;
+			}
+			else if (phoneStartupStableSince >= 0 &&
+				Game.GameTime - phoneStartupStableSince >= PhoneStartupStableMs)
+			{
+				// Publier les references uniquement apres l'enregistrement complet.
+				var phone = new CustomiFruit();
+				var zee = new iFruitContact("Zee");
+				zee.Answered += LsFunctions.ContactAnswered;
+				zee.DialTimeout = 1000;
+				zee.Active = true;
+				zee.Icon = ContactIcon.Blank;
+				phone.Contacts.Add(zee);
+				contactZee = zee;
+				iFruit = phone;
+			}
 		}
 		if (firstRun && (Entity)(object)player.Character != (Entity)null)
 		{
