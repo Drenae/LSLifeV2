@@ -31,12 +31,12 @@ internal static class VehicleWeaponTransfer
                 if (existing.FirstAttribute != null && existing.FirstAttribute.Value != id.ToString()) break;
             }
             weaponXml.SetAttributeValue("id", id);
-            LSL.vehWeaponsXML.Element("weapons")?.Add(weaponXml);
+            LSL.vehWeaponsXML.Element("weapons")?.Add(new XElement(weaponXml));
             LSL.vehWeaponsXML.Save(FilePath);
             Game.Player.Character.Weapons.Remove(weapon);
             LSL.playerWeapons.RemoveAt(index);
             LSL.playerWeps.RemoveAt(index);
-            car.vehWeapons.Add(weaponXml);
+            car.vehWeapons.Add(new XElement(weaponXml));
             car.vehWeps.Add(LSL.putWeaponVeh.Items[index]);
         }
         else
@@ -47,8 +47,13 @@ internal static class VehicleWeaponTransfer
             if (hash == null || !Enum.TryParse(hash.Value, out WeaponHash weapon) ||
                 (int)weapon == -1569615261) return false;
             LSL.vehWeaponsXML = XDocument.Load(FilePath);
+            // Une meme arme peut exister plusieurs fois : retrouver son ID avant son hash.
+            string selectedId = (string)selected.Attribute("id");
             XElement stored = LSL.vehWeaponsXML.Descendants("weapon")
-                .FirstOrDefault(w => (string)w.Element("HASH") == hash.Value);
+                .FirstOrDefault(w => selectedId != null && (string)w.Attribute("id") == selectedId);
+            if (stored == null)
+                stored = LSL.vehWeaponsXML.Descendants("weapon")
+                    .FirstOrDefault(w => (string)w.Element("HASH") == hash.Value);
             if (stored == null) return false;
             int ammo = 0;
             int.TryParse((string)stored.Element("AMMO"), out ammo);
@@ -59,7 +64,7 @@ internal static class VehicleWeaponTransfer
                 if (Enum.TryParse(component.Value, out WeaponComponent parsed))
                     Game.Player.Character.Weapons.Current.SetComponent(parsed, true);
             }
-            LSL.playerWeapons.Add(stored.Element("HASH"));
+            LSL.playerWeapons.Add(new XElement(stored));
             LSL.playerWeps.Add(hash.Value);
             car.vehWeapons.RemoveAt(index);
             car.vehWeps.RemoveAt(index);
