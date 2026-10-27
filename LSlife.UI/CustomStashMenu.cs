@@ -160,35 +160,7 @@ internal static class CustomStashMenu
     }
     private static void TakeHouse(int k)
     {
-        var house = LSL.HouseHandler.CurrentHouse;
-        if (house == null) return;
-        if (k <= 2)
-        {
-            int amount = Slider(k).Value;
-            if (k == 0) { amount = Math.Min(amount, house.Weed); house.Weed -= amount; LSL.PlayerInventory["Weed"] += amount; }
-            if (k == 1) { amount = Math.Min(amount, house.Crack); house.Crack -= amount; LSL.PlayerInventory["Crack"] += amount; }
-            if (k == 2) { amount = Math.Min(amount, house.Cocain); house.Cocain -= amount; LSL.PlayerInventory["Cocaine"] += amount; }
-        }
-        else if (k == 6)
-        {
-            int amount = Math.Min(Slider(k).Value, house.Money);
-            house.Money -= amount; Game.Player.Money += amount;
-        }
-        else if (k == 8 && house.Weapons.Count > 0)
-        {
-            int index = List(8).Index;
-            if (index < 0 || index >= house.Weapons.Count) return;
-            var w = house.Weapons[index];
-            var hash = w.Element("HASH");
-            GTA.Native.WeaponHash weapon;
-            if (hash == null || !Enum.TryParse(hash.Value, out weapon)) return;
-            int ammo = 0; int.TryParse((string)w.Element("AMMO"), out ammo);
-            Game.Player.Character.Weapons.Give(weapon, ammo, true, false);
-            LSL.playerWeapons.Add(w); LSL.playerWeps.Add(hash.Value);
-            house.Weapons.RemoveAt(index); house.Weps.RemoveAt(index);
-        }
-        LsFunctions.UpdateInventory();
-        LSL.HouseHandler.SaveHouse(house);
+        HouseStashTransfer.Withdraw(k, k <= 6 ? Slider(k).Value : List(k).Index);
     }
     private static string Value(int k)
     {
