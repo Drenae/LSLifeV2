@@ -120,7 +120,6 @@ internal static class CustomStashMenu
     {
         if (k <= 6 || k == 8)
         {
-            NativeUI.UIMenuItem item = k <= 6 ? (NativeUI.UIMenuItem)Slider(k) : List(k);
             if (k <= 6 && Slider(k).Value <= 0) return;
             if (k == 8 && List(k).Items.Count == 0) return;
             if (vehicle)
