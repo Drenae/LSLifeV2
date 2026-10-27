@@ -16,6 +16,7 @@ internal static class CustomZeeMenu
     private static CustomMenu cocaineMenu;
     private static CustomMenu activeMenu;
     private static bool dealerWeed, dealerCrack, dealerCocaine, dealerDeliveries;
+    private static int weedAmount, crackAmount, cocaineAmount, orderMultiplier = 1;
     private static readonly CustomMenuShared.HorizontalRepeat quantityRepeat = new CustomMenuShared.HorizontalRepeat();
 
     public static bool Visible => activeMenu != null && activeMenu.Visible;
@@ -95,13 +96,10 @@ internal static class CustomZeeMenu
             cannabisMenu.Add("Quantite", () => ChangeCannabis(1));
             cannabisMenu.Add("Multiplicateur", () => ChangeCannabisMultiplier(1));
             cannabisMenu.Add("Ajouter a la commande", AddCannabis,
-                () => LSL.dealer1Weed > 0 && LSL.bushWeed.Value > 0);
+                () => LSL.dealer1Weed > 0 && weedAmount > 0);
         }
         orderMenu.Close();
-        // Rester synchronise avec le stock reel du fournisseur.
-        LSL.bushWeed.Maximum = LSL.dealer1Weed;
-        if (LSL.bushWeed.Value > LSL.bushWeed.Maximum)
-            LSL.bushWeed.Value = LSL.bushWeed.Maximum;
+        weedAmount = Math.Min(weedAmount, LSL.dealer1Weed);
         quantityRepeat.Reset();
         activeMenu = cannabisMenu;
         cannabisMenu.Open();
@@ -113,13 +111,12 @@ internal static class CustomZeeMenu
         if (crackMenu == null)
         {
             crackMenu = new CustomMenu("CRACK", "ZEE / COMMANDES");
-            crackMenu.Add("Quantite", () => ChangeQuantity(LSL.crack, LSL.dealer1Crack, 1));
+            crackMenu.Add("Quantite", () => ChangeQuantity(1, 1));
             crackMenu.Add("Multiplicateur", () => ChangeCannabisMultiplier(1));
-            crackMenu.Add("Ajouter a la commande", () =>
-                ZeeDrugOrderActions.AddCrack(),
-                () => LSL.dealer1Crack > 0 && LSL.crack.Value > 0);
+            crackMenu.Add("Ajouter a la commande", () => AddDrug(1),
+                () => LSL.dealer1Crack > 0 && crackAmount > 0);
         }
-        OpenDrugMenu(crackMenu, LSL.crack, LSL.dealer1Crack);
+        OpenDrugMenu(crackMenu, 1);
     }
 
     private static void OpenCocaine()
@@ -127,28 +124,30 @@ internal static class CustomZeeMenu
         if (cocaineMenu == null)
         {
             cocaineMenu = new CustomMenu("COCAINE", "ZEE / COMMANDES");
-            cocaineMenu.Add("Quantite", () => ChangeQuantity(LSL.cocaine, LSL.dealer1Cocain, 1));
+            cocaineMenu.Add("Quantite", () => ChangeQuantity(2, 1));
             cocaineMenu.Add("Multiplicateur", () => ChangeCannabisMultiplier(1));
-            cocaineMenu.Add("Ajouter a la commande", () =>
-                ZeeDrugOrderActions.AddCocaine(),
-                () => LSL.dealer1Cocain > 0 && LSL.cocaine.Value > 0);
+            cocaineMenu.Add("Ajouter a la commande", () => AddDrug(2),
+                () => LSL.dealer1Cocain > 0 && cocaineAmount > 0);
         }
-        OpenDrugMenu(cocaineMenu, LSL.cocaine, LSL.dealer1Cocain);
+        OpenDrugMenu(cocaineMenu, 2);
     }
 
-    private static void OpenDrugMenu(CustomMenu target, NativeUI.UIMenuSliderItem slider, int stock)
+    private static void OpenDrugMenu(CustomMenu target, int drug)
     {
         orderMenu.Close();
-        slider.Maximum = stock;
-        if (slider.Value > slider.Maximum) slider.Value = slider.Maximum;
+        int stock = drug == 1 ? LSL.dealer1Crack : LSL.dealer1Cocain;
+        if (drug == 1) crackAmount = Math.Min(crackAmount, stock);
+        else cocaineAmount = Math.Min(cocaineAmount, stock);
         quantityRepeat.Reset();
         activeMenu = target;
         target.Open();
     }
 
-    private static void ChangeQuantity(NativeUI.UIMenuSliderItem slider, int stock, int direction)
+    private static void ChangeQuantity(int drug, int direction)
     {
-        slider.Value = ZeeOrderQuantities.Adjust(slider.Value, slider.Multiplier, stock, direction);
+        if (drug == 0) weedAmount = ZeeOrderQuantities.Adjust(weedAmount, orderMultiplier, LSL.dealer1Weed, direction);
+        else if (drug == 1) crackAmount = ZeeOrderQuantities.Adjust(crackAmount, orderMultiplier, LSL.dealer1Crack, direction);
+        else cocaineAmount = ZeeOrderQuantities.Adjust(cocaineAmount, orderMultiplier, LSL.dealer1Cocain, direction);
     }
 
     private static bool IsDrugMenu(CustomMenu target)
@@ -156,10 +155,9 @@ internal static class CustomZeeMenu
         return target == cannabisMenu || target == crackMenu || target == cocaineMenu;
     }
 
-    private static NativeUI.UIMenuSliderItem DrugSlider(CustomMenu target)
+    private static int DrugAmount(CustomMenu target)
     {
-        return target == cannabisMenu ? LSL.bushWeed :
-            target == crackMenu ? LSL.crack : LSL.cocaine;
+        return target == cannabisMenu ? weedAmount : target == crackMenu ? crackAmount : cocaineAmount;
     }
 
     private static int DrugStock(CustomMenu target)
@@ -175,24 +173,23 @@ internal static class CustomZeeMenu
         return price - LsFunctions.Discount(price);
     }
 
-    private static void ChangeCannabis(int direction)
-    {
-        LSL.bushWeed.Value = ZeeOrderQuantities.Adjust(LSL.bushWeed.Value,
-            LSL.bushWeed.Multiplier, LSL.dealer1Weed, direction);
-    }
+    private static void ChangeCannabis(int direction) => ChangeQuantity(0, direction);
 
     private static void ChangeCannabisMultiplier(int direction)
     {
-        int multiplier = ZeeOrderQuantities.NextMultiplier(LSL.bushWeed.Multiplier, direction);
-        LSL.bushWeed.Multiplier = multiplier;
-        LSL.crack.Multiplier = multiplier;
-        LSL.cocaine.Multiplier = multiplier;
+        orderMultiplier = ZeeOrderQuantities.NextMultiplier(orderMultiplier, direction);
     }
 
-    private static void AddCannabis()
+    private static void AddCannabis() => AddDrug(0);
+
+    private static void AddDrug(int drug)
     {
-        // Meme traitement que le bouton d'achat NativeUI.
-        ZeeDrugOrderActions.AddWeed();
+        bool added = drug == 0 ? ZeeDrugOrderActions.AddWeed(weedAmount) :
+            drug == 1 ? ZeeDrugOrderActions.AddCrack(crackAmount) :
+            ZeeDrugOrderActions.AddCocaine(cocaineAmount);
+        if (!added) return;
+        // Garder les anciens widgets coherents pour les chemins historiques.
+        LsMenus.RefreshLegacyOrderMenu();
     }
 
     private static void PlaceExistingOrder()
@@ -245,7 +242,7 @@ internal static class CustomZeeMenu
         if (horizontal != 0)
         {
             if (activeMenu.SelectedIndex == 0)
-                ChangeQuantity(DrugSlider(activeMenu), DrugStock(activeMenu), horizontal);
+                ChangeQuantity(activeMenu == cannabisMenu ? 0 : activeMenu == crackMenu ? 1 : 2, horizontal);
             else ChangeCannabisMultiplier(horizontal);
         }
         else if (DisabledJustPressed(172)) { quantityRepeat.Reset(); activeMenu.Move(-1); }
@@ -334,7 +331,7 @@ internal static class CustomZeeMenu
                 float barLeft = left + 0.119f;
                 float barWidth = 0.072f;
                 float ratio = DrugStock(displayed) > 0 ?
-                    Math.Max(0f, Math.Min(1f, (float)DrugSlider(displayed).Value / DrugStock(displayed))) : 0f;
+                    Math.Max(0f, Math.Min(1f, (float)DrugAmount(displayed) / DrugStock(displayed))) : 0f;
                 CustomMenuRenderer.Rect(barLeft + barWidth / 2f, y + 0.0205f, barWidth, 0.006f,
                     67, 65, 61, 255);
                 if (ratio > 0f)
@@ -342,13 +339,13 @@ internal static class CustomZeeMenu
                         barWidth * ratio, 0.006f, 218, 176, 101, 255);
                 CustomMenuRenderer.Rect(barLeft + barWidth * ratio, y + 0.0205f,
                     0.004f, 0.013f, 234, 207, 151, 255);
-                CustomMenuRenderer.TextRightCenteredVertically(DrugSlider(displayed).Value + " OZ",
+                CustomMenuRenderer.TextRightCenteredVertically(DrugAmount(displayed) + " OZ",
                     left + width - 0.018f, y + 0.0005f, 0.040f, 0.305f,
                     218, 176, 101, 255);
             }
             if (IsDrugMenu(displayed) && i == 1)
             {
-                CustomMenuRenderer.TextRightCenteredVertically("< x" + DrugSlider(displayed).Multiplier + " >",
+                CustomMenuRenderer.TextRightCenteredVertically("< x" + orderMultiplier + " >",
                     left + width - 0.018f, y + 0.0005f, 0.040f, 0.305f,
                     218, 176, 101, 255);
             }
@@ -360,7 +357,7 @@ internal static class CustomZeeMenu
             }
             if (IsDrugMenu(displayed) && i == 2)
             {
-                int price = DrugSlider(displayed).Value * DrugUnitPrice(displayed);
+                int price = DrugAmount(displayed) * DrugUnitPrice(displayed);
                 CustomMenuRenderer.TextRightCenteredVertically(LsFunctions.IntToMoney(price) + " $",
                     left + width - 0.018f, y + 0.0005f, 0.040f, 0.305f,
                     218, 176, 101, 255);
@@ -406,7 +403,7 @@ internal static class CustomZeeMenu
                     left + 0.016f, y + 0.012f, 0.022f,
                     0.255f, 202, 195, 180, 255);
                 CustomMenuRenderer.TextCenteredVertically("PRIX SELECTION  " +
-                    LsFunctions.IntToMoney(DrugSlider(displayed).Value *
+                    LsFunctions.IntToMoney(DrugAmount(displayed) *
                         DrugUnitPrice(displayed)) + " $",
                     left + 0.016f, y + 0.035f, 0.022f,
                     0.255f, 202, 195, 180, 255);
