@@ -126,8 +126,7 @@ internal static class CustomStashMenu
             if (vehicle)
             {
                 if (k <= 6) VehicleStashTransfer.Transfer(put, k, Slider(k).Value);
-                else if (put) LsMenus.onPutVehicleMenuSelect(LSL.vehStashPutMenu, item, 0);
-                else LsMenus.onTakeVehicleMenuSelect(LSL.vehStashTakeMenu, item, 0);
+                else VehicleWeaponTransfer.Transfer(put, List(8).Index);
             }
             else if (put) HouseStashTransfer.Deposit(k, k <= 6 ? Slider(k).Value : List(k).Index);
             else TakeHouse(k);
