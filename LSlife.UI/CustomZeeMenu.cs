@@ -148,10 +148,7 @@ internal static class CustomZeeMenu
 
     private static void ChangeQuantity(NativeUI.UIMenuSliderItem slider, int stock, int direction)
     {
-        int value = slider.Value + direction * slider.Multiplier;
-        if (value < 0) value = 0;
-        if (value > stock) value = stock;
-        slider.Value = value;
+        slider.Value = ZeeOrderQuantities.Adjust(slider.Value, slider.Multiplier, stock, direction);
     }
 
     private static bool IsDrugMenu(CustomMenu target)
@@ -180,21 +177,13 @@ internal static class CustomZeeMenu
 
     private static void ChangeCannabis(int direction)
     {
-        int value = LSL.bushWeed.Value + direction * LSL.bushWeed.Multiplier;
-        if (value < 0) value = 0;
-        if (value > LSL.dealer1Weed) value = LSL.dealer1Weed;
-        LSL.bushWeed.Value = value;
+        LSL.bushWeed.Value = ZeeOrderQuantities.Adjust(LSL.bushWeed.Value,
+            LSL.bushWeed.Multiplier, LSL.dealer1Weed, direction);
     }
 
     private static void ChangeCannabisMultiplier(int direction)
     {
-        // Le multiplicateur NativeUI est prive : utiliser les valeurs du controle
-        // de quantite, sans acceder au menu NativeUI.
-        int[] multipliers = { 1, 5, 10, 25, 50, 100 };
-        int current = Array.IndexOf(multipliers, LSL.bushWeed.Multiplier);
-        if (current < 0) current = 0;
-        int next = (current + direction + multipliers.Length) % multipliers.Length;
-        int multiplier = multipliers[next];
+        int multiplier = ZeeOrderQuantities.NextMultiplier(LSL.bushWeed.Multiplier, direction);
         LSL.bushWeed.Multiplier = multiplier;
         LSL.crack.Multiplier = multiplier;
         LSL.cocaine.Multiplier = multiplier;
