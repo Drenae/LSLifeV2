@@ -208,7 +208,7 @@ internal static class CustomZeeMenu
 
     private static void PlaceExistingOrder()
     {
-        if (LsMenus.PlaceDrugOrder())
+        if (StreetDealingActions.PlaceDrugOrder())
         {
             orderMenu.Close();
             activeMenu = null;
@@ -217,7 +217,7 @@ internal static class CustomZeeMenu
 
     private static void StartDealer()
     {
-        LsMenus.StartDealing(dealerWeed, dealerCrack, dealerCocaine, dealerDeliveries);
+        StreetDealingActions.StartDealing(dealerWeed, dealerCrack, dealerCocaine, dealerDeliveries);
         if (LSL.isDealing)
         {
             dealerMenu.Close();
