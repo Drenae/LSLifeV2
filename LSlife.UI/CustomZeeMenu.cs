@@ -37,9 +37,9 @@ internal static class CustomZeeMenu
         menu = new CustomMenu("ZEE", "");
         menu.Add("Dealer", OpenDealer);
         menu.Add("Commander de la drogue", OpenOrders);
-        menu.Add("Acheter des armes", () => RunZeeAction(LsMenus.CallWeaponDealer));
-        menu.Add("Demander a etre depose", () => RunZeeAction(LsMenus.CallLift));
-        menu.Add("Rembourser la dette", () => RunZeeAction(LsMenus.PayZeeDebt), () => LSL.dealer1Debt > 0);
+        menu.Add("Acheter des armes", () => RunZeeAction(ZeeContactActions.CallWeaponDealer));
+        menu.Add("Demander a etre depose", () => RunZeeAction(ZeeContactActions.CallLift));
+        menu.Add("Rembourser la dette", () => RunZeeAction(ZeeContactActions.PayZeeDebt), () => LSL.dealer1Debt > 0);
         menu.Add("Options du HUD", OpenHudOptions);
     }
 
