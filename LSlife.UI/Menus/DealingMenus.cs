@@ -30,17 +30,35 @@ internal static partial class LsMenus
 
 	public static void onWeedMenuSelect(UIMenu sender, UIMenuItem item, int index)
 	{
-		if (item == LSL.WeedBuy) ZeeDrugOrderActions.AddWeed();
+		if (item != LSL.WeedBuy || !ZeeDrugOrderActions.AddWeed(LSL.bushWeed.Value)) return;
+		LSL.bushWeed.Maximum = LSL.dealer1Weed;
+		LSL.WeedBuy.Text = "Commander ~g~" + LSL.bushWeed.Value + " ~s~pour " +
+			LsFunctions.IntToMoney(LSL.bushWeed.Value * (LSL.weed1Price - LsFunctions.Discount(LSL.weed1Price))) + " $";
+		RefreshLegacyOrderMenu();
 	}
 
 	public static void onCrackMenuSelect(UIMenu sender, UIMenuItem item, int index)
 	{
-		if (item == LSL.CrackBuy) ZeeDrugOrderActions.AddCrack();
+		if (item != LSL.CrackBuy || !ZeeDrugOrderActions.AddCrack(LSL.crack.Value)) return;
+		LSL.crack.Maximum = LSL.dealer1Crack;
+		LSL.CrackBuy.Text = "Commander ~g~" + LSL.crack.Value + " ~w~pour " +
+			LsFunctions.IntToMoney(LSL.crack.Value * (LSL.crack1Price - LsFunctions.Discount(LSL.crack1Price))) + " $";
+		RefreshLegacyOrderMenu();
 	}
 
 	public static void onCocainMenuSelect(UIMenu sender, UIMenuItem item, int index)
 	{
-		if (item == LSL.CocainBuy) ZeeDrugOrderActions.AddCocaine();
+		if (item != LSL.CocainBuy || !ZeeDrugOrderActions.AddCocaine(LSL.cocaine.Value)) return;
+		LSL.cocaine.Maximum = LSL.dealer1Cocain;
+		LSL.CocainBuy.Text = "Commander ~g~" + LSL.cocaine.Value + " ~w~pour " +
+			LsFunctions.IntToMoney(LSL.cocaine.Value * (LSL.cocain1Price - LsFunctions.Discount(LSL.cocain1Price))) + " $";
+		RefreshLegacyOrderMenu();
+	}
+
+	internal static void RefreshLegacyOrderMenu()
+	{
+		LSL.PlaceOrder.Text = "Commander pour " + LsFunctions.IntToMoney(LSL.NewOrder.Bill) + " $";
+		LsFunctions.UpdateOrderMenuDesc();
 	}
 
 	public static void OnOrderDrugsMenuSelect(UIMenu sender, UIMenuItem item, int index)
