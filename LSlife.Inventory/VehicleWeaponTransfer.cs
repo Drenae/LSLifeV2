@@ -24,12 +24,12 @@ internal static class VehicleWeaponTransfer
             if (!Enum.TryParse(LSL.playerWeps[index], out WeaponHash weapon) ||
                 (int)weapon == -1569615261) return false;
             LSL.vehWeaponsXML = XDocument.Load(FilePath);
+            var occupiedIds = LSL.vehWeaponsXML.Descendants("weapon")
+                .Select(w => (string)w.Attribute("id"))
+                .Where(idText => idText != null)
+                .ToList();
             int id = 0;
-            foreach (XElement existing in LSL.vehWeaponsXML.Descendants("weapon"))
-            {
-                id++;
-                if (existing.FirstAttribute != null && existing.FirstAttribute.Value != id.ToString()) break;
-            }
+            while (occupiedIds.Contains(id.ToString())) id++;
             weaponXml.SetAttributeValue("id", id);
             LSL.vehWeaponsXML.Element("weapons")?.Add(new XElement(weaponXml));
             LSL.vehWeaponsXML.Save(FilePath);
