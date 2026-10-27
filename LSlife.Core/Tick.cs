@@ -23,10 +23,10 @@ namespace LSlife;
 
 public partial class LSL
 {
-	// Evite d'enregistrer le contact pendant une transition de personnage au chargement.
+	// Courte stabilisation du personnage apres chargement (le conflit Menyoo etait externe).
 	private int phoneStartupPedHandle = -1;
 	private int phoneStartupStableSince = -1;
-	private const int PhoneStartupStableMs = 6000;
+	private const int PhoneStartupStableMs = 750;
 
 	private void onTick(object sender, EventArgs e)
 	{
