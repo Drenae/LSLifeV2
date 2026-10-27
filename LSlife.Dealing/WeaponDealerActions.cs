@@ -1,5 +1,6 @@
 using System;
 using GTA;
+using GTA.Native;
 
 namespace LSlife;
 
