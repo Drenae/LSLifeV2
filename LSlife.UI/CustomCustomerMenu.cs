@@ -88,17 +88,6 @@ internal static class CustomCustomerMenu
     private static bool JustPressed(int control) =>
         Function.Call<bool>(Hash.IS_DISABLED_CONTROL_JUST_PRESSED, 2, control);
 
-    private static int SalePrice()
-    {
-        var c = LSL.customerSellTo;
-        if (c == null || c.Drug == null) return 0;
-        int price = c.amount * c.Drug.PricePerG;
-        float divider = (float)c.amount / 7f;
-        if (divider >= 1f)
-            price -= (int)divider * c.Drug.PricePerG;
-        return price;
-    }
-
     private static void Draw()
     {
         var c = LSL.customerSellTo;
@@ -115,7 +104,7 @@ internal static class CustomCustomerMenu
         layout.TextPair("Stock disponible", LsFunctions.GramsToOz(available));
         layout.Separator(0.005f);
         layout.Row("Vendre", menu.SelectedIndex == 0,
-            CanSell() ? "+" + LsFunctions.IntToMoney(SalePrice()) + " $" : "Stock insuffisant",
+            CanSell() ? "+" + LsFunctions.IntToMoney(CustomerSalePricing.SalePrice()) + " $" : "Stock insuffisant",
             enabled: CanSell(), emphasizeValue: CanSell());
         layout.Row("Refuser la vente", menu.SelectedIndex == 1);
         layout.Render();
