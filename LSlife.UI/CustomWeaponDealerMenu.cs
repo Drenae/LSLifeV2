@@ -11,6 +11,8 @@ internal static class CustomWeaponDealerMenu
     private static CustomMenu menu;
     private static bool waitForRelease;
     private static int lastFrame = -1;
+    private static int meleeChoice;
+    private static int pistolChoice;
     private static readonly CustomMenuShared.HorizontalRepeat repeat = new CustomMenuShared.HorizontalRepeat();
 
     public static bool Visible => menu != null && menu.Visible;
@@ -23,9 +25,9 @@ internal static class CustomWeaponDealerMenu
         if (menu == null)
         {
             menu = new CustomMenu("ARMES", "MARCHAND");
-            menu.Add("Arme blanche", () => Purchase(LSL.melee));
-            menu.Add("Pistolet", () => Purchase(LSL.pistol));
-            menu.Add("Gilet pare-balles", () => Purchase(LSL.armour));
+            menu.Add("Arme blanche", () => Purchase(WeaponDealerAction.Melee));
+            menu.Add("Pistolet", () => Purchase(WeaponDealerAction.Pistol));
+            menu.Add("Gilet pare-balles", () => Purchase(WeaponDealerAction.Armour));
             menu.Add("Renvoyer", Dismiss);
         }
         menu.Open();
@@ -39,16 +41,16 @@ internal static class CustomWeaponDealerMenu
         repeat.Reset();
     }
 
-    private static void Purchase(NativeUI.UIMenuItem item)
+    private static void Purchase(WeaponDealerAction item)
     {
         if (LSL.weaponDealer1 == null) { Close(); return; }
 
-        bool isMelee = item == LSL.melee;
-        bool isPistol = item == LSL.pistol;
-        bool isAmmo = isPistol && LSL.pistol.Index == 3;
+        bool isMelee = item == WeaponDealerAction.Melee;
+        bool isPistol = item == WeaponDealerAction.Pistol;
+        bool isAmmo = isPistol && pistolChoice == 3;
         if (isMelee || (isPistol && !isAmmo))
         {
-            string weaponName = isMelee ? LSL.meleeWeps[LSL.melee.Index] : LSL.pistolWeps[LSL.pistol.Index];
+            string weaponName = isMelee ? LSL.meleeWeps[meleeChoice] : LSL.pistolWeps[pistolChoice];
             WeaponHash weapon;
             if (!Enum.TryParse<WeaponHash>(weaponName, true, out weapon))
             {
@@ -67,7 +69,7 @@ internal static class CustomWeaponDealerMenu
         int armourBefore = Game.Player.Character.Armor;
         int ammoBefore = Game.Player.Character.Weapons.Current.Ammo;
         // La logique historique conserve le prix, le credit et la sauvegarde.
-        LsMenus.OnWepMenuSelect(LSL.wepMenu, item, menu.SelectedIndex);
+        WeaponDealerActions.Execute(item, meleeChoice, pistolChoice);
         bool paid = Game.Player.Money < moneyBefore;
         bool credit = LSL.dealer1Debt > debtBefore;
         if (paid || credit)
@@ -75,7 +77,7 @@ internal static class CustomWeaponDealerMenu
             LsFunctions.PlayTheSound();
             GTA.UI.ShowSubtitle(credit ? "Achat effectue a credit." : "Achat effectue.", 2500);
         }
-        else if (item == LSL.armour && Game.Player.Character.Armor != armourBefore)
+        else if (item == WeaponDealerAction.Armour && Game.Player.Character.Armor != armourBefore)
         {
             GTA.UI.ShowSubtitle("Gilet pare-balles obtenu.", 2500);
         }
@@ -94,16 +96,16 @@ internal static class CustomWeaponDealerMenu
         if (LSL.weaponDealer1 == null) { Close(); return; }
         // Le gestionnaire historique ferme wepMenu : il doit aussi fermer
         // cette interface lors du renvoi du marchand.
-        LsMenus.OnWepMenuSelect(LSL.wepMenu, LSL.dismiss, 3);
+        WeaponDealerActions.Execute(WeaponDealerAction.Dismiss, meleeChoice, pistolChoice);
         Close();
     }
 
     private static void ChangeChoice(int direction)
     {
         if (menu.SelectedIndex == 0 && LSL.melee != null && LSL.meleeWeps.Count > 0)
-            LSL.melee.Index = (LSL.melee.Index + direction + LSL.meleeWeps.Count) % LSL.meleeWeps.Count;
+            meleeChoice = (meleeChoice + direction + LSL.meleeWeps.Count) % LSL.meleeWeps.Count;
         else if (menu.SelectedIndex == 1 && LSL.pistol != null && LSL.pistolWeps.Count > 0)
-            LSL.pistol.Index = (LSL.pistol.Index + direction + LSL.pistolWeps.Count) % LSL.pistolWeps.Count;
+            pistolChoice = (pistolChoice + direction + LSL.pistolWeps.Count) % LSL.pistolWeps.Count;
     }
 
     private static bool Pressed(int control) =>
@@ -164,11 +166,11 @@ internal static class CustomWeaponDealerMenu
         layout.Header("ARMES", "MARCHAND", titleScale: 0.54f);
         layout.Separator(0.004f);
         layout.Row("Arme blanche", menu.SelectedIndex == 0,
-            LsFunctions.IntToMoney(Price(LSL.melee.Index, true)) + " $");
-        layout.Row("< " + Choice(LSL.melee.Index, true) + " >", false, height: 0.030f);
+            LsFunctions.IntToMoney(Price(meleeChoice, true)) + " $");
+        layout.Row("< " + Choice(meleeChoice, true) + " >", false, height: 0.030f);
         layout.Row("Pistolet", menu.SelectedIndex == 1,
-            LsFunctions.IntToMoney(Price(LSL.pistol.Index, false)) + " $");
-        layout.Row("< " + Choice(LSL.pistol.Index, false) + " >", false, height: 0.030f);
+            LsFunctions.IntToMoney(Price(pistolChoice, false)) + " $");
+        layout.Row("< " + Choice(pistolChoice, false) + " >", false, height: 0.030f);
         layout.Row("Gilet pare-balles", menu.SelectedIndex == 2,
             LsFunctions.IntToMoney(250 - LsFunctions.Discount(250)) + " $");
         layout.Separator(0.005f);
