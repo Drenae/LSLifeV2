@@ -11,6 +11,7 @@ internal static class CustomHireDealerMenu
     private static CustomMenu menu;
     private static bool waitForRelease;
     private static int lastFrame = -1;
+    private static int proposedAmount;
     private static readonly CustomMenuShared.HorizontalRepeat repeat = new CustomMenuShared.HorizontalRepeat();
 
     public static bool Visible => menu != null && menu.Visible;
@@ -28,7 +29,7 @@ internal static class CustomHireDealerMenu
             menu.Add("Annuler", Cancel);
         }
 
-        LSL.hireDealerOfferAmount.Maximum = Math.Max(0, Game.Player.Money);
+        proposedAmount = Math.Max(0, Math.Min(proposedAmount, Game.Player.Money));
         menu.Open();
         waitForRelease = true;
         repeat.Reset();
@@ -49,7 +50,7 @@ internal static class CustomHireDealerMenu
     private static void Offer()
     {
         if (LSL.aDealer == null) { Close(); return; }
-        int offer = LSL.hireDealerOfferAmount.Value;
+        int offer = proposedAmount;
         if (offer <= 0 || offer > Game.Player.Money)
         {
             UI.ShowSubtitle("Choisis un montant que tu peux payer.", 3000);
@@ -76,10 +77,9 @@ internal static class CustomHireDealerMenu
     private static void Adjust(int direction)
     {
         int max = Math.Max(0, Game.Player.Money);
-        int current = LSL.hireDealerOfferAmount.Value;
+        int current = proposedAmount;
         int next = Math.Max(0, Math.Min(max, current + direction * 1000));
-        LSL.hireDealerOfferAmount.Value = next;
-        LsMenus.HireDealerOfferAmount_OnSliderChanged(LSL.hireDealerOfferAmount, next);
+        proposedAmount = next;
     }
 
     public static void TickOncePerFrame()
@@ -126,7 +126,7 @@ internal static class CustomHireDealerMenu
     private static void Draw()
     {
         if (LSL.aDealer == null) return;
-        int offer = LSL.hireDealerOfferAmount.Value;
+        int offer = proposedAmount;
         int money = Game.Player.Money;
         int employed = LSL.DealerHandler.dealers.Count;
         int capacity = (int)LsFunctions.CurrentRepLvl(LSL.dealer1Rep);
