@@ -20,8 +20,8 @@ internal static class VehicleWeaponTransfer
             if (index >= LSL.playerWeapons.Count || index >= LSL.playerWeps.Count ||
                 index >= LSL.putWeaponVeh.Items.Count) return false;
             XElement weaponXml = LSL.playerWeapons[index];
-            if (weaponXml == null ||
-                !Enum.TryParse(LSL.playerWeps[index], out WeaponHash weapon) ||
+            if (weaponXml == null) return false;
+            if (!Enum.TryParse(LSL.playerWeps[index], out WeaponHash weapon) ||
                 (int)weapon == -1569615261) return false;
             LSL.vehWeaponsXML = XDocument.Load(FilePath);
             int id = 0;
