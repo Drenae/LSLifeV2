@@ -44,7 +44,7 @@ internal static class CustomCustomerMenu
             return;
         }
         Close();
-        LsMenus.HandleCustomerTransaction(sale);
+        CustomerTransactionActions.HandleCustomerTransaction(sale);
     }
 
     public static void Close()
