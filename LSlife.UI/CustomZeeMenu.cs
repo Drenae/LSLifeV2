@@ -188,8 +188,6 @@ internal static class CustomZeeMenu
             drug == 1 ? ZeeDrugOrderActions.AddCrack(crackAmount) :
             ZeeDrugOrderActions.AddCocaine(cocaineAmount);
         if (!added) return;
-        // Garder les anciens widgets coherents pour les chemins historiques.
-        LsMenus.RefreshLegacyOrderMenu();
     }
 
     private static void PlaceExistingOrder()
