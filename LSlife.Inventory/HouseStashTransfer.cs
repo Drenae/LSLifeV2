@@ -66,7 +66,6 @@ internal static class HouseStashTransfer
             default: return;
         }
         LsFunctions.UpdateInventory();
-        LSL.HouseHandler.UpdateMenu(house);
         LSL.HouseHandler.SaveHouse(house);
     }
 
