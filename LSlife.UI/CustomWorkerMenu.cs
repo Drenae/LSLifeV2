@@ -17,7 +17,7 @@ internal static class CustomWorkerMenu
 
     public static void Open()
     {
-        if (Visible || LSL.LsMenuPool.IsAnyMenuOpen()) return;
+        if (Visible || CustomMenuShared.IsAnyGameplayMenuOpen()) return;
         if (LSL.DealerHandler.currentDealer == null) return;
         if (workerMenu == null)
         {
