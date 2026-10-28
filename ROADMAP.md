@@ -1,3 +1,10 @@
+## Migration des notifications Zee — 28 octobre 2026
+
+- [x] Notification de réassort extraite de `OrderDrugs_OnMenuOpen` vers `LSL.NotifyZeeRestock()` sans dépendance aux types de menu.
+- [x] Le menu de commande personnalisé Zee affiche maintenant cette notification à l'ouverture, comme l'ancien menu.
+- [x] Retrait de l'import `NativeUI` inutilisé dans `LsMenus.cs`.
+- [ ] Compiler et vérifier la notification de réassort Zee, ainsi que les commandes normales ; NativeUI reste indispensable aux autres anciens gestionnaires.
+
 ## Migration NativeUI — correctif du cycle de vie employé (28 octobre 2026)
 
 - [x] `CustomWorkerMenu.TickOncePerFrame()` appelé depuis `LSL.OnTick` au même titre que les six autres menus personnalisés, indépendamment de `LsMenuPool`.
