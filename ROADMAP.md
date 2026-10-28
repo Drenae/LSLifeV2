@@ -1,3 +1,12 @@
+## Jalon NativeUI — retrait de la DLL (28 octobre 2026)
+
+- [x] `LegacyMenuCompatibility.cs` : tous les champs NativeUI supprimes ; seuls les catalogues d'armes, tarifs, multiplicateurs et `deliveriesEnabled` sont conserves comme donnees de gameplay.
+- [x] `LSlife.csproj` : reference `<Reference Include="NativeUI">` supprimee.
+- [x] `LSlife.UI/HeatBars/BarHandler.cs` : gestionnaire `TimerBarPool` NativeUI inutilise supprime.
+- [x] `PlayerMenus.cs`, `StashMenus.cs`, `VehicleMenus.cs` : callbacks historiques retires au lot precedent.
+- [ ] **Compilation a confirmer** apres retrait de la DLL ; corriger les references residuelles sans reintroduire NativeUI.
+- [ ] Une fois compilation confirmee, verifier le comportement des menus, transferts, commandes et telephone natif avant SHVDN3.
+
 ## Migration NativeUI — nettoyage des anciens callbacks de stockage (28 octobre 2026)
 
 - [x] `PlayerMenus.cs` : ancien gestionnaire de retrait planque supprimé ; `HouseStashTransfer` et `CustomStashMenu` assurent le parcours actif.
