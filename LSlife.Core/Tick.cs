@@ -291,8 +291,6 @@ public partial class LSL
 		// ne lisent ou ne neutralisent les controles GTA de cette frame.
 		if (iFruit != null) iFruit.Update();
 		// Les menus CustomMenu ne dependent plus de l'existence du pool historique.
-		if (LsMenuPool != null)
-			LsMenuPool.ProcessMenus();
 		CustomZeeMenu.Tick();
 		CustomStashMenu.TickOncePerFrame();
 		CustomCustomerMenu.TickOncePerFrame();
