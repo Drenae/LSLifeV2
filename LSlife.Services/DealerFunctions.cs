@@ -34,34 +34,10 @@ internal static partial class LsFunctions
 
 	public static string OrderMenuDesc()
 	{
-		// Une seule ligne : NativeUI gère lui-même le retour automatique.
+		// Résumé de facture utilisé par les commandes Zee.
 		return "Facture : " + IntToMoney(LSL.NewOrder.Bill) + " $";
 	}
 
-	public static void UpdateOrderMenuDesc()
-	{
-		// Ne plus utiliser de description multiligne : NativeUI coupe
-		// automatiquement les textes, même lorsqu'ils contiennent des '\\n'.
-		LSL.PlaceOrder.Description = OrderMenuDesc();
-		LSL.bushWeed.Description = "Cannabis commandé : " + LSL.NewOrder.weed + " oz";
-		LSL.crack.Description = "Crack commandé : " + LSL.NewOrder.crack + " oz";
-		LSL.cocaine.Description = "Cocaïne commandée : " + LSL.NewOrder.cocaine + " oz";
-		LSL.WeedBuy.Description = "Dette actuelle : " + IntToMoney(LSL.dealer1Debt) + " $";
-		LSL.CrackBuy.Description = "Dette actuelle : " + IntToMoney(LSL.dealer1Debt) + " $";
-		LSL.CocainBuy.Description = "Plafond de crédit : " + IntToMoney(zeeDebtCap()) + " $";
-		if (LSL.OrderSummaryMenu != null)
-		{
-			LSL.OrderSummaryWeed.Text = "Cannabis : " + LSL.NewOrder.weed + " oz";
-			LSL.OrderSummaryCrack.Text = "Crack : " + LSL.NewOrder.crack + " oz";
-			LSL.OrderSummaryCocaine.Text = "Cocaïne : " + LSL.NewOrder.cocaine + " oz";
-			LSL.OrderSummaryBill.Text = "Facture : " + IntToMoney(LSL.NewOrder.Bill) + " $";
-			LSL.OrderSummaryDebt.Text = "Dette : " + IntToMoney(LSL.dealer1Debt) + " $";
-			LSL.OrderSummaryCredit.Text = "Plafond de crédit : " + IntToMoney(zeeDebtCap()) + " $";
-		}
-		// Rafraichissement reserve au menu historique pendant la migration.
-		if (LSL.LsMenuPool != null)
-			LSL.LsMenuPool.RefreshIndex();
-	}
 
 	public static int Discount(int price)
 	{
@@ -94,17 +70,6 @@ internal static partial class LsFunctions
 			LSL.iFruit.Close(1000);
 	}
 
-	private static void UpdateDealerInventory()
-	{
-		((UIText)LSL.zeeMenu.Subtitle).Caption = "Réputation : " + IntToMoney((int)LSL.dealer1Rep) + " Niveau :~g~" + (int)CurrentRepLvl(LSL.dealer1Rep);
-		LSL.payDebt.Text = "Rembourser la dette " + IntToMoney(LSL.dealer1Debt) + " $";
-		LSL.bushWeed.Maximum = LSL.dealer1Weed;
-		LSL.bushWeed.Value = 0;
-		LSL.crack.Maximum = LSL.dealer1Crack;
-		LSL.crack.Value = 0;
-		LSL.cocaine.Maximum = LSL.dealer1Cocain;
-		LSL.cocaine.Value = 0;
-	}
 
 	public static void ChangeAdealerToPdealer()
 	{
