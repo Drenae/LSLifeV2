@@ -219,7 +219,6 @@ public partial class LSL
 			playerWeps.Add(((object)weapon/*cast due to constrained. prefix*/).ToString());
 			i++;
 		}
-		InitializeLegacyMenus();
 		// iFruit est initialise apres le chargement de GTA dans Tick.
 		// Ne pas creer le telephone pendant le constructeur du script.
 		DealerHandler = new PlayerDealerHandler();
