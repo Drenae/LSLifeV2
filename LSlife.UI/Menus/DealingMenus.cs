@@ -58,7 +58,7 @@ internal static partial class LsMenus
 	internal static void RefreshLegacyOrderMenu()
 	{
 		LSL.PlaceOrder.Text = "Commander pour " + LsFunctions.IntToMoney(LSL.NewOrder.Bill) + " $";
-		LsFunctions.UpdateOrderMenuDesc();
+		LSL.PlaceOrder.Description = LsFunctions.OrderMenuDesc();
 	}
 
 	public static void OnOrderDrugsMenuSelect(UIMenu sender, UIMenuItem item, int index)
