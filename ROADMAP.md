@@ -1,3 +1,10 @@
+## Migration NativeUI — correctif du cycle de vie employé (28 octobre 2026)
+
+- [x] `CustomWorkerMenu.TickOncePerFrame()` appelé depuis `LSL.OnTick` au même titre que les six autres menus personnalisés, indépendamment de `LsMenuPool`.
+- [x] Maintien du traitement iFruit avant les menus et du pool historique pendant la transition.
+- [ ] Vérifier en jeu la navigation, les transferts, l'équipement et le retour arrière des sous-menus employés ; compilation non exécutée ici.
+- [ ] Supprimer NativeUI uniquement après migration de tous les anciens consommateurs et validation de la compilation.
+
 ## Découplage des actions métier — 28 octobre 2026
 
 - [x] Le menu Zee conserve ses quatre options de vente/livraison en mémoire sans lire les cases à cocher NativeUI ; valeurs initiales inchangées (activées).
