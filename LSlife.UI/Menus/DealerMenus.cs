@@ -18,7 +18,11 @@ internal static partial class LsMenus
 	{
 		if (item == LSL.buyWeapons) { CallWeaponDealer(); if (sender != null) sender.Visible = false; }
 		else if (item == LSL.buyLift) { CallLift(); if (sender != null) sender.Visible = false; }
-		else if (item == LSL.payDebt) PayZeeDebt();
+		else if (item == LSL.payDebt)
+		{
+			PayZeeDebt();
+			LSL.payDebt.Text = "Rembourser la dette " + LsFunctions.IntToMoney(LSL.dealer1Debt) + " $";
+		}
 	}
 
 	// Actions metier accessibles sans creer ni ouvrir de menu NativeUI.
@@ -29,7 +33,6 @@ internal static partial class LsMenus
 	internal static void PayZeeDebt()
 	{
 		ZeeContactActions.PayZeeDebt();
-		LSL.payDebt.Text = "Rembourser la dette " + LsFunctions.IntToMoney(LSL.dealer1Debt) + " $";
 	}
 
 	public static void OnWepMenuSelect(UIMenu sender, UIMenuItem item, int index)
