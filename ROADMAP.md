@@ -1,3 +1,13 @@
+## Migration des interactions monde — 28 octobre 2026
+
+- [x] `PlayerDealer.cs` ne dépend plus des objets `WorkerMainMenu`/`LsMenuPool` : ouverture, fermeture et visibilité passent par `CustomWorkerMenu` et `CustomMenuShared`.
+- [x] Suppression du second appel `CustomWorkerMenu.TickOncePerFrame()` depuis chaque employé : le menu est déjà traité une fois par frame dans `LSL.OnTick`.
+- [x] Ajout de `CustomWorkerMenu.Close()` pour les transitions de proximité et d'état de l'employé.
+- [x] `StashHouse.cs` : visibilité et fermeture de la planque via `CustomStashMenu`, sans widgets historiques.
+- [x] `DrugDealer.cs` et `AreaDealer.cs` : vérifications d'interaction basées sur `CustomMenuShared.IsAnyGameplayMenuOpen()`.
+- [ ] Il reste notamment `StashHouseHandler.cs`, `StashVehicle.cs`, `DealerFunctions.cs`, `LegacyMenuCompatibility.cs`, les callbacks `Menus/*.cs`, `MenuEvents.cs` et la référence NativeUI dans `LSlife.csproj`.
+- [ ] Aucun test demandé à l'utilisateur avant retrait effectif de NativeUI et validation de compilation.
+
 ## Migration coffre / gilets — 28 octobre 2026
 
 - [x] Nouvelle logique `VehicleArmourTransfer.Transfer(bool deposit, int requested)` sans NativeUI : validation des quantités, capacité des gilets, équipement automatique, stockage et sauvegarde XML.
