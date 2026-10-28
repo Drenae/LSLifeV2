@@ -16,8 +16,6 @@ using LSlife.Gangs;
 using LSlife.HeatBars;
 using LSlife.OldCustomers;
 using LSlife.Shots;
-using NativeUI;
-
 
 namespace LSlife;
 
@@ -117,7 +115,7 @@ public partial class LSL
 			ZeesDealers = new DrugDealer(NewOrder);
 			if (ZeesDealers != null)
 			{
-				PlaceOrder.Text = "Cancel Order";
+
 			}
 		}
 		else
@@ -129,7 +127,7 @@ public partial class LSL
 				NewOrder.PutBackDrugs();
 				NewOrder.ResetOrder();
 			}
-			LsMenuPool.CloseAllMenus();
+			CustomZeeMenu.Close();
 		}
 	}
 }
