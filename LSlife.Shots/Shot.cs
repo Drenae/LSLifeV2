@@ -39,7 +39,7 @@ public class Shot
 		//IL_011d: Unknown result type (might be due to invalid IL or missing references)
 		//IL_038d: Unknown result type (might be due to invalid IL or missing references)
 		//IL_0318: Unknown result type (might be due to invalid IL or missing references)
-		if (!LSL.LsMenuPool.IsAnyMenuOpen())
+		if (!CustomMenuShared.IsAnyGameplayMenuOpen())
 		{
 			if (!shotOffered && !accepted && !rejected && !ShotHandler.ShotOffers)
 			{
@@ -55,13 +55,13 @@ public class Shot
 			}
 			if (shotOffered && !accepted && !rejected)
 			{
-				if ((float)Game.GameTime > LSL.displayHelpTimer + 5000f && !LSL.LsMenuPool.IsAnyMenuOpen())
+				if ((float)Game.GameTime > LSL.displayHelpTimer + 5000f && !CustomMenuShared.IsAnyGameplayMenuOpen())
 				{
 					Function.Call((Hash)7023634693725934496L);
 					LSL.displayHelpTimer = Game.GameTime;
 					LsFunctions.DisplayHelpText("~INPUT_CONTEXT_SECONDARY~ pour refuser ou ~INPUT_CONTEXT~ pour accepter");
 				}
-				if (Game.IsControlJustPressed(2, (Control)52) && !LSL.LsMenuPool.IsAnyMenuOpen())
+				if (Game.IsControlJustPressed(2, (Control)52) && !CustomMenuShared.IsAnyGameplayMenuOpen())
 				{
 					Function.Call((Hash)7023634693725934496L);
 					rejected = true;
@@ -73,7 +73,7 @@ public class Shot
 						LsFunctions.RemovePedFromWorld(customer.Ped, clearTask: true);
 					}
 				}
-				if (Game.IsControlJustPressed(2, (Control)51) && !LSL.LsMenuPool.IsAnyMenuOpen())
+				if (Game.IsControlJustPressed(2, (Control)51) && !CustomMenuShared.IsAnyGameplayMenuOpen())
 				{
 					Function.Call((Hash)7023634693725934496L);
 					accepted = true;
@@ -114,7 +114,7 @@ public class Shot
 					Function.Call(unchecked((Hash)(-6974808092771143243L)), (((Entity)customer.Ped).Handle), (LSL.playerGroup));
 					((Entity)customer.Ped).CurrentBlip.ShowRoute = false;
 				}
-				if (!LSL.LsMenuPool.IsAnyMenuOpen() && dist <= 2f)
+				if (!CustomMenuShared.IsAnyGameplayMenuOpen() && dist <= 2f)
 				{
 					if (LSL.player.Character.IsInVehicle() && customer.Ped.IsInVehicle() && LSL.player.Character.CurrentVehicle.Speed < 1f)
 					{
@@ -124,14 +124,14 @@ public class Shot
 							LSL.displayHelpTimer = Game.GameTime;
 							LsFunctions.DisplayHelpText("~INPUT_SPRINT~ pour vendre à cette personne.");
 						}
-						if (Game.IsControlJustPressed(2, (Control)21) && !LSL.LsMenuPool.IsAnyMenuOpen())
+						if (Game.IsControlJustPressed(2, (Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen())
 						{
 							Function.Call((Hash)7023634693725934496L);
 							LSL.customerSellTo = customer;
-							LSL.sell.Text = "Vendre " + LsFunctions.GramsToOz(customer.amount) + " de " + LsFunctions.DrugDisplayName(customer.Drug.Name) + "?";
-							((UIText)LSL.customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.GramsToOz(LSL.PlayerInventory[customer.Drug.Name]) + " de " + LsFunctions.DrugDisplayName(customer.Drug.Name);
-							LSL.customerMainMenu.Visible = !LSL.customerMainMenu.Visible;
-							LSL.customerMainMenu.CurrentSelection = 0;
+							
+							
+							CustomCustomerMenu.Open();
+							
 						}
 					}
 					if (!LSL.player.Character.IsInVehicle() && LSL.player.Character.IsStopped && !LSL.player.Character.IsInCombat)
@@ -142,14 +142,14 @@ public class Shot
 							LSL.displayHelpTimer = Game.GameTime;
 							LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour vendre à cette personne.");
 						}
-						if (Game.IsControlJustPressed(2, (Control)21) && !LSL.LsMenuPool.IsAnyMenuOpen())
+						if (Game.IsControlJustPressed(2, (Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen())
 						{
 							Function.Call((Hash)7023634693725934496L);
 							LSL.customerSellTo = customer;
-							LSL.sell.Text = "Vendre " + LsFunctions.GramsToOz(customer.amount) + " de " + LsFunctions.DrugDisplayName(customer.Drug.Name) + "?";
-							((UIText)LSL.customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.GramsToOz(LSL.PlayerInventory[customer.Drug.Name]) + " de " + LsFunctions.DrugDisplayName(customer.Drug.Name);
-							LSL.customerMainMenu.Visible = !LSL.customerMainMenu.Visible;
-							LSL.customerMainMenu.CurrentSelection = 0;
+							
+							
+							CustomCustomerMenu.Open();
+							
 						}
 					}
 				}
