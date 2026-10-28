@@ -39,13 +39,18 @@ public partial class LSL
 		}
 	}
 
+    // Notification de réassort partagée avec le menu Zee personnalisé.
+    internal static void NotifyZeeRestock()
+    {
+        if (!dealer1ReloadOrder) return;
+        Enum.TryParse<Enums.DayGTA>(dealer1ReloadDay.ToString(), out var day);
+        LsFunctions.TextMsg("ZEE", "Réassort",
+            "La commande devrait arriver " + day + " à " + dealer1ReloadHour + ":00");
+    }
+
 	private void OrderDrugs_OnMenuOpen(UIMenu sender)
 	{
-		if (dealer1ReloadOrder)
-		{
-			Enum.TryParse<Enums.DayGTA>(dealer1ReloadDay.ToString(), out var mDay);
-			LsFunctions.TextMsg("ZEE", "Réassort", "La commande devrait arriver " + mDay.ToString() + " à " + dealer1ReloadHour + ":00");
-		}
+		NotifyZeeRestock();
 		if (!NewOrder.Placed)
 		{
 			PlaceOrder.Text = "Commander pour " + LsFunctions.IntToMoney(NewOrder.Bill) + " $";
