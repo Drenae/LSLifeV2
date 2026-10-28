@@ -8,12 +8,9 @@ namespace LSlife;
 internal static class CustomMenuShared
 {
     // Point d'entree unique pour les interactions du monde et le HUD.
-    // Compatibilite temporaire : les menus personnalises restent autonomes,
-    // mais les anciens menus doivent encore bloquer les interactions simultanees.
     internal static bool IsAnyGameplayMenuOpen()
     {
-        return (LSL.LsMenuPool != null && LSL.LsMenuPool.IsAnyMenuOpen())
-            || CustomZeeMenu.Visible
+        return CustomZeeMenu.Visible
             || CustomStashMenu.Visible
             || CustomCustomerMenu.Visible
             || CustomWeaponDealerMenu.Visible
