@@ -101,9 +101,9 @@ public partial class LSL
 						}
 					}
 				}
-				bushWeed.Maximum = dealer1Weed;
-				crack.Maximum = dealer1Crack;
-				cocaine.Maximum = dealer1Cocain;
+				
+				
+				
 			}
 			else
 			{
