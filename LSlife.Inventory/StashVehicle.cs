@@ -329,25 +329,6 @@ public class StashVehicle
 				if (Game.IsControlJustPressed(2, (Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 				{
 					drugCar.OpenDoor((VehicleDoor)5, false, false);
-					if (LSL.PlayerInventory.Count > 0)
-					{
-						LSL.putWeedVeh.Maximum = LSL.PlayerInventory["Weed"];
-						LSL.putCrackVeh.Maximum = LSL.PlayerInventory["Crack"];
-						LSL.putCocainVeh.Maximum = LSL.PlayerInventory["Cocaine"];
-					}
-					LSL.putMoneyVeh.Maximum = LSL.player.Money;
-					LSL.takeWeaponVeh.Items = vehWeps;
-					LSL.takeMoneyVeh.Maximum = drugCarMoney;
-					LSL.putArmourVeh.Items = new List<object>();
-					for (int t = 0; t < LSL.playerArmours + 1; t++)
-					{
-						LSL.putArmourVeh.Items.Add(t);
-					}
-					LSL.takeArmourVeh.Items = new List<object>();
-					for (int i = 0; i < drugCarArmour + 1; i++)
-					{
-						LSL.takeArmourVeh.Items.Add(i);
-					}
 					UpdateCarStash();
 					CustomStashMenu.OpenVehicle();
 				}
@@ -376,25 +357,6 @@ public class StashVehicle
 			{
 				drugCar.OpenDoor((VehicleDoor)2, true, false);
 				drugCar.OpenDoor((VehicleDoor)3, true, false);
-				if (LSL.PlayerInventory.Count > 0)
-				{
-					LSL.putWeedVeh.Maximum = LSL.PlayerInventory["Weed"];
-					LSL.putCrackVeh.Maximum = LSL.PlayerInventory["Crack"];
-					LSL.putCocainVeh.Maximum = LSL.PlayerInventory["Cocaine"];
-				}
-				LSL.putMoneyVeh.Maximum = LSL.player.Money;
-				LSL.takeWeaponVeh.Items = vehWeps;
-				LSL.takeMoneyVeh.Maximum = drugCarMoney;
-				LSL.putArmourVeh.Items = new List<object>();
-				for (int j = 0; j < LSL.playerArmours + 1; j++)
-				{
-					LSL.putArmourVeh.Items.Add(j);
-				}
-				LSL.takeArmourVeh.Items = new List<object>();
-				for (int k = 0; k < drugCarArmour + 1; k++)
-				{
-					LSL.takeArmourVeh.Items.Add(k);
-				}
 				UpdateCarStash();
 				CustomStashMenu.OpenVehicle();
 			}
@@ -1130,69 +1092,6 @@ public class StashVehicle
 
 	public void UpdateCarStash()
 	{
-		//IL_03c0: Unknown result type (might be due to invalid IL or missing references)
-		//IL_03c5: Unknown result type (might be due to invalid IL or missing references)
-		//IL_03df: Unknown result type (might be due to invalid IL or missing references)
-		//IL_03e6: Expected I4, but got Unknown
-		//IL_0403: Unknown result type (might be due to invalid IL or missing references)
-		//IL_040a: Expected I4, but got Unknown
-		//IL_0448: Unknown result type (might be due to invalid IL or missing references)
-		//IL_049f: Unknown result type (might be due to invalid IL or missing references)
-		//IL_04a4: Unknown result type (might be due to invalid IL or missing references)
-		//IL_04be: Unknown result type (might be due to invalid IL or missing references)
-		//IL_04c5: Expected I4, but got Unknown
-		//IL_04c5: Unknown result type (might be due to invalid IL or missing references)
-		//IL_04cc: Expected I4, but got Unknown
-		//IL_04dd: Unknown result type (might be due to invalid IL or missing references)
-		LSL.vehStashPutMenu.FormatDescriptions = true;
-		LSL.vehStashTakeMenu.FormatDescriptions = true;
-		LSL.takeWeedVeh.Maximum = drugCarWeed;
-		LSL.takeCrackVeh.Maximum = drugCarCrack;
-		LSL.takeCocainVeh.Maximum = drugCarCocain;
-		string sDescription = "Grams of Weed. Ready to be sold on the streets or given to a worker.";
-		LSL.putWeedVeh.Description = sDescription;
-		LSL.takeWeedVeh.Description = sDescription;
-		sDescription = "Grams of Crack. Ready to be sold on the streets or given to a worker.";
-		LSL.putCrackVeh.Description = sDescription;
-		LSL.takeCrackVeh.Description = sDescription;
-		sDescription = "Grams of Cocaine. Ready to be sold on the streets or given to a worker.";
-		LSL.putCocainVeh.Description = sDescription;
-		LSL.takeCocainVeh.Description = sDescription;
-		LSL.putWeedVeh.Text = "Cannabis " + LsFunctions.GramsToOz(LSL.PlayerInventory["Weed"]);
-		LSL.takeWeedVeh.Text = "Cannabis " + LsFunctions.GramsToOz(drugCarWeed);
-		LSL.putCrackVeh.Text = "Crack " + LsFunctions.GramsToOz(LSL.PlayerInventory["Crack"]);
-		LSL.takeCrackVeh.Text = "Crack " + LsFunctions.GramsToOz(drugCarCrack);
-		LSL.putCocainVeh.Text = "Cocaïne " + LsFunctions.GramsToOz(LSL.PlayerInventory["Cocaine"]);
-		LSL.takeCocainVeh.Text = "Cocaïne " + LsFunctions.GramsToOz(drugCarCocain);
-		LSL.takeWeedOzVeh.Maximum = drugCarWeedOz;
-		LSL.takeCrackOzVeh.Maximum = drugCarCrackOz;
-		LSL.takeCocainOzVeh.Maximum = drugCarCocainOz;
-		LSL.putWeedOzVeh.Maximum = LsFunctions.pWeedOunce;
-		LSL.putCrackOzVeh.Maximum = LsFunctions.pCrackOunce;
-		LSL.putCocainOzVeh.Maximum = LsFunctions.pCocaineOunce;
-		sDescription = "Oz packs of Weed. Must be deposited at a Stash house before it can be sold.";
-		LSL.putWeedOzVeh.Description = sDescription;
-		LSL.takeWeedOzVeh.Description = sDescription;
-		sDescription = "Oz packs of Crack. Must be deposited at a Stash house before it can be sold.";
-		LSL.putCrackOzVeh.Description = sDescription;
-		LSL.takeCrackOzVeh.Description = sDescription;
-		sDescription = "Oz packs of Cocaine. Must be deposited at a Stash house before it can be sold.";
-		LSL.putCocainOzVeh.Description = sDescription;
-		LSL.takeCocainOzVeh.Description = sDescription;
-		LSL.putWeedOzVeh.Text = "Cannabis ~r~" + LsFunctions.pWeedOunce + "~s~oz";
-		LSL.takeWeedOzVeh.Text = "Cannabis ~r~" + drugCarWeedOz + "~s~oz";
-		LSL.putCrackOzVeh.Text = "Crack ~r~" + LsFunctions.pCrackOunce + "~s~oz";
-		LSL.takeCrackOzVeh.Text = "Crack ~r~" + drugCarCrackOz + "~s~oz";
-		LSL.putCocainOzVeh.Text = "Cocaïne ~r~" + LsFunctions.pCocaineOunce + "~s~oz";
-		LSL.takeCocainOzVeh.Text = "Cocaïne ~r~" + drugCarCocainOz + "~s~oz";
-		LSL.putMoneyVeh.Text = "Argent " + LsFunctions.IntToMoney(LSL.player.Money) + " $";
-		LSL.takeMoneyVeh.Text = "Argent " + LsFunctions.IntToMoney(drugCarMoney) + " $";
-		LSL.takeMoneyStash.Maximum = drugCarMoney;
-		if (LSL.DEBUG)
-		{
-			LsFunctions.DbugString("dmon:" + drugCarMoney + " max:" + LSL.takeMoneyVeh.Maximum);
-		}
-		LSL.takeMoneyVeh.Multiplier = 1;
 		LSL.playerWeapons.Clear();
 		LSL.playerWeps.Clear();
 		int i = 0;
