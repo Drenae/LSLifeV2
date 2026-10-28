@@ -1,3 +1,12 @@
+## Correctif HUD réputation / migration — 28 octobre 2026
+
+- [x] Diagnostic : l'ancienne jauge « Quartier » affichait `Area.Heat`, et non `Area.Reputation`.
+- [x] Ajout d'une troisième jauge « Réputation » en bas à droite, indépendante des jauges de pression joueur et quartier.
+- [x] Progression de réputation calculée jusqu'au niveau suivant selon `LsFunctions.CurrentRepLvl` ; 88,2 points donnent environ 14 % de la première tranche (625 points).
+- [x] Protection des calculs de pression et de réputation contre les indices de quartier invalides.
+- [ ] Compiler et vérifier l'affichage des trois jauges en jeu ; confirmer que la réputation du quartier courant évolue après une vente.
+- [ ] NativeUI : `BarHandler`, `LegacyMenuCompatibility`, les callbacks historiques et la référence csproj restent à retirer après découplage complet.
+
 ## Migration téléphone et coffre — 28 octobre 2026
 
 - [x] Le contact Zee d'iFruit ouvre directement `CustomZeeMenu` sans dépendre de l'existence de `LsMenuPool`, des anciens boutons de vente ni de l'ancien écran Zee.
