@@ -1,3 +1,11 @@
+## Migration coffre / gilets — 28 octobre 2026
+
+- [x] Nouvelle logique `VehicleArmourTransfer.Transfer(bool deposit, int requested)` sans NativeUI : validation des quantités, capacité des gilets, équipement automatique, stockage et sauvegarde XML.
+- [x] `MenuEvents.cs` : remplacement des deux longues routines de transfert par des appels au service ; seules les listes de l'ancien menu restent dans les callbacks.
+- [x] Correction d'un défaut de retrait : un gilet équipé sur le personnage est désormais également décompté du coffre.
+- [ ] Vérifier les transferts de gilets depuis le coffre, les limites 5/6, l'équipement automatique et le rechargement de la sauvegarde ; compilation non exécutée ici.
+- [ ] NativeUI toujours requis : autres callbacks et initialisation historique non encore supprimés.
+
 ## Audit de suppression NativeUI — 28 octobre 2026
 
 - [x] Contact iFruit Zee déjà indépendant du pool ; fermeture du téléphone protégée contre une instance absente.
