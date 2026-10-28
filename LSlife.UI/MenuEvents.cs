@@ -54,7 +54,7 @@ public partial class LSL
 		if (!NewOrder.Placed)
 		{
 			PlaceOrder.Text = "Commander pour " + LsFunctions.IntToMoney(NewOrder.Bill) + " $";
-			LsFunctions.UpdateOrderMenuDesc();
+			PlaceOrder.Description = LsFunctions.OrderMenuDesc();
 		}
 	}
 
