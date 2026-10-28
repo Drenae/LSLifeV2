@@ -1,3 +1,13 @@
+## Migration NativeUI — nettoyage des anciens callbacks de stockage (28 octobre 2026)
+
+- [x] `PlayerMenus.cs` : ancien gestionnaire de retrait planque supprimé ; `HouseStashTransfer` et `CustomStashMenu` assurent le parcours actif.
+- [x] `StashMenus.cs` : anciens sliders, listes et gestionnaire de dépôt NativeUI supprimés.
+- [x] `VehicleMenus.cs` : anciens gestionnaires de dépôt/retrait coffre NativeUI supprimés ; transferts `VehicleStashTransfer` et `VehicleWeaponTransfer` conservés.
+- [x] `CustomWeaponDealerMenu.cs` : correction du sélecteur d'armes qui dépendait encore de `LSL.melee` et `LSL.pistol` jamais initialisés.
+- [ ] Supprimer `LegacyMenuCompatibility.cs` après extraction des listes métier et audit complet des références.
+- [ ] Retirer `BarHandler.cs` et la référence NativeUI du `.csproj` après vérification des consommateurs.
+- [ ] Compilation de ce lot non vérifiée.
+
 ## Suppression NativeUI — lot majeur (28 octobre 2026)
 
 - [x] `Setup.cs` : appel à `InitializeLegacyMenus()` déjà retiré.
