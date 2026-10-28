@@ -1,3 +1,8 @@
+## Fin du lot employé — 28 octobre 2026
+
+- [x] `UI/Menus/WorkerMenus.cs` : suppression des deux derniers appels historiques à `PlayerDealer.SetDrugDesc()` ; les transactions et la persistance restent inchangées.
+- [ ] La compilation de ce lot n'a pas été exécutée localement.
+
 ## Lot NativeUI — accès au menu employé (28 octobre 2026)
 
 - [x] `PlayerDealer.cs` ouvre directement `CustomWorkerMenu` sans initialiser les widgets NativeUI `wOrder`, `wArmour`, `wWeed`, `wCrack`, `wCocaine`, `wCollect`.
