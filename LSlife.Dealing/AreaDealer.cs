@@ -371,7 +371,7 @@ public class AreaDealer
 
 	public void PromtPlayerToTalk()
 	{
-		if (LSL.LsMenuPool.IsAnyMenuOpen() || CustomHireDealerMenu.Visible)
+		if (CustomMenuShared.IsAnyGameplayMenuOpen())
 		{
 			return;
 		}
