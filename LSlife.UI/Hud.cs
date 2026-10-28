@@ -252,11 +252,15 @@ internal static class Hud
 
 	private static void DrawHeatBars()
 	{
-		HudRender.Rect(barsX, barsY, BarsWidth, BarsRowHeight * 2, 11, 13, 16, 190);
-		HudRender.Rect(barsX, barsY, 3, BarsRowHeight * 2, 187, 154, 82, 225);
+		// Trois mesures distinctes : pression joueur, pression quartier et reputation quartier.
+		const int rows = 3;
+		HudRender.Rect(barsX, barsY - BarsRowHeight, BarsWidth, BarsRowHeight * rows, 11, 13, 16, 190);
+		HudRender.Rect(barsX, barsY - BarsRowHeight, 3, BarsRowHeight * rows, 187, 154, 82, 225);
+		HudRender.Rect(barsX + 12, barsY, BarsWidth - 24, 1, 130, 103, 52, 155);
 		HudRender.Rect(barsX + 12, barsY + BarsRowHeight, BarsWidth - 24, 1, 130, 103, 52, 155);
-		DrawBarRow("Joueur", PlayerHeatBar.GetPercentage(), barsY);
-		DrawBarRow("Quartier", AreaHeatBar.GetPercentage(), barsY + BarsRowHeight);
+		DrawBarRow("Joueur", PlayerHeatBar.GetPercentage(), barsY - BarsRowHeight);
+		DrawBarRow("Quartier", AreaHeatBar.GetPercentage(), barsY);
+		DrawBarRow("Réputation", AreaHeatBar.GetReputationPercentage(), barsY + BarsRowHeight);
 	}
 
 	private static void DrawBarRow(string label, float percentage, int y)
