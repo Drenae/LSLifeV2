@@ -102,9 +102,9 @@ internal static class CustomWeaponDealerMenu
 
     private static void ChangeChoice(int direction)
     {
-        if (menu.SelectedIndex == 0 && LSL.melee != null && LSL.meleeWeps.Count > 0)
+        if (menu.SelectedIndex == 0 && LSL.meleeWeps.Count > 0)
             meleeChoice = (meleeChoice + direction + LSL.meleeWeps.Count) % LSL.meleeWeps.Count;
-        else if (menu.SelectedIndex == 1 && LSL.pistol != null && LSL.pistolWeps.Count > 0)
+        else if (menu.SelectedIndex == 1 && LSL.pistolWeps.Count > 0)
             pistolChoice = (pistolChoice + direction + LSL.pistolWeps.Count) % LSL.pistolWeps.Count;
     }
 
