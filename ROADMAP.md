@@ -1,3 +1,10 @@
+## Correctif compilation sans NativeUI — 28 octobre 2026
+
+- [x] Supprimer les huit directives `using NativeUI;` restantes dans `Types.cs`, `CustomerLogic.cs`, `DealerLogic.cs`, `InventoryLogic.cs`, `PlayerLogic.cs`, `AreaLogic.cs`, `PoliceLogic.cs`, `SpawnLogic.cs` (CS0246).
+- [x] `DealerLogic.cs` : retirer `PlaceOrder.Text` et remplacer `LsMenuPool.CloseAllMenus()` par `CustomZeeMenu.Close()`.
+- [ ] Relancer `Build-Baseline.ps1` pour confirmer la compilation sans NativeUI et traiter toute nouvelle erreur.
+- [ ] SHVDN3 seulement apres compilation et validation de l'absence de dependance NativeUI.
+
 ## Jalon NativeUI — retrait de la DLL (28 octobre 2026)
 
 - [x] `LegacyMenuCompatibility.cs` : tous les champs NativeUI supprimes ; seuls les catalogues d'armes, tarifs, multiplicateurs et `deliveriesEnabled` sont conserves comme donnees de gameplay.
