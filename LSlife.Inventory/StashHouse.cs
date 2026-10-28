@@ -295,7 +295,6 @@ public class StashHouse
 			{
 				Function.Call((Hash)7023634693725934496L);
 				LsFunctions.UpdateInventory();
-				LSL.HouseHandler.UpdateMenu(this);
 				LSL.HouseHandler.CurrentHouse = this;
 				CustomStashMenu.OpenHouse();
 			}
