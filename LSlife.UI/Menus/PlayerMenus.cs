@@ -141,7 +141,6 @@ internal static partial class LsMenus
 			}
 		}
 		LsFunctions.UpdateInventory();
-		LSL.HouseHandler.UpdateMenu(LSL.HouseHandler.CurrentHouse);
 		LSL.HouseHandler.SaveHouse(LSL.HouseHandler.CurrentHouse);
 	}
 }
