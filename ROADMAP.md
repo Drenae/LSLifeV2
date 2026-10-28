@@ -1,3 +1,8 @@
+## Correctif compilation CS0117 — 28 octobre 2026
+
+- [x] `DealingMenus.cs:61` : remplacement du dernier appel à `LsFunctions.UpdateOrderMenuDesc()` supprimée par l'affectation de la description via `LsFunctions.OrderMenuDesc()`.
+- [ ] Recompilation à confirmer ; NativeUI reste présent dans les menus historiques.
+
 ## Suppression des routines de commande NativeUI — 28 octobre 2026
 
 - [x] `DealerFunctions.cs` : suppression de `UpdateOrderMenuDesc()` (mise à jour des anciens champs `PlaceOrder`, `bushWeed`, `crack`, `cocaine`, `WeedBuy`, `OrderSummary*`, `LsMenuPool`).
