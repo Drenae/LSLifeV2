@@ -1,3 +1,11 @@
+## Validation en jeu NativeUI et lancement migration SHVDN3 — 28 octobre 2026
+
+- [x] Migration NativeUI vers CustomMenu acceptee apres demarrage du mod et premier essai en jeu sans anomalie constatee ; tests approfondis a poursuivre en jouant.
+- [x] Compilation sans NativeUI confirmee (0 erreur, 3369 avertissements SHVDN2).
+- [ ] Confirmer l'installation et la version de ScriptHookVDotNet3.dll dans GTA V Legacy.
+- [ ] Auditer la compatibilite de `iFruitAddon2.dll` avec SHVDN3 avant toute substitution de reference.
+- [ ] Migrer les API SHVDN2 vers SHVDN3 par lots, sans toucher a `main` et sans casser les menus Custom ou le telephone natif.
+
 ## Jalon confirme — build sans NativeUI (28 octobre 2026, 16:39)
 
 - [x] Compilation locale confirmee par `build-baseline(20261028-163955).log` : **0 erreur**, **3369 avertissements**.
