@@ -24,7 +24,7 @@ internal static class CustomStashMenu
 
     public static void OpenHouse()
     {
-        if (Visible || LSL.LsMenuPool.IsAnyMenuOpen() ||
+        if (Visible || CustomMenuShared.IsAnyGameplayMenuOpen() ||
             LSL.HouseHandler.CurrentHouse == null) return;
         vehicle = false;
         if (houseMenu == null)
@@ -40,7 +40,7 @@ internal static class CustomStashMenu
 
     public static void OpenVehicle()
     {
-        if (Visible || LSL.LsMenuPool.IsAnyMenuOpen() || LSL.pStashVehicle == null) return;
+        if (Visible || CustomMenuShared.IsAnyGameplayMenuOpen() || LSL.pStashVehicle == null) return;
         vehicle = true;
         if (vehicleMenu == null)
         {
