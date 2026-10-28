@@ -1,3 +1,11 @@
+## Migration téléphone et coffre — 28 octobre 2026
+
+- [x] Le contact Zee d'iFruit ouvre directement `CustomZeeMenu` sans dépendre de l'existence de `LsMenuPool`, des anciens boutons de vente ni de l'ancien écran Zee.
+- [x] Les huit vérifications d'ouverture du coffre dans `StashVehicle.cs` passent par `CustomMenuShared.IsAnyGameplayMenuOpen()` ; plus d'accès direct au pool historique dans ce fichier.
+- [x] Import NativeUI inutilisé supprimé dans `InputEvents.cs`.
+- [ ] Le code historique de rafraîchissement des menus et les autres callbacks NativeUI restent présents ; ne pas retirer la référence DLL avant migration et compilation complète.
+- [ ] Tester appel Zee depuis iFruit (avec et sans activité de deal), fermeture du téléphone, coffre et planque, commandes et HUD ; compiler avec `Build-Baseline.ps1`.
+
 ## Migration des notifications Zee — 28 octobre 2026
 
 - [x] Notification de réassort extraite de `OrderDrugs_OnMenuOpen` vers `LSL.NotifyZeeRestock()` sans dépendance aux types de menu.
