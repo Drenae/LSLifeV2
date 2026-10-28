@@ -11,7 +11,6 @@ internal static class WorkerRevenueCollection
         if (worker.Ped == null) return;
         LsFunctions.HandOverGoods(LSL.player.Character, worker.Ped);
         worker.GiveMoneyToPlayer();
-        worker.SetDrugDesc();
         LSL.DealerHandler.needsSave = true;
     }
 }
