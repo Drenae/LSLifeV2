@@ -1,3 +1,12 @@
+## Jalon confirme — build sans NativeUI (28 octobre 2026, 16:39)
+
+- [x] Compilation locale confirmee par `build-baseline(20261028-163955).log` : **0 erreur**, **3369 avertissements**.
+- [x] Reference `NativeUI.dll` retiree du projet ; compilation sans NativeUI validee.
+- [ ] Validation fonctionnelle en jeu : menus Custom (Zee, clients, employes, coffres, planques), telephone iFruit natif, commandes, sauvegarde.
+- [ ] Migration SHVDN2 vers SHVDN3 : preparer un audit des changements d'API et des dependances (dont iFruitAddon2), puis migrer par lots coherents.
+- [ ] Conserver les avertissements SHVDN2 comme reference de depart ; ne pas les masquer pour simuler une migration.
+- [ ] Systeme d'alliances entre gangs : apres les migrations, comme convenu.
+
 ## Correctifs de compilation NativeUI — 28 octobre 2026
 
 - [x] `Shot.cs` : demandes de livraison via `CustomCustomerMenu` et garde de visibilite Custom.
