@@ -451,7 +451,7 @@ public class DrugDealer
 
 	private void PickupPromt()
 	{
-		if (!LSL.LsMenuPool.IsAnyMenuOpen() && (float)Game.GameTime > LSL.displayHelpTimer + 6000f)
+		if (!CustomMenuShared.IsAnyGameplayMenuOpen() && (float)Game.GameTime > LSL.displayHelpTimer + 6000f)
 		{
 			LSL.displayHelpTimer = Game.GameTime;
 			LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour récupérer la drogue.");
@@ -466,7 +466,7 @@ public class DrugDealer
 
 	private void PayBillPromt()
 	{
-		if (!LSL.LsMenuPool.IsAnyMenuOpen() && (float)Game.GameTime > LSL.displayHelpTimer + 6000f)
+		if (!CustomMenuShared.IsAnyGameplayMenuOpen() && (float)Game.GameTime > LSL.displayHelpTimer + 6000f)
 		{
 			LSL.displayHelpTimer = Game.GameTime;
 			if (PlayerOrder.CanPayBill())
