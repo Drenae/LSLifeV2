@@ -369,7 +369,7 @@ public partial class LSL
 				}
 			}
 			HandleAreaDealers();
-			if (!LsMenuPool.IsAnyMenuOpen() && (Entity)(object)weaponDealer1 != (Entity)null && readyToDeal && Game.IsControlJustPressed(2, (Control)51) && LsMenuPool != null && !LsMenuPool.IsAnyMenuOpen())
+			if (LsMenuPool != null && !LsMenuPool.IsAnyMenuOpen() && (Entity)(object)weaponDealer1 != (Entity)null && readyToDeal && Game.IsControlJustPressed(2, (Control)51))
 			{
 				CustomWeaponDealerMenu.Open();
 			}
