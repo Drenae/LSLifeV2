@@ -1,3 +1,11 @@
+## Cible SHVDN3 nightly (28 octobre 2026)
+
+- [x] Source officielle choisie : `scripthookvdotnet/scripthookvdotnet-nightly`.
+- [x] Derniere release verifiee au 28/10/2026 : `v3.7.0-nightly.195`, publiee le 24/10/2026 ; archive `ScriptHookVDotNet-v3.7.0-nightly.195.zip`.
+- [ ] Installer / confirmer cette release cote GTA V Legacy et identifier les assemblies v3 pour la compilation.
+- [ ] Auditer la compatibilite d'iFruitAddon2 avec SHVDN3 avant de remplacer la reference SHVDN2.
+- [ ] Migration du code par lots, avec builds regulieres, sans modifier `main`.
+
 ## Validation en jeu NativeUI et lancement migration SHVDN3 — 28 octobre 2026
 
 - [x] Migration NativeUI vers CustomMenu acceptee apres demarrage du mod et premier essai en jeu sans anomalie constatee ; tests approfondis a poursuivre en jouant.
