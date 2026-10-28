@@ -24,7 +24,7 @@ internal static class CustomZeeMenu
     public static void Toggle()
     {
         if (Visible) { activeMenu.Close(); activeMenu = null; quantityRepeat.Reset(); return; }
-        if (LSL.LsMenuPool.IsAnyMenuOpen()) return;
+        if (CustomMenuShared.IsAnyGameplayMenuOpen()) return;
         if (menu == null) Create();
         menu.Subtitle = "REPUTATION  " + (int)LSL.dealer1Rep +
                         "    |    NIVEAU  " + (int)LsFunctions.CurrentRepLvl(LSL.dealer1Rep);
