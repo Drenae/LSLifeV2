@@ -20,7 +20,6 @@ internal static class WorkerSupplyTransfer
         if (supplyCrack > 0) { worker.Drugs["Crack"] += supplyCrack; LSL.PlayerInventory["Crack"] -= supplyCrack; }
         if (supplyCocaine > 0) { worker.Drugs["Cocaine"] += supplyCocaine; LSL.PlayerInventory["Cocaine"] -= supplyCocaine; }
         LsFunctions.UpdateInventory();
-        worker.SetDrugDesc();
         LSL.DealerHandler.needsSave = true;
         return true;
     }
