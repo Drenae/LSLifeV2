@@ -321,12 +321,12 @@ public class StashVehicle
 		{
 			if (!drugCar.IsDoorOpen((VehicleDoor)5))
 			{
-				if ((float)Game.GameTime > LSL.displayHelpTimer + 5000f && !LSL.LsMenuPool.IsAnyMenuOpen() && !CustomStashMenu.Visible && LSL.player.Character.IsStopped)
+				if ((float)Game.GameTime > LSL.displayHelpTimer + 5000f && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 				{
 					LSL.displayHelpTimer = Game.GameTime;
 					LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour ouvrir le coffre.");
 				}
-				if (Game.IsControlJustPressed(2, (Control)21) && !LSL.LsMenuPool.IsAnyMenuOpen() && !CustomStashMenu.Visible && LSL.player.Character.IsStopped)
+				if (Game.IsControlJustPressed(2, (Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 				{
 					drugCar.OpenDoor((VehicleDoor)5, false, false);
 					if (LSL.PlayerInventory.Count > 0)
@@ -354,25 +354,25 @@ public class StashVehicle
 			}
 			else
 			{
-				if ((float)Game.GameTime > LSL.displayHelpTimer + 5000f && !LSL.LsMenuPool.IsAnyMenuOpen() && !CustomStashMenu.Visible && LSL.player.Character.IsStopped)
+				if ((float)Game.GameTime > LSL.displayHelpTimer + 5000f && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 				{
 					LSL.displayHelpTimer = Game.GameTime;
 					LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour fermer le coffre.");
 				}
-				if (Game.IsControlJustPressed(2, (Control)21) && !LSL.LsMenuPool.IsAnyMenuOpen() && !CustomStashMenu.Visible && LSL.player.Character.IsStopped)
+				if (Game.IsControlJustPressed(2, (Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 				{
 					drugCar.CloseDoor((VehicleDoor)5, false);
 				}
 			}
 		}
-		else if (!drugCar.IsDoorOpen((VehicleDoor)2) && !LSL.LsMenuPool.IsAnyMenuOpen() && !CustomStashMenu.Visible && LSL.player.Character.IsStopped)
+		else if (!drugCar.IsDoorOpen((VehicleDoor)2) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 		{
 			if ((float)Game.GameTime > LSL.displayHelpTimer + 3000f)
 			{
 				LSL.displayHelpTimer = Game.GameTime;
 				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour ouvrir les portes arrière.");
 			}
-			if (Game.IsControlJustPressed(2, (Control)21) && !LSL.LsMenuPool.IsAnyMenuOpen() && !CustomStashMenu.Visible && LSL.player.Character.IsStopped)
+			if (Game.IsControlJustPressed(2, (Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 			{
 				drugCar.OpenDoor((VehicleDoor)2, true, false);
 				drugCar.OpenDoor((VehicleDoor)3, true, false);
@@ -401,12 +401,12 @@ public class StashVehicle
 		}
 		else
 		{
-			if ((float)Game.GameTime > LSL.displayHelpTimer + 3000f && !LSL.LsMenuPool.IsAnyMenuOpen() && !CustomStashMenu.Visible && LSL.player.Character.IsStopped)
+			if ((float)Game.GameTime > LSL.displayHelpTimer + 3000f && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 			{
 				LSL.displayHelpTimer = Game.GameTime;
 				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour fermer les portes arrière.");
 			}
-			if (Game.IsControlJustPressed(2, (Control)21) && !LSL.LsMenuPool.IsAnyMenuOpen() && !CustomStashMenu.Visible && LSL.player.Character.IsStopped)
+			if (Game.IsControlJustPressed(2, (Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 			{
 				drugCar.CloseDoor((VehicleDoor)2, false);
 				drugCar.CloseDoor((VehicleDoor)3, false);
