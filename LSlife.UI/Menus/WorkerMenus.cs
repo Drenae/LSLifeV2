@@ -102,7 +102,6 @@ internal static partial class LsMenus
 		{
 			LsFunctions.HandOverGoods(LSL.player.Character, LSL.DealerHandler.currentDealer.Ped);
 			LsFunctions.UpdateInventory();
-			LSL.DealerHandler.dealers[i].SetDrugDesc();
 			LSL.DealerHandler.needsSave = true;
 		}
 	}
@@ -121,7 +120,6 @@ internal static partial class LsMenus
 		{
 			LsFunctions.HandOverGoods(LSL.player.Character, LSL.DealerHandler.currentDealer.Ped);
 			LSL.DealerHandler.dealers[i].GiveMoneyToPlayer();
-			LSL.DealerHandler.dealers[i].SetDrugDesc();
 			LSL.WorkerMainMenu.CurrentSelection = 3;
 		}
 	}
