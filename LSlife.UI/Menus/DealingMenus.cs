@@ -83,9 +83,6 @@ internal static partial class LsMenus
 	// Same gameplay, independent of NativeUI item and menu visibility.
 	internal static bool HandleCustomerTransaction(bool sale)
 	{
-		if (sale && LSL.customerSellTo != null &&
-			LSL.PlayerInventory[LSL.customerSellTo.Drug.Name] < LSL.customerSellTo.amount)
-			LSL.sell.Enabled = false;
 		return CustomerTransactionActions.HandleCustomerTransaction(sale);
 	}
 
