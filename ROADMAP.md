@@ -1,3 +1,9 @@
+## Correctif compilation CS1061 — 28 octobre 2026
+
+- [x] Suppression des cinq appels résiduels à `StashHouseHandler.UpdateMenu()` signalés par `build-baseline(20261028-152244).log` dans `HouseStashTransfer.cs`, `StashHouse.cs`, `CustomStashMenu.cs`, `Menus/PlayerMenus.cs` et `Menus/StashMenus.cs`.
+- [x] Les transferts conservent leurs appels de sauvegarde et la mise à jour d'inventaire ; le menu personnalisé utilise les stocks directement, sans rafraîchissement NativeUI.
+- [ ] Compilation à confirmer après récupération des commits ; NativeUI n'est pas encore supprimé.
+
 ## Suppression du rafraîchissement des anciens stocks — 28 octobre 2026
 
 - [x] `StashHouseHandler.UpdateMenu` supprimé : la méthode modifiait exclusivement les anciens composants NativeUI.
