@@ -20,7 +20,7 @@ internal static class CustomWeaponDealerMenu
     public static void Open()
     {
         if (Visible || LSL.weaponDealer1 == null || !LSL.readyToDeal ||
-            LSL.LsMenuPool == null || LSL.LsMenuPool.IsAnyMenuOpen())
+            CustomMenuShared.IsAnyGameplayMenuOpen())
             return;
         if (menu == null)
         {
