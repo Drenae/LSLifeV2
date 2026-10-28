@@ -82,19 +82,11 @@ internal static partial class LsFunctions
 
 	public static void ContactAnswered(iFruitContact contact)
 	{
-		if (contact.Name == "Zee" && LSL.LsMenuPool != null)
+		if (contact != null && contact.Name == "Zee")
 		{
-			if (LSL.isDealing)
-			{
-				LSL.StartDeal.Text = "Arrêter de dealer";
-			}
-			else
-			{
-				LSL.StartDeal.Text = " Commencer à dealer";
-			}
+			// Le contact iFruit ouvre directement l'interface personnalisee.
+			// Ne plus lire ni rafraichir les anciens widgets NativeUI.
 			CustomZeeMenu.Toggle();
-			UpdateDealerInventory();
-			LSL.zeeMenu.CurrentSelection = 0;
 		}
 		LSL.iFruit.Close(1000);
 	}
