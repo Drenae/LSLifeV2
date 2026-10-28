@@ -17,8 +17,7 @@ internal static class VehicleWeaponTransfer
         if (car == null || index < 0) return false;
         if (deposit)
         {
-            if (index >= LSL.playerWeapons.Count || index >= LSL.playerWeps.Count ||
-                index >= LSL.putWeaponVeh.Items.Count) return false;
+            if (index >= LSL.playerWeapons.Count || index >= LSL.playerWeps.Count) return false;
             XElement weaponXml = LSL.playerWeapons[index];
             if (weaponXml == null) return false;
             if (!Enum.TryParse(LSL.playerWeps[index], out WeaponHash weapon) ||
@@ -34,10 +33,11 @@ internal static class VehicleWeaponTransfer
             LSL.vehWeaponsXML.Element("weapons")?.Add(new XElement(weaponXml));
             LSL.vehWeaponsXML.Save(FilePath);
             Game.Player.Character.Weapons.Remove(weapon);
+            string weaponName = LSL.playerWeps[index];
             LSL.playerWeapons.RemoveAt(index);
             LSL.playerWeps.RemoveAt(index);
             car.vehWeapons.Add(new XElement(weaponXml));
-            car.vehWeps.Add(LSL.putWeaponVeh.Items[index]);
+            car.vehWeps.Add(weaponName);
         }
         else
         {
