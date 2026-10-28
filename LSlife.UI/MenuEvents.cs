@@ -75,108 +75,25 @@ public partial class LSL
 
 	private void TakeArmourVeh_Activated(UIMenu sender, UIMenuItem selectedItem)
 	{
-		int amount = takeArmourVeh.Index;
-		int max = 5;
-		if (player.Character.Armor < 100)
-		{
-			max = 6;
-		}
-		if (amount <= 0 || playerArmours + amount > max)
-		{
-			return;
-		}
-		if (player.Character.Armor < 100)
-		{
-			player.Character.Armor = 100;
-			amount--;
-		}
-		playerArmours += amount;
-		pStashVehicle.drugCarArmour -= amount;
-		foreach (XElement ele in LSLifeSave.Descendants())
-		{
-			if (ele.Name == "drugCarStash")
-			{
-				foreach (XElement el in ele.Elements())
-				{
-					if (el.Name == "armour")
-					{
-						el.Value = pStashVehicle.drugCarArmour.ToString();
-						break;
-					}
-				}
-			}
-			if (!(ele.Name == "playerInventory"))
-			{
-				continue;
-			}
-			foreach (XElement el2 in ele.Elements())
-			{
-				if (el2.Name == "armour")
-				{
-					el2.Value = playerArmours.ToString();
-					break;
-				}
-			}
-		}
-		LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
-		putArmourVeh.Items = new List<object>();
-		for (int t = 0; t < playerArmours + 1; t++)
-		{
-			putArmourVeh.Items.Add(t);
-		}
-		takeArmourVeh.Items = new List<object>();
-		for (int i = 0; i < pStashVehicle.drugCarArmour + 1; i++)
-		{
-			takeArmourVeh.Items.Add(i);
-		}
+		if (VehicleArmourTransfer.Transfer(false, takeArmourVeh.Index))
+			RefreshLegacyVehicleArmourChoices();
 	}
 
 	private void PutArmourVeh_Activated(UIMenu sender, UIMenuItem selectedItem)
 	{
-		int amount = putArmourVeh.Index;
-		if (amount <= 0 || playerArmours <= 0)
-		{
-			return;
-		}
-		playerArmours -= amount;
-		pStashVehicle.drugCarArmour += amount;
-		foreach (XElement ele in LSLifeSave.Descendants())
-		{
-			if (ele.Name == "drugCarStash")
-			{
-				foreach (XElement el in ele.Elements())
-				{
-					if (el.Name == "armour")
-					{
-						el.Value = pStashVehicle.drugCarArmour.ToString();
-						break;
-					}
-				}
-			}
-			if (!(ele.Name == "playerInventory"))
-			{
-				continue;
-			}
-			foreach (XElement el2 in ele.Elements())
-			{
-				if (el2.Name == "armour")
-				{
-					el2.Value = playerArmours.ToString();
-					break;
-				}
-			}
-		}
-		LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
-		putArmourVeh.Index = 0;
-		putArmourVeh.Items = new List<object>();
-		for (int t = 0; t < playerArmours + 1; t++)
-		{
-			putArmourVeh.Items.Add(t);
-		}
-		takeArmourVeh.Items = new List<object>();
-		for (int i = 0; i < pStashVehicle.drugCarArmour + 1; i++)
-		{
-			takeArmourVeh.Items.Add(i);
-		}
+		if (VehicleArmourTransfer.Transfer(true, putArmourVeh.Index))
+			RefreshLegacyVehicleArmourChoices();
 	}
+
+	// Les anciennes listes ne sont actualisees que pour leur propre interface.
+	private void RefreshLegacyVehicleArmourChoices()
+	{
+		putArmourVeh.Items = new List<object>();
+		for (int i = 0; i <= playerArmours; i++) putArmourVeh.Items.Add(i);
+		putArmourVeh.Index = 0;
+		takeArmourVeh.Items = new List<object>();
+		for (int i = 0; i <= pStashVehicle.drugCarArmour; i++) takeArmourVeh.Items.Add(i);
+		takeArmourVeh.Index = 0;
+	}
+
 }
