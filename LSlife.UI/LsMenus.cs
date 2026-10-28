@@ -7,7 +7,6 @@ using GTA.Math;
 using GTA.Native;
 using LSlife.OldCustomers;
 using LSlife.Shots;
-using NativeUI;
 
 namespace LSlife;
 
