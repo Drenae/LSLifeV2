@@ -1,3 +1,11 @@
+## Lot ouverture des menus personnalisés — 28 octobre 2026
+
+- [x] Zee, planques, coffres, clients, employés, recrutement et marchand d'armes : ouverture protégée par un contrôle partagé qui accepte un pool historique absent et refuse les menus concurrents.
+- [x] Ajout du menu employé dans la détection globale des menus ouverts et dans le masquage du HUD DEBUG.
+- [x] Suppression des accès directs à `LsMenuPool.IsAnyMenuOpen()` dans les sept interfaces personnalisées concernées.
+- [ ] NativeUI reste nécessaire aux anciens menus ; la DLL et `LegacyMenuCompatibility.cs` ne sont pas encore supprimés.
+- [ ] Vérifier compilation et GTA : ouverture/fermeture de chaque menu, transitions Zee/HUD, employés, recrutement, clients, coffre, planque et marchand d'armes.
+
 ## Lot Tick / interactions — 28 octobre 2026
 
 - [x] Le traitement des six menus personnalisés dans `Tick.cs` n'est plus conditionné par l'existence de `LsMenuPool`.
