@@ -24,20 +24,6 @@ public partial class LSL
 {
 	private void Setup()
 	{
-		//IL_078e: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0793: Unknown result type (might be due to invalid IL or missing references)
-		//IL_07ad: Unknown result type (might be due to invalid IL or missing references)
-		//IL_07b4: Expected I4, but got Unknown
-		//IL_07d6: Unknown result type (might be due to invalid IL or missing references)
-		//IL_07dd: Expected I4, but got Unknown
-		//IL_0816: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0873: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0878: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0892: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0899: Expected I4, but got Unknown
-		//IL_0899: Unknown result type (might be due to invalid IL or missing references)
-		//IL_08a0: Expected I4, but got Unknown
-		//IL_08b1: Unknown result type (might be due to invalid IL or missing references)
 		lsDebug = Function.Call<uint>(unchecked((Hash)(-3292914402564945716L)), ("lsdebug"));
 		areaDebug = Function.Call<uint>(unchecked((Hash)(-3292914402564945716L)), ("areadebug"));
 		spawnP = Function.Call<uint>(unchecked((Hash)(-3292914402564945716L)), ("spawnP"));
@@ -62,59 +48,56 @@ public partial class LSL
 		{
 			if (element.Name == "playerInventory")
 			{
-				bool foundArmour = false;
-				bool foundOz = false;
+				bool saveInventoryMigration = false;
 				foreach (XElement e in element.Elements())
 				{
 					int number;
 					if (e.Name == "weed")
 					{
 						int.TryParse(e.Value, out number);
-						PlayerInventory.Add("Weed", number);
+						PlayerInventory["Weed"] = number;
 					}
 					if (e.Name == "weedOz")
-					{
 						int.TryParse(e.Value, out LsFunctions.pWeedOunce);
-						foundOz = true;
-					}
 					if (e.Name == "crack")
 					{
 						int.TryParse(e.Value, out number);
-						PlayerInventory.Add("Crack", number);
+						PlayerInventory["Crack"] = number;
 					}
 					if (e.Name == "crackOz")
-					{
 						int.TryParse(e.Value, out LsFunctions.pCrackOunce);
-						foundOz = true;
-					}
 					if (e.Name == "cocain")
 					{
 						int.TryParse(e.Value, out number);
-						PlayerInventory.Add("Cocaine", number);
+						PlayerInventory["Cocaine"] = number;
 					}
 					if (e.Name == "cocaineOz")
-					{
 						int.TryParse(e.Value, out LsFunctions.pCocaineOunce);
-						foundOz = true;
-					}
 					if (e.Name == "armour")
-					{
 						int.TryParse(e.Value, out playerArmours);
-						foundArmour = true;
-					}
 				}
-				if (!foundArmour)
+				if (element.Element("armour") == null)
 				{
-					element.Add(new XElement("armour", playerArmours.ToString()));
-					LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
+					element.Add(new XElement("armour", playerArmours));
+					saveInventoryMigration = true;
 				}
-				if (!foundOz)
+				if (element.Element("weedOz") == null)
 				{
-					element.Add(new XElement("weedOz", LsFunctions.pWeedOunce.ToString()));
-					element.Add(new XElement("crackOz", LsFunctions.pCrackOunce.ToString()));
-					element.Add(new XElement("cocaineOz", LsFunctions.pCocaineOunce.ToString()));
-					LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
+					element.Add(new XElement("weedOz", LsFunctions.pWeedOunce));
+					saveInventoryMigration = true;
 				}
+				if (element.Element("crackOz") == null)
+				{
+					element.Add(new XElement("crackOz", LsFunctions.pCrackOunce));
+					saveInventoryMigration = true;
+				}
+				if (element.Element("cocaineOz") == null)
+				{
+					element.Add(new XElement("cocaineOz", LsFunctions.pCocaineOunce));
+					saveInventoryMigration = true;
+				}
+				if (saveInventoryMigration)
+					LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
 			}
 			if (!(element.Name == "dealer1"))
 			{
