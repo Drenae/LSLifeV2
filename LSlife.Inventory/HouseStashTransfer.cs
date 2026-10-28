@@ -58,7 +58,7 @@ internal static class HouseStashTransfer
                 }
                 weaponXml.SetAttributeValue("id", id);
                 house.Weapons.Add(weaponXml);
-                house.Weps.Add(LSL.putWeaponStash.Items[requested]);
+                house.Weps.Add(LSL.playerWeps[requested]);
                 Game.Player.Character.Weapons.Remove(weapon);
                 LSL.playerWeapons.RemoveAt(requested);
                 LSL.playerWeps.RemoveAt(requested);
@@ -101,7 +101,7 @@ internal static class HouseStashTransfer
                 int ammo = 0;
                 int.TryParse((string)w.Element("AMMO"), out ammo);
                 Game.Player.Character.Weapons.Give(weapon, ammo, true, false);
-                LSL.playerWeapons.Add(w);
+                LSL.playerWeapons.Add(new XElement(w));
                 LSL.playerWeps.Add(hash.Value);
                 house.Weapons.RemoveAt(requested);
                 house.Weps.RemoveAt(requested);
