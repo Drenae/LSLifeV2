@@ -19,6 +19,8 @@ internal static class AreaHeatBar
 
 	public static float GetPercentage()
 	{
-		return LSL.areas[LSL.areaIndex].Heat * 0.001f;
+		if (LSL.areas == null || LSL.areaIndex < 0 || LSL.areaIndex >= LSL.areas.Count)
+			return 0f;
+		return System.Math.Max(0f, System.Math.Min(1f, LSL.areas[LSL.areaIndex].Heat * 0.001f));
 	}
 }
