@@ -58,7 +58,9 @@ internal static partial class LsFunctions
 			LSL.OrderSummaryDebt.Text = "Dette : " + IntToMoney(LSL.dealer1Debt) + " $";
 			LSL.OrderSummaryCredit.Text = "Plafond de crédit : " + IntToMoney(zeeDebtCap()) + " $";
 		}
-		LSL.LsMenuPool.RefreshIndex();
+		// Rafraichissement reserve au menu historique pendant la migration.
+		if (LSL.LsMenuPool != null)
+			LSL.LsMenuPool.RefreshIndex();
 	}
 
 	public static int Discount(int price)
@@ -88,7 +90,8 @@ internal static partial class LsFunctions
 			// Ne plus lire ni rafraichir les anciens widgets NativeUI.
 			CustomZeeMenu.Toggle();
 		}
-		LSL.iFruit.Close(1000);
+		if (LSL.iFruit != null)
+			LSL.iFruit.Close(1000);
 	}
 
 	private static void UpdateDealerInventory()
