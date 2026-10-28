@@ -1,3 +1,11 @@
+## Audit de suppression NativeUI — 28 octobre 2026
+
+- [x] Contact iFruit Zee déjà indépendant du pool ; fermeture du téléphone protégée contre une instance absente.
+- [x] Rafraîchissement de l'ancien menu de commande protégé contre un pool nul.
+- [x] Vérifié : `LegacyMenuCompatibility.cs` construit toujours les menus NativeUI dans `InitializeLegacyMenus()` ; `Setup.cs` l'appelle ; `Tick.cs` traite le pool ; `BarHandler.cs` dépend des classes `TimerBarPool`/`BarTimerBar` ; le projet référence `NativeUI.dll`.
+- [ ] **Blocage à la suppression** : retirer tous les callbacks NativeUI et les appels aux widgets historiques, puis supprimer `InitializeLegacyMenus`, le pool, les barres et la référence csproj dans un ensemble compilable.
+- [ ] Compilation et tests GTA nécessaires ; ne pas annoncer la migration terminée avant validation.
+
 ## Correctif HUD réputation / migration — 28 octobre 2026
 
 - [x] Diagnostic : l'ancienne jauge « Quartier » affichait `Area.Heat`, et non `Area.Reputation`.
