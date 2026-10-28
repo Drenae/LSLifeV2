@@ -16,7 +16,6 @@ using LSlife.Gangs;
 using LSlife.HeatBars;
 using LSlife.OldCustomers;
 using LSlife.Shots;
-using NativeUI;
 
 
 namespace LSlife;
@@ -291,16 +290,15 @@ public partial class LSL
 		// iFruit doit traiter le telephone avant que les menus personnalises
 		// ne lisent ou ne neutralisent les controles GTA de cette frame.
 		if (iFruit != null) iFruit.Update();
+		// Les menus CustomMenu ne dependent plus de l'existence du pool historique.
 		if (LsMenuPool != null)
-		{
 			LsMenuPool.ProcessMenus();
-			CustomZeeMenu.Tick();
-			CustomStashMenu.TickOncePerFrame();
-			CustomCustomerMenu.TickOncePerFrame();
-			CustomWeaponDealerMenu.TickOncePerFrame();
-			CustomHireDealerMenu.TickOncePerFrame();
-			CustomHudOptionsMenu.TickOncePerFrame();
-		}
+		CustomZeeMenu.Tick();
+		CustomStashMenu.TickOncePerFrame();
+		CustomCustomerMenu.TickOncePerFrame();
+		CustomWeaponDealerMenu.TickOncePerFrame();
+		CustomHireDealerMenu.TickOncePerFrame();
+		CustomHudOptionsMenu.TickOncePerFrame();
 		if (Game.IsControlPressed(2, (Control)76) && Game.IsControlJustPressed(2, (Control)26))
 		{
 			DropDrugs.Drop();
@@ -330,7 +328,7 @@ public partial class LSL
 			if (showInventory)
 			{
 				Hud.Draw();
-				if (AreaDebug && !LsMenuPool.IsAnyMenuOpen()
+				if (AreaDebug && !CustomMenuShared.IsAnyGameplayMenuOpen()
                     && !CustomZeeMenu.Visible && !CustomHudOptionsMenu.Visible
                     && !CustomStashMenu.Visible && !CustomCustomerMenu.Visible
                     && !CustomWeaponDealerMenu.Visible && !CustomHireDealerMenu.Visible)
@@ -349,7 +347,7 @@ public partial class LSL
 			}
 			if (pigs.Count > 0 && pigs[0].AskPlayerToComply)
 			{
-				if ((float)Game.GameTime > displayHelpTimer + 3000f && !LsMenuPool.IsAnyMenuOpen())
+				if ((float)Game.GameTime > displayHelpTimer + 3000f && !CustomMenuShared.IsAnyGameplayMenuOpen())
 				{
 					Function.Call((Hash)7023634693725934496L);
 					displayHelpTimer = Game.GameTime;
@@ -369,7 +367,7 @@ public partial class LSL
 				}
 			}
 			HandleAreaDealers();
-			if (LsMenuPool != null && !LsMenuPool.IsAnyMenuOpen() && (Entity)(object)weaponDealer1 != (Entity)null && readyToDeal && Game.IsControlJustPressed(2, (Control)51))
+			if (!CustomMenuShared.IsAnyGameplayMenuOpen() && (Entity)(object)weaponDealer1 != (Entity)null && readyToDeal && Game.IsControlJustPressed(2, (Control)51))
 			{
 				CustomWeaponDealerMenu.Open();
 			}
@@ -736,7 +734,7 @@ public partial class LSL
 					}
 					Customer nCustomer = null;
 					nCustomer = ((!player.Character.IsInVehicle()) ? FindClosestCustomer() : FindClosestCustomerInVehicle());
-					if (nCustomer != null && !LsMenuPool.IsAnyMenuOpen())
+					if (nCustomer != null && !CustomMenuShared.IsAnyGameplayMenuOpen())
 					{
 						if (player.Character.IsInVehicle() && nCustomer.Ped.IsInVehicle() && player.Character.CurrentVehicle.Speed < 1f)
 						{
@@ -768,7 +766,7 @@ public partial class LSL
 								displayHelpTimer = Game.GameTime;
 								LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour vendre à cette personne.");
 							}
-							if (Game.IsControlJustPressed(2, (Control)21) && !LsMenuPool.IsAnyMenuOpen())
+							if (Game.IsControlJustPressed(2, (Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen())
 							{
 								Function.Call((Hash)7023634693725934496L);
 								customerSellTo = nCustomer;
@@ -1793,7 +1791,7 @@ public partial class LSL
 					CustomWeaponDealerMenu.Close();
 				}
 			}
-			else if (!readyToDeal && !LsMenuPool.IsAnyMenuOpen())
+			else if (!readyToDeal && !CustomMenuShared.IsAnyGameplayMenuOpen())
 			{
 				if ((float)Game.GameTime > displayHelpTimer + 5000f)
 				{
