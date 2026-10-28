@@ -17,7 +17,8 @@ internal static class CustomMenuShared
             || CustomCustomerMenu.Visible
             || CustomWeaponDealerMenu.Visible
             || CustomHireDealerMenu.Visible
-            || CustomHudOptionsMenu.Visible;
+            || CustomHudOptionsMenu.Visible
+            || CustomWorkerMenu.Visible;
     }
 
     public static string FrenchWeaponName(string weapon)
