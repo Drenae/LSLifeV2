@@ -1,3 +1,12 @@
+## Suppression du rafraîchissement des anciens stocks — 28 octobre 2026
+
+- [x] `StashHouseHandler.UpdateMenu` supprimé : la méthode modifiait exclusivement les anciens composants NativeUI.
+- [x] `StashHouse.cs` ne déclenche plus ce rafraîchissement avant d'ouvrir `CustomStashMenu`.
+- [x] `StashVehicle.cs` : suppression des deux blocs d'initialisation des curseurs et listes NativeUI à l'ouverture du coffre.
+- [x] `StashVehicle.UpdateCarStash()` conserve la reconstruction des listes d'armes joueur/véhicule mais ne modifie plus les widgets NativeUI.
+- [ ] Supprimer les menus historiques et la DLL après nettoyage des autres consommateurs.
+- [ ] Pas de demande de tests intermédiaires ; compilation non effectuée.
+
 ## Migration des interactions monde — 28 octobre 2026
 
 - [x] `PlayerDealer.cs` ne dépend plus des objets `WorkerMainMenu`/`LsMenuPool` : ouverture, fermeture et visibilité passent par `CustomWorkerMenu` et `CustomMenuShared`.
