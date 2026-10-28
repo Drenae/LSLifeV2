@@ -247,11 +247,11 @@ internal static class CustomStashMenu
                 (k == 7 ? Count(k) > 1 : Count(k) > 0));
             // Valeurs dessinees ensemble, alignees a droite : aucune colonne flottante.
             // Les codes GTA ~c~ gardent la disponibilite en gris.
-            bool quantity = k >= 0 && k <= 6;
-            layout.Row(label, selected, quantity ? null : Value(k),
+            bool isQuantity = k >= 0 && k <= 6;
+            layout.Row(label, selected, isQuantity ? null : Value(k),
                 0.040f, enabled: available, redValue: k >= 3 && k <= 5,
                 dimValue: !available, emphasizeValue: selected && available);
-            if (quantity)
+            if (isQuantity)
                 layout.Block(0f, y => CustomMenuRenderer.TextTwoColorsRight(
                     Value(k), AvailableValue(k).Substring(2), layout.Right - 0.019f,
                     y - 0.040f, 0.040f, 0.245f,
