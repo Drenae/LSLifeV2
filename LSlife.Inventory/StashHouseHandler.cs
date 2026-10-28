@@ -348,45 +348,6 @@ public class StashHouseHandler
 		return drugs;
 	}
 
-	public void UpdateMenu(StashHouse _house)
-	{
-		LSL.takeWeedStash.Maximum = _house.Weed;
-		LSL.takeCrackStash.Maximum = _house.Crack;
-		LSL.takeCocainStash.Maximum = _house.Cocain;
-		LSL.takeMoneyStash.Maximum = _house.Money;
-		LSL.takeWeedStash.Text = "Cannabis " + LsFunctions.GramsToOz(_house.Weed);
-		LSL.takeCrackStash.Text = "Crack " + LsFunctions.GramsToOz(_house.Crack);
-		LSL.takeCocainStash.Text = "Cocaïne " + LsFunctions.GramsToOz(_house.Cocain);
-		LSL.takeMoneyStash.Text = "Argent " + LsFunctions.IntToMoney(_house.Money) + " $";
-		LSL.takeWeaponStash.Items = _house.Weps;
-		LSL.takeWeaponStash.Index = 0;
-		LSL.takeArmourStash.Items = new List<object>();
-		for (int t = 0; t < _house.Armor + 1; t++)
-		{
-			LSL.takeArmourStash.Items.Add(t);
-		}
-		LSL.putWeedStash.Maximum = LSL.PlayerInventory["Weed"];
-		LSL.putCrackStash.Maximum = LSL.PlayerInventory["Crack"];
-		LSL.putCocainStash.Maximum = LSL.PlayerInventory["Cocaine"];
-		LSL.putWeedOzStash.Maximum = LsFunctions.pWeedOunce;
-		LSL.putCrackOzStash.Maximum = LsFunctions.pCrackOunce;
-		LSL.putCocainOzStash.Maximum = LsFunctions.pCocaineOunce;
-		LSL.putMoneyStash.Maximum = LSL.player.Money;
-		LSL.putWeedStash.Text = "Cannabis " + LsFunctions.GramsToOz(LSL.PlayerInventory["Weed"]);
-		LSL.putCrackStash.Text = "Crack " + LsFunctions.GramsToOz(LSL.PlayerInventory["Crack"]);
-		LSL.putCocainStash.Text = "Cocaïne " + LsFunctions.GramsToOz(LSL.PlayerInventory["Cocaine"]);
-		LSL.putWeedOzStash.Text = "Cannabis ~r~" + LsFunctions.pWeedOunce + "~s~z";
-		LSL.putCrackOzStash.Text = "Crack ~r~" + LsFunctions.pCrackOunce + "~s~z";
-		LSL.putCocainOzStash.Text = "Cocaïne ~r~" + LsFunctions.pCocaineOunce + "~s~z";
-		LSL.putMoneyStash.Text = "Argent " + LsFunctions.IntToMoney(LSL.player.Money) + " $";
-		LSL.putWeaponStash.Index = 0;
-		LSL.putWeaponStash.Items = LSL.playerWeps;
-		LSL.putArmourStash.Items = new List<object>();
-		for (int i = 0; i < LSL.playerArmours + 1; i++)
-		{
-			LSL.putArmourStash.Items.Add(i);
-		}
-	}
 
 	internal bool Inside()
 	{
