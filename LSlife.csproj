@@ -21,9 +21,6 @@
       <HintPath>$(GtaVPath)\ScriptHookVDotNet2.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="NativeUI">
-      <HintPath>$(GtaVPath)\scripts\NativeUI.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Core" />
     <Reference Include="iFruitAddon2">
