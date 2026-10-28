@@ -271,7 +271,6 @@ public class PlayerDealer
 
 	public void OnTick()
 	{
-		CustomWorkerMenu.TickOncePerFrame();
 		if ((Entity)(object)Ped != (Entity)null)
 		{
 			Enums.PdStates currentState = CurrentState;
@@ -367,15 +366,15 @@ public class PlayerDealer
 			{
 				bool dFarAway = Pos.DistanceTo(LSL.playerPos) > 3f;
 				bool dNotTalking = CurrentState != Enums.PdStates.TalkToPlayer && CurrentState != Enums.PdStates.FollowPlayer && CurrentState != Enums.PdStates.FollowingPlayer;
-				bool flag = !LSL.WorkerMainMenu.Visible && !CustomWorkerMenu.Visible;
+				bool flag = !CustomWorkerMenu.Visible;
 				bool vMoving = Ped.IsInVehicle() && Ped.CurrentVehicle.Speed > 0f;
 				if (flag | dNotTalking | dFarAway | vMoving)
 				{
 					LSL.DealerHandler.currentDealer = null;
 				}
-				if (LSL.DealerHandler.currentDealer == null && LSL.WorkerMainMenu.Visible)
+				if (LSL.DealerHandler.currentDealer == null && CustomWorkerMenu.Visible)
 				{
-					LSL.WorkerMainMenu.Visible = false;
+					CustomWorkerMenu.Close();
 				}
 			}
 			if (!((Entity)Ped).IsAlive && NewState != Enums.PdStates.Dead)
@@ -587,9 +586,9 @@ public class PlayerDealer
 				case Enums.PdStates.TalkToPlayer:
 					if (!playerNear())
 					{
-						if (LSL.DealerHandler.currentDealer == this && (LSL.WorkerMainMenu.Visible || CustomWorkerMenu.Visible))
+						if (LSL.DealerHandler.currentDealer == this && CustomWorkerMenu.Visible)
 						{
-							LSL.WorkerMainMenu.Visible = false;
+							CustomWorkerMenu.Close();
 						}
 						NewState = Enums.PdStates.Work;
 						Function.Call(unchecked((Hash)(-4137652152022615111L)), (Ped), ("GENERIC_BYE"), ("SPEECH_PARAMS_FORCE"));
@@ -1071,7 +1070,7 @@ public class PlayerDealer
 	private void PromtPlayerToTalk()
 	{
 		//IL_004c: Unknown result type (might be due to invalid IL or missing references)
-		if (CustomWorkerMenu.Visible || LSL.LsMenuPool.IsAnyMenuOpen() || LsFunctions.zeeClose() || ShotHandler.ShotOffers || LSL.PottentialWorker != null || !LSL.player.Character.IsStopped || !(LSL.playerPos.DistanceTo(((Entity)Ped).Position) < 2.5f) || !LsFunctions.IsCustomerNear())
+		if (CustomMenuShared.IsAnyGameplayMenuOpen() || LsFunctions.zeeClose() || ShotHandler.ShotOffers || LSL.PottentialWorker != null || !LSL.player.Character.IsStopped || !(LSL.playerPos.DistanceTo(((Entity)Ped).Position) < 2.5f) || !LsFunctions.IsCustomerNear())
 		{
 			return;
 		}
@@ -1084,7 +1083,7 @@ public class PlayerDealer
 		if (Game.IsControlJustReleased(2, (Control)51))
 		{
 			Function.Call((Hash)7023634693725934496L);
-			LSL.WorkerMainMenu.CurrentSelection = 3;
+			// Le menu personnalise gere sa propre selection.
 			LSL.DealerHandler.currentDealer = this;
 			SetDrugDesc();
 			SetDealerOrders();
@@ -1096,7 +1095,7 @@ public class PlayerDealer
 	private void PromtToFollow()
 	{
 		//IL_002e: Unknown result type (might be due to invalid IL or missing references)
-		if (!LSL.LsMenuPool.IsAnyMenuOpen() && LSL.player.Character.IsStopped && LSL.playerPos.DistanceTo(((Entity)Ped).Position) < 10f && LSL.player.Character.IsInVehicle() && Ped.CurrentPedGroup != LSL.player.Character.CurrentPedGroup && LsFunctions.IsCustomerNear())
+		if (!CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped && LSL.playerPos.DistanceTo(((Entity)Ped).Position) < 10f && LSL.player.Character.IsInVehicle() && Ped.CurrentPedGroup != LSL.player.Character.CurrentPedGroup && LsFunctions.IsCustomerNear())
 		{
 			if ((float)Game.GameTime > LSL.displayHelpTimer + 5000f)
 			{
