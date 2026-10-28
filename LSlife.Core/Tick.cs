@@ -298,6 +298,7 @@ public partial class LSL
 		CustomCustomerMenu.TickOncePerFrame();
 		CustomWeaponDealerMenu.TickOncePerFrame();
 		CustomHireDealerMenu.TickOncePerFrame();
+		CustomWorkerMenu.TickOncePerFrame();
 		CustomHudOptionsMenu.TickOncePerFrame();
 		if (Game.IsControlPressed(2, (Control)76) && Game.IsControlJustPressed(2, (Control)26))
 		{
