@@ -1,3 +1,12 @@
+## Suppression NativeUI — lot majeur (28 octobre 2026)
+
+- [x] `Setup.cs` : appel à `InitializeLegacyMenus()` déjà retiré.
+- [x] `LegacyMenuCompatibility.cs` : suppression intégrale de `InitializeLegacyMenus()` (plus de 20 000 caractères de construction de menus et branchements d'événements inutilisés).
+- [x] `DealerMenus.cs`, `DealingMenus.cs`, `WorkerMenus.cs` : suppression des callbacks NativeUI ; conservation des points d'entrée métier (`CallWeaponDealer`, `CallLift`, `PayZeeDebt`, `CancelDealerRecruitment`, `SubmitDealerOffer`, `StartDealing`, `PlaceDrugOrder`, `HandleCustomerTransaction`, `GiveWeaponToWorker`).
+- [x] `MenuEvents.cs` : suppression des callbacks NativeUI ; `NotifyZeeRestock()` conservé.
+- [ ] Éliminer les références restantes dans `PlayerMenus.cs`, `StashMenus.cs`, `VehicleMenus.cs` et les champs de compatibilité.
+- [ ] Supprimer `NativeUI.dll` du `.csproj` seulement après nettoyage complet des types ; compilation de ce lot à confirmer.
+
 ## Migration NativeUI — boucle de rendu (28 octobre 2026)
 
 - [x] `CustomMenuShared.IsAnyGameplayMenuOpen()` : suppression du test `LsMenuPool.IsAnyMenuOpen()` ; les sept menus Custom sont seuls pris en compte.
