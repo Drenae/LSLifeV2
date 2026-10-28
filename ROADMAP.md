@@ -1,3 +1,10 @@
+## Migration NativeUI — boucle de rendu (28 octobre 2026)
+
+- [x] `CustomMenuShared.IsAnyGameplayMenuOpen()` : suppression du test `LsMenuPool.IsAnyMenuOpen()` ; les sept menus Custom sont seuls pris en compte.
+- [x] `Tick.cs` : suppression de `LsMenuPool.ProcessMenus()` ; les menus Custom continuent leurs ticks individuels et le téléphone iFruit reste inchangé.
+- [ ] `InitializeLegacyMenus()` dans `Setup.cs` et les callbacks NativeUI restent à retirer après audit de leurs références.
+- [ ] Compilation non vérifiée dans cet environnement.
+
 ## Correctif CS1061 (28 octobre 2026)
 
 - [x] Retirer `SetDrugDesc()` de `WorkerRevenueCollection.cs` et `WorkerSupplyTransfer.cs` : les deux appels étaient devenus invalides après suppression de la méthode d'affichage NativeUI.
