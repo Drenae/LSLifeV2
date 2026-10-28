@@ -1,3 +1,11 @@
+## Lot Tick / interactions — 28 octobre 2026
+
+- [x] Le traitement des six menus personnalisés dans `Tick.cs` n'est plus conditionné par l'existence de `LsMenuPool`.
+- [x] Les vérifications d'ouverture de menu du Tick (HUD DEBUG, aide, marchand d'armes, client, interactions) passent par `CustomMenuShared.IsAnyGameplayMenuOpen()`, qui tient compte des six menus CustomMenu et du pool historique.
+- [x] Import direct `using NativeUI;` retiré de `Tick.cs` ; aucune modification des sauvegardes XML ou de l'initialisation iFruit.
+- [ ] `LsMenuPool.ProcessMenus()` et NativeUI.dll restent nécessaires pour les consommateurs historiques ; ne pas les supprimer avant leur migration.
+- [ ] Compilation Windows et test GTA à effectuer : démarrage à froid/téléphone Zee, interactions client/marchand, HUD DEBUG, fermeture des menus et sauvegardes.
+
 ## Correctif Tick — 28 octobre 2026
 
 - [x] Interaction marchand d'armes : vérification de `LsMenuPool` avant son accès et suppression du double test `IsAnyMenuOpen()`.
