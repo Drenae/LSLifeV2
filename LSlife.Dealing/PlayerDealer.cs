@@ -1085,9 +1085,6 @@ public class PlayerDealer
 			Function.Call((Hash)7023634693725934496L);
 			// Le menu personnalise gere sa propre selection.
 			LSL.DealerHandler.currentDealer = this;
-			SetDrugDesc();
-			SetDealerOrders();
-			SetArmourButton();
 			CustomWorkerMenu.Open();
 		}
 	}
@@ -1112,43 +1109,6 @@ public class PlayerDealer
 		}
 	}
 
-	private void SetDealerOrders()
-	{
-		LSL.wOrder.Items = Orders();
-		LSL.wOrder.Index = 0;
-	}
-
-	private void SetArmourButton()
-	{
-		if (LSL.playerArmours == 0)
-		{
-			LSL.wArmour.Text = "Plus de gilet disponible";
-		}
-		else
-		{
-			LSL.wArmour.Text = "Donner un gilet";
-		}
-	}
-
-	public void SetDrugDesc()
-	{
-		LsFunctions.SetWorkerMenuHealth(Ped);
-		LSL.wWeed.Maximum = LSL.PlayerInventory["Weed"];
-		LSL.wCrack.Maximum = LSL.PlayerInventory["Crack"];
-		LSL.wCocaine.Maximum = LSL.PlayerInventory["Cocaine"];
-		LSL.wWeed.Description = "Stock : " + LsFunctions.GramsToOz(Drugs["Weed"]) + " de cannabis.";
-		LSL.wCrack.Description = "Stock : " + LsFunctions.GramsToOz(Drugs["Crack"]) + " de crack.";
-		LSL.wCocaine.Description = "Stock : " + LsFunctions.GramsToOz(Drugs["Cocaine"]) + " de cocaïne.";
-		int cMoney = Money - Money / 100 * 20;
-		if (Money > 100)
-		{
-			LSL.wCollect.Description = "Le dealer a " + LsFunctions.IntToMoney(Money) + " $" + " ; il garde 20 %. À récupérer : " + LsFunctions.IntToMoney(cMoney) + " $" + ".";
-		}
-		else
-		{
-			LSL.wCollect.Description = "Le dealer n'a encore rien gagné";
-		}
-	}
 
 	private bool playerNear()
 	{
