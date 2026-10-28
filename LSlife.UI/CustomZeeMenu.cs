@@ -71,6 +71,7 @@ internal static class CustomZeeMenu
 
     private static void OpenOrders()
     {
+        LSL.NotifyZeeRestock();
         if (orderMenu == null)
         {
             orderMenu = new CustomMenu("COMMANDES", "ZEE / COMMANDES");
