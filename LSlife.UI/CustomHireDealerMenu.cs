@@ -18,8 +18,7 @@ internal static class CustomHireDealerMenu
 
     public static void Open()
     {
-        if (Visible || LSL.aDealer == null || LSL.LsMenuPool == null ||
-            LSL.LsMenuPool.IsAnyMenuOpen()) return;
+        if (Visible || LSL.aDealer == null || CustomMenuShared.IsAnyGameplayMenuOpen()) return;
 
         if (menu == null)
         {
