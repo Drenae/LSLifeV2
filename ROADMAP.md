@@ -1,3 +1,9 @@
+## Lot NativeUI — accès au menu employé (28 octobre 2026)
+
+- [x] `PlayerDealer.cs` ouvre directement `CustomWorkerMenu` sans initialiser les widgets NativeUI `wOrder`, `wArmour`, `wWeed`, `wCrack`, `wCocaine`, `wCollect`.
+- [x] Suppression de `SetDealerOrders()`, `SetArmourButton()` et `SetDrugDesc()` dans `PlayerDealer` : ces routines ne construisaient que l'affichage historique.
+- [ ] Les deux appels à `SetDrugDesc()` dans `UI/Menus/WorkerMenus.cs` (callbacks historiques) doivent être supprimés avant compilation ; ne pas considérer ce lot comme terminé tant que ces appels existent.
+
 ## Plan de sortie NativeUI (audit du 28 octobre 2026)
 
 Objectif prioritaire : **supprimer la référence NativeUI du `.csproj` et compiler sans la DLL**. Les avertissements SHVDN2 sont hors périmètre : migration SHVDN3 uniquement après ce jalon.
