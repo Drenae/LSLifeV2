@@ -1,3 +1,11 @@
+## Découplage des actions métier — 28 octobre 2026
+
+- [x] Le menu Zee conserve ses quatre options de vente/livraison en mémoire sans lire les cases à cocher NativeUI ; valeurs initiales inchangées (activées).
+- [x] `LsMenus.HandleCustomerTransaction(bool)` délègue directement à `CustomerTransactionActions` ; l'activation/désactivation de l'ancien bouton n'est plus une condition de la transaction.
+- [x] `LsMenus.PayZeeDebt()` ne modifie plus de composant NativeUI ; le rafraîchissement du libellé reste dans le callback historique `OnZeeMenuSelect`.
+- [ ] NativeUI reste présent pour les anciens callbacks et menus ; pas de suppression de DLL dans ce lot.
+- [ ] Compiler et tester : options de dealer Zee (fermer/réouvrir), vente/refus client, remboursement dette Zee, persistance des données et menus historiques.
+
 ## Lot ouverture des menus personnalisés — 28 octobre 2026
 
 - [x] Zee, planques, coffres, clients, employés, recrutement et marchand d'armes : ouverture protégée par un contrôle partagé qui accepte un pool historique absent et refuse les menus concurrents.
