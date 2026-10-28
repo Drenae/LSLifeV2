@@ -284,7 +284,7 @@ public class StashHouse
 			healthPickup = World.CreatePickup(unchecked((PickupType)(-1888453608)), houseHealthPickPos, Vector3.Zero, new Model("prop_ld_health_pack"), 100);
 			LsFunctions.DbugString("Spawned Health");
 		}
-		if (!LSL.LsMenuPool.IsAnyMenuOpen() && !CustomStashMenu.Visible && LSL.playerPos.DistanceTo(stashPos) <= 1f)
+		if (!CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.playerPos.DistanceTo(stashPos) <= 1f)
 		{
 			if ((float)Game.GameTime > LSL.displayHelpTimer + 3000f)
 			{
@@ -323,9 +323,9 @@ public class StashHouse
 				SetInside(v: false);
 			}
 		}
-		if (LSL.stashMainMenu.Visible && LSL.playerPos.DistanceTo(stashPos) > 1f)
+		if (CustomStashMenu.Visible && LSL.playerPos.DistanceTo(stashPos) > 1f)
 		{
-			LSL.stashMainMenu.Visible = false;
+			CustomStashMenu.Close();
 		}
 	}
 
