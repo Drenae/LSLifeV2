@@ -15,6 +15,13 @@ internal static class CustomWorkerMenu
     private static int equipmentWeaponIndex;
     public static bool Visible => activeMenu != null && activeMenu.Visible;
 
+    public static void Close()
+    {
+        if (activeMenu != null) activeMenu.Close();
+        activeMenu = null;
+        waitForRelease = false;
+    }
+
     public static void Open()
     {
         if (Visible || CustomMenuShared.IsAnyGameplayMenuOpen()) return;
