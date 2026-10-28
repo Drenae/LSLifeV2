@@ -13,6 +13,7 @@ internal static class CustomStashMenu
     private static CustomMenu activeMenu;
     private static bool vehicle, transfer, put;
     private static int stepIndex;
+    private static readonly int[] selected = new int[9];
     private static readonly int[] steps = { 1, 5, 10, 25, 50, 100 };
     private static bool waitForRelease;
     private static int lastFrame = -1;
@@ -55,6 +56,7 @@ internal static class CustomStashMenu
     private static void OpenTransfer(bool car, bool deposit)
     {
         vehicle = car; put = deposit; transfer = true; stepIndex = 0;
+        Array.Clear(selected, 0, selected.Length);
         horizontalRepeat.Reset();
         var menu = new CustomMenu(deposit ? "DEPOSER" : "RETIRER", "");
         menu.Add("Multiplicateur", () => Change(1));
@@ -91,10 +93,22 @@ internal static class CustomStashMenu
         }
         return k == 0 ? LSL.takeWeedStash : k == 1 ? LSL.takeCrackStash : k == 2 ? LSL.takeCocainStash : LSL.takeMoneyStash;
     }
-    private static NativeUI.UIMenuListItem List(int k)
+    private static int Count(int k)
     {
-        if (vehicle) return k == 7 ? (put ? LSL.putArmourVeh : LSL.takeArmourVeh) : (put ? LSL.putWeaponVeh : LSL.takeWeaponVeh);
-        return k == 7 ? (put ? LSL.putArmourStash : LSL.takeArmourStash) : (put ? LSL.putWeaponStash : LSL.takeWeaponStash);
+        if (k == 7)
+            return 1 + Math.Max(0, vehicle
+                ? (put ? LSL.playerArmours : LSL.pStashVehicle.drugCarArmour)
+                : (put ? LSL.playerArmours : LSL.HouseHandler.CurrentHouse.Armor));
+        return vehicle
+            ? (put ? LSL.playerWeps.Count : LSL.pStashVehicle.vehWeps.Count)
+            : (put ? LSL.playerWeps.Count : LSL.HouseHandler.CurrentHouse.Weps.Count);
+    }
+
+    private static string WeaponName(int i)
+    {
+        if (put) return LSL.playerWeps[i];
+        return vehicle ? LSL.pStashVehicle.vehWeps[i].ToString()
+            : LSL.HouseHandler.CurrentHouse.Weps[i].ToString();
     }
     private static void Refresh()
     {
@@ -112,8 +126,8 @@ internal static class CustomStashMenu
         }
         else
         {
-            var a = List(k);
-            if (a.Items.Count > 0) a.Index = (a.Index + direction + a.Items.Count) % a.Items.Count;
+            int count = Count(k);
+            if (count > 0) selected[k] = (selected[k] + direction + count) % count;
         }
     }
     private static void Commit(int k)
@@ -121,19 +135,19 @@ internal static class CustomStashMenu
         if (k <= 6 || k == 8)
         {
             if (k <= 6 && Slider(k).Value <= 0) return;
-            if (k == 8 && List(k).Items.Count == 0) return;
+            if (k == 8 && Count(k) == 0) return;
             if (vehicle)
             {
                 if (k <= 6) VehicleStashTransfer.Transfer(put, k, Slider(k).Value);
-                else VehicleWeaponTransfer.Transfer(put, List(8).Index);
+                else VehicleWeaponTransfer.Transfer(put, selected[8]);
             }
-            else if (put) HouseStashTransfer.Deposit(k, k <= 6 ? Slider(k).Value : List(k).Index);
+            else if (put) HouseStashTransfer.Deposit(k, k <= 6 ? Slider(k).Value : selected[k]);
             else TakeHouse(k);
             if (k <= 6) Slider(k).Value = 0;
         }
         else
         {
-            int amount = List(7).Index;
+            int amount = selected[7];
             if (amount <= 0) return;
             if (vehicle)
             {
@@ -159,7 +173,7 @@ internal static class CustomStashMenu
     }
     private static void TakeHouse(int k)
     {
-        HouseStashTransfer.Withdraw(k, k <= 6 ? Slider(k).Value : List(k).Index);
+        HouseStashTransfer.Withdraw(k, k <= 6 ? Slider(k).Value : selected[k]);
     }
     private static string Value(int k)
     {
@@ -171,8 +185,10 @@ internal static class CustomStashMenu
                 : k <= 5 ? value + "oz"
                 : LsFunctions.IntToMoney(value) + "$";
         }
-        var item = List(k);
-        return item.Items.Count == 0 ? "Aucun" : k == 7 ? "< " + item.Index + " >" : "< " + CustomMenuShared.FrenchWeaponName(item.Items[item.Index].ToString()) + " >";
+        int count = Count(k);
+        if (count == 0) return "Aucun";
+        int index = Math.Min(selected[k], count - 1);
+        return k == 7 ? "< " + index + " >" : "< " + CustomMenuShared.FrenchWeaponName(WeaponName(index)) + " >";
     }
     private static string AvailableValue(int k)
     {
@@ -200,7 +216,7 @@ internal static class CustomStashMenu
             string label = k >= 0 && k <= 5 ? DrugName(k) : activeMenu.Entries[i].Label;
             bool selected = activeMenu.SelectedIndex == i;
             bool available = k < 0 || (k <= 6 ? Slider(k).Maximum > 0 :
-                (k == 7 ? List(k).Items.Count > 1 : List(k).Items.Count > 0));
+                (k == 7 ? Count(k) > 1 : Count(k) > 0));
             // Valeurs dessinees ensemble, alignees a droite : aucune colonne flottante.
             // Les codes GTA ~c~ gardent la disponibilite en gris.
             bool quantity = k >= 0 && k <= 6;
