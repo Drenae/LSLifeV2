@@ -392,7 +392,15 @@ public partial class LSL
 		OrderSummaryMenu.AddItem(OrderSummaryBill);
 		OrderSummaryMenu.AddItem(OrderSummaryDebt);
 		OrderSummaryMenu.AddItem(OrderSummaryCredit);
-		OrderSummaryMenu.OnMenuOpen += (UIMenu sender) => LsFunctions.UpdateOrderMenuDesc();
+		OrderSummaryMenu.OnMenuOpen += (UIMenu sender) =>
+		{
+			OrderSummaryWeed.Text = "Cannabis : " + NewOrder.weed + " oz";
+			OrderSummaryCrack.Text = "Crack : " + NewOrder.crack + " oz";
+			OrderSummaryCocaine.Text = "Cocaïne : " + NewOrder.cocaine + " oz";
+			OrderSummaryBill.Text = LsFunctions.OrderMenuDesc();
+			OrderSummaryDebt.Text = "Dette : " + LsFunctions.IntToMoney(dealer1Debt) + " $";
+			OrderSummaryCredit.Text = "Plafond de crédit : " + LsFunctions.IntToMoney(LsFunctions.zeeDebtCap()) + " $";
+		};
 		PlaceOrder = new UIMenuItem("Commander pour " + LsFunctions.IntToMoney(0) + " $");
 		OrderDrugs.AddItem(PlaceOrder);
 		OrderDrugs.OnItemSelect += LsMenus.OnOrderDrugsMenuSelect;
