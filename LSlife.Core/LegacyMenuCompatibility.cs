@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using NativeUI;
-using GTA.UI;
 
 namespace LSlife;
 
@@ -275,7 +274,7 @@ public partial class LSL
 		OrderDrugs.BannerSprite.Color = Color.Black;
 		OrderDrugs.Title.DropShadow = true;
 		OrderDrugs.Title.Outline = true;
-		((UIText)OrderDrugs.Title).Shadow = true;
+		((GTA.UIText)OrderDrugs.Title).Shadow = true;
 		OrderDrugs.OnMenuOpen += OrderDrugs_OnMenuOpen;
 		buyWeapons = new UIMenuItem("Acheter des armes");
 		zeeMenu.AddItem(buyWeapons);
