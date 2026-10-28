@@ -14,6 +14,7 @@ internal static class CustomStashMenu
     private static bool vehicle, transfer, put;
     private static int stepIndex;
     private static readonly int[] selected = new int[9];
+    private static readonly int[] quantity = new int[7];
     private static readonly int[] steps = { 1, 5, 10, 25, 50, 100 };
     private static bool waitForRelease;
     private static int lastFrame = -1;
@@ -57,6 +58,7 @@ internal static class CustomStashMenu
     {
         vehicle = car; put = deposit; transfer = true; stepIndex = 0;
         Array.Clear(selected, 0, selected.Length);
+        Array.Clear(quantity, 0, quantity.Length);
         horizontalRepeat.Reset();
         var menu = new CustomMenu(deposit ? "DEPOSER" : "RETIRER", "");
         menu.Add("Multiplicateur", () => Change(1));
@@ -77,21 +79,47 @@ internal static class CustomStashMenu
         if (put || vehicle) return row <= 6 ? row - 1 : row - 1;
         return row == 4 ? 6 : row == 5 ? 7 : 8;
     }
-    private static NativeUI.UIMenuSliderItem Slider(int k)
+    private static int MaxQuantity(int k)
     {
-        if (vehicle)
-        {
-            var a = put
-                ? new[] { LSL.putWeedVeh, LSL.putCrackVeh, LSL.putCocainVeh, LSL.putWeedOzVeh, LSL.putCrackOzVeh, LSL.putCocainOzVeh, LSL.putMoneyVeh }
-                : new[] { LSL.takeWeedVeh, LSL.takeCrackVeh, LSL.takeCocainVeh, LSL.takeWeedOzVeh, LSL.takeCrackOzVeh, LSL.takeCocainOzVeh, LSL.takeMoneyVeh };
-            return a[k];
-        }
+        if (k == 6) return Math.Max(0, vehicle
+            ? (put ? Game.Player.Money : LSL.pStashVehicle.drugCarMoney)
+            : (put ? Game.Player.Money : LSL.HouseHandler.CurrentHouse.Money));
         if (put)
         {
-            var a = new[] { LSL.putWeedStash, LSL.putCrackStash, LSL.putCocainStash, LSL.putWeedOzStash, LSL.putCrackOzStash, LSL.putCocainOzStash, LSL.putMoneyStash };
-            return a[k];
+            switch (k)
+            {
+                case 0: return LSL.PlayerInventory["Weed"];
+                case 1: return LSL.PlayerInventory["Crack"];
+                case 2: return LSL.PlayerInventory["Cocaine"];
+                case 3: return LsFunctions.pWeedOunce;
+                case 4: return LsFunctions.pCrackOunce;
+                case 5: return LsFunctions.pCocaineOunce;
+            }
         }
-        return k == 0 ? LSL.takeWeedStash : k == 1 ? LSL.takeCrackStash : k == 2 ? LSL.takeCocainStash : LSL.takeMoneyStash;
+        if (vehicle)
+        {
+            var car = LSL.pStashVehicle;
+            switch (k)
+            {
+                case 0: return car.drugCarWeed;
+                case 1: return car.drugCarCrack;
+                case 2: return car.drugCarCocain;
+                case 3: return car.drugCarWeedOz;
+                case 4: return car.drugCarCrackOz;
+                case 5: return car.drugCarCocainOz;
+            }
+        }
+        else
+        {
+            var house = LSL.HouseHandler.CurrentHouse;
+            switch (k)
+            {
+                case 0: return house.Weed;
+                case 1: return house.Crack;
+                case 2: return house.Cocain;
+            }
+        }
+        return 0;
     }
     private static int Count(int k)
     {
@@ -121,8 +149,8 @@ internal static class CustomStashMenu
         if (k == -1) { stepIndex = (stepIndex + direction + steps.Length) % steps.Length; return; }
         if (k <= 6)
         {
-            var a = Slider(k);
-            a.Value = Math.Max(0, Math.Min(a.Maximum, a.Value + direction * steps[stepIndex]));
+            long next = (long)quantity[k] + (long)direction * steps[stepIndex];
+            quantity[k] = (int)Math.Max(0L, Math.Min((long)Math.Max(0, MaxQuantity(k)), next));
         }
         else
         {
@@ -134,16 +162,16 @@ internal static class CustomStashMenu
     {
         if (k <= 6 || k == 8)
         {
-            if (k <= 6 && Slider(k).Value <= 0) return;
+            if (k <= 6 && quantity[k] <= 0) return;
             if (k == 8 && Count(k) == 0) return;
             if (vehicle)
             {
-                if (k <= 6) VehicleStashTransfer.Transfer(put, k, Slider(k).Value);
+                if (k <= 6) VehicleStashTransfer.Transfer(put, k, quantity[k]);
                 else VehicleWeaponTransfer.Transfer(put, selected[8]);
             }
-            else if (put) HouseStashTransfer.Deposit(k, k <= 6 ? Slider(k).Value : selected[k]);
+            else if (put) HouseStashTransfer.Deposit(k, k <= 6 ? quantity[k] : selected[k]);
             else TakeHouse(k);
-            if (k <= 6) Slider(k).Value = 0;
+            if (k <= 6) quantity[k] = 0;
         }
         else
         {
@@ -173,14 +201,14 @@ internal static class CustomStashMenu
     }
     private static void TakeHouse(int k)
     {
-        HouseStashTransfer.Withdraw(k, k <= 6 ? Slider(k).Value : selected[k]);
+        HouseStashTransfer.Withdraw(k, k <= 6 ? quantity[k] : selected[k]);
     }
     private static string Value(int k)
     {
         if (k == -1) return "< x" + steps[stepIndex] + " >";
         if (k <= 6)
         {
-            int value = Slider(k).Value;
+            int value = quantity[k];
             return k <= 2 ? LsFunctions.GramsToOz(value).Replace(", ", " ").Replace(",", "")
                 : k <= 5 ? value + "oz"
                 : LsFunctions.IntToMoney(value) + "$";
@@ -193,7 +221,7 @@ internal static class CustomStashMenu
     private static string AvailableValue(int k)
     {
         if (k < 0 || k > 6) return null;
-        int maximum = Math.Max(0, Slider(k).Maximum);
+        int maximum = Math.Max(0, MaxQuantity(k));
         return k <= 2 ? "/ " + LsFunctions.GramsToOz(maximum).Replace(", ", " ").Replace(",", "")
             : k <= 5 ? "/ " + maximum + "oz"
             : "/ " + LsFunctions.IntToMoney(maximum) + "$";
@@ -215,7 +243,7 @@ internal static class CustomStashMenu
             if (k == 3) Section(layout, "CONDITIONNE");
             string label = k >= 0 && k <= 5 ? DrugName(k) : activeMenu.Entries[i].Label;
             bool selected = activeMenu.SelectedIndex == i;
-            bool available = k < 0 || (k <= 6 ? Slider(k).Maximum > 0 :
+            bool available = k < 0 || (k <= 6 ? MaxQuantity(k) > 0 :
                 (k == 7 ? Count(k) > 1 : Count(k) > 0));
             // Valeurs dessinees ensemble, alignees a droite : aucune colonne flottante.
             // Les codes GTA ~c~ gardent la disponibilite en gris.
@@ -233,8 +261,8 @@ internal static class CustomStashMenu
             if (k >= 0 && k <= 6)
             {
                 // Barre dans la ligne, comme le menu Approvisionner de l'employe.
-                var slider = Slider(k);
-                float fraction = slider.Maximum > 0 ? Math.Min(1f, (float)slider.Value / slider.Maximum) : 0f;
+                int maximum = Math.Max(0, MaxQuantity(k));
+                float fraction = maximum > 0 ? Math.Min(1f, (float)quantity[k] / maximum) : 0f;
                 bool red = k >= 3 && k <= 5;
                 layout.Block(0f, y =>
                 {
