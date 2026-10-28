@@ -31,7 +31,7 @@ internal static class DealerRecruitmentActions
 				Player player = Game.Player;
 				player.Money -= amount;
 				LsFunctions.PlayTheSound();
-				LSL.hireDealerOfferAmount.Maximum = Game.Player.Money;
+				
 				if (LSL.driveByHandler.AmountOfDriveBy(_agg: true) == 0 && LSL.rnd.Next(0, 5) == 0)
 				{
 					LsFunctions.SpawnDriveBy(LSL.player.Character, _agressive: true);
