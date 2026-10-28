@@ -331,7 +331,8 @@ public partial class LSL
 				if (AreaDebug && !CustomMenuShared.IsAnyGameplayMenuOpen()
                     && !CustomZeeMenu.Visible && !CustomHudOptionsMenu.Visible
                     && !CustomStashMenu.Visible && !CustomCustomerMenu.Visible
-                    && !CustomWeaponDealerMenu.Visible && !CustomHireDealerMenu.Visible)
+                    && !CustomWeaponDealerMenu.Visible && !CustomHireDealerMenu.Visible
+                    && !CustomWorkerMenu.Visible)
 				{
 					areaInfoUI();
 					ZeeInfoUI();
