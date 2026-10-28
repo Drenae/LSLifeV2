@@ -1,3 +1,9 @@
+## Correctif Tick — 28 octobre 2026
+
+- [x] Interaction marchand d'armes : vérification de `LsMenuPool` avant son accès et suppression du double test `IsAnyMenuOpen()`.
+- [ ] La migration NativeUI de `Tick.cs` reste à effectuer ; ce correctif ne supprime aucune dépendance.
+- [ ] Compilation Windows et test en jeu non effectués pour ce correctif.
+
 # Migration NativeUI — état au 28 octobre 2026
 
 **Branche de travail :** `feature/custom-zee-menu` ; **référence stable :** `main`. Ne pas supprimer `NativeUI.dll` avant compilation et vérification des derniers consommateurs.
