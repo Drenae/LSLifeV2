@@ -134,7 +134,6 @@ public class StashHouse
 		Cocain += LsFunctions.pCocaineOunce * 28;
 		LsFunctions.pCocaineOunce = 0;
 		LsFunctions.UpdateInventory();
-		LSL.HouseHandler.UpdateMenu(this);
 		LSL.HouseHandler.SaveHouse(this);
 	}
 
