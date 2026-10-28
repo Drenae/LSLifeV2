@@ -22,6 +22,13 @@ internal static class CustomZeeMenu
 
     public static bool Visible => activeMenu != null && activeMenu.Visible;
 
+    public static void Close()
+    {
+        if (activeMenu != null) activeMenu.Close();
+        activeMenu = null;
+        quantityRepeat.Reset();
+    }
+
     public static void Toggle()
     {
         if (Visible) { activeMenu.Close(); activeMenu = null; quantityRepeat.Reset(); return; }
