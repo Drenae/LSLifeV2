@@ -73,7 +73,7 @@ internal static partial class LsFunctions
 
 	public static void SetWorkerMenuHealth(Ped p)
 	{
-		((UIText)LSL.WorkerMainMenu.Subtitle).Caption = "Santé : " + ((Entity)p).Health + " Protection :" + p.Armor;
+		// Health and armor are displayed in CustomWorkerMenu.
 	}
 
 	public static void SetRandomCombatStats(Ped p)
