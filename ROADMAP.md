@@ -1,3 +1,10 @@
+## Suppression des routines de commande NativeUI — 28 octobre 2026
+
+- [x] `DealerFunctions.cs` : suppression de `UpdateOrderMenuDesc()` (mise à jour des anciens champs `PlaceOrder`, `bushWeed`, `crack`, `cocaine`, `WeedBuy`, `OrderSummary*`, `LsMenuPool`).
+- [x] Suppression de `UpdateDealerInventory()` : ne servait plus qu'à modifier les widgets de Zee et n'était plus appelée depuis le téléphone iFruit.
+- [x] `OrderMenuDesc()` reste disponible comme résumé de facture sans dépendance NativeUI.
+- [ ] Les appels historiques à `UpdateOrderMenuDesc` doivent être supprimés ou migrés dans les anciens gestionnaires avant retrait définitif de NativeUI ; compilation à confirmer.
+
 ## Correctif compilation CS1061 — 28 octobre 2026
 
 - [x] Suppression des cinq appels résiduels à `StashHouseHandler.UpdateMenu()` signalés par `build-baseline(20261028-152244).log` dans `HouseStashTransfer.cs`, `StashHouse.cs`, `CustomStashMenu.cs`, `Menus/PlayerMenus.cs` et `Menus/StashMenus.cs`.
