@@ -7,6 +7,19 @@ namespace LSlife;
 // Fonctions reutilisables pour les menus personnalises.
 internal static class CustomMenuShared
 {
+    // Point d'entree unique pour les interactions du monde et le HUD.
+    // Le pool NativeUI reste pris en compte tant que ses consommateurs existent.
+    internal static bool IsAnyGameplayMenuOpen()
+    {
+        return (LSL.LsMenuPool != null && LSL.LsMenuPool.IsAnyMenuOpen())
+            || CustomZeeMenu.Visible
+            || CustomStashMenu.Visible
+            || CustomCustomerMenu.Visible
+            || CustomWeaponDealerMenu.Visible
+            || CustomHireDealerMenu.Visible
+            || CustomHudOptionsMenu.Visible;
+    }
+
     public static string FrenchWeaponName(string weapon)
     {
         switch (weapon.ToUpperInvariant())
