@@ -15,7 +15,7 @@ internal static class CustomCustomerMenu
 
     public static void Open()
     {
-        if (Visible || LSL.customerSellTo == null || LSL.LsMenuPool.IsAnyMenuOpen())
+        if (Visible || LSL.customerSellTo == null || CustomMenuShared.IsAnyGameplayMenuOpen())
             return;
 
         if (menu == null)
