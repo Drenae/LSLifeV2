@@ -1,3 +1,37 @@
+# Migration NativeUI — état au 28 octobre 2026
+
+**Branche de travail :** `feature/custom-zee-menu` ; **référence stable :** `main`. Ne pas supprimer `NativeUI.dll` avant compilation et vérification des derniers consommateurs.
+
+## Dernier lot livré
+
+- [x] `Setup.cs` : initialisation des anciens menus déplacée dans `LSlife.Core/LegacyMenuCompatibility.cs`, et imports directs NativeUI retirés.
+- [x] `LSL.cs` : anciens champs NativeUI déplacés dans la classe partielle de compatibilité.
+- [x] Correction des erreurs `UIText` / `GTA.UI` dans la couche de compatibilité (commit `6bdc9ef`).
+- [x] `Setup.cs` : correction de migration des sauvegardes d'inventaire ; ajout indépendant des champs manquants `weedOz`, `crackOz`, `cocaineOz`, `armour`, et écriture unique après migration ; rechargement des quantités sans doublon de clés (commit `25d8f4e`).
+- [ ] **Compilation Windows du dernier lot non confirmée** ; les erreurs éventuelles doivent être corrigées avant test GTA.
+- [ ] **NativeUI.dll toujours indispensable** : l'extraction des anciens champs n'est pas une suppression de dépendance.
+
+## Travaux restants, par priorité
+
+1. [ ] Identifier et migrer tous les appels historiques encore actifs dans `Tick.cs` et les gestionnaires de planques, véhicules, dealer, employé, options et interactions.
+2. [ ] Remplacer les accès aux `UIMenu*` et aux sliders/listes NativeUI par les états et services des menus personnalisés ; préserver les sauvegardes et les callbacks iFruit.
+3. [ ] Supprimer les initialisations et événements devenus inutiles dans `LegacyMenuCompatibility.cs`, puis supprimer ce fichier quand il n'a plus de consommateurs.
+4. [ ] Retirer `LsMenuPool.ProcessMenus()` / `IsAnyMenuOpen()` et centraliser l'ouverture, fermeture et navigation des menus personnalisés.
+5. [ ] Retirer la référence NativeUI du `.csproj` et du déploiement ; compiler et tester à froid GTA V Legacy (téléphone Zee, argent, menus, employés, planques, véhicules, armes, sauvegardes).
+6. [ ] Nettoyer les avertissements et les anciennes traces de décompilation après stabilisation, sans confondre avertissements SHVDN2 et erreurs bloquantes.
+
+## Procédure de test
+
+```powershell
+cd E:\LSLife
+git pull origin feature/custom-zee-menu
+.\Build-Baseline.ps1
+```
+
+Ne lancer GTA qu'après une compilation réussie. Éviter de demander plusieurs redémarrages pour des changements purement internes.
+
+---
+
 ## Lot isolé 01 — affichage Employé (26 octobre 2026)
 
 - [x] Ajout de deux lignes **Instruction actuelle** et **Recette brute** dans le menu principal Employé uniquement (`CustomWorkerMenu.cs`).
