@@ -198,6 +198,7 @@ internal static class CustomStashMenu
             LsFunctions.UpdateInventory();
         }
         Refresh();
+        if (k >= 7) selected[k] = Math.Min(selected[k], Math.Max(0, Count(k) - 1));
     }
     private static void TakeHouse(int k)
     {
@@ -208,7 +209,7 @@ internal static class CustomStashMenu
         if (k == -1) return "< x" + steps[stepIndex] + " >";
         if (k <= 6)
         {
-            int value = quantity[k];
+            int value = Math.Min(quantity[k], Math.Max(0, MaxQuantity(k)));
             return k <= 2 ? LsFunctions.GramsToOz(value).Replace(", ", " ").Replace(",", "")
                 : k <= 5 ? value + "oz"
                 : LsFunctions.IntToMoney(value) + "$";
