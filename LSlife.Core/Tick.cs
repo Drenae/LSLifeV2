@@ -748,10 +748,8 @@ public partial class LSL
 							{
 								Function.Call((Hash)7023634693725934496L);
 								customerSellTo = nCustomer;
-								sell.Text = "Vendre " + LsFunctions.GramsToOz(customerSellTo.amount) + " de " + LsFunctions.DrugDisplayName(customerSellTo.Drug.Name) + "?";
-								((UIText)customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.GramsToOz(PlayerInventory[customerSellTo.Drug.Name]) + " de " + LsFunctions.DrugDisplayName(customerSellTo.Drug.Name);
-								sell.Enabled = PlayerInventory[customerSellTo.Drug.Name] >= customerSellTo.amount;
-								if (!sell.Enabled)
+								bool hasStock = PlayerInventory[customerSellTo.Drug.Name] >= customerSellTo.amount;
+								if (!hasStock)
 								{
 									LsFunctions.DisplayHelpText("Stock insuffisant pour cette vente.");
 								}
@@ -770,10 +768,8 @@ public partial class LSL
 							{
 								Function.Call((Hash)7023634693725934496L);
 								customerSellTo = nCustomer;
-								sell.Text = "Vendre " + LsFunctions.GramsToOz(customerSellTo.amount) + " de " + LsFunctions.DrugDisplayName(customerSellTo.Drug.Name) + "?";
-								((UIText)customerMainMenu.Subtitle).Caption = "Tu possèdes " + LsFunctions.GramsToOz(PlayerInventory[customerSellTo.Drug.Name]) + " de " + LsFunctions.DrugDisplayName(customerSellTo.Drug.Name);
-								sell.Enabled = PlayerInventory[customerSellTo.Drug.Name] >= customerSellTo.amount;
-								if (!sell.Enabled)
+								bool hasStock = PlayerInventory[customerSellTo.Drug.Name] >= customerSellTo.amount;
+								if (!hasStock)
 								{
 									LsFunctions.DisplayHelpText("Stock insuffisant pour cette vente.");
 								}
