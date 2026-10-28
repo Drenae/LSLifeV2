@@ -1,3 +1,9 @@
+## Correctif CS1061 (28 octobre 2026)
+
+- [x] Retirer `SetDrugDesc()` de `WorkerRevenueCollection.cs` et `WorkerSupplyTransfer.cs` : les deux appels étaient devenus invalides après suppression de la méthode d'affichage NativeUI.
+- [x] Conserver les mutations de stock, la collecte des recettes et la sauvegarde.
+- [ ] Confirmer la compilation ; audit global des références obligatoire avant les prochaines suppressions.
+
 ## Fin du lot employé — 28 octobre 2026
 
 - [x] `UI/Menus/WorkerMenus.cs` : suppression des deux derniers appels historiques à `PlayerDealer.SetDrugDesc()` ; les transactions et la persistance restent inchangées.
