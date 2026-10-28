@@ -141,7 +141,6 @@ internal static class CustomStashMenu
     private static void Refresh()
     {
         if (vehicle) { if (LSL.pStashVehicle != null) LSL.pStashVehicle.UpdateCarStash(); }
-        else if (LSL.HouseHandler.CurrentHouse != null) LSL.HouseHandler.UpdateMenu(LSL.HouseHandler.CurrentHouse);
     }
     private static void Change(int direction)
     {
