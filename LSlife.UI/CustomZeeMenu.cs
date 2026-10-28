@@ -15,7 +15,8 @@ internal static class CustomZeeMenu
     private static CustomMenu crackMenu;
     private static CustomMenu cocaineMenu;
     private static CustomMenu activeMenu;
-    private static bool dealerWeed, dealerCrack, dealerCocaine, dealerDeliveries;
+    // Choix du menu Zee autonomes : ne lisent plus les cases NativeUI.
+    private static bool dealerWeed = true, dealerCrack = true, dealerCocaine = true, dealerDeliveries = true;
     private static int weedAmount, crackAmount, cocaineAmount, orderMultiplier = 1;
     private static readonly CustomMenuShared.HorizontalRepeat quantityRepeat = new CustomMenuShared.HorizontalRepeat();
 
@@ -53,10 +54,6 @@ internal static class CustomZeeMenu
 
     private static void OpenDealer()
     {
-        dealerWeed = LSL.sellWeed.Checked;
-        dealerCrack = LSL.sellCrack.Checked;
-        dealerCocaine = LSL.sellCocaine.Checked;
-        dealerDeliveries = LSL.allowDeliveries.Checked;
         if (dealerMenu == null)
         {
             dealerMenu = new CustomMenu("DEALER", "ZEE / ACTIVITE");
