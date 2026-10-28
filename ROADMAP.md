@@ -1,3 +1,15 @@
+## Plan de sortie NativeUI (audit du 28 octobre 2026)
+
+Objectif prioritaire : **supprimer la référence NativeUI du `.csproj` et compiler sans la DLL**. Les avertissements SHVDN2 sont hors périmètre : migration SHVDN3 uniquement après ce jalon.
+
+- [ ] **Lot 1 — Couper les dépendances du gameplay** : rechercher et remplacer tous les accès encore actifs aux champs historiques (`LSL.*Menu`, `LsMenuPool`, curseurs et items) ; préserver les services métiers.
+- [ ] **Lot 2 — Retirer les callbacks NativeUI** : `MenuEvents.cs`, `LsMenus.cs` et `UI/Menus/*.cs` ; vérifier que les actions sont déjà exposées aux menus Custom.
+- [ ] **Lot 3 — Supprimer l'initialisation historique** : `InitializeLegacyMenus()` dans `Setup.cs`, `ProcessMenus()` dans `Tick.cs`, vérification du blocage d'interaction dans `CustomMenuShared.cs` ; déplacer les listes de données non visuelles nécessaires hors de `LegacyMenuCompatibility.cs`.
+- [ ] **Lot 4 — Retirer la bibliothèque** : supprimer `LegacyMenuCompatibility.cs`, les derniers types `NativeUI` (notamment `HeatBars/BarHandler.cs` si inutilisé), puis la référence `<Reference Include="NativeUI">` dans `LSlife.csproj`.
+- [ ] **Lot 5 si nécessaire — Stabilisation** : corriger les erreurs de compilation révélées par le retrait de la DLL, sans réintroduire de compatibilité NativeUI.
+
+**Estimation : 4 lots techniques + éventuellement 1 lot de stabilisation.** Il ne s'agit pas d'une garantie de compilation ni d'une demande de test intermédiaire.
+
 ## Correctif compilation CS0117 — 28 octobre 2026
 
 - [x] `DealingMenus.cs:61` : remplacement du dernier appel à `LsFunctions.UpdateOrderMenuDesc()` supprimée par l'affectation de la description via `LsFunctions.OrderMenuDesc()`.
