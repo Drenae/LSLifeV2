@@ -1,3 +1,12 @@
+## Correctifs de compilation NativeUI — 28 octobre 2026
+
+- [x] `Shot.cs` : demandes de livraison via `CustomCustomerMenu` et garde de visibilite Custom.
+- [x] `PedFunctions.cs` : retrait de l'ecriture dans le sous-titre de `WorkerMainMenu`.
+- [x] `DealerLogic.cs` : retrait des mises a jour des anciens curseurs de stock.
+- [x] `DealerRecruitmentActions.cs` : retrait de la mise a jour de l'ancien curseur d'offre.
+- [x] `CustomZeeMenu.cs` : ajout de `Close()` pour les appels existants.
+- [ ] Compilation a confirmer apres ces corrections ; continuer a eliminer toute reference historique revelee par le build.
+
 ## Correctif compilation sans NativeUI — 28 octobre 2026
 
 - [x] Supprimer les huit directives `using NativeUI;` restantes dans `Types.cs`, `CustomerLogic.cs`, `DealerLogic.cs`, `InventoryLogic.cs`, `PlayerLogic.cs`, `AreaLogic.cs`, `PoliceLogic.cs`, `SpawnLogic.cs` (CS0246).
