@@ -292,9 +292,9 @@ public partial class LSL
 				}
 			}
 		}
-		World.RemoveRelationshipGroup(rival_nutral);
-		World.RemoveRelationshipGroup(rival_enemy);
-		World.RemoveRelationshipGroup(CustomerRel);
+		GTA.Native.Function.Call(GTA.Native.Hash.REMOVE_RELATIONSHIP_GROUP, (int)(rival_nutral));
+		GTA.Native.Function.Call(GTA.Native.Hash.REMOVE_RELATIONSHIP_GROUP, (int)(rival_enemy));
+		GTA.Native.Function.Call(GTA.Native.Hash.REMOVE_RELATIONSHIP_GROUP, (int)(CustomerRel));
 		driveByHandler.CleanDriveBys();
 		if (pigs.Count > 0)
 		{
