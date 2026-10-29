@@ -189,12 +189,12 @@ public class StashHouse
 					LSL.displayHelpTimer = Game.GameTime;
 					LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour entrer dans la planque.");
 				}
-				if (!Game.IsControlJustReleased((Control)51))
+				if (!Game.IsControlJustReleased(2, (Control)51))
 				{
 					return;
 				}
 				Function.Call((Hash)7023634693725934496L);
-				((Entity)LSL.player.Character).IsPositionFrozen = true;
+				((Entity)LSL.player.Character).FreezePosition = true;
 				foreach (PlayerDealer playerDealer in LSL.DealerHandler.dealers)
 				{
 					if (playerDealer.NewState == Enums.PdStates.FollowingPlayer)
@@ -203,12 +203,12 @@ public class StashHouse
 						playerDealer.Ped.LeaveGroup();
 					}
 				}
-				GTA.UI.Screen.FadeOut(300);
+				Game.FadeScreenOut(300);
 				Script.Wait(300);
 				((Entity)LSL.player.Character).Position = exitPos;
 				Script.Wait(400);
-				((Entity)LSL.player.Character).IsPositionFrozen = false;
-				GTA.UI.Screen.FadeIn(300);
+				((Entity)LSL.player.Character).FreezePosition = false;
+				Game.FadeScreenIn(300);
 				inside = true;
 				LSL.HouseHandler.CurrentHouse = this;
 				foreach (Ped getPed in LSL.lPeds.GetPeds)
@@ -238,7 +238,7 @@ public class StashHouse
 				LSL.displayHelpTimer = Game.GameTime;
 				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour acheter pour $" + LsFunctions.IntToMoney(price));
 			}
-			if (Game.IsControlJustReleased((Control)51))
+			if (Game.IsControlJustReleased(2, (Control)51))
 			{
 				if (LSL.player.Money >= price)
 				{
@@ -291,7 +291,7 @@ public class StashHouse
 				LSL.displayHelpTimer = Game.GameTime;
 				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour ouvrir le stockage.");
 			}
-			if (Game.IsControlJustReleased((Control)51))
+			if (Game.IsControlJustReleased(2, (Control)51))
 			{
 				Function.Call((Hash)7023634693725934496L);
 				LsFunctions.UpdateInventory();
@@ -307,16 +307,16 @@ public class StashHouse
 				LSL.displayHelpTimer = Game.GameTime;
 				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour sortir de la planque.");
 			}
-			if (Game.IsControlJustReleased((Control)51))
+			if (Game.IsControlJustReleased(2, (Control)51))
 			{
 				Function.Call((Hash)7023634693725934496L);
-				((Entity)LSL.player.Character).IsPositionFrozen = true;
-				GTA.UI.Screen.FadeOut(300);
+				((Entity)LSL.player.Character).FreezePosition = true;
+				Game.FadeScreenOut(300);
 				Script.Wait(300);
 				((Entity)LSL.player.Character).Position = entrancePos;
 				Script.Wait(400);
-				((Entity)LSL.player.Character).IsPositionFrozen = false;
-				GTA.UI.Screen.FadeIn(300);
+				((Entity)LSL.player.Character).FreezePosition = false;
+				Game.FadeScreenIn(300);
 				inside = false;
 				SetInside(v: false);
 			}
@@ -372,7 +372,7 @@ public class StashHouse
 
 	public void RemoveBlip()
 	{
-		blip.Delete();
+		blip.Remove();
 	}
 
 	public void SetBlip()

@@ -205,7 +205,7 @@ internal static class WeaponDealerActions
 		}
 		if (item == WeaponDealerAction.Dismiss && (Entity)(object)LSL.weaponDealer1 != (Entity)null)
 		{
-			((Entity)LSL.weaponDealer1).AttachedBlip.Delete();
+			((Entity)LSL.weaponDealer1).CurrentBlip.Remove();
 			CustomWeaponDealerMenu.Close();
 			LSL.weaponDealer1.Task.WanderAround();
 			((Entity)LSL.weaponDealer1).MarkAsNoLongerNeeded();

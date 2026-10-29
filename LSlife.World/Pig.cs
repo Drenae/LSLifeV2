@@ -306,7 +306,7 @@ public class Pig
 			}
 			if (leader)
 			{
-				UI.ShowSubtitle("On t'a à l'œil. Tu ferais mieux de quitter ~y~" + ZoneCompat.GetZoneName(LSL.playerPos) + "~n~.", 4000);
+				UI.ShowSubtitle("On t'a à l'œil. Tu ferais mieux de quitter ~y~" + World.GetZoneName(LSL.playerPos) + "~n~.", 4000);
 			}
 			LSL.areas[LSL.areaIndex].HeatDecay();
 			Game.Player.Character.Task.ClearAll();
@@ -440,14 +440,14 @@ public class Pig
 			destination = StopPosition();
 			if ((Entity)(object)Ped == (Entity)(object)Vehicle.Driver)
 			{
-				Ped.Task.DriveTo(Vehicle, destination, 10f, (GTA.VehicleDrivingFlags)(786468), 12f);
+				Ped.Task.DriveTo(Vehicle, destination, 10f, 12f, 786468);
 			}
 			CurrentState = States.driveToPlayer;
 			break;
 		case States.Normal:
 			if ((Entity)(object)Vehicle != (Entity)null)
 			{
-				Ped.Task.CruiseWithVehicle(Vehicle, 9f, (GTA.VehicleDrivingFlags)(786603));
+				Ped.Task.CruiseWithVehicle(Vehicle, 9f, 786603);
 			}
 			else
 			{

@@ -146,7 +146,7 @@ public partial class LSL
 			thread.Abort();
 		}
 		showInventory = !showInventory;
-		GTA.Native.Function.Call(GTA.Native.Hash.PLAY_SOUND_FRONTEND, -1, "Text_Arrive_Tone", "Phone_SoundSet_Default", true);
+		Game.PlaySound("Text_Arrive_Tone", "Phone_SoundSet_Default");
 	}
 
 	private void OnAbort(object sender, EventArgs e)
@@ -176,19 +176,19 @@ public partial class LSL
 		}
 		if ((Entity)(object)drugDealer1 != (Entity)null)
 		{
-			Blip currentBlip = ((Entity)drugDealer1).AttachedBlip;
+			Blip currentBlip = ((Entity)drugDealer1).CurrentBlip;
 			if (currentBlip != null)
 			{
-				currentBlip.Delete();
+				currentBlip.Remove();
 			}
 			((Entity)drugDealer1).Delete();
 		}
 		if ((Entity)(object)weaponDealer1 != (Entity)null)
 		{
-			Blip currentBlip2 = ((Entity)weaponDealer1).AttachedBlip;
+			Blip currentBlip2 = ((Entity)weaponDealer1).CurrentBlip;
 			if (currentBlip2 != null)
 			{
-				currentBlip2.Delete();
+				currentBlip2.Remove();
 			}
 			((Entity)weaponDealer1).Delete();
 		}
@@ -199,10 +199,10 @@ public partial class LSL
 				if (c != null)
 				{
 					Ped ped = c.Ped;
-					Blip currentBlip3 = ((Entity)ped).AttachedBlip;
+					Blip currentBlip3 = ((Entity)ped).CurrentBlip;
 					if (currentBlip3 != null)
 					{
-						currentBlip3.Delete();
+						currentBlip3.Remove();
 					}
 					((Entity)ped).Delete();
 				}
@@ -212,20 +212,20 @@ public partial class LSL
 		{
 			if ((Entity)(object)pStashVehicle.drugCar != (Entity)null && ((Entity)pStashVehicle.drugCar).Exists())
 			{
-				((Entity)pStashVehicle.drugCar).AttachedBlip.Delete();
+				((Entity)pStashVehicle.drugCar).CurrentBlip.Remove();
 				((Entity)pStashVehicle.drugCar).Delete();
 			}
 			Blip drugCarBlip = pStashVehicle.drugCarBlip;
 			if (drugCarBlip != null)
 			{
-				drugCarBlip.Delete();
+				drugCarBlip.Remove();
 			}
 		}
 		if (wepDealer != null)
 		{
 			if ((Entity)(object)wepDealer.vehicle != (Entity)null)
 			{
-				((Entity)wepDealer.vehicle).AttachedBlip.Delete();
+				((Entity)wepDealer.vehicle).CurrentBlip.Remove();
 				((Entity)wepDealer.vehicle).Delete();
 			}
 			if ((Entity)(object)wepDealer.ped != (Entity)null)
@@ -237,19 +237,19 @@ public partial class LSL
 		{
 			if ((Entity)(object)aDealer.dPed != (Entity)null)
 			{
-				Blip currentBlip4 = ((Entity)aDealer.dPed).AttachedBlip;
+				Blip currentBlip4 = ((Entity)aDealer.dPed).CurrentBlip;
 				if (currentBlip4 != null)
 				{
-					currentBlip4.Delete();
+					currentBlip4.Remove();
 				}
 				((Entity)aDealer.dPed).Delete();
 			}
 			if ((Entity)(object)aDealer.cPed != (Entity)null)
 			{
-				Blip currentBlip5 = ((Entity)aDealer.cPed).AttachedBlip;
+				Blip currentBlip5 = ((Entity)aDealer.cPed).CurrentBlip;
 				if (currentBlip5 != null)
 				{
-					currentBlip5.Delete();
+					currentBlip5.Remove();
 				}
 				((Entity)aDealer.cPed).Delete();
 			}
@@ -264,10 +264,10 @@ public partial class LSL
 					Ped cPed = pd.cPed;
 					if (cPed != null)
 					{
-						Blip currentBlip6 = ((Entity)cPed).AttachedBlip;
+						Blip currentBlip6 = ((Entity)cPed).CurrentBlip;
 						if (currentBlip6 != null)
 						{
-							currentBlip6.Delete();
+							currentBlip6.Remove();
 						}
 					}
 					Ped cPed2 = pd.cPed;
@@ -278,10 +278,10 @@ public partial class LSL
 					Ped ped2 = pd.Ped;
 					if (ped2 != null)
 					{
-						Blip currentBlip7 = ((Entity)ped2).AttachedBlip;
+						Blip currentBlip7 = ((Entity)ped2).CurrentBlip;
 						if (currentBlip7 != null)
 						{
-							currentBlip7.Delete();
+							currentBlip7.Remove();
 						}
 					}
 					((Entity)pd.Ped).Delete();
@@ -292,9 +292,9 @@ public partial class LSL
 				}
 			}
 		}
-		GTA.Native.Function.Call(GTA.Native.Hash.REMOVE_RELATIONSHIP_GROUP, (int)(rival_nutral));
-		GTA.Native.Function.Call(GTA.Native.Hash.REMOVE_RELATIONSHIP_GROUP, (int)(rival_enemy));
-		GTA.Native.Function.Call(GTA.Native.Hash.REMOVE_RELATIONSHIP_GROUP, (int)(CustomerRel));
+		World.RemoveRelationshipGroup(rival_nutral);
+		World.RemoveRelationshipGroup(rival_enemy);
+		World.RemoveRelationshipGroup(CustomerRel);
 		driveByHandler.CleanDriveBys();
 		if (pigs.Count > 0)
 		{
@@ -303,10 +303,10 @@ public partial class LSL
 				Ped ped3 = pig.Ped;
 				if (ped3 != null)
 				{
-					Blip currentBlip8 = ((Entity)ped3).AttachedBlip;
+					Blip currentBlip8 = ((Entity)ped3).CurrentBlip;
 					if (currentBlip8 != null)
 					{
-						currentBlip8.Delete();
+						currentBlip8.Remove();
 					}
 				}
 				Ped ped4 = pig.Ped;
@@ -317,10 +317,10 @@ public partial class LSL
 				Vehicle vehicle = pig.Vehicle;
 				if (vehicle != null)
 				{
-					Blip currentBlip9 = ((Entity)vehicle).AttachedBlip;
+					Blip currentBlip9 = ((Entity)vehicle).CurrentBlip;
 					if (currentBlip9 != null)
 					{
-						currentBlip9.Delete();
+						currentBlip9.Remove();
 					}
 				}
 				((Entity)pig.Vehicle).Delete();

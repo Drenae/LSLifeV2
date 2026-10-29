@@ -799,27 +799,27 @@ public static class Enums
 		EVENT_INVALID = -1
 	}
 
-	public static int GetPolicePedType()
+	public static PedHash GetPolicePedType()
 	{
 		return LSL.areas[LSL.areaIndex].PoliceType switch
 		{
-			LSL.jurisdictionType.BCSO => unchecked((int)(-1320879687)), 
-			LSL.jurisdictionType.SAPR => unchecked((int)(-277793362)), 
-			LSL.jurisdictionType.LSSD => unchecked((int)(-1320879687)), 
-			LSL.jurisdictionType.LSPD => (int)1581098148, 
-			_ => (int)1581098148, 
+			LSL.jurisdictionType.BCSO => unchecked((PedHash)(-1320879687)), 
+			LSL.jurisdictionType.SAPR => unchecked((PedHash)(-277793362)), 
+			LSL.jurisdictionType.LSSD => unchecked((PedHash)(-1320879687)), 
+			LSL.jurisdictionType.LSPD => (PedHash)1581098148, 
+			_ => (PedHash)1581098148, 
 		};
 	}
 
-	public static int GetPoliceVehType()
+	public static VehicleHash GetPoliceVehType()
 	{
 		return LSL.areas[LSL.areaIndex].PoliceType switch
 		{
-			LSL.jurisdictionType.BCSO => unchecked((int)(-1683328900)), 
-			LSL.jurisdictionType.SAPR => (int)741586030, 
-			LSL.jurisdictionType.LSSD => unchecked((int)(-1683328900)), 
-			LSL.jurisdictionType.LSPD => (int)2046537925, 
-			_ => (int)2046537925, 
+			LSL.jurisdictionType.BCSO => unchecked((VehicleHash)(-1683328900)), 
+			LSL.jurisdictionType.SAPR => (VehicleHash)741586030, 
+			LSL.jurisdictionType.LSSD => unchecked((VehicleHash)(-1683328900)), 
+			LSL.jurisdictionType.LSPD => (VehicleHash)2046537925, 
+			_ => (VehicleHash)2046537925, 
 		};
 	}
 }

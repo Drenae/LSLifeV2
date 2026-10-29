@@ -100,6 +100,6 @@ public class Customer
 			blipName = blipName + " " + Drug.Name + " " + LsFunctions.GramsToOz(amount);
 		}
 		LsFunctions.AddBlip((Entity)(object)ped, (BlipColor)3, blipName, _friend: true, _edge: true);
-		((Entity)ped).AttachedBlip.Scale = 0.5f;
+		((Entity)ped).CurrentBlip.Scale = 0.5f;
 	}
 }

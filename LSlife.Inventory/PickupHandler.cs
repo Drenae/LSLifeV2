@@ -61,8 +61,8 @@ public class PickupHandler
 						{
 							continue;
 						}
-						RaycastResult raycast = World.Raycast(((Entity)cop).Position, bag.pos, (IntersectFlags)1);
-						if (!raycast.DidHit)
+						RaycastResult raycast = World.Raycast(((Entity)cop).Position, bag.pos, (IntersectOptions)1);
+						if (!raycast.DitHitAnything)
 						{
 							if (pig == null || pig.leader)
 							{

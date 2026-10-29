@@ -50,10 +50,10 @@ internal static class ZeeContactActions
 				Vehicle vehicle2 = LSL.wepDealer.vehicle;
 				if (vehicle2 != null)
 				{
-					Blip currentBlip = ((Entity)vehicle2).AttachedBlip;
+					Blip currentBlip = ((Entity)vehicle2).CurrentBlip;
 					if (currentBlip != null)
 					{
-						currentBlip.Delete();
+						currentBlip.Remove();
 					}
 				}
 				LSL.wepDealer = null;

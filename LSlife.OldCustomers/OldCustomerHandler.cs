@@ -40,13 +40,13 @@ internal static class OldCustomerHandler
 	{
 		if (!_ped.IsPlayer)
 		{
-			if (_ped.PedGroup == LSL.player.Character.PedGroup)
+			if (_ped.CurrentPedGroup == LSL.player.Character.CurrentPedGroup)
 			{
 				_ped.LeaveGroup();
 			}
-			if (((Entity)_ped).AttachedBlip != (Blip)null)
+			if (((Entity)_ped).CurrentBlip != (Blip)null)
 			{
-				((Entity)_ped).AttachedBlip.Delete();
+				((Entity)_ped).CurrentBlip.Remove();
 			}
 			OldCustomer oC = new OldCustomer(_ped, _veh, _inside, _canBeRival, _drug);
 			OldCustomers.Add(oC);

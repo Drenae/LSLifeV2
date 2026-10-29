@@ -28,7 +28,7 @@ public partial class LSL
 		areaDebug = Function.Call<uint>(unchecked((Hash)(-3292914402564945716L)), ("areadebug"));
 		spawnP = Function.Call<uint>(unchecked((Hash)(-3292914402564945716L)), ("spawnP"));
 		player = Game.Player;
-		player.Character.PedGroup.SeparationRange = 100f;
+		player.Character.CurrentPedGroup.SeparationRange = 100f;
 		iniSettings = ScriptSettings.Load("scripts\\LSlife.ini");
 		DEBUG = iniSettings.GetValue<bool>("OPTIONS", "DEBUG", false);
 		UseSprites = iniSettings.GetValue<bool>("OPTIONS", "SPRITES", true);
@@ -207,9 +207,9 @@ public partial class LSL
 			XElement weaponAmmoElement = new XElement("AMMO", ammunitionInWeapon);
 			parentElement.Add(weaponNameElement);
 			parentElement.Add(weaponAmmoElement);
-			foreach (WeaponComponent component in player.Character.Weapons[weapon].Components)
+			foreach (WeaponComponent component in Enum.GetValues(typeof(WeaponComponent)))
 			{
-				if (Function.Call<bool>(unchecked((Hash)(-4209984786179366080L)), (player.Character), ((int)weapon), component.Hash))
+				if (Function.Call<bool>(unchecked((Hash)(-4209984786179366080L)), (player.Character), ((int)weapon), ((int)component)))
 				{
 					XElement weaponComponentElement = new XElement("COMPONENT", (object)component);
 					parentElement.Add(weaponComponentElement);

@@ -197,11 +197,11 @@ internal static partial class LsFunctions
 	public static void AddBlip(Entity _ent, BlipColor _col, string _name, bool _friend, bool _edge)
 	{
 		//IL_002a: Unknown result type (might be due to invalid IL or missing references)
-		if (_ent.AttachedBlip == null || !_ent.AttachedBlip.Exists())
+		if (_ent.CurrentBlip == null || !_ent.CurrentBlip.Exists())
 		{
 			_ent.AddBlip();
 		}
-		Blip currentBlip = _ent.AttachedBlip;
+		Blip currentBlip = _ent.CurrentBlip;
 		currentBlip.IsFriendly = _friend;
 		currentBlip.IsShortRange = _edge;
 		currentBlip.Color = _col;
@@ -214,10 +214,10 @@ internal static partial class LsFunctions
 		{
 			Function.Call(unchecked((Hash)(-4932030039357269829L)), (ped));
 		}
-		Blip currentBlip = ((Entity)ped).AttachedBlip;
+		Blip currentBlip = ((Entity)ped).CurrentBlip;
 		if (currentBlip != null)
 		{
-			currentBlip.Delete();
+			currentBlip.Remove();
 		}
 		ped.LeaveGroup();
 		if (clearTask)

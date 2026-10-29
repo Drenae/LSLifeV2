@@ -44,12 +44,12 @@ public class AreaDealer
 	{
 		if (!enabled || (Entity)(object)dPed == (Entity)null || !((Entity)dPed).Exists() || !((Entity)dPed).IsAlive || CurrentState == Enums.DStates.AttackPlayer)
 		{
-			if (recruitmentDebugBlip != null && recruitmentDebugBlip.Exists()) recruitmentDebugBlip.Delete();
+			if (recruitmentDebugBlip != null && recruitmentDebugBlip.Exists()) recruitmentDebugBlip.Remove();
 			recruitmentDebugBlip = null;
 			return;
 		}
 		if (recruitmentDebugBlip != null && recruitmentDebugBlip.Exists()) return;
-		if (((Entity)dPed).AttachedBlip != null && ((Entity)dPed).AttachedBlip.Exists()) return;
+		if (((Entity)dPed).CurrentBlip != null && ((Entity)dPed).CurrentBlip.Exists()) return;
 		recruitmentDebugBlip = ((Entity)dPed).AddBlip();
 		recruitmentDebugBlip.Name = "Dealer recrutable (DEBUG)";
 		recruitmentDebugBlip.Color = (BlipColor)2;
@@ -84,7 +84,7 @@ public class AreaDealer
 			((Entity)dPed).AddBlip();
 		}
 		dPed.Money = LSL.rnd.Next(200, 2000);
-		Area = ZoneCompat.GetZoneNameLabel(((Entity)dPed).Position);
+		Area = World.GetZoneNameLabel(((Entity)dPed).Position);
 	}
 
 	public void CheckState()
@@ -171,10 +171,10 @@ public class AreaDealer
 			if ((Entity)(object)cPed != (Entity)null)
 			{
 				LsFunctions.RemovePedFromWorld(cPed, clearTask: true);
-				Blip currentBlip = ((Entity)cPed).AttachedBlip;
+				Blip currentBlip = ((Entity)cPed).CurrentBlip;
 				if (currentBlip != null)
 				{
-					currentBlip.Delete();
+					currentBlip.Remove();
 				}
 				cPed = null;
 			}
@@ -216,9 +216,9 @@ public class AreaDealer
 			if (!ShouldAttackPlayer())
 			{
 				NewState = Enums.DStates.Normal;
-				if ((!Detected && ((Entity)dPed).AttachedBlip != (Blip)null) || ((Entity)dPed).AttachedBlip.Exists())
+				if ((!Detected && ((Entity)dPed).CurrentBlip != (Blip)null) || ((Entity)dPed).CurrentBlip.Exists())
 				{
-					((Entity)dPed).AttachedBlip.Delete();
+					((Entity)dPed).CurrentBlip.Remove();
 				}
 			}
 			break;
@@ -390,7 +390,7 @@ public class AreaDealer
 				LSL.displayHelpTimer = Game.GameTime;
 				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour parler à cette personne.");
 			}
-			if (Game.IsControlJustPressed((Control)21))
+			if (Game.IsControlJustPressed(2, (Control)21))
 			{
 				Function.Call((Hash)7023634693725934496L);
 				CustomHireDealerMenu.Open();
@@ -486,7 +486,7 @@ public class AreaDealer
 						if (!LSL.CheckIfPedUsed(ped, _allowPolice: false, _allowVehicle: false))
 						{
 							cPed = ped;
-							((Entity)cPed).IsPositionFrozen = false;
+							((Entity)cPed).FreezePosition = false;
 							((Entity)cPed).IsPersistent = true;
 							LastCustomer = ((Entity)cPed).Handle;
 							if (DEBUG)
@@ -573,7 +573,7 @@ public class AreaDealer
 						UI.Notify("Transaction terminée");
 					}
 					LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
-					((Entity)cPed).AttachedBlip.Delete();
+					((Entity)cPed).CurrentBlip.Remove();
 					cPed = null;
 					cTimer.Reset();
 					cTimer.Start();

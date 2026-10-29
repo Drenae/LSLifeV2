@@ -49,7 +49,7 @@ public class Shot
 				{
 					price -= (int)div * customer.Drug.PricePerG;
 				}
-				LsFunctions.TextMsg("Livraison", customer.Ped, "Message", "Tu peux me livrer ~g~" + LsFunctions.GramsToOz(customer.amount) + "~w~ de ~g~" + LsFunctions.DrugDisplayName(customer.Drug.Name) + " ~w~pour $" + LsFunctions.IntToMoney(price) + " à ~y~" + World.GetStreetName(((Entity)customer.Ped).Position) + " ~w~dans ~y~" + ZoneCompat.GetZoneName(((Entity)customer.Ped).Position) + "~w~?");
+				LsFunctions.TextMsg("Livraison", customer.Ped, "Message", "Tu peux me livrer ~g~" + LsFunctions.GramsToOz(customer.amount) + "~w~ de ~g~" + LsFunctions.DrugDisplayName(customer.Drug.Name) + " ~w~pour $" + LsFunctions.IntToMoney(price) + " à ~y~" + World.GetStreetName(((Entity)customer.Ped).Position) + " ~w~dans ~y~" + World.GetZoneName(((Entity)customer.Ped).Position) + "~w~?");
 				timeShotOffered = Game.GameTime;
 				shotOffered = true;
 			}
@@ -61,7 +61,7 @@ public class Shot
 					LSL.displayHelpTimer = Game.GameTime;
 					LsFunctions.DisplayHelpText("~INPUT_CONTEXT_SECONDARY~ pour refuser ou ~INPUT_CONTEXT~ pour accepter");
 				}
-				if (Game.IsControlJustPressed((Control)52) && !CustomMenuShared.IsAnyGameplayMenuOpen())
+				if (Game.IsControlJustPressed(2, (Control)52) && !CustomMenuShared.IsAnyGameplayMenuOpen())
 				{
 					Function.Call((Hash)7023634693725934496L);
 					rejected = true;
@@ -73,12 +73,12 @@ public class Shot
 						LsFunctions.RemovePedFromWorld(customer.Ped, clearTask: true);
 					}
 				}
-				if (Game.IsControlJustPressed((Control)51) && !CustomMenuShared.IsAnyGameplayMenuOpen())
+				if (Game.IsControlJustPressed(2, (Control)51) && !CustomMenuShared.IsAnyGameplayMenuOpen())
 				{
 					Function.Call((Hash)7023634693725934496L);
 					accepted = true;
 					shotOffered = false;
-					((Entity)customer.Ped).AttachedBlip.IsShortRange = false;
+					((Entity)customer.Ped).CurrentBlip.IsShortRange = false;
 					LsFunctions.TextMsg("Livraison", customer.Ped, "Message", "On se retrouve là-bas.");
 					if (LSL.PlayerInventory[customer.Drug.Name] >= customer.amount)
 					{
@@ -108,11 +108,11 @@ public class Shot
 			}
 			if (accepted && customer != null)
 			{
-				if (customer.Ped.PedGroup != LSL.player.Character.PedGroup && dist <= 10f)
+				if (customer.Ped.CurrentPedGroup != LSL.player.Character.CurrentPedGroup && dist <= 10f)
 				{
 					customer.Ped.Task.ClearAll();
 					Function.Call(unchecked((Hash)(-6974808092771143243L)), (((Entity)customer.Ped).Handle), (LSL.playerGroup));
-					((Entity)customer.Ped).AttachedBlip.ShowRoute = false;
+					((Entity)customer.Ped).CurrentBlip.ShowRoute = false;
 				}
 				if (!CustomMenuShared.IsAnyGameplayMenuOpen() && dist <= 2f)
 				{
@@ -124,7 +124,7 @@ public class Shot
 							LSL.displayHelpTimer = Game.GameTime;
 							LsFunctions.DisplayHelpText("~INPUT_SPRINT~ pour vendre à cette personne.");
 						}
-						if (Game.IsControlJustPressed((Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen())
+						if (Game.IsControlJustPressed(2, (Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen())
 						{
 							Function.Call((Hash)7023634693725934496L);
 							LSL.customerSellTo = customer;
@@ -142,7 +142,7 @@ public class Shot
 							LSL.displayHelpTimer = Game.GameTime;
 							LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour vendre à cette personne.");
 						}
-						if (Game.IsControlJustPressed((Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen())
+						if (Game.IsControlJustPressed(2, (Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen())
 						{
 							Function.Call((Hash)7023634693725934496L);
 							LSL.customerSellTo = customer;

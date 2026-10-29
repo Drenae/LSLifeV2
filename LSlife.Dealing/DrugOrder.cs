@@ -103,7 +103,7 @@ public class DrugOrder
 			Vector3 position = ((Entity)stash.drugCar).Position;
 			if (position.DistanceTo(((Entity)LSL.ZeesDealers.dealerCar).Position) < 20f)
 			{
-				GTA.UI.Screen.FadeOut(1000);
+				Game.FadeScreenOut(1000);
 				Script.Wait(2000);
 				LSL.player.Character.SetIntoVehicle(stash.drugCar, unchecked((VehicleSeat)(-1)));
 				if (weed > 0)
@@ -120,7 +120,7 @@ public class DrugOrder
 				}
 				LsFunctions.PlayTheSound();
 				pickedUp = true;
-				GTA.UI.Screen.FadeIn(500);
+				Game.FadeScreenIn(500);
 			}
 			else
 			{

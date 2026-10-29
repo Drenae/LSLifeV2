@@ -94,7 +94,7 @@ public class PlayerDealer
 		//IL_0039: Unknown result type (might be due to invalid IL or missing references)
 		//IL_003f: Unknown result type (might be due to invalid IL or missing references)
 		//IL_0041: Unknown result type (might be due to invalid IL or missing references)
-		area = ZoneCompat.GetZoneNameLabel(pos);
+		area = World.GetZoneNameLabel(pos);
 		ID = id;
 		pHash = hash;
 		Pos = pos;
@@ -357,9 +357,9 @@ public class PlayerDealer
 			{
 				Pos = ((Entity)Ped).Position;
 			}
-			if (area != ZoneCompat.GetZoneNameLabel(((Entity)Ped).Position))
+			if (area != World.GetZoneNameLabel(((Entity)Ped).Position))
 			{
-				area = ZoneCompat.GetZoneNameLabel(((Entity)Ped).Position);
+				area = World.GetZoneNameLabel(((Entity)Ped).Position);
 			}
 			dArmour = Ped.Armor;
 			if (LSL.DealerHandler.currentDealer == this)
@@ -432,7 +432,7 @@ public class PlayerDealer
 					{
 						SetBlip();
 					}
-					if (Ped.PedGroup == Game.Player.Character.PedGroup)
+					if (Ped.CurrentPedGroup == Game.Player.Character.CurrentPedGroup)
 					{
 						Ped.LeaveGroup();
 					}
@@ -459,7 +459,7 @@ public class PlayerDealer
 					{
 						SetBlip();
 					}
-					if (Ped.PedGroup == LSL.player.Character.PedGroup)
+					if (Ped.CurrentPedGroup == LSL.player.Character.CurrentPedGroup)
 					{
 						Ped.LeaveGroup();
 					}
@@ -506,7 +506,7 @@ public class PlayerDealer
 							}
 						}
 					}
-					else if (((Entity)LSL.player.Character).IsDead || Ped.PedGroup != LSL.player.Character.PedGroup || LSL.playerPos.DistanceTo(((Entity)Ped).Position) > 100f)
+					else if (((Entity)LSL.player.Character).IsDead || Ped.CurrentPedGroup != LSL.player.Character.CurrentPedGroup || LSL.playerPos.DistanceTo(((Entity)Ped).Position) > 100f)
 					{
 						Ped.LeaveGroup();
 						NewState = Enums.PdStates.FollowPlayer;
@@ -614,28 +614,28 @@ public class PlayerDealer
 					{
 						((Entity)Ped).Position = LSL.playerPos.Around(2f);
 					}
-					if (LSL.player.Character.PedGroup != Ped.PedGroup)
+					if (LSL.player.Character.CurrentPedGroup != Ped.CurrentPedGroup)
 					{
 						val = ((Entity)LSL.player.Character).Position;
 						if (val.DistanceTo(Pos) < 100f)
 						{
 							Ped.BlockPermanentEvents = false;
-							LSL.player.Character.PedGroup.Add(Ped, false);
-							Function.Call((Hash)3327951495314425415L, (((Entity)Ped).Handle), (LSL.player.Character.PedGroup.Handle), (false));
+							LSL.player.Character.CurrentPedGroup.Add(Ped, false);
+							Function.Call((Hash)3327951495314425415L, (((Entity)Ped).Handle), (LSL.player.Character.CurrentPedGroup.Handle), (false));
 							NewState = Enums.PdStates.FollowingPlayer;
 							break;
 						}
 					}
-					if (LSL.player.Character.PedGroup == Ped.PedGroup)
+					if (LSL.player.Character.CurrentPedGroup == Ped.CurrentPedGroup)
 					{
 						Ped.BlockPermanentEvents = false;
-						Function.Call((Hash)3327951495314425415L, (((Entity)Ped).Handle), (LSL.player.Character.PedGroup.Handle), (false));
+						Function.Call((Hash)3327951495314425415L, (((Entity)Ped).Handle), (LSL.player.Character.CurrentPedGroup.Handle), (false));
 						NewState = Enums.PdStates.FollowingPlayer;
 					}
 					break;
 				case Enums.PdStates.FollowingPlayer:
 				{
-					if (((Entity)LSL.player.Character).IsDead || Ped.PedGroup != LSL.player.Character.PedGroup || isToFar)
+					if (((Entity)LSL.player.Character).IsDead || Ped.CurrentPedGroup != LSL.player.Character.CurrentPedGroup || isToFar)
 					{
 						if (isToFar)
 						{
@@ -780,7 +780,7 @@ public class PlayerDealer
 						if (!LSL.CheckIfPedUsed(ped, _allowPolice: false, _allowVehicle: false) && (Entity)(object)ped != (Entity)(object)lPed)
 						{
 							cPed = ped;
-							((Entity)cPed).IsPositionFrozen = false;
+							((Entity)cPed).FreezePosition = false;
 							((Entity)cPed).IsPersistent = true;
 							if (LSL.DEBUG)
 							{
@@ -862,7 +862,7 @@ public class PlayerDealer
 						UI.Notify("Transaction terminée");
 					}
 					LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
-					((Entity)cPed).AttachedBlip.Delete();
+					((Entity)cPed).CurrentBlip.Remove();
 					lPed = cPed;
 					cPed = null;
 				}
@@ -911,7 +911,7 @@ public class PlayerDealer
 		if ((Entity)(object)Ped != (Entity)null)
 		{
 			LsFunctions.DbugString("Ped spawned at " + ((Entity)Ped).Position.X + ", " + ((Entity)Ped).Position.Y + ", " + ((Entity)Ped).Position.Z);
-			Function.Call((Hash)3327951495314425415L, (((Entity)Ped).Handle), (Game.Player.Character.PedGroup.Handle), (false));
+			Function.Call((Hash)3327951495314425415L, (((Entity)Ped).Handle), (Game.Player.Character.CurrentPedGroup.Handle), (false));
 			LsFunctions.SetImmuneToPlayer(Ped);
 			LsFunctions.AddBlip((Entity)(object)Ped, (BlipColor)3, "Dealer", _friend: true, _edge: true);
 			SetBlip();
@@ -924,10 +924,10 @@ public class PlayerDealer
 			Ped.RelationshipGroup = LSL.playerRelationship;
 			Ped.Weapons.Select(Ped.Weapons.BestWeapon);
 			Ped.CanSwitchWeapons = true;
-			if (CurrentState == Enums.PdStates.FollowPlayer && Game.Player.Character.PedGroup != Ped.PedGroup && LSL.playerPos.DistanceTo(((Entity)Ped).Position) < 100f)
+			if (CurrentState == Enums.PdStates.FollowPlayer && Game.Player.Character.CurrentPedGroup != Ped.CurrentPedGroup && LSL.playerPos.DistanceTo(((Entity)Ped).Position) < 100f)
 			{
-				Game.Player.Character.PedGroup.Add(Ped, false);
-				Function.Call((Hash)3327951495314425415L, (((Entity)Ped).Handle), (Game.Player.Character.PedGroup.Handle), (false));
+				Game.Player.Character.CurrentPedGroup.Add(Ped, false);
+				Function.Call((Hash)3327951495314425415L, (((Entity)Ped).Handle), (Game.Player.Character.CurrentPedGroup.Handle), (false));
 			}
 			if (pData.Count > 0)
 			{
@@ -1080,7 +1080,7 @@ public class PlayerDealer
 			LSL.displayHelpTimer = Game.GameTime;
 			LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour parler à cette personne.");
 		}
-		if (Game.IsControlJustReleased((Control)51))
+		if (Game.IsControlJustReleased(2, (Control)51))
 		{
 			Function.Call((Hash)7023634693725934496L);
 			// Le menu personnalise gere sa propre selection.
@@ -1092,7 +1092,7 @@ public class PlayerDealer
 	private void PromtToFollow()
 	{
 		//IL_002e: Unknown result type (might be due to invalid IL or missing references)
-		if (!CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped && LSL.playerPos.DistanceTo(((Entity)Ped).Position) < 10f && LSL.player.Character.IsInVehicle() && Ped.PedGroup != LSL.player.Character.PedGroup && LsFunctions.IsCustomerNear())
+		if (!CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped && LSL.playerPos.DistanceTo(((Entity)Ped).Position) < 10f && LSL.player.Character.IsInVehicle() && Ped.CurrentPedGroup != LSL.player.Character.CurrentPedGroup && LsFunctions.IsCustomerNear())
 		{
 			if ((float)Game.GameTime > LSL.displayHelpTimer + 5000f)
 			{
@@ -1100,7 +1100,7 @@ public class PlayerDealer
 				LSL.displayHelpTimer = Game.GameTime;
 				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_VEH_HORN~ pour que ton dealer te suive.");
 			}
-			if (Game.IsControlJustPressed((Control)86))
+			if (Game.IsControlJustPressed(2, (Control)86))
 			{
 				Function.Call((Hash)7023634693725934496L);
 				LSL.DealerHandler.currentDealer = this;
@@ -1138,7 +1138,7 @@ public class PlayerDealer
 	{
 		if (blip != (Blip)null)
 		{
-			blip.Delete();
+			blip.Remove();
 			blip = null;
 		}
 	}
@@ -1147,20 +1147,20 @@ public class PlayerDealer
 	{
 		if (NewState == Enums.PdStates.FollowPlayer || CurrentState == Enums.PdStates.FollowPlayer)
 		{
-			((Entity)Ped).AttachedBlip.Color = (BlipColor)54;
+			((Entity)Ped).CurrentBlip.Color = (BlipColor)54;
 		}
 		else
 		{
-			((Entity)Ped).AttachedBlip.Color = (BlipColor)50;
+			((Entity)Ped).CurrentBlip.Color = (BlipColor)50;
 		}
-		((Entity)Ped).AttachedBlip.Name = "Dealer";
-		((Entity)Ped).AttachedBlip.Scale = 0.5f;
-		((Entity)Ped).AttachedBlip.IsShortRange = true;
+		((Entity)Ped).CurrentBlip.Name = "Dealer";
+		((Entity)Ped).CurrentBlip.Scale = 0.5f;
+		((Entity)Ped).CurrentBlip.IsShortRange = true;
 	}
 
 	private void RemoveBlip()
 	{
-		((Entity)Ped).AttachedBlip.Delete();
+		((Entity)Ped).CurrentBlip.Remove();
 	}
 
 	private void SetStartDrugs()

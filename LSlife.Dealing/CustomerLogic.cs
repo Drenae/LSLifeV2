@@ -35,7 +35,7 @@ public partial class LSL
 		//IL_0063: Unknown result type (might be due to invalid IL or missing references)
 		float nDistance = 100f;
 		Customer cCustomer = null;
-		foreach (Customer c in customers.Where((Customer r) => r.Ped.PedGroup == playerGroup))
+		foreach (Customer c in customers.Where((Customer r) => r.Ped.CurrentPedGroup == playerGroup))
 		{
 			Vector3 position = ((Entity)c.Ped).Position;
 			float cDistance = position.DistanceTo(playerPos + ((Entity)player.Character).ForwardVector);
@@ -55,7 +55,7 @@ public partial class LSL
 		//IL_004f: Unknown result type (might be due to invalid IL or missing references)
 		float nDistance = 100f;
 		Customer cCustomer = null;
-		foreach (Customer c in customers.Where((Customer r) => r.Ped.PedGroup == playerGroup && (Entity)(object)r.Ped.CurrentVehicle == (Entity)(object)player.Character.CurrentVehicle))
+		foreach (Customer c in customers.Where((Customer r) => r.Ped.CurrentPedGroup == playerGroup && (Entity)(object)r.Ped.CurrentVehicle == (Entity)(object)player.Character.CurrentVehicle))
 		{
 			Vector3 position = ((Entity)c.Ped).Position;
 			float cDistance = position.DistanceTo(playerPos);
@@ -133,7 +133,7 @@ public partial class LSL
 				{
 					return true;
 				}
-				if (Game.Player.Character.PedGroup == _ped.PedGroup)
+				if (Game.Player.Character.CurrentPedGroup == _ped.CurrentPedGroup)
 				{
 					return true;
 				}

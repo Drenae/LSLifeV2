@@ -272,7 +272,7 @@ public class StashVehicle
 		Vector3 position = ((Entity)drugCar).Position;
 		Vector3 val = ((Entity)drugCar).ForwardVector * -1f;
 		Model model = ((Entity)drugCar).Model;
-		return Vector3.Add(position, Vector3.Multiply(val, VehicleCompat.HalfLength(model) + 0.5f));
+		return Vector3.Add(position, Vector3.Multiply(val, model.GetDimensions().Y / 2f + 0.5f));
 	}
 
 	public void OnTick()
@@ -296,12 +296,12 @@ public class StashVehicle
 		{
 			World.DrawMarker((MarkerType)0, backPos, Vector3.Zero, Vector3.Zero, new Vector3(1f, 1f, 0.5f), Color.Green);
 		}
-		if (!((Entity)drugCar).AttachedBlip.IsShortRange)
+		if (!((Entity)drugCar).CurrentBlip.IsShortRange)
 		{
-			((Entity)drugCar).AttachedBlip.IsShortRange = true;
-			((Entity)drugCar).AttachedBlip.Sprite = (BlipSprite)225;
-			((Entity)drugCar).AttachedBlip.Name = "Drug Car";
-			((Entity)drugCar).AttachedBlip.Color = (BlipColor)2;
+			((Entity)drugCar).CurrentBlip.IsShortRange = true;
+			((Entity)drugCar).CurrentBlip.Sprite = (BlipSprite)225;
+			((Entity)drugCar).CurrentBlip.Name = "Drug Car";
+			((Entity)drugCar).CurrentBlip.Color = (BlipColor)2;
 		}
 		if (LSL.player.Character.IsInVehicle())
 		{
@@ -319,16 +319,16 @@ public class StashVehicle
 		}
 		if (trunkFound)
 		{
-			if (!VehicleCompat.IsDoorOpen(drugCar, 5))
+			if (!drugCar.IsDoorOpen((VehicleDoor)5))
 			{
 				if ((float)Game.GameTime > LSL.displayHelpTimer + 5000f && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 				{
 					LSL.displayHelpTimer = Game.GameTime;
 					LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour ouvrir le coffre.");
 				}
-				if (Game.IsControlJustPressed((Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
+				if (Game.IsControlJustPressed(2, (Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 				{
-					VehicleCompat.OpenDoor(drugCar, 5, false, false);
+					drugCar.OpenDoor((VehicleDoor)5, false, false);
 					UpdateCarStash();
 					CustomStashMenu.OpenVehicle();
 				}
@@ -340,23 +340,23 @@ public class StashVehicle
 					LSL.displayHelpTimer = Game.GameTime;
 					LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour fermer le coffre.");
 				}
-				if (Game.IsControlJustPressed((Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
+				if (Game.IsControlJustPressed(2, (Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 				{
-					VehicleCompat.CloseDoor(drugCar, 5, false);
+					drugCar.CloseDoor((VehicleDoor)5, false);
 				}
 			}
 		}
-		else if (!VehicleCompat.IsDoorOpen(drugCar, 2) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
+		else if (!drugCar.IsDoorOpen((VehicleDoor)2) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 		{
 			if ((float)Game.GameTime > LSL.displayHelpTimer + 3000f)
 			{
 				LSL.displayHelpTimer = Game.GameTime;
 				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour ouvrir les portes arrière.");
 			}
-			if (Game.IsControlJustPressed((Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
+			if (Game.IsControlJustPressed(2, (Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 			{
-				VehicleCompat.OpenDoor(drugCar, 2, true, false);
-				VehicleCompat.OpenDoor(drugCar, 3, true, false);
+				drugCar.OpenDoor((VehicleDoor)2, true, false);
+				drugCar.OpenDoor((VehicleDoor)3, true, false);
 				UpdateCarStash();
 				CustomStashMenu.OpenVehicle();
 			}
@@ -368,10 +368,10 @@ public class StashVehicle
 				LSL.displayHelpTimer = Game.GameTime;
 				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour fermer les portes arrière.");
 			}
-			if (Game.IsControlJustPressed((Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
+			if (Game.IsControlJustPressed(2, (Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 			{
-				VehicleCompat.CloseDoor(drugCar, 2, false);
-				VehicleCompat.CloseDoor(drugCar, 3, false);
+				drugCar.CloseDoor((VehicleDoor)2, false);
+				drugCar.CloseDoor((VehicleDoor)3, false);
 			}
 		}
 	}
@@ -400,7 +400,7 @@ public class StashVehicle
 			{
 				if (drugCarBlip != (Blip)null)
 				{
-					drugCarBlip.Delete();
+					drugCarBlip.Remove();
 					drugCarBlip = null;
 				}
 				Vehicle[] allVehicles = World.GetAllVehicles();
@@ -414,25 +414,25 @@ public class StashVehicle
 					Model model = ((Entity)veh).Model;
 					if (model.Hash == drugCarHash)
 					{
-						if (((Entity)veh).AttachedBlip != (Blip)null)
+						if (((Entity)veh).CurrentBlip != (Blip)null)
 						{
-							((Entity)veh).AttachedBlip.Delete();
+							((Entity)veh).CurrentBlip.Remove();
 						}
 						drugCar = veh;
 						((Entity)drugCar).IsPersistent = true;
 						drugCar.EngineHealth = 1000f;
 						((Entity)drugCar).Health = 1000;
 						drugCar.Repair();
-						if (((Entity)drugCar).AttachedBlip != (Blip)null)
+						if (((Entity)drugCar).CurrentBlip != (Blip)null)
 						{
-							((Entity)drugCar).AttachedBlip.Delete();
+							((Entity)drugCar).CurrentBlip.Remove();
 						}
 						((Entity)drugCar).AddBlip();
-						((Entity)drugCar).AttachedBlip.IsShortRange = true;
-						((Entity)drugCar).AttachedBlip.IsFriendly = true;
-						((Entity)drugCar).AttachedBlip.Sprite = (BlipSprite)225;
-						((Entity)drugCar).AttachedBlip.Name = "Drug Car";
-						((Entity)drugCar).AttachedBlip.Color = (BlipColor)2;
+						((Entity)drugCar).CurrentBlip.IsShortRange = true;
+						((Entity)drugCar).CurrentBlip.IsFriendly = true;
+						((Entity)drugCar).CurrentBlip.Sprite = (BlipSprite)225;
+						((Entity)drugCar).CurrentBlip.Name = "Drug Car";
+						((Entity)drugCar).CurrentBlip.Color = (BlipColor)2;
 					}
 				}
 				if ((Entity)(object)drugCar == (Entity)null || !((Entity)drugCar).Exists())
@@ -458,9 +458,9 @@ public class StashVehicle
 		{
 			return;
 		}
-		if (((Entity)drugCar).AttachedBlip.Exists() && (Entity)(object)drugCar.Driver == (Entity)(object)LSL.player.Character)
+		if (((Entity)drugCar).CurrentBlip.Exists() && (Entity)(object)drugCar.Driver == (Entity)(object)LSL.player.Character)
 		{
-			((Entity)drugCar).AttachedBlip.Delete();
+			((Entity)drugCar).CurrentBlip.Remove();
 		}
 		if (LSL.player.Character.IsInVehicle())
 		{
@@ -494,7 +494,7 @@ public class StashVehicle
 			drugCarWanted = false;
 			((Entity)drugCar).IsPersistent = false;
 			((Entity)drugCar).MarkAsNoLongerNeeded();
-			((Entity)drugCar).AttachedBlip.Delete();
+			((Entity)drugCar).CurrentBlip.Remove();
 			drugCar = null;
 			drugCarDestroyed = true;
 			LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
@@ -550,7 +550,7 @@ public class StashVehicle
 				drugCarBlip.Name = "Drug Car";
 				drugCarBlip.Color = (BlipColor)2;
 			}
-			((Entity)drugCar).AttachedBlip.Delete();
+			((Entity)drugCar).CurrentBlip.Remove();
 			((Entity)drugCar).Delete();
 			drugCar = null;
 		}
@@ -565,7 +565,7 @@ public class StashVehicle
 				drugCarBlip.Name = "Drug Car";
 				drugCarBlip.Color = (BlipColor)2;
 			}
-			((Entity)drugCar).AttachedBlip.Delete();
+			((Entity)drugCar).CurrentBlip.Remove();
 			((Entity)drugCar).Delete();
 			drugCar = null;
 		}
@@ -589,13 +589,13 @@ public class StashVehicle
 		drugCarDestroyed = true;
 		if (drugCarBlip != (Blip)null)
 		{
-			drugCarBlip.Delete();
+			drugCarBlip.Remove();
 		}
 		((Entity)drugCar).IsPersistent = false;
 		((Entity)drugCar).MarkAsNoLongerNeeded();
-		if (((Entity)drugCar).AttachedBlip != (Blip)null)
+		if (((Entity)drugCar).CurrentBlip != (Blip)null)
 		{
-			((Entity)drugCar).AttachedBlip.Delete();
+			((Entity)drugCar).CurrentBlip.Remove();
 		}
 		XDocument veh = XDocument.Load("scripts\\LSLife\\LSLife_Vehicles.xml");
 		foreach (XElement element in veh.Descendants())
@@ -630,7 +630,7 @@ public class StashVehicle
 		drugCarWanted = false;
 		((Entity)drugCar).IsPersistent = false;
 		((Entity)drugCar).MarkAsNoLongerNeeded();
-		((Entity)drugCar).AttachedBlip.Delete();
+		((Entity)drugCar).CurrentBlip.Remove();
 		((Entity)drugCar).Delete();
 		drugCar = null;
 		LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
@@ -909,16 +909,16 @@ public class StashVehicle
 			((Entity)drugCar).IsPersistent = true;
 			drugCar.RimColor = rimCol;
 			drugCar.Repair();
-			if (((Entity)drugCar).AttachedBlip != (Blip)null)
+			if (((Entity)drugCar).CurrentBlip != (Blip)null)
 			{
-				((Entity)drugCar).AttachedBlip.Delete();
+				((Entity)drugCar).CurrentBlip.Remove();
 			}
 			((Entity)drugCar).AddBlip();
-			((Entity)drugCar).AttachedBlip.IsShortRange = true;
-			((Entity)drugCar).AttachedBlip.IsFriendly = true;
-			((Entity)drugCar).AttachedBlip.Sprite = (BlipSprite)225;
-			((Entity)drugCar).AttachedBlip.Name = "Drug Car";
-			((Entity)drugCar).AttachedBlip.Color = (BlipColor)2;
+			((Entity)drugCar).CurrentBlip.IsShortRange = true;
+			((Entity)drugCar).CurrentBlip.IsFriendly = true;
+			((Entity)drugCar).CurrentBlip.Sprite = (BlipSprite)225;
+			((Entity)drugCar).CurrentBlip.Name = "Drug Car";
+			((Entity)drugCar).CurrentBlip.Color = (BlipColor)2;
 			{
 				foreach (XElement veh2 in vehiclesXML.Descendants())
 				{
@@ -1076,16 +1076,16 @@ public class StashVehicle
 		vehiclesXML.Save("scripts\\LSLife\\LSLife_Vehicles.xml");
 		drugCar = veh;
 		((Entity)drugCar).IsPersistent = true;
-		if (((Entity)drugCar).AttachedBlip != (Blip)null)
+		if (((Entity)drugCar).CurrentBlip != (Blip)null)
 		{
-			((Entity)drugCar).AttachedBlip.Delete();
+			((Entity)drugCar).CurrentBlip.Remove();
 		}
 		((Entity)drugCar).AddBlip();
-		((Entity)drugCar).AttachedBlip.IsShortRange = true;
-		((Entity)drugCar).AttachedBlip.IsFriendly = true;
-		((Entity)drugCar).AttachedBlip.Sprite = (BlipSprite)225;
-		((Entity)drugCar).AttachedBlip.Name = "Drug Car";
-		((Entity)drugCar).AttachedBlip.Color = (BlipColor)2;
+		((Entity)drugCar).CurrentBlip.IsShortRange = true;
+		((Entity)drugCar).CurrentBlip.IsFriendly = true;
+		((Entity)drugCar).CurrentBlip.Sprite = (BlipSprite)225;
+		((Entity)drugCar).CurrentBlip.Name = "Drug Car";
+		((Entity)drugCar).CurrentBlip.Color = (BlipColor)2;
 		drugCarDestroyed = false;
 		CurrentPosition = ((Entity)drugCar).Position;
 	}

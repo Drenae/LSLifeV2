@@ -54,12 +54,12 @@ internal static class CustomWeaponDealerMenu
             WeaponHash weapon;
             if (!Enum.TryParse<WeaponHash>(weaponName, true, out weapon))
             {
-                GTA.UI.Screen.ShowSubtitle("Arme indisponible : " + weaponName, 3000);
+                GTA.UI.ShowSubtitle("Arme indisponible : " + weaponName, 3000);
                 return;
             }
             if (Game.Player.Character.Weapons.HasWeapon(weapon))
             {
-                GTA.UI.Screen.ShowSubtitle("Tu possedes deja cette arme.", 2500);
+                GTA.UI.ShowSubtitle("Tu possedes deja cette arme.", 2500);
                 return;
             }
         }
@@ -75,19 +75,19 @@ internal static class CustomWeaponDealerMenu
         if (paid || credit)
         {
             LsFunctions.PlayTheSound();
-            GTA.UI.Screen.ShowSubtitle(credit ? "Achat effectue a credit." : "Achat effectue.", 2500);
+            GTA.UI.ShowSubtitle(credit ? "Achat effectue a credit." : "Achat effectue.", 2500);
         }
         else if (item == WeaponDealerAction.Armour && Game.Player.Character.Armor != armourBefore)
         {
-            GTA.UI.Screen.ShowSubtitle("Gilet pare-balles obtenu.", 2500);
+            GTA.UI.ShowSubtitle("Gilet pare-balles obtenu.", 2500);
         }
         else if (isAmmo && Game.Player.Character.Weapons.Current.Ammo != ammoBefore)
         {
-            GTA.UI.Screen.ShowSubtitle("Munitions obtenues.", 2500);
+            GTA.UI.ShowSubtitle("Munitions obtenues.", 2500);
         }
         else
         {
-            GTA.UI.Screen.ShowSubtitle("Achat impossible : fonds insuffisants, plafond de credit ou inventaire plein.", 3500);
+            GTA.UI.ShowSubtitle("Achat impossible : fonds insuffisants, plafond de credit ou inventaire plein.", 3500);
         }
     }
 

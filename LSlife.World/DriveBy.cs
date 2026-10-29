@@ -103,14 +103,14 @@ public class DriveBy
 		{
 			if (!Agressive)
 			{
-				((Entity)Vehicle).AttachedBlip.Color = (BlipColor)1;
-				((Entity)Vehicle).AttachedBlip.Name = "Driveby Vehicle";
+				((Entity)Vehicle).CurrentBlip.Color = (BlipColor)1;
+				((Entity)Vehicle).CurrentBlip.Name = "Driveby Vehicle";
 			}
 		}
 		else if (Agressive)
 		{
-			((Entity)Vehicle).AttachedBlip.Color = (BlipColor)61;
-			((Entity)Vehicle).AttachedBlip.Name = "Patrol";
+			((Entity)Vehicle).CurrentBlip.Color = (BlipColor)61;
+			((Entity)Vehicle).CurrentBlip.Name = "Patrol";
 		}
 	}
 
@@ -172,7 +172,7 @@ public class DriveBy
 						enterState = false;
 						if ((Entity)(object)Leader != (Entity)null && ((Entity)Leader).Exists() && (Entity)(object)Vehicle != (Entity)null && ((Entity)Vehicle).Exists())
 						{
-							Leader.Task.DriveTo(Vehicle, LastKnownPosition, 10f, (GTA.VehicleDrivingFlags)(6), 17f);
+							Leader.Task.DriveTo(Vehicle, LastKnownPosition, 10f, 17f, 6);
 						}
 					}
 					bool seen = false;
@@ -212,7 +212,7 @@ public class DriveBy
 							Ped leader2 = Leader;
 							if (leader2 != null)
 							{
-								leader2.Task.CruiseWithVehicle(Vehicle, 13f, (GTA.VehicleDrivingFlags)(5));
+								leader2.Task.CruiseWithVehicle(Vehicle, 13f, 5);
 							}
 						}
 					}
@@ -268,7 +268,7 @@ public class DriveBy
 					if (enterState)
 					{
 						enterState = false;
-						Leader.Task.DriveTo(Vehicle, LastKnownPosition, 10f, (GTA.VehicleDrivingFlags)(6), 17f);
+						Leader.Task.DriveTo(Vehicle, LastKnownPosition, 10f, 17f, 6);
 					}
 					position = ((Entity)Leader).Position;
 					if (position.DistanceTo(LastKnownPosition) < 20f)
@@ -282,7 +282,7 @@ public class DriveBy
 					{
 						enterState = false;
 						time = Game.GameTime;
-						Leader.Task.CruiseWithVehicle(Vehicle, 13f, (GTA.VehicleDrivingFlags)(5));
+						Leader.Task.CruiseWithVehicle(Vehicle, 13f, 5);
 					}
 					else
 					{
@@ -343,7 +343,7 @@ public class DriveBy
 
 	private void RemoveVehicle()
 	{
-		((Entity)Vehicle).AttachedBlip.Delete();
+		((Entity)Vehicle).CurrentBlip.Remove();
 		((Entity)Vehicle).MarkAsNoLongerNeeded();
 		LSL.entitiesCleanUp.Add((Entity)(object)Vehicle);
 		Vehicle = null;
@@ -383,7 +383,7 @@ public class DriveBy
 			{
 				if ((Entity)(object)p != (Entity)null && ((Entity)p).Exists())
 				{
-					if (!p.IsInVehicle() && !((Entity)p).AttachedBlip.Exists())
+					if (!p.IsInVehicle() && !((Entity)p).CurrentBlip.Exists())
 					{
 						LsFunctions.AddBlip((Entity)(object)p, (BlipColor)1, "Driveby Ped", _friend: false, _edge: false);
 					}
@@ -417,7 +417,7 @@ public class DriveBy
 			Leader = Peds.First();
 			foreach (Ped p2 in Peds)
 			{
-				if (p2.PedGroup == Group)
+				if (p2.CurrentPedGroup == Group)
 				{
 					Group.Remove(p2);
 				}
@@ -536,7 +536,7 @@ public class DriveBy
 			{
 				style = (DrivingStyle)6;
 			}
-			p.Task.DriveTo(Vehicle, LastKnownPosition, 10f, (GTA.VehicleDrivingFlags)(int)style, 20f);
+			p.Task.DriveTo(Vehicle, LastKnownPosition, 10f, 20f, (int)style);
 		}
 		else if (Agressive)
 		{

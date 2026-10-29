@@ -166,7 +166,7 @@ internal static class Prison
 					{
 						copCar = World.CreateVehicle(new Model((VehicleHash)2046537925), pos, heading);
 						((Entity)copCar).AddBlip();
-						((Entity)copCar).AttachedBlip.Sprite = (BlipSprite)672;
+						((Entity)copCar).CurrentBlip.Sprite = (BlipSprite)672;
 						if (DEBUG)
 						{
 							UI.Notify("Transport généré : " + (object)copCar);
@@ -206,32 +206,32 @@ internal static class Prison
 				break;
 			case PrisonStates.CopEnterCar:
 				Function.Call(unchecked((Hash)(-5650329060376590909L)), (((Entity)cop).Handle), (100f));
-				cop.Task.DriveTo(copCar, PrisonPos, 5f, (GTA.VehicleDrivingFlags)(5), Speed);
+				cop.Task.DriveTo(copCar, PrisonPos, 5f, Speed, 5);
 				CurrentState = PrisonStates.CopEnterCar;
 				stateChanged = true;
 				break;
 			case PrisonStates.ApproachBarrier:
-				cop.Task.DriveTo(copCar, BarrierWaitPos, 1f, (GTA.VehicleDrivingFlags)(2883621), Speed);
+				cop.Task.DriveTo(copCar, BarrierWaitPos, 1f, Speed, 2883621);
 				CurrentState = PrisonStates.ApproachBarrier;
 				stateChanged = true;
 				break;
 			case PrisonStates.ApproachGate1:
-				cop.Task.DriveTo(copCar, Gate1WaitPos, 1f, (GTA.VehicleDrivingFlags)(262144), Speed);
+				cop.Task.DriveTo(copCar, Gate1WaitPos, 1f, Speed, 262144);
 				CurrentState = PrisonStates.ApproachGate1;
 				stateChanged = true;
 				break;
 			case PrisonStates.ApproachGate2:
-				cop.Task.DriveTo(copCar, Gate2WaitPos, 1f, (GTA.VehicleDrivingFlags)(262144), Speed);
+				cop.Task.DriveTo(copCar, Gate2WaitPos, 1f, Speed, 262144);
 				CurrentState = PrisonStates.ApproachGate2;
 				stateChanged = true;
 				break;
 			case PrisonStates.FinalApproach:
-				cop.Task.DriveTo(copCar, Gate2ExitPos, 1f, (GTA.VehicleDrivingFlags)(262144), Speed);
+				cop.Task.DriveTo(copCar, Gate2ExitPos, 1f, Speed, 262144);
 				CurrentState = PrisonStates.FinalApproach;
 				stateChanged = true;
 				break;
 			case PrisonStates.FinalPos:
-				cop.Task.DriveTo(copCar, FinalPos, 1f, (GTA.VehicleDrivingFlags)(262144), Speed);
+				cop.Task.DriveTo(copCar, FinalPos, 1f, Speed, 262144);
 				CurrentState = PrisonStates.FinalPos;
 				stateChanged = true;
 				break;
@@ -277,7 +277,7 @@ internal static class Prison
 			if (position.DistanceTo(Gate1WaitPos) <= 5f && PriGate1 == null && (Entity)(object)pGate1() != (Entity)null)
 			{
 				PriGate1 = new Gate(pGate1());
-				((Entity)PriGate1.Prop).IsPositionFrozen = false;
+				((Entity)PriGate1.Prop).FreezePosition = false;
 				NewState = PrisonStates.ApproachGate2;
 				Model model = ((Entity)pGate1()).Model;
 				UI.Notify("Portail trouvé : " + model.Hash);
@@ -289,7 +289,7 @@ internal static class Prison
 			if (position.DistanceTo(Gate2WaitPos) <= 3f && PriGate2 == null && (Entity)(object)pGate2() != (Entity)null)
 			{
 				PriGate2 = new Gate(pGate2());
-				((Entity)PriGate2.Prop).IsPositionFrozen = false;
+				((Entity)PriGate2.Prop).FreezePosition = false;
 				NewState = PrisonStates.FinalApproach;
 			}
 			break;

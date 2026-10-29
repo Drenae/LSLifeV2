@@ -237,23 +237,23 @@ public partial class LSL
 			UI.Notify("~g~LsLife: " + vNumber);
 			UI.Notify("~g~LsLife: " + areas.Count + " zones chargées");
 			lPeds = new LsLPeds();
-			GTA.Native.Function.Call(GTA.Native.Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, (int)((Relationship)3), (int)(playerRelationship), (int)(CustomerRel));
-			GTA.Native.Function.Call(GTA.Native.Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, (int)((Relationship)3), (int)(playerRelationship), (int)(rival_nutral));
-			GTA.Native.Function.Call(GTA.Native.Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, (int)((Relationship)5), (int)(playerRelationship), (int)(rival_enemy));
-			GTA.Native.Function.Call(GTA.Native.Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, (int)((Relationship)3), (int)(rival_nutral), (int)(CustomerRel));
-			GTA.Native.Function.Call(GTA.Native.Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, (int)((Relationship)3), (int)(rival_nutral), (int)(playerRelationship));
-			GTA.Native.Function.Call(GTA.Native.Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, (int)((Relationship)1), (int)(rival_nutral), (int)(rival_enemy));
-			GTA.Native.Function.Call(GTA.Native.Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, (int)((Relationship)1), (int)(rival_enemy), (int)(CustomerRel));
-			GTA.Native.Function.Call(GTA.Native.Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, (int)((Relationship)5), (int)(rival_enemy), (int)(playerRelationship));
-			GTA.Native.Function.Call(GTA.Native.Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, (int)((Relationship)1), (int)(rival_enemy), (int)(rival_nutral));
-			GTA.Native.Function.Call(GTA.Native.Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, (int)((Relationship)0), (int)(CustomerRel), (int)(playerRelationship));
-			GTA.Native.Function.Call(GTA.Native.Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, (int)((Relationship)0), (int)(CustomerRel), (int)(rival_nutral));
-			GTA.Native.Function.Call(GTA.Native.Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, (int)((Relationship)0), (int)(CustomerRel), (int)(rival_enemy));
+			World.SetRelationshipBetweenGroups((Relationship)3, playerRelationship, CustomerRel);
+			World.SetRelationshipBetweenGroups((Relationship)3, playerRelationship, rival_nutral);
+			World.SetRelationshipBetweenGroups((Relationship)5, playerRelationship, rival_enemy);
+			World.SetRelationshipBetweenGroups((Relationship)3, rival_nutral, CustomerRel);
+			World.SetRelationshipBetweenGroups((Relationship)3, rival_nutral, playerRelationship);
+			World.SetRelationshipBetweenGroups((Relationship)1, rival_nutral, rival_enemy);
+			World.SetRelationshipBetweenGroups((Relationship)1, rival_enemy, CustomerRel);
+			World.SetRelationshipBetweenGroups((Relationship)5, rival_enemy, playerRelationship);
+			World.SetRelationshipBetweenGroups((Relationship)1, rival_enemy, rival_nutral);
+			World.SetRelationshipBetweenGroups((Relationship)0, CustomerRel, playerRelationship);
+			World.SetRelationshipBetweenGroups((Relationship)0, CustomerRel, rival_nutral);
+			World.SetRelationshipBetweenGroups((Relationship)0, CustomerRel, rival_enemy);
 			playerHeat = -100f;
 			Function.Call((Hash)2750315038012726912L, (player.Character), (9), (0), (0), (0));
 			playerHasBag = false;
 			canSprint = true;
-			playerArea = ZoneCompat.GetZoneNameLabel(playerPos);
+			playerArea = World.GetZoneNameLabel(playerPos);
 			if (areas.Where((Area a) => a.Name != playerArea).Count() == 0)
 			{
 				if (zoneData.ContainsKey(playerArea))
@@ -298,7 +298,7 @@ public partial class LSL
 		CustomHireDealerMenu.TickOncePerFrame();
 		CustomWorkerMenu.TickOncePerFrame();
 		CustomHudOptionsMenu.TickOncePerFrame();
-		if (Game.IsControlPressed(2, (Control)76) && Game.IsControlJustPressed((Control)26))
+		if (Game.IsControlPressed(2, (Control)76) && Game.IsControlJustPressed(2, (Control)26))
 		{
 			DropDrugs.Drop();
 		}
@@ -353,7 +353,7 @@ public partial class LSL
 					displayHelpTimer = Game.GameTime;
 					LsFunctions.DisplayHelpText("~INPUT_CONTEXT~ pour obtempérer.");
 				}
-				if (Game.IsControlJustPressed((Control)51))
+				if (Game.IsControlJustPressed(2, (Control)51))
 				{
 					PlayerComplied = true;
 					TaskSequence giveUP = new TaskSequence();
@@ -367,7 +367,7 @@ public partial class LSL
 				}
 			}
 			HandleAreaDealers();
-			if (!CustomMenuShared.IsAnyGameplayMenuOpen() && (Entity)(object)weaponDealer1 != (Entity)null && readyToDeal && Game.IsControlJustPressed((Control)51))
+			if (!CustomMenuShared.IsAnyGameplayMenuOpen() && (Entity)(object)weaponDealer1 != (Entity)null && readyToDeal && Game.IsControlJustPressed(2, (Control)51))
 			{
 				CustomWeaponDealerMenu.Open();
 			}
@@ -687,7 +687,7 @@ public partial class LSL
 									LsFunctions.RemovePedFromWorld(c.Ped, clearTask: true);
 									break;
 								}
-								if (!(c.Ped.PedGroup != player.Character.PedGroup))
+								if (!(c.Ped.CurrentPedGroup != player.Character.CurrentPedGroup))
 								{
 									continue;
 								}
@@ -744,7 +744,7 @@ public partial class LSL
 								displayHelpTimer = Game.GameTime;
 								LsFunctions.DisplayHelpText("~INPUT_SPRINT~ pour vendre depuis le véhicule.");
 							}
-							if (Game.IsControlJustPressed((Control)21))
+							if (Game.IsControlJustPressed(2, (Control)21))
 							{
 								Function.Call((Hash)7023634693725934496L);
 								customerSellTo = nCustomer;
@@ -764,7 +764,7 @@ public partial class LSL
 								displayHelpTimer = Game.GameTime;
 								LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour vendre à cette personne.");
 							}
-							if (Game.IsControlJustPressed((Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen())
+							if (Game.IsControlJustPressed(2, (Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen())
 							{
 								Function.Call((Hash)7023634693725934496L);
 								customerSellTo = nCustomer;
@@ -793,7 +793,7 @@ public partial class LSL
 							displayHelpTimer = Game.GameTime;
 							LsFunctions.DisplayHelpText("Appuie sur ~INPUT_VEH_EXIT~ pour entrer.");
 						}
-						if (Game.IsControlJustPressed((Control)75))
+						if (Game.IsControlJustPressed(2, (Control)75))
 						{
 							Function.Call((Hash)7023634693725934496L);
 							player.Character.Task.EnterVehicle(wepDealer.vehicle, (VehicleSeat)0);
@@ -802,7 +802,7 @@ public partial class LSL
 				}
 				else if (player.Character.IsInVehicle() && ((Entity)player.Character.CurrentVehicle).Handle == ((Entity)wepDealer.vehicle).Handle)
 				{
-					if (Game.IsControlJustPressed((Control)52))
+					if (Game.IsControlJustPressed(2, (Control)52))
 					{
 						player.Character.Task.LeaveVehicle(player.Character.CurrentVehicle, true);
 						Script.Wait(5500);
@@ -811,11 +811,11 @@ public partial class LSL
 						wepDealer.ped.CurrentVehicle.SoundHorn(12);
 						((Entity)wepDealer.ped).IsPersistent = false;
 						((Entity)wepDealer.vehicle).IsPersistent = false;
-						((Entity)wepDealer.vehicle).AttachedBlip.Delete();
+						((Entity)wepDealer.vehicle).CurrentBlip.Remove();
 						Function.Call((Hash)5188501456062479616L, (((Entity)wepDealer.ped).Handle), (((Entity)wepDealer.vehicle).Handle), (20f), (786603));
 						wepDealer = null;
 					}
-					if (Game.IsControlJustPressed((Control)51))
+					if (Game.IsControlJustPressed(2, (Control)51))
 					{
 						if (wepDealer.state == Dealer.States.Driving)
 						{
@@ -877,9 +877,9 @@ public partial class LSL
 							{
 								continue;
 							}
-							if (ent.AttachedBlip != (Blip)null || ent.AttachedBlip.Exists())
+							if (ent.CurrentBlip != (Blip)null || ent.CurrentBlip.Exists())
 							{
-								ent.AttachedBlip.Delete();
+								ent.CurrentBlip.Remove();
 							}
 							if (ent == (Entity)(object)attacker)
 							{
@@ -961,7 +961,7 @@ public partial class LSL
 				}
 			}
 			areaCheckTimer = Game.GameTime;
-			string newArea = ZoneCompat.GetZoneNameLabel(playerPos);
+			string newArea = World.GetZoneNameLabel(playerPos);
 			if (aDealer != null && playerArea != aDealer.Area && playerPos.DistanceTo(((Entity)aDealer.dPed).Position) > 300f)
 			{
 				if ((Entity)(object)aDealer.cPed != (Entity)null)
@@ -997,7 +997,7 @@ public partial class LSL
 				}
 				else
 				{
-					string area1 = ((HouseHandler.CurrentHouse == null || !HouseHandler.CurrentHouse.inside) ? playerArea : ZoneCompat.GetZoneNameLabel(HouseHandler.CurrentHouse.entrancePos));
+					string area1 = ((HouseHandler.CurrentHouse == null || !HouseHandler.CurrentHouse.inside) ? playerArea : World.GetZoneNameLabel(HouseHandler.CurrentHouse.entrancePos));
 					int aIndex2 = 0;
 					foreach (Area area3 in areas)
 					{
@@ -1013,7 +1013,7 @@ public partial class LSL
 			else if (aDealer == null && areas[areaIndex].CanSpawnDealer())
 			{
 				LsFunctions.DbugString("demandBuff 0");
-				if (areas[areaIndex].GangPresance > 0f && areas[areaIndex].Name != ZoneCompat.GetZoneNameLabel(HouseHandler.Houses[0].entrancePos))
+				if (areas[areaIndex].GangPresance > 0f && areas[areaIndex].Name != World.GetZoneNameLabel(HouseHandler.Houses[0].entrancePos))
 				{
 					List<Ped> aPeds = lPeds.GetPeds.FindAll((Ped r) =>
 					{
@@ -1021,7 +1021,7 @@ public partial class LSL
 						//IL_0027: Unknown result type (might be due to invalid IL or missing references)
 						//IL_002c: Unknown result type (might be due to invalid IL or missing references)
 						//IL_002f: Unknown result type (might be due to invalid IL or missing references)
-						if (ZoneCompat.GetZoneNameLabel(((Entity)r).Position) == areas[areaIndex].Name)
+						if (World.GetZoneNameLabel(((Entity)r).Position) == areas[areaIndex].Name)
 						{
 							Vector3 position2 = ((Entity)r).Position;
 							return position2.DistanceTo(playerPos) > 20f;
@@ -1059,7 +1059,7 @@ public partial class LSL
 		}
 		SlowTickTime = Game.GameTime;
 		player = Game.Player;
-		playerGroup = player.Character.PedGroup;
+		playerGroup = player.Character.CurrentPedGroup;
 		if (Function.Call<bool>((Hash)6160435850588389544L, (lsDebug)))
 		{
 			DEBUG = !DEBUG;
@@ -1106,7 +1106,7 @@ public partial class LSL
 					Entity killer = aDealer.dPed.GetKiller();
 					dKiller = (Ped)(object)((killer is Ped) ? killer : null);
 				}
-				if ((Entity)(object)dKiller != (Entity)null && dKiller.PedGroup == player.Character.PedGroup)
+				if ((Entity)(object)dKiller != (Entity)null && dKiller.CurrentPedGroup == player.Character.CurrentPedGroup)
 				{
 					aDealer.NewState = Enums.DStates.AttackPlayer;
 					if (driveByHandler.AmountOfDriveBy(_agg: true) == 0 && rnd.Next(0, 3) == 0)
@@ -1137,7 +1137,7 @@ public partial class LSL
 					Entity killer2 = aDealer.dPed.GetKiller();
 					dKiller2 = (Ped)(object)((killer2 is Ped) ? killer2 : null);
 				}
-				if ((Entity)(object)dKiller2 != (Entity)null && dKiller2.PedGroup == player.Character.PedGroup)
+				if ((Entity)(object)dKiller2 != (Entity)null && dKiller2.CurrentPedGroup == player.Character.CurrentPedGroup)
 				{
 					int drugCap = 28 * ((int)areas[areaIndex].GangPresance + 1);
 					if (drugCap < 28)
@@ -1288,7 +1288,7 @@ public partial class LSL
 			Area areaToAddHeat = ((HouseHandler.CurrentHouse == null || !HouseHandler.CurrentHouse.inside) ? areas[areaIndex] : areas.Find((Area a) =>
 			{
 				//IL_0010: Unknown result type (might be due to invalid IL or missing references)
-				return a.Name == ZoneCompat.GetZoneNameLabel(HouseHandler.CurrentHouse.entrancePos);
+				return a.Name == World.GetZoneNameLabel(HouseHandler.CurrentHouse.entrancePos);
 			}));
 			areaToAddHeat.Heat += (float)player.WantedLevel * 0.05f;
 		}
@@ -1338,9 +1338,9 @@ public partial class LSL
 					attacker.BlockPermanentEvents = true;
 					((Entity)attacker).IsPersistent = true;
 					LsFunctions.AddBlip((Entity)(object)attacker, (BlipColor)1, "Voleur", _friend: false, _edge: false);
-					if (((Entity)attacker).AttachedBlip != null && ((Entity)attacker).AttachedBlip.Exists())
+					if (((Entity)attacker).CurrentBlip != null && ((Entity)attacker).CurrentBlip.Exists())
 					{
-						((Entity)attacker).AttachedBlip.Scale = 1.3f;
+						((Entity)attacker).CurrentBlip.Scale = 1.3f;
 					}
 					WeaponHash weaponHash2 = unchecked((WeaponHash)(-1569615261));
 					int ammo2 = 0;
@@ -1524,10 +1524,10 @@ public partial class LSL
 						((Entity)p5).IsPersistent = true;
 					}
 					p5.BlockPermanentEvents = true;
-					if (((Entity)p5).AttachedBlip.Exists())
+					if (((Entity)p5).CurrentBlip.Exists())
 					{
-						((Entity)p5).AttachedBlip.Name = "Robber";
-						((Entity)p5).AttachedBlip.IsFriendly = false;
+						((Entity)p5).CurrentBlip.Name = "Robber";
+						((Entity)p5).CurrentBlip.IsFriendly = false;
 					}
 				}
 			}
@@ -1575,12 +1575,12 @@ public partial class LSL
 		}
 		if ((Entity)(object)attacker != (Entity)null)
 		{
-			if (((Entity)attacker).AttachedBlip == (Blip)null || !((Entity)attacker).AttachedBlip.Exists())
+			if (((Entity)attacker).CurrentBlip == (Blip)null || !((Entity)attacker).CurrentBlip.Exists())
 			{
 				LsFunctions.AddBlip((Entity)(object)attacker, (BlipColor)1, "Voleur", _friend: false, _edge: false);
-					if (((Entity)attacker).AttachedBlip != null && ((Entity)attacker).AttachedBlip.Exists())
+					if (((Entity)attacker).CurrentBlip != null && ((Entity)attacker).CurrentBlip.Exists())
 					{
-						((Entity)attacker).AttachedBlip.Scale = 1.3f;
+						((Entity)attacker).CurrentBlip.Scale = 1.3f;
 					}
 			}
 			if (((Entity)attacker).IsDead)
@@ -1751,7 +1751,7 @@ public partial class LSL
 			return;
 		}
 		float distanceToPlayer = World.GetDistance(((Entity)weaponDealer1).Position, playerPos);
-		if (distanceToPlayer > 15f && weaponDealer1.PedGroup != player.Character.PedGroup)
+		if (distanceToPlayer > 15f && weaponDealer1.CurrentPedGroup != player.Character.CurrentPedGroup)
 		{
 			if (Game.GameTime > dealerTimer + 2000 && playerPos != pedTarget)
 			{
@@ -1760,7 +1760,7 @@ public partial class LSL
 				weaponDealer1.Task.GoTo((Entity)(object)player.Character);
 			}
 		}
-		else if (weaponDealer1.PedGroup != player.Character.PedGroup)
+		else if (weaponDealer1.CurrentPedGroup != player.Character.CurrentPedGroup)
 		{
 			weaponDealer1.Task.ClearAll();
 			Function.Call(unchecked((Hash)(-6974808092771143243L)), (((Entity)weaponDealer1).Handle), (playerGroup));
@@ -1804,7 +1804,7 @@ public partial class LSL
 		if ((Entity)(object)weaponDealer1 != (Entity)null && !((Entity)weaponDealer1).IsAlive)
 		{
 			((Entity)weaponDealer1).IsPersistent = false;
-			((Entity)weaponDealer1).AttachedBlip.Delete();
+			((Entity)weaponDealer1).CurrentBlip.Remove();
 			((Entity)weaponDealer1).MarkAsNoLongerNeeded();
 			LsFunctions.SendTextMsg("Le dealer est mort !");
 			weaponDealer1 = null;

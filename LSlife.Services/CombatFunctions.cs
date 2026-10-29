@@ -65,7 +65,7 @@ internal static partial class LsFunctions
 		foreach (Area area in LSL.areas)
 		{
 			int gChance = 20;
-			if (area.Name == ZoneCompat.GetZoneNameLabel(LSL.HouseHandler.Houses[0].entrancePos))
+			if (area.Name == World.GetZoneNameLabel(LSL.HouseHandler.Houses[0].entrancePos))
 			{
 				gChance *= 2;
 				area.GangPresance = 0f;

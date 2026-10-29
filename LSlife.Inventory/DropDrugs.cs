@@ -37,10 +37,10 @@ internal static class DropDrugs
 		{
 			Vector3 forwardPos = LSL.playerPos + ((Entity)LSL.player.Character).ForwardVector * 2f;
 			Function.Call<Vector3>((Hash)7932734660826570736L, (forwardPos.X), (forwardPos.Y), (forwardPos.Z), (0), (0));
-			RaycastResult ray = World.Raycast(LSL.playerPos, forwardPos, (IntersectFlags)1);
-			if (ray.DidHit)
+			RaycastResult ray = World.Raycast(LSL.playerPos, forwardPos, (IntersectOptions)1);
+			if (ray.DitHitAnything)
 			{
-				forwardPos = ray.HitPosition + ray.SurfaceNormal;
+				forwardPos = ray.HitCoords + ray.SurfaceNormal;
 			}
 			LSL.pickupHandler.AddBag(new DroppedBag("You have dropped " + LsFunctions.GramsToOz(LSL.TotalDrugsCarried()) + " of drugs!", LSL.PlayerInventory["Weed"], LSL.PlayerInventory["Crack"], LSL.PlayerInventory["Cocaine"], LsFunctions.pWeedOunce, LsFunctions.pCrackOunce, LsFunctions.pCocaineOunce, 0, forwardPos));
 			LsFunctions.PlayTheSound();

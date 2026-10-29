@@ -74,7 +74,7 @@ public partial class LSL
 			{
 				UI.Notify("Policier généré");
 				((Entity)pigCar).AddBlip();
-				((Entity)pigCar).AttachedBlip.Name = "Voiture de police";
+				((Entity)pigCar).CurrentBlip.Name = "Voiture de police";
 			}
 			Function.Call(unchecked((Hash)(-823518585696636035L)), (((Entity)pigCar).Handle), (true));
 			pigs.Add(new Pig(pigCar.CreatePedOnSeat(unchecked((VehicleSeat)(-1)), new Model(Enums.GetPolicePedType())), _leader: true));

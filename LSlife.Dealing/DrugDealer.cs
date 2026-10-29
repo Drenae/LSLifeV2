@@ -74,7 +74,7 @@ public class DrugDealer
 						blip.Name = "Drug Pickup";
 						blip.ShowRoute = true;
 						LsFunctions.DbugString("dealer car spawned");
-						string areaName = ZoneCompat.GetZoneName(dealerSpawn.Position);
+						string areaName = World.GetZoneName(dealerSpawn.Position);
 						LsFunctions.TextMsg("ZEE", "Commande", "OK, retrouve mes gars à ~y~" + areaName + " ~s~, ils s'occuperont de toi.");
 					}
 					else
@@ -109,7 +109,7 @@ public class DrugDealer
 		switch (DealState)
 		{
 		case DrugDealSates.ReadyToDeal:
-			if (Ready && Game.IsControlJustReleased((Control)51) && PlayerOrder.PayBill())
+			if (Ready && Game.IsControlJustReleased(2, (Control)51) && PlayerOrder.PayBill())
 			{
 				if (LSL.player.Money > 0)
 				{
@@ -123,7 +123,7 @@ public class DrugDealer
 			break;
 		case DrugDealSates.Payed:
 			World.DrawMarker((MarkerType)0, backPos, Vector3.Zero, Vector3.Zero, new Vector3(1f, 1f, 0.5f), Color.Green);
-			if (Ready && Game.IsControlJustReleased((Control)51))
+			if (Ready && Game.IsControlJustReleased(2, (Control)51))
 			{
 				PlayerOrder.PickupDrugs();
 				if (PlayerOrder.pickedUp)
@@ -278,23 +278,23 @@ public class DrugDealer
 				Vector3 position = ((Entity)dealerCar).Position;
 				Vector3 val = ((Entity)dealerCar).ForwardVector * -1f;
 				model = ((Entity)dealerCar).Model;
-				backPos = Vector3.Add(position, Vector3.Multiply(val, VehicleCompat.HalfLength(model) + 0.5f));
-				VehicleCompat.OpenDoor(dealerCar, 5, false, false);
-				var task = lieut.Task;
+				backPos = Vector3.Add(position, Vector3.Multiply(val, model.GetDimensions().Y / 2f + 0.5f));
+				dealerCar.OpenDoor((VehicleDoor)5, false, false);
+				Tasks task = lieut.Task;
 				Vector3 position2 = ((Entity)dealerCar).Position;
 				Vector3 val2 = ((Entity)dealerCar).ForwardVector * -1f;
 				model = ((Entity)dealerCar).Model;
-				task.LookAt(Vector3.Add(position2, Vector3.Multiply(val2, VehicleCompat.HalfLength(model) + 0.5f)));
-				var task2 = lieut.Task;
+				task.LookAt(Vector3.Add(position2, Vector3.Multiply(val2, model.GetDimensions().Y / 2f + 0.5f)));
+				Tasks task2 = lieut.Task;
 				Vector3 position3 = ((Entity)dealerCar).Position;
 				Vector3 val3 = ((Entity)dealerCar).ForwardVector * -1f;
 				model = ((Entity)dealerCar).Model;
-				task2.GoTo(Vector3.Add(position3, Vector3.Multiply(val3, VehicleCompat.HalfLength(model) + 0.5f)) + ((Entity)dealerCar).RightVector * 1f);
-				var task3 = goon.Task;
+				task2.GoTo(Vector3.Add(position3, Vector3.Multiply(val3, model.GetDimensions().Y / 2f + 0.5f)) + ((Entity)dealerCar).RightVector * 1f);
+				Tasks task3 = goon.Task;
 				Vector3 position4 = ((Entity)dealerCar).Position;
 				Vector3 val4 = ((Entity)dealerCar).ForwardVector * -1f;
 				model = ((Entity)dealerCar).Model;
-				task3.GoTo(Vector3.Add(position4, Vector3.Multiply(val4, VehicleCompat.HalfLength(model) + 0.5f)) + ((Entity)dealerCar).RightVector * -2f);
+				task3.GoTo(Vector3.Add(position4, Vector3.Multiply(val4, model.GetDimensions().Y / 2f + 0.5f)) + ((Entity)dealerCar).RightVector * -2f);
 			}
 			else
 			{
@@ -302,7 +302,7 @@ public class DrugDealer
 				Vector3 position6 = ((Entity)dealerCar).Position;
 				Vector3 val5 = ((Entity)dealerCar).ForwardVector * -1f;
 				model = ((Entity)dealerCar).Model;
-				if (position5.DistanceTo(Vector3.Add(position6, Vector3.Multiply(val5, VehicleCompat.HalfLength(model) + 0.5f)) + ((Entity)dealerCar).RightVector * 1f) < 1f)
+				if (position5.DistanceTo(Vector3.Add(position6, Vector3.Multiply(val5, model.GetDimensions().Y / 2f + 0.5f)) + ((Entity)dealerCar).RightVector * 1f) < 1f)
 				{
 					EnterState = true;
 					DealState = DrugDealSates.GetReadyToDeal;
@@ -315,7 +315,7 @@ public class DrugDealer
 			{
 				EnterState = false;
 			}
-			else if (VehicleCompat.IsDoorOpen(dealerCar, 5))
+			else if (dealerCar.IsDoorOpen((VehicleDoor)5))
 			{
 				lieut.Task.LookAt((Entity)(object)LSL.player.Character);
 				goon.Task.LookAt((Entity)(object)LSL.player.Character);
@@ -386,7 +386,7 @@ public class DrugDealer
 			{
 				if ((goon.IsInVehicle() && lieut.IsInVehicle()) || Game.GameTime > time + 10000)
 				{
-					VehicleCompat.CloseDoor(dealerCar, 5, false);
+					dealerCar.CloseDoor((VehicleDoor)5, false);
 					SetDealState(DrugDealSates.Destroy);
 					if (PlayerOrder != null)
 					{
@@ -483,7 +483,7 @@ public class DrugDealer
 	private void RemoveBlip()
 	{
 		blip.Alpha = 0;
-		blip.Delete();
+		blip.Remove();
 	}
 
 	private void RemoveVehicle()
