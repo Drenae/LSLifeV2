@@ -486,7 +486,7 @@ public class AreaDealer
 						if (!LSL.CheckIfPedUsed(ped, _allowPolice: false, _allowVehicle: false))
 						{
 							cPed = ped;
-							((Entity)cPed).FreezePosition = false;
+							((Entity)cPed).IsPositionFrozen = false;
 							((Entity)cPed).IsPersistent = true;
 							LastCustomer = ((Entity)cPed).Handle;
 							if (DEBUG)
