@@ -1,3 +1,13 @@
+## Migration SHVDN3 — lot du 29 octobre 2026
+
+- [x] Adaptation des groupes de relations dans `LSL.cs`.
+- [x] Adaptation des contrôles et sous-titres dans `HirePed.cs`.
+- [x] Correction du sous-titre dans `CustomHudOptionsMenu.cs`.
+- [x] Migration des accès aux blips et de `FreezePosition` dans `AreaDealer.cs`.
+- [x] Migration des accès aux blips dans `InputEvents.cs`.
+- [ ] Relancer `Build-Baseline.ps1` et corriger les erreurs restantes par modules.
+- [ ] Vérifier les comportements en jeu avant fusion ; compilation non encore validée.
+
 ## Build 29/10/2026 15:26 — première barrière de compilation
 
 - [x] Diagnostic : 3 erreurs de types manquants (`PedHash`, `VehicleHash`, `UIText`), aucune autre erreur encore visible car compilation interrompue tôt.
