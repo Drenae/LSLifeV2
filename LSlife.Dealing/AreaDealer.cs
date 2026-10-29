@@ -84,7 +84,7 @@ public class AreaDealer
 			((Entity)dPed).AddBlip();
 		}
 		dPed.Money = LSL.rnd.Next(200, 2000);
-		Area = World.GetZoneNameLabel(((Entity)dPed).Position);
+		Area = ZoneCompat.GetZoneNameLabel(((Entity)dPed).Position);
 	}
 
 	public void CheckState()
