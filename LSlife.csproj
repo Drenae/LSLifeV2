@@ -17,8 +17,8 @@
     <EmbeddedResource Include="assets\\hud_background.png" LogicalName="LSlife.HudBackground" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="ScriptHookVDotNet2">
-      <HintPath>$(GtaVPath)\ScriptHookVDotNet2.dll</HintPath>
+    <Reference Include="ScriptHookVDotNet3">
+      <HintPath>$(GtaVPath)\ScriptHookVDotNet3.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
