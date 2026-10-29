@@ -1,3 +1,10 @@
+## Build 29/10/2026 15:26 — première barrière de compilation
+
+- [x] Diagnostic : 3 erreurs de types manquants (`PedHash`, `VehicleHash`, `UIText`), aucune autre erreur encore visible car compilation interrompue tôt.
+- [x] `Enums.cs` : import de l'espace de noms `GTA` pour les modèles de PNJ et véhicules.
+- [x] `LSL.cs` : type de texte migré vers `GTA.UI.TextElement`.
+- [ ] Relancer la compilation pour révéler les incompatibilités suivantes ; aucun succès de build présumé.
+
 ## Migration SHVDN3 — reprise isolée (29 octobre 2026)
 
 - [x] Branche dédiée `feature/shvdn3-migration` créée depuis le snapshot SHVDN2 restauré.
