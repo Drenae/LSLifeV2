@@ -38,7 +38,7 @@ internal static class CustomHudOptionsMenu
     private static void Save()
     {
         Hud.SavePosition();
-        GTA.UI.ShowSubtitle("Position du HUD enregistree.", 2500);
+        UI.ShowSubtitle("Position du HUD enregistree.", 2500);
         Close();
     }
 
