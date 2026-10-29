@@ -1,3 +1,15 @@
+## Build 29/10/2026 14:30 — 117 erreurs / 151 avertissements
+
+- [x] Diagnostic : `StashVehicle.cs` 39 erreurs, `Tick.cs` 36 erreurs ; 49 erreurs de moins que le build precedent (166).
+- [x] Migration des 12 relations entre groupes dans `Tick.cs` vers `SET_RELATIONSHIP_BETWEEN_GROUPS`.
+- [x] Migration de la suppression de groupes dans `InputEvents.cs` vers `REMOVE_RELATIONSHIP_GROUP`.
+- [x] Suppression de blip dans `WorldFunctions.cs` via `Delete()`.
+- [x] HUD : masquage composant par native `HIDE_HUD_COMPONENT_THIS_FRAME`.
+- [x] `Tick.cs` : correction surcharge `Game.IsControlPressed`.
+- [ ] Recompiler pour valider le lot (non teste).
+- [ ] Reste : `StashVehicle` / persistance et customisation vehicules ; `Tick` / composants d'armes, IA, navigation ; affichage UI.
+- [ ] Tester comportement en jeu ; backup SHVDN2 conserve intact.
+
 ## Build 29/10/2026 14:27:50 — syntaxe DriveBy
 
 - [x] Build bloque par **2 erreurs de syntaxe** dans `LSlife.World/DriveBy.cs:539` introduites par la migration groupee (cast `DrivingStyle`).
