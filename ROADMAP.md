@@ -1,3 +1,13 @@
+## Sauvegarde obligatoire et preparation SHVDN3 — 29 octobre 2026
+
+- [x] Sauvegarde distante **avant toute modification de code** : branche immuable de reference `backup/pre-shvdn3-2026-10-29`, creee depuis `feature/custom-zee-menu`.
+- [x] Version nightly `v3.7.0-nightly.195` : utilisateur confirme l'installation dans GTA V Legacy.
+- [x] Audit initial : `LSlife.csproj` reference encore `ScriptHookVDotNet2.dll` et `scripts/iFruitAddon2.dll`.
+- [x] Audit initial : `LSL.cs` utilise `CustomiFruit` et `iFruitContact` ; `Tick.cs` initialise le telephone a la demande et appelle `iFruit.Update()`.
+- [ ] Verifier la compatibilite binaire `iFruitAddon2.dll` avec SHVDN3 avant changement de reference ; ne pas casser le telephone natif.
+- [ ] Migrer les API SHVDN2 -> SHVDN3 par lots coherents ; compiler chaque lot et preserver les menus Custom.
+- [ ] Validation en jeu des commandes, clients, travailleurs, planques, coffres, Zee, telephone et sauvegardes.
+
 ## Cible SHVDN3 nightly (28 octobre 2026)
 
 - [x] Source officielle choisie : `scripthookvdotnet/scripthookvdotnet-nightly`.
