@@ -1,3 +1,15 @@
+## SHVDN3 — lot de migration du journal 2026-10-29 14:18
+
+- [x] Correctif du hash natif `GET_LABEL_TEXT` dans `ZoneCompat`.
+- [x] `VehicleCompat` : dimensions des modeles et ouverture/fermeture/test des portes par natives.
+- [x] `DrugDealer` et `StashVehicle` : migration des portes et `Model.GetDimensions`; `Tasks` remplacé par inference de type.
+- [x] `Tick`, `WorldFunctions` : migration `CurrentBlip` vers `AttachedBlip`, suppression par `Delete`.
+- [x] `DrugDealer`, `Pig`, `Shot` : noms de zones rediriges vers `ZoneCompat`.
+- [x] `LSL` : champs de groupes de relations convertis en `RelationshipGroup`.
+- [x] `Setup` : debut migration des composants d'armes vers la collection SHVDN3.
+- [ ] Compiler ce lot, corriger les signatures residuelles puis poursuivre les sauvegardes et modifications de vehicules (`StashVehicle`).
+- [ ] Valider les comportements en jeu avant fusion dans `main`.
+
 ## SHVDN3 — build 29/10/2026 14:16:59
 
 - [x] Journal analyse : 262 diagnostics d'erreur uniques, 149 avertissements rapportes dans la synthese precedente (verifier nouveau build).
