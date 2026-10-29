@@ -440,14 +440,14 @@ public class Pig
 			destination = StopPosition();
 			if ((Entity)(object)Ped == (Entity)(object)Vehicle.Driver)
 			{
-				Ped.Task.DriveTo(Vehicle, destination, 10f, 12f, 786468);
+				Ped.Task.DriveTo(Vehicle, destination, 10f, (GTA.VehicleDrivingFlags)(786468), 12f);
 			}
 			CurrentState = States.driveToPlayer;
 			break;
 		case States.Normal:
 			if ((Entity)(object)Vehicle != (Entity)null)
 			{
-				Ped.Task.CruiseWithVehicle(Vehicle, 9f, 786603);
+				Ped.Task.CruiseWithVehicle(Vehicle, 9f, (GTA.VehicleDrivingFlags)(786603));
 			}
 			else
 			{

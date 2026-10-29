@@ -206,32 +206,32 @@ internal static class Prison
 				break;
 			case PrisonStates.CopEnterCar:
 				Function.Call(unchecked((Hash)(-5650329060376590909L)), (((Entity)cop).Handle), (100f));
-				cop.Task.DriveTo(copCar, PrisonPos, 5f, Speed, 5);
+				cop.Task.DriveTo(copCar, PrisonPos, 5f, (GTA.VehicleDrivingFlags)(5), Speed);
 				CurrentState = PrisonStates.CopEnterCar;
 				stateChanged = true;
 				break;
 			case PrisonStates.ApproachBarrier:
-				cop.Task.DriveTo(copCar, BarrierWaitPos, 1f, Speed, 2883621);
+				cop.Task.DriveTo(copCar, BarrierWaitPos, 1f, (GTA.VehicleDrivingFlags)(2883621), Speed);
 				CurrentState = PrisonStates.ApproachBarrier;
 				stateChanged = true;
 				break;
 			case PrisonStates.ApproachGate1:
-				cop.Task.DriveTo(copCar, Gate1WaitPos, 1f, Speed, 262144);
+				cop.Task.DriveTo(copCar, Gate1WaitPos, 1f, (GTA.VehicleDrivingFlags)(262144), Speed);
 				CurrentState = PrisonStates.ApproachGate1;
 				stateChanged = true;
 				break;
 			case PrisonStates.ApproachGate2:
-				cop.Task.DriveTo(copCar, Gate2WaitPos, 1f, Speed, 262144);
+				cop.Task.DriveTo(copCar, Gate2WaitPos, 1f, (GTA.VehicleDrivingFlags)(262144), Speed);
 				CurrentState = PrisonStates.ApproachGate2;
 				stateChanged = true;
 				break;
 			case PrisonStates.FinalApproach:
-				cop.Task.DriveTo(copCar, Gate2ExitPos, 1f, Speed, 262144);
+				cop.Task.DriveTo(copCar, Gate2ExitPos, 1f, (GTA.VehicleDrivingFlags)(262144), Speed);
 				CurrentState = PrisonStates.FinalApproach;
 				stateChanged = true;
 				break;
 			case PrisonStates.FinalPos:
-				cop.Task.DriveTo(copCar, FinalPos, 1f, Speed, 262144);
+				cop.Task.DriveTo(copCar, FinalPos, 1f, (GTA.VehicleDrivingFlags)(262144), Speed);
 				CurrentState = PrisonStates.FinalPos;
 				stateChanged = true;
 				break;
