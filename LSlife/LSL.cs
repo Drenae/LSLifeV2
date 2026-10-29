@@ -53,11 +53,11 @@ public partial class LSL : Script
 
 	public static LsLPeds lPeds;
 
-	public static int CustomerRel = World.AddRelationshipGroup("LSCUSTOMER");
+	public static RelationshipGroup CustomerRel = World.AddRelationshipGroup("LSCUSTOMER");
 
-	public static int rival_nutral = World.AddRelationshipGroup("RIVAL_N");
+	public static RelationshipGroup rival_nutral = World.AddRelationshipGroup("RIVAL_N");
 
-	public static int rival_enemy = World.AddRelationshipGroup("RIVAL_E");
+	public static RelationshipGroup rival_enemy = World.AddRelationshipGroup("RIVAL_E");
 
 	public static int playerRelationship = Function.Call<int>(unchecked((Hash)(-3292914402564945716L)), ("PLAYER"));
 
