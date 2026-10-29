@@ -1,3 +1,10 @@
+## SHVDN3 — build du 29 octobre 2026, 12 h 49
+
+- [x] Nouveau diagnostic : **380 erreurs et 149 avertissements** (`build-baseline(20261029-124924).log`), contre 407 erreurs precedemment.
+- [x] Migrer 6 appels de fondu ecran (`Game.FadeScreenIn/Out`) vers `GTA.UI.Screen.Fading.FadeIn/Out` dans `DrugOrder.cs` et `StashHouse.cs`.
+- [ ] Recompiler pour valider les fondus et identifier les erreurs restantes.
+- [ ] Migrer les blips, les vehicules, les armes, les relations et le HUD ; conserver le telephone et les menus existants.
+
 ## SHVDN3 — migration des controles (29 octobre 2026)
 
 - [x] Journal `build-baseline(20261029-124711).log` : **407 erreurs, 122 avertissements** ; les lignes de diagnostic sont repetees par le resume MSBuild.
