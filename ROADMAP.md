@@ -1,3 +1,12 @@
+## SHVDN3 — build 29/10/2026 14:16:59
+
+- [x] Journal analyse : 262 diagnostics d'erreur uniques, 149 avertissements rapportes dans la synthese precedente (verifier nouveau build).
+- [x] `DropDrugs.cs` et `PickupHandler.cs` : migration des raycasts (`IntersectFlags`, `DidHit`, `HitPosition`).
+- [x] `ZoneCompat.cs` : conversion des zones GTA par natives `GET_NAME_OF_ZONE` et `GET_LABEL_TEXT`.
+- [x] Quatre fichiers (`PlayerDealer`, `AreaDealer`, `PlayerDealerHandler`, `CombatFunctions`) raccordes au helper pour les libelles de zone.
+- [ ] Poursuivre `Tick.cs`, `StashVehicle.cs`, `DrugDealer.cs`, groupes de peds et composants d'armes.
+- [ ] Confirmer les corrections par compilation Windows puis test en jeu avant fusion `main`.
+
 ## Migration SHVDN3 — build 29/10/2026 14:12
 
 - [x] Nouveau build : **274 erreurs et 149 avertissements** (298 erreurs au precedent build).
