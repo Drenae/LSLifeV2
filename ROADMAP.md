@@ -1,3 +1,11 @@
+## Migration SHVDN3 — build 29/10/2026 14:10
+
+- [x] Nouveau build : **298 erreurs, 149 avertissements** (contre 374 erreurs, 149 avertissements au build precedent).
+- [x] Migration complementaire des blips (`CurrentBlip` -> `AttachedBlip`, suppression `Delete()`) et de `Entity.FreezePosition` -> `Entity.IsPositionFrozen` dans plusieurs fichiers (OldCustomerHandler, DriveBy, Shot, PoliceLogic, StashHouse, AreaDealer, PlayerDealer).
+- [ ] Compiler ce lot ; aucun succes de build ni test en jeu confirme.
+- [ ] Poursuivre les ruptures d'API restantes dans Tick, StashVehicle, PlayerDealer, DrugDealer et les autres fichiers.
+- [ ] Conserver la branche backup intacte ; fusion main uniquement apres validation explicite.
+
 ## Migration SHVDN3 — build 29/10/2026 14:08
 
 - [x] Diagnostic build : 374 erreurs, 149 avertissements (contre 380 erreurs au build precedent).
