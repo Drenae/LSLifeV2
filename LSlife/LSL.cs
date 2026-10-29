@@ -249,7 +249,7 @@ public partial class LSL : Script
 
 	public static Dealer wepDealer;
 
-	public static UIText myUIText;
+	
 
 	public static int PedsCanSeeDeal = 0;
 
