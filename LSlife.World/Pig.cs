@@ -306,7 +306,7 @@ public class Pig
 			}
 			if (leader)
 			{
-				UI.ShowSubtitle("On t'a à l'œil. Tu ferais mieux de quitter ~y~" + World.GetZoneName(LSL.playerPos) + "~n~.", 4000);
+				UI.ShowSubtitle("On t'a à l'œil. Tu ferais mieux de quitter ~y~" + ZoneCompat.GetZoneName(LSL.playerPos) + "~n~.", 4000);
 			}
 			LSL.areas[LSL.areaIndex].HeatDecay();
 			Game.Player.Character.Task.ClearAll();
