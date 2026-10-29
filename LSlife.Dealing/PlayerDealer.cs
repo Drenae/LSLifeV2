@@ -1080,7 +1080,7 @@ public class PlayerDealer
 			LSL.displayHelpTimer = Game.GameTime;
 			LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour parler à cette personne.");
 		}
-		if (Game.IsControlJustReleased(2, (Control)51))
+		if (Game.IsControlJustReleased((Control)51))
 		{
 			Function.Call((Hash)7023634693725934496L);
 			// Le menu personnalise gere sa propre selection.
@@ -1100,7 +1100,7 @@ public class PlayerDealer
 				LSL.displayHelpTimer = Game.GameTime;
 				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_VEH_HORN~ pour que ton dealer te suive.");
 			}
-			if (Game.IsControlJustPressed(2, (Control)86))
+			if (Game.IsControlJustPressed((Control)86))
 			{
 				Function.Call((Hash)7023634693725934496L);
 				LSL.DealerHandler.currentDealer = this;
