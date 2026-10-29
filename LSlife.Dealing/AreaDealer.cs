@@ -44,12 +44,12 @@ public class AreaDealer
 	{
 		if (!enabled || (Entity)(object)dPed == (Entity)null || !((Entity)dPed).Exists() || !((Entity)dPed).IsAlive || CurrentState == Enums.DStates.AttackPlayer)
 		{
-			if (recruitmentDebugBlip != null && recruitmentDebugBlip.Exists()) recruitmentDebugBlip.Remove();
+			if (recruitmentDebugBlip != null && recruitmentDebugBlip.Exists()) recruitmentDebugBlip.Delete();
 			recruitmentDebugBlip = null;
 			return;
 		}
 		if (recruitmentDebugBlip != null && recruitmentDebugBlip.Exists()) return;
-		if (((Entity)dPed).CurrentBlip != null && ((Entity)dPed).CurrentBlip.Exists()) return;
+		if (((Entity)dPed).AttachedBlip != null && ((Entity)dPed).AttachedBlip.Exists()) return;
 		recruitmentDebugBlip = ((Entity)dPed).AddBlip();
 		recruitmentDebugBlip.Name = "Dealer recrutable (DEBUG)";
 		recruitmentDebugBlip.Color = (BlipColor)2;
@@ -171,10 +171,10 @@ public class AreaDealer
 			if ((Entity)(object)cPed != (Entity)null)
 			{
 				LsFunctions.RemovePedFromWorld(cPed, clearTask: true);
-				Blip currentBlip = ((Entity)cPed).CurrentBlip;
+				Blip currentBlip = ((Entity)cPed).AttachedBlip;
 				if (currentBlip != null)
 				{
-					currentBlip.Remove();
+					currentBlip.Delete();
 				}
 				cPed = null;
 			}
@@ -216,9 +216,9 @@ public class AreaDealer
 			if (!ShouldAttackPlayer())
 			{
 				NewState = Enums.DStates.Normal;
-				if ((!Detected && ((Entity)dPed).CurrentBlip != (Blip)null) || ((Entity)dPed).CurrentBlip.Exists())
+				if ((!Detected && ((Entity)dPed).AttachedBlip != (Blip)null) || ((Entity)dPed).AttachedBlip.Exists())
 				{
-					((Entity)dPed).CurrentBlip.Remove();
+					((Entity)dPed).AttachedBlip.Delete();
 				}
 			}
 			break;
@@ -573,7 +573,7 @@ public class AreaDealer
 						UI.Notify("Transaction terminée");
 					}
 					LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
-					((Entity)cPed).CurrentBlip.Remove();
+					((Entity)cPed).AttachedBlip.Delete();
 					cPed = null;
 					cTimer.Reset();
 					cTimer.Start();
