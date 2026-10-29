@@ -272,7 +272,7 @@ public class StashVehicle
 		Vector3 position = ((Entity)drugCar).Position;
 		Vector3 val = ((Entity)drugCar).ForwardVector * -1f;
 		Model model = ((Entity)drugCar).Model;
-		return Vector3.Add(position, Vector3.Multiply(val, model.GetDimensions().Y / 2f + 0.5f));
+		return Vector3.Add(position, Vector3.Multiply(val, VehicleCompat.HalfLength(model) + 0.5f));
 	}
 
 	public void OnTick()
@@ -319,7 +319,7 @@ public class StashVehicle
 		}
 		if (trunkFound)
 		{
-			if (!drugCar.IsDoorOpen((VehicleDoor)5))
+			if (!VehicleCompat.IsDoorOpen(drugCar, 5))
 			{
 				if ((float)Game.GameTime > LSL.displayHelpTimer + 5000f && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 				{
@@ -328,7 +328,7 @@ public class StashVehicle
 				}
 				if (Game.IsControlJustPressed((Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 				{
-					drugCar.OpenDoor((VehicleDoor)5, false, false);
+					VehicleCompat.OpenDoor(drugCar, 5, false, false);
 					UpdateCarStash();
 					CustomStashMenu.OpenVehicle();
 				}
@@ -342,11 +342,11 @@ public class StashVehicle
 				}
 				if (Game.IsControlJustPressed((Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 				{
-					drugCar.CloseDoor((VehicleDoor)5, false);
+					VehicleCompat.CloseDoor(drugCar, 5, false);
 				}
 			}
 		}
-		else if (!drugCar.IsDoorOpen((VehicleDoor)2) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
+		else if (!VehicleCompat.IsDoorOpen(drugCar, 2) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 		{
 			if ((float)Game.GameTime > LSL.displayHelpTimer + 3000f)
 			{
@@ -355,8 +355,8 @@ public class StashVehicle
 			}
 			if (Game.IsControlJustPressed((Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 			{
-				drugCar.OpenDoor((VehicleDoor)2, true, false);
-				drugCar.OpenDoor((VehicleDoor)3, true, false);
+				VehicleCompat.OpenDoor(drugCar, 2, true, false);
+				VehicleCompat.OpenDoor(drugCar, 3, true, false);
 				UpdateCarStash();
 				CustomStashMenu.OpenVehicle();
 			}
@@ -370,8 +370,8 @@ public class StashVehicle
 			}
 			if (Game.IsControlJustPressed((Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 			{
-				drugCar.CloseDoor((VehicleDoor)2, false);
-				drugCar.CloseDoor((VehicleDoor)3, false);
+				VehicleCompat.CloseDoor(drugCar, 2, false);
+				VehicleCompat.CloseDoor(drugCar, 3, false);
 			}
 		}
 	}
