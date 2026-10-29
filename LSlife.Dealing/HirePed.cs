@@ -44,11 +44,11 @@ public class HirePed
 			{
 				TimedOut = true;
 			}
-			else if (Game.IsControlJustPressed(2, (Control)52))
+			else if (Game.IsControlJustPressed((Control)52))
 			{
 				Declined = true;
 			}
-			else if (Game.IsControlJustPressed(2, (Control)51))
+			else if (Game.IsControlJustPressed((Control)51))
 			{
 				Accepted = true;
 				UI.ShowSubtitle("Super, je te suis.", 6000);
