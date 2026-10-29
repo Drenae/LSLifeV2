@@ -90,7 +90,7 @@ internal static class ShotHandler
 			if (handle != currentShot)
 			{
 				currentShot = handle;
-				((Entity)shots[cIndex].customer.Ped).CurrentBlip.ShowRoute = true;
+				((Entity)shots[cIndex].customer.Ped).AttachedBlip.ShowRoute = true;
 			}
 		}
 		// Les livraisons sont facultatives ; les ventes de rue restent actives.
