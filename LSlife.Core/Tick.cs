@@ -253,7 +253,7 @@ public partial class LSL
 			Function.Call((Hash)2750315038012726912L, (player.Character), (9), (0), (0), (0));
 			playerHasBag = false;
 			canSprint = true;
-			playerArea = World.GetZoneNameLabel(playerPos);
+			playerArea = ZoneCompat.GetZoneNameLabel(playerPos);
 			if (areas.Where((Area a) => a.Name != playerArea).Count() == 0)
 			{
 				if (zoneData.ContainsKey(playerArea))
@@ -687,7 +687,7 @@ public partial class LSL
 									LsFunctions.RemovePedFromWorld(c.Ped, clearTask: true);
 									break;
 								}
-								if (!(c.Ped.CurrentPedGroup != player.Character.CurrentPedGroup))
+								if (!(c.Ped.PedGroup != player.Character.PedGroup))
 								{
 									continue;
 								}
@@ -961,7 +961,7 @@ public partial class LSL
 				}
 			}
 			areaCheckTimer = Game.GameTime;
-			string newArea = World.GetZoneNameLabel(playerPos);
+			string newArea = ZoneCompat.GetZoneNameLabel(playerPos);
 			if (aDealer != null && playerArea != aDealer.Area && playerPos.DistanceTo(((Entity)aDealer.dPed).Position) > 300f)
 			{
 				if ((Entity)(object)aDealer.cPed != (Entity)null)
@@ -997,7 +997,7 @@ public partial class LSL
 				}
 				else
 				{
-					string area1 = ((HouseHandler.CurrentHouse == null || !HouseHandler.CurrentHouse.inside) ? playerArea : World.GetZoneNameLabel(HouseHandler.CurrentHouse.entrancePos));
+					string area1 = ((HouseHandler.CurrentHouse == null || !HouseHandler.CurrentHouse.inside) ? playerArea : ZoneCompat.GetZoneNameLabel(HouseHandler.CurrentHouse.entrancePos));
 					int aIndex2 = 0;
 					foreach (Area area3 in areas)
 					{
@@ -1013,7 +1013,7 @@ public partial class LSL
 			else if (aDealer == null && areas[areaIndex].CanSpawnDealer())
 			{
 				LsFunctions.DbugString("demandBuff 0");
-				if (areas[areaIndex].GangPresance > 0f && areas[areaIndex].Name != World.GetZoneNameLabel(HouseHandler.Houses[0].entrancePos))
+				if (areas[areaIndex].GangPresance > 0f && areas[areaIndex].Name != ZoneCompat.GetZoneNameLabel(HouseHandler.Houses[0].entrancePos))
 				{
 					List<Ped> aPeds = lPeds.GetPeds.FindAll((Ped r) =>
 					{
@@ -1021,7 +1021,7 @@ public partial class LSL
 						//IL_0027: Unknown result type (might be due to invalid IL or missing references)
 						//IL_002c: Unknown result type (might be due to invalid IL or missing references)
 						//IL_002f: Unknown result type (might be due to invalid IL or missing references)
-						if (World.GetZoneNameLabel(((Entity)r).Position) == areas[areaIndex].Name)
+						if (ZoneCompat.GetZoneNameLabel(((Entity)r).Position) == areas[areaIndex].Name)
 						{
 							Vector3 position2 = ((Entity)r).Position;
 							return position2.DistanceTo(playerPos) > 20f;
@@ -1059,7 +1059,7 @@ public partial class LSL
 		}
 		SlowTickTime = Game.GameTime;
 		player = Game.Player;
-		playerGroup = player.Character.CurrentPedGroup;
+		playerGroup = player.Character.PedGroup;
 		if (Function.Call<bool>((Hash)6160435850588389544L, (lsDebug)))
 		{
 			DEBUG = !DEBUG;
@@ -1106,7 +1106,7 @@ public partial class LSL
 					Entity killer = aDealer.dPed.GetKiller();
 					dKiller = (Ped)(object)((killer is Ped) ? killer : null);
 				}
-				if ((Entity)(object)dKiller != (Entity)null && dKiller.CurrentPedGroup == player.Character.CurrentPedGroup)
+				if ((Entity)(object)dKiller != (Entity)null && dKiller.PedGroup == player.Character.PedGroup)
 				{
 					aDealer.NewState = Enums.DStates.AttackPlayer;
 					if (driveByHandler.AmountOfDriveBy(_agg: true) == 0 && rnd.Next(0, 3) == 0)
@@ -1137,7 +1137,7 @@ public partial class LSL
 					Entity killer2 = aDealer.dPed.GetKiller();
 					dKiller2 = (Ped)(object)((killer2 is Ped) ? killer2 : null);
 				}
-				if ((Entity)(object)dKiller2 != (Entity)null && dKiller2.CurrentPedGroup == player.Character.CurrentPedGroup)
+				if ((Entity)(object)dKiller2 != (Entity)null && dKiller2.PedGroup == player.Character.PedGroup)
 				{
 					int drugCap = 28 * ((int)areas[areaIndex].GangPresance + 1);
 					if (drugCap < 28)
@@ -1288,7 +1288,7 @@ public partial class LSL
 			Area areaToAddHeat = ((HouseHandler.CurrentHouse == null || !HouseHandler.CurrentHouse.inside) ? areas[areaIndex] : areas.Find((Area a) =>
 			{
 				//IL_0010: Unknown result type (might be due to invalid IL or missing references)
-				return a.Name == World.GetZoneNameLabel(HouseHandler.CurrentHouse.entrancePos);
+				return a.Name == ZoneCompat.GetZoneNameLabel(HouseHandler.CurrentHouse.entrancePos);
 			}));
 			areaToAddHeat.Heat += (float)player.WantedLevel * 0.05f;
 		}
@@ -1751,7 +1751,7 @@ public partial class LSL
 			return;
 		}
 		float distanceToPlayer = World.GetDistance(((Entity)weaponDealer1).Position, playerPos);
-		if (distanceToPlayer > 15f && weaponDealer1.CurrentPedGroup != player.Character.CurrentPedGroup)
+		if (distanceToPlayer > 15f && weaponDealer1.PedGroup != player.Character.PedGroup)
 		{
 			if (Game.GameTime > dealerTimer + 2000 && playerPos != pedTarget)
 			{
@@ -1760,7 +1760,7 @@ public partial class LSL
 				weaponDealer1.Task.GoTo((Entity)(object)player.Character);
 			}
 		}
-		else if (weaponDealer1.CurrentPedGroup != player.Character.CurrentPedGroup)
+		else if (weaponDealer1.PedGroup != player.Character.PedGroup)
 		{
 			weaponDealer1.Task.ClearAll();
 			Function.Call(unchecked((Hash)(-6974808092771143243L)), (((Entity)weaponDealer1).Handle), (playerGroup));
