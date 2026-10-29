@@ -105,7 +105,7 @@ internal class EnemyHandler
 			enemy.AlwaysKeepTask = true;
 			enemy.Task.FightAgainst(Game.Player.Character);
 			((Entity)enemy).AddBlip();
-			((Entity)enemy).CurrentBlip.IsFriendly = false;
+			((Entity)enemy).AttachedBlip.IsFriendly = false;
 			Enemies.Add(enemy);
 			Time = Game.GameTime;
 		}
@@ -136,7 +136,7 @@ internal class EnemyHandler
 			}
 			else if (((Entity)p).IsDead)
 			{
-				((Entity)p).CurrentBlip.Remove();
+				((Entity)p).AttachedBlip.Delete();
 				Enemies.Remove(p);
 			}
 		}
@@ -146,7 +146,7 @@ internal class EnemyHandler
 	{
 		foreach (Ped p in Enemies.ToList())
 		{
-			((Entity)p).CurrentBlip.Remove();
+			((Entity)p).AttachedBlip.Delete();
 			Enemies.Remove(p);
 		}
 	}
