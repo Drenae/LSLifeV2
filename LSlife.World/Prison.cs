@@ -166,7 +166,7 @@ internal static class Prison
 					{
 						copCar = World.CreateVehicle(new Model((VehicleHash)2046537925), pos, heading);
 						((Entity)copCar).AddBlip();
-						((Entity)copCar).CurrentBlip.Sprite = (BlipSprite)672;
+						((Entity)copCar).AttachedBlip.Sprite = (BlipSprite)672;
 						if (DEBUG)
 						{
 							UI.Notify("Transport généré : " + (object)copCar);
