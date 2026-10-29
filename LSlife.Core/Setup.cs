@@ -207,9 +207,9 @@ public partial class LSL
 			XElement weaponAmmoElement = new XElement("AMMO", ammunitionInWeapon);
 			parentElement.Add(weaponNameElement);
 			parentElement.Add(weaponAmmoElement);
-			foreach (WeaponComponent component in Enum.GetValues(typeof(WeaponComponent)))
+			foreach (WeaponComponent component in player.Character.Weapons[weapon].Components)
 			{
-				if (Function.Call<bool>(unchecked((Hash)(-4209984786179366080L)), (player.Character), ((int)weapon), ((int)component)))
+				if (Function.Call<bool>(unchecked((Hash)(-4209984786179366080L)), (player.Character), ((int)weapon), component.Hash))
 				{
 					XElement weaponComponentElement = new XElement("COMPONENT", (object)component);
 					parentElement.Add(weaponComponentElement);
