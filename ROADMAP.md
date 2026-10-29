@@ -1,3 +1,11 @@
+## Migration SHVDN3 — build 29/10/2026 14:08
+
+- [x] Diagnostic build : 374 erreurs, 149 avertissements (contre 380 erreurs au build precedent).
+- [x] Premier lot de migration des blips sur 10 fichiers : `Entity.CurrentBlip` -> `Entity.AttachedBlip` et appels `Blip.Remove()` -> `Blip.Delete()` ; compilation et comportement en jeu **non verifies**.
+- [ ] Compiler pour verifier les nouvelles API de blips et traiter les autres fichiers restants.
+- [ ] Migrer ensuite les autres ruptures : raycast, portes, groupes, armes, UI et conduite.
+- [ ] Ne pas fusionner sur main avant build sans erreurs et validation en jeu.
+
 ## SHVDN3 — diagnostic build 2026-10-29 12:51
 
 - [x] Build recu : **380 erreurs / 149 avertissements** ; aucune reduction par rapport au precedent.
