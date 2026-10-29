@@ -1,3 +1,11 @@
+## Migration SHVDN3 — build 29/10/2026 14:12
+
+- [x] Nouveau build : **274 erreurs et 149 avertissements** (298 erreurs au precedent build).
+- [x] Corrections supplementaires : `EnemyHandler.cs` (blips), `Prison.cs` (IsPositionFrozen), `DrugDealer.cs` (Blip.Delete), `CustomWeaponDealerMenu.cs` (GTA.UI.Screen.ShowSubtitle).
+- [ ] `Tick.cs` : modifications non poussees (operation bloquee) ; migrer ses blips et sous-titres.
+- [ ] Compiler et corriger les autres incompatibilites SHVDN3, notamment `StashVehicle`, `PlayerDealer`, `DrugDealer`.
+- [ ] Pas de fusion dans main avant build et validation en jeu.
+
 ## Migration SHVDN3 — build 29/10/2026 14:10
 
 - [x] Nouveau build : **298 erreurs, 149 avertissements** (contre 374 erreurs, 149 avertissements au build precedent).
