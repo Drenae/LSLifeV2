@@ -1,3 +1,10 @@
+## Build 29/10/2026 14:27:50 — syntaxe DriveBy
+
+- [x] Build bloque par **2 erreurs de syntaxe** dans `LSlife.World/DriveBy.cs:539` introduites par la migration groupee (cast `DrivingStyle`).
+- [x] Corrige `p.Task.DriveTo(..., (GTA.VehicleDrivingFlags)(int)style, 20f)`.
+- [ ] Relancer la compilation complete : les 2 erreurs de parsing empechaient de connaitre le nombre restant d'erreurs API.
+- [ ] Tester en jeu la conduite des PNJ avant toute fusion dans main ; sauvegarde SHVDN2 preservee.
+
 ## Migration SHVDN3 — lot groupe apres build 29/10/2026 14:23
 
 - [x] Base de depart : 166 erreurs distinctes dans `build-baseline(20261029-142334).log`.
