@@ -194,7 +194,7 @@ public class StashHouse
 					return;
 				}
 				Function.Call((Hash)7023634693725934496L);
-				((Entity)LSL.player.Character).FreezePosition = true;
+				((Entity)LSL.player.Character).IsPositionFrozen = true;
 				foreach (PlayerDealer playerDealer in LSL.DealerHandler.dealers)
 				{
 					if (playerDealer.NewState == Enums.PdStates.FollowingPlayer)
@@ -207,7 +207,7 @@ public class StashHouse
 				Script.Wait(300);
 				((Entity)LSL.player.Character).Position = exitPos;
 				Script.Wait(400);
-				((Entity)LSL.player.Character).FreezePosition = false;
+				((Entity)LSL.player.Character).IsPositionFrozen = false;
 				Game.FadeScreenIn(300);
 				inside = true;
 				LSL.HouseHandler.CurrentHouse = this;
@@ -310,12 +310,12 @@ public class StashHouse
 			if (Game.IsControlJustReleased(2, (Control)51))
 			{
 				Function.Call((Hash)7023634693725934496L);
-				((Entity)LSL.player.Character).FreezePosition = true;
+				((Entity)LSL.player.Character).IsPositionFrozen = true;
 				Game.FadeScreenOut(300);
 				Script.Wait(300);
 				((Entity)LSL.player.Character).Position = entrancePos;
 				Script.Wait(400);
-				((Entity)LSL.player.Character).FreezePosition = false;
+				((Entity)LSL.player.Character).IsPositionFrozen = false;
 				Game.FadeScreenIn(300);
 				inside = false;
 				SetInside(v: false);

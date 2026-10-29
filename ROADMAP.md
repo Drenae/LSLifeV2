@@ -1,3 +1,13 @@
+## Migration SHVDN3 — reprise isolée (29 octobre 2026)
+
+- [x] Branche dédiée `feature/shvdn3-migration` créée depuis le snapshot SHVDN2 restauré.
+- [x] Référence du projet basculée sur `ScriptHookVDotNet3.dll`.
+- [x] Premier lot : migration ciblée de l'API des tâches de conduite et des propriétés d'entités.
+- [ ] Compiler avec la nightly `v3.7.0-nightly.195` et fournir le journal complet ; aucun succès de build n'est présumé.
+- [ ] Traiter les incompatibilités par modules (armes, véhicules, UI, monde, tâches).
+- [ ] Tester en jeu menus, téléphone, sauvegardes et gameplay avant fusion.
+- [ ] Conserver `feature/custom-zee-menu`, `main` et `backup/pre-shvdn3-2026-10-29` inchangées.
+
 ## Cible SHVDN3 nightly (28 octobre 2026)
 
 - [x] Source officielle choisie : `scripthookvdotnet/scripthookvdotnet-nightly`.

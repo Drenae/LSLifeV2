@@ -71,7 +71,7 @@ public class Dealer
 		Function.Call(unchecked((Hash)(-5650329060376590909L)), (((Entity)ped).Handle), (100f));
 		Function.Call(unchecked((Hash)(-5348838930497642877L)), (((Entity)vehicle).Handle), (((Entity)ped).Handle));
 		destination = World.GetNextPositionOnStreet(pos, true);
-		ped.Task.DriveTo(vehicle, destination, 5f, 25f, 5);
+		ped.Task.DriveTo(vehicle, destination, 5f, (GTA.VehicleDrivingFlags)(5), 25f);
 		state = States.Driving;
 		ped.StaysInVehicleWhenJacked = true;
 		ped.BlockPermanentEvents = true;
