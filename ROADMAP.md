@@ -1,3 +1,9 @@
+## SHVDN3 — diagnostic build 2026-10-29 12:51
+
+- [x] Build recu : **380 erreurs / 149 avertissements** ; aucune reduction par rapport au precedent.
+- [x] Corriger les 6 appels de fondu invalides `GTA.UI.Screen.Fading.FadeIn/FadeOut` vers `GTA.UI.Screen.FadeIn/FadeOut` (DrugOrder, StashHouse).
+- [ ] Recompiler pour valider les appels de fondu ; traiter ensuite les incompatibilites `CurrentBlip`, `Blip.Remove`, vehicules, armes et groupes de relation.
+
 ## SHVDN3 — build du 29 octobre 2026, 12 h 49
 
 - [x] Nouveau diagnostic : **380 erreurs et 149 avertissements** (`build-baseline(20261029-124924).log`), contre 407 erreurs precedemment.
