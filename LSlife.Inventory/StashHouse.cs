@@ -203,12 +203,12 @@ public class StashHouse
 						playerDealer.Ped.LeaveGroup();
 					}
 				}
-				GTA.UI.Screen.Fading.FadeOut(300);
+				GTA.UI.Screen.FadeOut(300);
 				Script.Wait(300);
 				((Entity)LSL.player.Character).Position = exitPos;
 				Script.Wait(400);
 				((Entity)LSL.player.Character).FreezePosition = false;
-				GTA.UI.Screen.Fading.FadeIn(300);
+				GTA.UI.Screen.FadeIn(300);
 				inside = true;
 				LSL.HouseHandler.CurrentHouse = this;
 				foreach (Ped getPed in LSL.lPeds.GetPeds)
@@ -311,12 +311,12 @@ public class StashHouse
 			{
 				Function.Call((Hash)7023634693725934496L);
 				((Entity)LSL.player.Character).FreezePosition = true;
-				GTA.UI.Screen.Fading.FadeOut(300);
+				GTA.UI.Screen.FadeOut(300);
 				Script.Wait(300);
 				((Entity)LSL.player.Character).Position = entrancePos;
 				Script.Wait(400);
 				((Entity)LSL.player.Character).FreezePosition = false;
-				GTA.UI.Screen.Fading.FadeIn(300);
+				GTA.UI.Screen.FadeIn(300);
 				inside = false;
 				SetInside(v: false);
 			}
