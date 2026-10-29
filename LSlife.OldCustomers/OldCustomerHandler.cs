@@ -44,9 +44,9 @@ internal static class OldCustomerHandler
 			{
 				_ped.LeaveGroup();
 			}
-			if (((Entity)_ped).CurrentBlip != (Blip)null)
+			if (((Entity)_ped).AttachedBlip != (Blip)null)
 			{
-				((Entity)_ped).CurrentBlip.Remove();
+				((Entity)_ped).AttachedBlip.Delete();
 			}
 			OldCustomer oC = new OldCustomer(_ped, _veh, _inside, _canBeRival, _drug);
 			OldCustomers.Add(oC);
