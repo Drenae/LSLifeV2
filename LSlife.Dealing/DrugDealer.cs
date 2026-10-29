@@ -74,7 +74,7 @@ public class DrugDealer
 						blip.Name = "Drug Pickup";
 						blip.ShowRoute = true;
 						LsFunctions.DbugString("dealer car spawned");
-						string areaName = World.GetZoneName(dealerSpawn.Position);
+						string areaName = ZoneCompat.GetZoneName(dealerSpawn.Position);
 						LsFunctions.TextMsg("ZEE", "Commande", "OK, retrouve mes gars à ~y~" + areaName + " ~s~, ils s'occuperont de toi.");
 					}
 					else
