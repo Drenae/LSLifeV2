@@ -780,7 +780,7 @@ public class PlayerDealer
 						if (!LSL.CheckIfPedUsed(ped, _allowPolice: false, _allowVehicle: false) && (Entity)(object)ped != (Entity)(object)lPed)
 						{
 							cPed = ped;
-							((Entity)cPed).FreezePosition = false;
+							((Entity)cPed).IsPositionFrozen = false;
 							((Entity)cPed).IsPersistent = true;
 							if (LSL.DEBUG)
 							{
@@ -862,7 +862,7 @@ public class PlayerDealer
 						UI.Notify("Transaction terminée");
 					}
 					LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
-					((Entity)cPed).CurrentBlip.Remove();
+					((Entity)cPed).AttachedBlip.Delete();
 					lPed = cPed;
 					cPed = null;
 				}
@@ -1147,20 +1147,20 @@ public class PlayerDealer
 	{
 		if (NewState == Enums.PdStates.FollowPlayer || CurrentState == Enums.PdStates.FollowPlayer)
 		{
-			((Entity)Ped).CurrentBlip.Color = (BlipColor)54;
+			((Entity)Ped).AttachedBlip.Color = (BlipColor)54;
 		}
 		else
 		{
-			((Entity)Ped).CurrentBlip.Color = (BlipColor)50;
+			((Entity)Ped).AttachedBlip.Color = (BlipColor)50;
 		}
-		((Entity)Ped).CurrentBlip.Name = "Dealer";
-		((Entity)Ped).CurrentBlip.Scale = 0.5f;
-		((Entity)Ped).CurrentBlip.IsShortRange = true;
+		((Entity)Ped).AttachedBlip.Name = "Dealer";
+		((Entity)Ped).AttachedBlip.Scale = 0.5f;
+		((Entity)Ped).AttachedBlip.IsShortRange = true;
 	}
 
 	private void RemoveBlip()
 	{
-		((Entity)Ped).CurrentBlip.Remove();
+		((Entity)Ped).AttachedBlip.Delete();
 	}
 
 	private void SetStartDrugs()
