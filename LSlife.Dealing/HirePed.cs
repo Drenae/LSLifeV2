@@ -44,20 +44,20 @@ public class HirePed
 			{
 				TimedOut = true;
 			}
-			else if (Game.IsControlJustPressed(2, (Control)52))
+			else if (Game.IsControlJustPressed((Control)52))
 			{
 				Declined = true;
 			}
-			else if (Game.IsControlJustPressed(2, (Control)51))
+			else if (Game.IsControlJustPressed((Control)51))
 			{
 				Accepted = true;
-				UI.ShowSubtitle("Super, je te suis.", 6000);
+				GTA.UI.Screen.ShowSubtitle("Super, je te suis.", 6000);
 			}
 			if (Declined || TimedOut)
 			{
 				Destroy = true;
 				LsFunctions.RemovePedFromWorld(PotentialWorker, clearTask: true);
-				UI.ShowSubtitle("OK, peut-être une prochaine fois.", 6000);
+				GTA.UI.Screen.ShowSubtitle("OK, peut-être une prochaine fois.", 6000);
 			}
 		}
 		else
