@@ -49,7 +49,7 @@ public class AreaDealer
 			return;
 		}
 		if (recruitmentDebugBlip != null && recruitmentDebugBlip.Exists()) return;
-		if (((Entity)dPed).CurrentBlip != null && ((Entity)dPed).CurrentBlip.Exists()) return;
+		if (((Entity)dPed).AttachedBlip != null && ((Entity)dPed).AttachedBlip.Exists()) return;
 		recruitmentDebugBlip = ((Entity)dPed).AddBlip();
 		recruitmentDebugBlip.Name = "Dealer recrutable (DEBUG)";
 		recruitmentDebugBlip.Color = (BlipColor)2;
@@ -171,7 +171,7 @@ public class AreaDealer
 			if ((Entity)(object)cPed != (Entity)null)
 			{
 				LsFunctions.RemovePedFromWorld(cPed, clearTask: true);
-				Blip currentBlip = ((Entity)cPed).CurrentBlip;
+				Blip currentBlip = ((Entity)cPed).AttachedBlip;
 				if (currentBlip != null)
 				{
 					currentBlip.Remove();
@@ -216,9 +216,9 @@ public class AreaDealer
 			if (!ShouldAttackPlayer())
 			{
 				NewState = Enums.DStates.Normal;
-				if ((!Detected && ((Entity)dPed).CurrentBlip != (Blip)null) || ((Entity)dPed).CurrentBlip.Exists())
+				if ((!Detected && ((Entity)dPed).AttachedBlip != (Blip)null) || ((Entity)dPed).AttachedBlip.Exists())
 				{
-					((Entity)dPed).CurrentBlip.Remove();
+					((Entity)dPed).AttachedBlip.Remove();
 				}
 			}
 			break;
@@ -486,7 +486,7 @@ public class AreaDealer
 						if (!LSL.CheckIfPedUsed(ped, _allowPolice: false, _allowVehicle: false))
 						{
 							cPed = ped;
-							((Entity)cPed).FreezePosition = false;
+							((Entity)cPed).IsPositionFrozen = false;
 							((Entity)cPed).IsPersistent = true;
 							LastCustomer = ((Entity)cPed).Handle;
 							if (DEBUG)
@@ -573,7 +573,7 @@ public class AreaDealer
 						UI.Notify("Transaction terminée");
 					}
 					LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
-					((Entity)cPed).CurrentBlip.Remove();
+					((Entity)cPed).AttachedBlip.Remove();
 					cPed = null;
 					cTimer.Reset();
 					cTimer.Start();
