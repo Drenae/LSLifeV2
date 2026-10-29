@@ -1,3 +1,12 @@
+## SHVDN3 — lot UI et diagnostic (29 octobre 2026)
+
+- [x] `build-baseline(20261029-124502).log` : **526 erreurs et 121 avertissements** (sortie du compilateur ; le journal repete les diagnostics dans le recapitulatif).
+- [x] Identifier les familles de ruptures : UI.Notify / UI.ShowSubtitle, Entity.CurrentBlip, Blip.Remove, controles, zones, vehicules, armes, raycast, GTA.RelationshipGroup.
+- [x] Ajouter `LSlife.UI/LegacyUiBridge.cs` pour acheminer les notifications et sous-titres vers `GTA.UI.Notification` et `GTA.UI.Screen` (SHVDN3).
+- [x] `CustomHudOptionsMenu.cs` : remplacer l'ancien appel `GTA.UI.ShowSubtitle` par le pont UI.
+- [ ] Compiler pour confirmer le lot UI ; puis migrer les autres API par lots sans modifier le gameplay.
+- [ ] Ne pas fusionner sur main avant compilation et validation en jeu ; conserver la branche de sauvegarde.
+
 ## SHVDN3 — corrections premier build (29 octobre 2026)
 
 - [x] `build-baseline(20261029-124327).log` : 3 erreurs CS0246 (types v2 `PedHash`, `VehicleHash`, `UIText`), 0 avertissement.
