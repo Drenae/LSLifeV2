@@ -1,3 +1,10 @@
+## SHVDN3 — migration des controles (29 octobre 2026)
+
+- [x] Journal `build-baseline(20261029-124711).log` : **407 erreurs, 122 avertissements** ; les lignes de diagnostic sont repetees par le resume MSBuild.
+- [x] Migrer **27 appels** `Game.IsControlJustPressed/Released(2, control)` vers la signature SHVDN3 a un argument, dans 8 fichiers (`HirePed`, `DrugDealer`, `AreaDealer`, `StashHouse`, `Shot`, `StashVehicle`, `PlayerDealer`, `Tick`).
+- [ ] Relancer `Build-Baseline.ps1` pour mesurer les erreurs restantes ; compilation non validee pour ce lot.
+- [ ] Prochain lot : blips (`CurrentBlip`/`Remove`), vehicules, relations et interfaces HUD ; ne pas modifier le comportement des menus.
+
 ## SHVDN3 — lot UI et diagnostic (29 octobre 2026)
 
 - [x] `build-baseline(20261029-124502).log` : **526 erreurs et 121 avertissements** (sortie du compilateur ; le journal repete les diagnostics dans le recapitulatif).
