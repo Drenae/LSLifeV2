@@ -94,7 +94,7 @@ public class PlayerDealer
 		//IL_0039: Unknown result type (might be due to invalid IL or missing references)
 		//IL_003f: Unknown result type (might be due to invalid IL or missing references)
 		//IL_0041: Unknown result type (might be due to invalid IL or missing references)
-		area = World.GetZoneNameLabel(pos);
+		area = ZoneCompat.GetZoneNameLabel(pos);
 		ID = id;
 		pHash = hash;
 		Pos = pos;
@@ -357,9 +357,9 @@ public class PlayerDealer
 			{
 				Pos = ((Entity)Ped).Position;
 			}
-			if (area != World.GetZoneNameLabel(((Entity)Ped).Position))
+			if (area != ZoneCompat.GetZoneNameLabel(((Entity)Ped).Position))
 			{
-				area = World.GetZoneNameLabel(((Entity)Ped).Position);
+				area = ZoneCompat.GetZoneNameLabel(((Entity)Ped).Position);
 			}
 			dArmour = Ped.Armor;
 			if (LSL.DealerHandler.currentDealer == this)
