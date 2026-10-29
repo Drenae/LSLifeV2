@@ -1,3 +1,12 @@
+## Migration SHVDN3 — premier lot (29 octobre 2026)
+
+- [x] Sauvegarde pre-migration : `backup/pre-shvdn3-2026-10-29` ; ne pas modifier cette branche.
+- [x] Version SHVDN nightly installee dans GTA V Legacy, confirmee par l'utilisateur ; `iFruitAddon2` compatible SHVDN3 selon l'utilisateur.
+- [x] Build de reference `build-baseline(20261029-123953).log` : 0 erreur, 3369 avertissements (3352 occurrences CS0618 dans le journal, en comptant les messages repetes).
+- [x] `LSlife.csproj` : reference compilee remplacee de `ScriptHookVDotNet2.dll` par `ScriptHookVDotNet3.dll`, sans changer iFruitAddon2 ni les fichiers de sauvegarde.
+- [ ] Compiler avec SHVDN3 et relever les erreurs de rupture d'API ; migrer les appels en lots sans masquer les erreurs.
+- [ ] Validation fonctionnelle en jeu apres build ; ne fusionner dans `main` et ne supprimer les autres branches qu'apres validation de stabilite explicite.
+
 ## Sauvegarde obligatoire et preparation SHVDN3 — 29 octobre 2026
 
 - [x] Sauvegarde distante **avant toute modification de code** : branche immuable de reference `backup/pre-shvdn3-2026-10-29`, creee depuis `feature/custom-zee-menu`.
