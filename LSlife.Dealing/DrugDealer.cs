@@ -483,7 +483,7 @@ public class DrugDealer
 	private void RemoveBlip()
 	{
 		blip.Alpha = 0;
-		blip.Remove();
+		blip.Delete();
 	}
 
 	private void RemoveVehicle()
