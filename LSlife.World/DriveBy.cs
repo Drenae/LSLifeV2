@@ -536,7 +536,7 @@ public class DriveBy
 			{
 				style = (DrivingStyle)6;
 			}
-			p.Task.DriveTo(Vehicle, LastKnownPosition, 10f, (GTA.VehicleDrivingFlags)((int), 20f)style);
+			p.Task.DriveTo(Vehicle, LastKnownPosition, 10f, (GTA.VehicleDrivingFlags)(int)style, 20f);
 		}
 		else if (Agressive)
 		{
