@@ -811,7 +811,7 @@ public partial class LSL
 						wepDealer.ped.CurrentVehicle.SoundHorn(12);
 						((Entity)wepDealer.ped).IsPersistent = false;
 						((Entity)wepDealer.vehicle).IsPersistent = false;
-						((Entity)wepDealer.vehicle).CurrentBlip.Remove();
+						((Entity)wepDealer.vehicle).AttachedBlip.Delete();
 						Function.Call((Hash)5188501456062479616L, (((Entity)wepDealer.ped).Handle), (((Entity)wepDealer.vehicle).Handle), (20f), (786603));
 						wepDealer = null;
 					}
@@ -877,9 +877,9 @@ public partial class LSL
 							{
 								continue;
 							}
-							if (ent.CurrentBlip != (Blip)null || ent.CurrentBlip.Exists())
+							if (ent.AttachedBlip != (Blip)null || ent.AttachedBlip.Exists())
 							{
-								ent.CurrentBlip.Remove();
+								ent.AttachedBlip.Delete();
 							}
 							if (ent == (Entity)(object)attacker)
 							{
@@ -1338,9 +1338,9 @@ public partial class LSL
 					attacker.BlockPermanentEvents = true;
 					((Entity)attacker).IsPersistent = true;
 					LsFunctions.AddBlip((Entity)(object)attacker, (BlipColor)1, "Voleur", _friend: false, _edge: false);
-					if (((Entity)attacker).CurrentBlip != null && ((Entity)attacker).CurrentBlip.Exists())
+					if (((Entity)attacker).AttachedBlip != null && ((Entity)attacker).AttachedBlip.Exists())
 					{
-						((Entity)attacker).CurrentBlip.Scale = 1.3f;
+						((Entity)attacker).AttachedBlip.Scale = 1.3f;
 					}
 					WeaponHash weaponHash2 = unchecked((WeaponHash)(-1569615261));
 					int ammo2 = 0;
@@ -1524,10 +1524,10 @@ public partial class LSL
 						((Entity)p5).IsPersistent = true;
 					}
 					p5.BlockPermanentEvents = true;
-					if (((Entity)p5).CurrentBlip.Exists())
+					if (((Entity)p5).AttachedBlip.Exists())
 					{
-						((Entity)p5).CurrentBlip.Name = "Robber";
-						((Entity)p5).CurrentBlip.IsFriendly = false;
+						((Entity)p5).AttachedBlip.Name = "Robber";
+						((Entity)p5).AttachedBlip.IsFriendly = false;
 					}
 				}
 			}
@@ -1575,12 +1575,12 @@ public partial class LSL
 		}
 		if ((Entity)(object)attacker != (Entity)null)
 		{
-			if (((Entity)attacker).CurrentBlip == (Blip)null || !((Entity)attacker).CurrentBlip.Exists())
+			if (((Entity)attacker).AttachedBlip == (Blip)null || !((Entity)attacker).AttachedBlip.Exists())
 			{
 				LsFunctions.AddBlip((Entity)(object)attacker, (BlipColor)1, "Voleur", _friend: false, _edge: false);
-					if (((Entity)attacker).CurrentBlip != null && ((Entity)attacker).CurrentBlip.Exists())
+					if (((Entity)attacker).AttachedBlip != null && ((Entity)attacker).AttachedBlip.Exists())
 					{
-						((Entity)attacker).CurrentBlip.Scale = 1.3f;
+						((Entity)attacker).AttachedBlip.Scale = 1.3f;
 					}
 			}
 			if (((Entity)attacker).IsDead)
@@ -1804,7 +1804,7 @@ public partial class LSL
 		if ((Entity)(object)weaponDealer1 != (Entity)null && !((Entity)weaponDealer1).IsAlive)
 		{
 			((Entity)weaponDealer1).IsPersistent = false;
-			((Entity)weaponDealer1).CurrentBlip.Remove();
+			((Entity)weaponDealer1).AttachedBlip.Delete();
 			((Entity)weaponDealer1).MarkAsNoLongerNeeded();
 			LsFunctions.SendTextMsg("Le dealer est mort !");
 			weaponDealer1 = null;
