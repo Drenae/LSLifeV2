@@ -13,7 +13,7 @@ namespace LSlife
         internal static string GetZoneName(Vector3 position)
         {
             string label = GetZoneNameLabel(position);
-            return Function.Call<string>(Hash.GET_LABEL_TEXT, label);
+            return Function.Call<string>((Hash)0x7B5280EBA9840C72UL, label);
         }
     }
 }
