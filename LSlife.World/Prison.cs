@@ -277,7 +277,7 @@ internal static class Prison
 			if (position.DistanceTo(Gate1WaitPos) <= 5f && PriGate1 == null && (Entity)(object)pGate1() != (Entity)null)
 			{
 				PriGate1 = new Gate(pGate1());
-				((Entity)PriGate1.Prop).FreezePosition = false;
+				((Entity)PriGate1.Prop).IsPositionFrozen = false;
 				NewState = PrisonStates.ApproachGate2;
 				Model model = ((Entity)pGate1()).Model;
 				UI.Notify("Portail trouvé : " + model.Hash);
@@ -289,7 +289,7 @@ internal static class Prison
 			if (position.DistanceTo(Gate2WaitPos) <= 3f && PriGate2 == null && (Entity)(object)pGate2() != (Entity)null)
 			{
 				PriGate2 = new Gate(pGate2());
-				((Entity)PriGate2.Prop).FreezePosition = false;
+				((Entity)PriGate2.Prop).IsPositionFrozen = false;
 				NewState = PrisonStates.FinalApproach;
 			}
 			break;
