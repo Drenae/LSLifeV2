@@ -1,3 +1,10 @@
+## SHVDN3 — corrections premier build (29 octobre 2026)
+
+- [x] `build-baseline(20261029-124327).log` : 3 erreurs CS0246 (types v2 `PedHash`, `VehicleHash`, `UIText`), 0 avertissement.
+- [x] `Enums.cs` : remplacer les retours de modeles police `PedHash` / `VehicleHash` par leurs identifiants numeriques `int`, conservant les valeurs d'origine.
+- [x] `LSL.cs` : retirer le champ `myUIText` inutilise (type v2 absent).
+- [ ] Compiler le lot et traiter les prochaines erreurs d'API v3 ; ne pas revenir a la reference SHVDN2.
+
 ## Migration SHVDN3 — premier lot (29 octobre 2026)
 
 - [x] Sauvegarde pre-migration : `backup/pre-shvdn3-2026-10-29` ; ne pas modifier cette branche.
