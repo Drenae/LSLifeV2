@@ -1,3 +1,11 @@
+## Migration SHVDN3 — lot groupe apres build 29/10/2026 14:23
+
+- [x] Base de depart : 166 erreurs distinctes dans `build-baseline(20261029-142334).log`.
+- [x] Lot de 10 fichiers en **un commit** : adaptation `TaskInvoker.DriveTo` (ordre des arguments, `VehicleDrivingFlags`), `CruiseWithVehicle` (flags), `Ped.CurrentPedGroup` vers `Ped.PedGroup`, appels audio vers native `PLAY_SOUND_FRONTEND`, `Blip.Remove` vers `Blip.Delete`.
+- [ ] **Verification obligatoire** : compiler, puis controler conduite des PNJ (police, drive-by, dealers), sons, groupes et interactions ; changements non testes en jeu.
+- [ ] Prochain lot : `StashVehicle` (modifications et plaques), armes/composants, HUD/UI, relationship groups, autres API obsoletes.
+- [ ] Backup `backup/pre-shvdn3-2026-10-29` intouchable ; pas de fusion main sans validation.
+
 ## SHVDN3 — lot de migration du journal 2026-10-29 14:18
 
 - [x] Correctif du hash natif `GET_LABEL_TEXT` dans `ZoneCompat`.
