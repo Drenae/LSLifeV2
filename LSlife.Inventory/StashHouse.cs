@@ -372,7 +372,7 @@ public class StashHouse
 
 	public void RemoveBlip()
 	{
-		blip.Remove();
+		blip.Delete();
 	}
 
 	public void SetBlip()
