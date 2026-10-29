@@ -111,7 +111,7 @@ public class DroppedBag
 
 	private void RemoveBlip()
 	{
-		blip.Remove();
+		blip.Delete();
 	}
 
 	public bool CanDespawn()
