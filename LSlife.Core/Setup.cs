@@ -28,7 +28,7 @@ public partial class LSL
 		areaDebug = Function.Call<uint>(unchecked((Hash)(-3292914402564945716L)), ("areadebug"));
 		spawnP = Function.Call<uint>(unchecked((Hash)(-3292914402564945716L)), ("spawnP"));
 		player = Game.Player;
-		player.Character.CurrentPedGroup.SeparationRange = 100f;
+		player.Character.PedGroup.SeparationRange = 100f;
 		iniSettings = ScriptSettings.Load("scripts\\LSlife.ini");
 		DEBUG = iniSettings.GetValue<bool>("OPTIONS", "DEBUG", false);
 		UseSprites = iniSettings.GetValue<bool>("OPTIONS", "SPRITES", true);
