@@ -333,7 +333,7 @@ public class StashVehicle
 					LSL.displayHelpTimer = Game.GameTime;
 					LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour ouvrir le coffre.");
 				}
-				if (Game.IsControlJustPressed((Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
+				if (GTA.Input.Controls.IsDisabledControlJustPressed(GTA.Input.ControlType.Frontend, (Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 				{
 					GTA.Native.Function.Call(GTA.Native.Hash.SET_VEHICLE_DOOR_OPEN, drugCar.Handle, 5, false, false);
 					UpdateCarStash();
@@ -347,7 +347,7 @@ public class StashVehicle
 					LSL.displayHelpTimer = Game.GameTime;
 					LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour fermer le coffre.");
 				}
-				if (Game.IsControlJustPressed((Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
+				if (GTA.Input.Controls.IsDisabledControlJustPressed(GTA.Input.ControlType.Frontend, (Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 				{
 					GTA.Native.Function.Call(GTA.Native.Hash.SET_VEHICLE_DOOR_SHUT, drugCar.Handle, 5, false);
 				}
@@ -360,7 +360,7 @@ public class StashVehicle
 				LSL.displayHelpTimer = Game.GameTime;
 				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour ouvrir les portes arrière.");
 			}
-			if (Game.IsControlJustPressed((Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
+			if (GTA.Input.Controls.IsDisabledControlJustPressed(GTA.Input.ControlType.Frontend, (Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 			{
 				GTA.Native.Function.Call(GTA.Native.Hash.SET_VEHICLE_DOOR_OPEN, drugCar.Handle, 2, true, false);
 				GTA.Native.Function.Call(GTA.Native.Hash.SET_VEHICLE_DOOR_OPEN, drugCar.Handle, 3, true, false);
@@ -375,7 +375,7 @@ public class StashVehicle
 				LSL.displayHelpTimer = Game.GameTime;
 				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour fermer les portes arrière.");
 			}
-			if (Game.IsControlJustPressed((Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
+			if (GTA.Input.Controls.IsDisabledControlJustPressed(GTA.Input.ControlType.Frontend, (Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 			{
 				GTA.Native.Function.Call(GTA.Native.Hash.SET_VEHICLE_DOOR_SHUT, drugCar.Handle, 2, false);
 				GTA.Native.Function.Call(GTA.Native.Hash.SET_VEHICLE_DOOR_SHUT, drugCar.Handle, 3, false);
