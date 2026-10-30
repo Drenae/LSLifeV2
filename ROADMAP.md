@@ -1,3 +1,11 @@
+## SHVDN3 — journal du 30/10/2026 13:26
+
+- [x] Journal analysé : 300 erreurs de compilation distinctes (600 occurrences répétées).
+- [x] Lot de correctifs UI dans InputEvents, AreaDealer, Pig, WorkerWeaponTransfer et AreaLogic.
+- [x] Suppression des appels `Blip.Remove()` dans DroppedBag, StashHouse, InputEvents et DrugDealer.
+- [ ] Corriger les erreurs concentrées dans StashVehicle, Tick, PlayerDealer et DrugDealer, notamment portes, groupes de PNJ, zones et armes.
+- [ ] Recompiler et vérifier la réduction réelle avant fusion ; aucun build vert confirmé.
+
 ## Migration SHVDN3 — gros lots du 30 octobre 2026
 
 - [x] Migration groupée des contrôles, sous-titres, blips et accès raycast dans 14 fichiers, sur 3 commits (`8bfbd2e0`, `09aa48d2`, `b00a28c8`).
