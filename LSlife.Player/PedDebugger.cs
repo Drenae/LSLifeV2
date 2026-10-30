@@ -62,7 +62,7 @@ public class PedDebugger
 					Vector2 tPos = LsFunctions.World3DToScreen2d(new Vector3(p2.Bones[37193].Position.X, p2.Bones[37193].Position.Y, p2.Bones[37193].Position.Z + 0.5f));
 					tPos.X = 1280f * tPos.X;
 					tPos.Y = 720f * tPos.Y;
-					new UIText(text, new Point((int)tPos.X, (int)tPos.Y), 0.2f, Color.WhiteSmoke, (GTA.Font)0, true, true, true).Draw();
+					new GTA.UI.TextElement(text, new PointF((int)tPos.X, (int)tPos.Y), 0.2f, Color.WhiteSmoke, GTA.UI.Font.ChaletLondon, GTA.UI.Alignment.Center, true, true).Draw();
 				}
 			}
 			else
@@ -75,7 +75,7 @@ public class PedDebugger
 			Vector2 tPos2 = LsFunctions.World3DToScreen2d(((Entity)LSL.pStashVehicle.drugCar).Position);
 			tPos2.X = 1280f * tPos2.X;
 			tPos2.Y = 720f * tPos2.Y;
-			new UIText(SetPedDebugtext((Entity)(object)LSL.pStashVehicle.drugCar, allowed: true), new Point((int)tPos2.X, (int)tPos2.Y), 0.2f, Color.WhiteSmoke, (GTA.Font)0, true, true, true).Draw();
+			new GTA.UI.TextElement(SetPedDebugtext((Entity)(object)LSL.pStashVehicle.drugCar, allowed: true), new PointF((int)tPos2.X, (int)tPos2.Y), 0.2f, Color.WhiteSmoke, GTA.UI.Font.ChaletLondon, GTA.UI.Alignment.Center, true, true).Draw();
 		}
 	}
 
