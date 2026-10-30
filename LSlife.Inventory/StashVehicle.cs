@@ -907,7 +907,7 @@ public class StashVehicle
 			drugCar.IsEngineRunning = false;
 			((Entity)drugCar).IsInvincible = false;
 			drugCar.CanTiresBurst = canTiresBurst;
-			drugCar.Mods.LicensePlateType = plateType;
+			GTA.Native.Function.Call(GTA.Native.Hash.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, drugCar.Handle, (int)plateType);
 			drugCar.Mods.LicensePlate = plate;
 			drugCar.Mods.WindowTint = tint;
 			drugCar.DirtLevel = dirt;
