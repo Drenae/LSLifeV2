@@ -94,7 +94,7 @@ public class PlayerDealer
 		//IL_0039: Unknown result type (might be due to invalid IL or missing references)
 		//IL_003f: Unknown result type (might be due to invalid IL or missing references)
 		//IL_0041: Unknown result type (might be due to invalid IL or missing references)
-		area = GTA.Native.Function.Call<string>(GTA.Native.Hash.GET_NAME_OF_ZONE, pos);
+		area = LsFunctions.GetZoneLabel(pos);
 		ID = id;
 		pHash = hash;
 		Pos = pos;
@@ -357,9 +357,9 @@ public class PlayerDealer
 			{
 				Pos = ((Entity)Ped).Position;
 			}
-			if (area != GTA.Native.Function.Call<string>(GTA.Native.Hash.GET_NAME_OF_ZONE, ((Entity)Ped).Position))
+			if (area != LsFunctions.GetZoneLabel(((Entity)Ped).Position))
 			{
-				area = GTA.Native.Function.Call<string>(GTA.Native.Hash.GET_NAME_OF_ZONE, ((Entity)Ped).Position);
+				area = LsFunctions.GetZoneLabel(((Entity)Ped).Position);
 			}
 			dArmour = Ped.Armor;
 			if (LSL.DealerHandler.currentDealer == this)
