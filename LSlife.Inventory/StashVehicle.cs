@@ -326,7 +326,7 @@ public class StashVehicle
 		}
 		if (trunkFound)
 		{
-			if (!drugCar.IsDoorOpen((VehicleDoor)5))
+			if (!(GTA.Native.Function.Call<float>(GTA.Native.Hash.GET_VEHICLE_DOOR_ANGLE_RATIO, drugCar.Handle, 5) > 0.1f))
 			{
 				if ((float)Game.GameTime > LSL.displayHelpTimer + 5000f && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 				{
@@ -335,7 +335,7 @@ public class StashVehicle
 				}
 				if (Game.IsControlJustPressed((Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 				{
-					drugCar.OpenDoor((VehicleDoor)5, false, false);
+					GTA.Native.Function.Call(GTA.Native.Hash.SET_VEHICLE_DOOR_OPEN, drugCar.Handle, 5, false, false);
 					UpdateCarStash();
 					CustomStashMenu.OpenVehicle();
 				}
@@ -349,11 +349,11 @@ public class StashVehicle
 				}
 				if (Game.IsControlJustPressed((Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 				{
-					drugCar.CloseDoor((VehicleDoor)5, false);
+					GTA.Native.Function.Call(GTA.Native.Hash.SET_VEHICLE_DOOR_SHUT, drugCar.Handle, 5, false);
 				}
 			}
 		}
-		else if (!drugCar.IsDoorOpen((VehicleDoor)2) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
+		else if (!(GTA.Native.Function.Call<float>(GTA.Native.Hash.GET_VEHICLE_DOOR_ANGLE_RATIO, drugCar.Handle, 2) > 0.1f) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 		{
 			if ((float)Game.GameTime > LSL.displayHelpTimer + 3000f)
 			{
@@ -362,8 +362,8 @@ public class StashVehicle
 			}
 			if (Game.IsControlJustPressed((Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 			{
-				drugCar.OpenDoor((VehicleDoor)2, true, false);
-				drugCar.OpenDoor((VehicleDoor)3, true, false);
+				GTA.Native.Function.Call(GTA.Native.Hash.SET_VEHICLE_DOOR_OPEN, drugCar.Handle, 2, true, false);
+				GTA.Native.Function.Call(GTA.Native.Hash.SET_VEHICLE_DOOR_OPEN, drugCar.Handle, 3, true, false);
 				UpdateCarStash();
 				CustomStashMenu.OpenVehicle();
 			}
@@ -377,8 +377,8 @@ public class StashVehicle
 			}
 			if (Game.IsControlJustPressed((Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.player.Character.IsStopped)
 			{
-				drugCar.CloseDoor((VehicleDoor)2, false);
-				drugCar.CloseDoor((VehicleDoor)3, false);
+				GTA.Native.Function.Call(GTA.Native.Hash.SET_VEHICLE_DOOR_SHUT, drugCar.Handle, 2, false);
+				GTA.Native.Function.Call(GTA.Native.Hash.SET_VEHICLE_DOOR_SHUT, drugCar.Handle, 3, false);
 			}
 		}
 	}
