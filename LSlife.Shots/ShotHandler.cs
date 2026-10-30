@@ -118,7 +118,7 @@ internal static class ShotHandler
 		{
 			if (LSL.DEBUG)
 			{
-				UI.Notify("Nouvelle livraison créée : client trouvé.");
+				GTA.UI.Notification.Show("Nouvelle livraison créée : client trouvé.");
 			}
 			spawnPos = LSL.GenerateSpawnPos(LSL.playerPos.Around(200f), LSL.Nodetype.Offroad, sidewalk: true);
 		}
@@ -148,7 +148,7 @@ internal static class ShotHandler
 				val = spawnPos;
 				string text = ((object)val/*cast due to constrained. prefix*/).ToString();
 				val = ((Entity)newPed).Position;
-				UI.Notify("Position livraison : " + text + " ; position client : " + ((object)val/*cast due to constrained. prefix*/).ToString());
+				GTA.UI.Notification.Show("Position livraison : " + text + " ; position client : " + ((object)val/*cast due to constrained. prefix*/).ToString());
 			}
 			if (!((Entity)(object)newPed != (Entity)null))
 			{
