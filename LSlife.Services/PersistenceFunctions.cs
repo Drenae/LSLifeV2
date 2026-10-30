@@ -273,7 +273,7 @@ internal static partial class LsFunctions
 				if (model.Hash == doorHash)
 				{
 					prop = p;
-					((Entity)p).FreezePosition = true;
+					((Entity)p).IsPositionFrozen = true;
 					if (((Entity)p).Position != pos)
 					{
 						((Entity)p).Position = pos;
