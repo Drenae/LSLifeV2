@@ -125,7 +125,7 @@ internal static partial class LsFunctions
 			ped2.Money -= price;
 			LSL.PlayerInventory[c.Drug.Name] -= c.amount;
 			PlayTheSound();
-			GTA.UI.Notification.PostTicker("Vendu : " + DrugDisplayName(c.Drug.Name) + " " + GramsToOz(c.amount) + ", il te reste " + GramsToOz(LSL.PlayerInventory[c.Drug.Name]) +". Réputation gagnée : ~g~" + repEarned + " ~s~, réputation totale ~g~" + LSL.areas[LSL.areaIndex].Reputation + "~s~ à " + LSL.areas[LSL.areaIndex].Name);
+			GTA.UI.Notification.PostTicker("Vendu : " + DrugDisplayName(c.Drug.Name) + " " + GramsToOz(c.amount) + ", il te reste " + GramsToOz(LSL.PlayerInventory[c.Drug.Name]) +". Réputation gagnée : ~g~" + repEarned + " ~s~, réputation totale ~g~" + LSL.areas[LSL.areaIndex].Reputation + "~s~ à " + LSL.areas[LSL.areaIndex].Name, false, false);
 			Function.Call(unchecked((Hash)(-8213159594590722974L)), (p), ("GENERIC_THANKS"), ("SPEECH_PARAMS_STANDARD"), (0));
 			if ((Entity)(object)c.Vehicle != (Entity)null && ((Entity)c.Vehicle).Exists())
 			{
@@ -152,7 +152,7 @@ internal static partial class LsFunctions
 			ped3.Money -= price;
 			LSL.PlayerInventory[c.Drug.Name] -= c.amount;
 			PlayTheSound();
-			GTA.UI.Notification.PostTicker("Vendu : " + DrugDisplayName(c.Drug.Name) + " " + GramsToOz(c.amount) + ", il te reste " + GramsToOz(LSL.PlayerInventory[c.Drug.Name]) +". Réputation gagnée : ~g~" + repEarned + " ~s~, réputation totale ~g~" + LSL.areas[LSL.areaIndex].Reputation + "~s~ à " + LSL.areas[LSL.areaIndex].Name);
+			GTA.UI.Notification.PostTicker("Vendu : " + DrugDisplayName(c.Drug.Name) + " " + GramsToOz(c.amount) + ", il te reste " + GramsToOz(LSL.PlayerInventory[c.Drug.Name]) +". Réputation gagnée : ~g~" + repEarned + " ~s~, réputation totale ~g~" + LSL.areas[LSL.areaIndex].Reputation + "~s~ à " + LSL.areas[LSL.areaIndex].Name, false, false);
 			Function.Call(unchecked((Hash)(-8213159594590722974L)), (p), ("GENERIC_THANKS"), ("SPEECH_PARAMS_STANDARD"), (0));
 			if ((Entity)(object)c.Vehicle != (Entity)null && ((Entity)c.Vehicle).Exists())
 			{
@@ -234,7 +234,7 @@ internal static partial class LsFunctions
 		{
 			if (LSL.DEBUG)
 			{
-				GTA.UI.Notification.PostTicker(police.Count + " | " + Function.Call<int>(unchecked((Hash)(-70476366192974276L)), (((Entity)pol).Handle)) + " | " + IsPolice(pol));
+				GTA.UI.Notification.PostTicker(police.Count + " | " + Function.Call<int>(unchecked((Hash)(-70476366192974276L)), (((Entity)pol).Handle)) + " | " + IsPolice(pol), false, false);
 			}
 			if (CanSee((Entity)(object)pol, (Entity)(object)Game.Player.Character))
 			{
@@ -291,7 +291,7 @@ internal static partial class LsFunctions
 		{
 			if (LSL.DEBUG)
 			{
-				GTA.UI.Notification.PostTicker(police.Count + " | " + Function.Call<int>(unchecked((Hash)(-70476366192974276L)), (((Entity)pol).Handle)) + " | " + IsPolice(pol));
+				GTA.UI.Notification.PostTicker(police.Count + " | " + Function.Call<int>(unchecked((Hash)(-70476366192974276L)), (((Entity)pol).Handle)) + " | " + IsPolice(pol), false, false);
 			}
 			position = ((Entity)pol).Position;
 			if (position.DistanceTo(LSL.playerPos) < 40f && CanSee((Entity)(object)pol, (Entity)(object)Game.Player.Character))
