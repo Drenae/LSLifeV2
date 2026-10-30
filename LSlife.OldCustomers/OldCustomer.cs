@@ -123,7 +123,7 @@ internal class OldCustomer
 				{
 					Entity killer = Ped.GetKiller();
 					Ped killer2 = (Ped)(object)((killer is Ped) ? killer : null);
-					if ((Entity)(object)killer2 != (Entity)null && killer2.CurrentPedGroup == LSL.player.Character.CurrentPedGroup && ShouldAttack())
+					if ((Entity)(object)killer2 != (Entity)null && killer2.PedGroup == LSL.player.Character.PedGroup && ShouldAttack())
 					{
 						LsFunctions.SpawnDriveBy(LSL.player.Character, _agressive: true);
 					}
