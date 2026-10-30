@@ -170,7 +170,7 @@ internal class OldCustomer
 		Ped.CanSwitchWeapons = true;
 		Ped.IsEnemy = true;
 		Ped.RelationshipGroup = LSL.rival_enemy;
-		Ped.Task.FightAgainst(_ped);
+		Ped.Task.Combat(_ped);
 	}
 
 	private bool EnteredState()
@@ -225,14 +225,14 @@ internal class OldCustomer
 		//IL_005c: Unknown result type (might be due to invalid IL or missing references)
 		if (Inside && LSL.HouseHandler.CurrentHouse != null)
 		{
-			Ped.Task.GoTo(LSL.HouseHandler.CurrentHouse.exitPos);
+			Ped.Task.FollowNavMeshTo(LSL.HouseHandler.CurrentHouse.exitPos);
 			return;
 		}
 		if ((Entity)(object)Vehicle != (Entity)null && ((Entity)Vehicle).Exists())
 		{
 			LSL.PerformTaskSeq(1, Vehicle, ((Entity)Vehicle).Position);
 		}
-		Ped.Task.WanderAround();
+		Ped.Task.Wander();
 	}
 
 	private void SetState(OldCustomerStates _state)
