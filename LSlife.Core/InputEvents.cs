@@ -179,7 +179,7 @@ public partial class LSL
 			Blip currentBlip = ((Entity)drugDealer1).AttachedBlip;
 			if (currentBlip != null)
 			{
-				currentBlip.Remove();
+				currentBlip.Delete();
 			}
 			((Entity)drugDealer1).Delete();
 		}
@@ -212,20 +212,20 @@ public partial class LSL
 		{
 			if ((Entity)(object)pStashVehicle.drugCar != (Entity)null && ((Entity)pStashVehicle.drugCar).Exists())
 			{
-				((Entity)pStashVehicle.drugCar).AttachedBlip.Remove();
+				((Entity)pStashVehicle.drugCar).AttachedBlip.Delete();
 				((Entity)pStashVehicle.drugCar).Delete();
 			}
 			Blip drugCarBlip = pStashVehicle.drugCarBlip;
 			if (drugCarBlip != null)
 			{
-				drugCarBlip.Remove();
+				drugCarBlip.Delete();
 			}
 		}
 		if (wepDealer != null)
 		{
 			if ((Entity)(object)wepDealer.vehicle != (Entity)null)
 			{
-				((Entity)wepDealer.vehicle).AttachedBlip.Remove();
+				((Entity)wepDealer.vehicle).AttachedBlip.Delete();
 				((Entity)wepDealer.vehicle).Delete();
 			}
 			if ((Entity)(object)wepDealer.ped != (Entity)null)

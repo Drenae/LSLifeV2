@@ -44,7 +44,7 @@ public class AreaDealer
 	{
 		if (!enabled || (Entity)(object)dPed == (Entity)null || !((Entity)dPed).Exists() || !((Entity)dPed).IsAlive || CurrentState == Enums.DStates.AttackPlayer)
 		{
-			if (recruitmentDebugBlip != null && recruitmentDebugBlip.Exists()) recruitmentDebugBlip.Remove();
+			if (recruitmentDebugBlip != null && recruitmentDebugBlip.Exists()) recruitmentDebugBlip.Delete();
 			recruitmentDebugBlip = null;
 			return;
 		}
@@ -174,7 +174,7 @@ public class AreaDealer
 				Blip currentBlip = ((Entity)cPed).AttachedBlip;
 				if (currentBlip != null)
 				{
-					currentBlip.Remove();
+					currentBlip.Delete();
 				}
 				cPed = null;
 			}
@@ -218,7 +218,7 @@ public class AreaDealer
 				NewState = Enums.DStates.Normal;
 				if ((!Detected && ((Entity)dPed).AttachedBlip != (Blip)null) || ((Entity)dPed).AttachedBlip.Exists())
 				{
-					((Entity)dPed).AttachedBlip.Remove();
+					((Entity)dPed).AttachedBlip.Delete();
 				}
 			}
 			break;
@@ -390,7 +390,7 @@ public class AreaDealer
 				LSL.displayHelpTimer = Game.GameTime;
 				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour parler à cette personne.");
 			}
-			if (Game.IsControlJustPressed(2, (Control)21))
+			if (Game.IsControlJustPressed((Control)21))
 			{
 				Function.Call((Hash)7023634693725934496L);
 				CustomHireDealerMenu.Open();
@@ -573,7 +573,7 @@ public class AreaDealer
 						UI.Notify("Transaction terminée");
 					}
 					LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
-					((Entity)cPed).AttachedBlip.Remove();
+					((Entity)cPed).AttachedBlip.Delete();
 					cPed = null;
 					cTimer.Reset();
 					cTimer.Start();
