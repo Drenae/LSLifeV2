@@ -38,7 +38,7 @@ internal class DefaultPed
 	public void MovePed()
 	{
 		//IL_000c: Unknown result type (might be due to invalid IL or missing references)
-		Ped.Task.GoTo(target);
+		Ped.Task.FollowNavMeshTo(target);
 		pInventory.AddItem(new Cocaine("Coke", _stack: true, ""), 420);
 	}
 
