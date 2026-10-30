@@ -78,15 +78,15 @@ public class Shot
 					Function.Call((Hash)7023634693725934496L);
 					accepted = true;
 					shotOffered = false;
-					((Entity)customer.Ped).CurrentBlip.IsShortRange = false;
+					((Entity)customer.Ped).AttachedBlip.IsShortRange = false;
 					LsFunctions.TextMsg("Livraison", customer.Ped, "Message", "On se retrouve là-bas.");
 					if (LSL.PlayerInventory[customer.Drug.Name] >= customer.amount)
 					{
-						UI.ShowSubtitle("Livre " + LsFunctions.GramsToOz(customer.amount) + " de ~g~" + LsFunctions.DrugDisplayName(customer.Drug.Name) + "~w~ à ~y~" + World.GetStreetName(((Entity)customer.Ped).Position) + ".", 10000);
+						GTA.UI.Screen.ShowSubtitle("Livre " + LsFunctions.GramsToOz(customer.amount) + " de ~g~" + LsFunctions.DrugDisplayName(customer.Drug.Name) + "~w~ à ~y~" + World.GetStreetName(((Entity)customer.Ped).Position) + ".", 10000);
 					}
 					else
 					{
-						UI.ShowSubtitle("Tu n’as pas assez de ~g~" + LsFunctions.DrugDisplayName(customer.Drug.Name) + "~w~. Récupère ~g~" + LsFunctions.GramsToOz(customer.amount) + "~w~ et livre-la à ~y~" + World.GetStreetName(((Entity)customer.Ped).Position) + ".", 10000);
+						GTA.UI.Screen.ShowSubtitle("Tu n’as pas assez de ~g~" + LsFunctions.DrugDisplayName(customer.Drug.Name) + "~w~. Récupère ~g~" + LsFunctions.GramsToOz(customer.amount) + "~w~ et livre-la à ~y~" + World.GetStreetName(((Entity)customer.Ped).Position) + ".", 10000);
 					}
 				}
 				if (Game.GameTime > timeShotOffered + 25000)
@@ -112,7 +112,7 @@ public class Shot
 				{
 					customer.Ped.Task.ClearAll();
 					Function.Call(unchecked((Hash)(-6974808092771143243L)), (((Entity)customer.Ped).Handle), (LSL.playerGroup));
-					((Entity)customer.Ped).CurrentBlip.ShowRoute = false;
+					((Entity)customer.Ped).AttachedBlip.ShowRoute = false;
 				}
 				if (!CustomMenuShared.IsAnyGameplayMenuOpen() && dist <= 2f)
 				{
