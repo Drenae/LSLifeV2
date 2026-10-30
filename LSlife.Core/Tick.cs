@@ -197,10 +197,6 @@ public partial class LSL
 		//IL_3ff4: Unknown result type (might be due to invalid IL or missing references)
 		//IL_400d: Unknown result type (might be due to invalid IL or missing references)
 		//IL_4012: Unknown result type (might be due to invalid IL or missing references)
-		if (Game.IsLoading)
-		{
-			return;
-		}
 		// Un Ped existant et IsPlaying ne suffisent pas : le protagoniste peut
 		// encore changer plusieurs fois pendant les premieres secondes.
 		if (iFruit == null)
