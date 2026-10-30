@@ -346,7 +346,7 @@ public class PlayerDealer
 		{
 			if (Ped.RelationshipGroup != LSL.playerRelationship)
 			{
-				UI.Notify("~r~Employé retiré du groupe de compagnons : réintégration");
+				GTA.UI.Notification.Show("~r~Employé retiré du groupe de compagnons : réintégration");
 				Ped.RelationshipGroup = LSL.playerRelationship;
 			}
 			if (!isFollowing() && LSL.driveByHandler.AmountOfDriveBy(_agg: true) > 0 && !playerNear())
@@ -390,7 +390,7 @@ public class PlayerDealer
 				}
 				if (LSL.DEBUG)
 				{
-					UI.Notify("PDealer state = " + NewState);
+					GTA.UI.Notification.Show("PDealer state = " + NewState);
 				}
 				switch (NewState)
 				{
@@ -750,7 +750,7 @@ public class PlayerDealer
 				cPed = null;
 				if (LSL.DEBUG)
 				{
-					UI.Notify("Le client du dealer n'existe pas");
+					GTA.UI.Notification.Show("Le client du dealer n'existe pas");
 				}
 			}
 			if ((Entity)(object)cPed != (Entity)null && ((Entity)cPed).Exists() && ((Entity)cPed).IsDead)
@@ -759,7 +759,7 @@ public class PlayerDealer
 				cPed = null;
 				if (LSL.DEBUG)
 				{
-					UI.Notify("Le client du dealer n'existe pas");
+					GTA.UI.Notification.Show("Le client du dealer n'existe pas");
 				}
 			}
 			if ((Entity)(object)cPed == (Entity)null)
@@ -770,7 +770,7 @@ public class PlayerDealer
 				}
 				if (LSL.DEBUG)
 				{
-					UI.Notify("Recherche d'un client pour le dealer");
+					GTA.UI.Notification.Show("Recherche d'un client pour le dealer");
 				}
 				List<Ped> peds = LSL.lPeds.GetPeds;
 				if (peds.ToList().Count > 0)
@@ -793,7 +793,7 @@ public class PlayerDealer
 				}
 				if (LSL.DEBUG)
 				{
-					UI.Notify("Aucun personnage trouvé pour le dealer");
+					GTA.UI.Notification.Show("Aucun personnage trouvé pour le dealer");
 				}
 				return;
 			}
@@ -835,7 +835,7 @@ public class PlayerDealer
 				{
 					if (LSL.DEBUG)
 					{
-						UI.Notify("Transaction en cours");
+						GTA.UI.Notification.Show("Transaction en cours");
 					}
 					dealState = Enums.DealState.DoingDeal;
 					cPed.Task.PlayAnimation("switch@franklin@002110_04_magd_3_weed_exchange", "002110_04_magd_3_weed_exchange_franklin", 8f, 3000, (AnimationFlags)16);
@@ -859,7 +859,7 @@ public class PlayerDealer
 					dealState = Enums.DealState.GetNear;
 					if (LSL.DEBUG)
 					{
-						UI.Notify("Transaction terminée");
+						GTA.UI.Notification.Show("Transaction terminée");
 					}
 					LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
 					((Entity)cPed).AttachedBlip.Delete();
@@ -873,7 +873,7 @@ public class PlayerDealer
 		{
 			if (LSL.DEBUG)
 			{
-				UI.Notify("Client supprimé : trop éloigné du dealer");
+				GTA.UI.Notification.Show("Client supprimé : trop éloigné du dealer");
 			}
 			LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
 			cPed = null;
@@ -960,7 +960,7 @@ public class PlayerDealer
 			LsFunctions.NotImmuneToPlayer(Ped);
 			if (LSL.DEBUG)
 			{
-				UI.Notify("Dealer retiré du monde");
+				GTA.UI.Notification.Show("Dealer retiré du monde");
 			}
 			Pos = ((Entity)Ped).Position;
 			RemoveBlip();
@@ -987,11 +987,11 @@ public class PlayerDealer
 			}
 			else
 			{
-				UI.Notify("~r~LsLife - Impossible de déterminer le type du quartier : " + this.area);
+				GTA.UI.Notification.Show("~r~LsLife - Impossible de déterminer le type du quartier : " + this.area);
 			}
 			if (LSL.DEBUG)
 			{
-				UI.Notify("~r~Quartier ajouté au dealer : " + this.area);
+				GTA.UI.Notification.Show("~r~Quartier ajouté au dealer : " + this.area);
 			}
 		}
 		if (pArea == null || pArea.Drugs.Count <= 0)
@@ -1049,11 +1049,11 @@ public class PlayerDealer
 		{
 			if (startMoney != Money)
 			{
-				UI.Notify("Gains : " + LsFunctions.IntToMoney(Money - startMoney) + " $");
+				GTA.UI.Notification.Show("Gains : " + LsFunctions.IntToMoney(Money - startMoney) + " $");
 			}
 			else
 			{
-				UI.Notify("Aucun gain");
+				GTA.UI.Notification.Show("Aucun gain");
 			}
 		}
 	}
