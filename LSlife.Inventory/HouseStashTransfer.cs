@@ -103,8 +103,8 @@ internal static class HouseStashTransfer
                 Game.Player.Character.Weapons.Select(weapon, true);
                 foreach (XElement component in w.Elements("COMPONENT"))
                 {
-                    if (Enum.TryParse(component.Value, out WeaponComponent parsed))
-                        Game.Player.Character.Weapons.Current.SetComponent(parsed, true);
+                    if (Enum.TryParse(component.Value, out WeaponComponentHash parsed))
+                        Game.Player.Character.Weapons.Current.Components[parsed].Active = true;
                 }
                 LSL.playerWeapons.Add(new XElement(w));
                 LSL.playerWeps.Add(hash.Value);
