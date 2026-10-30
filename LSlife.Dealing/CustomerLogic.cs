@@ -97,7 +97,7 @@ public partial class LSL
 				{
 					return true;
 				}
-				if (((Entity)_ped).Alpha == 0)
+				if (GTA.Native.Function.Call<int>(GTA.Native.Hash.GET_ENTITY_ALPHA, _ped.Handle) == 0)
 				{
 					return true;
 				}
