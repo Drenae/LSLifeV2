@@ -93,7 +93,7 @@ public partial class LSL
 				Locked = false;
 				Script.Wait(10);
 				Function.Call((Hash)3423943577717663365L, ("BIG_SCORE_GOLD_CAGE_LOCK"), (0));
-				Game.PlaySound("0x08053C9C", "BIG_SCORE_GOLD_CAGE_LOCK");
+				GTA.Native.Function.Call(GTA.Native.Hash.PLAY_SOUND_FRONTEND, -1, "0x08053C9C", "BIG_SCORE_GOLD_CAGE_LOCK", true);
 				model = ((Entity)Prop).Model;
 				Function.Call(unchecked((Hash)(-7272475972733243984L)), (model.Hash), (((Entity)Prop).Position.X), (((Entity)Prop).Position.Y), (((Entity)Prop).Position.Z), (false), (0f), (50f), (0f));
 				if (DEBUG)
@@ -106,7 +106,7 @@ public partial class LSL
 			{
 				Locked = true;
 				Script.Wait(10);
-				Game.PlaySound("Bar_Lower_And_Lock", "DLC_IND_ROLLERCOASTER_SOUNDS");
+				GTA.Native.Function.Call(GTA.Native.Hash.PLAY_SOUND_FRONTEND, -1, "Bar_Lower_And_Lock", "DLC_IND_ROLLERCOASTER_SOUNDS", true);
 				model = ((Entity)Prop).Model;
 				Function.Call(unchecked((Hash)(-7272475972733243984L)), (model.Hash), (((Entity)Prop).Position.X), (((Entity)Prop).Position.Y), (((Entity)Prop).Position.Z), (true), (0f), (50f), (0f));
 				if (DEBUG)
