@@ -412,7 +412,7 @@ public class Pig
 			if (leader)
 			{
 				TaskSequence searchPlayer = new TaskSequence();
-				searchPlayer.AddTask.GoTo(((Entity)Ped).Position + ((Entity)Ped).ForwardVector * 0.5f, false, 3000);
+				searchPlayer.AddTask.FollowNavMeshTo(((Entity)Ped).Position + ((Entity)Ped).ForwardVector * 0.5f);
 				searchPlayer.AddTask.TurnTo((Entity)(object)Game.Player.Character, 1000);
 				searchPlayer.AddTask.PlayAnimation("missexile3", "ex03_dingy_search_case_base_michael");
 				Ped.Task.PerformSequence(searchPlayer);
