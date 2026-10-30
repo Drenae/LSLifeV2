@@ -49,7 +49,7 @@ public class Shot
 				{
 					price -= (int)div * customer.Drug.PricePerG;
 				}
-				LsFunctions.TextMsg("Livraison", customer.Ped, "Message", "Tu peux me livrer ~g~" + LsFunctions.GramsToOz(customer.amount) + "~w~ de ~g~" + LsFunctions.DrugDisplayName(customer.Drug.Name) + " ~w~pour $" + LsFunctions.IntToMoney(price) + " à ~y~" + World.GetStreetName(((Entity)customer.Ped).Position) + " ~w~dans ~y~" + World.GetZoneName(((Entity)customer.Ped).Position) + "~w~?");
+				LsFunctions.TextMsg("Livraison", customer.Ped, "Message", "Tu peux me livrer ~g~" + LsFunctions.GramsToOz(customer.amount) + "~w~ de ~g~" + LsFunctions.DrugDisplayName(customer.Drug.Name) + " ~w~pour $" + LsFunctions.IntToMoney(price) + " à ~y~" + World.GetStreetName(((Entity)customer.Ped).Position) + " ~w~dans ~y~" + GTA.Native.Function.Call<string>(GTA.Native.Hash.GET_NAME_OF_ZONE, ((Entity)customer.Ped).Position) + "~w~?");
 				timeShotOffered = Game.GameTime;
 				shotOffered = true;
 			}
