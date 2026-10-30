@@ -1,3 +1,12 @@
+## SHVDN3 — build du 30/10/2026 à 14:13
+
+- [x] 85 erreurs de compilation distinctes dans le journal (170 lignes dupliquées), contre 165 au précédent.
+- [x] `Tick.cs` : migration des groupes de PNJ, zones, auteurs des décès et composants d'armes ; correction des appels de groupes de relations.
+- [x] `PlayerDealer.cs` : migration suppression des blips et gel des positions.
+- [x] `PersistenceFunctions.cs` : migration gel des positions.
+- [ ] Recompiler pour vérifier les changements ; aucune compilation réussie confirmée.
+- [ ] Corriger les incompatibilités restantes de `Tick.cs`, conduite, HUD/UIText, sons, `DrugDealer`, `PedDebugger` et `StashVehicle`.
+
 ## SHVDN3 — build 30/10/2026 14:05:38 : gros lot
 
 - [x] Journal analysé : environ 165 erreurs uniques (fichier/position/code/message), avant corrections de ce lot.
