@@ -190,7 +190,7 @@ internal static partial class LsFunctions
 			XElement weaponAmmoElement = new XElement("AMMO", ammunitionInWeapon);
 			parentElement.Add(weaponNameElement);
 			parentElement.Add(weaponAmmoElement);
-			foreach (WeaponComponent component in Enum.GetValues(typeof(WeaponComponent)))
+			foreach (WeaponComponentHash component in Enum.GetValues(typeof(WeaponComponentHash)))
 			{
 				if (Function.Call<bool>(unchecked((Hash)(-4209984786179366080L)), (_ped), ((int)weapon), ((int)component)))
 				{
@@ -257,9 +257,9 @@ internal static partial class LsFunctions
 						GTA.UI.Notification.Show("Arme donnée au personnage : " + ((object)weapon/*cast due to constrained. prefix*/).ToString());
 					}
 				}
-				if (ele.Name == "COMPONENT" && !hasWeapon && Enum.TryParse<WeaponComponent>(ele.Value, out WeaponComponent wepcomp) && _ped != null)
+				if (ele.Name == "COMPONENT" && !hasWeapon && Enum.TryParse<WeaponComponentHash>(ele.Value, out WeaponComponentHash wepcomp) && _ped != null)
 				{
-					_ped.Weapons.Current.SetComponent(wepcomp, true);
+					_ped.Weapons.Current.Components[wepcomp].Active = true;
 				}
 			}
 		}
