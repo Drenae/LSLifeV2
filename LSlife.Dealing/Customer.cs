@@ -92,7 +92,7 @@ public class Customer
 		Ped.MoneyCarried = (uint)System.Math.Max(0, amount * Drug.PricePerG + extraMoney);
 		if (!FarAway && (Entity)(object)vehicle == (Entity)null)
 		{
-			Ped.Task.GoTo(target);
+			Ped.Task.FollowNavMeshTo(target);
 		}
 		string blipName = "Shot";
 		if (farAway)
