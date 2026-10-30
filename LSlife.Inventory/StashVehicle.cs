@@ -12,6 +12,13 @@ namespace LSlife;
 
 public class StashVehicle
 {
+    private static float GetModelLength(GTA.Model model)
+    {
+        GTA.Math.Vector3 min, max;
+        model.GetDimensions(out min, out max);
+        return max.Y - min.Y;
+    }
+
 	public bool drugCarWanted;
 
 	public bool drugCarDestroyed = true;
@@ -272,7 +279,7 @@ public class StashVehicle
 		Vector3 position = ((Entity)drugCar).Position;
 		Vector3 val = ((Entity)drugCar).ForwardVector * -1f;
 		Model model = ((Entity)drugCar).Model;
-		return Vector3.Add(position, Vector3.Multiply(val, model.GetDimensions().Y / 2f + 0.5f));
+		return Vector3.Add(position, Vector3.Multiply(val, GetModelLength(model) / 2f + 0.5f));
 	}
 
 	public void OnTick()
