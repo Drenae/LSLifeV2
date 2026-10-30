@@ -45,7 +45,7 @@ public partial class LSL
 				pig.DeletePig();
 				if (DEBUG)
 				{
-					GTA.UI.Notification.Show("Policier généré supprimé");
+					GTA.UI.Notification.PostTicker("Policier généré supprimé");
 				}
 				goto IL_008c;
 			}
@@ -67,12 +67,12 @@ public partial class LSL
 		//IL_0086: Unknown result type (might be due to invalid IL or missing references)
 		//IL_00a2: Unknown result type (might be due to invalid IL or missing references)
 		//IL_00a7: Unknown result type (might be due to invalid IL or missing references)
-		Vehicle pigCar = World.CreateVehicle(new Model(Enums.GetPoliceVehType()), GenerateSpawnPos(playerPos.Around(200f), Nodetype.Road, sidewalk: false));
+		Vehicle pigCar = Vehicle.Create(new Model(Enums.GetPoliceVehType()), GenerateSpawnPos(playerPos.Around(200f), Nodetype.Road, sidewalk: false));
 		if ((Entity)(object)pigCar != (Entity)null)
 		{
 			if (DEBUG)
 			{
-				GTA.UI.Notification.Show("Policier généré");
+				GTA.UI.Notification.PostTicker("Policier généré");
 				((Entity)pigCar).AddBlip();
 				((Entity)pigCar).AttachedBlip.Name = "Voiture de police";
 			}
