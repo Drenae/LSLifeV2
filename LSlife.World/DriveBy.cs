@@ -343,7 +343,7 @@ public class DriveBy
 
 	private void RemoveVehicle()
 	{
-		((Entity)Vehicle).AttachedBlip.Remove();
+		((Entity)Vehicle).AttachedBlip.Delete();
 		((Entity)Vehicle).MarkAsNoLongerNeeded();
 		LSL.entitiesCleanUp.Add((Entity)(object)Vehicle);
 		Vehicle = null;
