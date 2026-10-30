@@ -169,7 +169,7 @@ internal static class Prison
 						((Entity)copCar).AttachedBlip.Sprite = (BlipSprite)672;
 						if (DEBUG)
 						{
-							UI.Notify("Transport généré : " + (object)copCar);
+							GTA.UI.Notification.Show("Transport généré : " + (object)copCar);
 						}
 					}
 				}
@@ -238,7 +238,7 @@ internal static class Prison
 			}
 			if (stateChanged)
 			{
-				UI.Notify("Passage à l'état " + NewState);
+				GTA.UI.Notification.Show("Passage à l'état " + NewState);
 			}
 			return;
 		}
@@ -280,7 +280,7 @@ internal static class Prison
 				((Entity)PriGate1.Prop).IsPositionFrozen = false;
 				NewState = PrisonStates.ApproachGate2;
 				Model model = ((Entity)pGate1()).Model;
-				UI.Notify("Portail trouvé : " + model.Hash);
+				GTA.UI.Notification.Show("Portail trouvé : " + model.Hash);
 			}
 			break;
 		case PrisonStates.ApproachGate2:
@@ -378,7 +378,7 @@ internal static class Prison
 				if (model.Hash == doorHash)
 				{
 					prop = p;
-					UI.Notify("Portail 1 trouvé");
+					GTA.UI.Notification.Show("Portail 1 trouvé");
 					break;
 				}
 			}
@@ -403,7 +403,7 @@ internal static class Prison
 				if (model.Hash == doorHash)
 				{
 					prop = p;
-					UI.Notify("Portail 2 trouvé");
+					GTA.UI.Notification.Show("Portail 2 trouvé");
 					break;
 				}
 			}
