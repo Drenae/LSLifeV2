@@ -306,7 +306,7 @@ public class Pig
 			}
 			if (leader)
 			{
-				GTA.UI.Screen.ShowSubtitle("On t'a à l'œil. Tu ferais mieux de quitter ~y~" + World.GetZoneName(LSL.playerPos) + "~n~.", 4000);
+				GTA.UI.Screen.ShowSubtitle("On t'a à l'œil. Tu ferais mieux de quitter ~y~" + GTA.Native.Function.Call<string>(GTA.Native.Hash.GET_NAME_OF_ZONE, LSL.playerPos) + "~n~.", 4000);
 			}
 			LSL.areas[LSL.areaIndex].HeatDecay();
 			Game.Player.Character.Task.ClearAll();
