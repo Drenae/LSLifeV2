@@ -217,7 +217,7 @@ internal static partial class LsFunctions
 		Blip currentBlip = ((Entity)ped).AttachedBlip;
 		if (currentBlip != null)
 		{
-			currentBlip.Remove();
+			currentBlip.Delete();
 		}
 		ped.LeaveGroup();
 		if (clearTask)
