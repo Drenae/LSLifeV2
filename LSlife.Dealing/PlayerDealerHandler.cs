@@ -379,7 +379,7 @@ public class PlayerDealerHandler
 				allocatedIDs.Add(id2);
 				if (LSL.DEBUG)
 				{
-					GTA.UI.Notification.PostTicker("Identifiant " + id2 + " attribué, taille du groupe = " + allocatedIDs.Count);
+					GTA.UI.Notification.PostTicker("Identifiant " + id2 + " attribué, taille du groupe = " + allocatedIDs.Count, false, false);
 				}
 				if (dealers.FindAll((PlayerDealer d) =>
 				{
@@ -395,7 +395,7 @@ public class PlayerDealerHandler
 				}
 				if (LSL.DEBUG)
 				{
-					GTA.UI.Notification.PostTicker("Dealer chargé : " + id2);
+					GTA.UI.Notification.PostTicker("Dealer chargé : " + id2, false, false);
 				}
 			}
 		}
@@ -537,7 +537,7 @@ public class PlayerDealerHandler
 		}
 		if (LSL.DEBUG)
 		{
-			GTA.UI.Notification.PostTicker("Nouvel identifiant : " + id);
+			GTA.UI.Notification.PostTicker("Nouvel identifiant : " + id, false, false);
 		}
 		allocatedIDs.Add(id);
 		return id;
