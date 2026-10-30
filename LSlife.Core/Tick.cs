@@ -298,7 +298,7 @@ public partial class LSL
 		CustomHireDealerMenu.TickOncePerFrame();
 		CustomWorkerMenu.TickOncePerFrame();
 		CustomHudOptionsMenu.TickOncePerFrame();
-		if (GTA.Native.Function.Call<bool>(GTA.Native.Hash.IS_CONTROL_PRESSED, 2, 76) && Game.IsControlJustPressed((Control)26))
+		if (GTA.Native.Function.Call<bool>(GTA.Native.Hash.IS_CONTROL_PRESSED, 2, 76) && GTA.Input.Controls.IsDisabledControlJustPressed((Control)26))
 		{
 			DropDrugs.Drop();
 		}
@@ -353,7 +353,7 @@ public partial class LSL
 					displayHelpTimer = Game.GameTime;
 					LsFunctions.DisplayHelpText("~INPUT_CONTEXT~ pour obtempérer.");
 				}
-				if (Game.IsControlJustPressed((Control)51))
+				if (GTA.Input.Controls.IsDisabledControlJustPressed((Control)51))
 				{
 					PlayerComplied = true;
 					TaskSequence giveUP = new TaskSequence();
@@ -367,7 +367,7 @@ public partial class LSL
 				}
 			}
 			HandleAreaDealers();
-			if (!CustomMenuShared.IsAnyGameplayMenuOpen() && (Entity)(object)weaponDealer1 != (Entity)null && readyToDeal && Game.IsControlJustPressed((Control)51))
+			if (!CustomMenuShared.IsAnyGameplayMenuOpen() && (Entity)(object)weaponDealer1 != (Entity)null && readyToDeal && GTA.Input.Controls.IsDisabledControlJustPressed((Control)51))
 			{
 				CustomWeaponDealerMenu.Open();
 			}
@@ -744,7 +744,7 @@ public partial class LSL
 								displayHelpTimer = Game.GameTime;
 								LsFunctions.DisplayHelpText("~INPUT_SPRINT~ pour vendre depuis le véhicule.");
 							}
-							if (Game.IsControlJustPressed((Control)21))
+							if (GTA.Input.Controls.IsDisabledControlJustPressed((Control)21))
 							{
 								Function.Call((Hash)7023634693725934496L);
 								customerSellTo = nCustomer;
@@ -764,7 +764,7 @@ public partial class LSL
 								displayHelpTimer = Game.GameTime;
 								LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour vendre à cette personne.");
 							}
-							if (Game.IsControlJustPressed((Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen())
+							if (GTA.Input.Controls.IsDisabledControlJustPressed((Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen())
 							{
 								Function.Call((Hash)7023634693725934496L);
 								customerSellTo = nCustomer;
@@ -793,7 +793,7 @@ public partial class LSL
 							displayHelpTimer = Game.GameTime;
 							LsFunctions.DisplayHelpText("Appuie sur ~INPUT_VEH_EXIT~ pour entrer.");
 						}
-						if (Game.IsControlJustPressed((Control)75))
+						if (GTA.Input.Controls.IsDisabledControlJustPressed((Control)75))
 						{
 							Function.Call((Hash)7023634693725934496L);
 							player.Character.Task.EnterVehicle(wepDealer.vehicle, (VehicleSeat)0);
@@ -802,7 +802,7 @@ public partial class LSL
 				}
 				else if (player.Character.IsInVehicle() && ((Entity)player.Character.CurrentVehicle).Handle == ((Entity)wepDealer.vehicle).Handle)
 				{
-					if (Game.IsControlJustPressed((Control)52))
+					if (GTA.Input.Controls.IsDisabledControlJustPressed((Control)52))
 					{
 						player.Character.Task.LeaveVehicle(player.Character.CurrentVehicle, true);
 						Script.Wait(5500);
@@ -815,7 +815,7 @@ public partial class LSL
 						Function.Call((Hash)5188501456062479616L, (((Entity)wepDealer.ped).Handle), (((Entity)wepDealer.vehicle).Handle), (20f), (786603));
 						wepDealer = null;
 					}
-					if (Game.IsControlJustPressed((Control)51))
+					if (GTA.Input.Controls.IsDisabledControlJustPressed((Control)51))
 					{
 						if (wepDealer.state == Dealer.States.Driving)
 						{
