@@ -296,12 +296,12 @@ public class DrugDealer
 				Vector3 position3 = ((Entity)dealerCar).Position;
 				Vector3 val3 = ((Entity)dealerCar).ForwardVector * -1f;
 				model = ((Entity)dealerCar).Model;
-				task2.GoTo(Vector3.Add(position3, Vector3.Multiply(val3, GetModelLength(model) / 2f + 0.5f)) + ((Entity)dealerCar).RightVector * 1f);
+				task2.FollowNavMeshTo(Vector3.Add(position3, Vector3.Multiply(val3, GetModelLength(model) / 2f + 0.5f)) + ((Entity)dealerCar).RightVector * 1f);
 				GTA.TaskInvoker task3 = goon.Task;
 				Vector3 position4 = ((Entity)dealerCar).Position;
 				Vector3 val4 = ((Entity)dealerCar).ForwardVector * -1f;
 				model = ((Entity)dealerCar).Model;
-				task3.GoTo(Vector3.Add(position4, Vector3.Multiply(val4, GetModelLength(model) / 2f + 0.5f)) + ((Entity)dealerCar).RightVector * -2f);
+				task3.FollowNavMeshTo(Vector3.Add(position4, Vector3.Multiply(val4, GetModelLength(model) / 2f + 0.5f)) + ((Entity)dealerCar).RightVector * -2f);
 			}
 			else
 			{
