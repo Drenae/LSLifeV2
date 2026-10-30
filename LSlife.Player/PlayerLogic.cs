@@ -58,13 +58,13 @@ public partial class LSL
 		{
 			TaskSequence val2 = new TaskSequence();
 			val2.AddTask.LeaveVehicle();
-			val2.AddTask.WanderAround();
+			val2.AddTask.Wander();
 			return val2;
 		}
 		case 1:
 		{
 			TaskSequence val = new TaskSequence();
-			val.AddTask.GoTo(((Entity)vehicle).Position + ((Entity)vehicle).RightVector * 2f * -1f);
+			val.AddTask.FollowNavMeshTo(((Entity)vehicle).Position + ((Entity)vehicle).RightVector * 2f * -1f);
 			val.AddTask.EnterVehicle(vehicle, unchecked((VehicleSeat)(-1)));
 			val.AddTask.CruiseWithVehicle(vehicle, 20f, (GTA.VehicleDrivingFlags)5);
 			return val;
@@ -78,11 +78,11 @@ public partial class LSL
 			driveToPlayerAndExit.AddTask.DriveTo(vehicle, target, 10f, (GTA.VehicleDrivingFlags)5, 20f);
 			if (player.Character.IsInVehicle())
 			{
-				driveToPlayerAndExit.AddTask.GoTo(playerPos + playerRight * 3f);
+				driveToPlayerAndExit.AddTask.FollowNavMeshTo(playerPos + playerRight * 3f);
 			}
 			else
 			{
-				driveToPlayerAndExit.AddTask.GoTo(playerPos + playerForward * 2f);
+				driveToPlayerAndExit.AddTask.FollowNavMeshTo(playerPos + playerForward * 2f);
 			}
 			return driveToPlayerAndExit;
 		}
