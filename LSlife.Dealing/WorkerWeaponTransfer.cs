@@ -22,7 +22,7 @@ internal static class WorkerWeaponTransfer
 		//IL_0327: Unknown result type (might be due to invalid IL or missing references)
 		if (LSL.DEBUG)
 		{
-			GTA.UI.Notification.Show("Transfert d'arme");
+			GTA.UI.Notification.PostTicker("Transfert d'arme");
 		}
 		if (LSL.playerWeps.Count > 0)
 		{
@@ -122,7 +122,7 @@ internal static class WorkerWeaponTransfer
 							LSL.playerWeps.RemoveAt(index);
 							if (LSL.DEBUG)
 							{
-								GTA.UI.Notification.Show("Enregistrement de l'arme du dealer : " + ((object)wep/*cast due to constrained. prefix*/).ToString() + " munitions : " + ammo);
+								GTA.UI.Notification.PostTicker("Enregistrement de l'arme du dealer : " + ((object)wep/*cast due to constrained. prefix*/).ToString() + " munitions : " + ammo);
 							}
 							break;
 						}
@@ -131,17 +131,17 @@ internal static class WorkerWeaponTransfer
 				}
 				if (LSL.DEBUG)
 				{
-					GTA.UI.Notification.Show("Aucune correspondance dans playerWeapons");
+					GTA.UI.Notification.PostTicker("Aucune correspondance dans playerWeapons");
 				}
 			}
 			else if (LSL.DEBUG)
 			{
-				GTA.UI.Notification.Show("Identifiant d'arme introuvable : " + LSL.playerWeps[index]);
+				GTA.UI.Notification.PostTicker("Identifiant d'arme introuvable : " + LSL.playerWeps[index]);
 			}
 		}
 		else if (LSL.DEBUG)
 		{
-			GTA.UI.Notification.Show("Aucune arme trouvée");
+			GTA.UI.Notification.PostTicker("Aucune arme trouvée");
 		}
 	}
 }
