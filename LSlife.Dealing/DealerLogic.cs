@@ -48,7 +48,7 @@ public partial class LSL
 		if (wepdealer)
 		{
 			Vector3 dealer1pos = World.GetNextPositionOnSidewalk(GenerateSpawnPos(playerPos.Around(60f), Nodetype.AnyRoad, sidewalk: true));
-			weaponDealer1 = World.CreatePed(new Model(unchecked((PedHash)(-236444766))), GenerateSpawnPos(dealer1pos, Nodetype.AnyRoad, sidewalk: true));
+			weaponDealer1 = Ped.Create(new Model(unchecked((PedHash)(-236444766))), GenerateSpawnPos(dealer1pos, Nodetype.AnyRoad, sidewalk: true));
 			while ((Entity)(object)weaponDealer1 == (Entity)null)
 			{
 				Script.Wait(0);
@@ -64,7 +64,7 @@ public partial class LSL
 				Function.Call(unchecked((Hash)(-4079649877180351064L)), (weaponDealer1), (100));
 				readyToDeal = false;
 				Script.Wait(100);
-				weaponDealer1.Task.GoTo(pedTarget);
+				weaponDealer1.Task.FollowNavMeshTo(pedTarget);
 				dealerTimer = Game.GameTime;
 				LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
 				foreach (XElement element in LSLifeSave.Descendants())
