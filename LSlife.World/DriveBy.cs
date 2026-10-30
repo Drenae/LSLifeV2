@@ -103,14 +103,14 @@ public class DriveBy
 		{
 			if (!Agressive)
 			{
-				((Entity)Vehicle).CurrentBlip.Color = (BlipColor)1;
-				((Entity)Vehicle).CurrentBlip.Name = "Driveby Vehicle";
+				((Entity)Vehicle).AttachedBlip.Color = (BlipColor)1;
+				((Entity)Vehicle).AttachedBlip.Name = "Driveby Vehicle";
 			}
 		}
 		else if (Agressive)
 		{
-			((Entity)Vehicle).CurrentBlip.Color = (BlipColor)61;
-			((Entity)Vehicle).CurrentBlip.Name = "Patrol";
+			((Entity)Vehicle).AttachedBlip.Color = (BlipColor)61;
+			((Entity)Vehicle).AttachedBlip.Name = "Patrol";
 		}
 	}
 
@@ -343,7 +343,7 @@ public class DriveBy
 
 	private void RemoveVehicle()
 	{
-		((Entity)Vehicle).CurrentBlip.Remove();
+		((Entity)Vehicle).AttachedBlip.Remove();
 		((Entity)Vehicle).MarkAsNoLongerNeeded();
 		LSL.entitiesCleanUp.Add((Entity)(object)Vehicle);
 		Vehicle = null;
@@ -383,7 +383,7 @@ public class DriveBy
 			{
 				if ((Entity)(object)p != (Entity)null && ((Entity)p).Exists())
 				{
-					if (!p.IsInVehicle() && !((Entity)p).CurrentBlip.Exists())
+					if (!p.IsInVehicle() && !((Entity)p).AttachedBlip.Exists())
 					{
 						LsFunctions.AddBlip((Entity)(object)p, (BlipColor)1, "Driveby Ped", _friend: false, _edge: false);
 					}
