@@ -237,23 +237,23 @@ public partial class LSL
 			GTA.UI.Notification.Show("~g~LsLife: " + vNumber);
 			GTA.UI.Notification.Show("~g~LsLife: " + areas.Count + " zones chargées");
 			lPeds = new LsLPeds();
-			World.SetRelationshipBetweenGroups((Relationship)3, playerRelationship, CustomerRel);
-			World.SetRelationshipBetweenGroups((Relationship)3, playerRelationship, rival_nutral);
-			World.SetRelationshipBetweenGroups((Relationship)5, playerRelationship, rival_enemy);
-			World.SetRelationshipBetweenGroups((Relationship)3, rival_nutral, CustomerRel);
-			World.SetRelationshipBetweenGroups((Relationship)3, rival_nutral, playerRelationship);
-			World.SetRelationshipBetweenGroups((Relationship)1, rival_nutral, rival_enemy);
-			World.SetRelationshipBetweenGroups((Relationship)1, rival_enemy, CustomerRel);
-			World.SetRelationshipBetweenGroups((Relationship)5, rival_enemy, playerRelationship);
-			World.SetRelationshipBetweenGroups((Relationship)1, rival_enemy, rival_nutral);
-			World.SetRelationshipBetweenGroups((Relationship)0, CustomerRel, playerRelationship);
-			World.SetRelationshipBetweenGroups((Relationship)0, CustomerRel, rival_nutral);
-			World.SetRelationshipBetweenGroups((Relationship)0, CustomerRel, rival_enemy);
+			playerRelationship.SetRelationshipBetweenGroups(CustomerRel, (Relationship)3);
+			playerRelationship.SetRelationshipBetweenGroups(rival_nutral, (Relationship)3);
+			playerRelationship.SetRelationshipBetweenGroups(rival_enemy, (Relationship)5);
+			rival_nutral.SetRelationshipBetweenGroups(CustomerRel, (Relationship)3);
+			rival_nutral.SetRelationshipBetweenGroups(playerRelationship, (Relationship)3);
+			rival_nutral.SetRelationshipBetweenGroups(rival_enemy, (Relationship)1);
+			rival_enemy.SetRelationshipBetweenGroups(CustomerRel, (Relationship)1);
+			rival_enemy.SetRelationshipBetweenGroups(playerRelationship, (Relationship)5);
+			rival_enemy.SetRelationshipBetweenGroups(rival_nutral, (Relationship)1);
+			CustomerRel.SetRelationshipBetweenGroups(playerRelationship, (Relationship)0);
+			CustomerRel.SetRelationshipBetweenGroups(rival_nutral, (Relationship)0);
+			CustomerRel.SetRelationshipBetweenGroups(rival_enemy, (Relationship)0);
 			playerHeat = -100f;
 			Function.Call((Hash)2750315038012726912L, (player.Character), (9), (0), (0), (0));
 			playerHasBag = false;
 			canSprint = true;
-			playerArea = World.GetZoneNameLabel(playerPos);
+			playerArea = LsFunctions.GetZoneLabel(playerPos);
 			if (areas.Where((Area a) => a.Name != playerArea).Count() == 0)
 			{
 				if (zoneData.ContainsKey(playerArea))
@@ -961,7 +961,7 @@ public partial class LSL
 				}
 			}
 			areaCheckTimer = Game.GameTime;
-			string newArea = World.GetZoneNameLabel(playerPos);
+			string newArea = LsFunctions.GetZoneLabel(playerPos);
 			if (aDealer != null && playerArea != aDealer.Area && playerPos.DistanceTo(((Entity)aDealer.dPed).Position) > 300f)
 			{
 				if ((Entity)(object)aDealer.cPed != (Entity)null)
