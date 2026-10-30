@@ -117,11 +117,11 @@ public partial class LSL
 					ePos.Add(new XElement("h", vHead));
 					xDocument.Root.Add(ePos);
 					xDocument.Save("scripts\\LSLife\\LSLife_Spawns.xml");
-					GTA.UI.Notification.Show("Position ajoutée au fichier XML");
+					GTA.UI.Notification.PostTicker("Position ajoutée au fichier XML");
 				}
 				else
 				{
-					GTA.UI.Notification.Show("Tu dois être dans un véhicule pour ajouter une position.");
+					GTA.UI.Notification.PostTicker("Tu dois être dans un véhicule pour ajouter une position.");
 				}
 			}
 			if (DEBUG)
