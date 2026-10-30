@@ -40,7 +40,7 @@ internal static class OldCustomerHandler
 	{
 		if (!_ped.IsPlayer)
 		{
-			if (_ped.CurrentPedGroup == LSL.player.Character.CurrentPedGroup)
+			if (_ped.PedGroup == LSL.player.Character.PedGroup)
 			{
 				_ped.LeaveGroup();
 			}
