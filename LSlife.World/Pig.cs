@@ -159,7 +159,7 @@ public class Pig
 			{
 				if (DEBUG)
 				{
-					GTA.UI.Notification.PostTicker("Sac disparu");
+					GTA.UI.Notification.PostTicker("Sac disparu", false, false);
 				}
 				NewState = States.Destroy;
 			}
@@ -391,7 +391,7 @@ public class Pig
 		}
 		if (DEBUG)
 		{
-			GTA.UI.Notification.PostTicker("Nouvel état de la police : " + NewState);
+			GTA.UI.Notification.PostTicker("Nouvel état de la police : " + NewState, false, false);
 		}
 		switch (NewState)
 		{
@@ -403,7 +403,7 @@ public class Pig
 			}
 			if (DEBUG)
 			{
-				GTA.UI.Notification.PostTicker("Récupération du sac");
+				GTA.UI.Notification.PostTicker("Récupération du sac", false, false);
 			}
 			Ped.Task.FollowNavMeshTo(Bag.pos);
 			CurrentState = NewState;
@@ -456,7 +456,7 @@ public class Pig
 			CurrentState = States.Normal;
 			if (DEBUG)
 			{
-				GTA.UI.Notification.PostTicker("Retour à l'état normal");
+				GTA.UI.Notification.PostTicker("Retour à l'état normal", false, false);
 			}
 			break;
 		case States.WatchPlayer:
@@ -483,7 +483,7 @@ public class Pig
 			}
 			if (DEBUG)
 			{
-				GTA.UI.Notification.PostTicker("Passage en surveillance");
+				GTA.UI.Notification.PostTicker("Passage en surveillance", false, false);
 			}
 			break;
 		case States.ApproachPlayer:
