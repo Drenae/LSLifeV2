@@ -350,7 +350,7 @@ public class AreaDealer
 				{
 					return true;
 				}
-				if ((Entity)(object)Game.Player.Character.GetMeleeTarget() == (Entity)(object)dPed || Game.Player.IsTargetting((Entity)(object)dPed))
+				if ((Entity)(object)GTA.Entity.FromHandle(GTA.Native.Function.Call<int>(GTA.Native.Hash.GET_MELEE_TARGET_FOR_PED, Game.Player.Character.Handle)) == (Entity)(object)dPed || GTA.Native.Function.Call<bool>(GTA.Native.Hash.IS_PLAYER_TARGETTING_ENTITY, Game.Player.Handle, dPed.Handle))
 				{
 					return true;
 				}
