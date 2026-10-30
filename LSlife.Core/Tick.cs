@@ -298,7 +298,7 @@ public partial class LSL
 		CustomHireDealerMenu.TickOncePerFrame();
 		CustomWorkerMenu.TickOncePerFrame();
 		CustomHudOptionsMenu.TickOncePerFrame();
-		if (Game.IsControlPressed(2, (Control)76) && Game.IsControlJustPressed((Control)26))
+		if (GTA.Native.Function.Call<bool>(GTA.Native.Hash.IS_CONTROL_PRESSED, 2, 76) && Game.IsControlJustPressed((Control)26))
 		{
 			DropDrugs.Drop();
 		}
@@ -338,7 +338,7 @@ public partial class LSL
 					PlayerUI();
 					GangUI();
 				}
-				player.GetTargetedEntity();
+				GTA.Native.Function.Call<int>(GTA.Native.Hash.GET_ENTITY_PLAYER_IS_FREE_AIMING_AT, player.Handle);
 
 			}
 			else
@@ -949,7 +949,7 @@ public partial class LSL
 					parentElement.Add(weaponAmmoElement);
 					foreach (WeaponComponent component in Enum.GetValues(typeof(WeaponComponent)))
 					{
-						if (Function.Call<bool>(unchecked((Hash)(-4209984786179366080L)), (player.Character), ((int)weapon2), ((int)component)))
+						if (Function.Call<bool>(unchecked((Hash)(-4209984786179366080L)), (player.Character), ((int)weapon2), ((int)component.Hash)))
 						{
 							XElement weaponComponentElement = new XElement("COMPONENT", (object)component);
 							parentElement.Add(weaponComponentElement);
@@ -1372,10 +1372,10 @@ public partial class LSL
 					playerWeapons.Clear();
 					playerWeps.Clear();
 					attacker.Weapons.Select(attacker.Weapons.BestWeapon);
-					attacker.DropsWeaponsOnDeath = false;
+					GTA.Native.Function.Call(GTA.Native.Hash.SET_PED_DROPS_WEAPONS_WHEN_DEAD, attacker.Handle, false);
 					if (DEBUG)
 					{
-						GTA.UI.Notification.Show("L'assaillant est équipé de " + attacker.Weapons.Current.Name + " et d'un gilet pare-balles");
+						GTA.UI.Notification.Show("L'assaillant est équipé de " + attacker.Weapons.Current.Hash.ToString() + " et d'un gilet pare-balles");
 					}
 					attackerWeed = PlayerInventory["Weed"];
 					attackerCrack = PlayerInventory["Crack"];
@@ -1846,9 +1846,9 @@ public partial class LSL
 				displayHelpTimer = Game.GameTime;
 				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour interagir ou sur ~INPUT_CONTEXT_SECONDARY~ pour renvoyer.");
 			}
-			if (Game.IsWaypointActive && wepDealer.destination != World.GetNextPositionOnStreet(World.GetWaypointPosition()))
+			if (Game.IsWaypointActive && wepDealer.destination != World.GetNextPositionOnStreet(GTA.Native.Function.Call<GTA.Math.Vector3>(GTA.Native.Hash.GET_BLIP_INFO_ID_COORD, GTA.Native.Function.Call<int>(GTA.Native.Hash.GET_FIRST_BLIP_INFO_ID, 8))))
 			{
-				wepDealer.destination = World.GetNextPositionOnStreet(World.GetWaypointPosition());
+				wepDealer.destination = World.GetNextPositionOnStreet(GTA.Native.Function.Call<GTA.Math.Vector3>(GTA.Native.Hash.GET_BLIP_INFO_ID_COORD, GTA.Native.Function.Call<int>(GTA.Native.Hash.GET_FIRST_BLIP_INFO_ID, 8)));
 				((Entity)wepDealer.vehicle).IsInvincible = true;
 				wepDealer.ped.Task.ClearAll();
 				wepDealer.ped.Task.DriveTo(wepDealer.vehicle, wepDealer.destination, 1f, (GTA.VehicleDrivingFlags)(786603), 10f);
