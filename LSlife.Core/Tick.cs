@@ -1817,7 +1817,7 @@ public partial class LSL
 			position = ((Entity)wepDealer.vehicle).Position;
 			if (position.DistanceTo(wepDealer.destination) < 80f)
 			{
-				wepDealer.ped.Task.DriveTo(wepDealer.vehicle, wepDealer.destination, 4f, 10f, 786603);
+				wepDealer.ped.Task.DriveTo(wepDealer.vehicle, wepDealer.destination, 4f, (GTA.VehicleDrivingFlags)(786603), 10f);
 				wepDealer.state = Dealer.States.Ariving;
 			}
 		}
@@ -1832,7 +1832,7 @@ public partial class LSL
 				OutputArgument outArgA2 = new OutputArgument();
 				Function.Call((Hash)8084282276450675138L, (NodeID2), (InputArgument)(object)outArgA2);
 				Vector3 parkPos2 = outArgA2.GetResult<Vector3>();
-				wepDealer.ped.Task.DriveTo(wepDealer.vehicle, parkPos2, 2f, 6f, 786603);
+				wepDealer.ped.Task.DriveTo(wepDealer.vehicle, parkPos2, 2f, (GTA.VehicleDrivingFlags)(786603), 6f);
 				wepDealer.destination = Vector3.Zero;
 				wepDealer.state = Dealer.States.Arrived;
 			}
@@ -1851,7 +1851,7 @@ public partial class LSL
 				wepDealer.destination = World.GetNextPositionOnStreet(World.GetWaypointPosition());
 				((Entity)wepDealer.vehicle).IsInvincible = true;
 				wepDealer.ped.Task.ClearAll();
-				wepDealer.ped.Task.DriveTo(wepDealer.vehicle, wepDealer.destination, 1f, 10f, 786603);
+				wepDealer.ped.Task.DriveTo(wepDealer.vehicle, wepDealer.destination, 1f, (GTA.VehicleDrivingFlags)(786603), 10f);
 				GTA.UI.Screen.ShowSubtitle("OK, on se rend à ~y~" + World.GetStreetName(wepDealer.destination));
 				wepDealer.state = Dealer.States.Leaving;
 			}
@@ -1859,19 +1859,19 @@ public partial class LSL
 		if (wepDealer.state == Dealer.States.Leaving)
 		{
 			Script.Wait(5000);
-			wepDealer.ped.Task.DriveTo(wepDealer.vehicle, wepDealer.destination, 1f, 40f, 786603);
+			wepDealer.ped.Task.DriveTo(wepDealer.vehicle, wepDealer.destination, 1f, (GTA.VehicleDrivingFlags)(786603), 40f);
 			wepDealer.state = Dealer.States.Driving;
 		}
 		if (wepDealer.state == Dealer.States.Faster)
 		{
-			wepDealer.ped.Task.DriveTo(wepDealer.vehicle, wepDealer.destination, 4f, 50f, 6);
+			wepDealer.ped.Task.DriveTo(wepDealer.vehicle, wepDealer.destination, 4f, (GTA.VehicleDrivingFlags)(6), 50f);
 			wepDealer.state = Dealer.States.Fast;
 			GTA.UI.Screen.ShowSubtitle("OK, j'accélère.", 2000);
 			wepDealer.canSpeed = true;
 		}
 		if (wepDealer.state == Dealer.States.Slower)
 		{
-			wepDealer.ped.Task.DriveTo(wepDealer.vehicle, wepDealer.destination, 4f, 20f, 786603);
+			wepDealer.ped.Task.DriveTo(wepDealer.vehicle, wepDealer.destination, 4f, (GTA.VehicleDrivingFlags)(786603), 20f);
 			wepDealer.state = Dealer.States.Driving;
 			GTA.UI.Screen.ShowSubtitle("Ok, Slowing it down.", 2000);
 			wepDealer.canSpeed = false;
