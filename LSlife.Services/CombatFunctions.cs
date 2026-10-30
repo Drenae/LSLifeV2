@@ -17,6 +17,11 @@ namespace LSlife;
 
 internal static partial class LsFunctions
 {
+    public static string GetZoneLabel(GTA.Math.Vector3 pos)
+    {
+        return GTA.Native.Function.Call<string>(GTA.Native.Hash.GET_NAME_OF_ZONE, pos.X, pos.Y, pos.Z);
+    }
+
 	public static bool IsPlayerArmoursMaxed()
 	{
 		if (Game.Player.Character.Armor >= 100 && LSL.playerArmours == 5)
