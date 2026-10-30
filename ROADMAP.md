@@ -1,3 +1,11 @@
+## Build 30/10/2026 — 16:05:06 : compilation verte
+
+- [x] **0 erreur, 85 avertissements** : génération de `bin/Release/net48/LSlife.dll` réussie après correction de l'horloge dans AreaLogic.
+- [x] Nouveau lot : migration de cinq lectures `player.WantedLevel` vers `player.Wanted.WantedLevel` dans `LSlife.Core/Tick.cs`.
+- [x] Nouveau lot : migration des états d'ignorance police/population et du contrôle joueur vers `Game.Player.Wanted.SetPoliceIgnorePlayer`, `SetEveryoneIgnorePlayer` et `Game.Player.SetControlState` dans `LSlife.World/Prison.cs`.
+- [ ] Recompiler pour vérifier les nouvelles signatures ; 85 avertissements concernent encore les contrôles, Wanted, argent, conduite, hauteur du sol, pickups, Game.IsLoading et champs inutilisés.
+- [ ] Tester en jeu la prison, la police, les contrôles et les interactions ; aucun test GTA exécuté par l'assistant. Branche `main` inchangée.
+
 ## Build du 30/10/2026 à 16:01:30 — correction transversale
 
 - [x] Build utilisateur : **28 erreurs CS7036, 64 avertissements**.
