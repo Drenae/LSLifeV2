@@ -9,6 +9,13 @@ namespace LSlife;
 
 public class DrugDealer
 {
+    private static float GetModelLength(GTA.Model model)
+    {
+        GTA.Math.Vector3 min, max;
+        model.GetDimensions(out min, out max);
+        return max.Y - min.Y;
+    }
+
 	private enum DrugDealSates
 	{
 		SpawnStuff,
@@ -278,23 +285,23 @@ public class DrugDealer
 				Vector3 position = ((Entity)dealerCar).Position;
 				Vector3 val = ((Entity)dealerCar).ForwardVector * -1f;
 				model = ((Entity)dealerCar).Model;
-				backPos = Vector3.Add(position, Vector3.Multiply(val, model.GetDimensions().Y / 2f + 0.5f));
+				backPos = Vector3.Add(position, Vector3.Multiply(val, GetModelLength(model) / 2f + 0.5f));
 				dealerCar.OpenDoor((VehicleDoor)5, false, false);
 				Tasks task = lieut.Task;
 				Vector3 position2 = ((Entity)dealerCar).Position;
 				Vector3 val2 = ((Entity)dealerCar).ForwardVector * -1f;
 				model = ((Entity)dealerCar).Model;
-				task.LookAt(Vector3.Add(position2, Vector3.Multiply(val2, model.GetDimensions().Y / 2f + 0.5f)));
+				task.LookAt(Vector3.Add(position2, Vector3.Multiply(val2, GetModelLength(model) / 2f + 0.5f)));
 				Tasks task2 = lieut.Task;
 				Vector3 position3 = ((Entity)dealerCar).Position;
 				Vector3 val3 = ((Entity)dealerCar).ForwardVector * -1f;
 				model = ((Entity)dealerCar).Model;
-				task2.GoTo(Vector3.Add(position3, Vector3.Multiply(val3, model.GetDimensions().Y / 2f + 0.5f)) + ((Entity)dealerCar).RightVector * 1f);
+				task2.GoTo(Vector3.Add(position3, Vector3.Multiply(val3, GetModelLength(model) / 2f + 0.5f)) + ((Entity)dealerCar).RightVector * 1f);
 				Tasks task3 = goon.Task;
 				Vector3 position4 = ((Entity)dealerCar).Position;
 				Vector3 val4 = ((Entity)dealerCar).ForwardVector * -1f;
 				model = ((Entity)dealerCar).Model;
-				task3.GoTo(Vector3.Add(position4, Vector3.Multiply(val4, model.GetDimensions().Y / 2f + 0.5f)) + ((Entity)dealerCar).RightVector * -2f);
+				task3.GoTo(Vector3.Add(position4, Vector3.Multiply(val4, GetModelLength(model) / 2f + 0.5f)) + ((Entity)dealerCar).RightVector * -2f);
 			}
 			else
 			{
@@ -302,7 +309,7 @@ public class DrugDealer
 				Vector3 position6 = ((Entity)dealerCar).Position;
 				Vector3 val5 = ((Entity)dealerCar).ForwardVector * -1f;
 				model = ((Entity)dealerCar).Model;
-				if (position5.DistanceTo(Vector3.Add(position6, Vector3.Multiply(val5, model.GetDimensions().Y / 2f + 0.5f)) + ((Entity)dealerCar).RightVector * 1f) < 1f)
+				if (position5.DistanceTo(Vector3.Add(position6, Vector3.Multiply(val5, GetModelLength(model) / 2f + 0.5f)) + ((Entity)dealerCar).RightVector * 1f) < 1f)
 				{
 					EnterState = true;
 					DealState = DrugDealSates.GetReadyToDeal;
