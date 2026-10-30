@@ -118,7 +118,7 @@ internal static class ShotHandler
 		{
 			if (LSL.DEBUG)
 			{
-				GTA.UI.Notification.PostTicker("Nouvelle livraison créée : client trouvé.");
+				GTA.UI.Notification.PostTicker("Nouvelle livraison créée : client trouvé.", false, false);
 			}
 			spawnPos = LSL.GenerateSpawnPos(LSL.playerPos.Around(200f), LSL.Nodetype.Offroad, sidewalk: true);
 		}
