@@ -23,7 +23,7 @@ public partial class LSL
 {
 	private bool IsNight()
 	{
-		int hour = World.CurrentTimeOfDay.Hours;
+		int hour = GTA.Chrono.GameClock.Today.Hours;
 		if (hour <= 20)
 		{
 			return hour < 5;
