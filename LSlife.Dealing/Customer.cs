@@ -89,7 +89,7 @@ public class Customer
 			amount = LsFunctions.RanRange(1, max);
 		}
 		int extraMoney = rnd.Next(0, 500);
-		Ped.MoneyCarried = amount * Drug.PricePerG + extraMoney;
+		Ped.MoneyCarried = (uint)System.Math.Max(0, amount * Drug.PricePerG + extraMoney);
 		if (!FarAway && (Entity)(object)vehicle == (Entity)null)
 		{
 			Ped.Task.GoTo(target);
