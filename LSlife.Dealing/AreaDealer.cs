@@ -252,13 +252,13 @@ public class AreaDealer
 			{
 				if (DEBUG)
 				{
-					GTA.UI.Notification.Show("adealer state = " + NewState);
+					GTA.UI.Notification.PostTicker("adealer state = " + NewState);
 				}
 				switch (NewState)
 				{
 				case Enums.DStates.WalkToPath:
 					dPed.Task.ClearAll();
-					dPed.Task.GoTo(servePos);
+					dPed.Task.FollowNavMeshTo(servePos);
 					CurrentState = Enums.DStates.WalkToPath;
 					break;
 				case Enums.DStates.Normal:
@@ -275,7 +275,7 @@ public class AreaDealer
 					}
 					else
 					{
-						dPed.Task.WanderAround();
+						dPed.Task.Wander();
 					}
 					CurrentState = Enums.DStates.Normal;
 					break;
@@ -288,7 +288,7 @@ public class AreaDealer
 				case Enums.DStates.StopForPlayer:
 					if (dPed.IsWalking || dPed.IsRunning)
 					{
-						dPed.Task.Wait(20000);
+						dPed.Task.Pause(20000);
 					}
 					CurrentState = Enums.DStates.StopForPlayer;
 					break;
@@ -307,7 +307,7 @@ public class AreaDealer
 					LsFunctions.AddBlip((Entity)(object)dPed, (BlipColor)1, "Rival Dealer", _friend: false, _edge: false);
 					dPed.CanSwitchWeapons = true;
 					dPed.Weapons.Select(dPed.Weapons.BestWeapon);
-					dPed.Task.FightAgainst(Game.Player.Character);
+					dPed.Task.Combat(Game.Player.Character);
 					CurrentState = Enums.DStates.AttackPlayer;
 					break;
 				case Enums.DStates.NoState:
@@ -329,7 +329,7 @@ public class AreaDealer
 		}
 		else
 		{
-			GTA.UI.Notification.Show("~r~Erreur : personnage du dealer de quartier introuvable");
+			GTA.UI.Notification.PostTicker("~r~Erreur : personnage du dealer de quartier introuvable");
 		}
 	}
 
@@ -469,14 +469,14 @@ public class AreaDealer
 				cPed = null;
 				if (DEBUG)
 				{
-					GTA.UI.Notification.Show("Le client du dealer de quartier n'existe pas");
+					GTA.UI.Notification.PostTicker("Le client du dealer de quartier n'existe pas");
 				}
 			}
 			if ((Entity)(object)cPed == (Entity)null)
 			{
 				if (DEBUG)
 				{
-					GTA.UI.Notification.Show("Recherche d'un client pour le dealer de quartier");
+					GTA.UI.Notification.PostTicker("Recherche d'un client pour le dealer de quartier");
 				}
 				List<Ped> peds = LSL.lPeds.GetPeds;
 				if (peds.ToList().Count > 0)
@@ -500,7 +500,7 @@ public class AreaDealer
 				}
 				if (DEBUG)
 				{
-					GTA.UI.Notification.Show("Aucun personnage trouvé pour le dealer de quartier");
+					GTA.UI.Notification.PostTicker("Aucun personnage trouvé pour le dealer de quartier");
 				}
 				cTimer.Reset();
 				return;
@@ -545,7 +545,7 @@ public class AreaDealer
 				{
 					if (DEBUG)
 					{
-						GTA.UI.Notification.Show("Transaction en cours");
+						GTA.UI.Notification.PostTicker("Transaction en cours");
 					}
 					dealState = Enums.DealState.DoingDeal;
 					cPed.Task.PlayAnimation("switch@franklin@002110_04_magd_3_weed_exchange", "002110_04_magd_3_weed_exchange_franklin", 8f, 3000, (AnimationFlags)16);
@@ -558,7 +558,7 @@ public class AreaDealer
 				{
 					dealState = Enums.DealState.WalkingAway;
 					Function.Call(unchecked((Hash)(-8213159594590722974L)), (cPed), ("GENERIC_THANKS"), ("SPEECH_PARAMS_STANDARD"));
-					cPed.Task.WanderAround();
+					cPed.Task.Wander();
 					dPed.Task.GuardCurrentPosition();
 				}
 				break;
@@ -570,7 +570,7 @@ public class AreaDealer
 					dealState = Enums.DealState.GetNear;
 					if (DEBUG)
 					{
-						GTA.UI.Notification.Show("Transaction terminée");
+						GTA.UI.Notification.PostTicker("Transaction terminée");
 					}
 					LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
 					((Entity)cPed).AttachedBlip.Delete();
@@ -585,7 +585,7 @@ public class AreaDealer
 		{
 			if (DEBUG)
 			{
-				GTA.UI.Notification.Show("Client du dealer de quartier supprimé : trop éloigné");
+				GTA.UI.Notification.PostTicker("Client du dealer de quartier supprimé : trop éloigné");
 			}
 			LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
 			cPed = null;
