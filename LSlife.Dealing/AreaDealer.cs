@@ -390,7 +390,7 @@ public class AreaDealer
 				LSL.displayHelpTimer = Game.GameTime;
 				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour parler à cette personne.");
 			}
-			if (GTA.Input.Controls.IsDisabledControlJustPressed(GTA.Input.ControlType.Frontend, (Control)21))
+			if (Game.IsControlJustPressed((Control)21))
 			{
 				Function.Call((Hash)7023634693725934496L);
 				CustomHireDealerMenu.Open();
