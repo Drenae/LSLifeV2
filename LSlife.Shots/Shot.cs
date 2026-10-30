@@ -108,7 +108,7 @@ public class Shot
 			}
 			if (accepted && customer != null)
 			{
-				if (customer.Ped.CurrentPedGroup != LSL.player.Character.CurrentPedGroup && dist <= 10f)
+				if (customer.Ped.PedGroup != LSL.player.Character.PedGroup && dist <= 10f)
 				{
 					customer.Ped.Task.ClearAll();
 					Function.Call(unchecked((Hash)(-6974808092771143243L)), (((Entity)customer.Ped).Handle), (LSL.playerGroup));
