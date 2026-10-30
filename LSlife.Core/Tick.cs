@@ -405,7 +405,7 @@ public partial class LSL
 				}
 				else if ((float)Game.GameTime > lastTimeDealDone + 10000f)
 				{
-					if (playerHeat > -100f && player.WantedLevel == 0)
+					if (playerHeat > -100f && player.Wanted.WantedLevel == 0)
 					{
 						if (isDealing)
 						{
@@ -1290,7 +1290,7 @@ public partial class LSL
 				//IL_0010: Unknown result type (might be due to invalid IL or missing references)
 				return a.Name == LsFunctions.GetZoneLabel(HouseHandler.CurrentHouse.entrancePos);
 			}));
-			areaToAddHeat.Heat += (float)player.WantedLevel * 0.05f;
+			areaToAddHeat.Heat += (float)player.Wanted.WantedLevel * 0.05f;
 		}
 		if (player.IsPlaying && !notFined)
 		{
@@ -1672,11 +1672,11 @@ public partial class LSL
 				Function.Call(unchecked((Hash)(-6909787959634350604L)), (player), (false));
 			}
 		}
-		if (player.WantedLevel > 0 && !playerWanted)
+		if (player.Wanted.WantedLevel > 0 && !playerWanted)
 		{
 			playerWanted = true;
 		}
-		if (playerWanted && player.WantedLevel == 0)
+		if (playerWanted && player.Wanted.WantedLevel == 0)
 		{
 			playerWanted = false;
 		}
@@ -1690,7 +1690,7 @@ public partial class LSL
 			LsFunctions.RemovePedFromWorld(weaponDealer1, clearTask: true);
 			weaponDealer1 = null;
 		}
-		if (player.WantedLevel > 0 && isDealing)
+		if (player.Wanted.WantedLevel > 0 && isDealing)
 		{
 			isDealing = false;
 		}
