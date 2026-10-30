@@ -346,7 +346,7 @@ public class PlayerDealer
 		{
 			if (Ped.RelationshipGroup != LSL.playerRelationship)
 			{
-				GTA.UI.Notification.PostTicker("~r~Employé retiré du groupe de compagnons : réintégration");
+				GTA.UI.Notification.PostTicker("~r~Employé retiré du groupe de compagnons : réintégration", false, false);
 				Ped.RelationshipGroup = LSL.playerRelationship;
 			}
 			if (!isFollowing() && LSL.driveByHandler.AmountOfDriveBy(_agg: true) > 0 && !playerNear())
@@ -390,7 +390,7 @@ public class PlayerDealer
 				}
 				if (LSL.DEBUG)
 				{
-					GTA.UI.Notification.PostTicker("PDealer state = " + NewState);
+					GTA.UI.Notification.PostTicker("PDealer state = " + NewState, false, false);
 				}
 				switch (NewState)
 				{
@@ -750,7 +750,7 @@ public class PlayerDealer
 				cPed = null;
 				if (LSL.DEBUG)
 				{
-					GTA.UI.Notification.PostTicker("Le client du dealer n'existe pas");
+					GTA.UI.Notification.PostTicker("Le client du dealer n'existe pas", false, false);
 				}
 			}
 			if ((Entity)(object)cPed != (Entity)null && ((Entity)cPed).Exists() && ((Entity)cPed).IsDead)
@@ -759,7 +759,7 @@ public class PlayerDealer
 				cPed = null;
 				if (LSL.DEBUG)
 				{
-					GTA.UI.Notification.PostTicker("Le client du dealer n'existe pas");
+					GTA.UI.Notification.PostTicker("Le client du dealer n'existe pas", false, false);
 				}
 			}
 			if ((Entity)(object)cPed == (Entity)null)
@@ -770,7 +770,7 @@ public class PlayerDealer
 				}
 				if (LSL.DEBUG)
 				{
-					GTA.UI.Notification.PostTicker("Recherche d'un client pour le dealer");
+					GTA.UI.Notification.PostTicker("Recherche d'un client pour le dealer", false, false);
 				}
 				List<Ped> peds = LSL.lPeds.GetPeds;
 				if (peds.ToList().Count > 0)
@@ -793,7 +793,7 @@ public class PlayerDealer
 				}
 				if (LSL.DEBUG)
 				{
-					GTA.UI.Notification.PostTicker("Aucun personnage trouvé pour le dealer");
+					GTA.UI.Notification.PostTicker("Aucun personnage trouvé pour le dealer", false, false);
 				}
 				return;
 			}
@@ -835,7 +835,7 @@ public class PlayerDealer
 				{
 					if (LSL.DEBUG)
 					{
-						GTA.UI.Notification.PostTicker("Transaction en cours");
+						GTA.UI.Notification.PostTicker("Transaction en cours", false, false);
 					}
 					dealState = Enums.DealState.DoingDeal;
 					cPed.Task.PlayAnimation("switch@franklin@002110_04_magd_3_weed_exchange", "002110_04_magd_3_weed_exchange_franklin", 8f, 3000, (AnimationFlags)16);
@@ -859,7 +859,7 @@ public class PlayerDealer
 					dealState = Enums.DealState.GetNear;
 					if (LSL.DEBUG)
 					{
-						GTA.UI.Notification.PostTicker("Transaction terminée");
+						GTA.UI.Notification.PostTicker("Transaction terminée", false, false);
 					}
 					LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
 					((Entity)cPed).AttachedBlip.Delete();
@@ -873,7 +873,7 @@ public class PlayerDealer
 		{
 			if (LSL.DEBUG)
 			{
-				GTA.UI.Notification.PostTicker("Client supprimé : trop éloigné du dealer");
+				GTA.UI.Notification.PostTicker("Client supprimé : trop éloigné du dealer", false, false);
 			}
 			LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
 			cPed = null;
@@ -960,7 +960,7 @@ public class PlayerDealer
 			LsFunctions.NotImmuneToPlayer(Ped);
 			if (LSL.DEBUG)
 			{
-				GTA.UI.Notification.PostTicker("Dealer retiré du monde");
+				GTA.UI.Notification.PostTicker("Dealer retiré du monde", false, false);
 			}
 			Pos = ((Entity)Ped).Position;
 			RemoveBlip();
@@ -987,11 +987,11 @@ public class PlayerDealer
 			}
 			else
 			{
-				GTA.UI.Notification.PostTicker("~r~LsLife - Impossible de déterminer le type du quartier : " + this.area);
+				GTA.UI.Notification.PostTicker("~r~LsLife - Impossible de déterminer le type du quartier : " + this.area, false, false);
 			}
 			if (LSL.DEBUG)
 			{
-				GTA.UI.Notification.PostTicker("~r~Quartier ajouté au dealer : " + this.area);
+				GTA.UI.Notification.PostTicker("~r~Quartier ajouté au dealer : " + this.area, false, false);
 			}
 		}
 		if (pArea == null || pArea.Drugs.Count <= 0)
@@ -1049,11 +1049,11 @@ public class PlayerDealer
 		{
 			if (startMoney != Money)
 			{
-				GTA.UI.Notification.PostTicker("Gains : " + LsFunctions.IntToMoney(Money - startMoney) + " $");
+				GTA.UI.Notification.PostTicker("Gains : " + LsFunctions.IntToMoney(Money - startMoney) + " $", false, false);
 			}
 			else
 			{
-				GTA.UI.Notification.PostTicker("Aucun gain");
+				GTA.UI.Notification.PostTicker("Aucun gain", false, false);
 			}
 		}
 	}
