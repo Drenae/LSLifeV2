@@ -462,7 +462,7 @@ public class Pig
 		case States.WatchPlayer:
 			Ped.Task.ClearAll();
 			Ped.Weapons.Give((WeaponHash)1593441988, 100, true, true);
-			Ped.Task.AimAt((Entity)(object)Game.Player.Character, 20000);
+			Ped.Task.AimGunAtEntity((Entity)(object)Game.Player.Character, 20000);
 			time = Game.GameTime;
 			CurrentState = States.WatchPlayer;
 			if ((Entity)(object)Game.Player.Character.CurrentVehicle != (Entity)null)
