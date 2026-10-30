@@ -780,7 +780,7 @@ public class PlayerDealer
 						if (!LSL.CheckIfPedUsed(ped, _allowPolice: false, _allowVehicle: false) && (Entity)(object)ped != (Entity)(object)lPed)
 						{
 							cPed = ped;
-							((Entity)cPed).FreezePosition = false;
+							((Entity)cPed).IsPositionFrozen = false;
 							((Entity)cPed).IsPersistent = true;
 							if (LSL.DEBUG)
 							{
