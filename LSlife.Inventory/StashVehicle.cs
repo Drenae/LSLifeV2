@@ -446,14 +446,14 @@ public class StashVehicle
 				{
 					if (LSL.DEBUG)
 					{
-						GTA.UI.Notification.Show("Tentative de chargement du véhicule");
+						GTA.UI.Notification.PostTicker("Tentative de chargement du véhicule");
 					}
 					VehicleLoad();
 				}
 			}
 			else if (drugCarBlip == (Blip)null)
 			{
-				drugCarBlip = World.CreateBlip(CurrentPosition);
+				drugCarBlip = Blip.Create(CurrentPosition);
 				drugCarBlip.IsShortRange = true;
 				drugCarBlip.IsFriendly = true;
 				drugCarBlip.Sprite = (BlipSprite)225;
@@ -550,7 +550,7 @@ public class StashVehicle
 		{
 			if (drugCarBlip == (Blip)null)
 			{
-				drugCarBlip = World.CreateBlip(((Entity)drugCar).Position);
+				drugCarBlip = Blip.Create(((Entity)drugCar).Position);
 				drugCarBlip.IsShortRange = true;
 				drugCarBlip.IsFriendly = true;
 				drugCarBlip.Sprite = (BlipSprite)225;
@@ -565,7 +565,7 @@ public class StashVehicle
 		{
 			if (drugCarBlip == (Blip)null)
 			{
-				drugCarBlip = World.CreateBlip(((Entity)drugCar).Position);
+				drugCarBlip = Blip.Create(((Entity)drugCar).Position);
 				drugCarBlip.IsShortRange = true;
 				drugCarBlip.IsFriendly = true;
 				drugCarBlip.Sprite = (BlipSprite)225;
@@ -866,22 +866,22 @@ public class StashVehicle
 		});
 		if (LSL.DEBUG)
 		{
-			GTA.UI.Notification.Show(vehicles.Count.ToString() ?? "");
+			GTA.UI.Notification.PostTicker(vehicles.Count.ToString() ?? "");
 			Vector3 currentPosition = CurrentPosition;
-			GTA.UI.Notification.Show("~r~Coordonnées attendues : " + ((object)currentPosition/*cast due to constrained. prefix*/).ToString());
+			GTA.UI.Notification.PostTicker("~r~Coordonnées attendues : " + ((object)currentPosition/*cast due to constrained. prefix*/).ToString());
 		}
 		if (vehicles.Count == 0)
 		{
 			if (model.IsInCdImage)
 			{
-				drugCar = World.CreateVehicle(new Model(drugCarName), CurrentPosition, drugCarHead);
+				drugCar = Vehicle.Create(new Model(drugCarName), CurrentPosition, drugCarHead);
 			}
 			else
 			{
 				model = new Model(drugCarHash);
 				if (model.IsInCdImage)
 				{
-					drugCar = World.CreateVehicle(model, CurrentPosition, drugCarHead);
+					drugCar = Vehicle.Create(model, CurrentPosition, drugCarHead);
 				}
 			}
 		}
@@ -894,7 +894,7 @@ public class StashVehicle
 		{
 			string text = drugCarName;
 			Vector3 currentPosition = CurrentPosition;
-			GTA.UI.Notification.Show(text + " | " + ((object)currentPosition/*cast due to constrained. prefix*/).ToString());
+			GTA.UI.Notification.PostTicker(text + " | " + ((object)currentPosition/*cast due to constrained. prefix*/).ToString());
 		}
 		if ((Entity)(object)drugCar != (Entity)null)
 		{
@@ -962,7 +962,7 @@ public class StashVehicle
 				return;
 			}
 		}
-		GTA.UI.Notification.Show("~r~Échec du chargement du véhicule");
+		GTA.UI.Notification.PostTicker("~r~Échec du chargement du véhicule");
 	}
 
 	public void VehicleSave(Vehicle veh)
