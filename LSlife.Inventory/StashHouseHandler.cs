@@ -19,7 +19,7 @@ public class StashHouseHandler
 		LoadHouses();
 		if (LSL.DEBUG)
 		{
-			GTA.UI.Notification.PostTicker("Planques chargées : " + Houses.Count);
+			GTA.UI.Notification.PostTicker("Planques chargées : " + Houses.Count, false, false);
 		}
 	}
 
@@ -62,7 +62,7 @@ public class StashHouseHandler
 		//IL_0807: Unknown result type (might be due to invalid IL or missing references)
 		if (!File.Exists("scripts\\LSLife\\LSLife_StashHouses.xml"))
 		{
-			GTA.UI.Notification.PostTicker("~r~Fichier StashHouses.xml manquant");
+			GTA.UI.Notification.PostTicker("~r~Fichier StashHouses.xml manquant", false, false);
 			return;
 		}
 		XDocument StashDoc = XDocument.Load("scripts\\LSLife\\LSLife_StashHouses.xml");
@@ -202,7 +202,7 @@ public class StashHouseHandler
 							int.TryParse(ele5.Value, out weed);
 							if (LSL.DEBUG)
 							{
-								GTA.UI.Notification.PostTicker("~y~Weed : " + weed);
+								GTA.UI.Notification.PostTicker("~y~Weed : " + weed, false, false);
 							}
 						}
 					}
