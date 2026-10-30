@@ -52,12 +52,12 @@ internal static class CustomHireDealerMenu
         int offer = proposedAmount;
         if (offer <= 0 || offer > Game.Player.Money)
         {
-            UI.ShowSubtitle("Choisis un montant que tu peux payer.", 3000);
+            GTA.UI.Screen.ShowSubtitle("Choisis un montant que tu peux payer.", 3000);
             return;
         }
         if (offer <= LSL.aDealer.LastOffer)
         {
-            UI.ShowSubtitle("Ton offre doit etre superieure a la precedente.", 3000);
+            GTA.UI.Screen.ShowSubtitle("Ton offre doit etre superieure a la precedente.", 3000);
             return;
         }
 
