@@ -517,7 +517,7 @@ public class DrugDealer
 			p.RelationshipGroup = LSL.playerRelationship;
 			LsFunctions.SetRandomCombatStats(p);
 			p.FiringPattern = unchecked((FiringPattern)(-753768974));
-			p.AlwaysKeepTask = true;
+			p.KeepTaskWhenMarkedAsNoLongerNeeded = true;
 			p.CanSwitchWeapons = true;
 			p.BlockPermanentEvents = true;
 			Function.Call(unchecked((Hash)(-4079649877180351064L)), (p), (100));
