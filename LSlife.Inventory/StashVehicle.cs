@@ -446,7 +446,7 @@ public class StashVehicle
 				{
 					if (LSL.DEBUG)
 					{
-						GTA.UI.Notification.PostTicker("Tentative de chargement du véhicule");
+						GTA.UI.Notification.PostTicker("Tentative de chargement du véhicule", false, false);
 					}
 					VehicleLoad();
 				}
@@ -866,9 +866,9 @@ public class StashVehicle
 		});
 		if (LSL.DEBUG)
 		{
-			GTA.UI.Notification.PostTicker(vehicles.Count.ToString() ?? "");
+			GTA.UI.Notification.PostTicker(vehicles.Count.ToString() ?? "", false, false);
 			Vector3 currentPosition = CurrentPosition;
-			GTA.UI.Notification.PostTicker("~r~Coordonnées attendues : " + ((object)currentPosition/*cast due to constrained. prefix*/).ToString());
+			GTA.UI.Notification.PostTicker("~r~Coordonnées attendues : " + ((object)currentPosition/*cast due to constrained. prefix*/).ToString(), false, false);
 		}
 		if (vehicles.Count == 0)
 		{
@@ -894,7 +894,7 @@ public class StashVehicle
 		{
 			string text = drugCarName;
 			Vector3 currentPosition = CurrentPosition;
-			GTA.UI.Notification.PostTicker(text + " | " + ((object)currentPosition/*cast due to constrained. prefix*/).ToString());
+			GTA.UI.Notification.PostTicker(text + " | " + ((object)currentPosition/*cast due to constrained. prefix*/).ToString(), false, false);
 		}
 		if ((Entity)(object)drugCar != (Entity)null)
 		{
@@ -962,7 +962,7 @@ public class StashVehicle
 				return;
 			}
 		}
-		GTA.UI.Notification.PostTicker("~r~Échec du chargement du véhicule");
+		GTA.UI.Notification.PostTicker("~r~Échec du chargement du véhicule", false, false);
 	}
 
 	public void VehicleSave(Vehicle veh)
