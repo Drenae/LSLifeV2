@@ -338,7 +338,7 @@ internal static class Hud
 		DrawHudText(LSL.isDealing ? "ACTIVÉ" : "DÉSACTIVÉ",
 			left + 290, footerY + 5, 0.30f,
 			LSL.isDealing ? Color.LightGreen : Color.LightCoral);
-		UI.HideHudComponentThisFrame((HudComponent)3);
+		GTA.Native.Function.Call(GTA.Native.Hash.HIDE_HUD_COMPONENT_THIS_FRAME, 3);
 	}
 
 }
