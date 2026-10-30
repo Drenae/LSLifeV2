@@ -100,7 +100,7 @@ public class StashHouse
 		stashPos = _stashPos;
 		purchased = _purchased;
 		price = _price;
-		blip = World.CreateBlip(entrancePos);
+		blip = Blip.Create(entrancePos);
 		blip.Sprite = (BlipSprite)40;
 		blip.Name = "Stash House";
 		SetBlip();
