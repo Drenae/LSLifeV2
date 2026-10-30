@@ -286,7 +286,7 @@ public class DrugDealer
 				Vector3 val = ((Entity)dealerCar).ForwardVector * -1f;
 				model = ((Entity)dealerCar).Model;
 				backPos = Vector3.Add(position, Vector3.Multiply(val, GetModelLength(model) / 2f + 0.5f));
-				dealerCar.OpenDoor((VehicleDoor)5, false, false);
+				GTA.Native.Function.Call(GTA.Native.Hash.SET_VEHICLE_DOOR_OPEN, dealerCar.Handle, 5, false, false);
 				Tasks task = lieut.Task;
 				Vector3 position2 = ((Entity)dealerCar).Position;
 				Vector3 val2 = ((Entity)dealerCar).ForwardVector * -1f;
@@ -322,7 +322,7 @@ public class DrugDealer
 			{
 				EnterState = false;
 			}
-			else if (dealerCar.IsDoorOpen((VehicleDoor)5))
+			else if ((GTA.Native.Function.Call<float>(GTA.Native.Hash.GET_VEHICLE_DOOR_ANGLE_RATIO, dealerCar.Handle, 5) > 0.1f))
 			{
 				lieut.Task.LookAt((Entity)(object)LSL.player.Character);
 				goon.Task.LookAt((Entity)(object)LSL.player.Character);
@@ -393,7 +393,7 @@ public class DrugDealer
 			{
 				if ((goon.IsInVehicle() && lieut.IsInVehicle()) || Game.GameTime > time + 10000)
 				{
-					dealerCar.CloseDoor((VehicleDoor)5, false);
+					GTA.Native.Function.Call(GTA.Native.Hash.SET_VEHICLE_DOOR_SHUT, dealerCar.Handle, 5, false);
 					SetDealState(DrugDealSates.Destroy);
 					if (PlayerOrder != null)
 					{
