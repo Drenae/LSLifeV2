@@ -1,3 +1,11 @@
+## SHVDN3 — build du 30/10/2026 à 14:44:26
+
+- [x] Journal analysé : une erreur bloquante `CS0266` dans `LSlife.Dealing/Customer.cs:92` (`int` vers `uint` pour `Ped.MoneyCarried`).
+- [x] Correction du montant avec borne minimale zéro et conversion explicite vers `uint` (`d10c0fd5`).
+- [ ] Relancer `Build-Baseline.ps1` et confirmer le retour à zéro erreur.
+- [ ] Après build vert, poursuivre la réduction des avertissements SHVDN3 par gros lots, puis les tests en jeu (menus Custom, téléphone, stocks, sauvegardes).
+- [ ] Ne jamais modifier `main` durant la migration ; travailler exclusivement sur `feature/shvdn3-migration`.
+
 ## SHVDN3 — build du 30/10/2026 à 14:34:37
 
 - [x] Analyse du journal : **10 erreurs distinctes**, dans `Tick.cs`, `PedDebugger.cs`, `AreaLogic.cs`, `StashVehicle.cs`.
