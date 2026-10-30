@@ -1750,7 +1750,7 @@ public partial class LSL
 		{
 			return;
 		}
-		float distanceToPlayer = World.GetDistance(((Entity)weaponDealer1).Position, playerPos);
+		float distanceToPlayer = GTA.Math.Vector3.Distance(((Entity)weaponDealer1).Position, playerPos);
 		if (distanceToPlayer > 15f && weaponDealer1.PedGroup != player.Character.PedGroup)
 		{
 			if (Game.GameTime > dealerTimer + 2000 && playerPos != pedTarget)
