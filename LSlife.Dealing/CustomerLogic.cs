@@ -274,7 +274,7 @@ public partial class LSL
 			}
 			else
 			{
-				c.Ped.Task.GoTo(c.Target);
+				c.Ped.Task.FollowNavMeshTo(c.Target);
 			}
 		}
 	}
