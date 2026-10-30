@@ -1,3 +1,11 @@
+## Build 30/10/2026 — 15:55:26 (lot de correction)
+
+- [x] Diagnostic : échec du build après migration API ; **91 appels** `Notification.PostTicker` incomplets sur 20 fichiers et une erreur `FollowNavMeshTo(Entity)` dans `LSlife.Core/Tick.cs`.
+- [x] Correction de **86 appels PostTicker** dans 17 fichiers et conversion de la cible de navigation en `player.Character.Position`.
+- [ ] Trois fichiers restent à corriger : `LSlife.World/DriveBy.cs` (2), `LSlife.Shots/ShotHandler.cs` (2), `LSlife.World/AreaLogic.cs` (1) ; leurs écritures ont été bloquées par les contrôles de sécurité de l'outil.
+- [ ] Recompiler après correction des trois fichiers restants ; ne pas annoncer un build vert avant validation locale.
+- [ ] Continuer la migration des API obsolètes (contrôles, police, conduite, tâches, argent, pickups, terrain, horloge), puis tests fonctionnels en jeu.
+
 ## SHVDN3 — build du 30/10/2026 à 14:45:31 et lot transversal
 
 - [x] Compilation locale fournie : **0 erreur, 233 avertissements** (216 CS0618, 17 autres diagnostics), contre 241 avertissements au précédent build vert.
