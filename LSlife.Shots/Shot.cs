@@ -61,7 +61,7 @@ public class Shot
 					LSL.displayHelpTimer = Game.GameTime;
 					LsFunctions.DisplayHelpText("~INPUT_CONTEXT_SECONDARY~ pour refuser ou ~INPUT_CONTEXT~ pour accepter");
 				}
-				if (Game.IsControlJustPressed((Control)52) && !CustomMenuShared.IsAnyGameplayMenuOpen())
+				if (GTA.Input.Controls.IsDisabledControlJustPressed(GTA.Input.ControlType.Frontend, (Control)52) && !CustomMenuShared.IsAnyGameplayMenuOpen())
 				{
 					Function.Call((Hash)7023634693725934496L);
 					rejected = true;
@@ -73,7 +73,7 @@ public class Shot
 						LsFunctions.RemovePedFromWorld(customer.Ped, clearTask: true);
 					}
 				}
-				if (Game.IsControlJustPressed((Control)51) && !CustomMenuShared.IsAnyGameplayMenuOpen())
+				if (GTA.Input.Controls.IsDisabledControlJustPressed(GTA.Input.ControlType.Frontend, (Control)51) && !CustomMenuShared.IsAnyGameplayMenuOpen())
 				{
 					Function.Call((Hash)7023634693725934496L);
 					accepted = true;
@@ -124,7 +124,7 @@ public class Shot
 							LSL.displayHelpTimer = Game.GameTime;
 							LsFunctions.DisplayHelpText("~INPUT_SPRINT~ pour vendre à cette personne.");
 						}
-						if (Game.IsControlJustPressed((Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen())
+						if (GTA.Input.Controls.IsDisabledControlJustPressed(GTA.Input.ControlType.Frontend, (Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen())
 						{
 							Function.Call((Hash)7023634693725934496L);
 							LSL.customerSellTo = customer;
@@ -142,7 +142,7 @@ public class Shot
 							LSL.displayHelpTimer = Game.GameTime;
 							LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour vendre à cette personne.");
 						}
-						if (Game.IsControlJustPressed((Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen())
+						if (GTA.Input.Controls.IsDisabledControlJustPressed(GTA.Input.ControlType.Frontend, (Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen())
 						{
 							Function.Call((Hash)7023634693725934496L);
 							LSL.customerSellTo = customer;
