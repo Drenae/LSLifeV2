@@ -279,7 +279,7 @@ public partial class LSL
 			{
 				debugString = (areas[areaIndex].DemandBuff() - Game.GameTime).ToString();
 			}
-			myUIText = new UIText(debugString, new Point(10, 10), 0.4f, Color.WhiteSmoke, (GTA.Font)0, false);
+			myUIText = new GTA.UI.TextElement(debugString, new PointF(10, 10), 0.4f, Color.WhiteSmoke, GTA.UI.Font.ChaletLondon);
 			myUIText.Draw();
 		}
 		if (Prison.Started && Prison.CurrentState > Prison.PrisonStates.ApproachBarrier)
@@ -949,7 +949,7 @@ public partial class LSL
 					parentElement.Add(weaponAmmoElement);
 					foreach (WeaponComponent component in Enum.GetValues(typeof(WeaponComponent)))
 					{
-						if (Function.Call<bool>(unchecked((Hash)(-4209984786179366080L)), (player.Character), ((int)weapon2), ((int)component.Hash)))
+						if (Function.Call<bool>(unchecked((Hash)(-4209984786179366080L)), (player.Character), ((int)weapon2), ((int)component.ComponentHash)))
 						{
 							XElement weaponComponentElement = new XElement("COMPONENT", (object)component);
 							parentElement.Add(weaponComponentElement);
