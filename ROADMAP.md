@@ -1,3 +1,12 @@
+## Build du 30/10/2026 à 16:01:30 — correction transversale
+
+- [x] Build utilisateur : **28 erreurs CS7036, 64 avertissements**.
+- [x] Les **27 appels** `GTA.Input.Controls.IsDisabledControlJustPressed/Released` introduits au lot précédent exigeaient `ControlType` et `ControlAction` : retour aux appels `Game.IsControlJustPressed/Released` compatibles et précédemment fonctionnels, dans 8 fichiers, pour préserver la sémantique des commandes. Une véritable migration de cette API exige une correspondance explicite des groupes et actions.
+- [x] Dernier `Notification.PostTicker` incomplet corrigé dans `ShotHandler.cs`.
+- [x] Migrations complémentaires : `AreaDealer.MoneyCarried` (uint), `GameClock.Today` dans AreaLogic, `TaskSequence.AddTask.Wander/FollowNavMeshTo` dans PlayerLogic.
+- [ ] Recompiler et vérifier les signatures des séquences de tâches ; aucun build local effectué par l'assistant.
+- [ ] Reste : Wanted, police, conduite, pickups, hauteur du sol, finances, nettoyage warnings et tests fonctionnels en jeu. Ne pas toucher `main`.
+
 ## SHVDN3 — gros lot après build 30/10/2026 15:58:20
 
 - [x] Build utilisateur analysé : **5 erreurs CS7036 et 94 avertissements**.
