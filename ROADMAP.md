@@ -1,3 +1,11 @@
+## SHVDN3 — build du 30/10/2026 à 14:31:22
+
+- [x] Journal complet analysé : **37 diagnostics d'erreur distincts** ; nombreuses alertes d'obsolescence sans échec de compilation.
+- [x] Lot de corrections : `DrugDealer` (TaskInvoker), `PlayerLogic` (VehicleDrivingFlags), `WorldFunctions` (Blip.Delete), `AreaLogic` (heure/HUD), `Hud` (masquage natif), `CustomerLogic` (alpha natif), `Pig` (navigation), `AreaDealer` (ciblage), `StashVehicle` (néons et composants d'armes), `Tick` (commandes, composants, armes, waypoint), `PedDebugger` (position des os).
+- [ ] Recompiler : les modifications du lot ne sont pas encore validées.
+- [ ] Terminer migration `UIText` dans `PedDebugger`, `Tick`, `AreaLogic` et vérifier les API natives ciblage et waypoint ; corriger tout diagnostic nouveau.
+- [ ] Tester en jeu après compilation réussie ; ne pas fusionner avant validation.
+
 ## SHVDN3 — build 30/10/2026 14:29:48
 
 - [x] Le build s'arrête à l'analyse syntaxique : 2 erreurs `CS1525` / `CS1003` dans `DriveBy.cs:539`, aucune compilation sémantique effectuée.
