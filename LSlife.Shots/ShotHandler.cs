@@ -118,7 +118,7 @@ internal static class ShotHandler
 		{
 			if (LSL.DEBUG)
 			{
-				GTA.UI.Notification.Show("Nouvelle livraison créée : client trouvé.");
+				GTA.UI.Notification.PostTicker("Nouvelle livraison créée : client trouvé.");
 			}
 			spawnPos = LSL.GenerateSpawnPos(LSL.playerPos.Around(200f), LSL.Nodetype.Offroad, sidewalk: true);
 		}
@@ -142,13 +142,13 @@ internal static class ShotHandler
 			{
 				continue;
 			}
-			Ped newPed = World.CreatePed(((Entity)p).Model, spawnPos);
+			Ped newPed = Ped.Create(((Entity)p).Model, spawnPos);
 			if (LSL.DEBUG)
 			{
 				val = spawnPos;
 				string text = ((object)val/*cast due to constrained. prefix*/).ToString();
 				val = ((Entity)newPed).Position;
-				GTA.UI.Notification.Show("Position livraison : " + text + " ; position client : " + ((object)val/*cast due to constrained. prefix*/).ToString());
+				GTA.UI.Notification.PostTicker("Position livraison : " + text + " ; position client : " + ((object)val/*cast due to constrained. prefix*/).ToString());
 			}
 			if (!((Entity)(object)newPed != (Entity)null))
 			{
