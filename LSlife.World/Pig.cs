@@ -70,7 +70,7 @@ public class Pig
 		}
 		destination = StopPosition();
 		((Entity)Ped).IsPersistent = true;
-		Ped.AlwaysKeepTask = true;
+		Ped.KeepTaskWhenMarkedAsNoLongerNeeded = true;
 		Ped.BlockPermanentEvents = true;
 		Function.Call(unchecked((Hash)(-4970914549772615683L)), (Ped), (true));
 		Function.Call(unchecked((Hash)(-5650329060376590909L)), (Ped), (100));
@@ -159,7 +159,7 @@ public class Pig
 			{
 				if (DEBUG)
 				{
-					GTA.UI.Notification.Show("Sac disparu");
+					GTA.UI.Notification.PostTicker("Sac disparu");
 				}
 				NewState = States.Destroy;
 			}
@@ -391,7 +391,7 @@ public class Pig
 		}
 		if (DEBUG)
 		{
-			GTA.UI.Notification.Show("Nouvel état de la police : " + NewState);
+			GTA.UI.Notification.PostTicker("Nouvel état de la police : " + NewState);
 		}
 		switch (NewState)
 		{
@@ -403,9 +403,9 @@ public class Pig
 			}
 			if (DEBUG)
 			{
-				GTA.UI.Notification.Show("Récupération du sac");
+				GTA.UI.Notification.PostTicker("Récupération du sac");
 			}
-			Ped.Task.GoTo(Bag.pos);
+			Ped.Task.FollowNavMeshTo(Bag.pos);
 			CurrentState = NewState;
 			break;
 		case States.SearchPlayer:
@@ -422,7 +422,7 @@ public class Pig
 			break;
 		case States.Destroy:
 			LsFunctions.RemovePedFromWorld(Ped, clearTask: true);
-			Ped.AlwaysKeepTask = false;
+			Ped.KeepTaskWhenMarkedAsNoLongerNeeded = false;
 			Ped.BlockPermanentEvents = false;
 			Ped = null;
 			if ((Entity)(object)Vehicle != (Entity)null)
@@ -451,12 +451,12 @@ public class Pig
 			}
 			else
 			{
-				Ped.Task.WanderAround();
+				Ped.Task.Wander();
 			}
 			CurrentState = States.Normal;
 			if (DEBUG)
 			{
-				GTA.UI.Notification.Show("Retour à l'état normal");
+				GTA.UI.Notification.PostTicker("Retour à l'état normal");
 			}
 			break;
 		case States.WatchPlayer:
@@ -483,7 +483,7 @@ public class Pig
 			}
 			if (DEBUG)
 			{
-				GTA.UI.Notification.Show("Passage en surveillance");
+				GTA.UI.Notification.PostTicker("Passage en surveillance");
 			}
 			break;
 		case States.ApproachPlayer:
@@ -506,7 +506,7 @@ public class Pig
 			{
 				destination = LSL.playerPos + ((Entity)Game.Player.Character).RightVector * -1f * 2f + ((Entity)Game.Player.Character).ForwardVector * 2f;
 			}
-			Ped.Task.GoTo(destination);
+			Ped.Task.FollowNavMeshTo(destination);
 			pPos = LSL.playerPos;
 			Ped.Task.LookAt((Entity)(object)Game.Player.Character);
 			CurrentState = States.ApproachPlayer;
