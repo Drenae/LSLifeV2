@@ -252,7 +252,7 @@ public class AreaDealer
 			{
 				if (DEBUG)
 				{
-					GTA.UI.Notification.PostTicker("adealer state = " + NewState);
+					GTA.UI.Notification.PostTicker("adealer state = " + NewState, false, false);
 				}
 				switch (NewState)
 				{
@@ -329,7 +329,7 @@ public class AreaDealer
 		}
 		else
 		{
-			GTA.UI.Notification.PostTicker("~r~Erreur : personnage du dealer de quartier introuvable");
+			GTA.UI.Notification.PostTicker("~r~Erreur : personnage du dealer de quartier introuvable", false, false);
 		}
 	}
 
@@ -469,14 +469,14 @@ public class AreaDealer
 				cPed = null;
 				if (DEBUG)
 				{
-					GTA.UI.Notification.PostTicker("Le client du dealer de quartier n'existe pas");
+					GTA.UI.Notification.PostTicker("Le client du dealer de quartier n'existe pas", false, false);
 				}
 			}
 			if ((Entity)(object)cPed == (Entity)null)
 			{
 				if (DEBUG)
 				{
-					GTA.UI.Notification.PostTicker("Recherche d'un client pour le dealer de quartier");
+					GTA.UI.Notification.PostTicker("Recherche d'un client pour le dealer de quartier", false, false);
 				}
 				List<Ped> peds = LSL.lPeds.GetPeds;
 				if (peds.ToList().Count > 0)
@@ -500,7 +500,7 @@ public class AreaDealer
 				}
 				if (DEBUG)
 				{
-					GTA.UI.Notification.PostTicker("Aucun personnage trouvé pour le dealer de quartier");
+					GTA.UI.Notification.PostTicker("Aucun personnage trouvé pour le dealer de quartier", false, false);
 				}
 				cTimer.Reset();
 				return;
@@ -545,7 +545,7 @@ public class AreaDealer
 				{
 					if (DEBUG)
 					{
-						GTA.UI.Notification.PostTicker("Transaction en cours");
+						GTA.UI.Notification.PostTicker("Transaction en cours", false, false);
 					}
 					dealState = Enums.DealState.DoingDeal;
 					cPed.Task.PlayAnimation("switch@franklin@002110_04_magd_3_weed_exchange", "002110_04_magd_3_weed_exchange_franklin", 8f, 3000, (AnimationFlags)16);
@@ -570,7 +570,7 @@ public class AreaDealer
 					dealState = Enums.DealState.GetNear;
 					if (DEBUG)
 					{
-						GTA.UI.Notification.PostTicker("Transaction terminée");
+						GTA.UI.Notification.PostTicker("Transaction terminée", false, false);
 					}
 					LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
 					((Entity)cPed).AttachedBlip.Delete();
@@ -585,7 +585,7 @@ public class AreaDealer
 		{
 			if (DEBUG)
 			{
-				GTA.UI.Notification.PostTicker("Client du dealer de quartier supprimé : trop éloigné");
+				GTA.UI.Notification.PostTicker("Client du dealer de quartier supprimé : trop éloigné", false, false);
 			}
 			LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
 			cPed = null;
