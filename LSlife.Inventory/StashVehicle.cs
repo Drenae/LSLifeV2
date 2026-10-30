@@ -320,7 +320,7 @@ public class StashVehicle
 			return;
 		}
 		bool trunkFound = false;
-		if (((Entity)drugCar).HasBone("boot"))
+		if (GTA.Native.Function.Call<int>(GTA.Native.Hash.GET_ENTITY_BONE_INDEX_BY_NAME, drugCar.Handle, "boot") != -1)
 		{
 			trunkFound = true;
 		}
@@ -414,7 +414,7 @@ public class StashVehicle
 				foreach (Vehicle veh in allVehicles)
 				{
 					Vector3 position = ((Entity)veh).Position;
-					if (!(position.DistanceTo(CurrentPosition) < 6f) || !(veh.NumberPlate == reg))
+					if (!(position.DistanceTo(CurrentPosition) < 6f) || !(veh.Mods.LicensePlate == reg))
 					{
 						continue;
 					}
@@ -718,7 +718,7 @@ public class StashVehicle
 		VehicleWheelType wheelType = (VehicleWheelType)5;
 		VehicleColor rimCol = (VehicleColor)117;
 		bool canTiresBurst = false;
-		NumberPlateType plateType = (NumberPlateType)0;
+		LicensePlateType plateType = (LicensePlateType)0;
 		string plate = "";
 		VehicleWindowTint tint = (VehicleWindowTint)0;
 		float dirt = 0f;
@@ -820,7 +820,7 @@ public class StashVehicle
 				}
 				if (e.Name == "NumPlateType")
 				{
-					Enum.TryParse<NumberPlateType>(e.Value, out plateType);
+					Enum.TryParse<LicensePlateType>(e.Value, out plateType);
 				}
 				if (e.Name == "NumPlate")
 				{
@@ -857,7 +857,7 @@ public class StashVehicle
 		{
 			//IL_0014: Unknown result type (might be due to invalid IL or missing references)
 			//IL_0019: Unknown result type (might be due to invalid IL or missing references)
-			if (v.NumberPlate == reg)
+			if (v.Mods.LicensePlate == reg)
 			{
 				Model model2 = ((Entity)v).Model;
 				return model2.Hash == drugCarHash;
@@ -898,23 +898,23 @@ public class StashVehicle
 		}
 		if ((Entity)(object)drugCar != (Entity)null)
 		{
-			drugCar.InstallModKit();
-			drugCar.PrimaryColor = drugCarPriCol;
-			drugCar.SecondaryColor = drugCarSecCol;
+			drugCar.Mods.InstallModKit();
+			drugCar.Mods.PrimaryColor = drugCarPriCol;
+			drugCar.Mods.SecondaryColor = drugCarSecCol;
 			((Entity)drugCar).Health = health;
 			drugCar.EngineHealth = engineHealth;
-			drugCar.WheelType = wheelType;
-			drugCar.EngineRunning = false;
+			drugCar.Mods.WheelType = wheelType;
+			drugCar.IsEngineRunning = false;
 			((Entity)drugCar).IsInvincible = false;
 			drugCar.CanTiresBurst = canTiresBurst;
-			drugCar.NumberPlateType = plateType;
-			drugCar.NumberPlate = plate;
-			drugCar.WindowTint = tint;
+			drugCar.Mods.LicensePlateType = plateType;
+			drugCar.Mods.LicensePlate = plate;
+			drugCar.Mods.WindowTint = tint;
 			drugCar.DirtLevel = dirt;
 			drugCar.FuelLevel = fuel;
-			drugCar.Livery = livery;
+			drugCar.Mods.Livery = livery;
 			((Entity)drugCar).IsPersistent = true;
-			drugCar.RimColor = rimCol;
+			drugCar.Mods.RimColor = rimCol;
 			drugCar.Repair();
 			if (((Entity)drugCar).AttachedBlip != (Blip)null)
 			{
@@ -935,16 +935,16 @@ public class StashVehicle
 						{
 							if (m.Name == "FrontWheels")
 							{
-								Enum.TryParse<VehicleMod>(m.Name.ToString(), out VehicleMod mod);
+								Enum.TryParse<VehicleModType>(m.Name.ToString(), out VehicleModType mod);
 								int.TryParse(m.Value, out var val);
-								drugCar.SetMod(mod, val, customTire);
-								drugCar.RimColor = rimCol;
+								drugCar.Mods[mod].Index = val;
+								drugCar.Mods.RimColor = rimCol;
 							}
 							else
 							{
-								Enum.TryParse<VehicleMod>(m.Name.ToString(), out VehicleMod mod2);
+								Enum.TryParse<VehicleModType>(m.Name.ToString(), out VehicleModType mod2);
 								int.TryParse(m.Value, out var val2);
-								drugCar.SetMod(mod2, val2, false);
+								drugCar.Mods[mod2].Index = val2;
 							}
 						}
 					}
@@ -954,9 +954,9 @@ public class StashVehicle
 					}
 					foreach (XElement item in veh2.Elements())
 					{
-						Enum.TryParse<VehicleToggleMod>(item.Name.ToString(), out VehicleToggleMod toggleMod);
+						Enum.TryParse<VehicleToggleModType>(item.Name.ToString(), out VehicleToggleModType toggleMod);
 						bool.TryParse(item.Value, out var toggle);
-						drugCar.ToggleMod(toggleMod, toggle);
+						drugCar.Mods[toggleMod].IsInstalled = toggle;
 					}
 				}
 				return;
@@ -1039,23 +1039,23 @@ public class StashVehicle
 		parentElement.Add(new XElement("PosY", ((Entity)veh).Position.Y));
 		parentElement.Add(new XElement("PosZ", ((Entity)veh).Position.Z));
 		parentElement.Add(new XElement("Heading", ((Entity)veh).Heading));
-		parentElement.Add(new XElement("PrimaryCol", veh.PrimaryColor));
-		parentElement.Add(new XElement("SecondaryCol", veh.SecondaryColor));
+		parentElement.Add(new XElement("PrimaryCol", veh.Mods.PrimaryColor));
+		parentElement.Add(new XElement("SecondaryCol", veh.Mods.SecondaryColor));
 		parentElement.Add(new XElement("Health", veh.BodyHealth));
 		parentElement.Add(new XElement("EngineHealth", veh.EngineHealth));
-		parentElement.Add(new XElement("WheelType", veh.WheelType));
-		parentElement.Add(new XElement("RimCol", veh.RimColor));
-		parentElement.Add(new XElement("SmokeCol", veh.TireSmokeColor));
-		parentElement.Add(new XElement("NeonCol", veh.NeonLightsColor));
-		parentElement.Add(new XElement("TrimCol", veh.TrimColor));
-		parentElement.Add(new XElement("DashCol", veh.DashboardColor));
-		parentElement.Add(new XElement("NumPlateType", veh.NumberPlateType));
-		parentElement.Add(new XElement("NumPlate", veh.NumberPlate));
-		parentElement.Add(new XElement("WindowTint", veh.WindowTint));
+		parentElement.Add(new XElement("WheelType", veh.Mods.WheelType));
+		parentElement.Add(new XElement("RimCol", veh.Mods.RimColor));
+		parentElement.Add(new XElement("SmokeCol", veh.Mods.TireSmokeColor));
+		parentElement.Add(new XElement("NeonCol", veh.Mods.NeonLightsColor));
+		parentElement.Add(new XElement("TrimCol", veh.Mods.TrimColor));
+		parentElement.Add(new XElement("DashCol", veh.Mods.DashboardColor));
+		parentElement.Add(new XElement("NumPlateType", veh.Mods.LicensePlateType));
+		parentElement.Add(new XElement("NumPlate", veh.Mods.LicensePlate));
+		parentElement.Add(new XElement("WindowTint", veh.Mods.WindowTint));
 		parentElement.Add(new XElement("DirtLevel", veh.DirtLevel));
 		parentElement.Add(new XElement("CanTiresBurst", veh.CanTiresBurst));
 		parentElement.Add(new XElement("Fuel", veh.FuelLevel));
-		parentElement.Add(new XElement("Livery", veh.Livery));
+		parentElement.Add(new XElement("Livery", veh.Mods.Livery));
 		if (Function.Call<bool>(unchecked((Hash)(-5507252750051666468L)), (((Entity)veh).Handle), (23)))
 		{
 			parentElement.Add(new XElement("CustomTire", true));
@@ -1064,13 +1064,13 @@ public class StashVehicle
 		{
 			parentElement.Add(new XElement("CustomTire", false));
 		}
-		foreach (VehicleMod mod in Enum.GetValues(typeof(VehicleMod)))
+		foreach (VehicleModType mod in Enum.GetValues(typeof(VehicleModType)))
 		{
-			modsElement.Add(new XElement(((object)mod/*cast due to constrained. prefix*/).ToString(), veh.GetMod(mod)));
+			modsElement.Add(new XElement(((object)mod/*cast due to constrained. prefix*/).ToString(), veh.Mods[mod].Index));
 		}
-		foreach (VehicleToggleMod mod2 in Enum.GetValues(typeof(VehicleToggleMod)))
+		foreach (VehicleToggleModType mod2 in Enum.GetValues(typeof(VehicleToggleModType)))
 		{
-			toggleModsElement.Add(new XElement(((object)mod2/*cast due to constrained. prefix*/).ToString(), veh.IsToggleModOn(mod2)));
+			toggleModsElement.Add(new XElement(((object)mod2/*cast due to constrained. prefix*/).ToString(), veh.Mods[mod2].IsInstalled));
 		}
 		foreach (VehicleNeonLight neon in Enum.GetValues(typeof(VehicleNeonLight)))
 		{
