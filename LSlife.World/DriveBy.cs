@@ -461,7 +461,7 @@ public class DriveBy
 			spawnPos = LSL.GenerateSpawnPos(defendPosition.Around(300f), LSL.Nodetype.Road, sidewalk: false);
 		}
 		lastSpawn = spawnPos;
-		Vehicle = World.CreateVehicle(LsFunctions.RequestModel(vehicleHash), spawnPos);
+		Vehicle = Vehicle.Create(LsFunctions.RequestModel(vehicleHash), spawnPos);
 		int time = Game.GameTime;
 		while ((Entity)(object)Vehicle == (Entity)null && Game.GameTime < time + 1000)
 		{
@@ -477,7 +477,7 @@ public class DriveBy
 		}
 		else if (LSL.DEBUG)
 		{
-			GTA.UI.Notification.Show("~r~Impossible de faire apparaître l'attaque en voiture.");
+			GTA.UI.Notification.PostTicker("~r~Impossible de faire apparaître l'attaque en voiture.");
 		}
 	}
 
@@ -523,14 +523,14 @@ public class DriveBy
 		}
 		LsFunctions.SetRandomCombatStats(p);
 		p.FiringPattern = unchecked((FiringPattern)(-753768974));
-		p.AlwaysKeepTask = true;
+		p.KeepTaskWhenMarkedAsNoLongerNeeded = true;
 		p.CanSwitchWeapons = true;
 		Function.Call(unchecked((Hash)(-4079649877180351064L)), (p), (100));
 		LsFunctions.SetRivalWeapons(p);
 		if (_leader)
 		{
 			Leader = p;
-			p.AlwaysKeepTask = true;
+			p.KeepTaskWhenMarkedAsNoLongerNeeded = true;
 			DrivingStyle style = (DrivingStyle)786603;
 			if (Agressive)
 			{
@@ -568,7 +568,7 @@ public class DriveBy
 				vehicleHash = (VehicleHash)model.Hash;
 				if (LSL.DEBUG)
 				{
-					GTA.UI.Notification.Show("foundSUV");
+					GTA.UI.Notification.PostTicker("foundSUV");
 				}
 				break;
 			}
