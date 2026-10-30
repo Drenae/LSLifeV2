@@ -384,7 +384,7 @@ public class PlayerDealerHandler
 				if (dealers.FindAll((PlayerDealer d) =>
 				{
 					//IL_0007: Unknown result type (might be due to invalid IL or missing references)
-					return d.area == GTA.Native.Function.Call<string>(GTA.Native.Hash.GET_NAME_OF_ZONE, pos);
+					return d.area == LsFunctions.GetZoneLabel(pos);
 				}).Count == 0)
 				{
 					AddDealer(new PlayerDealer(id2, pedHash, Enums.PdStates.Work, pos, weed, crack, cocaine, money, armour, tWeapons, pData));
