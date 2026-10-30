@@ -84,7 +84,7 @@ public class AreaDealer
 			((Entity)dPed).AddBlip();
 		}
 		dPed.Money = LSL.rnd.Next(200, 2000);
-		Area = GTA.Native.Function.Call<string>(GTA.Native.Hash.GET_NAME_OF_ZONE, ((Entity)dPed).Position);
+		Area = LsFunctions.GetZoneLabel(((Entity)dPed).Position);
 	}
 
 	public void CheckState()
