@@ -298,7 +298,7 @@ public partial class LSL
 		CustomHireDealerMenu.TickOncePerFrame();
 		CustomWorkerMenu.TickOncePerFrame();
 		CustomHudOptionsMenu.TickOncePerFrame();
-		if (Game.IsControlPressed(2, (Control)76) && Game.IsControlJustPressed(2, (Control)26))
+		if (Game.IsControlPressed(2, (Control)76) && Game.IsControlJustPressed((Control)26))
 		{
 			DropDrugs.Drop();
 		}
@@ -353,7 +353,7 @@ public partial class LSL
 					displayHelpTimer = Game.GameTime;
 					LsFunctions.DisplayHelpText("~INPUT_CONTEXT~ pour obtempérer.");
 				}
-				if (Game.IsControlJustPressed(2, (Control)51))
+				if (Game.IsControlJustPressed((Control)51))
 				{
 					PlayerComplied = true;
 					TaskSequence giveUP = new TaskSequence();
@@ -367,7 +367,7 @@ public partial class LSL
 				}
 			}
 			HandleAreaDealers();
-			if (!CustomMenuShared.IsAnyGameplayMenuOpen() && (Entity)(object)weaponDealer1 != (Entity)null && readyToDeal && Game.IsControlJustPressed(2, (Control)51))
+			if (!CustomMenuShared.IsAnyGameplayMenuOpen() && (Entity)(object)weaponDealer1 != (Entity)null && readyToDeal && Game.IsControlJustPressed((Control)51))
 			{
 				CustomWeaponDealerMenu.Open();
 			}
@@ -744,7 +744,7 @@ public partial class LSL
 								displayHelpTimer = Game.GameTime;
 								LsFunctions.DisplayHelpText("~INPUT_SPRINT~ pour vendre depuis le véhicule.");
 							}
-							if (Game.IsControlJustPressed(2, (Control)21))
+							if (Game.IsControlJustPressed((Control)21))
 							{
 								Function.Call((Hash)7023634693725934496L);
 								customerSellTo = nCustomer;
@@ -764,7 +764,7 @@ public partial class LSL
 								displayHelpTimer = Game.GameTime;
 								LsFunctions.DisplayHelpText("Appuie sur ~INPUT_SPRINT~ pour vendre à cette personne.");
 							}
-							if (Game.IsControlJustPressed(2, (Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen())
+							if (Game.IsControlJustPressed((Control)21) && !CustomMenuShared.IsAnyGameplayMenuOpen())
 							{
 								Function.Call((Hash)7023634693725934496L);
 								customerSellTo = nCustomer;
@@ -793,7 +793,7 @@ public partial class LSL
 							displayHelpTimer = Game.GameTime;
 							LsFunctions.DisplayHelpText("Appuie sur ~INPUT_VEH_EXIT~ pour entrer.");
 						}
-						if (Game.IsControlJustPressed(2, (Control)75))
+						if (Game.IsControlJustPressed((Control)75))
 						{
 							Function.Call((Hash)7023634693725934496L);
 							player.Character.Task.EnterVehicle(wepDealer.vehicle, (VehicleSeat)0);
@@ -802,7 +802,7 @@ public partial class LSL
 				}
 				else if (player.Character.IsInVehicle() && ((Entity)player.Character.CurrentVehicle).Handle == ((Entity)wepDealer.vehicle).Handle)
 				{
-					if (Game.IsControlJustPressed(2, (Control)52))
+					if (Game.IsControlJustPressed((Control)52))
 					{
 						player.Character.Task.LeaveVehicle(player.Character.CurrentVehicle, true);
 						Script.Wait(5500);
@@ -811,11 +811,11 @@ public partial class LSL
 						wepDealer.ped.CurrentVehicle.SoundHorn(12);
 						((Entity)wepDealer.ped).IsPersistent = false;
 						((Entity)wepDealer.vehicle).IsPersistent = false;
-						((Entity)wepDealer.vehicle).CurrentBlip.Remove();
+						((Entity)wepDealer.vehicle).AttachedBlip.Delete();
 						Function.Call((Hash)5188501456062479616L, (((Entity)wepDealer.ped).Handle), (((Entity)wepDealer.vehicle).Handle), (20f), (786603));
 						wepDealer = null;
 					}
-					if (Game.IsControlJustPressed(2, (Control)51))
+					if (Game.IsControlJustPressed((Control)51))
 					{
 						if (wepDealer.state == Dealer.States.Driving)
 						{
@@ -877,9 +877,9 @@ public partial class LSL
 							{
 								continue;
 							}
-							if (ent.CurrentBlip != (Blip)null || ent.CurrentBlip.Exists())
+							if (ent.AttachedBlip != (Blip)null || ent.AttachedBlip.Exists())
 							{
-								ent.CurrentBlip.Remove();
+								ent.AttachedBlip.Delete();
 							}
 							if (ent == (Entity)(object)attacker)
 							{
@@ -1338,9 +1338,9 @@ public partial class LSL
 					attacker.BlockPermanentEvents = true;
 					((Entity)attacker).IsPersistent = true;
 					LsFunctions.AddBlip((Entity)(object)attacker, (BlipColor)1, "Voleur", _friend: false, _edge: false);
-					if (((Entity)attacker).CurrentBlip != null && ((Entity)attacker).CurrentBlip.Exists())
+					if (((Entity)attacker).AttachedBlip != null && ((Entity)attacker).AttachedBlip.Exists())
 					{
-						((Entity)attacker).CurrentBlip.Scale = 1.3f;
+						((Entity)attacker).AttachedBlip.Scale = 1.3f;
 					}
 					WeaponHash weaponHash2 = unchecked((WeaponHash)(-1569615261));
 					int ammo2 = 0;
@@ -1524,10 +1524,10 @@ public partial class LSL
 						((Entity)p5).IsPersistent = true;
 					}
 					p5.BlockPermanentEvents = true;
-					if (((Entity)p5).CurrentBlip.Exists())
+					if (((Entity)p5).AttachedBlip.Exists())
 					{
-						((Entity)p5).CurrentBlip.Name = "Robber";
-						((Entity)p5).CurrentBlip.IsFriendly = false;
+						((Entity)p5).AttachedBlip.Name = "Robber";
+						((Entity)p5).AttachedBlip.IsFriendly = false;
 					}
 				}
 			}
@@ -1575,12 +1575,12 @@ public partial class LSL
 		}
 		if ((Entity)(object)attacker != (Entity)null)
 		{
-			if (((Entity)attacker).CurrentBlip == (Blip)null || !((Entity)attacker).CurrentBlip.Exists())
+			if (((Entity)attacker).AttachedBlip == (Blip)null || !((Entity)attacker).AttachedBlip.Exists())
 			{
 				LsFunctions.AddBlip((Entity)(object)attacker, (BlipColor)1, "Voleur", _friend: false, _edge: false);
-					if (((Entity)attacker).CurrentBlip != null && ((Entity)attacker).CurrentBlip.Exists())
+					if (((Entity)attacker).AttachedBlip != null && ((Entity)attacker).AttachedBlip.Exists())
 					{
-						((Entity)attacker).CurrentBlip.Scale = 1.3f;
+						((Entity)attacker).AttachedBlip.Scale = 1.3f;
 					}
 			}
 			if (((Entity)attacker).IsDead)
@@ -1804,7 +1804,7 @@ public partial class LSL
 		if ((Entity)(object)weaponDealer1 != (Entity)null && !((Entity)weaponDealer1).IsAlive)
 		{
 			((Entity)weaponDealer1).IsPersistent = false;
-			((Entity)weaponDealer1).CurrentBlip.Remove();
+			((Entity)weaponDealer1).AttachedBlip.Delete();
 			((Entity)weaponDealer1).MarkAsNoLongerNeeded();
 			LsFunctions.SendTextMsg("Le dealer est mort !");
 			weaponDealer1 = null;
@@ -1852,7 +1852,7 @@ public partial class LSL
 				((Entity)wepDealer.vehicle).IsInvincible = true;
 				wepDealer.ped.Task.ClearAll();
 				wepDealer.ped.Task.DriveTo(wepDealer.vehicle, wepDealer.destination, 1f, 10f, 786603);
-				UI.ShowSubtitle("OK, on se rend à ~y~" + World.GetStreetName(wepDealer.destination));
+				GTA.UI.Screen.ShowSubtitle("OK, on se rend à ~y~" + World.GetStreetName(wepDealer.destination));
 				wepDealer.state = Dealer.States.Leaving;
 			}
 		}
@@ -1866,14 +1866,14 @@ public partial class LSL
 		{
 			wepDealer.ped.Task.DriveTo(wepDealer.vehicle, wepDealer.destination, 4f, 50f, 6);
 			wepDealer.state = Dealer.States.Fast;
-			UI.ShowSubtitle("OK, j'accélère.", 2000);
+			GTA.UI.Screen.ShowSubtitle("OK, j'accélère.", 2000);
 			wepDealer.canSpeed = true;
 		}
 		if (wepDealer.state == Dealer.States.Slower)
 		{
 			wepDealer.ped.Task.DriveTo(wepDealer.vehicle, wepDealer.destination, 4f, 20f, 786603);
 			wepDealer.state = Dealer.States.Driving;
-			UI.ShowSubtitle("Ok, Slowing it down.", 2000);
+			GTA.UI.Screen.ShowSubtitle("Ok, Slowing it down.", 2000);
 			wepDealer.canSpeed = false;
 		}
 		goto IL_29de;

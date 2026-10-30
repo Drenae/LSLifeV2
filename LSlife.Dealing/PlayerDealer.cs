@@ -862,7 +862,7 @@ public class PlayerDealer
 						UI.Notify("Transaction terminée");
 					}
 					LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
-					((Entity)cPed).CurrentBlip.Remove();
+					((Entity)cPed).AttachedBlip.Delete();
 					lPed = cPed;
 					cPed = null;
 				}
@@ -1080,7 +1080,7 @@ public class PlayerDealer
 			LSL.displayHelpTimer = Game.GameTime;
 			LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour parler à cette personne.");
 		}
-		if (Game.IsControlJustReleased(2, (Control)51))
+		if (Game.IsControlJustReleased((Control)51))
 		{
 			Function.Call((Hash)7023634693725934496L);
 			// Le menu personnalise gere sa propre selection.
@@ -1100,7 +1100,7 @@ public class PlayerDealer
 				LSL.displayHelpTimer = Game.GameTime;
 				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_VEH_HORN~ pour que ton dealer te suive.");
 			}
-			if (Game.IsControlJustPressed(2, (Control)86))
+			if (Game.IsControlJustPressed((Control)86))
 			{
 				Function.Call((Hash)7023634693725934496L);
 				LSL.DealerHandler.currentDealer = this;
@@ -1147,20 +1147,20 @@ public class PlayerDealer
 	{
 		if (NewState == Enums.PdStates.FollowPlayer || CurrentState == Enums.PdStates.FollowPlayer)
 		{
-			((Entity)Ped).CurrentBlip.Color = (BlipColor)54;
+			((Entity)Ped).AttachedBlip.Color = (BlipColor)54;
 		}
 		else
 		{
-			((Entity)Ped).CurrentBlip.Color = (BlipColor)50;
+			((Entity)Ped).AttachedBlip.Color = (BlipColor)50;
 		}
-		((Entity)Ped).CurrentBlip.Name = "Dealer";
-		((Entity)Ped).CurrentBlip.Scale = 0.5f;
-		((Entity)Ped).CurrentBlip.IsShortRange = true;
+		((Entity)Ped).AttachedBlip.Name = "Dealer";
+		((Entity)Ped).AttachedBlip.Scale = 0.5f;
+		((Entity)Ped).AttachedBlip.IsShortRange = true;
 	}
 
 	private void RemoveBlip()
 	{
-		((Entity)Ped).CurrentBlip.Remove();
+		((Entity)Ped).AttachedBlip.Delete();
 	}
 
 	private void SetStartDrugs()

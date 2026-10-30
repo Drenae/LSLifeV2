@@ -298,7 +298,7 @@ public class Pig
 			{
 				if (leader)
 				{
-					UI.ShowSubtitle("Tu es en état d'arrestation.", 3000);
+					GTA.UI.Screen.ShowSubtitle("Tu es en état d'arrestation.", 3000);
 					Game.Player.WantedLevel = 2;
 				}
 				NewState = States.Destroy;
@@ -306,7 +306,7 @@ public class Pig
 			}
 			if (leader)
 			{
-				UI.ShowSubtitle("On t'a à l'œil. Tu ferais mieux de quitter ~y~" + World.GetZoneName(LSL.playerPos) + "~n~.", 4000);
+				GTA.UI.Screen.ShowSubtitle("On t'a à l'œil. Tu ferais mieux de quitter ~y~" + World.GetZoneName(LSL.playerPos) + "~n~.", 4000);
 			}
 			LSL.areas[LSL.areaIndex].HeatDecay();
 			Game.Player.Character.Task.ClearAll();
@@ -469,7 +469,7 @@ public class Pig
 			{
 				if (leader)
 				{
-					UI.ShowSubtitle("Monsieur, veuillez sortir du véhicule.", 4000);
+					GTA.UI.Screen.ShowSubtitle("Monsieur, veuillez sortir du véhicule.", 4000);
 				}
 				AskPlayerToComply = true;
 			}
@@ -477,7 +477,7 @@ public class Pig
 			{
 				if (leader)
 				{
-					UI.ShowSubtitle("À terre !", 4000);
+					GTA.UI.Screen.ShowSubtitle("À terre !", 4000);
 				}
 				AskPlayerToComply = true;
 			}
