@@ -93,6 +93,6 @@ public partial class LSL
 
 	private int PedsInPlayersGroup()
 	{
-		return player.Character.CurrentPedGroup.ToList(false).Count;
+		return player.Character.PedGroup.ToList(false).Count;
 	}
 }
