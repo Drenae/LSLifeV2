@@ -119,9 +119,9 @@ internal class OldCustomer
 				{
 					LSL.areas[LSL.areaIndex].GangPresance = 0f;
 				}
-				if (Ped.GetKiller() is Ped)
+				if (GTA.Entity.FromHandle(GTA.Native.Function.Call<int>(GTA.Native.Hash.GET_PED_SOURCE_OF_DEATH, Ped.Handle)) is Ped)
 				{
-					Entity killer = Ped.GetKiller();
+					Entity killer = GTA.Entity.FromHandle(GTA.Native.Function.Call<int>(GTA.Native.Hash.GET_PED_SOURCE_OF_DEATH, Ped.Handle));
 					Ped killer2 = (Ped)(object)((killer is Ped) ? killer : null);
 					if ((Entity)(object)killer2 != (Entity)null && killer2.PedGroup == LSL.player.Character.PedGroup && ShouldAttack())
 					{
