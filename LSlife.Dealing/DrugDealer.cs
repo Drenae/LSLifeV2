@@ -74,7 +74,7 @@ public class DrugDealer
 			{
 				if (blip == (Blip)null)
 				{
-					blip = World.CreateBlip(dealerSpawn.Position);
+					blip = Blip.Create(dealerSpawn.Position);
 					if (blip != (Blip)null)
 					{
 						blip.Sprite = (BlipSprite)478;
@@ -221,7 +221,7 @@ public class DrugDealer
 			}
 			if ((Entity)(object)dealerCar == (Entity)null)
 			{
-				dealerCar = World.CreateVehicle(LsFunctions.RequestModel((VehicleHash)1177543287), dealerSpawn.Position, dealerSpawn.Heading);
+				dealerCar = Vehicle.Create(LsFunctions.RequestModel((VehicleHash)1177543287), dealerSpawn.Position, dealerSpawn.Heading);
 				while ((Entity)(object)dealerCar == (Entity)null || !((Entity)dealerCar).Exists())
 				{
 					Script.Yield();
