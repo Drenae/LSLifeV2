@@ -1,3 +1,11 @@
+## SHVDN3 — build 30/10/2026 13:33
+
+- [x] 244 erreurs de compilation distinctes, contre 268 au build précédent (-24).
+- [x] `DriveBy.cs` : suppression de blip migrée vers `AttachedBlip.Delete()`.
+- [ ] Principaux blocages : `StashVehicle.cs` (57), `Tick.cs` (51), `PlayerDealer.cs` (27), `DrugDealer.cs` (20).
+- [ ] Adapter portes/coffres, dimensions de modèles, groupes de peds, composants d'armes et fonctions de zone selon les API SHVDN3.
+- [ ] Recompiler et vérifier les erreurs restantes ; aucun build réussi confirmé.
+
 ## SHVDN3 — build 30/10/2026 13:29
 
 - [x] 268 erreurs de compilation distinctes (536 lignes dupliquées), contre 300 au build précédent.
