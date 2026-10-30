@@ -80,7 +80,7 @@ internal class EnemyHandler
 				}
 			}
 			int pedIndex = Rand.Next(0, 2);
-			Ped enemy = World.CreatePed(new Model(pedHashes[pedIndex]), SpawnLocations[index]);
+			Ped enemy = Ped.Create(new Model(pedHashes[pedIndex]), SpawnLocations[index]);
 			while ((Entity)(object)enemy == (Entity)null)
 			{
 				Script.Wait(0);
@@ -102,8 +102,8 @@ internal class EnemyHandler
 			enemy.FiringPattern = unchecked((FiringPattern)(-957453492));
 			enemy.CanWrithe = false;
 			enemy.Armor = 100;
-			enemy.AlwaysKeepTask = true;
-			enemy.Task.FightAgainst(Game.Player.Character);
+			enemy.KeepTaskWhenMarkedAsNoLongerNeeded = true;
+			enemy.Task.Combat(Game.Player.Character);
 			((Entity)enemy).AddBlip();
 			((Entity)enemy).AttachedBlip.IsFriendly = false;
 			Enemies.Add(enemy);
