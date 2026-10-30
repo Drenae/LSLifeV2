@@ -20,7 +20,7 @@ internal static partial class LsFunctions
 	public static void SendTextMsg(string str)
 	{
 		Game.PlaySound("Text_Arrive_Tone", "Phone_SoundSet_Default");
-		UI.Notify(str);
+		GTA.UI.Notification.Show(str);
 	}
 
 	public static void TextMsg(string _name, string _title, string _msg)
@@ -97,7 +97,7 @@ internal static partial class LsFunctions
 	{
 		if (LSL.DEBUG)
 		{
-			UI.Notify(_string);
+			GTA.UI.Notification.Show(_string);
 		}
 	}
 
