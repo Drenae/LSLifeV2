@@ -1,3 +1,14 @@
+## SHVDN3 — build 30/10/2026 14:05:38 : gros lot
+
+- [x] Journal analysé : environ 165 erreurs uniques (fichier/position/code/message), avant corrections de ce lot.
+- [x] `StashVehicle` : migration majeure des couleurs, jantes, plaques, teintes, livrées, kits, modifications et options vers `Vehicle.Mods` et types SHVDN3.
+- [x] `Tick` / `InputEvents` : groupes de relations migrés vers `RelationshipGroup` ; récupération de zone corrigée.
+- [x] `PedFunctions` / `Setup` : composants d'armes migrés vers `WeaponComponentHash`.
+- [x] `OldCustomer` : recherche du responsable de la mort via native.
+- [x] Autres fichiers : groupes de PNJ, blips et appels UI migrés dans DriveBy, CustomerLogic, PlayerLogic, WorldFunctions, UtilityFunctions, PoliceLogic, Types, DisplayFunctions et PedFunctions.
+- [ ] Recompiler impérativement : aucune compilation réussie confirmée ; les autres incompatibilités de Tick, conduite, UI et sons restent à corriger.
+- [ ] Préserver les branches stables et vérifier les comportements en jeu après build vert.
+
 ## Migration SHVDN3 — lot massif du 30/10/2026 (build 13:42)
 
 - [x] Zones : `GetZoneLabel(Vector3)` via native `GET_NAME_OF_ZONE(x,y,z)` et migration des appels dans DrugDealer, AreaDealer, PlayerDealer, PlayerDealerHandler, CombatFunctions, Shot, Pig.
