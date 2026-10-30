@@ -201,7 +201,7 @@ internal static partial class LsFunctions
 			double gangStr = LSL.areas[LSL.areaIndex].GangPresance * 1.5f;
 			if (RanRange(0, 8 + (int)gangStr) == 0)
 			{
-				UI.ShowSubtitle("Hé, pour info, ~r~quelqu'un ~w~d'autre vend vers ~y~" + World.GetStreetName(((Entity)LSL.aDealer.dPed).Position) + "~w~.", 6000);
+				GTA.UI.Screen.ShowSubtitle("Hé, pour info, ~r~quelqu'un ~w~d'autre vend vers ~y~" + World.GetStreetName(((Entity)LSL.aDealer.dPed).Position) + "~w~.", 6000);
 				AddBlip((Entity)(object)LSL.aDealer.dPed, (BlipColor)1, "Dealer", _friend: false, _edge: false);
 				LSL.aDealer.Detected = true;
 				tip = true;
@@ -209,7 +209,7 @@ internal static partial class LsFunctions
 		}
 		if (!tip && LSL.pigs.Count > 0 && !tip && !LSL.pigs[0].detected && RanRange(0, 5 + (int)LSL.areas[LSL.areaIndex].GangPresance) == 0)
 		{
-			UI.ShowSubtitle("J'ai entendu que les ~r~flics ~w~sont vers ~y~" + World.GetStreetName(((Entity)LSL.pigs[0].Ped).Position) + "~w~. Ils viennent par ici.", 6000);
+			GTA.UI.Screen.ShowSubtitle("J'ai entendu que les ~r~flics ~w~sont vers ~y~" + World.GetStreetName(((Entity)LSL.pigs[0].Ped).Position) + "~w~. Ils viennent par ici.", 6000);
 			LSL.pigs[0].detected = true;
 			tip = true;
 		}
@@ -221,7 +221,7 @@ internal static partial class LsFunctions
 			{
 				Hire = true;
 				LSL.PottentialWorker = new HirePed(c.Ped);
-				UI.ShowSubtitle("Tu recrutes du monde ?", 6000);
+				GTA.UI.Screen.ShowSubtitle("Tu recrutes du monde ?", 6000);
 				tip = true;
 			}
 		}
