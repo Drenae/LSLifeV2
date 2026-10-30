@@ -1074,7 +1074,7 @@ public class StashVehicle
 		}
 		foreach (VehicleNeonLight neon in Enum.GetValues(typeof(VehicleNeonLight)))
 		{
-			neonsElement.Add(new XElement(((object)neon/*cast due to constrained. prefix*/).ToString(), GTA.Native.Function.Call<bool>(GTA.Native.Hash.IS_VEHICLE_NEON_LIGHT_ENABLED, veh.Handle, (int)neon)));
+			neonsElement.Add(new XElement(((object)neon/*cast due to constrained. prefix*/).ToString(), GTA.Native.Function.Call<bool>((GTA.Native.Hash)0x8C4B92553E4766A5UL, veh.Handle, (int)neon)));
 		}
 		parentElement.Add(modsElement);
 		parentElement.Add(toggleModsElement);
@@ -1118,7 +1118,7 @@ public class StashVehicle
 			parentElement.Add(weaponAmmoElement);
 			foreach (WeaponComponent component in Enum.GetValues(typeof(WeaponComponent)))
 			{
-				if (Function.Call<bool>(unchecked((Hash)(-4209984786179366080L)), (LSL.player.Character), ((int)weapon), ((int)component.Hash)))
+				if (Function.Call<bool>(unchecked((Hash)(-4209984786179366080L)), (LSL.player.Character), ((int)weapon), ((int)component.ComponentHash)))
 				{
 					XElement weaponComponentElement = new XElement("COMPONENT", (object)component);
 					parentElement.Add(weaponComponentElement);
