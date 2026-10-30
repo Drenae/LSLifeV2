@@ -1,3 +1,11 @@
+## Build 30/10/2026 16:05:55 — migration API
+
+- [x] Build confirmé : **0 erreur, 77 avertissements** (contre 85 auparavant).
+- [x] Migration des deux appels de navigation obsolètes `TaskInvoker.GoTo(Vector3)` vers `FollowNavMeshTo` dans `LSlife.Dealing/DrugDealer.cs`.
+- [ ] `World.GetGroundHeight` : migration différée tant que la signature et l'enum de mode ne sont pas vérifiés ; ancienne implémentation restaurée pour éviter une régression de compilation.
+- [ ] Autres avertissements : contrôles, police, argent, conduite, pickups, code inaccessible, champs inutilisés ; tests en jeu toujours requis.
+- [ ] Relancer la compilation pour vérifier le dernier lot. Branche `main` inchangée.
+
 ## Build 30/10/2026 — 16:05:06 : compilation verte
 
 - [x] **0 erreur, 85 avertissements** : génération de `bin/Release/net48/LSlife.dll` réussie après correction de l'horloge dans AreaLogic.
