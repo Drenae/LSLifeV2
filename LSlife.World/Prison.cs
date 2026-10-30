@@ -153,8 +153,8 @@ internal static class Prison
 				{
 					break;
 				}
-				Game.Player.IgnoredByPolice = true;
-				Game.Player.IgnoredByEveryone = true;
+				Game.Player.Wanted.SetPoliceIgnorePlayer(true);
+				Game.Player.Wanted.SetEveryoneIgnorePlayer(true);
 				Vector3 playerPos = ((Entity)Game.Player.Character).Position;
 				OutputArgument outArgA = new OutputArgument();
 				OutputArgument outArgB = new OutputArgument();
@@ -350,7 +350,7 @@ internal static class Prison
 	{
 		//IL_0072: Unknown result type (might be due to invalid IL or missing references)
 		Function.Call(unchecked((Hash)(-8272491852216909662L)), (Game.Player.Handle), (true), (256));
-		Game.Player.CanControlCharacter = true;
+		Game.Player.SetControlState(true);
 		LSL.entitiesCleanUp.Add((Entity)(object)copCar);
 		LSL.entitiesCleanUp.Add((Entity)(object)cop);
 		cop = null;
