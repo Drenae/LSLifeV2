@@ -164,18 +164,18 @@ internal static class Prison
 					Vector3 pos = outArgA.GetResult<Vector3>();
 					if ((Entity)(object)copCar == (Entity)null)
 					{
-						copCar = World.CreateVehicle(new Model((VehicleHash)2046537925), pos, heading);
+						copCar = Vehicle.Create(new Model((VehicleHash)2046537925), pos, heading);
 						((Entity)copCar).AddBlip();
 						((Entity)copCar).AttachedBlip.Sprite = (BlipSprite)672;
 						if (DEBUG)
 						{
-							GTA.UI.Notification.Show("Transport généré : " + (object)copCar);
+							GTA.UI.Notification.PostTicker("Transport généré : " + (object)copCar);
 						}
 					}
 				}
 				if ((Entity)(object)cop == (Entity)null)
 				{
-					cop = World.CreatePed(new Model((PedHash)1581098148), ((Entity)Game.Player.Character).Position + ((Entity)Game.Player.Character).ForwardVector * -1f * 1.5f);
+					cop = Ped.Create(new Model((PedHash)1581098148), ((Entity)Game.Player.Character).Position + ((Entity)Game.Player.Character).ForwardVector * -1f * 1.5f);
 				}
 				if ((Entity)(object)copCar != (Entity)null && (Entity)(object)cop != (Entity)null)
 				{
@@ -198,7 +198,7 @@ internal static class Prison
 			}
 			case PrisonStates.PlayerEnterCar:
 				cop.Task.ClearAll();
-				cop.AlwaysKeepTask = true;
+				cop.KeepTaskWhenMarkedAsNoLongerNeeded = true;
 				cop.BlockPermanentEvents = true;
 				cop.Task.EnterVehicle(copCar, unchecked((VehicleSeat)(-1)));
 				CurrentState = PrisonStates.PlayerEnterCar;
@@ -238,7 +238,7 @@ internal static class Prison
 			}
 			if (stateChanged)
 			{
-				GTA.UI.Notification.Show("Passage à l'état " + NewState);
+				GTA.UI.Notification.PostTicker("Passage à l'état " + NewState);
 			}
 			return;
 		}
@@ -280,7 +280,7 @@ internal static class Prison
 				((Entity)PriGate1.Prop).IsPositionFrozen = false;
 				NewState = PrisonStates.ApproachGate2;
 				Model model = ((Entity)pGate1()).Model;
-				GTA.UI.Notification.Show("Portail trouvé : " + model.Hash);
+				GTA.UI.Notification.PostTicker("Portail trouvé : " + model.Hash);
 			}
 			break;
 		case PrisonStates.ApproachGate2:
@@ -378,7 +378,7 @@ internal static class Prison
 				if (model.Hash == doorHash)
 				{
 					prop = p;
-					GTA.UI.Notification.Show("Portail 1 trouvé");
+					GTA.UI.Notification.PostTicker("Portail 1 trouvé");
 					break;
 				}
 			}
@@ -403,7 +403,7 @@ internal static class Prison
 				if (model.Hash == doorHash)
 				{
 					prop = p;
-					GTA.UI.Notification.Show("Portail 2 trouvé");
+					GTA.UI.Notification.PostTicker("Portail 2 trouvé");
 					break;
 				}
 			}
