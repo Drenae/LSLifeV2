@@ -1138,7 +1138,7 @@ public class PlayerDealer
 	{
 		if (blip != (Blip)null)
 		{
-			blip.Remove();
+			blip.Delete();
 			blip = null;
 		}
 	}
