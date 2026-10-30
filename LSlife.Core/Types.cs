@@ -99,7 +99,7 @@ public partial class LSL
 				if (DEBUG)
 				{
 					model = ((Entity)Prop).Model;
-					UI.Notify(model.Hash + " Porte déverrouillée " + ((object)((Entity)Prop).Position/*cast due to constrained. prefix*/).ToString());
+					GTA.UI.Notification.Show(model.Hash + " Porte déverrouillée " + ((object)((Entity)Prop).Position/*cast due to constrained. prefix*/).ToString());
 				}
 			}
 			else
@@ -112,7 +112,7 @@ public partial class LSL
 				if (DEBUG)
 				{
 					model = ((Entity)Prop).Model;
-					UI.Notify(model.Hash + " Porte verrouillée " + ((object)((Entity)Prop).Position/*cast due to constrained. prefix*/).ToString());
+					GTA.UI.Notification.Show(model.Hash + " Porte verrouillée " + ((object)((Entity)Prop).Position/*cast due to constrained. prefix*/).ToString());
 				}
 			}
 		}
