@@ -53,7 +53,7 @@ internal static class ZeeContactActions
 					Blip currentBlip = ((Entity)vehicle2).AttachedBlip;
 					if (currentBlip != null)
 					{
-						currentBlip.Remove();
+						currentBlip.Delete();
 					}
 				}
 				LSL.wepDealer = null;
