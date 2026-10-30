@@ -1,3 +1,13 @@
+## Migration SHVDN3 — lot massif du 30/10/2026 (build 13:42)
+
+- [x] Zones : `GetZoneLabel(Vector3)` via native `GET_NAME_OF_ZONE(x,y,z)` et migration des appels dans DrugDealer, AreaDealer, PlayerDealer, PlayerDealerHandler, CombatFunctions, Shot, Pig.
+- [x] Portes des véhicules : migration des appels `OpenDoor`, `CloseDoor`, `IsDoorOpen` vers natives dans StashVehicle et DrugDealer.
+- [x] Groupes de PNJ : `CurrentPedGroup` remplacé par `PedGroup` dans PlayerDealer, Setup, Shot, OldCustomer et OldCustomerHandler (API SHVDN3 vérifiée).
+- [x] Composants d'armes : `WeaponComponentHash` et `Weapon.Components[hash].Active` dans WorkerWeaponTransfer, HouseStashTransfer, VehicleWeaponTransfer (API SHVDN3 vérifiée).
+- [x] Plaques : retour à `Vehicle.NumberPlate` dans StashVehicle.
+- [ ] Recompiler pour valider ces changements et traiter les erreurs restantes (Tick, StashVehicle, tâches, sons, armes, UI).
+- [ ] Ne pas fusionner sans build et tests en jeu.
+
 ### Build 30/10/2026 13:35:41
 - [x] Analyse : 243 diagnostics d'erreur uniques selon fichier/position/code/message (plusieurs sorties répétées).
 - [x] Migration `Model.GetDimensions(out min, out max)` dans `DrugDealer.cs` (5 occurrences) et `StashVehicle.cs` (1 occurrence).
