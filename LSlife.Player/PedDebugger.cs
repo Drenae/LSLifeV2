@@ -59,7 +59,7 @@ public class PedDebugger
 						allowed = true;
 					}
 					string text = SetPedDebugtext((Entity)(object)p2, allowed);
-					Vector2 tPos = LsFunctions.World3DToScreen2d(new Vector3(p2.GetBoneCoord((Bone)37193).X, p2.GetBoneCoord((Bone)37193).Y, p2.GetBoneCoord((Bone)37193).Z + 0.5f));
+					Vector2 tPos = LsFunctions.World3DToScreen2d(new Vector3(p2.Bones[37193].Position.X, p2.Bones[37193].Position.Y, p2.Bones[37193].Position.Z + 0.5f));
 					tPos.X = 1280f * tPos.X;
 					tPos.Y = 720f * tPos.Y;
 					new UIText(text, new Point((int)tPos.X, (int)tPos.Y), 0.2f, Color.WhiteSmoke, (GTA.Font)0, true, true, true).Draw();
