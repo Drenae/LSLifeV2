@@ -91,7 +91,7 @@ internal static partial class LsFunctions
 		}
 		else
 		{
-			UI.Notify("~r~Fichier LsLife_LSSA.xml introuvable");
+			GTA.UI.Notification.Show("~r~Fichier LsLife_LSSA.xml introuvable");
 		}
 		if (!LSL.LCRWMAP)
 		{
@@ -128,7 +128,7 @@ internal static partial class LsFunctions
 		}
 		else
 		{
-			UI.Notify("~r~Fichier LsLife_LCRW.xml introuvable");
+			GTA.UI.Notification.Show("~r~Fichier LsLife_LCRW.xml introuvable");
 		}
 	}
 
@@ -220,7 +220,7 @@ internal static partial class LsFunctions
 			LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
 			if (LSL.DEBUG)
 			{
-				UI.Notify("Sauvegarde modifiée");
+				GTA.UI.Notification.Show("Sauvegarde modifiée");
 			}
 		}
 	}
@@ -280,7 +280,7 @@ internal static partial class LsFunctions
 					}
 					if (LSL.DEBUG)
 					{
-						UI.Notify("Porte trouvée");
+						GTA.UI.Notification.Show("Porte trouvée");
 					}
 					break;
 				}
@@ -291,7 +291,7 @@ internal static partial class LsFunctions
 			prop = World.CreateProp(new Model(doorHash), pos, new Vector3(0f, 0f, 0f), false, false);
 			if (LSL.DEBUG)
 			{
-				UI.Notify("Aucune porte trouvée, création d'une porte");
+				GTA.UI.Notification.Show("Aucune porte trouvée, création d'une porte");
 			}
 		}
 		return prop;
