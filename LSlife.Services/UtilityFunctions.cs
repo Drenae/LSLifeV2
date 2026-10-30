@@ -85,7 +85,7 @@ internal static partial class LsFunctions
 				Enum.TryParse<Enums.DayGTA>(LSL.dealer1ReloadDay.ToString(), out var mDay);
 				if (LSL.DEBUG)
 				{
-					GTA.UI.Notification.PostTicker(LSL.dealer1ReloadHour.ToString() ?? "");
+					GTA.UI.Notification.PostTicker(LSL.dealer1ReloadHour.ToString() ?? "", false, false);
 				}
 				string amPm = "AM";
 				if (timeTodeliver > 12)
@@ -239,7 +239,7 @@ internal static partial class LsFunctions
 				TextMsg("ZEE", "Réapprovisionnement", "Cannabis : " + finalWeed2 + "oz, crack : " + finalCrack2 + "oz, cocaïne : " + finalCocain2 + "oz.");
 				if (LSL.DEBUG)
 				{
-					GTA.UI.Notification.PostTicker("Cannabis : " + finalWeed2 + " crack : " + finalCrack2 + " cocaïne : " + finalCocain2);
+					GTA.UI.Notification.PostTicker("Cannabis : " + finalWeed2 + " crack : " + finalCrack2 + " cocaïne : " + finalCocain2, false, false);
 				}
 				LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
 				UpdateSave();
@@ -392,7 +392,7 @@ internal static partial class LsFunctions
 			lastHour = currentHour;
 			if (LSL.DEBUG)
 			{
-				GTA.UI.Notification.PostTicker("Heures écoulées : " + hoursPassed);
+				GTA.UI.Notification.PostTicker("Heures écoulées : " + hoursPassed, false, false);
 			}
 		}
 		return hoursPassed;
