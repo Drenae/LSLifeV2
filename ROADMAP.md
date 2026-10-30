@@ -1,3 +1,13 @@
+## SHVDN3 — gros lot après build 30/10/2026 15:58:20
+
+- [x] Build utilisateur analysé : **5 erreurs CS7036 et 94 avertissements**.
+- [x] Correction des **5 appels `Notification.PostTicker`** manquants dans `LSlife.World/DriveBy.cs`, `LSlife.Shots/ShotHandler.cs`, `LSlife.World/AreaLogic.cs` ; les trois fichiers précédemment bloqués ont finalement été poussés.
+- [x] Migration de **27 appels de contrôle** (`Game.IsControlJustPressed/Released` vers `GTA.Input.Controls.IsDisabledControlJustPressed/Released`) dans 8 fichiers : HirePed, DrugDealer, StashHouse, StashVehicle, Shot, PlayerDealer, Tick, AreaDealer.
+- [x] Modernisation complémentaire de navigation et géométrie dans Tick, Customer, Pig.
+- [ ] **Build local requis** : lot non compilé par l'assistant ; vérifier signatures des API `GTA.Input.Controls` et `TaskInvoker` et corriger tout écart en gros lots.
+- [ ] Continuer les avertissements SHVDN3 : police/Wanted, conduite/VehicleDrivingFlags, argent/MoneyCarried, pickups, hauteur du sol, horloge, Game.IsLoading ; vérifier la sémantique avant remplacement.
+- [ ] Tests en jeu indispensables : interactions, menus, iFruit, contrôles, PNJ, sauvegardes, HUD et véhicules. `main` inchangée.
+
 ## Build 30/10/2026 — 15:55:26 (lot de correction)
 
 - [x] Diagnostic : échec du build après migration API ; **91 appels** `Notification.PostTicker` incomplets sur 20 fichiers et une erreur `FollowNavMeshTo(Entity)` dans `LSlife.Core/Tick.cs`.
