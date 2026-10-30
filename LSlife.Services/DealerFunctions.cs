@@ -122,7 +122,7 @@ internal static partial class LsFunctions
 			Player player = Game.Player;
 			player.Money += price;
 			Ped ped2 = c.Ped;
-			ped2.Money -= price;
+			ped2.MoneyCarried = (uint)System.Math.Max(0L, (long)ped2.MoneyCarried - price);
 			LSL.PlayerInventory[c.Drug.Name] -= c.amount;
 			PlayTheSound();
 			GTA.UI.Notification.PostTicker("Vendu : " + DrugDisplayName(c.Drug.Name) + " " + GramsToOz(c.amount) + ", il te reste " + GramsToOz(LSL.PlayerInventory[c.Drug.Name]) +". Réputation gagnée : ~g~" + repEarned + " ~s~, réputation totale ~g~" + LSL.areas[LSL.areaIndex].Reputation + "~s~ à " + LSL.areas[LSL.areaIndex].Name, false, false);
@@ -149,7 +149,7 @@ internal static partial class LsFunctions
 			Player player2 = Game.Player;
 			player2.Money += price;
 			Ped ped3 = c.Ped;
-			ped3.Money -= price;
+			ped3.MoneyCarried = (uint)System.Math.Max(0L, (long)ped3.MoneyCarried - price);
 			LSL.PlayerInventory[c.Drug.Name] -= c.amount;
 			PlayTheSound();
 			GTA.UI.Notification.PostTicker("Vendu : " + DrugDisplayName(c.Drug.Name) + " " + GramsToOz(c.amount) + ", il te reste " + GramsToOz(LSL.PlayerInventory[c.Drug.Name]) +". Réputation gagnée : ~g~" + repEarned + " ~s~, réputation totale ~g~" + LSL.areas[LSL.areaIndex].Reputation + "~s~ à " + LSL.areas[LSL.areaIndex].Name, false, false);
@@ -240,7 +240,8 @@ internal static partial class LsFunctions
 			{
 				SendTextMsg("Ils t'ont vu dealer. Tu vas attirer l'attention dans ce quartier.");
 				LSL.areas[LSL.areaIndex].Heat++;
-				Game.Player.WantedLevel = 1;
+				Game.Player.Wanted.SetWantedLevel(1);
+			Game.Player.Wanted.ApplyWantedLevelChangeNow();
 				break;
 			}
 		}
@@ -298,7 +299,8 @@ internal static partial class LsFunctions
 			{
 				SendTextMsg("Ils t'ont vu dealer. Tu vas attirer l'attention dans ce quartier.");
 				LSL.areas[LSL.areaIndex].Heat += 200f;
-				Game.Player.WantedLevel = 1;
+				Game.Player.Wanted.SetWantedLevel(1);
+			Game.Player.Wanted.ApplyWantedLevelChangeNow();
 				break;
 			}
 		}
