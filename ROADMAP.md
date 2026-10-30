@@ -1,3 +1,13 @@
+## SHVDN3 — build 30/10/2026 14:27
+
+- [x] Analyse du journal : **68 erreurs distinctes** (hors doublons), contre 85 au build précédent.
+- [x] `Tick.cs` : réparation des références au tueur introduites par migration précédente ; conversion des tâches de conduite.
+- [x] `DisplayFunctions.cs`, `Types.cs`, `InputEvents.cs` : `Game.PlaySound` remplacé par `PLAY_SOUND_FRONTEND` natif.
+- [x] `DriveBy.cs`, `Pig.cs` : mise à jour des arguments `VehicleDrivingFlags` pour les tâches de conduite.
+- [x] `PlayerDealer.cs` : correction suppression blip.
+- [ ] Recompiler et valider : aucun build réussi confirmé.
+- [ ] Traiter `UIText`, `PedDebugger`, `AreaLogic`, `DrugDealer.Tasks`, `HudComponent`, `WorldFunctions`, autres erreurs restantes.
+
 ## SHVDN3 — build du 30/10/2026 à 14:13
 
 - [x] 85 erreurs de compilation distinctes dans le journal (170 lignes dupliquées), contre 165 au précédent.
