@@ -1,3 +1,11 @@
+## SHVDN3 — build 30/10/2026 13:29
+
+- [x] 268 erreurs de compilation distinctes (536 lignes dupliquées), contre 300 au build précédent.
+- [x] Migration des appels UI dans Prison, StashHouseHandler, PlayerDealerHandler, DealerFunctions, ShotHandler, PersistenceFunctions.
+- [x] Suppression des blips ennemis adaptée dans EnemyHandler.
+- [ ] Priorité : StashVehicle (57 erreurs distinctes), Tick (51), PlayerDealer (27), DrugDealer (20).
+- [ ] Nouveau build requis après ce lot ; aucune compilation réussie confirmée.
+
 ## SHVDN3 — journal du 30/10/2026 13:26
 
 - [x] Journal analysé : 300 erreurs de compilation distinctes (600 occurrences répétées).
