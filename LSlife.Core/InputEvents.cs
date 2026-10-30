@@ -146,7 +146,7 @@ public partial class LSL
 			thread.Abort();
 		}
 		showInventory = !showInventory;
-		Game.PlaySound("Text_Arrive_Tone", "Phone_SoundSet_Default");
+		GTA.Native.Function.Call(GTA.Native.Hash.PLAY_SOUND_FRONTEND, -1, "Text_Arrive_Tone", "Phone_SoundSet_Default", true);
 	}
 
 	private void OnAbort(object sender, EventArgs e)
