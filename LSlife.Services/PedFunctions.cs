@@ -254,7 +254,7 @@ internal static partial class LsFunctions
 					current2.Ammo += ammo;
 					if (LSL.DEBUG)
 					{
-						GTA.UI.Notification.PostTicker("Arme donnée au personnage : " + ((object)weapon/*cast due to constrained. prefix*/).ToString());
+						GTA.UI.Notification.PostTicker("Arme donnée au personnage : " + ((object)weapon/*cast due to constrained. prefix*/).ToString(), false, false);
 					}
 				}
 				if (ele.Name == "COMPONENT" && !hasWeapon && Enum.TryParse<WeaponComponentHash>(ele.Value, out WeaponComponentHash wepcomp) && _ped != null)
@@ -292,7 +292,7 @@ internal static partial class LsFunctions
 		if (LSL.driveByHandler.GetDriveBies.Where((DriveBy r) => CanSee((Entity)(object)r.Leader, (Entity)(object)LSL.player.Character)).Count() > 0)
 		{
 			LSL.driveByHandler.SetAgressiveTarget(_agg: true, LSL.player.Character);
-			GTA.UI.Notification.PostTicker("Vente repérée depuis un véhicule");
+			GTA.UI.Notification.PostTicker("Vente repérée depuis un véhicule", false, false);
 		}
 	}
 
