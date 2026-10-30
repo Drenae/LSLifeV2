@@ -83,7 +83,7 @@ public class AreaDealer
 		{
 			((Entity)dPed).AddBlip();
 		}
-		dPed.Money = LSL.rnd.Next(200, 2000);
+		dPed.MoneyCarried = (uint)LSL.rnd.Next(200, 2000);
 		Area = LsFunctions.GetZoneLabel(((Entity)dPed).Position);
 	}
 
