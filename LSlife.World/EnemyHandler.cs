@@ -136,7 +136,7 @@ internal class EnemyHandler
 			}
 			else if (((Entity)p).IsDead)
 			{
-				((Entity)p).AttachedBlip.Remove();
+				((Entity)p).AttachedBlip.Delete();
 				Enemies.Remove(p);
 			}
 		}
@@ -146,7 +146,7 @@ internal class EnemyHandler
 	{
 		foreach (Ped p in Enemies.ToList())
 		{
-			((Entity)p).AttachedBlip.Remove();
+			((Entity)p).AttachedBlip.Delete();
 			Enemies.Remove(p);
 		}
 	}
