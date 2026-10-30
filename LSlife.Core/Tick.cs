@@ -234,8 +234,8 @@ public partial class LSL
 			{
 				LoadAreaData();
 			}
-			GTA.UI.Notification.Show("~g~LsLife: " + vNumber);
-			GTA.UI.Notification.Show("~g~LsLife: " + areas.Count + " zones chargées");
+			GTA.UI.Notification.PostTicker("~g~LsLife: " + vNumber);
+			GTA.UI.Notification.PostTicker("~g~LsLife: " + areas.Count + " zones chargées");
 			lPeds = new LsLPeds();
 			((GTA.RelationshipGroup)playerRelationship).SetRelationshipBetweenGroups(CustomerRel, (Relationship)3);
 			((GTA.RelationshipGroup)playerRelationship).SetRelationshipBetweenGroups(rival_nutral, (Relationship)3);
@@ -262,7 +262,7 @@ public partial class LSL
 				}
 				else
 				{
-					GTA.UI.Notification.Show("~r~LsLife - Impossible de déterminer le type du quartier : " + playerArea);
+					GTA.UI.Notification.PostTicker("~r~LsLife - Impossible de déterminer le type du quartier : " + playerArea);
 				}
 			}
 			Area cArea = areas.Find((Area a) => a.Name == playerArea);
@@ -520,7 +520,7 @@ public partial class LSL
 											{
 												hash2 = LsFunctions.cHashes[rnd.Next(0, LsFunctions.cHashes.Count)];
 											}
-											Ped cPed2 = World.CreatePed(LsFunctions.RequestModel(hash2), HouseHandler.CurrentHouse.exitPos);
+											Ped cPed2 = Ped.Create(LsFunctions.RequestModel(hash2), HouseHandler.CurrentHouse.exitPos);
 											if ((Entity)(object)cPed2 != (Entity)null)
 											{
 												customers.Add(new Customer(cPed2, playerPos, farAway: false, null, drug, (int)LsFunctions.CurrentRepLvl(areas[areaIndex].Reputation)));
@@ -553,7 +553,7 @@ public partial class LSL
 											{
 												hash3 = LsFunctions.cHashes[rnd.Next(0, LsFunctions.cHashes.Count)];
 											}
-											Ped cPed3 = World.CreatePed(LsFunctions.RequestModel(hash3), HouseHandler.CurrentHouse.exitPos);
+											Ped cPed3 = Ped.Create(LsFunctions.RequestModel(hash3), HouseHandler.CurrentHouse.exitPos);
 											if ((Entity)(object)cPed3 != (Entity)null)
 											{
 												customers.Add(new Customer(cPed3, playerPos, farAway: false, null, drug, (int)LsFunctions.CurrentRepLvl(areas[areaIndex].Reputation)));
@@ -586,7 +586,7 @@ public partial class LSL
 											{
 												hash = LsFunctions.cHashes[rnd.Next(0, LsFunctions.cHashes.Count)];
 											}
-											Ped cPed = World.CreatePed(LsFunctions.RequestModel(hash), HouseHandler.CurrentHouse.exitPos);
+											Ped cPed = Ped.Create(LsFunctions.RequestModel(hash), HouseHandler.CurrentHouse.exitPos);
 											if ((Entity)(object)cPed != (Entity)null)
 											{
 												customers.Add(new Customer(cPed, playerPos, farAway: false, null, drug, (int)LsFunctions.CurrentRepLvl(areas[areaIndex].Reputation)));
@@ -839,7 +839,7 @@ public partial class LSL
 				{
 					if (DEBUG)
 					{
-						GTA.UI.Notification.Show("dealer1 angry");
+						GTA.UI.Notification.PostTicker("dealer1 angry");
 					}
 					dealer1Angry = true;
 				}
@@ -849,7 +849,7 @@ public partial class LSL
 					{
 						if (DEBUG)
 						{
-							GTA.UI.Notification.Show("Attaque en voiture dans un quartier défavorisé");
+							GTA.UI.Notification.PostTicker("Attaque en voiture dans un quartier défavorisé");
 						}
 						LsFunctions.SpawnDriveBy(player.Character, _agressive: true);
 					}
@@ -857,7 +857,7 @@ public partial class LSL
 					{
 						if (DEBUG)
 						{
-							GTA.UI.Notification.Show("dealer1 drive-by");
+							GTA.UI.Notification.PostTicker("dealer1 drive-by");
 						}
 						LsFunctions.SpawnDriveBy(player.Character, _agressive: true);
 						LsFunctions.TextMsg("ZEE", "Dette", "Rembourse ta dette et je les rappellerai.");
@@ -886,7 +886,7 @@ public partial class LSL
 								entitiesCleanUp.Remove(ent);
 								if (DEBUG)
 								{
-									GTA.UI.Notification.Show("Assaillant supprimé après l'arrêt de l'attaque");
+									GTA.UI.Notification.PostTicker("Assaillant supprimé après l'arrêt de l'attaque");
 								}
 								continue;
 							}
@@ -896,7 +896,7 @@ public partial class LSL
 								entitiesCleanUp.Remove(ent);
 								if (DEBUG)
 								{
-									GTA.UI.Notification.Show("Delete:" + (object)ent);
+									GTA.UI.Notification.PostTicker("Delete:" + (object)ent);
 								}
 								ent.Delete();
 							}
@@ -924,7 +924,7 @@ public partial class LSL
 			{
 				if (DEBUG)
 				{
-					GTA.UI.Notification.Show("Changement d'arme du joueur détecté");
+					GTA.UI.Notification.PostTicker("Changement d'arme du joueur détecté");
 				}
 				playerWeps.Clear();
 				playerWeapons.Clear();
@@ -942,7 +942,7 @@ public partial class LSL
 					XElement weaponNameElement = new XElement("HASH", (object)weapon2);
 					if (DEBUG)
 					{
-						GTA.UI.Notification.Show("Arme ajoutée : " + ((object)weapon2/*cast due to constrained. prefix*/).ToString() + " (liste playerWeapons).");
+						GTA.UI.Notification.PostTicker("Arme ajoutée : " + ((object)weapon2/*cast due to constrained. prefix*/).ToString() + " (liste playerWeapons).");
 					}
 					XElement weaponAmmoElement = new XElement("AMMO", ammunitionInWeapon);
 					parentElement.Add(weaponNameElement);
@@ -982,7 +982,7 @@ public partial class LSL
 					}
 					else
 					{
-						GTA.UI.Notification.Show("~r~LsLife - Impossible de déterminer le type du quartier : " + playerArea);
+						GTA.UI.Notification.PostTicker("~r~LsLife - Impossible de déterminer le type du quartier : " + playerArea);
 					}
 					int aIndex = 0;
 					foreach (Area area2 in areas)
@@ -1039,7 +1039,7 @@ public partial class LSL
 								if (DEBUG)
 								{
 									model = ((Entity)p3).Model;
-									GTA.UI.Notification.Show("Dealer de quartier généré avec ~g~" + ((object)model/*cast due to constrained. prefix*/).ToString());
+									GTA.UI.Notification.PostTicker("Dealer de quartier généré avec ~g~" + ((object)model/*cast due to constrained. prefix*/).ToString());
 								}
 								break;
 							}
@@ -1128,7 +1128,7 @@ public partial class LSL
 					}
 					if (DEBUG)
 					{
-						GTA.UI.Notification.Show("Tu as été vu en train de tuer un dealer.");
+						GTA.UI.Notification.PostTicker("Tu as été vu en train de tuer un dealer.");
 					}
 				}
 				Ped dKiller2 = null;
@@ -1244,7 +1244,7 @@ public partial class LSL
 					}
 					if (DEBUG)
 					{
-						GTA.UI.Notification.Show("Munitions données pour " + ((object)weaponHash/*cast due to constrained. prefix*/).ToString() + " : " + ammo);
+						GTA.UI.Notification.PostTicker("Munitions données pour " + ((object)weaponHash/*cast due to constrained. prefix*/).ToString() + " : " + ammo);
 					}
 				}
 			}
@@ -1375,7 +1375,7 @@ public partial class LSL
 					GTA.Native.Function.Call(GTA.Native.Hash.SET_PED_DROPS_WEAPONS_WHEN_DEAD, attacker.Handle, false);
 					if (DEBUG)
 					{
-						GTA.UI.Notification.Show("L'assaillant est équipé de " + attacker.Weapons.Current.Hash.ToString() + " et d'un gilet pare-balles");
+						GTA.UI.Notification.PostTicker("L'assaillant est équipé de " + attacker.Weapons.Current.Hash.ToString() + " et d'un gilet pare-balles");
 					}
 					attackerWeed = PlayerInventory["Weed"];
 					attackerCrack = PlayerInventory["Crack"];
@@ -1518,7 +1518,7 @@ public partial class LSL
 				}
 				if (!p5.IsInCombatAgainst(player.Character) || !p5.IsInMeleeCombat)
 				{
-					p5.Task.FightAgainst(player.Character);
+					p5.Task.Combat(player.Character);
 					if (!((Entity)p5).IsPersistent)
 					{
 						((Entity)p5).IsPersistent = true;
@@ -1568,7 +1568,7 @@ public partial class LSL
 			if (Function.Call<bool>((Hash)5315141875575487047L) && !Prison.Ready)
 			{
 				Function.Call(unchecked((Hash)(-8272491852216909662L)), (player.Handle), (false), (256));
-				GTA.UI.Notification.Show("READY");
+				GTA.UI.Notification.PostTicker("READY");
 				Prison.Ready = true;
 			}
 			Prison.PrisonTick();
@@ -1611,12 +1611,12 @@ public partial class LSL
 						Function.Call(unchecked((Hash)(-4032282232082276974L)), (attacker), (EnemyRelationShipGroup));
 						attackerAttacking = true;
 						attacker.Task.ClearAll();
-						attacker.Task.FightAgainst(player.Character);
+						attacker.Task.Combat(player.Character);
 					}
 					else
 					{
 						attacker.Task.ClearAll();
-						attacker.Task.WanderAround();
+						attacker.Task.Wander();
 						attackerAttacking = false;
 					}
 				}
@@ -1757,7 +1757,7 @@ public partial class LSL
 			{
 				dealerTimer = Game.GameTime;
 				pedTarget = playerPos;
-				weaponDealer1.Task.GoTo((Entity)(object)player.Character);
+				weaponDealer1.Task.FollowNavMeshTo((Entity)(object)player.Character);
 			}
 		}
 		else if (weaponDealer1.PedGroup != player.Character.PedGroup)
