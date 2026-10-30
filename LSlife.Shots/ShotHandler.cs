@@ -148,7 +148,7 @@ internal static class ShotHandler
 				val = spawnPos;
 				string text = ((object)val/*cast due to constrained. prefix*/).ToString();
 				val = ((Entity)newPed).Position;
-				GTA.UI.Notification.PostTicker("Position livraison : " + text + " ; position client : " + ((object)val/*cast due to constrained. prefix*/).ToString());
+				GTA.UI.Notification.PostTicker("Position livraison : " + text + " ; position client : " + ((object)val/*cast due to constrained. prefix*/).ToString(), false, false);
 			}
 			if (!((Entity)(object)newPed != (Entity)null))
 			{
