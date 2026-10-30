@@ -1,3 +1,10 @@
+## Migration SHVDN3 — build du 30/10/2026 à 13:12
+
+- [x] Build analysé : **475 erreurs**, **123 avertissements** (les erreurs sont répétées dans le journal).
+- [x] Migration ciblée des sous-titres et `CurrentBlip` dans `PoliceLogic.cs`, `ShotHandler.cs` et `Shot.cs`.
+- [ ] Corriger les API restantes : `Blip.Remove`, UI, groupes de PNJ, armes, véhicules, raycasts, zones et contrôles.
+- [ ] Recompiler après les changements et valider en jeu ; aucun build réussi annoncé.
+
 ## Migration SHVDN3 — lot du 29 octobre 2026
 
 - [x] Adaptation des groupes de relations dans `LSL.cs`.
