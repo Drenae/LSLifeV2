@@ -477,7 +477,7 @@ public class DriveBy
 		}
 		else if (LSL.DEBUG)
 		{
-			GTA.UI.Notification.PostTicker("~r~Impossible de faire apparaître l'attaque en voiture.");
+			GTA.UI.Notification.PostTicker("~r~Impossible de faire apparaître l'attaque en voiture.", false, false);
 		}
 	}
 
@@ -568,7 +568,7 @@ public class DriveBy
 				vehicleHash = (VehicleHash)model.Hash;
 				if (LSL.DEBUG)
 				{
-					GTA.UI.Notification.PostTicker("foundSUV");
+					GTA.UI.Notification.PostTicker("foundSUV", false, false);
 				}
 				break;
 			}
