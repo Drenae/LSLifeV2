@@ -1101,9 +1101,9 @@ public partial class LSL
 			if ((Entity)(object)aDealer.cPed != (Entity)null && ((Entity)aDealer.cPed).IsDead)
 			{
 				Ped dKiller = null;
-				if (aDealer.GTA.Entity.FromHandle(GTA.Native.Function.Call<int>(GTA.Native.Hash.GET_PED_SOURCE_OF_DEATH, dPed.Handle)) is Ped)
+				if (GTA.Entity.FromHandle(GTA.Native.Function.Call<int>(GTA.Native.Hash.GET_PED_SOURCE_OF_DEATH, aDealer.cPed.Handle)) is Ped)
 				{
-					Entity killer = aDealer.GTA.Entity.FromHandle(GTA.Native.Function.Call<int>(GTA.Native.Hash.GET_PED_SOURCE_OF_DEATH, dPed.Handle));
+					Entity killer = GTA.Entity.FromHandle(GTA.Native.Function.Call<int>(GTA.Native.Hash.GET_PED_SOURCE_OF_DEATH, aDealer.cPed.Handle));
 					dKiller = (Ped)(object)((killer is Ped) ? killer : null);
 				}
 				if ((Entity)(object)dKiller != (Entity)null && dKiller.PedGroup == player.Character.PedGroup)
@@ -1132,9 +1132,9 @@ public partial class LSL
 					}
 				}
 				Ped dKiller2 = null;
-				if (aDealer.GTA.Entity.FromHandle(GTA.Native.Function.Call<int>(GTA.Native.Hash.GET_PED_SOURCE_OF_DEATH, dPed.Handle)) is Ped)
+				if (GTA.Entity.FromHandle(GTA.Native.Function.Call<int>(GTA.Native.Hash.GET_PED_SOURCE_OF_DEATH, aDealer.cPed.Handle)) is Ped)
 				{
-					Entity killer2 = aDealer.GTA.Entity.FromHandle(GTA.Native.Function.Call<int>(GTA.Native.Hash.GET_PED_SOURCE_OF_DEATH, dPed.Handle));
+					Entity killer2 = GTA.Entity.FromHandle(GTA.Native.Function.Call<int>(GTA.Native.Hash.GET_PED_SOURCE_OF_DEATH, aDealer.cPed.Handle));
 					dKiller2 = (Ped)(object)((killer2 is Ped) ? killer2 : null);
 				}
 				if ((Entity)(object)dKiller2 != (Entity)null && dKiller2.PedGroup == player.Character.PedGroup)
@@ -1304,7 +1304,7 @@ public partial class LSL
 			{
 				isDealing = false;
 			}
-			Entity killer3 = player.GTA.Entity.FromHandle(GTA.Native.Function.Call<int>(GTA.Native.Hash.GET_PED_SOURCE_OF_DEATH, Character.Handle));
+			Entity killer3 = GTA.Entity.FromHandle(GTA.Native.Function.Call<int>(GTA.Native.Hash.GET_PED_SOURCE_OF_DEATH, player.Character.Handle));
 			if (killer3 != (Entity)null)
 			{
 				Ped p4 = (Ped)(object)((killer3 is Ped) ? killer3 : null);
