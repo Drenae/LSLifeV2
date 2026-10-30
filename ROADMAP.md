@@ -1,3 +1,12 @@
+## SHVDN3 — build du 30/10/2026 à 14:45:31 et lot transversal
+
+- [x] Compilation locale fournie : **0 erreur, 233 avertissements** (216 CS0618, 17 autres diagnostics), contre 241 avertissements au précédent build vert.
+- [x] Gros lot transversal poussé sur `feature/shvdn3-migration` : migration de `Notification.Show` vers `Notification.PostTicker`, créations `World.CreatePed/Vehicle/Blip/Prop` vers les fabriques des entités, `AlwaysKeepTask` vers `KeepTaskWhenMarkedAsNoLongerNeeded`, et tâches `GoTo`, `WanderAround`, `FightAgainst`, `Wait` vers les API SHVDN3 recommandées dans de nombreux modules (Core, Dealing, Inventory, World, Shots, Services, Player, OldCustomers).
+- [ ] **Recompiler** ce lot : il n'a pas été validé localement et peut révéler des signatures incompatibles. Corriger en gros lots, sans mini-correctifs isolés.
+- [ ] Poursuivre la migration des contrôles `Game.IsControlJustPressed/Released`, niveaux de recherche `Player.WantedLevel`, conduite `DrivingStyle/DriveTo`, argent `Ped.Money`, hauteur du sol, pickups et horloge.
+- [ ] Vérifier ensuite en jeu les menus Custom, le téléphone, la navigation des PNJ, les interactions, la sauvegarde et les véhicules ; 0 erreur de compilation n'est **pas** une validation fonctionnelle.
+- [ ] Ne pas modifier `main` ni fusionner avant validation complète.
+
 ## SHVDN3 — build du 30/10/2026 à 14:44:26
 
 - [x] Journal analysé : une erreur bloquante `CS0266` dans `LSlife.Dealing/Customer.cs:92` (`int` vers `uint` pour `Ped.MoneyCarried`).
