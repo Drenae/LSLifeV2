@@ -76,7 +76,7 @@ public partial class LSL
 				}
 				else
 				{
-					GTA.UI.Notification.PostTicker("~r~LsLife - Impossible de déterminer le type du quartier : " + name);
+					GTA.UI.Notification.PostTicker("~r~LsLife - Impossible de déterminer le type du quartier : " + name, false, false);
 				}
 				areas.Add(new Area(name, LsFunctions.LsDrugs(), type, cStr, gstr, heat, rep));
 			}
