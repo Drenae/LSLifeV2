@@ -28,7 +28,7 @@ public class HirePed
 		PotentialWorker.Task.ClearAll();
 		PotentialWorker.BlockPermanentEvents = true;
 		((Entity)PotentialWorker).IsPersistent = true;
-		PotentialWorker.Task.Wait(10000);
+		PotentialWorker.Task.Pause(10000);
 	}
 
 	public void OnTick()
