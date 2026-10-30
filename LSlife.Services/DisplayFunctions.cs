@@ -19,7 +19,7 @@ internal static partial class LsFunctions
 {
 	public static void SendTextMsg(string str)
 	{
-		Game.PlaySound("Text_Arrive_Tone", "Phone_SoundSet_Default");
+		GTA.Native.Function.Call(GTA.Native.Hash.PLAY_SOUND_FRONTEND, -1, "Text_Arrive_Tone", "Phone_SoundSet_Default", true);
 		GTA.UI.Notification.Show(str);
 	}
 
@@ -38,7 +38,7 @@ internal static partial class LsFunctions
 			HeadShotHandler.MugShot(ped, _name);
 			((Entity)ped).Delete();
 		}
-		Game.PlaySound("Text_Arrive_Tone", "Phone_SoundSet_Default");
+		GTA.Native.Function.Call(GTA.Native.Hash.PLAY_SOUND_FRONTEND, -1, "Text_Arrive_Tone", "Phone_SoundSet_Default", true);
 		Function.Call((Hash)2316831480196236324L, ("CELL_EMAIL_BCON"));
 		Function.Call((Hash)7789129354908300458L, (_msg));
 		Function.Call((Hash)2075484565200204495L, (HeadShotHandler.headShots[_name].Texture), (HeadShotHandler.headShots[_name].Texture), (true), (1), (_title), (_name));
@@ -65,7 +65,7 @@ internal static partial class LsFunctions
 			HeadShotHandler.DeleteHeadShot(_name);
 			HeadShotHandler.MugShot(_ped, _name);
 		}
-		Game.PlaySound("Text_Arrive_Tone", "Phone_SoundSet_Default");
+		GTA.Native.Function.Call(GTA.Native.Hash.PLAY_SOUND_FRONTEND, -1, "Text_Arrive_Tone", "Phone_SoundSet_Default", true);
 		Function.Call((Hash)2316831480196236324L, ("CELL_EMAIL_BCON"));
 		Function.Call((Hash)7789129354908300458L, (_msg));
 		Function.Call((Hash)2075484565200204495L, (HeadShotHandler.headShots[_name].Texture), (HeadShotHandler.headShots[_name].Texture), (true), (1), (_title), (_name));
@@ -90,7 +90,7 @@ internal static partial class LsFunctions
 
 	public static void PlayTheSound()
 	{
-		Game.PlaySound("LOCAL_PLYR_CASH_COUNTER_INCREASE", "DLC_HEISTS_GENERAL_FRONTEND_SOUNDS");
+		GTA.Native.Function.Call(GTA.Native.Hash.PLAY_SOUND_FRONTEND, -1, "LOCAL_PLYR_CASH_COUNTER_INCREASE", "DLC_HEISTS_GENERAL_FRONTEND_SOUNDS", true);
 	}
 
 	public static void DbugString(string _string)
