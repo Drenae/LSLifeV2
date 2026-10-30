@@ -20,7 +20,7 @@ internal static partial class LsFunctions
 	public static void SendTextMsg(string str)
 	{
 		GTA.Native.Function.Call(GTA.Native.Hash.PLAY_SOUND_FRONTEND, -1, "Text_Arrive_Tone", "Phone_SoundSet_Default", true);
-		GTA.UI.Notification.Show(str);
+		GTA.UI.Notification.PostTicker(str);
 	}
 
 	public static void TextMsg(string _name, string _title, string _msg)
@@ -30,7 +30,7 @@ internal static partial class LsFunctions
 		//IL_002c: Unknown result type (might be due to invalid IL or missing references)
 		if (!HeadShotHandler.headShots.ContainsKey(_name))
 		{
-			Ped ped = World.CreatePed(RequestModel(PedModels[_name]), new Vector3(0f, 0f, 0f));
+			Ped ped = Ped.Create(RequestModel(PedModels[_name]), new Vector3(0f, 0f, 0f));
 			while ((Entity)(object)ped == (Entity)null)
 			{
 				Script.Yield();
@@ -97,7 +97,7 @@ internal static partial class LsFunctions
 	{
 		if (LSL.DEBUG)
 		{
-			GTA.UI.Notification.Show(_string);
+			GTA.UI.Notification.PostTicker(_string);
 		}
 	}
 
