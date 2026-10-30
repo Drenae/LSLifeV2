@@ -252,7 +252,7 @@ public class AreaDealer
 			{
 				if (DEBUG)
 				{
-					UI.Notify("adealer state = " + NewState);
+					GTA.UI.Notification.Show("adealer state = " + NewState);
 				}
 				switch (NewState)
 				{
@@ -329,7 +329,7 @@ public class AreaDealer
 		}
 		else
 		{
-			UI.Notify("~r~Erreur : personnage du dealer de quartier introuvable");
+			GTA.UI.Notification.Show("~r~Erreur : personnage du dealer de quartier introuvable");
 		}
 	}
 
@@ -469,14 +469,14 @@ public class AreaDealer
 				cPed = null;
 				if (DEBUG)
 				{
-					UI.Notify("Le client du dealer de quartier n'existe pas");
+					GTA.UI.Notification.Show("Le client du dealer de quartier n'existe pas");
 				}
 			}
 			if ((Entity)(object)cPed == (Entity)null)
 			{
 				if (DEBUG)
 				{
-					UI.Notify("Recherche d'un client pour le dealer de quartier");
+					GTA.UI.Notification.Show("Recherche d'un client pour le dealer de quartier");
 				}
 				List<Ped> peds = LSL.lPeds.GetPeds;
 				if (peds.ToList().Count > 0)
@@ -500,7 +500,7 @@ public class AreaDealer
 				}
 				if (DEBUG)
 				{
-					UI.Notify("Aucun personnage trouvé pour le dealer de quartier");
+					GTA.UI.Notification.Show("Aucun personnage trouvé pour le dealer de quartier");
 				}
 				cTimer.Reset();
 				return;
@@ -545,7 +545,7 @@ public class AreaDealer
 				{
 					if (DEBUG)
 					{
-						UI.Notify("Transaction en cours");
+						GTA.UI.Notification.Show("Transaction en cours");
 					}
 					dealState = Enums.DealState.DoingDeal;
 					cPed.Task.PlayAnimation("switch@franklin@002110_04_magd_3_weed_exchange", "002110_04_magd_3_weed_exchange_franklin", 8f, 3000, (AnimationFlags)16);
@@ -570,7 +570,7 @@ public class AreaDealer
 					dealState = Enums.DealState.GetNear;
 					if (DEBUG)
 					{
-						UI.Notify("Transaction terminée");
+						GTA.UI.Notification.Show("Transaction terminée");
 					}
 					LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
 					((Entity)cPed).AttachedBlip.Delete();
@@ -585,7 +585,7 @@ public class AreaDealer
 		{
 			if (DEBUG)
 			{
-				UI.Notify("Client du dealer de quartier supprimé : trop éloigné");
+				GTA.UI.Notification.Show("Client du dealer de quartier supprimé : trop éloigné");
 			}
 			LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
 			cPed = null;
