@@ -414,7 +414,7 @@ public class StashVehicle
 				foreach (Vehicle veh in allVehicles)
 				{
 					Vector3 position = ((Entity)veh).Position;
-					if (!(position.DistanceTo(CurrentPosition) < 6f) || !(veh.NumberPlateText == reg))
+					if (!(position.DistanceTo(CurrentPosition) < 6f) || !(veh.NumberPlate == reg))
 					{
 						continue;
 					}
@@ -857,7 +857,7 @@ public class StashVehicle
 		{
 			//IL_0014: Unknown result type (might be due to invalid IL or missing references)
 			//IL_0019: Unknown result type (might be due to invalid IL or missing references)
-			if (v.NumberPlateText == reg)
+			if (v.NumberPlate == reg)
 			{
 				Model model2 = ((Entity)v).Model;
 				return model2.Hash == drugCarHash;
@@ -908,7 +908,7 @@ public class StashVehicle
 			((Entity)drugCar).IsInvincible = false;
 			drugCar.CanTiresBurst = canTiresBurst;
 			drugCar.NumberPlateType = plateType;
-			drugCar.NumberPlateText = plate;
+			drugCar.NumberPlate = plate;
 			drugCar.WindowTint = tint;
 			drugCar.DirtLevel = dirt;
 			drugCar.FuelLevel = fuel;
@@ -1050,7 +1050,7 @@ public class StashVehicle
 		parentElement.Add(new XElement("TrimCol", veh.TrimColor));
 		parentElement.Add(new XElement("DashCol", veh.DashboardColor));
 		parentElement.Add(new XElement("NumPlateType", veh.NumberPlateType));
-		parentElement.Add(new XElement("NumPlate", veh.NumberPlateText));
+		parentElement.Add(new XElement("NumPlate", veh.NumberPlate));
 		parentElement.Add(new XElement("WindowTint", veh.WindowTint));
 		parentElement.Add(new XElement("DirtLevel", veh.DirtLevel));
 		parentElement.Add(new XElement("CanTiresBurst", veh.CanTiresBurst));
