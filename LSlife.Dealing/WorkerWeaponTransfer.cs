@@ -103,7 +103,7 @@ internal static class WorkerWeaponTransfer
 										}
 									}
 								}
-								if (!(e3.Name == "COMPONENT") || !Enum.TryParse<WeaponComponent>(e3.Value, out WeaponComponent wepcomp))
+								if (!(e3.Name == "COMPONENT") || !Enum.TryParse<WeaponComponentHash>(e3.Value, out WeaponComponentHash wepcomp))
 								{
 									continue;
 								}
@@ -113,7 +113,7 @@ internal static class WorkerWeaponTransfer
 									Ped ped2 = currentDealer3.Ped;
 									if (ped2 != null)
 									{
-										ped2.Weapons.Current.SetComponent(wepcomp, true);
+										ped2.Weapons.Current.Components[wepcomp].Active = true;
 									}
 								}
 							}
