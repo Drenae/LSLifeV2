@@ -176,7 +176,7 @@ internal static class WeaponDealerActions
 			{
 				if (LsFunctions.IsPlayerArmoursMaxed())
 				{
-					UI.ShowSubtitle("Tu ne peux plus rien transporter.", 4000);
+					GTA.UI.Screen.ShowSubtitle("Tu ne peux plus rien transporter.", 4000);
 				}
 				else
 				{
@@ -192,7 +192,7 @@ internal static class WeaponDealerActions
 			{
 				if (LsFunctions.IsPlayerArmoursMaxed())
 				{
-					UI.ShowSubtitle("Tu ne peux plus rien transporter.", 4000);
+					GTA.UI.Screen.ShowSubtitle("Tu ne peux plus rien transporter.", 4000);
 				}
 				else
 				{
@@ -205,7 +205,7 @@ internal static class WeaponDealerActions
 		}
 		if (item == WeaponDealerAction.Dismiss && (Entity)(object)LSL.weaponDealer1 != (Entity)null)
 		{
-			((Entity)LSL.weaponDealer1).CurrentBlip.Remove();
+			((Entity)LSL.weaponDealer1).AttachedBlip.Remove();
 			CustomWeaponDealerMenu.Close();
 			LSL.weaponDealer1.Task.WanderAround();
 			((Entity)LSL.weaponDealer1).MarkAsNoLongerNeeded();
