@@ -1,3 +1,9 @@
+### Build 30/10/2026 13:35:41
+- [x] Analyse : 243 diagnostics d'erreur uniques selon fichier/position/code/message (plusieurs sorties répétées).
+- [x] Migration `Model.GetDimensions(out min, out max)` dans `DrugDealer.cs` (5 occurrences) et `StashVehicle.cs` (1 occurrence).
+- [ ] Recompiler : les corrections ci-dessus n'ont pas encore été vérifiées par build.
+- [ ] Priorité : portes de véhicule, `Tick.cs`, `PlayerDealer.cs`, groupes de peds et armes.
+
 ## SHVDN3 — build 30/10/2026 13:33
 
 - [x] 244 erreurs de compilation distinctes, contre 268 au build précédent (-24).
