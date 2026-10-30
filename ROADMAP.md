@@ -1,3 +1,10 @@
+## Migration SHVDN3 — gros lots du 30 octobre 2026
+
+- [x] Migration groupée des contrôles, sous-titres, blips et accès raycast dans 14 fichiers, sur 3 commits (`8bfbd2e0`, `09aa48d2`, `b00a28c8`).
+- [ ] Recompiler pour mesurer la baisse réelle des erreurs.
+- [ ] Traiter en priorité les véhicules/portes, groupes de PNJ, zones, armes et autres API cassées.
+- [ ] Valider la compilation et les tests en jeu avant toute fusion vers la branche stable.
+
 ## Migration SHVDN3 — build du 30/10/2026 à 13:12
 
 - [x] Build analysé : **475 erreurs**, **123 avertissements** (les erreurs sont répétées dans le journal).
