@@ -23,7 +23,7 @@ public partial class LSL
 {
 	private bool IsNight()
 	{
-		int hour = World.CurrentDayTime.Hours;
+		int hour = World.CurrentTimeOfDay.Hours;
 		if (hour <= 20)
 		{
 			return hour < 5;
@@ -87,7 +87,7 @@ public partial class LSL
 	{
 		//IL_009c: Unknown result type (might be due to invalid IL or missing references)
 		bool flag = Function.Call<bool>((Hash)7576188390707304864L);
-		bool SaveHud = UI.IsHudComponentActive((HudComponent)17);
+		bool SaveHud = GTA.Native.Function.Call<bool>(GTA.Native.Hash.IS_HUD_COMPONENT_ACTIVE, 17);
 		bool StatSave = Function.Call<bool>(unchecked((Hash)(-4920555325479993693L)));
 		bool Paused = Function.Call<bool>(unchecked((Hash)(-5763681587332382773L)));
 		bool sPaused = Function.Call<bool>(unchecked((Hash)(-1572002141673951856L)));
@@ -96,7 +96,7 @@ public partial class LSL
 		{
 			pSaved = true;
 		}
-		new UIText(pSaved.ToString(), new Point(Game.ScreenResolution.Width / 2, Game.ScreenResolution.Height / 2), 1f).Draw();
+		new UIText(pSaved.ToString(), new Point(1280 / 2, 720 / 2), 1f).Draw();
 	}
 
 	public void HandleAreaDealers()
