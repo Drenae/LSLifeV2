@@ -417,7 +417,7 @@ public class DriveBy
 			Leader = Peds.First();
 			foreach (Ped p2 in Peds)
 			{
-				if (p2.CurrentPedGroup == Group)
+				if (p2.PedGroup == Group)
 				{
 					Group.Remove(p2);
 				}
@@ -477,7 +477,7 @@ public class DriveBy
 		}
 		else if (LSL.DEBUG)
 		{
-			UI.Notify("~r~Impossible de faire apparaître l'attaque en voiture.");
+			GTA.UI.Notification.Show("~r~Impossible de faire apparaître l'attaque en voiture.");
 		}
 	}
 
@@ -568,7 +568,7 @@ public class DriveBy
 				vehicleHash = (VehicleHash)model.Hash;
 				if (LSL.DEBUG)
 				{
-					UI.Notify("foundSUV");
+					GTA.UI.Notification.Show("foundSUV");
 				}
 				break;
 			}
