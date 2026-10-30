@@ -1,3 +1,10 @@
+## SHVDN3 — build 30/10/2026 14:29:48
+
+- [x] Le build s'arrête à l'analyse syntaxique : 2 erreurs `CS1525` / `CS1003` dans `DriveBy.cs:539`, aucune compilation sémantique effectuée.
+- [x] Correction du cast `VehicleDrivingFlags` et de l'ordre des arguments `DriveTo` à la ligne 539 (`f899f9b5`).
+- [x] Vérification visuelle des autres appels `DriveTo` / `CruiseWithVehicle` modifiés dans `DriveBy`, `Pig` et `Tick`.
+- [ ] Relancer le build pour obtenir les éventuelles erreurs sémantiques restantes ; ne pas considérer 2 comme le total réel.
+
 ## SHVDN3 — build 30/10/2026 14:27
 
 - [x] Analyse du journal : **68 erreurs distinctes** (hors doublons), contre 85 au build précédent.
