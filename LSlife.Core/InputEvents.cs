@@ -292,9 +292,9 @@ public partial class LSL
 				}
 			}
 		}
-		World.RemoveRelationshipGroup(rival_nutral);
-		World.RemoveRelationshipGroup(rival_enemy);
-		World.RemoveRelationshipGroup(CustomerRel);
+		rival_nutral.Remove();
+		rival_enemy.Remove();
+		CustomerRel.Remove();
 		driveByHandler.CleanDriveBys();
 		if (pigs.Count > 0)
 		{
