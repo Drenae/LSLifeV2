@@ -96,7 +96,7 @@ public partial class LSL
 		{
 			pSaved = true;
 		}
-		new UIText(pSaved.ToString(), new Point(1280 / 2, 720 / 2), 1f).Draw();
+		new GTA.UI.TextElement(pSaved.ToString(), new PointF(640, 360), 1f).Draw();
 	}
 
 	public void HandleAreaDealers()
