@@ -407,7 +407,7 @@ public class StashVehicle
 				foreach (Vehicle veh in allVehicles)
 				{
 					Vector3 position = ((Entity)veh).Position;
-					if (!(position.DistanceTo(CurrentPosition) < 6f) || !(veh.NumberPlate == reg))
+					if (!(position.DistanceTo(CurrentPosition) < 6f) || !(veh.NumberPlateText == reg))
 					{
 						continue;
 					}
@@ -439,7 +439,7 @@ public class StashVehicle
 				{
 					if (LSL.DEBUG)
 					{
-						UI.Notify("Tentative de chargement du véhicule");
+						GTA.UI.Notification.Show("Tentative de chargement du véhicule");
 					}
 					VehicleLoad();
 				}
@@ -850,7 +850,7 @@ public class StashVehicle
 		{
 			//IL_0014: Unknown result type (might be due to invalid IL or missing references)
 			//IL_0019: Unknown result type (might be due to invalid IL or missing references)
-			if (v.NumberPlate == reg)
+			if (v.NumberPlateText == reg)
 			{
 				Model model2 = ((Entity)v).Model;
 				return model2.Hash == drugCarHash;
@@ -859,9 +859,9 @@ public class StashVehicle
 		});
 		if (LSL.DEBUG)
 		{
-			UI.Notify(vehicles.Count.ToString() ?? "");
+			GTA.UI.Notification.Show(vehicles.Count.ToString() ?? "");
 			Vector3 currentPosition = CurrentPosition;
-			UI.Notify("~r~Coordonnées attendues : " + ((object)currentPosition/*cast due to constrained. prefix*/).ToString());
+			GTA.UI.Notification.Show("~r~Coordonnées attendues : " + ((object)currentPosition/*cast due to constrained. prefix*/).ToString());
 		}
 		if (vehicles.Count == 0)
 		{
@@ -887,7 +887,7 @@ public class StashVehicle
 		{
 			string text = drugCarName;
 			Vector3 currentPosition = CurrentPosition;
-			UI.Notify(text + " | " + ((object)currentPosition/*cast due to constrained. prefix*/).ToString());
+			GTA.UI.Notification.Show(text + " | " + ((object)currentPosition/*cast due to constrained. prefix*/).ToString());
 		}
 		if ((Entity)(object)drugCar != (Entity)null)
 		{
@@ -901,7 +901,7 @@ public class StashVehicle
 			((Entity)drugCar).IsInvincible = false;
 			drugCar.CanTiresBurst = canTiresBurst;
 			drugCar.NumberPlateType = plateType;
-			drugCar.NumberPlate = plate;
+			drugCar.NumberPlateText = plate;
 			drugCar.WindowTint = tint;
 			drugCar.DirtLevel = dirt;
 			drugCar.FuelLevel = fuel;
@@ -955,7 +955,7 @@ public class StashVehicle
 				return;
 			}
 		}
-		UI.Notify("~r~Échec du chargement du véhicule");
+		GTA.UI.Notification.Show("~r~Échec du chargement du véhicule");
 	}
 
 	public void VehicleSave(Vehicle veh)
@@ -1043,7 +1043,7 @@ public class StashVehicle
 		parentElement.Add(new XElement("TrimCol", veh.TrimColor));
 		parentElement.Add(new XElement("DashCol", veh.DashboardColor));
 		parentElement.Add(new XElement("NumPlateType", veh.NumberPlateType));
-		parentElement.Add(new XElement("NumPlate", veh.NumberPlate));
+		parentElement.Add(new XElement("NumPlate", veh.NumberPlateText));
 		parentElement.Add(new XElement("WindowTint", veh.WindowTint));
 		parentElement.Add(new XElement("DirtLevel", veh.DirtLevel));
 		parentElement.Add(new XElement("CanTiresBurst", veh.CanTiresBurst));
