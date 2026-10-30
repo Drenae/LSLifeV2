@@ -207,7 +207,7 @@ internal static class WeaponDealerActions
 		{
 			((Entity)LSL.weaponDealer1).AttachedBlip.Delete();
 			CustomWeaponDealerMenu.Close();
-			LSL.weaponDealer1.Task.WanderAround();
+			LSL.weaponDealer1.Task.Wander();
 			((Entity)LSL.weaponDealer1).MarkAsNoLongerNeeded();
 			LSL.weaponDealer1.LeaveGroup();
 			LSL.weaponDealer1 = null;
