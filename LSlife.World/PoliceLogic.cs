@@ -45,7 +45,7 @@ public partial class LSL
 				pig.DeletePig();
 				if (DEBUG)
 				{
-					UI.Notify("Policier généré supprimé");
+					GTA.UI.Notification.Show("Policier généré supprimé");
 				}
 				goto IL_008c;
 			}
@@ -72,7 +72,7 @@ public partial class LSL
 		{
 			if (DEBUG)
 			{
-				UI.Notify("Policier généré");
+				GTA.UI.Notification.Show("Policier généré");
 				((Entity)pigCar).AddBlip();
 				((Entity)pigCar).AttachedBlip.Name = "Voiture de police";
 			}
