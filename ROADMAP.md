@@ -1,3 +1,12 @@
+## SHVDN3 — build du 30/10/2026 à 14:34:37
+
+- [x] Analyse du journal : **10 erreurs distinctes**, dans `Tick.cs`, `PedDebugger.cs`, `AreaLogic.cs`, `StashVehicle.cs`.
+- [x] Migration des derniers appels `UIText` identifiés vers `GTA.UI.TextElement` (`Tick`, `PedDebugger`, `AreaLogic`).
+- [x] Remplacement `WeaponComponent.Hash` inexistant par `WeaponComponent.ComponentHash` (`Tick`, `StashVehicle`).
+- [x] Remplacement du membre `Hash.IS_VEHICLE_NEON_LIGHT_ENABLED` absent par sa valeur native dans `StashVehicle`.
+- [ ] Relancer la compilation et contrôler les nouveaux diagnostics, puis tester en jeu.
+- [ ] Nettoyer les avertissements d'obsolescence progressivement après stabilisation.
+
 ## SHVDN3 — build du 30/10/2026 à 14:31:22
 
 - [x] Journal complet analysé : **37 diagnostics d'erreur distincts** ; nombreuses alertes d'obsolescence sans échec de compilation.
