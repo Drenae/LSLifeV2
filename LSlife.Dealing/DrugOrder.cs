@@ -103,7 +103,7 @@ public class DrugOrder
 			Vector3 position = ((Entity)stash.drugCar).Position;
 			if (position.DistanceTo(((Entity)LSL.ZeesDealers.dealerCar).Position) < 20f)
 			{
-				Game.FadeScreenOut(1000);
+				GTA.UI.Screen.Fading.FadeOut(1000);
 				Script.Wait(2000);
 				LSL.player.Character.SetIntoVehicle(stash.drugCar, unchecked((VehicleSeat)(-1)));
 				if (weed > 0)
@@ -120,16 +120,16 @@ public class DrugOrder
 				}
 				LsFunctions.PlayTheSound();
 				pickedUp = true;
-				Game.FadeScreenIn(500);
+				GTA.UI.Screen.Fading.FadeIn(500);
 			}
 			else
 			{
-				UI.ShowSubtitle("Ton véhicule doit être plus proche.");
+				GTA.UI.Screen.ShowSubtitle("Ton véhicule doit être plus proche.");
 			}
 		}
 		else
 		{
-			UI.ShowSubtitle("Il te faut un véhicule de stockage pour récupérer une commande aussi importante.");
+			GTA.UI.Screen.ShowSubtitle("Il te faut un véhicule de stockage pour récupérer une commande aussi importante.");
 		}
 		if (pickedUp)
 		{
