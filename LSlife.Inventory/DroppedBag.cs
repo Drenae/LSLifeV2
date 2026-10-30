@@ -69,7 +69,7 @@ public class DroppedBag
 	{
 		CreateBlip();
 		CreatePickup();
-		UI.ShowSubtitle(_subtitle, 5000);
+		GTA.UI.Screen.ShowSubtitle(_subtitle, 5000);
 		timeSpawned = Game.GameTime;
 	}
 
@@ -96,7 +96,7 @@ public class DroppedBag
 		{
 			LsFunctions.GivePedWeapons(Game.Player.Character, weapons);
 		}
-		UI.ShowSubtitle("Tu as ramassé " + LsFunctions.GramsToOz(weed) +  " de cannabis, " + LsFunctions.GramsToOz(crack) + " de crack, " + LsFunctions.GramsToOz(cocaine) + " de cocaïne et " + LsFunctions.IntToMoney(money) + " $", 5000);
+		GTA.UI.Screen.ShowSubtitle("Tu as ramassé " + LsFunctions.GramsToOz(weed) +  " de cannabis, " + LsFunctions.GramsToOz(crack) + " de crack, " + LsFunctions.GramsToOz(cocaine) + " de cocaïne et " + LsFunctions.IntToMoney(money) + " $", 5000);
 		LsFunctions.UpdateInventory();
 	}
 
