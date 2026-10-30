@@ -70,7 +70,7 @@ internal static partial class LsFunctions
 		foreach (Area area in LSL.areas)
 		{
 			int gChance = 20;
-			if (area.Name == GTA.Native.Function.Call<string>(GTA.Native.Hash.GET_NAME_OF_ZONE, LSL.HouseHandler.Houses[0].entrancePos))
+			if (area.Name == LsFunctions.GetZoneLabel(LSL.HouseHandler.Houses[0].entrancePos))
 			{
 				gChance *= 2;
 				area.GangPresance = 0f;
