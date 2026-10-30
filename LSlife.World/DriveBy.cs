@@ -172,7 +172,7 @@ public class DriveBy
 						enterState = false;
 						if ((Entity)(object)Leader != (Entity)null && ((Entity)Leader).Exists() && (Entity)(object)Vehicle != (Entity)null && ((Entity)Vehicle).Exists())
 						{
-							Leader.Task.DriveTo(Vehicle, LastKnownPosition, 10f, 17f, 6);
+							Leader.Task.DriveTo(Vehicle, LastKnownPosition, 10f, (GTA.VehicleDrivingFlags)(6), 17f);
 						}
 					}
 					bool seen = false;
@@ -212,7 +212,7 @@ public class DriveBy
 							Ped leader2 = Leader;
 							if (leader2 != null)
 							{
-								leader2.Task.CruiseWithVehicle(Vehicle, 13f, 5);
+								leader2.Task.CruiseWithVehicle(Vehicle, 13f, (GTA.VehicleDrivingFlags)(5));
 							}
 						}
 					}
@@ -268,7 +268,7 @@ public class DriveBy
 					if (enterState)
 					{
 						enterState = false;
-						Leader.Task.DriveTo(Vehicle, LastKnownPosition, 10f, 17f, 6);
+						Leader.Task.DriveTo(Vehicle, LastKnownPosition, 10f, (GTA.VehicleDrivingFlags)(6), 17f);
 					}
 					position = ((Entity)Leader).Position;
 					if (position.DistanceTo(LastKnownPosition) < 20f)
@@ -282,7 +282,7 @@ public class DriveBy
 					{
 						enterState = false;
 						time = Game.GameTime;
-						Leader.Task.CruiseWithVehicle(Vehicle, 13f, 5);
+						Leader.Task.CruiseWithVehicle(Vehicle, 13f, (GTA.VehicleDrivingFlags)(5));
 					}
 					else
 					{
@@ -536,7 +536,7 @@ public class DriveBy
 			{
 				style = (DrivingStyle)6;
 			}
-			p.Task.DriveTo(Vehicle, LastKnownPosition, 10f, 20f, (int)style);
+			p.Task.DriveTo(Vehicle, LastKnownPosition, 10f, (GTA.VehicleDrivingFlags)((int), 20f)style);
 		}
 		else if (Agressive)
 		{
