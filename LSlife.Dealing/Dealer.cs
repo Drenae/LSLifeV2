@@ -54,14 +54,14 @@ public class Dealer
 		//IL_012d: Unknown result type (might be due to invalid IL or missing references)
 		this.pos = pos;
 		this.vehModel = vehModel;
-		vehicle = World.CreateVehicle(this.vehModel, LSL.GenerateSpawnPos(pos.Around(80f), LSL.Nodetype.Road, sidewalk: false));
+		vehicle = Vehicle.Create(this.vehModel, LSL.GenerateSpawnPos(pos.Around(80f), LSL.Nodetype.Road, sidewalk: false));
 		while ((Entity)(object)vehicle == (Entity)null)
 		{
 			Script.Wait(0);
 		}
 		((Entity)vehicle).IsPersistent = true;
 		LsFunctions.AddBlip((Entity)(object)vehicle, (BlipColor)3, "Zee's Driver", _friend: true, _edge: false);
-		ped = World.CreatePed(pedModel, ((Entity)vehicle).Position);
+		ped = Ped.Create(pedModel, ((Entity)vehicle).Position);
 		while ((Entity)(object)ped == (Entity)null)
 		{
 			Script.Wait(0);
