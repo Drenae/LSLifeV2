@@ -1,3 +1,11 @@
+## Build 31/10/2026 01:37:08
+
+- [x] Build utilisateur confirmé : **0 erreur / 52 avertissements**, DLL Release net48 générée.
+- [x] Lot de nettoyage de champs privés inutilisés : `PedTeam`, `DefaultPed`, `DroppedBag` ; initialisation explicite de `PedDebugger.dTime`, `Pig.DEBUG`, `AreaDealer.DEBUG`.
+- [ ] `ItemSlot.SlotNumber` : écriture GitHub bloquée, reste à traiter.
+- [ ] Reste à migrer les contrôles (mapping précis Control/ControlAction), les pickups et les 5 accès terrain ; examiner les avertissements de code inaccessible et les champs réellement inutilisés.
+- [ ] Recompiler après le lot ; tester en jeu avant validation de migration SHVDN3. Branche `main` inchangée.
+
 ## Build 31/10/2026 01:35:49 — migration transversale
 
 - [x] Build utilisateur : **16 erreurs CS7036, 57 avertissements**.
