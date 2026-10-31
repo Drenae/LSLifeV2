@@ -20,27 +20,18 @@ namespace LSlife
                 foreach (Area area in areas)
                 {
                     if (area.Gang == null) continue;
-                    // Reutiliser le proprietaire enregistre au lieu du tirage aleatoire d'Area.
-                    GangOrganization previousOwner = null;
-                    foreach (string name in GangUtilities.LsLifeGangs.Values.Distinct(StringComparer.OrdinalIgnoreCase))
+                    string ownerId = GangPolitics.GetTerritoryOwner(area.Name);
+                    if (!string.IsNullOrEmpty(ownerId))
                     {
-                        GangOrganization candidate;
-                        if (GangPolitics.TryGetGang(name, out candidate) &&
-                            candidate.Territories.Contains(area.Name))
-                        {
-                            previousOwner = candidate;
-                            break;
-                        }
-                    }
-                    if (previousOwner != null)
-                    {
-                        if (!string.Equals(area.Gang.Name, previousOwner.Name, StringComparison.OrdinalIgnoreCase))
-                            area.Gang = new Gang(previousOwner.Name, (int)area.GangPresance * 10000, 50, 20, area.Name);
+                        GangOrganization owner;
+                        if (GangPolitics.TryGetGang(ownerId, out owner) &&
+                            !string.Equals(area.Gang.Name, owner.Name, StringComparison.OrdinalIgnoreCase))
+                            area.Gang = new Gang(owner.Name, (int)area.GangPresance * 10000, 50, 20, area.Name);
                     }
                     else
                     {
-                        GangOrganization newOwner = GangPolitics.RegisterGang(area.Gang.Name, area.Gang.Name);
-                        newOwner.Territories.Add(area.Name);
+                        GangPolitics.RegisterGang(area.Gang.Name, area.Gang.Name);
+                        GangPolitics.SetTerritoryOwner(area.Name, area.Gang.Name);
                     }
                 }
                 lastGangDiplomacySave = Game.GameTime;
@@ -53,7 +44,7 @@ namespace LSlife
 
         private void TickGangDiplomacy()
         {
-            if (firstRun || Game.GameTime - lastGangDiplomacySave < 60000) return;
+            if (firstRun || !GangPolitics.IsDirty || Game.GameTime - lastGangDiplomacySave < 60000) return;
             lastGangDiplomacySave = Game.GameTime;
             try { GangPolitics.Save(GangDiplomacySavePath); }
             catch (Exception ex) { LsFunctions.DbugString("Diplomatie : sauvegarde impossible : " + ex.Message); }
