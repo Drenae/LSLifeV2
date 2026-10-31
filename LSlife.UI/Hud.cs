@@ -234,8 +234,8 @@ internal static class Hud
 	// Options visuelles : valeurs prudentes pour cette premiere version.
 	// Les stocks restent affiches par defaut, comme dans l'ancien HUD.
 	private const bool CompactWhenNotSelling = false;
-	private const bool ShowReputation = false;
-	private const bool ShowDealerCapacity = false;
+	private static readonly bool ShowReputation = false;
+	private static readonly bool ShowDealerCapacity = false;
 
 	public static void Draw()
 	{
