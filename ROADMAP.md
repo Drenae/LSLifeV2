@@ -1,3 +1,11 @@
+## Tests en jeu 31/10/2026 — correctifs crashes SHVDN3
+
+- [x] Menu Zee principal, commandes de drogue (composition, paiement, réception/stock), options HUD : test utilisateur positif avant fin de livraison.
+- [x] Crash `InvalidCastException` (`OutputArgument` → `InputArgument`) sur **Acheter des armes** et **Demander à être déposé** : 11 conversions invalides retirées dans `SpawnLogic.cs` (6), `WorldFunctions.cs` (3) et `Tick.cs` (2). Recompilation requise.
+- [x] Crash `AreaDealer.Deal()` : protections contre liste de peds absente et blip client absent ; correction également du test de blip `||` susceptible de déréférencer null dans `AreaDealer.CheckState()`. Recompiler et retester le sous-menu Dealer.
+- [ ] **Crash après départ des livreurs** : `NullReferenceException` dans `LSL.onTick` sans ligne source ; cause précise non établie. Reproduire avec DLL PDB ou journal SHVDN3 plus détaillé, vérifier cycle de vie `ZeesDealers` après livraison.
+- [ ] Compiler les correctifs, puis retester les 3 actions Zee et la livraison. `main` inchangée.
+
 ## Build 31/10/2026 01:48:28 — compilation SHVDN3 propre
 
 - [x] **Build Release net48 réussi : 0 erreur / 0 avertissement** (`LSlife.dll` générée), confirmé par le journal utilisateur.
