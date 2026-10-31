@@ -58,7 +58,7 @@ namespace LSlife
             foreach (GangOrganization gang in gangs.Skip(page * PageSize).Take(PageSize))
             {
                 string id = gang.Id;
-                overview.Add(gang.Name + " (" + gang.Territories.Count + " zones)", () =>
+                overview.Add(gang.Name + (state.CanViewGangIntelligence(gang.Id) ? " (" + gang.Territories.Count + " zones)" : " - Inconnu"), () =>
                 {
                     selectedGang = id;
                     relationPage = 0;
@@ -76,7 +76,15 @@ namespace LSlife
         {
             GangOrganization gang;
             if (!LSL.DiplomacyState.TryGetGang(selectedGang, out gang)) return BuildOverview();
+            var state = LSL.DiplomacyState;
             detail = new CustomMenu(gang.Name, "TERRITOIRES / DIPLOMATIE");
+            if (!state.CanViewGangIntelligence(gang.Id))
+            {
+                detail.Add("Renseignements indisponibles", () =>
+                    GTA.UI.ShowSubtitle("Rapprochez-vous de ce gang pour obtenir des informations.", 3500));
+                detail.Add("Retour", () => CustomZeeMenu.ShowGangSubmenu(BuildOverview()));
+                return detail;
+            }
             detail.Add("Territoires : " + gang.Territories.Count, () => { territoryPage = 0; CustomZeeMenu.ShowGangSubmenu(BuildTerritories()); });
             detail.Add("Membres : " + gang.Members, () => { });
             detail.Add("Tresorerie : " + gang.Money + " $", () => { });
@@ -89,6 +97,7 @@ namespace LSlife
         private static CustomMenu BuildRelations()
         {
             var state = LSL.DiplomacyState;
+            if (!state.CanViewGangIntelligence(selectedGang)) return BuildDetail();
             var gangs = state.Organizations.Where(g => !string.Equals(g.Id, selectedGang, StringComparison.OrdinalIgnoreCase)).ToList();
             int pages = Math.Max(1, (gangs.Count + PageSize - 1) / PageSize);
             relationPage = Math.Max(0, Math.Min(relationPage, pages - 1));
@@ -96,9 +105,15 @@ namespace LSlife
             foreach (GangOrganization gang in gangs.Skip(relationPage * PageSize).Take(PageSize))
             {
                 string id = gang.Id;
-                GangRelation relation = state.GetRelation(selectedGang, id);
-                relations.Add(gang.Name + " : " + relation.Trust + "/100", () =>
+                bool known = state.CanViewRelationIntelligence(selectedGang, id);
+                GangRelation relation = known ? state.GetRelation(selectedGang, id) : null;
+                relations.Add(gang.Name + (known ? " : " + relation.Trust + "/100" : " : Confidentiel"), () =>
                 {
+                    if (!state.CanViewRelationIntelligence(selectedGang, id))
+                    {
+                        GTA.UI.ShowSubtitle("Les relations entre gangs tiers restent confidentielles.", 3500);
+                        return;
+                    }
                     selectedPartner = id;
                     CustomZeeMenu.ShowGangSubmenu(BuildRelationDetail());
                 });
@@ -127,15 +142,22 @@ namespace LSlife
 
         private static CustomMenu BuildCartels()
         {
-            var groups = LSL.DiplomacyState.Cartels.ToList();
+            var state = LSL.DiplomacyState;
+            var groups = state.Cartels.ToList();
             int pages = Math.Max(1, (groups.Count + PageSize - 1) / PageSize);
             cartelPage = Math.Max(0, Math.Min(cartelPage, pages - 1));
             cartels = new CustomMenu("CARTELS", "ORGANISATIONS  " + (cartelPage + 1) + "/" + pages);
             foreach (GangCartel cartel in groups.Skip(cartelPage * PageSize).Take(PageSize))
             {
                 string name = cartel.Name;
-                cartels.Add(name + " (" + cartel.Members.Count + " gangs)", () =>
+                bool known = state.CanViewCartelIntelligence(cartel);
+                cartels.Add(known ? name + " (" + cartel.Members.Count + " gangs)" : "Cartel - Informations confidentielles", () =>
                 {
+                    if (!state.CanViewCartelIntelligence(cartel))
+                    {
+                        GTA.UI.ShowSubtitle("Vous ne faites pas partie de ce cartel.", 3000);
+                        return;
+                    }
                     selectedCartel = name;
                     CustomZeeMenu.ShowGangSubmenu(BuildCartelDetail());
                 });
@@ -151,7 +173,7 @@ namespace LSlife
         {
             GangCartel cartel = LSL.DiplomacyState.Cartels.FirstOrDefault(c =>
                 string.Equals(c.Name, selectedCartel, StringComparison.OrdinalIgnoreCase));
-            if (cartel == null) return BuildCartels();
+            if (cartel == null || !LSL.DiplomacyState.CanViewCartelIntelligence(cartel)) return BuildCartels();
             cartelDetail = new CustomMenu(cartel.Name, "COMPOSITION DU CARTEL");
             cartelDetail.Add("Direction : " + cartel.LeaderGangId, () => { });
             foreach (string member in cartel.Members.OrderBy(m => m).Take(5))
@@ -188,6 +210,7 @@ namespace LSlife
             var state = LSL.DiplomacyState;
             GangOrganization partner;
             if (!state.TryGetGang(selectedPartner, out partner)) return BuildRelations();
+            if (!state.CanViewRelationIntelligence(selectedGang, selectedPartner)) return BuildRelations();
             GangRelation relation = state.GetRelation(selectedGang, selectedPartner);
             relationDetail = new CustomMenu("DIPLOMATIE", partner.Name);
             relationDetail.Add("Statut : " + RelationLabel(relation.Status), () => { });
@@ -203,6 +226,7 @@ namespace LSlife
 
         private static CustomMenu BuildAgreements()
         {
+            if (!LSL.DiplomacyState.CanViewRelationIntelligence(selectedGang, selectedPartner)) return BuildRelations();
             var relation = LSL.DiplomacyState.GetRelation(selectedGang, selectedPartner);
             agreements = new CustomMenu("ACCORDS", selectedGang + " / " + selectedPartner);
             foreach (GangAgreementType type in Enum.GetValues(typeof(GangAgreementType)))
