@@ -1,3 +1,11 @@
+## Build 31/10/2026 01:48:28 — compilation SHVDN3 propre
+
+- [x] **Build Release net48 réussi : 0 erreur / 0 avertissement** (`LSlife.dll` générée), confirmé par le journal utilisateur.
+- [x] Migration des API obsolètes de contrôles, terrain et pickups : compilation validée.
+- [ ] **Validation en jeu GTA V Legacy** : démarrage du script, menu Zee, menus employés, planques/coffres, interactions dealer/clients, commandes clavier/manette, pickups, spawns/hauteurs, HUD, téléphone natif et iFruitAddon2.
+- [ ] Examiner les logs SHVDN3 en cas de crash ou anomalie ; corriger sur `feature/shvdn3-migration`.
+- [ ] Ne fusionner vers `main` qu'après validation fonctionnelle explicite.
+
 ## Build 31/10/2026 01:46:48 — LOT final des 8 avertissements
 
 - [x] Build utilisateur : **0 erreur / 8 avertissements**. Migration des 27 contrôles compilée.
