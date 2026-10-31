@@ -1187,7 +1187,7 @@ public partial class LSL
 		Vector3 pos = ((Entity)wepDealer.vehicle).Position + ((Entity)wepDealer.vehicle).Velocity;
 		int NodeID = Function.Call<int>((Hash)2510518586829603349L, (pos.X), (pos.Y), (pos.Z), (1), (1), (1f), (0f));
 		OutputArgument outArgA = new OutputArgument();
-		Function.Call((Hash)8084282276450675138L, (NodeID), (InputArgument)(object)outArgA);
+		Function.Call((Hash)8084282276450675138L, (NodeID), outArgA);
 		Vector3 parkPos = outArgA.GetResult<Vector3>();
 		wepDealer.destination = parkPos;
 		goto IL_25d6;
@@ -1826,7 +1826,7 @@ public partial class LSL
 				Vector3 pos2 = wepDealer.destination;
 				int NodeID2 = Function.Call<int>((Hash)2510518586829603349L, (pos2.X), (pos2.Y), (pos2.Z), (1), (1), (1f), (0f));
 				OutputArgument outArgA2 = new OutputArgument();
-				Function.Call((Hash)8084282276450675138L, (NodeID2), (InputArgument)(object)outArgA2);
+				Function.Call((Hash)8084282276450675138L, (NodeID2), outArgA2);
 				Vector3 parkPos2 = outArgA2.GetResult<Vector3>();
 				wepDealer.ped.Task.DriveTo(wepDealer.vehicle, parkPos2, 2f, (GTA.VehicleDrivingFlags)(786603), 6f);
 				wepDealer.destination = Vector3.Zero;
