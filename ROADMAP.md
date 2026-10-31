@@ -1,3 +1,12 @@
+## DEBUG HUD - 31/10/2026
+
+- [x] Overlay AreaDebug dissocie de showInventory.
+- [x] Quatre panneaux disposes en deux colonnes, deplacement borne aux nouvelles dimensions.
+- [x] Ajout des informations employes, dealer de quartier, temps de jeu et protections sur les compteurs de PNJ.
+- [x] Sous-titre de confirmation pour le basculement du diagnostic.
+- [ ] Compiler et tester en jeu; ajuster si necessaire l'affichage selon la resolution.
+- [ ] Revoir ensuite les etiquettes 3D de PedDebugger.
+
 ## Crash employé/dealer — 31/10/2026 09:25:35
 
 - [x] Log : `NullReferenceException` dans `PlayerDealer.Deal()` via `PlayerDealer.OnSlowTick()` et `PlayerDealerHandler.OnSlowTick()` ; distinct du DEBUG.
