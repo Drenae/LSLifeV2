@@ -44,11 +44,11 @@ public class HirePed
 			{
 				TimedOut = true;
 			}
-			else if (Game.IsControlJustPressed((Control)52))
+			else if (GTA.Native.Function.Call<bool>(GTA.Native.Hash.IS_DISABLED_CONTROL_JUST_PRESSED, 2, 52))
 			{
 				Declined = true;
 			}
-			else if (Game.IsControlJustPressed((Control)51))
+			else if (GTA.Native.Function.Call<bool>(GTA.Native.Hash.IS_DISABLED_CONTROL_JUST_PRESSED, 2, 51))
 			{
 				Accepted = true;
 				GTA.UI.Screen.ShowSubtitle("Super, je te suis.", 6000);
