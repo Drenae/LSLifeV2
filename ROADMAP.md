@@ -1,3 +1,13 @@
+## Build 31/10/2026 01:35:49 — migration transversale
+
+- [x] Build utilisateur : **16 erreurs CS7036, 57 avertissements**.
+- [x] Correction des **16 erreurs** : `Wanted.SetWantedLevel(level, false)` et `Wanted.ApplyWantedLevelChangeNow(false)` dans `Pig.cs` et `DealerFunctions.cs`.
+- [x] `AreaDealer.cs` : deux `DriveTo` migrés vers `VehicleDrivingFlags` avec l'ordre des paramètres SHVDN3.
+- [x] `DriveBy.cs` : retrait de `DrivingStyle` obsolète, conservation des valeurs de flags d'origine.
+- [x] `DroppedBag.cs` : explicitation de l'argument `value` du pickup ; surcharge exacte à contrôler au build.
+- [ ] Recompiler ce lot ; aucun build local effectué par l'assistant.
+- [ ] Restent contrôles (mapping ControlAction), terrain, pickups, code inaccessible et champs inutilisés. Tests en jeu nécessaires. `main` inchangée.
+
 ## Build 30/10/2026 16:05:55 — migration API
 
 - [x] Build confirmé : **0 erreur, 77 avertissements** (contre 85 auparavant).
