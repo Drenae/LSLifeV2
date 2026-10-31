@@ -172,6 +172,48 @@ namespace LSlife.Gangs
             MarkDirty();
         }
 
+        internal bool ProposeAgreement(string first, string second, GangAgreementType agreement)
+        {
+            if (!CanNegotiate(first, second)) return false;
+            GangRelation relation = GetRelation(first, second);
+            int requiredTrust = agreement == GangAgreementType.MutualDefense ? 75 :
+                agreement == GangAgreementType.ArmedSupport ? 65 :
+                agreement == GangAgreementType.Trade ? 50 : 35;
+            if (relation.Trust < requiredTrust) return false;
+            SetAgreement(first, second, agreement, true);
+            if (agreement == GangAgreementType.MutualDefense)
+                Set(first, second, GangRelationStatus.Allied);
+            return true;
+        }
+
+        internal void CancelAgreement(string first, string second, GangAgreementType agreement)
+        {
+            GangRelation relation = GetRelation(first, second);
+            if (!relation.Agreements.Contains(agreement)) return;
+            SetAgreement(first, second, agreement, false);
+            if (agreement == GangAgreementType.MutualDefense &&
+                relation.Status == GangRelationStatus.Allied)
+                Set(first, second, GangRelationStatus.Neutral);
+            ChangeTrust(first, second, -10);
+        }
+
+        internal bool CanCreateCartel(string leaderGangId)
+        {
+            if (string.IsNullOrWhiteSpace(leaderGangId) || !organizations.ContainsKey(leaderGangId))
+                return false;
+            return !cartels.Values.Any(c => c.Members.Contains(leaderGangId));
+        }
+
+        internal bool CanJoinCartel(string cartelName, string gangId)
+        {
+            GangCartel cartel;
+            if (string.IsNullOrWhiteSpace(gangId) || !organizations.ContainsKey(gangId) ||
+                !cartels.TryGetValue(cartelName, out cartel) ||
+                cartels.Values.Any(c => c.Members.Contains(gangId))) return false;
+            return AreAllied(cartel.LeaderGangId, gangId) &&
+                GetRelation(cartel.LeaderGangId, gangId).Trust >= 70;
+        }
+
         internal void JoinGang(string id, PlayerGangRank rank)
         {
             if (!organizations.ContainsKey(id)) throw new ArgumentException("Gang inconnu.");
@@ -201,6 +243,7 @@ namespace LSlife.Gangs
             if (string.IsNullOrWhiteSpace(name) || !organizations.ContainsKey(leaderGangId))
                 throw new ArgumentException("Cartel ou gang dirigeant invalide.");
             if (cartels.ContainsKey(name)) throw new InvalidOperationException("Cartel deja existant.");
+            if (!CanCreateCartel(leaderGangId)) throw new InvalidOperationException("Ce gang appartient deja a un cartel.");
             GangCartel cartel = new GangCartel(name, leaderGangId);
             cartels.Add(name, cartel);
             MarkDirty();
