@@ -8,15 +8,15 @@ Remettre en état LS Life pour GTA V Legacy : **fonctionnement, bugs, traduction
 
 - **GTA V Legacy**, mode histoire.
 - **ScriptHookVDotNet2**.
-- **NativeUI 1.9.1 d'origine** : dépendance temporaire pendant la migration vers CustomMenu ; ne la supprimer qu'après remplacement et validation de tous ses usages, HUD compris.
+- **CustomMenu** : interfaces personnalisées déjà intégrées ; NativeUI retiré de la base de référence.
 - **iFruitAddon2**.
 - Projet C# / .NET Framework 4.8 / x64.
 
-Ne pas migrer vers SHVDN3, LemonUI, ni créer LSNativeUI sans nouvelle demande explicite. La migration **NativeUI vers les interfaces CustomMenu et le rendu natif GTA V** est explicitement approuvée sur `feature/custom-zee-menu`.
+Ne pas migrer vers SHVDN3, LemonUI, ni créer LSNativeUI sans nouvelle demande explicite. Les interfaces CustomMenu et le rendu natif GTA V de `feature/custom-zee-menu` constituent la référence.
 
 ## 3. Protection de la stabilité
 
-- `main` représente la version fonctionnelle de référence.
+- `main` et `feature/custom-zee-menu` représentent la base SHVDN2 de référence ; les nouveautés sont développées sur `feature/gang-alliances`.
 - Ne jamais supprimer ou remplacer une fonctionnalité opérationnelle sans accord.
 - Ne jamais faire de reset destructeur, réécrire l'historique ou modifier les sauvegardes du joueur sans autorisation.
 - Compiler après les changements et distinguer **compilation réussie** de **fonctionnement vérifié en jeu**.
@@ -58,4 +58,4 @@ Ne pas migrer vers SHVDN3, LemonUI, ni créer LSNativeUI sans nouvelle demande e
 - Fournir les commandes PowerShell regroupées dans un seul bloc, en fin de réponse quand elles sont nécessaires.
 - Travailler sur le dépôt réel et éviter de demander des fichiers déjà accessibles.
 - Ne pas créer de branche supplémentaire sans besoin ni accord.
-- Ne pas supprimer les branches distantes sans demande explicite.
+- Ne supprimer des branches distantes que sur demande explicite, après vérification des références à conserver.
