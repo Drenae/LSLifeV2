@@ -75,7 +75,7 @@ public partial class LSL
 				NodeNumber++;
 			}
 		}
-		Function.Call((Hash)8084282276450675138L, (NodeID), (InputArgument)(object)outArgA);
+		Function.Call((Hash)8084282276450675138L, (NodeID), outArgA);
 		finalpos = outArgA.GetResult<Vector3>();
 		if (sidewalk)
 		{
@@ -96,7 +96,7 @@ public partial class LSL
 		_ = Vector3.Zero;
 		int NodeID = Function.Call<int>((Hash)2510518586829603349L, (pos.X), (pos.Y), (pos.Z), (1), (1), (200f), (200f));
 		OutputArgument outArgA = new OutputArgument();
-		Function.Call((Hash)8084282276450675138L, (NodeID), (InputArgument)(object)outArgA);
+		Function.Call((Hash)8084282276450675138L, (NodeID), outArgA);
 		return outArgA.GetResult<Vector3>();
 	}
 
@@ -112,7 +112,7 @@ public partial class LSL
 		List<PathnodeFlags> pathnodesflags = new List<PathnodeFlags>();
 		OutputArgument outArgA = new OutputArgument();
 		OutputArgument outArgB = new OutputArgument();
-		if (Function.Call<bool>((Hash)389656384451763932L, (pos.X), (pos.Y), (pos.Z), (InputArgument)(object)outArgA, (InputArgument)(object)outArgB))
+		if (Function.Call<bool>((Hash)389656384451763932L, (pos.X), (pos.Y), (pos.Z), outArgA, outArgB))
 		{
 			outArgA.GetResult<int>();
 			int flags = outArgB.GetResult<int>();
@@ -138,7 +138,7 @@ public partial class LSL
 		//IL_002b: Unknown result type (might be due to invalid IL or missing references)
 		OutputArgument outArgA = new OutputArgument();
 		OutputArgument outArgB = new OutputArgument();
-		if (Function.Call<bool>((Hash)389656384451763932L, (pos.X), (pos.Y), (pos.Z), (InputArgument)(object)outArgA, (InputArgument)(object)outArgB))
+		if (Function.Call<bool>((Hash)389656384451763932L, (pos.X), (pos.Y), (pos.Z), outArgA, outArgB))
 		{
 			outArgA.GetResult<int>();
 			if (((uint)outArgB.GetResult<int>() & (uint)flag) != 0)
