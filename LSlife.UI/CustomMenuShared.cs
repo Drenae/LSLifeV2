@@ -19,6 +19,17 @@ internal static class CustomMenuShared
             || CustomWorkerMenu.Visible;
     }
 
+    // Les touches du menu doivent rester lisibles via IS_DISABLED_CONTROL_*,
+    // sans declencher leurs actions GTA (phares, radio, telephone, conduite, etc.).
+    // A appeler chaque frame avant les ticks des menus.
+    internal static void BlockGameplayControlsWhileMenuOpen()
+    {
+        if (!IsAnyGameplayMenuOpen()) return;
+        Function.Call(Hash.DISABLE_ALL_CONTROL_ACTIONS, 0);
+        Function.Call(Hash.DISABLE_ALL_CONTROL_ACTIONS, 1);
+        Function.Call(Hash.DISABLE_ALL_CONTROL_ACTIONS, 2);
+    }
+
     public static string FrenchWeaponName(string weapon)
     {
         switch (weapon.ToUpperInvariant())
