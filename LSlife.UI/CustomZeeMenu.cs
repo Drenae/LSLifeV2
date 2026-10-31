@@ -8,6 +8,7 @@ namespace LSlife;
 // Menu Zee personnalise : rendu natif GTA V.
 internal static class CustomZeeMenu
 {
+    private static bool networkMode;
     private static CustomMenu menu;
     private static CustomMenu dealerMenu;
     private static CustomMenu orderMenu;
@@ -26,13 +27,25 @@ internal static class CustomZeeMenu
     {
         if (activeMenu != null) activeMenu.Close();
         activeMenu = null;
+        networkMode = false;
         quantityRepeat.Reset();
+    }
+
+    internal static void ToggleNetwork()
+    {
+        if (Visible) { Close(); return; }
+        if (CustomMenuShared.IsAnyGameplayMenuOpen()) return;
+        networkMode = true;
+        activeMenu = CustomGangMenu.Open();
+        quantityRepeat.Reset();
+        activeMenu.Open();
     }
 
     public static void Toggle()
     {
         if (Visible) { activeMenu.Close(); activeMenu = null; quantityRepeat.Reset(); return; }
         if (CustomMenuShared.IsAnyGameplayMenuOpen()) return;
+        networkMode = false;
         if (menu == null) Create();
         menu.Subtitle = "REPUTATION  " + (int)LSL.dealer1Rep +
                         "    |    NIVEAU  " + (int)LsFunctions.CurrentRepLvl(LSL.dealer1Rep);
@@ -49,19 +62,13 @@ internal static class CustomZeeMenu
         menu.Add("Acheter des armes", () => RunZeeAction(ZeeContactActions.CallWeaponDealer));
         menu.Add("Demander a etre depose", () => RunZeeAction(ZeeContactActions.CallLift));
         menu.Add("Rembourser la dette", () => RunZeeAction(ZeeContactActions.PayZeeDebt), () => LSL.dealer1Debt > 0);
-        menu.Add("Gangs et territoires", OpenGangs);
         menu.Add("Options du HUD", OpenHudOptions);
-    }
-
-    private static void OpenGangs()
-    {
-        ShowGangSubmenu(CustomGangMenu.Open());
     }
 
     internal static void ShowGangSubmenu(CustomMenu target)
     {
         if (activeMenu != null) activeMenu.Close();
-        activeMenu = target ?? menu;
+        activeMenu = target ?? (networkMode ? CustomGangMenu.Open() : menu);
         quantityRepeat.Reset();
         activeMenu.Open();
     }
@@ -271,7 +278,8 @@ internal static class CustomZeeMenu
             activeMenu.Close();
             if (CustomGangMenu.IsGangMenu(activeMenu))
             {
-                activeMenu = CustomGangMenu.Back(activeMenu) ?? menu;
+                activeMenu = CustomGangMenu.Back(activeMenu);
+                if (activeMenu == null) { networkMode = false; return; }
                 activeMenu.Open();
             }
             else if (IsDrugMenu(activeMenu)) { activeMenu = orderMenu; orderMenu.Open(); }
