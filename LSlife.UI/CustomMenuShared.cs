@@ -28,6 +28,16 @@ internal static class CustomMenuShared
         Function.Call(Hash.DISABLE_ALL_CONTROL_ACTIONS, 0);
         Function.Call(Hash.DISABLE_ALL_CONTROL_ACTIONS, 1);
         Function.Call(Hash.DISABLE_ALL_CONTROL_ACTIONS, 2);
+        // Le stick gauche reste reserve aux deplacements a pied, pas aux menus.
+        // Les commandes du D-pad et les boutons de validation restent bloques.
+        if (!Game.Player.Character.IsInVehicle())
+        {
+            foreach (int control in new[] { 30, 31, 32, 33, 34, 35 })
+            {
+                Function.Call(Hash.ENABLE_CONTROL_ACTION, 0, control, true);
+                Function.Call(Hash.ENABLE_CONTROL_ACTION, 2, control, true);
+            }
+        }
     }
 
     public static string FrenchWeaponName(string weapon)
