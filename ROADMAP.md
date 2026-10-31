@@ -1,3 +1,11 @@
+## Changement de quartier / spawn dealers - 31/10/2026
+
+- [x] Analyse de Tick.cs : recherche de dealer dans `else if` de changement de zone, empechant le spawn lors du meme controle.
+- [x] Separer le spawn de la transition de zone, avec protection de la liste de PNJ.
+- [x] Verifier `LsLPeds.Ontick()` : actualise les PNJ proches toutes les 7 secondes et retire ceux trop eloignes.
+- [ ] Compiler et tester en jeu les transitions successives de quartiers et la regeneration des dealers.
+- [ ] Si le probleme persiste, instrumenter `CanSpawnDealer()`, `GangPresance`, nombre de PNJ eligibles et `areaIndex` dans le HUD DEBUG.
+
 ## DEBUG HUD - 31/10/2026
 
 - [x] Overlay AreaDebug dissocie de showInventory.
