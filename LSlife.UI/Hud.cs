@@ -104,6 +104,15 @@ internal static class Hud
 	private static int posX = TopHudDefaultX;
 	private static int posY = TopHudDefaultY;
 	private static int debugX = 10;
+	private static int allianceX = TopHudDefaultX;
+	private static int allianceY = TopHudDefaultY + 172;
+	public static int AllianceX => allianceX;
+	public static int AllianceY => allianceY;
+	public static void MoveAlliance(int dx, int dy)
+	{
+		allianceX = System.Math.Max(0, System.Math.Min(MaxX - 365, allianceX + dx));
+		allianceY = System.Math.Max(0, System.Math.Min(MaxY - 80, allianceY + dy));
+	}
 	private static int debugY = 10;
 	public static bool DebugEnabled { get; set; }
 	public static int BarsPositionX => barsX;
@@ -136,6 +145,7 @@ internal static class Hud
 		barsY = System.Math.Max(0, System.Math.Min(MaxY - BarsRowHeight * 2, barsY));
 		debugX = System.Math.Max(0, System.Math.Min(MaxX - 340, debugX));
 		debugY = System.Math.Max(0, System.Math.Min(MaxY - 864, debugY));
+		MoveAlliance(0, 0);
 	}
 
 	public static void Move(int dx, int dy)
@@ -165,6 +175,8 @@ internal static class Hud
 		barsY = ReadPosition(config, "heatPosY", barsY);
 		debugX = ReadPosition(config, "debugPosX", debugX);
 		debugY = ReadPosition(config, "debugPosY", debugY);
+		allianceX = ReadPosition(config, "alliancePosX", posX);
+		allianceY = ReadPosition(config, "alliancePosY", posY + 172);
 		if (config.Element("hudPosVersion") == null)
 			posX = System.Math.Max(0, posX - 365);
 	}
@@ -186,6 +198,8 @@ internal static class Hud
 		SetConfig(config, "heatPosY", barsY);
 		SetConfig(config, "debugPosX", debugX);
 		SetConfig(config, "debugPosY", debugY);
+		SetConfig(config, "alliancePosX", allianceX);
+		SetConfig(config, "alliancePosY", allianceY);
 		SetConfig(config, "hudPosVersion", 2);
 		string temporary = HudPositionFile + ".tmp";
 		new XDocument(new XElement("hudPositions", config)).Save(temporary);
@@ -239,7 +253,29 @@ internal static class Hud
 	public static void Draw()
 	{
 		InventoryGui();
+		DrawAlliances();
 		DrawHeatBars();
+	}
+
+	private static void DrawAlliances()
+	{
+		var diplomacy = LSL.DiplomacyState;
+		if (diplomacy == null || string.IsNullOrWhiteSpace(diplomacy.PlayerGangId)) return;
+		var allies = diplomacy.Organizations.Where(g =>
+			!string.Equals(g.Id, diplomacy.PlayerGangId, StringComparison.OrdinalIgnoreCase) &&
+			diplomacy.AreAllied(diplomacy.PlayerGangId, g.Id)).Select(g => g.Name).ToList();
+		if (allies.Count == 0) return;
+		int shown = System.Math.Min(5, allies.Count);
+		int height = 38 + shown * 24 + (allies.Count > shown ? 24 : 0);
+		HudRender.Rect(allianceX, allianceY, 365, height, 11, 13, 16, 190);
+		HudRender.Rect(allianceX, allianceY, 3, height, 187, 154, 82, 225);
+		HudRender.Text("ALLIANCES", allianceX + 18, allianceY + 7, 0.31f, 218, 176, 101, 255);
+		HudRender.Rect(allianceX + 12, allianceY + 33, 341, 1, 130, 103, 52, 155);
+		for (int i = 0; i < shown; i++)
+			HudRender.Text(allies[i], allianceX + 20, allianceY + 38 + i * 24, 0.29f, 235, 236, 239, 255);
+		if (allies.Count > shown)
+			HudRender.Text("+ " + (allies.Count - shown) + " autres", allianceX + 20,
+				allianceY + 38 + shown * 24, 0.27f, 180, 182, 187, 255);
 	}
 
 	private static Color PressureColor(float value)
