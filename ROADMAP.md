@@ -1,3 +1,10 @@
+## Crash quelques secondes après chargement — 31/10/2026 03:32:56
+
+- [ ] `NullReferenceException` dans `LSL.onTick` après chargement, sans numéro de ligne dans SHVDN. Cause non encore identifiée.
+- [x] Instrumentation `Tick.cs` : wrapper `onTick`/`OnTickCore`, enregistrement de l'exception et stack trace dans `scripts/LSLife/LSLifeRuntimeErrors.log`, puis relance de l'exception pour préserver le signal SHVDN. Aucun gameplay modifié volontairement.
+- [ ] Compiler en Debug avec symboles PDB si possible, déployer DLL et PDB ensemble, reproduire et analyser `LSLifeRuntimeErrors.log`.
+- [ ] Corriger la cause identifiée, puis valider le chargement et les menus. `main` inchangée.
+
 ## Tests en jeu 31/10/2026 — correctifs crashes SHVDN3
 
 - [x] Menu Zee principal, commandes de drogue (composition, paiement, réception/stock), options HUD : test utilisateur positif avant fin de livraison.
