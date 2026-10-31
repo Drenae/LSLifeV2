@@ -50,7 +50,7 @@ public partial class LSL
 
 	private void ZeeInfoUI()
 	{
-		HudRender.DebugPanel("ZEE", Hud.DebugX, Hud.DebugY + 344, 340, new[]
+		HudRender.DebugPanel("ZEE", Hud.DebugX + 350, Hud.DebugY, 340, new[]
 		{
 			"argent : " + dealer1Money,
 			"reload : " + dealer1ReloadOrder,
@@ -67,25 +67,29 @@ public partial class LSL
 		{
 			"pression : " + playerHeat,
 			"vente : " + isDealing,
-			"tPeds : " + lPeds.GetPeds.Count,
+			"employes : " + (DealerHandler != null ? DealerHandler.dealers.Count : 0),
+			"dealer quartier : " + (aDealer != null ? aDealer.dealState.ToString() : "aucun"),
+			"jeu (ms) : " + Game.GameTime,
+			"tPeds : " + (lPeds != null && lPeds.GetPeds != null ? lPeds.GetPeds.Count : 0),
 			"oPeds : " + OldCustomerHandler.AmountOf()
 		};
 		if (wepDealer != null)
 		{
 			lines.Add("dSpeed : " + wepDealer.maxSpeed + "|" +
-				(wepDealer.ped.CurrentVehicle != null ? wepDealer.ped.CurrentVehicle.Speed : 0f));
+				(wepDealer.ped != null && wepDealer.ped.CurrentVehicle != null ? wepDealer.ped.CurrentVehicle.Speed : 0f));
 			lines.Add("cSpeed : " + wepDealer.canSpeed);
 			lines.Add("sSpeed : " + wepDealer.shouldSpeed);
 		}
-		int drvAmount = driveByHandler.GetDriveBies.Count;
+		int drvAmount = driveByHandler != null && driveByHandler.GetDriveBies != null ? driveByHandler.GetDriveBies.Count : 0;
 		if (drvAmount > 0) lines.Add("drvAmount : " + drvAmount);
-		HudRender.DebugPanel("JOUEUR", Hud.DebugX, Hud.DebugY + 492, 340, lines.ToArray());
+		HudRender.DebugPanel("JOUEUR", Hud.DebugX + 350, Hud.DebugY + 165, 340, lines.ToArray());
 	}
 
 	private void GangUI()
 	{
 		Gang gang = areas[areaIndex].Gang;
-		HudRender.DebugPanel("GANG", Hud.DebugX, Hud.DebugY + 688, 340, new[]
+		if (gang == null) return;
+		HudRender.DebugPanel("GANG", Hud.DebugX, Hud.DebugY + 330, 340, new[]
 		{
 			"nom : " + gang.Name,
 			"argent : " + gang.Money,
@@ -117,8 +121,8 @@ internal static class Hud
 	}
 	public static void MoveDebug(int dx, int dy)
 	{
-		debugX = System.Math.Max(0, System.Math.Min(MaxX - 340, debugX + dx));
-		debugY = System.Math.Max(0, System.Math.Min(MaxY - 864, debugY + dy));
+		debugX = System.Math.Max(0, System.Math.Min(MaxX - 690, debugX + dx));
+		debugY = System.Math.Max(0, System.Math.Min(MaxY - 620, debugY + dy));
 	}
 
 	private const int MaxX = 1920;
@@ -134,8 +138,8 @@ internal static class Hud
 		posY = System.Math.Max(25, System.Math.Min(MaxY - 164, posY));
 		barsX = System.Math.Max(0, System.Math.Min(MaxX - BarsWidth, barsX));
 		barsY = System.Math.Max(0, System.Math.Min(MaxY - BarsRowHeight * 2, barsY));
-		debugX = System.Math.Max(0, System.Math.Min(MaxX - 340, debugX));
-		debugY = System.Math.Max(0, System.Math.Min(MaxY - 864, debugY));
+		debugX = System.Math.Max(0, System.Math.Min(MaxX - 690, debugX));
+		debugY = System.Math.Max(0, System.Math.Min(MaxY - 620, debugY));
 	}
 
 	public static void Move(int dx, int dy)
