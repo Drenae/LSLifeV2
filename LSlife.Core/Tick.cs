@@ -358,7 +358,7 @@ public partial class LSL
 			Hud.DebugEnabled = AreaDebug;
 			if (showInventory) Hud.Draw();
 			else Hud.Hide();
-			if (AreaDebug && !CustomMenuShared.IsAnyGameplayMenuOpen()
+			if (showInventory && AreaDebug && !CustomMenuShared.IsAnyGameplayMenuOpen()
 				&& !CustomZeeMenu.Visible && !CustomHudOptionsMenu.Visible
 				&& !CustomStashMenu.Visible && !CustomCustomerMenu.Visible
 				&& !CustomWeaponDealerMenu.Visible && !CustomHireDealerMenu.Visible
