@@ -1,3 +1,11 @@
+## Journalisation globale - 31/10/2026
+
+- [x] Nouveau `LSLifeLog` centralise : `scripts\\LSLife\\LSLife.log`, date, niveau et categorie (`[Planque]`, `[Dealer]`, `[Quartier]`, `[Tick]`, `[Demarrage]`).
+- [x] Rotation a 5 Mo vers `LSLife.previous.log`; journal independant de DEBUG et AREADEBUG.
+- [x] Traces de demarrage, chargement/sauvegarde de planques, transitions de quartiers, creation/suppression de dealers et exceptions du Tick.
+- [ ] Verifier inclusion du nouveau fichier dans le projet et compiler.
+- [ ] Etendre les evenements aux ventes, stocks, employes, commandes, livraisons, police et sauvegardes, sans spammer chaque frame.
+
 ## Audit comparatif SHVDN2 / SHVDN3 - 31/10/2026
 
 Reference : `feature/custom-zee-menu` (SHVDN2), cible : `feature/shvdn3-migration`.
