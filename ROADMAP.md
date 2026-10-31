@@ -18,7 +18,7 @@
 
 ### Diplomatie et relations
 - [ ] Relier la confiance diplomatique aux actions du joueur et aux événements de gangs.
-- [ ] Ajouter des rencontres et propositions diplomatiques via un menu adapté.
+- [ ] Ajouter des rencontres avec les chefs et des propositions diplomatiques interactives (le navigateur actuel reste consultatif).
 - [ ] Permettre de refuser, rompre ou renégocier une alliance.
 
 ### Accords et fonctionnement d'un cartel
@@ -31,8 +31,8 @@
 - [ ] Verifier la precision des limites de quartiers, les performances et la compatibilite avec les autres mods de carte avant implementation.
 
 ### Interface et sauvegarde
-- [ ] Concevoir un menu « Diplomatie / Cartel » cohérent avec CustomMenu.
-- [ ] Afficher membres, statut, confiance, accords, territoires et revenus.
+- [ ] Completer le navigateur des gangs avec les interactions diplomatiques et un ecran Cartel, sans permettre d'accord automatique sans rencontre.
+- [ ] Completer les fiches gangs : accords, detail des territoires, revenus et informations des chefs.
 - [ ] Tester en jeu la restauration des territoires et des alliances apres Reload(), ainsi que les cas limites : mort d'un chef, disparition d'un gang, rupture d'accord.
 
 ### Validation
