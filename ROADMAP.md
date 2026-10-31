@@ -1,3 +1,10 @@
+## Build 31/10/2026 01:41:57
+
+- [x] Build utilisateur **0 erreur / 37 avertissements**.
+- [x] `Hud.cs` : options `ShowReputation` et `ShowDealerCapacity` passées de constantes à champs statiques readonly ; conserve le comportement désactivé sans branches inaccessibles.
+- [ ] Recompiler ce changement. Restent les API de contrôle, terrain et pickups ; éviter les substitutions aveugles de signatures SHVDN3.
+- [ ] Tester les menus, interactions, police, commandes et spawn en jeu avant fusion. `main` inchangée.
+
 ## Build 31/10/2026 01:41:07 — correctif de compilation
 
 - [x] Build utilisateur : **2 erreurs CS0103, 41 avertissements** ; `DrugOrder.cs` utilisait encore `payed` après suppression du champ.
