@@ -116,7 +116,7 @@ public class DrugDealer
 		switch (DealState)
 		{
 		case DrugDealSates.ReadyToDeal:
-			if (Ready && Game.IsControlJustReleased((Control)51) && PlayerOrder.PayBill())
+			if (Ready && GTA.Native.Function.Call<bool>(GTA.Native.Hash.IS_DISABLED_CONTROL_JUST_RELEASED, 2, 51) && PlayerOrder.PayBill())
 			{
 				if (LSL.player.Money > 0)
 				{
@@ -130,7 +130,7 @@ public class DrugDealer
 			break;
 		case DrugDealSates.Payed:
 			World.DrawMarker((MarkerType)0, backPos, Vector3.Zero, Vector3.Zero, new Vector3(1f, 1f, 0.5f), Color.Green);
-			if (Ready && Game.IsControlJustReleased((Control)51))
+			if (Ready && GTA.Native.Function.Call<bool>(GTA.Native.Hash.IS_DISABLED_CONTROL_JUST_RELEASED, 2, 51))
 			{
 				PlayerOrder.PickupDrugs();
 				if (PlayerOrder.pickedUp)
