@@ -1050,14 +1050,14 @@ public partial class LSL
 					}
 				}
 			}
-			else if (aDealer == null && areas[areaIndex].CanSpawnDealer())
+			if (aDealer == null && areas.Count > areaIndex && areas[areaIndex].CanSpawnDealer())
 			{
 				lastTickStage = "area dealer spawn";
 				LsFunctions.DbugString("demandBuff 0");
 				if (areas[areaIndex].GangPresance > 0f && (HouseHandler == null || HouseHandler.Houses == null || HouseHandler.Houses.Count == 0 || areas[areaIndex].Name != LsFunctions.GetZoneLabel(HouseHandler.Houses[0].entrancePos)))
 				{
 		lastTickStage = "area dealer ped selection";
-					List<Ped> aPeds = lPeds.GetPeds.FindAll((Ped r) =>
+					List<Ped> aPeds = (lPeds != null && lPeds.GetPeds != null ? lPeds.GetPeds : new List<Ped>()).FindAll((Ped r) =>
 					{
 						//IL_0001: Unknown result type (might be due to invalid IL or missing references)
 						//IL_0027: Unknown result type (might be due to invalid IL or missing references)
