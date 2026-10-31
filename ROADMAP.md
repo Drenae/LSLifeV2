@@ -1,3 +1,9 @@
+## Diagnostic 31/10/2026 03:36–03:40
+
+- [x] Log reçu : deux `NullReferenceException` identiques, stack `OnTickCore → onTick`, sans PDB/numéro de ligne. Le précédent journal ne suffit pas à isoler la cause.
+- [x] Ajout de 19 marqueurs d'étapes dans `Tick.cs`, journalisés à l'exception via `LSLifeRuntimeErrors.log` ; localisation ciblée du prochain crash sans deviner le correctif.
+- [ ] Recompiler et reproduire ; lire `Derniere etape onTick`, corriger l'accès nul précisément.
+
 ## Crash quelques secondes après chargement — 31/10/2026 03:32:56
 
 - [ ] `NullReferenceException` dans `LSL.onTick` après chargement, sans numéro de ligne dans SHVDN. Cause non encore identifiée.
