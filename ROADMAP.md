@@ -21,6 +21,12 @@
 - [ ] Finaliser l'audit des gangs, chefs, territoires, relations, réputation, sauvegardes et interactions (classes Gang, Area, ThreatHandler, persistance et relations PNJ déjà examinées).
 - [ ] Identifier précisément les mécanismes de guerre, recrutement, distribution et contrôle de zone réutilisables.
 
+### Renseignements et progression
+- [ ] Ajouter la decouverte progressive des gangs par rencontres, presence sur leurs territoires et contacts, sans reveler leurs informations des le debut.
+- [ ] Memoriser les niveaux de connaissance par gang dans la sauvegarde diplomatique, avec migration compatible des anciennes sauvegardes.
+- [ ] Autoriser les renseignements partiels selon la proximite et la reputation, et les details confidentiels seulement aux membres/allies concernes.
+- [ ] Verifier que les accords entre gangs tiers ne sont ni visibles ni modifiables par le joueur.
+
 ### Diplomatie et relations
 - [ ] Relier la confiance diplomatique aux actions du joueur et aux événements de gangs.
 - [ ] Ajouter des rencontres avec les chefs et des propositions diplomatiques interactives (le navigateur actuel reste consultatif).
