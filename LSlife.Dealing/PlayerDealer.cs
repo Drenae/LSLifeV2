@@ -772,8 +772,8 @@ public class PlayerDealer
 				{
 					GTA.UI.Notification.PostTicker("Recherche d'un client pour le dealer", false, false);
 				}
-				List<Ped> peds = LSL.lPeds.GetPeds;
-				if (peds.ToList().Count > 0)
+				List<Ped> peds = LSL.lPeds != null ? LSL.lPeds.GetPeds : null;
+				if (peds != null && peds.Count > 0)
 				{
 					foreach (Ped ped in peds)
 					{
@@ -861,8 +861,13 @@ public class PlayerDealer
 					{
 						GTA.UI.Notification.PostTicker("Transaction terminée", false, false);
 					}
+					// Le client peut ne pas avoir de blip (notamment hors DEBUG).
+					Blip customerBlip = ((Entity)cPed).AttachedBlip;
+					if (customerBlip != null && customerBlip.Exists())
+					{
+						customerBlip.Delete();
+					}
 					LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
-					((Entity)cPed).AttachedBlip.Delete();
 					lPed = cPed;
 					cPed = null;
 				}
