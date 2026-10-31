@@ -197,11 +197,21 @@ internal static partial class LsFunctions
 	public static void AddBlip(Entity _ent, BlipColor _col, string _name, bool _friend, bool _edge)
 	{
 		//IL_002a: Unknown result type (might be due to invalid IL or missing references)
-		if (_ent.AttachedBlip == null || !_ent.AttachedBlip.Exists())
+		if (_ent == null || !_ent.Exists())
 		{
-			_ent.AddBlip();
+			LSLifeLog.Warning("Blip", "Ajout impossible : entite absente ou invalide (" + _name + ")");
+			return;
 		}
 		Blip currentBlip = _ent.AttachedBlip;
+		if (currentBlip == null || !currentBlip.Exists())
+		{
+			currentBlip = _ent.AddBlip();
+		}
+		if (currentBlip == null || !currentBlip.Exists())
+		{
+			LSLifeLog.Warning("Blip", "Creation du blip impossible : " + _name + ", entite=" + _ent.Handle);
+			return;
+		}
 		currentBlip.IsFriendly = _friend;
 		currentBlip.IsShortRange = _edge;
 		currentBlip.Color = _col;
