@@ -22,10 +22,11 @@
 - [ ] Identifier précisément les mécanismes de guerre, recrutement, distribution et contrôle de zone réutilisables.
 
 ### Acces aux alliances
-- [ ] Remplacer le raccourci provisoire F7 par un acces configurable au reseau d'alliances, independant de Zee.
-- [ ] Integrer les contacts des chefs de gangs dans le telephone existant, uniquement apres rencontre et echange de coordonnees.
+- [ ] Integrer les contacts des chefs de gangs dans iFruitAddon2, uniquement apres rencontre et echange de coordonnees ; appeler un chef ouvre uniquement sa fiche et les accords impliquant le joueur.
 - [ ] Ajouter les rendez-vous et rencontres physiques avec les chefs pour negocier, conclure et rompre les accords.
-- [ ] Garder le reseau d'alliances strictement consultatif et limite aux organisations liees au joueur.
+- [ ] Retirer les anciens parcours de navigateur de gangs devenus inutiles ; conserver les fiches individuelles pour les appels aux chefs.
+
+- [ ] Valider en jeu le nouveau bloc HUD Alliances, ses coordonnees sauvegardees et le cas sans alliance (bloc masque).
 
 ### Renseignements et progression
 - [ ] Ajouter la decouverte progressive des gangs par rencontres, presence sur leurs territoires et contacts, sans reveler leurs informations des le debut.
