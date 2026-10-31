@@ -216,7 +216,7 @@ public class AreaDealer
 			if (!ShouldAttackPlayer())
 			{
 				NewState = Enums.DStates.Normal;
-				if ((!Detected && ((Entity)dPed).AttachedBlip != (Blip)null) || ((Entity)dPed).AttachedBlip.Exists())
+				if (((Entity)dPed).AttachedBlip != null && ((Entity)dPed).AttachedBlip.Exists())
 				{
 					((Entity)dPed).AttachedBlip.Delete();
 				}
@@ -478,7 +478,8 @@ public class AreaDealer
 				{
 					GTA.UI.Notification.PostTicker("Recherche d'un client pour le dealer de quartier", false, false);
 				}
-				List<Ped> peds = LSL.lPeds.GetPeds;
+				List<Ped> peds = LSL.lPeds?.GetPeds;
+				if (peds == null) { cTimer.Reset(); return; }
 				if (peds.ToList().Count > 0)
 				{
 					foreach (Ped ped in peds)
@@ -573,7 +574,7 @@ public class AreaDealer
 						GTA.UI.Notification.PostTicker("Transaction terminée", false, false);
 					}
 					LsFunctions.RemovePedFromWorld(cPed, clearTask: false);
-					((Entity)cPed).AttachedBlip.Delete();
+					if (((Entity)cPed).AttachedBlip != null && ((Entity)cPed).AttachedBlip.Exists()) ((Entity)cPed).AttachedBlip.Delete();
 					cPed = null;
 					cTimer.Reset();
 					cTimer.Start();
