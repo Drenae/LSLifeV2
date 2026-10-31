@@ -11,6 +11,9 @@ namespace LSlife
         private static CustomMenu overview;
         private static CustomMenu detail;
         private static CustomMenu relations;
+        private static CustomMenu relationDetail;
+        private static CustomMenu agreements;
+        private static string selectedPartner;
         private static CustomMenu territories;
         private static CustomMenu cartels;
         private static CustomMenu cartelDetail;
@@ -24,7 +27,8 @@ namespace LSlife
         internal static bool IsGangMenu(CustomMenu menu)
         {
             return menu != null && (menu == overview || menu == detail || menu == relations ||
-                menu == territories || menu == cartels || menu == cartelDetail);
+                menu == territories || menu == cartels || menu == cartelDetail ||
+                menu == relationDetail || menu == agreements);
         }
 
         internal static CustomMenu Open()
@@ -35,6 +39,8 @@ namespace LSlife
 
         internal static CustomMenu Back(CustomMenu current)
         {
+            if (current == agreements) return BuildRelationDetail();
+            if (current == relationDetail) return BuildRelations();
             if (current == relations || current == territories) return BuildDetail();
             if (current == cartelDetail) return BuildCartels();
             if (current == cartels) return BuildOverview();
@@ -73,6 +79,7 @@ namespace LSlife
             detail = new CustomMenu(gang.Name, "TERRITOIRES / DIPLOMATIE");
             detail.Add("Territoires : " + gang.Territories.Count, () => { territoryPage = 0; CustomZeeMenu.ShowGangSubmenu(BuildTerritories()); });
             detail.Add("Membres : " + gang.Members, () => { });
+            detail.Add("Tresorerie : " + gang.Money + " $", () => { });
             detail.Add("Dirigeant : " + (string.IsNullOrEmpty(gang.LeaderName) ? "Non defini" : gang.LeaderName), () => { });
             detail.Add("Relations", () => CustomZeeMenu.ShowGangSubmenu(BuildRelations()));
             detail.Add("Retour", () => CustomZeeMenu.ShowGangSubmenu(BuildOverview()));
@@ -91,8 +98,10 @@ namespace LSlife
                 string id = gang.Id;
                 GangRelation relation = state.GetRelation(selectedGang, id);
                 relations.Add(gang.Name + " : " + relation.Trust + "/100", () =>
-                    GTA.UI.ShowSubtitle("Relation : " + state.Get(selectedGang, id) +
-                        " | Confiance : " + state.GetRelation(selectedGang, id).Trust + "/100", 3500));
+                {
+                    selectedPartner = id;
+                    CustomZeeMenu.ShowGangSubmenu(BuildRelationDetail());
+                });
             }
             if (relationPage > 0) relations.Add("Page precedente", () => { relationPage--; CustomZeeMenu.ShowGangSubmenu(BuildRelations()); });
             if (relationPage + 1 < pages) relations.Add("Page suivante", () => { relationPage++; CustomZeeMenu.ShowGangSubmenu(BuildRelations()); });
@@ -149,6 +158,62 @@ namespace LSlife
                 cartelDetail.Add(member, () => GTA.UI.ShowSubtitle("Membre du cartel : " + member, 2500));
             cartelDetail.Add("Retour", () => CustomZeeMenu.ShowGangSubmenu(BuildCartels()));
             return cartelDetail;
+        }
+
+        private static string RelationLabel(GangRelationStatus status)
+        {
+            switch (status)
+            {
+                case GangRelationStatus.Hostile: return "Hostile";
+                case GangRelationStatus.NonAggression: return "Non-agression";
+                case GangRelationStatus.Allied: return "Allie";
+                default: return "Neutre";
+            }
+        }
+
+        private static string AgreementLabel(GangAgreementType agreement)
+        {
+            switch (agreement)
+            {
+                case GangAgreementType.NonAggression: return "Non-agression";
+                case GangAgreementType.Trade: return "Commerce";
+                case GangAgreementType.ArmedSupport: return "Soutien arme";
+                case GangAgreementType.MutualDefense: return "Defense mutuelle";
+                default: return agreement.ToString();
+            }
+        }
+
+        private static CustomMenu BuildRelationDetail()
+        {
+            var state = LSL.DiplomacyState;
+            GangOrganization partner;
+            if (!state.TryGetGang(selectedPartner, out partner)) return BuildRelations();
+            GangRelation relation = state.GetRelation(selectedGang, selectedPartner);
+            relationDetail = new CustomMenu("DIPLOMATIE", partner.Name);
+            relationDetail.Add("Statut : " + RelationLabel(relation.Status), () => { });
+            relationDetail.Add("Confiance : " + relation.Trust + "/100", () => { });
+            relationDetail.Add("Accords : " + relation.Agreements.Count,
+                () => CustomZeeMenu.ShowGangSubmenu(BuildAgreements()));
+            relationDetail.Add(state.CanNegotiate(selectedGang, selectedPartner) ?
+                "Negociation possible" : "Negociation indisponible",
+                () => GTA.UI.ShowSubtitle("Les negociations necessitent une rencontre avec le dirigeant.", 3500));
+            relationDetail.Add("Retour", () => CustomZeeMenu.ShowGangSubmenu(BuildRelations()));
+            return relationDetail;
+        }
+
+        private static CustomMenu BuildAgreements()
+        {
+            var relation = LSL.DiplomacyState.GetRelation(selectedGang, selectedPartner);
+            agreements = new CustomMenu("ACCORDS", selectedGang + " / " + selectedPartner);
+            foreach (GangAgreementType type in Enum.GetValues(typeof(GangAgreementType)))
+            {
+                bool active = relation.Agreements.Contains(type);
+                string name = AgreementLabel(type);
+                agreements.Add(name + " : " + (active ? "Actif" : "Inactif"), () =>
+                    GTA.UI.ShowSubtitle(name + " : " + (active ? "accord actif" : "aucun accord"), 2500));
+            }
+            agreements.Add("Retour", () => CustomZeeMenu.ShowGangSubmenu(BuildRelationDetail()));
+            return agreements;
         }
 
     }
