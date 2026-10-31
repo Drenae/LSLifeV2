@@ -1,3 +1,11 @@
+## Build 31/10/2026 01:46:48 — LOT final des 8 avertissements
+
+- [x] Build utilisateur : **0 erreur / 8 avertissements**. Migration des 27 contrôles compilée.
+- [x] **3 pickups** migrés vers `GTA.Pickup.Create` : `DroppedBag`, `StashHouse`, `Tick`. Types, positions, rotations, modèles personnalisés et montants (0 / 100 / 100) conservés ; signatures vérifiées dans le code source SHVDN3.
+- [x] **5 requêtes de hauteur** migrées vers `World.GetGroundHeight(position, out float height)` dans `WorldFunctions` (4) et `CustomerLogic` (1), signature vérifiée dans SHVDN3. En cas d'absence de collision, conservation de la hauteur initiale dans les helpers de positionnement ; `CustomerLogic` utilise 0f comme ancien comportement de repli.
+- [ ] **Compiler ce lot**, objectif 0 erreur / 0 avertissement ; ne pas annoncer le résultat avant retour utilisateur.
+- [ ] Tests en jeu : pickups, altitude des spawns, client, commandes, coffres, interactions. `main` inchangée.
+
 ## Build 31/10/2026 01:45:11 — GROS LOT commandes GTA (8 fichiers)
 
 - [x] Build utilisateur : **0 erreur / 35 avertissements** ; les 2 CS0162 du HUD sont éliminés.
