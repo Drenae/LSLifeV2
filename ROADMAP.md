@@ -1,3 +1,12 @@
+## Build 31/10/2026 01:41:07 — correctif de compilation
+
+- [x] Build utilisateur : **2 erreurs CS0103, 41 avertissements** ; `DrugOrder.cs` utilisait encore `payed` après suppression du champ.
+- [x] `DrugOrder.cs` : retrait des deux affectations restantes à `payed` (59 et 248), variable jamais lue.
+- [x] `Prison.cs` : suppression de trois champs privés jamais lus (`Gate.DEBUG`, `Gate.Locked`, `BailAmount`) ; le `Prison.DEBUG` réellement utilisé est conservé.
+- [x] `Threat.cs` : initialisation explicite de `Responded` à `false`.
+- [ ] Relancer le build ; correctif non encore compilé.
+- [ ] Restent API contrôles, terrain, pickups, avertissements HUD ; tests en jeu. Branche `main` inchangée.
+
 ## Build 31/10/2026 01:39:15 — nettoyage transversal
 
 - [x] Build utilisateur : **0 erreur / 46 avertissements** (52 auparavant).
