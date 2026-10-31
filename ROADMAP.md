@@ -1,3 +1,15 @@
+## Build 31/10/2026 01:39:15 — nettoyage transversal
+
+- [x] Build utilisateur : **0 erreur / 46 avertissements** (52 auparavant).
+- [x] `InputEvents.cs` : suppression de la condition constante `if (1 == 0)`.
+- [x] `ItemSlot.cs` : suppression du champ privé inutilisé `SlotNumber`.
+- [x] `DefaultPed.cs` : initialisation explicite de `working`.
+- [x] `DrugOrder.cs` : suppression de `payed`, assigné mais jamais lu.
+- [x] `ShotHandler.cs` : suppression de `routeSet`, assigné mais jamais lu.
+- [ ] `Threat.Responded` : écriture GitHub bloquée, non modifié.
+- [ ] Reste : 27 avertissements de contrôles, 5 de terrain, 3 de pickups, code inaccessible HUD, état inutilisé de Prison ; migration à effectuer en conservant les comportements.
+- [ ] Compiler le lot, puis tests GTA. `main` inchangée.
+
 ## Build 31/10/2026 01:37:08
 
 - [x] Build utilisateur confirmé : **0 erreur / 52 avertissements**, DLL Release net48 générée.
