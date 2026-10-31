@@ -531,12 +531,12 @@ public class DriveBy
 		{
 			Leader = p;
 			p.KeepTaskWhenMarkedAsNoLongerNeeded = true;
-			DrivingStyle style = (DrivingStyle)786603;
+			GTA.VehicleDrivingFlags style = (GTA.VehicleDrivingFlags)786603;
 			if (Agressive)
 			{
-				style = (DrivingStyle)6;
+				style = (GTA.VehicleDrivingFlags)6;
 			}
-			p.Task.DriveTo(Vehicle, LastKnownPosition, 10f, (GTA.VehicleDrivingFlags)(int)style, 20f);
+			p.Task.DriveTo(Vehicle, LastKnownPosition, 10f, style, 20f);
 		}
 		else if (Agressive)
 		{
