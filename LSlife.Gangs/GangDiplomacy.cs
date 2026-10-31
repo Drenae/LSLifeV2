@@ -54,6 +54,8 @@ namespace LSlife.Gangs
         private readonly Dictionary<string, GangRelation> relations = new Dictionary<string, GangRelation>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, GangOrganization> organizations = new Dictionary<string, GangOrganization>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, GangCartel> cartels = new Dictionary<string, GangCartel>(StringComparer.OrdinalIgnoreCase);
+        internal bool IsDirty { get; private set; }
+        internal void MarkDirty() { IsDirty = true; }
         internal string PlayerGangId;
         internal PlayerGangRank PlayerRank = PlayerGangRank.Independent;
 
@@ -84,21 +86,23 @@ namespace LSlife.Gangs
         internal void Set(string first, string second, GangRelationStatus status)
         {
             if (!Enum.IsDefined(typeof(GangRelationStatus), status)) throw new ArgumentOutOfRangeException("status");
-            GetRelation(first, second).Status = status;
+            GangRelation relation = GetRelation(first, second);
+            if (relation.Status != status) { relation.Status = status; MarkDirty(); }
         }
 
         internal void ChangeTrust(string first, string second, int change)
         {
             GangRelation relation = GetRelation(first, second);
-            relation.Trust = (int)Math.Max(0L, Math.Min(100L, (long)relation.Trust + change));
+            int next = (int)Math.Max(0L, Math.Min(100L, (long)relation.Trust + change));
+            if (next != relation.Trust) { relation.Trust = next; MarkDirty(); }
         }
 
         internal void SetAgreement(string first, string second, GangAgreementType agreement, bool enabled)
         {
             if (!Enum.IsDefined(typeof(GangAgreementType), agreement)) throw new ArgumentOutOfRangeException("agreement");
             GangRelation relation = GetRelation(first, second);
-            if (enabled) relation.Agreements.Add(agreement);
-            else relation.Agreements.Remove(agreement);
+            bool changed = enabled ? relation.Agreements.Add(agreement) : relation.Agreements.Remove(agreement);
+            if (changed) MarkDirty();
             if (agreement == GangAgreementType.NonAggression)
             {
                 if (enabled && relation.Status == GangRelationStatus.Neutral) relation.Status = GangRelationStatus.NonAggression;
@@ -114,6 +118,7 @@ namespace LSlife.Gangs
             {
                 gang = new GangOrganization(id, name);
                 organizations.Add(id, gang);
+                MarkDirty();
             }
             return gang;
         }
@@ -130,9 +135,10 @@ namespace LSlife.Gangs
                 throw new ArgumentOutOfRangeException("rank");
             PlayerGangId = id;
             PlayerRank = rank;
+            MarkDirty();
         }
 
-        internal void LeaveGang() { PlayerGangId = null; PlayerRank = PlayerGangRank.Independent; }
+        internal void LeaveGang() { PlayerGangId = null; PlayerRank = PlayerGangRank.Independent; MarkDirty(); }
 
         internal GangOrganization FoundPlayerGang(string id, string name)
         {
@@ -141,6 +147,7 @@ namespace LSlife.Gangs
             if (gang.PlayerFounded || gang.Members != 0 || !string.IsNullOrEmpty(gang.LeaderName))
                 throw new InvalidOperationException("Organisation deja existante.");
             gang.PlayerFounded = true;
+            MarkDirty();
             JoinGang(id, PlayerGangRank.Leader);
             return gang;
         }
@@ -152,6 +159,7 @@ namespace LSlife.Gangs
             if (cartels.ContainsKey(name)) throw new InvalidOperationException("Cartel deja existant.");
             GangCartel cartel = new GangCartel(name, leaderGangId);
             cartels.Add(name, cartel);
+            MarkDirty();
             return cartel;
         }
 
@@ -163,6 +171,7 @@ namespace LSlife.Gangs
             if (cartels.Values.Any(c => c.Members.Contains(gangId)))
                 throw new InvalidOperationException("Ce gang appartient deja a un cartel.");
             cartel.Members.Add(gangId);
+            MarkDirty();
         }
 
         internal void RemoveCartelMember(string cartelName, string gangId)
@@ -171,10 +180,10 @@ namespace LSlife.Gangs
             if (!cartels.TryGetValue(cartelName, out cartel)) throw new ArgumentException("Cartel inconnu.");
             if (string.Equals(cartel.LeaderGangId, gangId, StringComparison.OrdinalIgnoreCase))
                 throw new InvalidOperationException("Le dirigeant doit dissoudre le cartel.");
-            cartel.Members.Remove(gangId);
+            if (cartel.Members.Remove(gangId)) MarkDirty();
         }
 
-        internal void DissolveCartel(string cartelName) { cartels.Remove(cartelName); }
+        internal void DissolveCartel(string cartelName) { if (cartels.Remove(cartelName)) MarkDirty(); }
 
         internal void Save(string path)
         {
@@ -200,6 +209,7 @@ namespace LSlife.Gangs
             new XDocument(root).Save(temporary);
             if (File.Exists(path)) File.Replace(temporary, path, path + ".bak");
             else File.Move(temporary, path);
+            IsDirty = false;
         }
 
         internal void Load(string path)
@@ -273,6 +283,7 @@ namespace LSlife.Gangs
             foreach (var pair in loaded.cartels) cartels.Add(pair.Key, pair.Value);
             PlayerGangId = loaded.PlayerGangId;
             PlayerRank = loaded.PlayerRank;
+            IsDirty = false;
         }
 
         private static int ReadInt(XElement element, string attribute, int fallback, int min, int max)
