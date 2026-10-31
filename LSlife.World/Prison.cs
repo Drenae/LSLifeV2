@@ -21,11 +21,9 @@ internal static class Prison
 
 	public class Gate
 	{
-		private readonly bool DEBUG = true;
 
 		public Prop Prop;
 
-		private bool Locked = true;
 
 		public Gate(Prop prop)
 		{
@@ -59,7 +57,6 @@ internal static class Prison
 
 	public static LsTimer SentanceTime = null;
 
-	private static int BailAmount = -1;
 
 	private static PrisonStates NewState = PrisonStates.None;
 
