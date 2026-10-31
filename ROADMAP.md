@@ -31,11 +31,12 @@
 - [ ] Verifier la precision des limites de quartiers, les performances et la compatibilite avec les autres mods de carte avant implementation.
 
 ### Interface et sauvegarde
-- [ ] Completer le navigateur des gangs avec les interactions diplomatiques et un ecran Cartel, sans permettre d'accord automatique sans rencontre.
-- [ ] Completer les fiches gangs : accords, detail des territoires, revenus et informations des chefs.
+- [ ] Ajouter les interactions diplomatiques et les negociations avec les chefs dans les ecrans gangs/cartels, sans accord automatique.
+- [ ] Completer les fiches gangs : accords, revenus et informations des chefs ; enrichir la fiche des membres de cartel.
 - [ ] Tester en jeu la restauration des territoires et des alliances apres Reload(), ainsi que les cas limites : mort d'un chef, disparition d'un gang, rupture d'accord.
 
 ### Validation
+- [ ] Verifier en voiture et a pied que les touches des menus ne declenchent plus les commandes GTA (phares, radio, telephone, deplacement, attaque).
 - [ ] Implémenter par lots cohérents sans modifier les mécaniques non concernées.
 - [ ] Compiler avec `Build-Baseline.ps1` après chaque lot.
 - [ ] Tester en jeu la création, l'évolution et la dissolution des alliances.
