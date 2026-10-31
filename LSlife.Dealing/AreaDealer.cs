@@ -266,11 +266,11 @@ public class AreaDealer
 					{
 						if (((Entity)dPed.CurrentVehicle.Driver).Handle != ((Entity)dPed).Handle)
 						{
-							dPed.CurrentVehicle.Driver.Task.DriveTo(dPed.CurrentVehicle, World.GetNextPositionOnSidewalk(((Entity)dPed.CurrentVehicle).Position), 3f, 5f);
+							dPed.CurrentVehicle.Driver.Task.DriveTo(dPed.CurrentVehicle, World.GetNextPositionOnSidewalk(((Entity)dPed.CurrentVehicle).Position), 3f, (GTA.VehicleDrivingFlags)0, 5f);
 						}
 						else
 						{
-							dPed.Task.DriveTo(dPed.CurrentVehicle, World.GetNextPositionOnSidewalk(((Entity)dPed.CurrentVehicle).Position), 3f, 5f);
+							dPed.Task.DriveTo(dPed.CurrentVehicle, World.GetNextPositionOnSidewalk(((Entity)dPed.CurrentVehicle).Position), 3f, (GTA.VehicleDrivingFlags)0, 5f);
 						}
 					}
 					else
