@@ -157,6 +157,31 @@ namespace LSlife.Gangs
                 relation.Agreements.Contains(GangAgreementType.MutualDefense);
         }
 
+        // Les renseignements diplomatiques ne sont accessibles qu'au gang du joueur
+        // et a ses allies directs. Les alliances de tiers restent confidentielles.
+        internal bool CanViewGangIntelligence(string gangId)
+        {
+            if (string.IsNullOrWhiteSpace(PlayerGangId) || string.IsNullOrWhiteSpace(gangId) ||
+                !organizations.ContainsKey(gangId)) return false;
+            if (string.Equals(PlayerGangId, gangId, StringComparison.OrdinalIgnoreCase)) return true;
+            return AreAllied(PlayerGangId, gangId);
+        }
+
+        internal bool CanViewRelationIntelligence(string first, string second)
+        {
+            if (string.IsNullOrWhiteSpace(PlayerGangId)) return false;
+            return (string.Equals(first, PlayerGangId, StringComparison.OrdinalIgnoreCase) &&
+                    CanViewGangIntelligence(second)) ||
+                   (string.Equals(second, PlayerGangId, StringComparison.OrdinalIgnoreCase) &&
+                    CanViewGangIntelligence(first));
+        }
+
+        internal bool CanViewCartelIntelligence(GangCartel cartel)
+        {
+            return cartel != null && !string.IsNullOrWhiteSpace(PlayerGangId) &&
+                cartel.Members.Contains(PlayerGangId);
+        }
+
         internal bool CanNegotiate(string first, string second)
         {
             if (string.IsNullOrWhiteSpace(first) || string.IsNullOrWhiteSpace(second) ||
