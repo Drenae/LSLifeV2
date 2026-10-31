@@ -273,6 +273,7 @@ public partial class LSL
 			InitializeGangDiplomacy();
 			firstRun = false;
 		}
+		TickGangDiplomacy();
 		if (DEBUG)
 		{
 			string debugString = "0";
