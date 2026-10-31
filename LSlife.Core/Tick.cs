@@ -812,7 +812,7 @@ public partial class LSL
 					}
 				}
 			}
-		lastTickStage = "if (wepDealer != null)";
+		lastTickStage = "vehicle-dealer processing";
 			if (wepDealer != null)
 			{
 				wepDealer.SetSpeed();
@@ -863,6 +863,7 @@ public partial class LSL
 				}
 			}
 		lastTickStage = "ShotHandler.Tick";
+		lastTickStage = "shot handler";
 			ShotHandler.Tick();
 		}
 		lastTickStage = "10-second maintenance";
@@ -901,7 +902,8 @@ public partial class LSL
 				}
 				if (entitiesCleanUp.Count > 0)
 				{
-					foreach (Entity ent in entitiesCleanUp.ToList())
+			lastTickStage = "entity cleanup loop";
+				foreach (Entity ent in entitiesCleanUp.ToList())
 					{
 						if (ent == (Entity)null || !ent.Exists())
 						{
@@ -947,6 +949,7 @@ public partial class LSL
 		if (Game.GameTime > areaCheckTimer + 999)
 		{
 			newWepAmount = 0;
+		lastTickStage = "weapon scan";
 			foreach (WeaponHash weapon in Enum.GetValues(typeof(WeaponHash)))
 			{
 				if (Function.Call<bool>(unchecked((Hash)(-8220001501650343748L)), (player.Character), ((int)weapon)))
@@ -999,7 +1002,9 @@ public partial class LSL
 				}
 			}
 			areaCheckTimer = Game.GameTime;
+		lastTickStage = "zone detection";
 			string newArea = LsFunctions.GetZoneLabel(playerPos);
+		lastTickStage = "existing area dealer validation";
 			if (aDealer != null && playerArea != aDealer.Area && (aDealer.dPed == null || !aDealer.dPed.Exists() || playerPos.DistanceTo(((Entity)aDealer.dPed).Position) > 300f))
 			{
 				if ((Entity)(object)aDealer.cPed != (Entity)null)
@@ -1010,6 +1015,7 @@ public partial class LSL
 				aDealer = null;
 			}
 		lastTickStage = "area changed";
+		lastTickStage = "zone transition";
 			if (playerArea != newArea)
 			{
 				playerArea = newArea;
@@ -1049,9 +1055,9 @@ public partial class LSL
 					}
 				}
 			}
-		lastTickStage = "area dealer spawn";
 			else if (aDealer == null && areas[areaIndex].CanSpawnDealer())
 			{
+				lastTickStage = "area dealer spawn";
 				LsFunctions.DbugString("demandBuff 0");
 				if (areas[areaIndex].GangPresance > 0f && (HouseHandler == null || HouseHandler.Houses == null || HouseHandler.Houses.Count == 0 || areas[areaIndex].Name != LsFunctions.GetZoneLabel(HouseHandler.Houses[0].entrancePos)))
 				{
