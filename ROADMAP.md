@@ -1,3 +1,9 @@
+## Compilation 31/10/2026 — log 02:49:48
+
+- [x] Cinq erreurs C# à `Tick.cs:1052` : marqueur de diagnostic inséré entre `if` et `else if`. Marqueur déplacé dans le bloc `else if`.
+- [x] Instrumentation renforcée dans `Tick.cs` : points de contrôle autour de scans d'armes, zones, nettoyage, dealer de quartier et début de tick. Capture de toutes les exceptions `Exception` (plus seulement `NullReferenceException`) dans `scripts/LSLife/LSLifeRuntimeErrors.log`, puis propagation à SHVDN.
+- [ ] Compilation locale à relancer : non vérifiable ici. Ensuite reproduire crash automatique après `Reload()` et transmettre le nouveau journal.
+
 ## Diagnostic du crash 03:44:22 — après `wepDealer`
 
 - [x] Dernier marqueur du log : `if (wepDealer != null)` ; localisation **non définitive** car de nombreuses instructions suivent avant le prochain marqueur.
