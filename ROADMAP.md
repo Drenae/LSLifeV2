@@ -1,3 +1,11 @@
+## Build 31/10/2026 01:45:11 — GROS LOT commandes GTA (8 fichiers)
+
+- [x] Build utilisateur : **0 erreur / 35 avertissements** ; les 2 CS0162 du HUD sont éliminés.
+- [x] **27 appels obsolètes** `Game.IsControlJustPressed/Released((Control)ID)` migrés dans `HirePed`, `DrugDealer`, `AreaDealer`, `StashHouse`, `Shot`, `StashVehicle`, `PlayerDealer`, `Tick`.
+- [x] Utilisation directe des natives `IS_DISABLED_CONTROL_JUST_PRESSED/RELEASED` avec groupe `2` et ID numérique inchangé : évite les incompatibilités de types entre `GTA.Control` et `GTA.Input.ControlAction` ; les événements pressed/released restent distincts.
+- [ ] **Recompiler ce lot de 27 modifications** et tester en jeu les interactions (menus, recrutement, coffre, tirs, dealer). Les signatures natives sont utilisées sans vérification locale de compilation.
+- [ ] 5 avertissements `GetGroundHeight` et 3 `CreatePickup` à traiter après validation des signatures SHVDN3 ; tests gameplay, puis fusion. `main` inchangée.
+
 ## Build 31/10/2026 01:43:40
 
 - [x] Build utilisateur **0 erreur / 37 avertissements**.
