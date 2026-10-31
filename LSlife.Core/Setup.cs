@@ -24,6 +24,7 @@ public partial class LSL
 {
 	private void Setup()
 	{
+		LSLifeLog.Info("Demarrage", "Initialisation LS Life - SHVDN3");
 		lsDebug = Function.Call<uint>(unchecked((Hash)(-3292914402564945716L)), ("lsdebug"));
 		areaDebug = Function.Call<uint>(unchecked((Hash)(-3292914402564945716L)), ("areadebug"));
 		spawnP = Function.Call<uint>(unchecked((Hash)(-3292914402564945716L)), ("spawnP"));
@@ -43,6 +44,7 @@ public partial class LSL
 			cocain1Price = 1300;
 		}
 		LsFunctions.LoadZoneData();
+		LSLifeLog.Info("Quartier", "Donnees des quartiers chargees : " + zoneData.Count);
 		LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
 		foreach (XElement element in LSLifeSave.Descendants())
 		{
