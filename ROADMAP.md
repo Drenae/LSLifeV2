@@ -25,6 +25,11 @@
 - [ ] Prévoir les contributions et le partage des revenus, avec règles transparentes.
 - [ ] Gérer les rivalités, trahisons et conséquences sur les relations et territoires.
 
+### Carte des territoires (faisabilite a valider)
+- [ ] Etudier l'affichage des territoires des gangs sur la carte du menu Pause uniquement, sans marquage sur la minimap.
+- [ ] Si les API GTA V Legacy / SHVDN2 le permettent, colorer les zones controlees par gang ; laisser les zones libres sans marquage.
+- [ ] Verifier la precision des limites de quartiers, les performances et la compatibilite avec les autres mods de carte avant implementation.
+
 ### Interface et sauvegarde
 - [ ] Concevoir un menu « Diplomatie / Cartel » cohérent avec CustomMenu.
 - [ ] Afficher membres, statut, confiance, accords, territoires et revenus.
