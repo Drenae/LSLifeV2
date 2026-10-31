@@ -27,6 +27,8 @@ public partial class LSL
 	private int phoneStartupStableSince = -1;
 	private const int PhoneStartupStableMs = 750;
 
+	private string lastTickStage = "not-started";
+
 	private void onTick(object sender, EventArgs e)
 	{
 		try
@@ -36,7 +38,7 @@ public partial class LSL
 		catch (NullReferenceException ex)
 		{
 			System.Diagnostics.StackTrace trace = new System.Diagnostics.StackTrace(ex, true);
-			string details = "[LSLife] NullReferenceException dans onTick : " + ex + Environment.NewLine + trace;
+			string details = "[LSLife] Derniere etape onTick : " + lastTickStage + Environment.NewLine + "NullReferenceException : " + ex + Environment.NewLine + trace;
 			try
 			{
 				Directory.CreateDirectory(@"scripts\LSLife");
@@ -219,6 +221,7 @@ public partial class LSL
 		//IL_4012: Unknown result type (might be due to invalid IL or missing references)
 		// Un Ped existant et IsPlaying ne suffisent pas : le protagoniste peut
 		// encore changer plusieurs fois pendant les premieres secondes.
+		lastTickStage = "if (iFruit == null)";
 		if (iFruit == null)
 		{
 			Ped currentPed = Game.Player != null ? Game.Player.Character : null;
@@ -244,6 +247,7 @@ public partial class LSL
 				iFruit = phone;
 			}
 		}
+		lastTickStage = "if (firstRun &&";
 		if (firstRun && (Entity)(object)player.Character != (Entity)null)
 		{
 			if (File.Exists("scripts\\LSLife\\LSLifeAreas.xml"))
@@ -288,6 +292,7 @@ public partial class LSL
 			}
 			firstRun = false;
 		}
+		lastTickStage = "if (DEBUG)";
 		if (DEBUG)
 		{
 			string debugString = "0";
@@ -298,6 +303,7 @@ public partial class LSL
 			myUIText = new GTA.UI.TextElement(debugString, new PointF(10, 10), 0.4f, Color.WhiteSmoke, GTA.UI.Font.ChaletLondon);
 			myUIText.Draw();
 		}
+		lastTickStage = "if (Prison.Started";
 		if (Prison.Started && Prison.CurrentState > Prison.PrisonStates.ApproachBarrier)
 		{
 			Function.Call(unchecked((Hash)(-7077668788463384353L)), ("restrictedareas"));
@@ -305,8 +311,10 @@ public partial class LSL
 		}
 		// iFruit doit traiter le telephone avant que les menus personnalises
 		// ne lisent ou ne neutralisent les controles GTA de cette frame.
+		lastTickStage = "if (iFruit != null) iFruit.Update();";
 		if (iFruit != null) iFruit.Update();
 		// Les menus CustomMenu ne dependent plus de l'existence du pool historique.
+		lastTickStage = "CustomZeeMenu.Tick();";
 		CustomZeeMenu.Tick();
 		CustomStashMenu.TickOncePerFrame();
 		CustomCustomerMenu.TickOncePerFrame();
@@ -319,6 +327,7 @@ public partial class LSL
 			DropDrugs.Drop();
 		}
 		Vector3 position;
+		lastTickStage = "if ((Entity)(object)player.Character";
 		if ((Entity)(object)player.Character != (Entity)null && ((Entity)player.Character).IsAlive && player.IsPlaying)
 		{
 			playerPos = ((Entity)player.Character).Position;
@@ -326,19 +335,24 @@ public partial class LSL
 			{
 				PedDebugger.OnTick();
 			}
+		lastTickStage = "if (DealerHandler != null)";
 			if (DealerHandler != null)
 			{
 				DealerHandler.OnTick();
 			}
+		lastTickStage = "if (HouseHandler != null)";
 			if (HouseHandler != null)
 			{
 				HouseHandler.Ontick();
 			}
+		lastTickStage = "if (ZeesDealers != null)";
 			if (ZeesDealers != null)
 			{
 				ZeesDealers.OnTick();
 			}
+		lastTickStage = "HandlePotentialWorker();";
 			HandlePotentialWorker();
+		lastTickStage = "Hud.DebugEnabled = AreaDebug;";
 			Hud.DebugEnabled = AreaDebug;
 			if (showInventory)
 			{
@@ -382,15 +396,18 @@ public partial class LSL
 					player.Character.Task.PerformSequence(giveUP);
 				}
 			}
+		lastTickStage = "HandleAreaDealers();";
 			HandleAreaDealers();
 			if (!CustomMenuShared.IsAnyGameplayMenuOpen() && (Entity)(object)weaponDealer1 != (Entity)null && readyToDeal && GTA.Native.Function.Call<bool>(GTA.Native.Hash.IS_DISABLED_CONTROL_JUST_PRESSED, 2, 51))
 			{
 				CustomWeaponDealerMenu.Open();
 			}
+		lastTickStage = "if (pStashVehicle != null)";
 			if (pStashVehicle != null)
 			{
 				pStashVehicle.OnTick();
 			}
+		lastTickStage = "if ((float)Game.GameTime > ratTimer";
 			if ((float)Game.GameTime > ratTimer + 1000f)
 			{
 				if (isDealing)
@@ -795,6 +812,7 @@ public partial class LSL
 					}
 				}
 			}
+		lastTickStage = "if (wepDealer != null)";
 			if (wepDealer != null)
 			{
 				wepDealer.SetSpeed();
@@ -1068,6 +1086,7 @@ public partial class LSL
 				LsFunctions.DbugString("Cant spawn dealer dead :" + areas[areaIndex].DealerKilled);
 			}
 		}
+		lastTickStage = "if (aDealer != null)";
 		if (aDealer != null) aDealer.UpdateRecruitmentDebugMarker(DEBUG);
 		if (Game.GameTime <= SlowTickTime + 375)
 		{
@@ -1088,6 +1107,7 @@ public partial class LSL
 		{
 			LsFunctions.SpawnDriveBy(player.Character, _agressive: false);
 		}
+		lastTickStage = "if (lPeds != null)";
 		if (lPeds != null)
 		{
 			lPeds.Ontick();
@@ -1216,6 +1236,7 @@ public partial class LSL
 		{
 			dealer1Angry = false;
 		}
+		lastTickStage = "LsFunctions.DateTimeUpdate();";
 		LsFunctions.DateTimeUpdate();
 		if (attackerPickupSpawned && !attackerPickup.ObjectExists())
 		{
