@@ -268,6 +268,7 @@ public partial class LSL : Script
 	public LSL()
 	{
 		Setup();
+		Hud.Innit();
 		((Script)this).Aborted += OnAbort;
 		((Script)this).Tick += onTick;
 		((Script)this).KeyDown += onKeyDown;
