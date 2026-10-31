@@ -9,6 +9,7 @@ namespace LSlife
     public partial class LSL
     {
         private static readonly GangDiplomacy GangPolitics = new GangDiplomacy();
+        internal static GangDiplomacy DiplomacyState { get { return GangPolitics; } }
         private const string GangDiplomacySavePath = "scripts\\LSLife\\LSLife_GangDiplomacy.xml";
         private int lastGangDiplomacySave;
 
