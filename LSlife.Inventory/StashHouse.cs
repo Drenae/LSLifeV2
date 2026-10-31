@@ -280,7 +280,7 @@ public class StashHouse
 		else
 		{
 			pickupSpawned = true;
-			healthPickup = World.CreatePickup(unchecked((PickupType)(-1888453608)), houseHealthPickPos, Vector3.Zero, new Model("prop_ld_health_pack"), 100);
+			healthPickup = Pickup.Create(unchecked((PickupType)(-1888453608)), houseHealthPickPos, Vector3.Zero, amount: 100, customModel: new Model("prop_ld_health_pack"));
 			LsFunctions.DbugString("Spawned Health");
 		}
 		if (!CustomMenuShared.IsAnyGameplayMenuOpen() && LSL.playerPos.DistanceTo(stashPos) <= 1f)
