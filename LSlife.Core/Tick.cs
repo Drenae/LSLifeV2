@@ -1110,6 +1110,7 @@ public partial class LSL
 		else if (Function.Call<bool>((Hash)6160435850588389544L, (areaDebug)))
 		{
 			AreaDebug = !AreaDebug;
+			GTA.UI.Screen.ShowSubtitle(AreaDebug ? "Diagnostic quartier active" : "Diagnostic quartier desactive", 1800);
 		}
 		else if (Function.Call<bool>((Hash)6160435850588389544L, (spawnP)))
 		{
