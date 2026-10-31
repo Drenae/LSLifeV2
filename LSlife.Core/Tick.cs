@@ -355,27 +355,21 @@ public partial class LSL
 			HandlePotentialWorker();
 		lastTickStage = "Hud.DebugEnabled = AreaDebug;";
 			Hud.DebugEnabled = AreaDebug;
-			if (showInventory)
+			if (showInventory) Hud.Draw();
+			else Hud.Hide();
+			if (AreaDebug && !CustomMenuShared.IsAnyGameplayMenuOpen()
+				&& !CustomZeeMenu.Visible && !CustomHudOptionsMenu.Visible
+				&& !CustomStashMenu.Visible && !CustomCustomerMenu.Visible
+				&& !CustomWeaponDealerMenu.Visible && !CustomHireDealerMenu.Visible
+				&& !CustomWorkerMenu.Visible)
 			{
-				Hud.Draw();
-				if (AreaDebug && !CustomMenuShared.IsAnyGameplayMenuOpen()
-                    && !CustomZeeMenu.Visible && !CustomHudOptionsMenu.Visible
-                    && !CustomStashMenu.Visible && !CustomCustomerMenu.Visible
-                    && !CustomWeaponDealerMenu.Visible && !CustomHireDealerMenu.Visible
-                    && !CustomWorkerMenu.Visible)
-				{
-					areaInfoUI();
-					ZeeInfoUI();
-					PlayerUI();
-					GangUI();
-				}
-				GTA.Native.Function.Call<int>(GTA.Native.Hash.GET_ENTITY_PLAYER_IS_FREE_AIMING_AT, player.Handle);
+				lastTickStage = "debug overlay";
+				areaInfoUI();
+				ZeeInfoUI();
+				PlayerUI();
+				GangUI();
+			}
 
-			}
-			else
-			{
-				Hud.Hide();
-			}
 			if (pigs.Count > 0 && pigs[0].AskPlayerToComply)
 			{
 				if ((float)Game.GameTime > displayHelpTimer + 3000f && !CustomMenuShared.IsAnyGameplayMenuOpen())
