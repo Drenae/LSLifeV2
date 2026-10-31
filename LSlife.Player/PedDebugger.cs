@@ -12,7 +12,7 @@ public class PedDebugger
 {
 	private List<Ped> debugPeds = new List<Ped>();
 
-	private int dTime;
+	private int dTime = 0;
 
 	private int dInterval = 2000;
 
