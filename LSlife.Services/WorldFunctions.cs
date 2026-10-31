@@ -84,7 +84,7 @@ internal static partial class LsFunctions
 		//IL_0049: Unknown result type (might be due to invalid IL or missing references)
 		OutputArgument x2dp = new OutputArgument();
 		OutputArgument y2dp = new OutputArgument();
-		Function.Call((Hash)3812348786834502901L, (pos.X), (pos.Y), (pos.Z), (InputArgument)(object)x2dp, (InputArgument)(object)y2dp);
+		Function.Call((Hash)3812348786834502901L, (pos.X), (pos.Y), (pos.Z), x2dp, y2dp);
 		return new Vector2(x2dp.GetResult<float>(), y2dp.GetResult<float>());
 	}
 
@@ -187,7 +187,7 @@ internal static partial class LsFunctions
 		//IL_0055: Unknown result type (might be due to invalid IL or missing references)
 		//IL_004f: Unknown result type (might be due to invalid IL or missing references)
 		OutputArgument outArgA = new OutputArgument();
-		if (Function.Call<bool>((Hash)2596914974566212883L, (pos.X), (pos.Y), (pos.Z), (InputArgument)(object)outArgA, (1), (3f), (0)))
+		if (Function.Call<bool>((Hash)2596914974566212883L, (pos.X), (pos.Y), (pos.Z), outArgA, (1), (3f), (0)))
 		{
 			return outArgA.GetResult<Vector3>();
 		}
