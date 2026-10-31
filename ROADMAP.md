@@ -1,3 +1,11 @@
+## Etiquettes DEBUG PNJ - comparaison captures SHVDN2/SHVDN3
+
+- [x] Captures comparees : SHVDN2 affiche etats/taches au-dessus des PNJ, SHVDN3 conserve les panneaux mais perd les etiquettes.
+- [x] `PedDebugger.cs` : texte SHVDN3 redirige vers `HudRender.Text` en coordonnees virtuelles 1920x1080, avec verification des coordonnees visibles.
+- [x] Correction du balayage de PNJ : `dTime` actualise toutes les 2 secondes (auparavant jamais actualise).
+- [ ] Compilation et verification en jeu de la lisibilite/position des etiquettes et de leur rafraichissement apres changement de quartier.
+- [ ] Investiguer separement les regressions de gameplay/spawn sans supposer que l'affichage DEBUG en est la cause.
+
 ## Journalisation globale - 31/10/2026
 
 - [x] Nouveau `LSLifeLog` centralise : `scripts\\LSLife\\LSLife.log`, date, niveau et categorie (`[Planque]`, `[Dealer]`, `[Quartier]`, `[Tick]`, `[Demarrage]`).
