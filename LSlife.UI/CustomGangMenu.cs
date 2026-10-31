@@ -51,10 +51,12 @@ namespace LSlife
         private static CustomMenu BuildOverview()
         {
             var state = LSL.DiplomacyState;
-            var gangs = state.Organizations.ToList();
+            var gangs = state.Organizations.Where(g => state.CanViewGangIntelligence(g.Id)).ToList();
             int pages = Math.Max(1, (gangs.Count + PageSize - 1) / PageSize);
             page = Math.Max(0, Math.Min(page, pages - 1));
             overview = new CustomMenu("GANGS", "ORGANISATIONS  " + (page + 1) + "/" + pages);
+            if (gangs.Count == 0) overview.Add("Aucun gang allie", () =>
+                GTA.UI.ShowSubtitle("Rencontrez des chefs de gang pour etablir des alliances.", 3500));
             foreach (GangOrganization gang in gangs.Skip(page * PageSize).Take(PageSize))
             {
                 string id = gang.Id;
@@ -68,7 +70,7 @@ namespace LSlife
             if (page > 0) overview.Add("Page precedente", () => { page--; CustomZeeMenu.ShowGangSubmenu(BuildOverview()); });
             if (page + 1 < pages) overview.Add("Page suivante", () => { page++; CustomZeeMenu.ShowGangSubmenu(BuildOverview()); });
             overview.Add("Cartels", () => { cartelPage = 0; CustomZeeMenu.ShowGangSubmenu(BuildCartels()); });
-            overview.Add("Retour", () => CustomZeeMenu.ShowGangSubmenu(null));
+            overview.Add("Fermer", () => CustomZeeMenu.Close());
             return overview;
         }
 
@@ -98,10 +100,13 @@ namespace LSlife
         {
             var state = LSL.DiplomacyState;
             if (!state.CanViewGangIntelligence(selectedGang)) return BuildDetail();
-            var gangs = state.Organizations.Where(g => !string.Equals(g.Id, selectedGang, StringComparison.OrdinalIgnoreCase)).ToList();
+            var gangs = state.Organizations.Where(g =>
+                !string.Equals(g.Id, selectedGang, StringComparison.OrdinalIgnoreCase) &&
+                state.CanViewRelationIntelligence(selectedGang, g.Id)).ToList();
             int pages = Math.Max(1, (gangs.Count + PageSize - 1) / PageSize);
             relationPage = Math.Max(0, Math.Min(relationPage, pages - 1));
             relations = new CustomMenu("RELATIONS", selectedGang + "  " + (relationPage + 1) + "/" + pages);
+            if (gangs.Count == 0) relations.Add("Aucune relation accessible", () => { });
             foreach (GangOrganization gang in gangs.Skip(relationPage * PageSize).Take(PageSize))
             {
                 string id = gang.Id;
@@ -143,7 +148,7 @@ namespace LSlife
         private static CustomMenu BuildCartels()
         {
             var state = LSL.DiplomacyState;
-            var groups = state.Cartels.ToList();
+            var groups = state.Cartels.Where(state.CanViewCartelIntelligence).ToList();
             int pages = Math.Max(1, (groups.Count + PageSize - 1) / PageSize);
             cartelPage = Math.Max(0, Math.Min(cartelPage, pages - 1));
             cartels = new CustomMenu("CARTELS", "ORGANISATIONS  " + (cartelPage + 1) + "/" + pages);
