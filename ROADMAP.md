@@ -1,3 +1,10 @@
+## Build 31/10/2026 01:43:40
+
+- [x] Build utilisateur **0 erreur / 37 avertissements**.
+- [x] `Hud.cs` : correction complémentaire des deux branches `CS0162` : les drapeaux de visibilité ne sont plus `readonly` (la compilation peut toujours évaluer un `static readonly false` comme constant dans ce contexte). Valeurs par défaut conservées à `false`.
+- [ ] Recompiler ce correctif ; avertissements contrôles, terrain et pickups à migrer avec signatures SHVDN3 vérifiées.
+- [ ] Tests en jeu avant fusion ; `main` inchangée.
+
 ## Build 31/10/2026 01:41:57
 
 - [x] Build utilisateur **0 erreur / 37 avertissements**.
