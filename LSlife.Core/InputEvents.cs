@@ -151,10 +151,6 @@ public partial class LSL
 
 	private void OnAbort(object sender, EventArgs e)
 	{
-		if (1 == 0)
-		{
-			return;
-		}
 		if (ShotHandler.shots.Count > 0)
 		{
 			foreach (Shot s in ShotHandler.shots)
