@@ -49,7 +49,21 @@ internal static class CustomZeeMenu
         menu.Add("Acheter des armes", () => RunZeeAction(ZeeContactActions.CallWeaponDealer));
         menu.Add("Demander a etre depose", () => RunZeeAction(ZeeContactActions.CallLift));
         menu.Add("Rembourser la dette", () => RunZeeAction(ZeeContactActions.PayZeeDebt), () => LSL.dealer1Debt > 0);
+        menu.Add("Gangs et territoires", OpenGangs);
         menu.Add("Options du HUD", OpenHudOptions);
+    }
+
+    private static void OpenGangs()
+    {
+        ShowGangSubmenu(CustomGangMenu.Open());
+    }
+
+    internal static void ShowGangSubmenu(CustomMenu target)
+    {
+        if (activeMenu != null) activeMenu.Close();
+        activeMenu = target ?? menu;
+        quantityRepeat.Reset();
+        activeMenu.Open();
     }
 
     private static void OpenHudOptions()
@@ -255,7 +269,12 @@ internal static class CustomZeeMenu
         {
             quantityRepeat.Reset();
             activeMenu.Close();
-            if (IsDrugMenu(activeMenu)) { activeMenu = orderMenu; orderMenu.Open(); }
+            if (CustomGangMenu.IsGangMenu(activeMenu))
+            {
+                activeMenu = CustomGangMenu.Back(activeMenu) ?? menu;
+                activeMenu.Open();
+            }
+            else if (IsDrugMenu(activeMenu)) { activeMenu = orderMenu; orderMenu.Open(); }
             else if (activeMenu == orderMenu || activeMenu == dealerMenu)
             { activeMenu = menu; menu.Open(); }
             else activeMenu = null;
@@ -278,7 +297,8 @@ internal static class CustomZeeMenu
         bool showOrderDetails = displayed == orderMenu || IsDrugMenu(displayed);
         var layout = new CustomMenuLayout();
         string subtitle = IsDrugMenu(displayed) || displayed == orderMenu ? "" :
-            displayed == dealerMenu ? "ZEE / ACTIVITE" : "CONTACT  /  SERVICES";
+            displayed == dealerMenu ? "ZEE / ACTIVITE" :
+            CustomGangMenu.IsGangMenu(displayed) ? displayed.Subtitle : "CONTACT  /  SERVICES";
         layout.Header(displayed.Title, subtitle, titleScale: 0.67f);
         layout.Separator(0.004f);
         layout.Block(0.045f, y =>
