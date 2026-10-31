@@ -270,6 +270,7 @@ public partial class LSL
 			{
 				areaIndex = areas.IndexOf(cArea);
 			}
+			InitializeGangDiplomacy();
 			firstRun = false;
 		}
 		if (DEBUG)
