@@ -1,3 +1,10 @@
+## Diagnostic du crash 03:44:22 — après `wepDealer`
+
+- [x] Dernier marqueur du log : `if (wepDealer != null)` ; localisation **non définitive** car de nombreuses instructions suivent avant le prochain marqueur.
+- [x] `Tick.cs` : garde de blip sur nettoyage périodique (`||` → `&&`), contrôle de validité du ped `aDealer` avant accès à sa position, contrôle de la présence de planques avant `Houses[0]`.
+- [x] Sept nouveaux points de contrôle autour de `ShotHandler`, entretien 10 secondes, actualisation des zones et création des dealers de quartier.
+- [ ] Recompiler et reproduire ; exploiter le nouveau marqueur du log pour isoler l'instruction fautive. Pas encore de validation en jeu.
+
 ## Diagnostic 31/10/2026 03:36–03:40
 
 - [x] Log reçu : deux `NullReferenceException` identiques, stack `OnTickCore → onTick`, sans PDB/numéro de ligne. Le précédent journal ne suffit pas à isoler la cause.
