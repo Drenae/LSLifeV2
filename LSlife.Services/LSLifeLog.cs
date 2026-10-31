@@ -11,7 +11,7 @@ internal static class LSLifeLog
     private const string LogPath = @"scripts\LSLife\LSLife.log";
     private const long MaxBytes = 5 * 1024 * 1024;
 
-    public static void Info(string category, string message) { Write("INFO", category, message, null); }
+    public static void Info(string category, string message) { /* Les evenements normaux ne sont pas journalises. */ }
     public static void Warning(string category, string message) { Write("WARN", category, message, null); }
     public static void Error(string category, string message, Exception exception = null) { Write("ERROR", category, message, exception); }
 
