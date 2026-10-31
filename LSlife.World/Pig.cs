@@ -6,6 +6,7 @@ namespace LSlife;
 
 public class Pig
 {
+	private readonly bool DEBUG = false;
 	public enum States
 	{
 		Destroy,
