@@ -240,8 +240,8 @@ internal static partial class LsFunctions
 			{
 				SendTextMsg("Ils t'ont vu dealer. Tu vas attirer l'attention dans ce quartier.");
 				LSL.areas[LSL.areaIndex].Heat++;
-				Game.Player.Wanted.SetWantedLevel(1);
-			Game.Player.Wanted.ApplyWantedLevelChangeNow();
+				Game.Player.Wanted.SetWantedLevel(1, false);
+			Game.Player.Wanted.ApplyWantedLevelChangeNow(false);
 				break;
 			}
 		}
@@ -299,8 +299,8 @@ internal static partial class LsFunctions
 			{
 				SendTextMsg("Ils t'ont vu dealer. Tu vas attirer l'attention dans ce quartier.");
 				LSL.areas[LSL.areaIndex].Heat += 200f;
-				Game.Player.Wanted.SetWantedLevel(1);
-			Game.Player.Wanted.ApplyWantedLevelChangeNow();
+				Game.Player.Wanted.SetWantedLevel(1, false);
+			Game.Player.Wanted.ApplyWantedLevelChangeNow(false);
 				break;
 			}
 		}
