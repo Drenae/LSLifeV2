@@ -54,6 +54,8 @@ namespace LSlife.Gangs
         private readonly Dictionary<string, GangRelation> relations = new Dictionary<string, GangRelation>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, GangOrganization> organizations = new Dictionary<string, GangOrganization>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, GangCartel> cartels = new Dictionary<string, GangCartel>(StringComparer.OrdinalIgnoreCase);
+        internal IEnumerable<GangOrganization> Organizations { get { return organizations.Values.OrderBy(g => g.Name); } }
+        internal IEnumerable<GangCartel> Cartels { get { return cartels.Values.OrderBy(g => g.Name); } }
         internal bool IsDirty { get; private set; }
         internal void MarkDirty() { IsDirty = true; }
         internal string PlayerGangId;
