@@ -1007,7 +1007,8 @@ public partial class LSL
 				{
 					LsFunctions.RemovePedFromWorld(aDealer.cPed, clearTask: false);
 				}
-				LsFunctions.RemovePedFromWorld(aDealer.dPed, clearTask: false);
+				LSLifeLog.Warning("Dealer", "Retrait dealer : quartier joueur=" + playerArea + ", quartier dealer=" + aDealer.Area + ", nouvelle zone=" + newArea + ", distance=" + (aDealer.dPed != null && aDealer.dPed.Exists() ? playerPos.DistanceTo(((Entity)aDealer.dPed).Position).ToString("F1") : "ped invalide"));
+				if (aDealer.dPed != null && aDealer.dPed.Exists()) LsFunctions.RemovePedFromWorld(aDealer.dPed, clearTask: false);
 				aDealer = null;
 				LSLifeLog.Info("Dealer", "Ancien dealer retire apres changement de quartier");
 			}
@@ -1168,6 +1169,7 @@ public partial class LSL
 			}
 			if (aDealer != null && ((Entity)aDealer.dPed).IsDead)
 			{
+				LSLifeLog.Warning("Dealer", "Dealer mort : quartier=" + playerArea + ", ped=" + aDealer.dPed.Handle);
 				areas[areaIndex].KillDealer();
 				if (aDealer.dPed.WasKilledByTakedown && LsFunctions.CanSee((Entity)(object)aDealer.dPed, (Entity)(object)player.Character) && rnd.Next(0, 3) == 0)
 				{
