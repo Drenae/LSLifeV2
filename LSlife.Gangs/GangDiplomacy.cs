@@ -181,7 +181,7 @@ namespace LSlife.Gangs
             int requiredTrust = agreement == GangAgreementType.MutualDefense ? 75 :
                 agreement == GangAgreementType.ArmedSupport ? 65 :
                 agreement == GangAgreementType.Trade ? 50 : 35;
-            if (relation.Trust < requiredTrust) return false;
+            if (relation.Trust < requiredTrust || relation.Agreements.Contains(agreement)) return false;
             SetAgreement(first, second, agreement, true);
             if (agreement == GangAgreementType.MutualDefense)
                 Set(first, second, GangRelationStatus.Allied);
@@ -257,8 +257,8 @@ namespace LSlife.Gangs
             GangCartel cartel;
             if (!cartels.TryGetValue(cartelName, out cartel) || !organizations.ContainsKey(gangId))
                 throw new ArgumentException("Cartel ou gang inconnu.");
-            if (cartels.Values.Any(c => c.Members.Contains(gangId)))
-                throw new InvalidOperationException("Ce gang appartient deja a un cartel.");
+            if (!CanJoinCartel(cartelName, gangId))
+                throw new InvalidOperationException("Adhesion refusee : alliance, confiance ou disponibilite insuffisante.");
             cartel.Members.Add(gangId);
             MarkDirty();
         }
