@@ -17,6 +17,7 @@ public class StashHouseHandler
 	public StashHouseHandler()
 	{
 		LoadHouses();
+		LSLifeLog.Info("Planque", "Planques chargees : " + Houses.Count);
 		if (LSL.DEBUG)
 		{
 			GTA.UI.Notification.PostTicker("Planques chargées : " + Houses.Count, false, false);
@@ -275,8 +276,10 @@ public class StashHouseHandler
 			if (found)
 			{
 				StashDoc.Save("scripts\\LSLife\\LSLife_StashHouses.xml");
+			LSLifeLog.Info("Planque", "Sauvegarde des donnees de planque");
 			}
 			Houses.Add(new StashHouse(id, entrance, exit, stash, health, purchased, price, inside, weed, crack, cocain, money, armour, sWeapons, sWeps));
+			LSLifeLog.Info("Planque", "Planque chargee : id=" + id + ", achetee=" + purchased);
 		}
 	}
 
