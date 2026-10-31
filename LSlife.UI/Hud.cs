@@ -144,48 +144,42 @@ internal static class Hud
 		posY = System.Math.Max(25, System.Math.Min(MaxY - 164, posY + dy));
 	}
 
+	private const string HudPositionFile = "scripts\\LSLife\\LSLife_HudPositions.xml";
 	private static void LoadInvConfig()
 	{
-		foreach (XElement element in LSL.LSLifeSave.Descendants())
+		// Priorite au fichier dedie : l'ancien fichier reste une source de migration.
+		XDocument source = LSL.LSLifeSave;
+		if (System.IO.File.Exists(HudPositionFile))
 		{
-			if (!(element.Name == "config"))
+			try { source = XDocument.Load(HudPositionFile); }
+			catch (Exception ex)
 			{
-				continue;
-			}
-			{
-				foreach (XElement e in element.Elements())
-				{
-					if (e.Name == "invPosX")
-					{
-						int.TryParse(e.Value, out posX);
-					}
-					else if (e.Name == "invPosY")
-					{
-						int.TryParse(e.Value, out posY);
-					}
-					else if (e.Name == "heatPosX") int.TryParse(e.Value, out barsX);
-					else if (e.Name == "heatPosY") int.TryParse(e.Value, out barsY);
-					else if (e.Name == "debugPosX") int.TryParse(e.Value, out debugX);
-					else if (e.Name == "debugPosY") int.TryParse(e.Value, out debugY);
-				}
-				// Migrer une seule fois les anciennes coordonnées (bord droit).
-				if (element.Element("hudPosVersion") == null)
-				{
-					posX = System.Math.Max(0, posX - 365);
-				}
-				break;
+				LsFunctions.DbugString("HUD : lecture positions impossible : " + ex.Message);
 			}
 		}
+		XElement config = source.Descendants("config").FirstOrDefault();
+		if (config == null) return;
+		posX = ReadPosition(config, "invPosX", posX);
+		posY = ReadPosition(config, "invPosY", posY);
+		barsX = ReadPosition(config, "heatPosX", barsX);
+		barsY = ReadPosition(config, "heatPosY", barsY);
+		debugX = ReadPosition(config, "debugPosX", debugX);
+		debugY = ReadPosition(config, "debugPosY", debugY);
+		if (config.Element("hudPosVersion") == null)
+			posX = System.Math.Max(0, posX - 365);
+	}
+
+	private static int ReadPosition(XElement config, string key, int fallback)
+	{
+		int value;
+		XElement element = config.Element(key);
+		return element != null && int.TryParse(element.Value, out value) ? value : fallback;
 	}
 
 	public static void SavePosition()
 	{
-		XElement config = LSL.LSLifeSave.Descendants("config").FirstOrDefault();
-		if (config == null)
-		{
-			config = new XElement("config");
-			LSL.LSLifeSave.Root.Add(config);
-		}
+		// Un fichier independant evite les ecrasements par les autres sauvegardes LS Life.
+		XElement config = new XElement("config");
 		SetConfig(config, "invPosX", posX);
 		SetConfig(config, "invPosY", posY);
 		SetConfig(config, "heatPosX", barsX);
@@ -193,7 +187,12 @@ internal static class Hud
 		SetConfig(config, "debugPosX", debugX);
 		SetConfig(config, "debugPosY", debugY);
 		SetConfig(config, "hudPosVersion", 2);
-		LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
+		string temporary = HudPositionFile + ".tmp";
+		new XDocument(new XElement("hudPositions", config)).Save(temporary);
+		if (System.IO.File.Exists(HudPositionFile))
+			System.IO.File.Replace(temporary, HudPositionFile, HudPositionFile + ".bak");
+		else
+			System.IO.File.Move(temporary, HudPositionFile);
 	}
 
 	private static void SetConfig(XElement config, string key, int value)
