@@ -38,6 +38,7 @@ public partial class LSL
 		}
 		catch (Exception ex)
 		{
+			LSLifeLog.Error("Tick", "Echec pendant : " + lastTickStage, ex);
 			System.Diagnostics.StackTrace trace = new System.Diagnostics.StackTrace(ex, true);
 			string details = "[LSLife] Derniere etape onTick : " + lastTickStage + Environment.NewLine + "Exception : " + ex + Environment.NewLine + trace;
 			try
@@ -1008,11 +1009,13 @@ public partial class LSL
 				}
 				LsFunctions.RemovePedFromWorld(aDealer.dPed, clearTask: false);
 				aDealer = null;
+				LSLifeLog.Info("Dealer", "Ancien dealer retire apres changement de quartier");
 			}
 		lastTickStage = "area changed";
 		lastTickStage = "zone transition";
 			if (playerArea != newArea)
 			{
+				LSLifeLog.Info("Quartier", "Transition : " + playerArea + " -> " + newArea);
 				playerArea = newArea;
 				if (areas.FindAll((Area a) => a.Name == playerArea).Count == 0)
 				{
@@ -1077,6 +1080,7 @@ public partial class LSL
 							if (!CheckIfPedUsed(p3, _allowPolice: false, _allowVehicle: false))
 							{
 								aDealer = new AreaDealer(p3);
+								LSLifeLog.Info("Dealer", "Dealer de quartier cree : " + playerArea + " / ped=" + p3.Handle);
 								aDealer.UpdateRecruitmentDebugMarker(DEBUG);
 								if (DEBUG)
 								{
