@@ -20,8 +20,28 @@ namespace LSlife
                 foreach (Area area in areas)
                 {
                     if (area.Gang == null) continue;
-                    GangOrganization gang = GangPolitics.RegisterGang(area.Gang.Name, area.Gang.Name);
-                    gang.Territories.Add(area.Name);
+                    // Reutiliser le proprietaire enregistre au lieu du tirage aleatoire d'Area.
+                    GangOrganization previousOwner = null;
+                    foreach (string name in GangUtilities.LsLifeGangs.Values.Distinct(StringComparer.OrdinalIgnoreCase))
+                    {
+                        GangOrganization candidate;
+                        if (GangPolitics.TryGetGang(name, out candidate) &&
+                            candidate.Territories.Contains(area.Name))
+                        {
+                            previousOwner = candidate;
+                            break;
+                        }
+                    }
+                    if (previousOwner != null)
+                    {
+                        if (!string.Equals(area.Gang.Name, previousOwner.Name, StringComparison.OrdinalIgnoreCase))
+                            area.Gang = new Gang(previousOwner.Name, (int)area.GangPresance * 10000, 50, 20, area.Name);
+                    }
+                    else
+                    {
+                        GangOrganization newOwner = GangPolitics.RegisterGang(area.Gang.Name, area.Gang.Name);
+                        newOwner.Territories.Add(area.Name);
+                    }
                 }
                 lastGangDiplomacySave = Game.GameTime;
             }
