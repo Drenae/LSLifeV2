@@ -1586,7 +1586,7 @@ public partial class LSL
 				{
 					attackerAttacking = false;
 					attackerPickupSpawned = true;
-					attackerPickup = World.CreatePickup((PickupType)341217064, ((Entity)attacker).Position, Vector3.Zero, new Model("prop_big_bag_01"), 100);
+					attackerPickup = Pickup.Create((PickupType)341217064, ((Entity)attacker).Position, Vector3.Zero, amount: 100, customModel: new Model("prop_big_bag_01"));
 				}
 				attacker = null;
 			}
