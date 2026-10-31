@@ -29,6 +29,26 @@ public partial class LSL
 
 	private void onTick(object sender, EventArgs e)
 	{
+		try
+		{
+			OnTickCore(sender, e);
+		}
+		catch (NullReferenceException ex)
+		{
+			System.Diagnostics.StackTrace trace = new System.Diagnostics.StackTrace(ex, true);
+			string details = "[LSLife] NullReferenceException dans onTick : " + ex + Environment.NewLine + trace;
+			try
+			{
+				Directory.CreateDirectory(@"scripts\LSLife");
+				File.AppendAllText(@"scripts\LSLife\LSLifeRuntimeErrors.log", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + Environment.NewLine + details + Environment.NewLine);
+			}
+			catch (Exception) { }
+			throw;
+		}
+	}
+
+	private void OnTickCore(object sender, EventArgs e)
+	{
 		//IL_02c5: Unknown result type (might be due to invalid IL or missing references)
 		//IL_02cf: Expected Obj, but got Unknown
 		//IL_018d: Unknown result type (might be due to invalid IL or missing references)
