@@ -1,3 +1,10 @@
+## Crash blip dealer - 31/10/2026
+
+- [x] Log : NullReferenceException dans `LsFunctions.AddBlip`, appele par `AreaDealer.DoState`.
+- [x] `WorldFunctions.cs` : utiliser le retour de `Entity.AddBlip()` et verifier entite/blip avant manipulation.
+- [x] Avertissement `[Blip]` dans `LSLife.log` si creation impossible.
+- [ ] Compiler et verifier en jeu ; surveiller les nouvelles exceptions et les avertissements `[Blip]`.
+
 ## Etiquettes DEBUG PNJ - comparaison captures SHVDN2/SHVDN3
 
 - [x] Captures comparees : SHVDN2 affiche etats/taches au-dessus des PNJ, SHVDN3 conserve les panneaux mais perd les etiquettes.
