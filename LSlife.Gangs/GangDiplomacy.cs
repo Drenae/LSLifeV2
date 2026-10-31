@@ -128,6 +128,50 @@ namespace LSlife.Gangs
             return organizations.TryGetValue(id, out gang);
         }
 
+        internal string GetTerritoryOwner(string areaName)
+        {
+            if (string.IsNullOrWhiteSpace(areaName)) return null;
+            foreach (GangOrganization gang in organizations.Values)
+                if (gang.Territories.Contains(areaName)) return gang.Id;
+            return null;
+        }
+
+        internal void SetTerritoryOwner(string areaName, string gangId)
+        {
+            if (string.IsNullOrWhiteSpace(areaName) || !organizations.ContainsKey(gangId))
+                throw new ArgumentException("Territoire ou gang invalide.");
+            bool changed = false;
+            foreach (GangOrganization gang in organizations.Values)
+                if (gang.Territories.Remove(areaName)) changed = true;
+            if (organizations[gangId].Territories.Add(areaName)) changed = true;
+            if (changed) MarkDirty();
+        }
+
+        internal bool AreAllied(string first, string second)
+        {
+            if (string.Equals(first, second, StringComparison.OrdinalIgnoreCase)) return true;
+            GangRelation relation = GetRelation(first, second);
+            return relation.Status == GangRelationStatus.Allied ||
+                relation.Agreements.Contains(GangAgreementType.MutualDefense);
+        }
+
+        internal bool CanNegotiate(string first, string second)
+        {
+            if (string.IsNullOrWhiteSpace(first) || string.IsNullOrWhiteSpace(second) ||
+                string.Equals(first, second, StringComparison.OrdinalIgnoreCase)) return false;
+            GangRelation relation = GetRelation(first, second);
+            return relation.Status != GangRelationStatus.Hostile && relation.Trust >= 30;
+        }
+
+        internal void BreakAlliance(string first, string second)
+        {
+            GangRelation relation = GetRelation(first, second);
+            relation.Agreements.Clear();
+            relation.Status = GangRelationStatus.Neutral;
+            ChangeTrust(first, second, -20);
+            MarkDirty();
+        }
+
         internal void JoinGang(string id, PlayerGangRank rank)
         {
             if (!organizations.ContainsKey(id)) throw new ArgumentException("Gang inconnu.");
