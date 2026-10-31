@@ -70,3 +70,4 @@ public class AreaDealer
 		recruitmentDebugBlip.IsShortRange = false;
 		recruitmentDebugBlip.IsFriendly = false;
 	}
+
