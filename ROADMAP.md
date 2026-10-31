@@ -1,3 +1,11 @@
+## Crash employé/dealer — 31/10/2026 09:25:35
+
+- [x] Log : `NullReferenceException` dans `PlayerDealer.Deal()` via `PlayerDealer.OnSlowTick()` et `PlayerDealerHandler.OnSlowTick()` ; distinct du DEBUG.
+- [x] Correction du blip client supprimé sans vérification (`AttachedBlip.Delete()`), alors que le blip n'est créé que lorsque `LSL.DEBUG` est actif. Suppression protégée par `!= null && Exists()` et effectuée avant le retrait du PNJ.
+- [x] Vérification de `LSL.lPeds` et de sa liste avant la recherche d'un client.
+- [ ] Recompiler et tester la vente automatique des employés sur une session prolongée ; cause exacte non confirmée faute de numéro de ligne.
+- [ ] Revoir séparément le HUD DEBUG et ses dépendances à `showInventory`.
+
 ## Compilation 31/10/2026 — log 02:49:48
 
 - [x] Cinq erreurs C# à `Tick.cs:1052` : marqueur de diagnostic inséré entre `if` et `else if`. Marqueur déplacé dans le bloc `else if`.
