@@ -189,7 +189,7 @@ public class StashHouse
 					LSL.displayHelpTimer = Game.GameTime;
 					LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour entrer dans la planque.");
 				}
-				if (!Game.IsControlJustReleased((Control)51))
+				if (!GTA.Native.Function.Call<bool>(GTA.Native.Hash.IS_DISABLED_CONTROL_JUST_RELEASED, 2, 51))
 				{
 					return;
 				}
@@ -238,7 +238,7 @@ public class StashHouse
 				LSL.displayHelpTimer = Game.GameTime;
 				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour acheter pour $" + LsFunctions.IntToMoney(price));
 			}
-			if (Game.IsControlJustReleased((Control)51))
+			if (GTA.Native.Function.Call<bool>(GTA.Native.Hash.IS_DISABLED_CONTROL_JUST_RELEASED, 2, 51))
 			{
 				if (LSL.player.Money >= price)
 				{
@@ -291,7 +291,7 @@ public class StashHouse
 				LSL.displayHelpTimer = Game.GameTime;
 				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour ouvrir le stockage.");
 			}
-			if (Game.IsControlJustReleased((Control)51))
+			if (GTA.Native.Function.Call<bool>(GTA.Native.Hash.IS_DISABLED_CONTROL_JUST_RELEASED, 2, 51))
 			{
 				Function.Call((Hash)7023634693725934496L);
 				LsFunctions.UpdateInventory();
@@ -307,7 +307,7 @@ public class StashHouse
 				LSL.displayHelpTimer = Game.GameTime;
 				LsFunctions.DisplayHelpText("Appuie sur ~INPUT_CONTEXT~ pour sortir de la planque.");
 			}
-			if (Game.IsControlJustReleased((Control)51))
+			if (GTA.Native.Function.Call<bool>(GTA.Native.Hash.IS_DISABLED_CONTROL_JUST_RELEASED, 2, 51))
 			{
 				Function.Call((Hash)7023634693725934496L);
 				((Entity)LSL.player.Character).IsPositionFrozen = true;
