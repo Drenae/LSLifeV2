@@ -58,7 +58,7 @@ internal static partial class LsFunctions
 		Vector3 finalSpawnPos = Vector3.Zero;
 		for (int i = 0; i < 16; i++)
 		{
-			newSpawnPos.Z = World.GetGroundHeight(newSpawnPos);
+			if (World.GetGroundHeight(newSpawnPos, out float newGroundHeight)) newSpawnPos.Z = newGroundHeight;
 			if (Function.Call<bool>((Hash)1322919935073282825L, (newSpawnPos.X), (newSpawnPos.Y), (newSpawnPos.Z)) || newSpawnPos.DistanceTo(spawnPos) < newSpawnPos.DistanceTo(directionPos))
 			{
 				oldSpawnPos = newSpawnPos;
@@ -66,7 +66,7 @@ internal static partial class LsFunctions
 				continue;
 			}
 			finalSpawnPos = oldSpawnPos;
-			finalSpawnPos.Z = World.GetGroundHeight(finalSpawnPos);
+			if (World.GetGroundHeight(finalSpawnPos, out float finalGroundHeight)) finalSpawnPos.Z = finalGroundHeight;
 			return finalSpawnPos;
 		}
 		return finalSpawnPos;
@@ -253,7 +253,7 @@ internal static partial class LsFunctions
 		//IL_0006: Unknown result type (might be due to invalid IL or missing references)
 		Vector3 position = _entity.Position;
 		float eZ = position.Z;
-		if (World.GetGroundHeight(position) > eZ)
+		if (World.GetGroundHeight(position, out float groundHeight) && groundHeight > eZ)
 		{
 			return true;
 		}
@@ -289,7 +289,7 @@ internal static partial class LsFunctions
 		//IL_0004: Unknown result type (might be due to invalid IL or missing references)
 		//IL_000f: Unknown result type (might be due to invalid IL or missing references)
 		Vector3 finalPos = _vector3;
-		finalPos.Z = World.GetGroundHeight(finalPos);
+		if (World.GetGroundHeight(finalPos, out float finalGroundZ)) finalPos.Z = finalGroundZ;
 		return finalPos;
 	}
 
