@@ -33,12 +33,13 @@ public partial class LSL
 	{
 		try
 		{
+			lastTickStage = "tick start";
 			OnTickCore(sender, e);
 		}
-		catch (NullReferenceException ex)
+		catch (Exception ex)
 		{
 			System.Diagnostics.StackTrace trace = new System.Diagnostics.StackTrace(ex, true);
-			string details = "[LSLife] Derniere etape onTick : " + lastTickStage + Environment.NewLine + "NullReferenceException : " + ex + Environment.NewLine + trace;
+			string details = "[LSLife] Derniere etape onTick : " + lastTickStage + Environment.NewLine + "Exception : " + ex + Environment.NewLine + trace;
 			try
 			{
 				Directory.CreateDirectory(@"scripts\LSLife");
