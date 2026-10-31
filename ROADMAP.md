@@ -13,8 +13,8 @@
 ## Priorité 1 — Alliances entre gangs et cartels
 
 ### Étude du système existant
-- [ ] Auditer les gangs, leurs chefs, territoires, relations, réputation, sauvegardes et interactions.
-- [ ] Identifier les mécanismes de guerre, recrutement, distribution et contrôle de zone réutilisables.
+- [ ] Finaliser l'audit des gangs, chefs, territoires, relations, réputation, sauvegardes et interactions (classes Gang, Area, ThreatHandler, persistance et relations PNJ déjà examinées).
+- [ ] Identifier précisément les mécanismes de guerre, recrutement, distribution et contrôle de zone réutilisables.
 - [ ] Définir les règles de compatibilité avec les sauvegardes actuelles.
 
 ### Diplomatie et relations
