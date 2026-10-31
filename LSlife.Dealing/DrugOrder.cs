@@ -8,7 +8,6 @@ public class DrugOrder
 {
 	public bool Placed;
 
-	private bool payed;
 
 	public bool pickedUp;
 
@@ -42,7 +41,6 @@ public class DrugOrder
 	{
 		if (CanPayBill())
 		{
-			payed = true;
 			int cash = LSL.player.Money;
 			int toPay = 0;
 			toPay = ((cash >= Bill) ? Bill : cash);
