@@ -1,3 +1,16 @@
+## Audit comparatif SHVDN2 / SHVDN3 - 31/10/2026
+
+Reference : `feature/custom-zee-menu` (SHVDN2), cible : `feature/shvdn3-migration`.
+
+- [x] Comparer les arbres : 134 fichiers dans chaque branche, 54 fichiers C# modifies dans la cible.
+- [x] `LsLPeds.cs` strictement identique : rafraichissement PNJ toutes les 7 secondes.
+- [x] `Area.CanSpawnDealer()` identique : blocage possible via DealerKilled/DemandBuff.
+- [x] `Tick.cs` : ancien `World.GetZoneNameLabel` remplace par `LsFunctions.GetZoneLabel` pour les transitions, la selection de PNJ et les planques. Verifier l'equivalence exacte de ces identifiants.
+- [x] `Tick.cs` : condition de spawn deja modifiee (`else if` -> `if`) sans resoudre le symptome en jeu ; ne pas la considerer comme cause confirmee.
+- [ ] Instrumenter et comparer en jeu playerArea, newArea, areaIndex, zoneData.ContainsKey, GangPresance, CanSpawnDealer, nombre de PNJ et de candidats.
+- [ ] Comparer la logique de DEBUG (PedDebugger, HUD, touches, affichage), puis les 54 fichiers C# modifies pour identifier les regressions fonctionnelles.
+- [ ] Eviter les modifications de gameplay non etayees ; compiler et valider chaque correctif.
+
 ## Changement de quartier / spawn dealers - 31/10/2026
 
 - [x] Analyse de Tick.cs : recherche de dealer dans `else if` de changement de zone, empechant le spawn lors du meme controle.
