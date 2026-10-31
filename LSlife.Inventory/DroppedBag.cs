@@ -143,7 +143,7 @@ public class DroppedBag
 	{
 		//IL_0007: Unknown result type (might be due to invalid IL or missing references)
 		//IL_0011: Unknown result type (might be due to invalid IL or missing references)
-		pickup = World.CreatePickup((PickupType)738282662, pos, new Model("prop_big_bag_01"), 0);
+		pickup = World.CreatePickup((PickupType)738282662, pos, new Model("prop_big_bag_01"), value: 0);
 		while (pickup == (Pickup)null)
 		{
 			Script.Wait(0);
