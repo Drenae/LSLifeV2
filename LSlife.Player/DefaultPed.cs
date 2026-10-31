@@ -20,7 +20,7 @@ internal class DefaultPed
 
 	public Vector3 target;
 
-	public bool working;
+	public bool working = false;
 
 
 	private InventoryObject pInventory = new InventoryObject();
