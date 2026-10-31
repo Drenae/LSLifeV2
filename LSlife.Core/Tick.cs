@@ -862,8 +862,10 @@ public partial class LSL
 					}
 				}
 			}
+		lastTickStage = "ShotHandler.Tick";
 			ShotHandler.Tick();
 		}
+		lastTickStage = "10-second maintenance";
 		if (Game.GameTime > oneSecDelay + 10001)
 		{
 			oneSecDelay = Game.GameTime;
@@ -911,7 +913,7 @@ public partial class LSL
 							{
 								continue;
 							}
-							if (ent.AttachedBlip != (Blip)null || ent.AttachedBlip.Exists())
+							if (ent.AttachedBlip != null && ent.AttachedBlip.Exists())
 							{
 								ent.AttachedBlip.Delete();
 							}
@@ -939,7 +941,9 @@ public partial class LSL
 				}
 			}
 		}
+		lastTickStage = "area-check preparation";
 		Model model;
+		lastTickStage = "area-check";
 		if (Game.GameTime > areaCheckTimer + 999)
 		{
 			newWepAmount = 0;
@@ -996,7 +1000,7 @@ public partial class LSL
 			}
 			areaCheckTimer = Game.GameTime;
 			string newArea = LsFunctions.GetZoneLabel(playerPos);
-			if (aDealer != null && playerArea != aDealer.Area && playerPos.DistanceTo(((Entity)aDealer.dPed).Position) > 300f)
+			if (aDealer != null && playerArea != aDealer.Area && (aDealer.dPed == null || !aDealer.dPed.Exists() || playerPos.DistanceTo(((Entity)aDealer.dPed).Position) > 300f))
 			{
 				if ((Entity)(object)aDealer.cPed != (Entity)null)
 				{
@@ -1005,6 +1009,7 @@ public partial class LSL
 				LsFunctions.RemovePedFromWorld(aDealer.dPed, clearTask: false);
 				aDealer = null;
 			}
+		lastTickStage = "area changed";
 			if (playerArea != newArea)
 			{
 				playerArea = newArea;
@@ -1044,11 +1049,13 @@ public partial class LSL
 					}
 				}
 			}
+		lastTickStage = "area dealer spawn";
 			else if (aDealer == null && areas[areaIndex].CanSpawnDealer())
 			{
 				LsFunctions.DbugString("demandBuff 0");
-				if (areas[areaIndex].GangPresance > 0f && areas[areaIndex].Name != LsFunctions.GetZoneLabel(HouseHandler.Houses[0].entrancePos))
+				if (areas[areaIndex].GangPresance > 0f && (HouseHandler == null || HouseHandler.Houses == null || HouseHandler.Houses.Count == 0 || areas[areaIndex].Name != LsFunctions.GetZoneLabel(HouseHandler.Houses[0].entrancePos)))
 				{
+		lastTickStage = "area dealer ped selection";
 					List<Ped> aPeds = lPeds.GetPeds.FindAll((Ped r) =>
 					{
 						//IL_0001: Unknown result type (might be due to invalid IL or missing references)
