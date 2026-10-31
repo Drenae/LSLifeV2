@@ -22,7 +22,6 @@ internal class DefaultPed
 
 	public bool working;
 
-	private int areaIndex;
 
 	private InventoryObject pInventory = new InventoryObject();
 
