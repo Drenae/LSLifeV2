@@ -29,8 +29,7 @@
 ### Interface et sauvegarde
 - [ ] Concevoir un menu « Diplomatie / Cartel » cohérent avec CustomMenu.
 - [ ] Afficher membres, statut, confiance, accords, territoires et revenus.
-- [ ] Brancher le chargement et la sauvegarde diplomatiques sur le cycle de vie du mod, sans toucher aux sauvegardes historiques.
-- [ ] Tester les cas limites : mort d'un chef, disparition d'un gang, rupture d'accord, rechargement.
+- [ ] Tester la restauration des territoires et des alliances apres Reload(), ainsi que les cas limites : mort d'un chef, disparition d'un gang, rupture d'accord.
 
 ### Validation
 - [ ] Implémenter par lots cohérents sans modifier les mécaniques non concernées.
@@ -46,7 +45,7 @@
 ## Priorité 3 — Qualité et finition
 - [ ] Compléter les traductions françaises visibles.
 - [ ] Corriger les bugs reproductibles signalés pendant les tests.
-- [ ] Vérifier les menus, le HUD, le téléphone et les sauvegardes.
+- [ ] Valider en jeu la persistance des positions du HUD apres Reload(), puis verifier les menus, le téléphone et les sauvegardes.
 - [ ] Étudier une conversion métrique globale en dernier, avec migration sûre des données.
 
 ## Règles de suivi
