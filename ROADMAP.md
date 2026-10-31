@@ -21,6 +21,12 @@
 - [ ] Finaliser l'audit des gangs, chefs, territoires, relations, réputation, sauvegardes et interactions (classes Gang, Area, ThreatHandler, persistance et relations PNJ déjà examinées).
 - [ ] Identifier précisément les mécanismes de guerre, recrutement, distribution et contrôle de zone réutilisables.
 
+### Acces aux alliances
+- [ ] Remplacer le raccourci provisoire F7 par un acces configurable au reseau d'alliances, independant de Zee.
+- [ ] Integrer les contacts des chefs de gangs dans le telephone existant, uniquement apres rencontre et echange de coordonnees.
+- [ ] Ajouter les rendez-vous et rencontres physiques avec les chefs pour negocier, conclure et rompre les accords.
+- [ ] Garder le reseau d'alliances strictement consultatif et limite aux organisations liees au joueur.
+
 ### Renseignements et progression
 - [ ] Ajouter la decouverte progressive des gangs par rencontres, presence sur leurs territoires et contacts, sans reveler leurs informations des le debut.
 - [ ] Memoriser les niveaux de connaissance par gang dans la sauvegarde diplomatique, avec migration compatible des anciennes sauvegardes.
