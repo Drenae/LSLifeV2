@@ -39,6 +39,7 @@ public class PedDebugger
 		//IL_014e: Unknown result type (might be due to invalid IL or missing references)
 		if (Game.GameTime > dTime + dInterval)
 		{
+			dTime = Game.GameTime;
 			foreach (Ped p in World.GetAllPeds().ToList())
 			{
 				if (!debugPeds.Contains(p))
@@ -60,9 +61,10 @@ public class PedDebugger
 					}
 					string text = SetPedDebugtext((Entity)(object)p2, allowed);
 					Vector2 tPos = LsFunctions.World3DToScreen2d(new Vector3(p2.Bones[37193].Position.X, p2.Bones[37193].Position.Y, p2.Bones[37193].Position.Z + 0.5f));
-					tPos.X = 1280f * tPos.X;
-					tPos.Y = 720f * tPos.Y;
-					new GTA.UI.TextElement(text, new PointF((int)tPos.X, (int)tPos.Y), 0.2f, Color.WhiteSmoke, GTA.UI.Font.ChaletLondon, GTA.UI.Alignment.Center, true, true).Draw();
+					if (tPos.X > 0f && tPos.X < 1f && tPos.Y > 0f && tPos.Y < 1f)
+					{
+						HudRender.Text(text, (int)(tPos.X * 1920f), (int)(tPos.Y * 1080f), 0.24f, 245, 245, 245, 255, true);
+					}
 				}
 			}
 			else
@@ -73,9 +75,10 @@ public class PedDebugger
 		if (LSL.pStashVehicle != null && (Entity)(object)LSL.pStashVehicle.drugCar != (Entity)null && ((Entity)LSL.pStashVehicle.drugCar).Exists())
 		{
 			Vector2 tPos2 = LsFunctions.World3DToScreen2d(((Entity)LSL.pStashVehicle.drugCar).Position);
-			tPos2.X = 1280f * tPos2.X;
-			tPos2.Y = 720f * tPos2.Y;
-			new GTA.UI.TextElement(SetPedDebugtext((Entity)(object)LSL.pStashVehicle.drugCar, allowed: true), new PointF((int)tPos2.X, (int)tPos2.Y), 0.2f, Color.WhiteSmoke, GTA.UI.Font.ChaletLondon, GTA.UI.Alignment.Center, true, true).Draw();
+			if (tPos2.X > 0f && tPos2.X < 1f && tPos2.Y > 0f && tPos2.Y < 1f)
+			{
+				HudRender.Text(SetPedDebugtext((Entity)(object)LSL.pStashVehicle.drugCar, allowed: true), (int)(tPos2.X * 1920f), (int)(tPos2.Y * 1080f), 0.24f, 245, 245, 245, 255, true);
+			}
 		}
 	}
 
