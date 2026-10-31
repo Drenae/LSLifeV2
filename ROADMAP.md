@@ -15,7 +15,6 @@
 ### Étude du système existant
 - [ ] Finaliser l'audit des gangs, chefs, territoires, relations, réputation, sauvegardes et interactions (classes Gang, Area, ThreatHandler, persistance et relations PNJ déjà examinées).
 - [ ] Identifier précisément les mécanismes de guerre, recrutement, distribution et contrôle de zone réutilisables.
-- [ ] Définir les règles de compatibilité avec les sauvegardes actuelles.
 
 ### Diplomatie et relations
 - [ ] Relier la confiance diplomatique aux actions du joueur et aux événements de gangs.
@@ -29,7 +28,7 @@
 ### Interface et sauvegarde
 - [ ] Concevoir un menu « Diplomatie / Cartel » cohérent avec CustomMenu.
 - [ ] Afficher membres, statut, confiance, accords, territoires et revenus.
-- [ ] Tester la restauration des territoires et des alliances apres Reload(), ainsi que les cas limites : mort d'un chef, disparition d'un gang, rupture d'accord.
+- [ ] Tester en jeu la restauration des territoires et des alliances apres Reload(), ainsi que les cas limites : mort d'un chef, disparition d'un gang, rupture d'accord.
 
 ### Validation
 - [ ] Implémenter par lots cohérents sans modifier les mécaniques non concernées.
@@ -45,7 +44,7 @@
 ## Priorité 3 — Qualité et finition
 - [ ] Compléter les traductions françaises visibles.
 - [ ] Corriger les bugs reproductibles signalés pendant les tests.
-- [ ] Valider en jeu la persistance des positions du HUD apres Reload(), puis verifier les menus, le téléphone et les sauvegardes.
+- [ ] Vérifier les menus, le téléphone et les sauvegardes apres integration de la diplomatie.
 - [ ] Étudier une conversion métrique globale en dernier, avec migration sûre des données.
 
 ## Règles de suivi
