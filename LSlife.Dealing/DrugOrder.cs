@@ -56,7 +56,6 @@ public class DrugOrder
 			}
 			LsFunctions.SaveDealer();
 			LsFunctions.PlayTheSound();
-			payed = true;
 			return true;
 		}
 		return false;
@@ -245,7 +244,6 @@ public class DrugOrder
 		crack = 0;
 		cocaine = 0;
 		Bill = 0;
-		payed = false;
 		pickedUp = false;
 		Placed = false;
 	}
