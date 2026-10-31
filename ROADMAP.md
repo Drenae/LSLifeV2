@@ -18,22 +18,18 @@
 - [ ] Définir les règles de compatibilité avec les sauvegardes actuelles.
 
 ### Diplomatie et relations
-- [ ] Définir les états de relation : hostile, neutre, négociation, allié, cartel.
-- [ ] Définir une confiance/réputation entre gangs et les conditions de progression.
+- [ ] Relier la confiance diplomatique aux actions du joueur et aux événements de gangs.
 - [ ] Ajouter des rencontres et propositions diplomatiques via un menu adapté.
 - [ ] Permettre de refuser, rompre ou renégocier une alliance.
 
 ### Accords et fonctionnement d'un cartel
-- [ ] Concevoir les accords : non-agression, commerce, soutien armé, défense mutuelle.
-- [ ] Définir la création d'un cartel regroupant plusieurs gangs.
-- [ ] Définir le rôle du joueur : fondateur, partenaire ou dirigeant, selon le gameplay existant.
 - [ ] Prévoir les contributions et le partage des revenus, avec règles transparentes.
 - [ ] Gérer les rivalités, trahisons et conséquences sur les relations et territoires.
 
 ### Interface et sauvegarde
 - [ ] Concevoir un menu « Diplomatie / Cartel » cohérent avec CustomMenu.
 - [ ] Afficher membres, statut, confiance, accords, territoires et revenus.
-- [ ] Sauvegarder les alliances et restaurer leur état au chargement.
+- [ ] Brancher le chargement et la sauvegarde diplomatiques sur le cycle de vie du mod, sans toucher aux sauvegardes historiques.
 - [ ] Tester les cas limites : mort d'un chef, disparition d'un gang, rupture d'accord, rechargement.
 
 ### Validation
