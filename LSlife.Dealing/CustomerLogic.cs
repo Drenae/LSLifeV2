@@ -125,7 +125,7 @@ public partial class LSL
 				{
 					return true;
 				}
-				if (!_ped.IsInVehicle() && ((Entity)_ped).Position.Z > World.GetGroundHeight(((Entity)_ped).Position + ((Entity)_ped).ForwardVector * 2f) + 2f)
+				if (!_ped.IsInVehicle() && ((Entity)_ped).Position.Z > (World.GetGroundHeight(((Entity)_ped).Position + ((Entity)_ped).ForwardVector * 2f, out float customerGroundHeight) ? customerGroundHeight : 0f) + 2f)
 				{
 					return true;
 				}
