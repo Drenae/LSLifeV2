@@ -215,8 +215,8 @@ public class Pig
 							seenPlayer = false;
 							if (Game.Player.Wanted.WantedLevel < 1)
 							{
-								Game.Player.Wanted.SetWantedLevel(1);
-			Game.Player.Wanted.ApplyWantedLevelChangeNow();
+								Game.Player.Wanted.SetWantedLevel(1, false);
+			Game.Player.Wanted.ApplyWantedLevelChangeNow(false);
 							}
 							LSL.areas[LSL.areaIndex].Heat += 10f;
 						}
@@ -224,8 +224,8 @@ public class Pig
 						{
 							if (Game.Player.Wanted.WantedLevel < 1)
 							{
-								Game.Player.Wanted.SetWantedLevel(1);
-			Game.Player.Wanted.ApplyWantedLevelChangeNow();
+								Game.Player.Wanted.SetWantedLevel(1, false);
+			Game.Player.Wanted.ApplyWantedLevelChangeNow(false);
 							}
 							LSL.areas[LSL.areaIndex].Heat += 10f;
 						}
@@ -274,15 +274,15 @@ public class Pig
 				if ((Entity)(object)Game.Player.Character.CurrentVehicle != (Entity)null && !Game.Player.Character.CurrentVehicle.IsStopped)
 				{
 					LsFunctions.DbugString("Indice de recherche augmenté : refus d'obtempérer en véhicule");
-					Game.Player.Wanted.SetWantedLevel(1);
-			Game.Player.Wanted.ApplyWantedLevelChangeNow();
+					Game.Player.Wanted.SetWantedLevel(1, false);
+			Game.Player.Wanted.ApplyWantedLevelChangeNow(false);
 					LSL.areas[LSL.areaIndex].Heat += 200f;
 					break;
 				}
 				if (Game.GameTime > time + delay || LSL.playerPos.DistanceTo(pPos) > 2f)
 				{
-					Game.Player.Wanted.SetWantedLevel(1);
-			Game.Player.Wanted.ApplyWantedLevelChangeNow();
+					Game.Player.Wanted.SetWantedLevel(1, false);
+			Game.Player.Wanted.ApplyWantedLevelChangeNow(false);
 					LSL.areas[LSL.areaIndex].Heat += 200f;
 					break;
 				}
@@ -303,8 +303,8 @@ public class Pig
 				if (leader)
 				{
 					GTA.UI.Screen.ShowSubtitle("Tu es en état d'arrestation.", 3000);
-					Game.Player.Wanted.SetWantedLevel(2);
-			Game.Player.Wanted.ApplyWantedLevelChangeNow();
+					Game.Player.Wanted.SetWantedLevel(2, false);
+			Game.Player.Wanted.ApplyWantedLevelChangeNow(false);
 				}
 				NewState = States.Destroy;
 				break;
@@ -326,8 +326,8 @@ public class Pig
 			if (Game.Player.Wanted.WantedLevel < 1 && LSL.playerPos.DistanceTo(pPos) > 8f)
 			{
 				LsFunctions.DbugString("Indice de recherche augmenté : refus d'obtempérer");
-				Game.Player.Wanted.SetWantedLevel(2);
-			Game.Player.Wanted.ApplyWantedLevelChangeNow();
+				Game.Player.Wanted.SetWantedLevel(2, false);
+			Game.Player.Wanted.ApplyWantedLevelChangeNow(false);
 				LSL.areas[LSL.areaIndex].Heat += 200f;
 				break;
 			}
