@@ -12,6 +12,7 @@ namespace LSlife
         private static CustomMenu detail;
         private static CustomMenu relations;
         private static int page;
+        private static int relationPage;
         private static string selectedGang;
         private const int PageSize = 5;
         internal static bool IsGangMenu(CustomMenu menu)
@@ -45,6 +46,7 @@ namespace LSlife
                 overview.Add(gang.Name + " (" + gang.Territories.Count + " zones)", () =>
                 {
                     selectedGang = id;
+                    relationPage = 0;
                     CustomZeeMenu.ShowGangSubmenu(BuildDetail());
                 });
             }
@@ -71,8 +73,10 @@ namespace LSlife
         {
             var state = LSL.DiplomacyState;
             var gangs = state.Organizations.Where(g => !string.Equals(g.Id, selectedGang, StringComparison.OrdinalIgnoreCase)).ToList();
-            relations = new CustomMenu("RELATIONS", selectedGang);
-            foreach (GangOrganization gang in gangs.Take(5))
+            int pages = Math.Max(1, (gangs.Count + PageSize - 1) / PageSize);
+            relationPage = Math.Max(0, Math.Min(relationPage, pages - 1));
+            relations = new CustomMenu("RELATIONS", selectedGang + "  " + (relationPage + 1) + "/" + pages);
+            foreach (GangOrganization gang in gangs.Skip(relationPage * PageSize).Take(PageSize))
             {
                 string id = gang.Id;
                 GangRelation relation = state.GetRelation(selectedGang, id);
@@ -80,6 +84,8 @@ namespace LSlife
                     GTA.UI.ShowSubtitle("Relation : " + state.Get(selectedGang, id) +
                         " | Confiance : " + state.GetRelation(selectedGang, id).Trust + "/100", 3500));
             }
+            if (relationPage > 0) relations.Add("Page precedente", () => { relationPage--; CustomZeeMenu.ShowGangSubmenu(BuildRelations()); });
+            if (relationPage + 1 < pages) relations.Add("Page suivante", () => { relationPage++; CustomZeeMenu.ShowGangSubmenu(BuildRelations()); });
             relations.Add("Retour", () => CustomZeeMenu.ShowGangSubmenu(BuildDetail()));
             return relations;
         }
