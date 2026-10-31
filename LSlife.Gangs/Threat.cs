@@ -11,7 +11,7 @@ internal class Threat
 
 	private Ped TargetPed;
 
-	public bool Responded;
+	public bool Responded = false;
 
 	public int Level { get; private set; }
 
