@@ -1,3 +1,9 @@
+## Dealer visible 2 secondes - 31/10/2026
+
+- [x] `AreaDealer.UpdateRecruitmentDebugMarker` reutilise et suit un blip deja present sur le PNJ (auparavant sortie anticipee sans suivi).
+- [x] `Tick.cs` : avertissement `[Dealer]` lors du retrait par changement de quartier/distance et lors de la mort du dealer.
+- [ ] Compiler, verifier si le point rouge reste visible ; en cas de disparition, analyser les avertissements dans `LSLife.log` pour distinguer suppression du PNJ et du blip.
+
 ## Crash blip dealer - 31/10/2026
 
 - [x] Log : NullReferenceException dans `LsFunctions.AddBlip`, appele par `AreaDealer.DoState`.
