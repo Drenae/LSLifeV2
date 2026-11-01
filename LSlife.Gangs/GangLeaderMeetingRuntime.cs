@@ -58,11 +58,21 @@ namespace LSlife
                 Model model = GangUtilities.TryGetRepresentativeModel(gang.Id, out modelName)
                     ? new Model(modelName)
                     : LsFunctions.RequestModel(unchecked((PedHash)(-1954728090)));
-                leaderMeetingPed = World.CreatePed(model, position);
+                // Comme Zee : vehicule stationne avec deux occupants.
+                Vector3 carPosition = GenerateSpawnPos(position, Nodetype.AnyRoad, false);
+                if (carPosition.DistanceTo(position) > 80f) return;
+                leaderMeetingCar = World.CreateVehicle(
+                    LsFunctions.RequestModel((VehicleHash)1177543287), carPosition);
+                if (leaderMeetingCar == null || !leaderMeetingCar.Exists()) return;
+                leaderMeetingCar.IsPersistent = true;
+                leaderMeetingPed = leaderMeetingCar.CreatePedOnSeat((VehicleSeat)0, model);
+                leaderMeetingEscort = leaderMeetingCar.CreatePedOnSeat(
+                    unchecked((VehicleSeat)(-1)), model);
                 if (leaderMeetingPed == null || !leaderMeetingPed.Exists()) return;
                 pendingLeaderGangId = gang.Id;
                 leaderMeetingPed.IsPersistent = true;
-                leaderMeetingPed.FreezePosition = true;
+                leaderMeetingPed.BlockPermanentEvents = true;
+                if (leaderMeetingEscort != null) leaderMeetingEscort.BlockPermanentEvents = true;
                 leaderMeetingBlip = leaderMeetingPed.AddBlip();
                 leaderMeetingBlip.Name = "Rendez-vous : " + gang.Name;
                 leaderMeetingBlip.Color = (BlipColor)2;
