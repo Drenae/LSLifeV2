@@ -68,8 +68,9 @@ namespace LSlife
                 representative.Position.DistanceTo(player.Character.Position) > 3f) return;
             // Tests DEBUG : 3 secondes au lieu de 2 minutes en partie normale.
             int cooldown = DEBUG ? 3000 : 120000;
-            if (representativeLastService != 0 &&
-                Game.GameTime - representativeLastService < cooldown) return;
+            int lastService;
+            if (representativeLastService.TryGetValue(gang.Id, out lastService) &&
+                Game.GameTime - lastService < cooldown) return;
             if (!representative.IsHeadtracking(player.Character))
                 representative.Task.LookAt(player.Character);
             if ((float)Game.GameTime > displayHelpTimer + 4000f)
@@ -78,7 +79,7 @@ namespace LSlife
                 LsFunctions.DisplayHelpText("~INPUT_CONTEXT~ : parler au representant de " + gang.Name);
             }
             if (!Game.IsControlJustPressed(2, (GTA.Control)51)) return;
-            representativeLastService = Game.GameTime;
+            representativeLastService[gang.Id] = Game.GameTime;
             GangPolitics.ChangePlayerReputation(gang.Id, 5);
             GTA.UI.ShowSubtitle(gang.Name + " : confiance " +
                 GangPolitics.GetPlayerReputation(gang.Id) + "/100 (+5).", 3500);
