@@ -25,6 +25,13 @@ namespace LSlife
             if (leaderMeetingPed != null && leaderMeetingPed.Exists())
                 leaderMeetingPed.Delete();
             leaderMeetingPed = null;
+            if (leaderMeetingEscort != null && leaderMeetingEscort.Exists()) leaderMeetingEscort.Delete();
+            if (leaderMeetingCar != null && leaderMeetingCar.Exists()) leaderMeetingCar.Delete();
+            leaderMeetingEscort = null;
+            leaderMeetingCar = null;
+            leaderMeetingExited = false;
+            leaderMeetingFinished = false;
+            leaderMeetingDepartureTime = 0;
             pendingLeaderGangId = null;
         }
 
