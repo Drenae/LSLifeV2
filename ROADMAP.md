@@ -23,9 +23,9 @@
 
 ### Progression : rencontre et reputation
 - [ ] Identifier les chefs de gangs en monde ouvert, sans donner leurs contacts automatiquement.
-- [ ] Creer la premiere rencontre du vrai chef et des missions de gang (un premier service repetable via les dealers locaux existe, +5 reputation avec delai de 2 minutes, mais ce n'est pas encore une mission).
+- [ ] Creer la premiere rencontre du vrai chef et de vraies missions de gang. L'interaction transitoire avec un dealer local exige maintenant son etat TalkToPlayer, n'intercepte pas Sprint et limite le gain de +5 par gang toutes les 2 minutes. A remplacer par un representant distinct du recrutement.
 - [ ] Ajouter les pertes de reputation et des missions reelles, puis tester la persistance des gains de services locaux apres Reload().
-- [ ] Tester les paliers avec les services de dealers locaux : contact 25, territoires 35, membres 45, relations 55, alliance 60, tresorerie 75.
+- [ ] Tester la coexistence des interactions Sprint (recrutement) et E (reputation), puis les paliers : contact 25, territoires 35, membres 45, relations 55, alliance 60, tresorerie 75.
 
 ### Telephone des chefs
 - [ ] Tester en jeu l'ajout dynamique des contacts iFruit apres cinq services au meme gang (+5 chacun), puis leur desactivation si la reputation baisse.
