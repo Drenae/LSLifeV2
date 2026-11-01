@@ -51,6 +51,22 @@ namespace LSlife.Gangs
     // Etat autonome : aucune modification des sauvegardes existantes ni des groupes PNJ GTA.
     internal sealed class GangDiplomacy
     {
+        // Rencontres physiques avec les chefs, independantes de la reputation.
+        private readonly HashSet<string> metLeaders =
+            new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+        internal bool HasMetLeader(string gangId)
+        {
+            return !string.IsNullOrWhiteSpace(gangId) && metLeaders.Contains(gangId);
+        }
+
+        internal void MarkLeaderMet(string gangId)
+        {
+            if (!organizations.ContainsKey(gangId))
+                throw new ArgumentException("Gang inconnu.");
+            if (metLeaders.Add(gangId)) MarkDirty();
+        }
+
         internal bool NativeTerritoriesMigrated { get; private set; }
 
         internal void CompleteNativeTerritoryMigration()
@@ -358,10 +374,12 @@ namespace LSlife.Gangs
 
         internal void Save(string path)
         {
-            XElement root = new XElement("gangDiplomacy", new XAttribute("version", 2),
+            XElement root = new XElement("gangDiplomacy", new XAttribute("version", 3),
                 new XAttribute("nativeTerritoriesMigrated", NativeTerritoriesMigrated),
                 new XElement("player", new XAttribute("gang", PlayerGangId ?? ""),
                     new XAttribute("rank", PlayerRank)),
+                new XElement("metLeaders", metLeaders.OrderBy(id => id).Select(id =>
+                    new XElement("leader", new XAttribute("gang", id)))),
                 new XElement("playerReputations", playerReputation.OrderBy(p => p.Key).Select(p =>
                     new XElement("reputation", new XAttribute("gang", p.Key), new XAttribute("value", p.Value)))),
                 new XElement("organizations", organizations.Values.OrderBy(g => g.Id).Select(g =>
@@ -408,6 +426,13 @@ namespace LSlife.Gangs
                 gang.PlayerFounded = (bool?)element.Attribute("playerFounded") ?? false;
                 foreach (XElement territory in element.Elements("territory"))
                     if (!string.IsNullOrWhiteSpace(territory.Value)) gang.Territories.Add(territory.Value);
+            }
+            XElement met = doc.Root.Element("metLeaders");
+            if (met != null) foreach (XElement element in met.Elements("leader"))
+            {
+                string id = (string)element.Attribute("gang");
+                if (!string.IsNullOrWhiteSpace(id) && loaded.organizations.ContainsKey(id))
+                    loaded.metLeaders.Add(id);
             }
             XElement reputations = doc.Root.Element("playerReputations");
             if (reputations != null) foreach (XElement element in reputations.Elements("reputation"))
@@ -467,6 +492,8 @@ namespace LSlife.Gangs
             foreach (var pair in loaded.cartels) cartels.Add(pair.Key, pair.Value);
             PlayerGangId = loaded.PlayerGangId;
             PlayerRank = loaded.PlayerRank;
+            metLeaders.Clear();
+            foreach (string id in loaded.metLeaders) metLeaders.Add(id);
             NativeTerritoriesMigrated = (bool?)doc.Root.Attribute("nativeTerritoriesMigrated") ?? false;
             IsDirty = false;
         }
