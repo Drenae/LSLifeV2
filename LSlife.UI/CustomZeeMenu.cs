@@ -31,6 +31,17 @@ internal static class CustomZeeMenu
         quantityRepeat.Reset();
     }
 
+    internal static void OpenGangContact(string gangId)
+    {
+        if (Visible || CustomMenuShared.IsAnyGameplayMenuOpen()) return;
+        CustomMenu target = CustomGangMenu.OpenContact(gangId);
+        if (target == null) return;
+        networkMode = true;
+        activeMenu = target;
+        quantityRepeat.Reset();
+        activeMenu.Open();
+    }
+
     internal static void ToggleNetwork()
     {
         if (Visible) { Close(); return; }
