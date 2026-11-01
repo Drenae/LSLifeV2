@@ -22,6 +22,12 @@
 
 ## Priorité 1 — Alliances entre gangs et cartels
 
+### Territoires natifs GTA V
+- [ ] Valider la migration unique des quartiers connus et la conservation des reputations, relations et sauvegardes.
+- [ ] Tester la persistance des conquetes apres plusieurs Reload().
+- [ ] Cartographier les quartiers restants et supprimer progressivement les proprietaires aleatoires.
+- [ ] Adapter les representants aux modeles des factions natives.
+
 ### Étude du système existant
 - [ ] Finaliser l'audit des gangs, chefs, territoires, relations, réputation, sauvegardes et interactions (classes Gang, Area, ThreatHandler, persistance et relations PNJ déjà examinées).
 - [ ] Identifier précisément les mécanismes de guerre, recrutement, distribution et contrôle de zone réutilisables.
