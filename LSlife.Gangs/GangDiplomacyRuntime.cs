@@ -12,7 +12,6 @@ namespace LSlife
         internal static GangDiplomacy DiplomacyState { get { return GangPolitics; } }
         private const string GangDiplomacySavePath = "scripts\\LSLife\\LSLife_GangDiplomacy.xml";
         private int lastGangDiplomacySave;
-        private int lastGangEncounterCheck;
         private readonly System.Collections.Generic.Dictionary<string, int> lastGangServiceByGang =
             new System.Collections.Generic.Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
         private const int GangServiceCooldownMs = 120000;
@@ -25,8 +24,6 @@ namespace LSlife
                 !player.Character.Exists() || !player.Character.IsAlive ||
                 player.Character.IsInVehicle() || CustomMenuShared.IsAnyGameplayMenuOpen())
                 return;
-            if (Game.GameTime - lastGangEncounterCheck < 350) return;
-            lastGangEncounterCheck = Game.GameTime;
             if (areaIndex < 0 || areaIndex >= areas.Count) return;
             Area area = areas[areaIndex];
             if (area == null || area.Gang == null) return;
@@ -34,8 +31,9 @@ namespace LSlife
             if (!GangPolitics.TryGetGang(area.Gang.Name, out gang)) return;
             AreaDealer intermediary = area.Gang.AreaDealers.FirstOrDefault(d =>
                 d != null && d.dPed != null && d.dPed.Exists() && d.dPed.IsAlive &&
-                d.Area == area.Name &&
-                d.CurrentState == Enums.DStates.TalkToPlayer &&
+                (d.CurrentState == Enums.DStates.TalkToPlayer ||
+                 d.CurrentState == Enums.DStates.LookAtPlayer ||
+                 d.CurrentState == Enums.DStates.StopForPlayer) &&
                 !d.dPed.IsInVehicle() &&
                 d.dPed.Position.DistanceTo(player.Character.Position) < 2.5f);
             if (intermediary == null) return;
@@ -46,7 +44,13 @@ namespace LSlife
             if (lastGangServiceByGang.TryGetValue(gang.Id, out last) &&
                 Game.GameTime >= last && Game.GameTime - last < GangServiceCooldownMs)
                 return;
-            LsFunctions.DisplayHelpText("~INPUT_CONTEXT~ : discuter avec un intermediaire de " + gang.Name);
+            // L'aide d'embauche partage l'affichage GTA : ne pas l'ecraser a chaque frame.
+            // La touche E est lue a CHAQUE tick (JustPressed dure une seule frame).
+            if ((float)Game.GameTime > displayHelpTimer + 4000f)
+            {
+                displayHelpTimer = Game.GameTime;
+                LsFunctions.DisplayHelpText("~INPUT_SPRINT~ : recrutement  |  ~INPUT_CONTEXT~ : service pour " + gang.Name);
+            }
             if (!Game.IsControlJustPressed(2, (GTA.Control)51)) return;
             lastGangServiceByGang[gang.Id] = Game.GameTime;
             GangPolitics.ChangePlayerReputation(gang.Id, 5);
