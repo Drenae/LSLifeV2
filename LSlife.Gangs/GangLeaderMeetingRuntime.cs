@@ -31,6 +31,7 @@ namespace LSlife
             leaderMeetingCar = null;
             leaderMeetingExited = false;
             leaderMeetingFinished = false;
+            leaderMeetingDrivingAway = false;
             leaderMeetingDepartureTime = 0;
             pendingLeaderGangId = null;
         }
@@ -89,17 +90,19 @@ namespace LSlife
             }
             if (leaderMeetingFinished)
             {
-                if (Game.GameTime > leaderMeetingDepartureTime + 25000)
+                if (Game.GameTime > leaderMeetingDepartureTime + 45000 ||
+                    (leaderMeetingDrivingAway && leaderMeetingCar != null &&
+                     leaderMeetingCar.Position.DistanceTo(player.Character.Position) > 150f))
                 {
                     ClearLeaderMeeting();
                     return;
                 }
-                if (leaderMeetingCar != null && leaderMeetingEscort != null &&
+                if (!leaderMeetingDrivingAway && leaderMeetingCar != null && leaderMeetingEscort != null &&
                     leaderMeetingEscort.IsInVehicle() && leaderMeetingPed.IsInVehicle())
                 {
                     Function.Call(Hash.TASK_VEHICLE_DRIVE_WANDER,
                         leaderMeetingEscort, leaderMeetingCar, 17f, 786603);
-                    leaderMeetingDepartureTime = Game.GameTime - 15000;
+                    leaderMeetingDrivingAway = true;
                 }
                 return;
             }
