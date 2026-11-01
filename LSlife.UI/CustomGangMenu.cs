@@ -55,7 +55,7 @@ namespace LSlife
             if (current == relations || current == territories) return BuildDetail();
             if (current == cartelDetail) return BuildCartels();
             if (current == cartels) return BuildOverview();
-            if (current == detail) return BuildOverview();
+            if (current == detail) return null;
             return null;
         }
 
@@ -90,7 +90,7 @@ namespace LSlife
             GangOrganization gang;
             if (!LSL.DiplomacyState.TryGetGang(selectedGang, out gang)) return BuildOverview();
             var state = LSL.DiplomacyState;
-            detail = new CustomMenu(gang.Name, "TERRITOIRES / DIPLOMATIE");
+            detail = new CustomMenu(gang.Name, "CONTACT / INFORMATIONS");
             if (!state.HasLeaderContact(gang.Id))
             {
                 detail.Add("Renseignements indisponibles", () =>
@@ -120,7 +120,7 @@ namespace LSlife
                 });
             detail.Add("Demander un rendez-vous", () =>
                 GTA.UI.ShowSubtitle("Les rendez-vous seront disponibles apres l'integration des chefs dans le monde.", 3500));
-            detail.Add("Retour", () => CustomZeeMenu.Close());
+            detail.Add("Raccrocher", () => CustomZeeMenu.Close());
             return detail;
         }
 
