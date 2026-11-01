@@ -59,11 +59,18 @@ namespace LSlife
                 // Reutilise les emplacements de livraison de Zee, deja
                 // selectionnes pour des rencontres en voiture hors du centre.
                 var possibleLocations = LsFunctions.spawnPostions.FindAll(s =>
-                    s.Position.DistanceTo(player.Character.Position) >= 400f &&
-                    s.Position.DistanceTo(player.Character.Position) <= 1800f);
+                {
+                    float distance = s.Position.DistanceTo(player.Character.Position);
+                    if (distance < 400f || distance > 1800f) return false;
+                    string zone = World.GetZoneNameLabel(s.Position);
+                    string nativeOwner;
+                    if (GangUtilities.TryGetNativeGang(zone, out nativeOwner)) return false;
+                    string savedOwner = GangPolitics.GetTerritoryOwner(zone);
+                    return string.IsNullOrEmpty(savedOwner);
+                });
                 if (possibleLocations.Count == 0)
                 {
-                    GTA.UI.ShowSubtitle("Aucun lieu de rendez-vous disponible dans ce secteur.", 4000);
+                    GTA.UI.ShowSubtitle("Aucun lieu neutre disponible dans ce secteur.", 4000);
                     return;
                 }
                 DealerSpawnPostion meetingLocation =
