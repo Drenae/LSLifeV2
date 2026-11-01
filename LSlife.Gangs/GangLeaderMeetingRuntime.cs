@@ -92,7 +92,10 @@ namespace LSlife
 
             if (string.IsNullOrEmpty(pendingLeaderGangId)) return;
             if (leaderMeetingPed == null || !leaderMeetingPed.Exists() ||
-                !leaderMeetingPed.IsAlive || Game.GameTime >= leaderMeetingExpires)
+                !leaderMeetingPed.IsAlive || leaderMeetingCar == null ||
+                !leaderMeetingCar.Exists() || leaderMeetingEscort == null ||
+                !leaderMeetingEscort.Exists() || !leaderMeetingEscort.IsAlive ||
+                (!leaderMeetingFinished && Game.GameTime >= leaderMeetingExpires))
             {
                 ClearLeaderMeeting();
                 return;
