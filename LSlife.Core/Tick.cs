@@ -52,12 +52,7 @@ public partial class LSL
 			contact.DialTimeout = 1000;
 			contact.Icon = ContactIcon.Blank;
 			contact.Active = true;
-			contact.Answered += answeredContact =>
-            {
-                CustomZeeMenu.OpenGangContact(id);
-                // Comme Zee : fermer l'etat iFruit, pas seulement le rendu GTA.
-                if (iFruit != null) iFruit.Close(1000);
-            };
+			contact.Answered += answeredContact => CustomZeeMenu.OpenGangContact(id);
 			iFruit.Contacts.Add(contact);
 			gangLeaderContacts.Add(id, contact);
 		}
