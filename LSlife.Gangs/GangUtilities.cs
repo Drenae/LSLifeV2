@@ -38,6 +38,23 @@ internal static class GangUtilities
             { "The Lost MC", "g_m_y_lost_01" }
         };
 
+    // Le chef et son escorte doivent etre visuellement distincts.
+    private static readonly Dictionary<string, string> NativeLeaderModels =
+        new Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase)
+        {
+            { "Ballas", "g_m_y_ballaorig_01" },
+            { "Families", "g_m_y_famdnf_01" },
+            { "Vagos", "g_m_y_mexgoon_02" },
+            { "Aztecas", "g_m_y_mexgang_01" },
+            { "Marabunta Grande", "g_m_y_salvagoon_02" },
+            { "The Lost MC", "g_m_y_lost_02" }
+        };
+
+    public static bool TryGetLeaderModel(string gang, out string model)
+    {
+        return NativeLeaderModels.TryGetValue(gang ?? "", out model);
+    }
+
     public static bool TryGetRepresentativeModel(string gang, out string model)
     {
         return NativeRepresentativeModels.TryGetValue(gang ?? "", out model);
