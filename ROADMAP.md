@@ -29,7 +29,7 @@
 
 ### Telephone des chefs
 - [ ] Tester en jeu l'ajout dynamique des contacts iFruit apres cinq services au meme gang (+5 chacun), puis leur desactivation si la reputation baisse.
-- [ ] Tester la navigation du menu du chef et la neutralisation des commandes du telephone iFruit pendant l'affichage du CustomMenu, ainsi que le raccrochage.
+- [ ] Tester le raccrochage du chef (action Raccrocher et touche Retour) : fermeture du telephone et fin de l'animation d'appel, sans perturber Zee ; verifier iFruit apres nouvel appel.
 - [ ] Ajouter une rencontre physique du chef, sauvegarder le fait de l'avoir rencontre, puis faire apparaitre progressivement les actions Territoires et Relations selon reputation ET rencontre. Les informations doivent rester des lignes non selectionnables (mise en page CONTACT / INFORMATIONS deja preparee).
 - [ ] Tester en jeu les verrouillages des sous-menus de chef selon les seuils de reputation, notamment apres perte de confiance, et verifier qu'aucune relation entre deux gangs tiers n'est affichee.
 - [ ] Retirer les parcours de navigateur de gangs/cartels devenus inutiles apres validation.
