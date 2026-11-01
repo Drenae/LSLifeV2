@@ -21,28 +21,37 @@
 - [ ] Finaliser l'audit des gangs, chefs, territoires, relations, réputation, sauvegardes et interactions (classes Gang, Area, ThreatHandler, persistance et relations PNJ déjà examinées).
 - [ ] Identifier précisément les mécanismes de guerre, recrutement, distribution et contrôle de zone réutilisables.
 
-### Acces aux alliances
-- [ ] Relier la reputation du joueur aux rencontres et missions pour chaque gang (la sauvegarde et les seuils existent, mais aucune progression en jeu pour le moment).
-- [ ] Integrer les contacts des chefs dans iFruitAddon2 a partir du seuil de reputation et ouvrir la fiche du chef appele via `OpenContact`, sans contact automatique au debut.
-- [ ] Ajouter les rendez-vous et rencontres physiques avec les chefs pour negocier, conclure et rompre les accords.
-- [ ] Retirer les anciens parcours de navigateur de gangs devenus inutiles ; conserver les fiches individuelles pour les appels aux chefs.
+### Progression : rencontre et reputation
+- [ ] Identifier les chefs de gangs en monde ouvert, sans donner leurs contacts automatiquement.
+- [ ] Creer une premiere interaction avec le chef et des missions/services pour gagner sa confiance.
+- [ ] Relier les gains et pertes de reputation personnelle aux actions reelles, avec sauvegarde et Reload().
+- [ ] Tester les paliers : contact 25, territoires 35, membres 45, relations 55, alliance 60, tresorerie 75.
+- [ ] Garder la reputation personnelle distincte de la confiance diplomatique entre organisations.
 
-- [ ] Valider en jeu le nouveau bloc HUD Alliances, ses coordonnees sauvegardees et le cas sans alliance (bloc masque).
+### Telephone des chefs
+- [ ] Tester en jeu l ajout et la desactivation dynamiques des contacts iFruit au seuil de reputation.
+- [ ] Tester l ouverture du menu individuel du chef appele, la navigation, le raccrochage et l absence de navigateur global.
+- [ ] Finaliser le menu : dirigeant, territoires, membres, tresorerie, relations, demander un rendez-vous et raccrocher.
+- [ ] Afficher des renseignements partiels puis detailles selon la reputation, sans devoiler les accords de gangs tiers.
+- [ ] Retirer les parcours de navigateur de gangs/cartels devenus inutiles apres validation.
 
-### Renseignements et progression
-- [ ] Ajouter la decouverte progressive des gangs par rencontres, presence sur leurs territoires et contacts, sans reveler leurs informations des le debut.
-- [ ] Tester la migration des anciennes sauvegardes diplomatiques sans reputation et la conservation des valeurs apres Reload().
-- [ ] Connecter les paliers de reputation du menu de chef a de vrais contacts et rencontres ; ne pas confondre reputation du joueur et confiance entre deux gangs.
-- [ ] Verifier que les accords entre gangs tiers ne sont ni visibles ni modifiables par le joueur.
+### Rendez-vous et negociations en personne
+- [ ] Demander un rendez-vous par telephone : lieu adapte, confirmation, marqueur temporaire et expiration.
+- [ ] Identifier ou faire apparaitre le chef au lieu du rendez-vous et permettre une interaction en personne.
+- [ ] Ouvrir un menu distinct de negociations uniquement face au chef, jamais par simple appel.
+- [ ] Commencer par la demande d alliance au seuil requis ; debloquer ensuite d autres accords progressivement.
+- [ ] Gerer les refus, ruptures, renegociations, reactions et consequences sur la reputation.
+- [ ] Interdire la modification des accords entre deux gangs tiers.
 
-### Diplomatie et relations
-- [ ] Relier la confiance diplomatique aux actions du joueur et aux événements de gangs.
-- [ ] Ajouter des rencontres avec les chefs et des propositions diplomatiques interactives (le navigateur actuel reste consultatif).
-- [ ] Permettre de refuser, rompre ou renégocier une alliance.
+### HUD et sauvegarde
+- [ ] Valider le bloc HUD Alliances avec et sans allies, son placement X/Y et sa sauvegarde.
+- [ ] Verifier la migration des anciennes sauvegardes sans reputation et la persistance des relations.
+- [ ] Tester le comportement apres Reload(), disparition d un gang ou mort d un chef.
 
-### Accords et fonctionnement d'un cartel
-- [ ] Prévoir les contributions et le partage des revenus, avec règles transparentes.
-- [ ] Gérer les rivalités, trahisons et conséquences sur les relations et territoires.
+### Cartels (apres validation des gangs)
+- [ ] Definir la creation d un cartel a partir de plusieurs gangs allies et l accord explicite des chefs.
+- [ ] Prevoir les contributions, le partage des revenus, les rivalites et les trahisons.
+- [ ] Etudier l impact des alliances sur les territoires, la pression policiere et les guerres de gangs.
 
 ### Carte des territoires (faisabilite a valider)
 - [ ] Etudier l'affichage des territoires des gangs sur la carte du menu Pause uniquement, sans marquage sur la minimap.
