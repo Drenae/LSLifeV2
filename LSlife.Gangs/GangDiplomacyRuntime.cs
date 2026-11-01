@@ -48,6 +48,11 @@ namespace LSlife
                 // Les gangs historiques peuvent etre enregistres sans fiches detaillees.
                 // Ne pas inventer de nom de dirigeant, de tresorerie ou de membres :
                 // ces informations seront alimentees par les rencontres et le gameplay.
+                // Les zones sont initialisees avec un gang aleatoire dans Area.Innit().
+                // Persister IMMEDIATEMENT leur premier proprietaire, sinon un Reload()
+                // avant la sauvegarde differee de 60s change aleatoirement le gang.
+                if (GangPolitics.IsDirty)
+                    GangPolitics.Save(GangDiplomacySavePath);
                 lastGangDiplomacySave = Game.GameTime;
             }
             catch (Exception ex)
