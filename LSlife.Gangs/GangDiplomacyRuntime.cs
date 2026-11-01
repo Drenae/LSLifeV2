@@ -72,6 +72,36 @@ namespace LSlife
             }
         }
 
+        private void RegisterDiscoveredArea(Area area)
+        {
+            if (area == null || area.Gang == null) return;
+            string ownerId = GangPolitics.GetTerritoryOwner(area.Name);
+            if (!string.IsNullOrEmpty(ownerId))
+            {
+                GangOrganization owner;
+                if (GangPolitics.TryGetGang(ownerId, out owner))
+                    area.Gang = new Gang(owner.Name, (int)area.GangPresance * 10000,
+                        50, 20, area.Name);
+                return;
+            }
+            string nativeGang;
+            string name = GangUtilities.TryGetNativeGang(area.Name, out nativeGang)
+                ? nativeGang : area.Gang.Name;
+            GangPolitics.RegisterGang(name, name);
+            GangPolitics.SetTerritoryOwner(area.Name, name);
+            if (!string.Equals(area.Gang.Name, name, StringComparison.OrdinalIgnoreCase))
+                area.Gang = new Gang(name, (int)area.GangPresance * 10000, 50, 20, area.Name);
+            try
+            {
+                GangPolitics.Save(GangDiplomacySavePath);
+                lastGangDiplomacySave = Game.GameTime;
+            }
+            catch (Exception ex)
+            {
+                LsFunctions.DbugString("Diplomatie : nouvelle zone : " + ex.Message);
+            }
+        }
+
         private void TickGangDiplomacy()
         {
             if (firstRun || !GangPolitics.IsDirty || Game.GameTime - lastGangDiplomacySave < 60000) return;
