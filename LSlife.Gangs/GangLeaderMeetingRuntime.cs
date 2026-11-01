@@ -94,7 +94,12 @@ namespace LSlife
                 leaderMeetingPed = leaderMeetingCar.CreatePedOnSeat((VehicleSeat)0, leaderModel);
                 leaderMeetingEscort = leaderMeetingCar.CreatePedOnSeat(
                     unchecked((VehicleSeat)(-1)), escortModel);
-                if (leaderMeetingPed == null || !leaderMeetingPed.Exists()) return;
+                if (leaderMeetingPed == null || !leaderMeetingPed.Exists() ||
+                    leaderMeetingEscort == null || !leaderMeetingEscort.Exists())
+                {
+                    ClearLeaderMeeting();
+                    return;
+                }
                 pendingLeaderGangId = gang.Id;
                 ActiveLeaderMeetingGangId = gang.Id;
                 leaderMeetingPed.IsPersistent = true;
@@ -128,7 +133,9 @@ namespace LSlife
                     return;
                 }
                 if (!leaderMeetingDrivingAway && leaderMeetingCar != null && leaderMeetingEscort != null &&
-                    leaderMeetingEscort.IsInVehicle() && leaderMeetingPed.IsInVehicle())
+                    leaderMeetingEscort.IsInVehicle(leaderMeetingCar) &&
+                    leaderMeetingPed.IsInVehicle(leaderMeetingCar) &&
+                    leaderMeetingCar.Driver == leaderMeetingEscort)
                 {
                     Function.Call(Hash.TASK_VEHICLE_DRIVE_WANDER,
                         leaderMeetingEscort, leaderMeetingCar, 17f, 786603);
@@ -145,6 +152,11 @@ namespace LSlife
                     Function.Call(Hash.TASK_LEAVE_VEHICLE, leaderMeetingEscort, leaderMeetingCar, 0);
             }
             if (!leaderMeetingExited || leaderMeetingPed.IsInVehicle()) return;
+            if (leaderMeetingPed.Position.DistanceTo(player.Character.Position) < 12f)
+                World.DrawMarker((MarkerType)0,
+                    leaderMeetingPed.Position + new Vector3(0f, 0f, 2.1f),
+                    Vector3.Zero, Vector3.Zero, new Vector3(0.35f, 0.35f, 0.35f),
+                    System.Drawing.Color.Yellow);
             if (player.Character.IsInVehicle() || CustomMenuShared.IsAnyGameplayMenuOpen() ||
                 leaderMeetingPed.Position.DistanceTo(player.Character.Position) > 3f) return;
             leaderMeetingPed.Task.LookAt(player.Character);
