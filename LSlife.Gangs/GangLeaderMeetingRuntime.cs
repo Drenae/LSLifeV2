@@ -9,6 +9,7 @@ namespace LSlife
     public partial class LSL
     {
         private static string requestedLeaderGangId;
+        private static string ActiveLeaderMeetingGangId;
 
         internal static void RequestLeaderMeeting(string gangId)
         {
@@ -40,6 +41,7 @@ namespace LSlife
             leaderMeetingDrivingAway = false;
             leaderMeetingDepartureTime = 0;
             pendingLeaderGangId = null;
+            ActiveLeaderMeetingGangId = null;
         }
 
         private void TickLeaderMeeting()
@@ -85,6 +87,7 @@ namespace LSlife
                     unchecked((VehicleSeat)(-1)), model);
                 if (leaderMeetingPed == null || !leaderMeetingPed.Exists()) return;
                 pendingLeaderGangId = gang.Id;
+                ActiveLeaderMeetingGangId = gang.Id;
                 leaderMeetingPed.IsPersistent = true;
                 leaderMeetingPed.BlockPermanentEvents = true;
                 if (leaderMeetingEscort != null) leaderMeetingEscort.BlockPermanentEvents = true;
