@@ -16,7 +16,8 @@ namespace LSlife
         private Blip representativeBlip;
         private string representativeGangId;
         private int representativeSpawnTime;
-        private int representativeLastService;
+        private readonly System.Collections.Generic.Dictionary<string, int> representativeLastService =
+            new System.Collections.Generic.Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
         private void TickGangEncounters()
         {
