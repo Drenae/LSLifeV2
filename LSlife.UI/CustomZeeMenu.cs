@@ -25,10 +25,20 @@ internal static class CustomZeeMenu
 
     public static void Close()
     {
+        bool endingGangCall = networkMode && CustomGangMenu.IsGangMenu(activeMenu);
         if (activeMenu != null) activeMenu.Close();
         activeMenu = null;
         networkMode = false;
         quantityRepeat.Reset();
+        if (endingGangCall)
+        {
+            // Le menu et l'appel sont deux interfaces distinctes.
+            // Fermer egalement le telephone et son animation d'appel.
+            Function.Call(Hash.DESTROY_MOBILE_PHONE);
+            Ped playerPed = Game.Player.Character;
+            if (playerPed != null && playerPed.Exists())
+                Function.Call(Hash.CLEAR_PED_SECONDARY_TASK, playerPed.Handle);
+        }
     }
 
     internal static void OpenGangContact(string gangId)
