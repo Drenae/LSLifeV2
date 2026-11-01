@@ -35,6 +35,9 @@ namespace LSlife
                         GangPolitics.SetTerritoryOwner(area.Name, area.Gang.Name);
                     }
                 }
+                // Les gangs historiques peuvent etre enregistres sans fiches detaillees.
+                // Ne pas inventer de nom de dirigeant, de tresorerie ou de membres :
+                // ces informations seront alimentees par les rencontres et le gameplay.
                 lastGangDiplomacySave = Game.GameTime;
             }
             catch (Exception ex)
