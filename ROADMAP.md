@@ -51,6 +51,13 @@
 - [ ] Tester en jeu les verrouillages des sous-menus de chef selon les seuils de reputation, notamment apres perte de confiance, et verifier qu'aucune relation entre deux gangs tiers n'est affichee.
 - [ ] Retirer les parcours de navigateur de gangs/cartels devenus inutiles apres validation.
 
+### Rendez-vous immersifs sur le modele de Zee
+- [ ] Etudier les livraisons Zee pour reprendre le choix d'un lieu tres isole et accessible en voiture.
+- [ ] Faire attendre le chef et un accompagnateur dans un vehicule du gang ; les faire descendre quand le joueur approche.
+- [ ] Garder les deux PNJ sur place pendant l'interaction, sans disparition immediate du chef.
+- [ ] Apres la discussion, les faire remonter dans le vehicule et partir ; nettoyer seulement une fois loin du joueur.
+- [ ] Gerer expiration, Reload(), vehicule detruit, mort des PNJ et rendez-vous concurrents.
+
 ### Rendez-vous et negociations en personne
 - [ ] Tester les rendez-vous demandes par telephone : apparition du chef distinct, marqueur temporaire, expiration (5 min DEBUG / 10 min normal) et nettoyage au Reload().
 - [ ] Tester la premiere rencontre physique du chef et la persistance XML de metLeaders apres Reload(), sans attribuer de faux nom au chef ; ameliorer ensuite les lieux de rendez-vous pour les rendre propres a chaque gang.
