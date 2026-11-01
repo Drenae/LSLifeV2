@@ -31,6 +31,16 @@ namespace LSlife
                 foreach (Area area in areas)
                 {
                     if (area.Gang == null) continue;
+                    // Migration unique : les quartiers natifs reprennent leur gang
+                    // historique. Les prochaines modifications de territoire restent
+                    // ensuite sous controle du gameplay et de la sauvegarde.
+                    string nativeGang;
+                    if (!GangPolitics.NativeTerritoriesMigrated &&
+                        GangUtilities.TryGetNativeGang(area.Name, out nativeGang))
+                    {
+                        GangPolitics.RegisterGang(nativeGang, nativeGang);
+                        GangPolitics.SetTerritoryOwner(area.Name, nativeGang);
+                    }
                     string ownerId = GangPolitics.GetTerritoryOwner(area.Name);
                     if (!string.IsNullOrEmpty(ownerId))
                     {
@@ -45,6 +55,7 @@ namespace LSlife
                         GangPolitics.SetTerritoryOwner(area.Name, area.Gang.Name);
                     }
                 }
+                GangPolitics.CompleteNativeTerritoryMigration();
                 // Les gangs historiques peuvent etre enregistres sans fiches detaillees.
                 // Ne pas inventer de nom de dirigeant, de tresorerie ou de membres :
                 // ces informations seront alimentees par les rencontres et le gameplay.
