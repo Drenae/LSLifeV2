@@ -36,7 +36,7 @@ namespace LSlife
                 d != null && d.dPed != null && d.dPed.Exists() && d.dPed.IsAlive &&
                 d.Area == area.Name &&
                 d.CurrentState == Enums.DStates.TalkToPlayer &&
-                !d.dPed.IsInCombat && !d.dPed.IsInVehicle() &&
+                !d.dPed.IsInVehicle() &&
                 d.dPed.Position.DistanceTo(player.Character.Position) < 2.5f);
             if (intermediary == null) return;
 
