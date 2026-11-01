@@ -133,8 +133,8 @@ namespace LSlife
                     return;
                 }
                 if (!leaderMeetingDrivingAway && leaderMeetingCar != null && leaderMeetingEscort != null &&
-                    leaderMeetingEscort.IsInVehicle(leaderMeetingCar) &&
-                    leaderMeetingPed.IsInVehicle(leaderMeetingCar) &&
+                    leaderMeetingEscort.IsInVehicle() && leaderMeetingEscort.CurrentVehicle == leaderMeetingCar &&
+                    leaderMeetingPed.IsInVehicle() && leaderMeetingPed.CurrentVehicle == leaderMeetingCar &&
                     leaderMeetingCar.Driver == leaderMeetingEscort)
                 {
                     Function.Call(Hash.TASK_VEHICLE_DRIVE_WANDER,
