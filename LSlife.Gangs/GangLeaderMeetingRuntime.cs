@@ -79,9 +79,11 @@ namespace LSlife
                 // Les positions Zee sont deja au niveau de la chaussee.
                 // Ne pas les deplacer verticalement avec un second calcul de sol.
                 string modelName;
-                Model model = GangUtilities.TryGetRepresentativeModel(gang.Id, out modelName)
+                Model escortModel = GangUtilities.TryGetRepresentativeModel(gang.Id, out modelName)
                     ? new Model(modelName)
                     : LsFunctions.RequestModel(unchecked((PedHash)(-1954728090)));
+                Model leaderModel = GangUtilities.TryGetLeaderModel(gang.Id, out modelName)
+                    ? new Model(modelName) : escortModel;
                 // Comme Zee : vehicule stationne avec deux occupants.
                 Vector3 carPosition = meetingLocation.Position;
                 leaderMeetingCar = World.CreateVehicle(
@@ -89,9 +91,9 @@ namespace LSlife
                     carPosition, meetingLocation.Heading);
                 if (leaderMeetingCar == null || !leaderMeetingCar.Exists()) return;
                 leaderMeetingCar.IsPersistent = true;
-                leaderMeetingPed = leaderMeetingCar.CreatePedOnSeat((VehicleSeat)0, model);
+                leaderMeetingPed = leaderMeetingCar.CreatePedOnSeat((VehicleSeat)0, leaderModel);
                 leaderMeetingEscort = leaderMeetingCar.CreatePedOnSeat(
-                    unchecked((VehicleSeat)(-1)), model);
+                    unchecked((VehicleSeat)(-1)), escortModel);
                 if (leaderMeetingPed == null || !leaderMeetingPed.Exists()) return;
                 pendingLeaderGangId = gang.Id;
                 ActiveLeaderMeetingGangId = gang.Id;
