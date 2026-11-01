@@ -23,9 +23,40 @@ namespace LSlife;
 public partial class LSL
 {
 	// Courte stabilisation du personnage apres chargement (le conflit Menyoo etait externe).
+	private readonly Dictionary<string, iFruitContact> gangLeaderContacts = new Dictionary<string, iFruitContact>(StringComparer.OrdinalIgnoreCase);
+	private int phoneContactsLastSync = -1;
 	private int phoneStartupPedHandle = -1;
 	private int phoneStartupStableSince = -1;
 	private const int PhoneStartupStableMs = 750;
+
+	// Les contacts apparaissent seulement apres avoir atteint le palier de confiance.
+	// Le controle est limite a une fois par seconde pour ne pas reconstruire le telephone.
+	private void SyncGangLeaderContacts()
+	{
+		if (iFruit == null || firstRun || (phoneContactsLastSync >= 0 &&
+			Game.GameTime - phoneContactsLastSync < 1000)) return;
+		phoneContactsLastSync = Game.GameTime;
+		foreach (GangOrganization gang in DiplomacyState.Organizations)
+		{
+			bool available = DiplomacyState.HasLeaderContact(gang.Id);
+			iFruitContact existing;
+			if (gangLeaderContacts.TryGetValue(gang.Id, out existing))
+			{
+				existing.Active = available;
+				continue;
+			}
+			if (!available) continue;
+			string id = gang.Id;
+			var contact = new iFruitContact(string.IsNullOrWhiteSpace(gang.LeaderName) ?
+				"Chef - " + gang.Name : gang.LeaderName + " - " + gang.Name);
+			contact.DialTimeout = 1000;
+			contact.Icon = ContactIcon.Blank;
+			contact.Active = true;
+			contact.Answered += (sender, args) => CustomZeeMenu.OpenGangContact(id);
+			iFruit.Contacts.Add(contact);
+			gangLeaderContacts.Add(id, contact);
+		}
+	}
 
 	private void onTick(object sender, EventArgs e)
 	{
@@ -225,6 +256,8 @@ public partial class LSL
 				zee.Icon = ContactIcon.Blank;
 				phone.Contacts.Add(zee);
 				contactZee = zee;
+				gangLeaderContacts.Clear();
+				phoneContactsLastSync = -1;
 				iFruit = phone;
 			}
 		}
@@ -291,7 +324,11 @@ public partial class LSL
 		}
 		// iFruit doit traiter le telephone avant que les menus personnalises
 		// ne lisent ou ne neutralisent les controles GTA de cette frame.
-		if (iFruit != null) iFruit.Update();
+		if (iFruit != null)
+		{
+			SyncGangLeaderContacts();
+			iFruit.Update();
+		}
 		// Les menus CustomMenu ne dependent plus de l'existence du pool historique.
 		CustomMenuShared.BlockGameplayControlsWhileMenuOpen();
 		CustomZeeMenu.Tick();
