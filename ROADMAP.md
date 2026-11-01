@@ -22,6 +22,11 @@
 
 ## Priorité 1 — Alliances entre gangs et cartels
 
+### Persistance des quartiers decouverts
+- [ ] Tester le parcours de plusieurs quartiers et verifier leur apparition immediate dans LSLife_GangDiplomacy.xml, puis leur conservation apres Reload().
+- [ ] Auditer LS LifeAreas.xml : son chargement historique n'enregistre pas les nouvelles zones visitees ; definir si un inventaire complet doit y etre ajoute sans perturber les statistiques existantes.
+- [ ] Ne jamais ecraser les proprietaires sauvegardes lors d'une nouvelle decouverte.
+
 ### Territoires natifs GTA V
 - [ ] Valider la migration unique des quartiers connus et la conservation des reputations, relations et sauvegardes.
 - [ ] Tester la persistance des conquetes apres plusieurs Reload().
