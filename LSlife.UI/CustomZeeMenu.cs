@@ -340,12 +340,19 @@ internal static class CustomZeeMenu
                 float y = rowTop;
                 const float x = 0.149f, width = 0.268f;
                 float left = layout.Left;
-            bool selected = i == displayed.SelectedIndex;
+            bool information = CustomGangMenu.IsGangMenu(displayed) &&
+                !displayed.Entries[i].Enabled;
+            bool section = information && (displayed.Entries[i].Label == "CONTACT" ||
+                displayed.Entries[i].Label == "INFORMATIONS");
+            bool selected = !information && i == displayed.SelectedIndex;
             bool debtEntry = displayed == menu && displayed.Entries[i].Label == "Rembourser la dette";
             bool debtFree = debtEntry && LSL.dealer1Debt <= 0;
-            CustomMenuRenderer.Rect(x, y + 0.0205f, width - 0.012f, 0.040f,
-                selected ? 65 : 39, selected ? 55 : 43,
-                selected ? 40 : 48, selected ? 248 : 245);
+            if (!information || section)
+                CustomMenuRenderer.Rect(x, y + 0.0205f, width - 0.012f, 0.040f,
+                    selected ? 65 : section ? 28 : 39,
+                    selected ? 55 : section ? 30 : 43,
+                    selected ? 40 : section ? 33 : 48,
+                    selected ? 248 : section ? 210 : 245);
             if (selected)
             {
                 CustomMenuRenderer.Rect(left + 0.008f, y + 0.0205f, 0.0035f, 0.038f, 218, 176, 101, 255);
@@ -356,9 +363,9 @@ internal static class CustomZeeMenu
                 IsDrugMenu(displayed) && i == 0 ? "Quantite" :
                 displayed.Entries[i].Label,
                 left + 0.019f, y + 0.0005f, 0.040f,
-                0.315f, debtFree ? 133 : (selected ? 255 : 226),
-                debtFree ? 135 : (selected ? 247 : 227),
-                debtFree ? 138 : (selected ? 226 : 229), 255);
+                0.315f, section ? 218 : debtFree ? 133 : (selected ? 255 : 226),
+                section ? 176 : debtFree ? 135 : (selected ? 247 : 227),
+                section ? 101 : debtFree ? 138 : (selected ? 226 : 229), 255);
             if (debtEntry && !debtFree)
             {
                 // Valeur lue en direct : toute nouvelle dette ou tout remboursement
