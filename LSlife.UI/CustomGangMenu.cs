@@ -90,7 +90,7 @@ namespace LSlife
             GangOrganization gang;
             if (!LSL.DiplomacyState.TryGetGang(selectedGang, out gang)) return null;
             var state = LSL.DiplomacyState;
-            detail = new CustomMenu(gang.Name, "CONTACT / INFORMATIONS");
+            detail = new CustomMenu(gang.Name, "CONTACT");
             if (!state.HasLeaderContact(gang.Id))
             {
                 detail.Add("Renseignements indisponibles", () =>
@@ -101,7 +101,6 @@ namespace LSlife
             int reputation = state.GetPlayerReputation(gang.Id);
             // Les renseignements confidentiels restent invisibles tant que le chef
             // n'a pas ete rencontre. La rencontre physique sera geree separement.
-            detail.Add("CONTACT", null, () => false);
             detail.Add("Demander un rendez-vous", () =>
                 GTA.UI.ShowSubtitle("Le chef ne propose pas encore de rendez-vous.", 3500));
             detail.Add("INFORMATIONS", null, () => false);
