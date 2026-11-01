@@ -51,6 +51,15 @@ namespace LSlife.Gangs
     // Etat autonome : aucune modification des sauvegardes existantes ni des groupes PNJ GTA.
     internal sealed class GangDiplomacy
     {
+        internal bool NativeTerritoriesMigrated { get; private set; }
+
+        internal void CompleteNativeTerritoryMigration()
+        {
+            if (NativeTerritoriesMigrated) return;
+            NativeTerritoriesMigrated = true;
+            MarkDirty();
+        }
+
         // Reputation du joueur distincte des relations diplomatiques entre gangs.
         // Aucun contact ni renseignement n'est offert automatiquement au chargement.
         private readonly Dictionary<string, int> playerReputation =
@@ -349,7 +358,8 @@ namespace LSlife.Gangs
 
         internal void Save(string path)
         {
-            XElement root = new XElement("gangDiplomacy", new XAttribute("version", 1),
+            XElement root = new XElement("gangDiplomacy", new XAttribute("version", 2),
+                new XAttribute("nativeTerritoriesMigrated", NativeTerritoriesMigrated),
                 new XElement("player", new XAttribute("gang", PlayerGangId ?? ""),
                     new XAttribute("rank", PlayerRank)),
                 new XElement("playerReputations", playerReputation.OrderBy(p => p.Key).Select(p =>
@@ -457,6 +467,7 @@ namespace LSlife.Gangs
             foreach (var pair in loaded.cartels) cartels.Add(pair.Key, pair.Value);
             PlayerGangId = loaded.PlayerGangId;
             PlayerRank = loaded.PlayerRank;
+            NativeTerritoriesMigrated = (bool?)doc.Root.Attribute("nativeTerritoriesMigrated") ?? false;
             IsDirty = false;
         }
 
