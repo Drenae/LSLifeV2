@@ -25,6 +25,24 @@ internal static class GangUtilities
         return NativeGangZones.TryGetValue(zone ?? "", out gang);
     }
 
+    // Modeles natifs GTA V pour distinguer les representants des factions.
+    // Les gangs non couverts conservent le modele historique.
+    private static readonly Dictionary<string, string> NativeRepresentativeModels =
+        new Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase)
+        {
+            { "Ballas", "g_m_y_ballaeast_01" },
+            { "Families", "g_m_y_famfor_01" },
+            { "Vagos", "g_m_y_mexgoon_01" },
+            { "Aztecas", "g_m_y_mexgang_01" },
+            { "Marabunta Grande", "g_m_y_salvagoon_01" },
+            { "The Lost MC", "g_m_y_lost_01" }
+        };
+
+    public static bool TryGetRepresentativeModel(string gang, out string model)
+    {
+        return NativeRepresentativeModels.TryGetValue(gang ?? "", out model);
+    }
+
 	private const int memberCost = 10000;
 
 	public const int moneyCap = 999999999;
