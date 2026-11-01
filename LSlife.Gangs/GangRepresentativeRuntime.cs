@@ -47,8 +47,11 @@ namespace LSlife
                     pos.X, pos.Y, pos.Z + 50f, groundZ, false);
                 if (!foundGround) return;
                 pos.Z = groundZ.GetResult<float>();
-                representative = World.CreatePed(
-                    LsFunctions.RequestModel(unchecked((PedHash)(-1954728090))), pos);
+                string nativeModel;
+                Model pedModel = GangUtilities.TryGetRepresentativeModel(gang.Id, out nativeModel)
+                    ? new Model(nativeModel)
+                    : LsFunctions.RequestModel(unchecked((PedHash)(-1954728090)));
+                representative = World.CreatePed(pedModel, pos);
                 if (representative == null || !representative.Exists())
                 {
                     representative = null;
