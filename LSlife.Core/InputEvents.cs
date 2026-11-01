@@ -151,6 +151,8 @@ public partial class LSL
 
 	private void OnAbort(object sender, EventArgs e)
 	{
+		// Nettoyage explicite des representants persistants lors d'un Reload().
+		ClearRepresentative();
 		if (1 == 0)
 		{
 			return;
