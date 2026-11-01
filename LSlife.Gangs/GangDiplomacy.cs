@@ -51,6 +51,40 @@ namespace LSlife.Gangs
     // Etat autonome : aucune modification des sauvegardes existantes ni des groupes PNJ GTA.
     internal sealed class GangDiplomacy
     {
+        // Reputation du joueur distincte des relations diplomatiques entre gangs.
+        // Aucun contact ni renseignement n'est offert automatiquement au chargement.
+        private readonly Dictionary<string, int> playerReputation =
+            new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+        internal const int ContactReputation = 25;
+        internal const int TerritoryReputation = 35;
+        internal const int MembersReputation = 45;
+        internal const int RelationsReputation = 55;
+        internal const int TreasuryReputation = 75;
+        internal const int AllianceReputation = 60;
+
+        internal int GetPlayerReputation(string gangId)
+        {
+            int value;
+            return !string.IsNullOrWhiteSpace(gangId) && playerReputation.TryGetValue(gangId, out value) ? value : 0;
+        }
+
+        internal bool HasLeaderContact(string gangId)
+        {
+            return !string.IsNullOrWhiteSpace(gangId) && organizations.ContainsKey(gangId) &&
+                GetPlayerReputation(gangId) >= ContactReputation;
+        }
+
+        internal void ChangePlayerReputation(string gangId, int change)
+        {
+            if (string.IsNullOrWhiteSpace(gangId) || !organizations.ContainsKey(gangId))
+                throw new ArgumentException("Gang inconnu.");
+            int current = GetPlayerReputation(gangId);
+            int next = (int)Math.Max(0L, Math.Min(100L, (long)current + change));
+            if (next == current) return;
+            playerReputation[gangId] = next;
+            MarkDirty();
+        }
+
         private readonly Dictionary<string, GangRelation> relations = new Dictionary<string, GangRelation>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, GangOrganization> organizations = new Dictionary<string, GangOrganization>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, GangCartel> cartels = new Dictionary<string, GangCartel>(StringComparer.OrdinalIgnoreCase);
@@ -304,6 +338,8 @@ namespace LSlife.Gangs
             XElement root = new XElement("gangDiplomacy", new XAttribute("version", 1),
                 new XElement("player", new XAttribute("gang", PlayerGangId ?? ""),
                     new XAttribute("rank", PlayerRank)),
+                new XElement("playerReputations", playerReputation.OrderBy(p => p.Key).Select(p =>
+                    new XElement("reputation", new XAttribute("gang", p.Key), new XAttribute("value", p.Value)))),
                 new XElement("organizations", organizations.Values.OrderBy(g => g.Id).Select(g =>
                     new XElement("gang", new XAttribute("id", g.Id), new XAttribute("name", g.Name),
                         new XAttribute("leader", g.LeaderName ?? ""), new XAttribute("money", g.Money),
@@ -349,6 +385,13 @@ namespace LSlife.Gangs
                 foreach (XElement territory in element.Elements("territory"))
                     if (!string.IsNullOrWhiteSpace(territory.Value)) gang.Territories.Add(territory.Value);
             }
+            XElement reputations = doc.Root.Element("playerReputations");
+            if (reputations != null) foreach (XElement element in reputations.Elements("reputation"))
+            {
+                string id = (string)element.Attribute("gang");
+                if (!string.IsNullOrWhiteSpace(id) && loaded.organizations.ContainsKey(id))
+                    loaded.playerReputation[id] = ReadInt(element, "value", 0, 0, 100);
+            }
             XElement rels = doc.Root.Element("relations");
             if (rels != null) foreach (XElement element in rels.Elements("relation"))
             {
@@ -389,6 +432,8 @@ namespace LSlife.Gangs
                     Enum.IsDefined(typeof(PlayerGangRank), rank) && rank != PlayerGangRank.Independent)
                     loaded.JoinGang(id, rank);
             }
+            playerReputation.Clear();
+            foreach (var pair in loaded.playerReputation) playerReputation.Add(pair.Key, pair.Value);
             organizations.Clear();
             foreach (var pair in loaded.organizations) organizations.Add(pair.Key, pair.Value);
             relations.Clear();
