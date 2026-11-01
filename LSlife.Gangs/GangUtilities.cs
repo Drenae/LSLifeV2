@@ -11,11 +11,10 @@ internal static class GangUtilities
     private static readonly Dictionary<string, string> NativeGangZones =
         new Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase)
         {
-            { "DAVIS", "Families" },
+            { "DAVIS", "Ballas" },
             { "CHAMH", "Families" },
             { "STRAW", "Families" },
             { "RANCHO", "Vagos" },
-            { "CYPRE", "Vagos" },
             { "LAMESA", "Marabunta Grande" },
             { "EBURO", "Marabunta Grande" },
             { "EAST_V", "Marabunta Grande" }
