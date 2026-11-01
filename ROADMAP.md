@@ -15,6 +15,11 @@
 - [ ] Renommer les classes/fichiers `Custom*Menu` en noms definitifs sans prefixe `Custom`, en actualisant toutes les references et en preservant `CustomMenu` comme composant technique jusqu'a migration complete.
 - [ ] Verifier le stick gauche a pied, le D-pad et les commandes vehicule avec un menu ouvert, sur manette et clavier.
 
+## Correctifs a valider en jeu
+- [ ] Appeler un chef : l'etat iFruit doit etre ferme via Close(1000) des l'ouverture du CustomMenu, comme pour Zee ; verifier la reouverture normale du telephone apres raccrochage.
+- [ ] Verifier l'identite graphique des en-tetes CONTACT et INFORMATIONS (memes separateurs, couleurs et police).
+- [ ] Verifier que le proprietaire d'une zone ne change plus entre plusieurs Reload() consecutifs grace a la sauvegarde immediate du premier proprietaire ; ne pas reinitialiser les sauvegardes existantes.
+
 ## Priorité 1 — Alliances entre gangs et cartels
 
 ### Étude du système existant
