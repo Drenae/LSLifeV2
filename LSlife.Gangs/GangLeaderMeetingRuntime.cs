@@ -13,6 +13,12 @@ namespace LSlife
         internal static void RequestLeaderMeeting(string gangId)
         {
             if (!GangPolitics.HasLeaderContact(gangId)) return;
+            if (!string.IsNullOrEmpty(requestedLeaderGangId) ||
+                !string.IsNullOrEmpty(ActiveLeaderMeetingGangId))
+            {
+                GTA.UI.ShowSubtitle("Un rendez-vous avec un chef est deja en cours.", 4000);
+                return;
+            }
             requestedLeaderGangId = gangId;
             GTA.UI.ShowSubtitle("Rendez-vous demande. Rejoignez le marqueur du chef.", 4000);
         }
