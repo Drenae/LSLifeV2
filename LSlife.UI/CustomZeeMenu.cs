@@ -299,8 +299,15 @@ internal static class CustomZeeMenu
             activeMenu.Close();
             if (CustomGangMenu.IsGangMenu(activeMenu))
             {
-                activeMenu = CustomGangMenu.Back(activeMenu);
-                if (activeMenu == null) { networkMode = false; return; }
+                CustomMenu previous = activeMenu;
+                CustomMenu parent = CustomGangMenu.Back(previous);
+                if (parent == null)
+                {
+                    activeMenu = previous;
+                    Close();
+                    return;
+                }
+                activeMenu = parent;
                 activeMenu.Open();
             }
             else if (IsDrugMenu(activeMenu)) { activeMenu = orderMenu; orderMenu.Open(); }
