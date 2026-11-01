@@ -52,7 +52,7 @@ public partial class LSL
 			contact.DialTimeout = 1000;
 			contact.Icon = ContactIcon.Blank;
 			contact.Active = true;
-			contact.Answered += (sender, args) => CustomZeeMenu.OpenGangContact(id);
+			contact.Answered += () => CustomZeeMenu.OpenGangContact(id);
 			iFruit.Contacts.Add(contact);
 			gangLeaderContacts.Add(id, contact);
 		}
