@@ -4,6 +4,28 @@ namespace LSlife.Gangs;
 
 internal static class GangUtilities
 {
+    // Zones GTA V (World.GetZoneNameLabel), pas les quartiers inventes par le mod.
+    // Ne mapper que les quartiers historiques clairement identifies.
+    // Les quartiers non documentes conservent provisoirement leur attribution
+    // sauvegardee : aucune prise de controle automatique d'un quartier neutre.
+    private static readonly Dictionary<string, string> NativeGangZones =
+        new Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase)
+        {
+            { "DAVIS", "Families" },
+            { "CHAMH", "Families" },
+            { "STRAW", "Families" },
+            { "RANCHO", "Vagos" },
+            { "CYPRE", "Vagos" },
+            { "LAMESA", "Marabunta Grande" },
+            { "EBURO", "Marabunta Grande" },
+            { "EAST_V", "Marabunta Grande" }
+        };
+
+    public static bool TryGetNativeGang(string zone, out string gang)
+    {
+        return NativeGangZones.TryGetValue(zone ?? "", out gang);
+    }
+
 	private const int memberCost = 10000;
 
 	public const int moneyCap = 999999999;
