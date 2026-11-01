@@ -293,7 +293,7 @@ public partial class LSL
 				{
 					Area discoveredArea = new Area(playerArea, LsFunctions.LsDrugs(), zoneData[playerArea].Item1);
 					areas.Add(discoveredArea);
-					RegisterDiscoveredArea(discoveredArea);
+					// La zone initiale est prise en charge par InitializeGangDiplomacy().
 				}
 				else
 				{
