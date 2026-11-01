@@ -347,6 +347,21 @@ internal static class CustomZeeMenu
         for (int index = 0; index < displayed.Entries.Count; index++)
         {
             int entryIndex = index;
+            if (CustomGangMenu.IsGangMenu(displayed) &&
+                displayed.Entries[index].Label == "INFORMATIONS" &&
+                !displayed.Entries[index].Enabled)
+            {
+                layout.Separator(0.004f);
+                layout.Block(0.045f, y =>
+                {
+                    CustomMenuRenderer.Rect(0.149f, y + 0.0225f, 0.255f, 0.045f, 28, 30, 33, 232);
+                    CustomMenuRenderer.TextCenteredVertically("INFORMATIONS",
+                        layout.Left + 0.016f, y, 0.045f,
+                        0.275f, 226, 206, 167, 255);
+                });
+                layout.Separator(0.004f);
+                continue;
+            }
             layout.Block(0.043f, rowTop =>
             {
                 int i = entryIndex;
