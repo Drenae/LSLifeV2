@@ -52,11 +52,11 @@
 - [ ] Retirer les parcours de navigateur de gangs/cartels devenus inutiles apres validation.
 
 ### Rendez-vous immersifs sur le modele de Zee
-- [ ] Etudier les livraisons Zee pour reprendre le choix d'un lieu tres isole et accessible en voiture.
+- [ ] Tester en jeu la selection des emplacements Zee existants (400-1800 m), l'orientation du vehicule et le trajet GPS ; completer les points si des secteurs n'en possedent pas.
 - [ ] Faire attendre le chef et un accompagnateur dans un vehicule du gang ; les faire descendre quand le joueur approche.
 - [ ] Garder les deux PNJ sur place pendant l'interaction, sans disparition immediate du chef.
 - [ ] Apres la discussion, les faire remonter dans le vehicule et partir ; nettoyer seulement une fois loin du joueur.
-- [ ] Gerer expiration, Reload(), vehicule detruit, mort des PNJ et rendez-vous concurrents.
+- [ ] Tester expiration, Reload(), vehicule detruit, mort des PNJ et blocage des rendez-vous concurrents ; verifier l'absence de PNJ orphelins.
 
 ### Rendez-vous et negociations en personne
 - [ ] Tester les rendez-vous demandes par telephone : apparition du chef distinct, marqueur temporaire, expiration (5 min DEBUG / 10 min normal) et nettoyage au Reload().
