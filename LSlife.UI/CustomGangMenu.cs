@@ -99,7 +99,7 @@ namespace LSlife
                 return detail;
             }
             int reputation = state.GetPlayerReputation(gang.Id);
-            detail.Add("Dirigeant : " + (string.IsNullOrEmpty(gang.LeaderName) ? "Non identifie" : gang.LeaderName), () => { });
+            detail.Add("Dirigeant : " + (string.IsNullOrWhiteSpace(gang.LeaderName) ? "Identite inconnue" : gang.LeaderName), () => { });
             detail.Add("Confiance : " + reputation + "/100", () => { });
             detail.Add(state.CanViewLeaderInformation(gang.Id, GangDiplomacy.TerritoryReputation) ?
                 "Territoires : " + gang.Territories.Count : "Territoires : verrouille",
@@ -109,9 +109,9 @@ namespace LSlife
                     { territoryPage = 0; CustomZeeMenu.ShowGangSubmenu(BuildTerritories()); }
                 });
             detail.Add(state.CanViewLeaderInformation(gang.Id, GangDiplomacy.MembersReputation) ?
-                "Membres : " + gang.Members : "Membres : verrouille", () => { });
+                "Membres : " + (gang.Members > 0 ? gang.Members.ToString() : "Non recenses") : "Membres : verrouille", () => { });
             detail.Add(state.CanViewLeaderInformation(gang.Id, GangDiplomacy.TreasuryReputation) ?
-                "Tresorerie : " + gang.Money + " $" : "Tresorerie : verrouille", () => { });
+                "Tresorerie : " + (gang.Money > 0 ? gang.Money + " $" : "Inconnue") : "Tresorerie : verrouille", () => { });
             detail.Add(state.CanViewLeaderInformation(gang.Id, GangDiplomacy.RelationsReputation) ?
                 "Relations" : "Relations : verrouille", () =>
                 {
@@ -128,13 +128,17 @@ namespace LSlife
         {
             var state = LSL.DiplomacyState;
             if (!state.CanViewLeaderInformation(selectedGang, GangDiplomacy.RelationsReputation)) return BuildDetail();
+            // Ne jamais divulguer la diplomatie entre deux organisations tierces.
+            // Un appel ne permet de consulter que la relation du chef avec le gang du joueur.
             var gangs = state.Organizations.Where(g =>
-                !string.Equals(g.Id, selectedGang, StringComparison.OrdinalIgnoreCase) &&
+                !string.IsNullOrWhiteSpace(state.PlayerGangId) &&
+                string.Equals(g.Id, state.PlayerGangId, StringComparison.OrdinalIgnoreCase) &&
                 state.CanViewRelationIntelligence(selectedGang, g.Id)).ToList();
             int pages = Math.Max(1, (gangs.Count + PageSize - 1) / PageSize);
             relationPage = Math.Max(0, Math.Min(relationPage, pages - 1));
             relations = new CustomMenu("RELATIONS", selectedGang + "  " + (relationPage + 1) + "/" + pages);
-            if (gangs.Count == 0) relations.Add("Aucune relation accessible", () => { });
+            if (gangs.Count == 0) relations.Add("Relations confidentielles", () =>
+                GTA.UI.ShowSubtitle("Les relations avec les autres gangs ne sont pas encore connues.", 3000));
             foreach (GangOrganization gang in gangs.Skip(relationPage * PageSize).Take(PageSize))
             {
                 string id = gang.Id;
