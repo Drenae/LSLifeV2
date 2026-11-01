@@ -12,6 +12,10 @@ namespace LSlife
         internal static GangDiplomacy DiplomacyState { get { return GangPolitics; } }
         private const string GangDiplomacySavePath = "scripts\\LSLife\\LSLife_GangDiplomacy.xml";
         private int lastGangDiplomacySave;
+        private Ped leaderMeetingPed;
+        private Blip leaderMeetingBlip;
+        private string pendingLeaderGangId;
+        private int leaderMeetingExpires;
         private Ped representative;
         private Blip representativeBlip;
         private string representativeGangId;
@@ -22,6 +26,7 @@ namespace LSlife
         private void TickGangEncounters()
         {
             TickGangRepresentative();
+            TickLeaderMeeting();
         }
 
         private void InitializeGangDiplomacy()
