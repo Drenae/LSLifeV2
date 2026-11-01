@@ -16,7 +16,7 @@
 - [ ] Verifier le stick gauche a pied, le D-pad et les commandes vehicule avec un menu ouvert, sur manette et clavier.
 
 ## Correctifs a valider en jeu
-- [ ] Appeler un chef : l'etat iFruit doit etre ferme via Close(1000) des l'ouverture du CustomMenu, comme pour Zee ; verifier la reouverture normale du telephone apres raccrochage.
+- [ ] Appeler un chef : conserver l'appel actif et l'animation du telephone a l'oreille pendant le CustomMenu ; fermer iFruit via Close(1000) uniquement sur Raccrocher ou Retour, puis verifier la reouverture normale du telephone.
 - [ ] Verifier l'identite graphique des en-tetes CONTACT et INFORMATIONS (memes separateurs, couleurs et police).
 - [ ] Verifier que le proprietaire d'une zone ne change plus entre plusieurs Reload() consecutifs grace a la sauvegarde immediate du premier proprietaire ; ne pas reinitialiser les sauvegardes existantes.
 
