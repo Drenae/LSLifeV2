@@ -50,14 +50,19 @@ namespace LSlife
                 }
                 representativeGangId = gang.Id;
                 representative.IsPersistent = true;
-                representative.Task.GuardCurrentPosition();
+                // Un interlocuteur doit rester accessible : l'IA ne peut plus l'envoyer sur la route.
+                representative.FreezePosition = true;
             }
 
             UpdateRepresentativeDebug(gang.Name);
             if (player.Character.IsInVehicle() || CustomMenuShared.IsAnyGameplayMenuOpen() ||
                 representative.Position.DistanceTo(player.Character.Position) > 3f) return;
+            // Tests DEBUG : 3 secondes au lieu de 2 minutes en partie normale.
+            int cooldown = DEBUG ? 3000 : 120000;
             if (representativeLastService != 0 &&
-                Game.GameTime - representativeLastService < 120000) return;
+                Game.GameTime - representativeLastService < cooldown) return;
+            if (!representative.IsHeadtracking(player.Character))
+                representative.Task.LookAt(player.Character);
             if ((float)Game.GameTime > displayHelpTimer + 4000f)
             {
                 displayHelpTimer = Game.GameTime;
