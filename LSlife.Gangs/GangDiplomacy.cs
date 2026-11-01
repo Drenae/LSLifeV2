@@ -74,6 +74,20 @@ namespace LSlife.Gangs
                 GetPlayerReputation(gangId) >= ContactReputation;
         }
 
+        internal bool CanViewLeaderInformation(string gangId, int requiredReputation)
+        {
+            return HasLeaderContact(gangId) && GetPlayerReputation(gangId) >= requiredReputation;
+        }
+
+        internal bool CanRequestAlliance(string gangId)
+        {
+            return CanViewLeaderInformation(gangId, AllianceReputation) &&
+                !string.IsNullOrWhiteSpace(PlayerGangId) &&
+                !string.Equals(PlayerGangId, gangId, StringComparison.OrdinalIgnoreCase) &&
+                organizations.ContainsKey(PlayerGangId) && !AreAllied(PlayerGangId, gangId) &&
+                CanNegotiate(PlayerGangId, gangId);
+        }
+
         internal void ChangePlayerReputation(string gangId, int change)
         {
             if (string.IsNullOrWhiteSpace(gangId) || !organizations.ContainsKey(gangId))
@@ -398,7 +412,8 @@ namespace LSlife.Gangs
                 string first = (string)element.Attribute("first");
                 string second = (string)element.Attribute("second");
                 if (string.IsNullOrWhiteSpace(first) || string.IsNullOrWhiteSpace(second) ||
-                    string.Equals(first, second, StringComparison.OrdinalIgnoreCase)) continue;
+                    string.Equals(first, second, StringComparison.OrdinalIgnoreCase) ||
+                    !loaded.organizations.ContainsKey(first) || !loaded.organizations.ContainsKey(second)) continue;
                 GangRelation relation = loaded.GetRelation(first, second);
                 GangRelationStatus status;
                 if (Enum.TryParse((string)element.Attribute("status"), true, out status) &&
