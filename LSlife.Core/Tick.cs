@@ -307,6 +307,7 @@ public partial class LSL
 			firstRun = false;
 		}
 		TickGangDiplomacy();
+		TickGangEncounters();
 		if (DEBUG)
 		{
 			string debugString = "0";
