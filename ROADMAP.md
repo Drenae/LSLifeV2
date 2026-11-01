@@ -25,12 +25,12 @@
 - [ ] Identifier les chefs de gangs en monde ouvert, sans donner leurs contacts automatiquement.
 - [ ] Creer la premiere rencontre du vrai chef et de vraies missions de gang. Le representant est maintenant distinct des dealers, reste fixe et regarde le joueur. Le gain est de +5, avec 3 secondes en DEBUG et 2 minutes hors DEBUG. Reste a construire de vraies missions.
 - [ ] Ajouter les pertes de reputation et des missions reelles, puis tester la persistance des gains de services locaux apres Reload().
-- [ ] Verifier en jeu le PNJ representant immobile, son regard vers le joueur, le cooldown DEBUG de 3 secondes, puis les paliers : contact 25, territoires 35, membres 45, relations 55, alliance 60, tresorerie 75.
+- [ ] Verifier le recalage du PNJ representant au sol (correctif anti-flottement), son immobilite et le cooldown DEBUG, puis les paliers de contact 25 et les autres paliers APRES rencontre du chef.
 
 ### Telephone des chefs
 - [ ] Tester en jeu l'ajout dynamique des contacts iFruit apres cinq services au meme gang (+5 chacun), puis leur desactivation si la reputation baisse.
-- [ ] Tester l ouverture du menu individuel du chef appele, la navigation, le raccrochage et l absence de navigateur global.
-- [ ] Finaliser le menu : dirigeant, territoires, membres, tresorerie, relations, demander un rendez-vous et raccrocher ; connecter les valeurs inconnues aux donnees de gameplay reelles.
+- [ ] Tester la navigation du menu du chef et la neutralisation des commandes du telephone iFruit pendant l'affichage du CustomMenu, ainsi que le raccrochage.
+- [ ] Ajouter une rencontre physique du chef, sauvegarder le fait de l'avoir rencontre, puis faire apparaitre progressivement les actions Territoires et Relations selon reputation ET rencontre. Les informations doivent rester des lignes non selectionnables (mise en page CONTACT / INFORMATIONS deja preparee).
 - [ ] Tester en jeu les verrouillages des sous-menus de chef selon les seuils de reputation, notamment apres perte de confiance, et verifier qu'aucune relation entre deux gangs tiers n'est affichee.
 - [ ] Retirer les parcours de navigateur de gangs/cartels devenus inutiles apres validation.
 
@@ -53,8 +53,8 @@
 - [ ] Etudier l impact des alliances sur les territoires, la pression policiere et les guerres de gangs.
 
 ### Carte des territoires (faisabilite a valider)
-- [ ] Etudier l'affichage des territoires des gangs sur la carte du menu Pause uniquement, sans marquage sur la minimap.
-- [ ] Si les API GTA V Legacy / SHVDN2 le permettent, colorer les zones controlees par gang ; laisser les zones libres sans marquage.
+- [ ] Etudier l'affichage sur la carte du menu Pause des territoires du gang du joueur, des gangs allies et des membres du cartel uniquement ; ne jamais afficher les territoires des gangs neutres ou ennemis, ni sur la minimap.
+- [ ] Si les API GTA V Legacy / SHVDN2 le permettent, colorer seulement les zones autorisees selon l'appartenance et les alliances en cours ; laisser les zones libres et celles des autres gangs sans marquage.
 - [ ] Verifier la precision des limites de quartiers, les performances et la compatibilite avec les autres mods de carte avant implementation.
 
 ### Interface et sauvegarde
