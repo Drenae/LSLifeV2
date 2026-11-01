@@ -291,7 +291,9 @@ public partial class LSL
 			{
 				if (zoneData.ContainsKey(playerArea))
 				{
-					areas.Add(new Area(playerArea, LsFunctions.LsDrugs(), zoneData[playerArea].Item1));
+					Area discoveredArea = new Area(playerArea, LsFunctions.LsDrugs(), zoneData[playerArea].Item1);
+					areas.Add(discoveredArea);
+					RegisterDiscoveredArea(discoveredArea);
 				}
 				else
 				{
@@ -1029,7 +1031,9 @@ public partial class LSL
 				{
 					if (zoneData.ContainsKey(playerArea))
 					{
-						areas.Add(new Area(playerArea, LsFunctions.LsDrugs(), zoneData[playerArea].Item1));
+						Area discoveredArea = new Area(playerArea, LsFunctions.LsDrugs(), zoneData[playerArea].Item1);
+					areas.Add(discoveredArea);
+					RegisterDiscoveredArea(discoveredArea);
 					}
 					else
 					{
