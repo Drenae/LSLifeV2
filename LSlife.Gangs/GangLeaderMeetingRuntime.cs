@@ -87,6 +87,15 @@ namespace LSlife
                 ClearLeaderMeeting();
                 return;
             }
+            if (!leaderMeetingExited && leaderMeetingCar != null &&
+                leaderMeetingCar.Position.DistanceTo(player.Character.Position) < 18f)
+            {
+                leaderMeetingExited = true;
+                Function.Call(Hash.TASK_LEAVE_VEHICLE, leaderMeetingPed, leaderMeetingCar, 0);
+                if (leaderMeetingEscort != null)
+                    Function.Call(Hash.TASK_LEAVE_VEHICLE, leaderMeetingEscort, leaderMeetingCar, 0);
+            }
+            if (!leaderMeetingExited || leaderMeetingPed.IsInVehicle()) return;
             if (player.Character.IsInVehicle() || CustomMenuShared.IsAnyGameplayMenuOpen() ||
                 leaderMeetingPed.Position.DistanceTo(player.Character.Position) > 3f) return;
             leaderMeetingPed.Task.LookAt(player.Character);
