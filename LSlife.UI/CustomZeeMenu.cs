@@ -30,14 +30,10 @@ internal static class CustomZeeMenu
         activeMenu = null;
         networkMode = false;
         quantityRepeat.Reset();
-        if (endingGangCall)
+        if (endingGangCall && LSL.iFruit != null)
         {
-            // Le menu et l'appel sont deux interfaces distinctes.
-            // Fermer egalement le telephone et son animation d'appel.
-            Function.Call(Hash.DESTROY_MOBILE_PHONE);
-            Ped playerPed = Game.Player.Character;
-            if (playerPed != null && playerPed.Exists())
-                Function.Call(Hash.CLEAR_PED_SECONDARY_TASK, playerPed.Handle);
+            // Fermer l'etat iFruit reel, comme pour le contact Zee.
+            LSL.iFruit.Close(1000);
         }
     }
 
