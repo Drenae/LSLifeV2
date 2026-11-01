@@ -31,7 +31,8 @@
 - [ ] Valider la migration unique des quartiers connus et la conservation des reputations, relations et sauvegardes.
 - [ ] Tester la persistance des conquetes apres plusieurs Reload().
 - [ ] Cartographier les quartiers restants et supprimer progressivement les proprietaires aleatoires.
-- [ ] Adapter les representants aux modeles des factions natives.
+- [ ] Tester en jeu les modeles natifs distincts des representants (Ballas, Families, Vagos, Aztecas, Marabunta et Lost MC), leur spawn et leur nettoyage au Reload().
+- [ ] Completer le mapping des autres factions et des quartiers natifs seulement apres validation de leurs emplacements et modeles.
 
 ### Étude du système existant
 - [ ] Finaliser l'audit des gangs, chefs, territoires, relations, réputation, sauvegardes et interactions (classes Gang, Area, ThreatHandler, persistance et relations PNJ déjà examinées).
@@ -41,7 +42,7 @@
 - [ ] Identifier les chefs de gangs en monde ouvert, sans donner leurs contacts automatiquement.
 - [ ] Creer la premiere rencontre du vrai chef et de vraies missions de gang. Le representant est maintenant distinct des dealers, reste fixe et regarde le joueur. Le gain est de +5, avec 3 secondes en DEBUG et 2 minutes hors DEBUG. Reste a construire de vraies missions.
 - [ ] Ajouter les pertes de reputation et des missions reelles, puis tester la persistance des gains de services locaux apres Reload().
-- [ ] Verifier le recalage du PNJ representant au sol (correctif anti-flottement), son immobilite et le cooldown DEBUG, puis les paliers de contact 25 et les autres paliers APRES rencontre du chef.
+- [ ] Verifier le PNJ representant au sol, son immobilite, le cooldown DEBUG de 3 secondes independant pour chaque gang et les paliers APRES rencontre du chef.
 
 ### Telephone des chefs
 - [ ] Tester en jeu l'ajout dynamique des contacts iFruit apres cinq services au meme gang (+5 chacun), puis leur desactivation si la reputation baisse.
