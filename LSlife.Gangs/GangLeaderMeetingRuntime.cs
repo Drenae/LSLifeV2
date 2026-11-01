@@ -48,9 +48,19 @@ namespace LSlife
                 ClearLeaderMeeting();
                 GangOrganization gang;
                 if (!GangPolitics.TryGetGang(requested, out gang)) return;
-                Vector3 position = World.GetNextPositionOnSidewalk(
-                    player.Character.Position + player.Character.ForwardVector * 40f);
-                if (position.DistanceTo(player.Character.Position) < 12f) return;
+                // Reutilise les emplacements de livraison de Zee, deja
+                // selectionnes pour des rencontres en voiture hors du centre.
+                var possibleLocations = LsFunctions.spawnPostions.FindAll(s =>
+                    s.Position.DistanceTo(player.Character.Position) >= 400f &&
+                    s.Position.DistanceTo(player.Character.Position) <= 1800f);
+                if (possibleLocations.Count == 0)
+                {
+                    GTA.UI.ShowSubtitle("Aucun lieu de rendez-vous disponible dans ce secteur.", 4000);
+                    return;
+                }
+                DealerSpawnPostion meetingLocation =
+                    possibleLocations[rnd.Next(possibleLocations.Count)];
+                Vector3 position = meetingLocation.Position;
                 var groundZ = new OutputArgument();
                 if (!Function.Call<bool>(Hash.GET_GROUND_Z_FOR_3D_COORD,
                     position.X, position.Y, position.Z + 50f, groundZ, false)) return;
@@ -60,10 +70,10 @@ namespace LSlife
                     ? new Model(modelName)
                     : LsFunctions.RequestModel(unchecked((PedHash)(-1954728090)));
                 // Comme Zee : vehicule stationne avec deux occupants.
-                Vector3 carPosition = GenerateSpawnPos(position, Nodetype.AnyRoad, false);
-                if (carPosition.DistanceTo(position) > 80f) return;
+                Vector3 carPosition = meetingLocation.Position;
                 leaderMeetingCar = World.CreateVehicle(
-                    LsFunctions.RequestModel((VehicleHash)1177543287), carPosition);
+                    LsFunctions.RequestModel((VehicleHash)1177543287),
+                    carPosition, meetingLocation.Heading);
                 if (leaderMeetingCar == null || !leaderMeetingCar.Exists()) return;
                 leaderMeetingCar.IsPersistent = true;
                 leaderMeetingPed = leaderMeetingCar.CreatePedOnSeat((VehicleSeat)0, model);
@@ -74,10 +84,11 @@ namespace LSlife
                 leaderMeetingPed.IsPersistent = true;
                 leaderMeetingPed.BlockPermanentEvents = true;
                 if (leaderMeetingEscort != null) leaderMeetingEscort.BlockPermanentEvents = true;
-                leaderMeetingBlip = leaderMeetingPed.AddBlip();
+                leaderMeetingBlip = World.CreateBlip(carPosition);
                 leaderMeetingBlip.Name = "Rendez-vous : " + gang.Name;
                 leaderMeetingBlip.Color = (BlipColor)2;
                 leaderMeetingBlip.IsShortRange = false;
+                leaderMeetingBlip.ShowRoute = true;
                 leaderMeetingExpires = Game.GameTime + (DEBUG ? 300000 : 600000);
             }
 
