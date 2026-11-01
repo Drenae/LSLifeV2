@@ -121,7 +121,13 @@ public class Area
 		}
 		List<Drug> SortedList = Drugs.OrderByDescending((Drug d) => d.Demand).ToList();
 		Drugs = SortedList;
-		string gName = GangUtilities.LsLifeGangs[LSL.rnd.Next(0, GangUtilities.LsLifeGangs.Count)];
+		string gName;
+		if (!GangUtilities.TryGetNativeGang(Name, out gName))
+		{
+			// Zones non cartographiees : garder l'attribution historique
+			// jusqu'a la migration complete de la carte native.
+			gName = GangUtilities.LsLifeGangs[LSL.rnd.Next(0, GangUtilities.LsLifeGangs.Count)];
+		}
 		Gang = new Gang(gName, (int)GangPresance * 10000, 50, 20, Name);
 	}
 
