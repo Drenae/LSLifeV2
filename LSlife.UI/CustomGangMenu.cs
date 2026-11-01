@@ -103,6 +103,7 @@ namespace LSlife
             // n'a pas ete rencontre. La rencontre physique sera geree separement.
             detail.Add("Demander un rendez-vous", () =>
                 GTA.UI.ShowSubtitle("Le chef ne propose pas encore de rendez-vous.", 3500));
+            detail = new CustomMenu(gang.Name, "INFORMATION");
             detail.Add("INFORMATIONS", null, () => false);
             detail.Add("Dirigeant : " + (string.IsNullOrWhiteSpace(gang.LeaderName) ?
                 "Identite inconnue" : gang.LeaderName), null, () => false);
