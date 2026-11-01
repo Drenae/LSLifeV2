@@ -31,6 +31,17 @@ namespace LSlife
                 menu == relationDetail || menu == agreements);
         }
 
+        // Point d'entree destine au contact telephonique d'un chef.
+        // L'appelant doit verifier l'acquisition du contact avant d'ouvrir ce menu.
+        internal static CustomMenu OpenContact(string gangId)
+        {
+            if (!LSL.DiplomacyState.HasLeaderContact(gangId)) return null;
+            selectedGang = gangId;
+            relationPage = 0;
+            territoryPage = 0;
+            return BuildDetail();
+        }
+
         internal static CustomMenu Open()
         {
             page = 0;
@@ -80,26 +91,43 @@ namespace LSlife
             if (!LSL.DiplomacyState.TryGetGang(selectedGang, out gang)) return BuildOverview();
             var state = LSL.DiplomacyState;
             detail = new CustomMenu(gang.Name, "TERRITOIRES / DIPLOMATIE");
-            if (!state.CanViewGangIntelligence(gang.Id))
+            if (!state.HasLeaderContact(gang.Id))
             {
                 detail.Add("Renseignements indisponibles", () =>
                     GTA.UI.ShowSubtitle("Rapprochez-vous de ce gang pour obtenir des informations.", 3500));
                 detail.Add("Retour", () => CustomZeeMenu.ShowGangSubmenu(BuildOverview()));
                 return detail;
             }
-            detail.Add("Territoires : " + gang.Territories.Count, () => { territoryPage = 0; CustomZeeMenu.ShowGangSubmenu(BuildTerritories()); });
-            detail.Add("Membres : " + gang.Members, () => { });
-            detail.Add("Tresorerie : " + gang.Money + " $", () => { });
-            detail.Add("Dirigeant : " + (string.IsNullOrEmpty(gang.LeaderName) ? "Non defini" : gang.LeaderName), () => { });
-            detail.Add("Relations", () => CustomZeeMenu.ShowGangSubmenu(BuildRelations()));
-            detail.Add("Retour", () => CustomZeeMenu.ShowGangSubmenu(BuildOverview()));
+            int reputation = state.GetPlayerReputation(gang.Id);
+            detail.Add("Dirigeant : " + (string.IsNullOrEmpty(gang.LeaderName) ? "Non identifie" : gang.LeaderName), () => { });
+            detail.Add("Confiance : " + reputation + "/100", () => { });
+            detail.Add(reputation >= GangDiplomacy.TerritoryReputation ?
+                "Territoires : " + gang.Territories.Count : "Territoires : verrouille",
+                () =>
+                {
+                    if (state.GetPlayerReputation(gang.Id) >= GangDiplomacy.TerritoryReputation)
+                    { territoryPage = 0; CustomZeeMenu.ShowGangSubmenu(BuildTerritories()); }
+                });
+            detail.Add(reputation >= GangDiplomacy.MembersReputation ?
+                "Membres : " + gang.Members : "Membres : verrouille", () => { });
+            detail.Add(reputation >= GangDiplomacy.TreasuryReputation ?
+                "Tresorerie : " + gang.Money + " $" : "Tresorerie : verrouille", () => { });
+            detail.Add(reputation >= GangDiplomacy.RelationsReputation ?
+                "Relations" : "Relations : verrouille", () =>
+                {
+                    if (state.GetPlayerReputation(gang.Id) >= GangDiplomacy.RelationsReputation)
+                        CustomZeeMenu.ShowGangSubmenu(BuildRelations());
+                });
+            detail.Add("Demander un rendez-vous", () =>
+                GTA.UI.ShowSubtitle("Les rendez-vous seront disponibles apres l'integration des chefs dans le monde.", 3500));
+            detail.Add("Retour", () => CustomZeeMenu.Close());
             return detail;
         }
 
         private static CustomMenu BuildRelations()
         {
             var state = LSL.DiplomacyState;
-            if (!state.CanViewGangIntelligence(selectedGang)) return BuildDetail();
+            if (state.GetPlayerReputation(selectedGang) < GangDiplomacy.RelationsReputation) return BuildDetail();
             var gangs = state.Organizations.Where(g =>
                 !string.Equals(g.Id, selectedGang, StringComparison.OrdinalIgnoreCase) &&
                 state.CanViewRelationIntelligence(selectedGang, g.Id)).ToList();
@@ -132,6 +160,7 @@ namespace LSlife
         {
             GangOrganization gang;
             if (!LSL.DiplomacyState.TryGetGang(selectedGang, out gang)) return BuildOverview();
+            if (LSL.DiplomacyState.GetPlayerReputation(selectedGang) < GangDiplomacy.TerritoryReputation) return BuildDetail();
             var zones = gang.Territories.OrderBy(t => t).ToList();
             int pages = Math.Max(1, (zones.Count + PageSize - 1) / PageSize);
             territoryPage = Math.Max(0, Math.Min(territoryPage, pages - 1));
