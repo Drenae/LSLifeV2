@@ -153,6 +153,8 @@ public partial class LSL
 	{
 		// Nettoyage explicite des representants persistants lors d'un Reload().
 		ClearRepresentative();
+		ClearLeaderMeeting();
+		requestedLeaderGangId = null;
 		if (1 == 0)
 		{
 			return;
