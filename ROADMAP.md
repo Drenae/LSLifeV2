@@ -22,7 +22,8 @@
 - [ ] Identifier précisément les mécanismes de guerre, recrutement, distribution et contrôle de zone réutilisables.
 
 ### Acces aux alliances
-- [ ] Integrer les contacts des chefs de gangs dans iFruitAddon2, uniquement apres rencontre et echange de coordonnees ; appeler un chef ouvre uniquement sa fiche et les accords impliquant le joueur.
+- [ ] Relier la reputation du joueur aux rencontres et missions pour chaque gang (la sauvegarde et les seuils existent, mais aucune progression en jeu pour le moment).
+- [ ] Integrer les contacts des chefs dans iFruitAddon2 a partir du seuil de reputation et ouvrir la fiche du chef appele via `OpenContact`, sans contact automatique au debut.
 - [ ] Ajouter les rendez-vous et rencontres physiques avec les chefs pour negocier, conclure et rompre les accords.
 - [ ] Retirer les anciens parcours de navigateur de gangs devenus inutiles ; conserver les fiches individuelles pour les appels aux chefs.
 
@@ -30,8 +31,8 @@
 
 ### Renseignements et progression
 - [ ] Ajouter la decouverte progressive des gangs par rencontres, presence sur leurs territoires et contacts, sans reveler leurs informations des le debut.
-- [ ] Memoriser les niveaux de connaissance par gang dans la sauvegarde diplomatique, avec migration compatible des anciennes sauvegardes.
-- [ ] Autoriser les renseignements partiels selon la proximite et la reputation, et les details confidentiels seulement aux membres/allies concernes.
+- [ ] Tester la migration des anciennes sauvegardes diplomatiques sans reputation et la conservation des valeurs apres Reload().
+- [ ] Connecter les paliers de reputation du menu de chef a de vrais contacts et rencontres ; ne pas confondre reputation du joueur et confiance entre deux gangs.
 - [ ] Verifier que les accords entre gangs tiers ne sont ni visibles ni modifiables par le joueur.
 
 ### Diplomatie et relations
