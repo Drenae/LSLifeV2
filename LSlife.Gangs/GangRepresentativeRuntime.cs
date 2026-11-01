@@ -41,6 +41,12 @@ namespace LSlife
                 Vector3 pos = World.GetNextPositionOnSidewalk(
                     player.Character.Position + player.Character.ForwardVector * 25f);
                 if (pos.DistanceTo(player.Character.Position) < 10f) return;
+                // Recaler le trottoir sur le sol avant de figer le PNJ.
+                var groundZ = new OutputArgument();
+                bool foundGround = Function.Call<bool>(Hash.GET_GROUND_Z_FOR_3D_COORD,
+                    pos.X, pos.Y, pos.Z + 50f, groundZ, false);
+                if (!foundGround) return;
+                pos.Z = groundZ.GetResult<float>();
                 representative = World.CreatePed(
                     LsFunctions.RequestModel(unchecked((PedHash)(-1954728090))), pos);
                 if (representative == null || !representative.Exists())
