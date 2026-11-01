@@ -16,6 +16,7 @@ namespace LSlife
         private Ped leaderMeetingEscort;
         private bool leaderMeetingExited;
         private bool leaderMeetingFinished;
+        private bool leaderMeetingDrivingAway;
         private int leaderMeetingDepartureTime;
         private Ped leaderMeetingPed;
         private Blip leaderMeetingBlip;
