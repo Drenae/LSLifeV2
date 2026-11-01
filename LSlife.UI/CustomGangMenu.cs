@@ -99,27 +99,15 @@ namespace LSlife
                 return detail;
             }
             int reputation = state.GetPlayerReputation(gang.Id);
-            detail.Add("Dirigeant : " + (string.IsNullOrWhiteSpace(gang.LeaderName) ? "Identite inconnue" : gang.LeaderName), () => { });
-            detail.Add("Confiance : " + reputation + "/100", () => { });
-            detail.Add(state.CanViewLeaderInformation(gang.Id, GangDiplomacy.TerritoryReputation) ?
-                "Territoires : " + gang.Territories.Count : "Territoires : verrouille",
-                () =>
-                {
-                    if (state.GetPlayerReputation(gang.Id) >= GangDiplomacy.TerritoryReputation)
-                    { territoryPage = 0; CustomZeeMenu.ShowGangSubmenu(BuildTerritories()); }
-                });
-            detail.Add(state.CanViewLeaderInformation(gang.Id, GangDiplomacy.MembersReputation) ?
-                "Membres : " + (gang.Members > 0 ? gang.Members.ToString() : "Non recenses") : "Membres : verrouille", () => { });
-            detail.Add(state.CanViewLeaderInformation(gang.Id, GangDiplomacy.TreasuryReputation) ?
-                "Tresorerie : " + (gang.Money > 0 ? gang.Money + " $" : "Inconnue") : "Tresorerie : verrouille", () => { });
-            detail.Add(state.CanViewLeaderInformation(gang.Id, GangDiplomacy.RelationsReputation) ?
-                "Relations" : "Relations : verrouille", () =>
-                {
-                    if (state.GetPlayerReputation(gang.Id) >= GangDiplomacy.RelationsReputation)
-                        CustomZeeMenu.ShowGangSubmenu(BuildRelations());
-                });
+            // Les renseignements confidentiels restent invisibles tant que le chef
+            // n'a pas ete rencontre. La rencontre physique sera geree separement.
+            detail.Add("CONTACT", null, () => false);
             detail.Add("Demander un rendez-vous", () =>
-                GTA.UI.ShowSubtitle("Les rendez-vous seront disponibles apres l'integration des chefs dans le monde.", 3500));
+                GTA.UI.ShowSubtitle("Le chef ne propose pas encore de rendez-vous.", 3500));
+            detail.Add("INFORMATIONS", null, () => false);
+            detail.Add("Dirigeant : " + (string.IsNullOrWhiteSpace(gang.LeaderName) ?
+                "Identite inconnue" : gang.LeaderName), null, () => false);
+            detail.Add("Confiance : " + reputation + "/100", null, () => false);
             detail.Add("Raccrocher", () => CustomZeeMenu.Close());
             return detail;
         }
