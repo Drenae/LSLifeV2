@@ -61,10 +61,8 @@ namespace LSlife
                 DealerSpawnPostion meetingLocation =
                     possibleLocations[rnd.Next(possibleLocations.Count)];
                 Vector3 position = meetingLocation.Position;
-                var groundZ = new OutputArgument();
-                if (!Function.Call<bool>(Hash.GET_GROUND_Z_FOR_3D_COORD,
-                    position.X, position.Y, position.Z + 50f, groundZ, false)) return;
-                position.Z = groundZ.GetResult<float>();
+                // Les positions Zee sont deja au niveau de la chaussee.
+                // Ne pas les deplacer verticalement avec un second calcul de sol.
                 string modelName;
                 Model model = GangUtilities.TryGetRepresentativeModel(gang.Id, out modelName)
                     ? new Model(modelName)
