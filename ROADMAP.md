@@ -47,13 +47,13 @@
 ### Telephone des chefs
 - [ ] Tester en jeu l'ajout dynamique des contacts iFruit apres cinq services au meme gang (+5 chacun), puis leur desactivation si la reputation baisse.
 - [ ] Tester le raccrochage du chef (action Raccrocher et touche Retour) : fermeture du telephone et fin de l'animation d'appel, sans perturber Zee ; verifier iFruit apres nouvel appel.
-- [ ] Ajouter une rencontre physique du chef, sauvegarder le fait de l'avoir rencontre, puis faire apparaitre progressivement les actions Territoires et Relations selon reputation ET rencontre. Les informations doivent rester des lignes non selectionnables (mise en page CONTACT / INFORMATIONS deja preparee).
+- [ ] Tester le deblocage des actions Territoires (35) et Relations (55) uniquement apres rencontre physique, et leur disparition si la reputation redescend. Les informations restent non selectionnables.
 - [ ] Tester en jeu les verrouillages des sous-menus de chef selon les seuils de reputation, notamment apres perte de confiance, et verifier qu'aucune relation entre deux gangs tiers n'est affichee.
 - [ ] Retirer les parcours de navigateur de gangs/cartels devenus inutiles apres validation.
 
 ### Rendez-vous et negociations en personne
-- [ ] Demander un rendez-vous par telephone : lieu adapte, confirmation, marqueur temporaire et expiration.
-- [ ] Identifier ou faire apparaitre le chef au lieu du rendez-vous et permettre une interaction en personne.
+- [ ] Tester les rendez-vous demandes par telephone : apparition du chef distinct, marqueur temporaire, expiration (5 min DEBUG / 10 min normal) et nettoyage au Reload().
+- [ ] Tester la premiere rencontre physique du chef et la persistance XML de metLeaders apres Reload(), sans attribuer de faux nom au chef ; ameliorer ensuite les lieux de rendez-vous pour les rendre propres a chaque gang.
 - [ ] Ouvrir un menu distinct de negociations uniquement face au chef, jamais par simple appel.
 - [ ] Commencer par la demande d alliance au seuil requis (60/100 de reputation personnelle, gang du joueur requis et confiance diplomatique suffisante) ; debloquer ensuite d autres accords progressivement.
 - [ ] Gerer les refus, ruptures, renegociations, reactions et consequences sur la reputation.
