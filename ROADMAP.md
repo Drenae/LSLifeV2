@@ -30,8 +30,8 @@
 ### Telephone des chefs
 - [ ] Tester en jeu l ajout et la desactivation dynamiques des contacts iFruit au seuil de reputation.
 - [ ] Tester l ouverture du menu individuel du chef appele, la navigation, le raccrochage et l absence de navigateur global.
-- [ ] Finaliser le menu : dirigeant, territoires, membres, tresorerie, relations, demander un rendez-vous et raccrocher.
-- [ ] Tester en jeu les verrouillages des sous-menus de chef selon les seuils de reputation, notamment apres perte de confiance.
+- [ ] Finaliser le menu : dirigeant, territoires, membres, tresorerie, relations, demander un rendez-vous et raccrocher ; connecter les valeurs inconnues aux donnees de gameplay reelles.
+- [ ] Tester en jeu les verrouillages des sous-menus de chef selon les seuils de reputation, notamment apres perte de confiance, et verifier qu'aucune relation entre deux gangs tiers n'est affichee.
 - [ ] Retirer les parcours de navigateur de gangs/cartels devenus inutiles apres validation.
 
 ### Rendez-vous et negociations en personne
