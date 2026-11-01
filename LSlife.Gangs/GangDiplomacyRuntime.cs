@@ -13,11 +13,12 @@ namespace LSlife
         private const string GangDiplomacySavePath = "scripts\\LSLife\\LSLife_GangDiplomacy.xml";
         private int lastGangDiplomacySave;
         private int lastGangEncounterCheck;
-        private int lastGangService = -GangServiceCooldownMs;
+        private readonly System.Collections.Generic.Dictionary<string, int> lastGangServiceByGang =
+            new System.Collections.Generic.Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
         private const int GangServiceCooldownMs = 120000;
 
-        // Premiere progression jouable : les dealers locaux sont des intermediaires,
-        // jamais des dirigeants. Le joueur doit leur parler physiquement.
+        // Interactions diplomatiques separees du recrutement des dealers.
+        // Aucun recrutement, changement d'employeur ou menu d'embauche n'est modifie.
         private void TickGangEncounters()
         {
             if (firstRun || player == null || player.Character == null ||
@@ -34,19 +35,26 @@ namespace LSlife
             AreaDealer intermediary = area.Gang.AreaDealers.FirstOrDefault(d =>
                 d != null && d.dPed != null && d.dPed.Exists() && d.dPed.IsAlive &&
                 d.Area == area.Name &&
-                d.dPed.Position.DistanceTo(player.Character.Position) < 3.0f);
+                d.CurrentState == Enums.DStates.TalkToPlayer &&
+                !d.dPed.IsInCombat && !d.dPed.IsInVehicle() &&
+                d.dPed.Position.DistanceTo(player.Character.Position) < 2.5f);
             if (intermediary == null) return;
-            if (Game.GameTime - lastGangService < GangServiceCooldownMs) return;
-            LsFunctions.DisplayHelpText("~INPUT_CONTEXT~ : service pour " + gang.Name);
+
+            // Sprint est reserve a l'embauche; ne jamais intercepter cette commande.
+            if (Game.IsControlPressed(2, (GTA.Control)21)) return;
+            int last;
+            if (lastGangServiceByGang.TryGetValue(gang.Id, out last) &&
+                Game.GameTime >= last && Game.GameTime - last < GangServiceCooldownMs)
+                return;
+            LsFunctions.DisplayHelpText("~INPUT_CONTEXT~ : discuter avec un intermediaire de " + gang.Name);
             if (!Game.IsControlJustPressed(2, (GTA.Control)51)) return;
-            lastGangService = Game.GameTime;
+            lastGangServiceByGang[gang.Id] = Game.GameTime;
             GangPolitics.ChangePlayerReputation(gang.Id, 5);
             GTA.UI.ShowSubtitle(gang.Name + " : confiance " +
                 GangPolitics.GetPlayerReputation(gang.Id) + "/100 (+5).", 3500);
             try { GangPolitics.Save(GangDiplomacySavePath); lastGangDiplomacySave = Game.GameTime; }
             catch (Exception ex) { LsFunctions.DbugString("Diplomatie : sauvegarde service : " + ex.Message); }
         }
-
 
         private void InitializeGangDiplomacy()
         {
