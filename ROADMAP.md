@@ -23,12 +23,12 @@
 
 ### Progression : rencontre et reputation
 - [ ] Identifier les chefs de gangs en monde ouvert, sans donner leurs contacts automatiquement.
-- [ ] Creer une premiere interaction avec le chef et des missions/services pour gagner sa confiance.
-- [ ] Relier les gains et pertes de reputation personnelle aux actions reelles, avec sauvegarde et Reload().
-- [ ] Tester les paliers : contact 25, territoires 35, membres 45, relations 55, alliance 60, tresorerie 75.
+- [ ] Creer la premiere rencontre du vrai chef et des missions de gang (un premier service repetable via les dealers locaux existe, +5 reputation avec delai de 2 minutes, mais ce n'est pas encore une mission).
+- [ ] Ajouter les pertes de reputation et des missions reelles, puis tester la persistance des gains de services locaux apres Reload().
+- [ ] Tester les paliers avec les services de dealers locaux : contact 25, territoires 35, membres 45, relations 55, alliance 60, tresorerie 75.
 
 ### Telephone des chefs
-- [ ] Tester en jeu l ajout et la desactivation dynamiques des contacts iFruit au seuil de reputation.
+- [ ] Tester en jeu l'ajout dynamique des contacts iFruit apres cinq services au meme gang (+5 chacun), puis leur desactivation si la reputation baisse.
 - [ ] Tester l ouverture du menu individuel du chef appele, la navigation, le raccrochage et l absence de navigateur global.
 - [ ] Finaliser le menu : dirigeant, territoires, membres, tresorerie, relations, demander un rendez-vous et raccrocher ; connecter les valeurs inconnues aux donnees de gameplay reelles.
 - [ ] Tester en jeu les verrouillages des sous-menus de chef selon les seuils de reputation, notamment apres perte de confiance, et verifier qu'aucune relation entre deux gangs tiers n'est affichee.
