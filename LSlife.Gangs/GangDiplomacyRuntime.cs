@@ -13,7 +13,7 @@ namespace LSlife
         private const string GangDiplomacySavePath = "scripts\\LSLife\\LSLife_GangDiplomacy.xml";
         private int lastGangDiplomacySave;
         private int lastGangEncounterCheck;
-        private int lastGangService;
+        private int lastGangService = -GangServiceCooldownMs;
         private const int GangServiceCooldownMs = 120000;
 
         // Premiere progression jouable : les dealers locaux sont des intermediaires,
