@@ -26,26 +26,25 @@
 - [ ] Creer une premiere interaction avec le chef et des missions/services pour gagner sa confiance.
 - [ ] Relier les gains et pertes de reputation personnelle aux actions reelles, avec sauvegarde et Reload().
 - [ ] Tester les paliers : contact 25, territoires 35, membres 45, relations 55, alliance 60, tresorerie 75.
-- [ ] Garder la reputation personnelle distincte de la confiance diplomatique entre organisations.
 
 ### Telephone des chefs
 - [ ] Tester en jeu l ajout et la desactivation dynamiques des contacts iFruit au seuil de reputation.
 - [ ] Tester l ouverture du menu individuel du chef appele, la navigation, le raccrochage et l absence de navigateur global.
 - [ ] Finaliser le menu : dirigeant, territoires, membres, tresorerie, relations, demander un rendez-vous et raccrocher.
-- [ ] Afficher des renseignements partiels puis detailles selon la reputation, sans devoiler les accords de gangs tiers.
+- [ ] Tester en jeu les verrouillages des sous-menus de chef selon les seuils de reputation, notamment apres perte de confiance.
 - [ ] Retirer les parcours de navigateur de gangs/cartels devenus inutiles apres validation.
 
 ### Rendez-vous et negociations en personne
 - [ ] Demander un rendez-vous par telephone : lieu adapte, confirmation, marqueur temporaire et expiration.
 - [ ] Identifier ou faire apparaitre le chef au lieu du rendez-vous et permettre une interaction en personne.
 - [ ] Ouvrir un menu distinct de negociations uniquement face au chef, jamais par simple appel.
-- [ ] Commencer par la demande d alliance au seuil requis ; debloquer ensuite d autres accords progressivement.
+- [ ] Commencer par la demande d alliance au seuil requis (60/100 de reputation personnelle, gang du joueur requis et confiance diplomatique suffisante) ; debloquer ensuite d autres accords progressivement.
 - [ ] Gerer les refus, ruptures, renegociations, reactions et consequences sur la reputation.
 - [ ] Interdire la modification des accords entre deux gangs tiers.
 
 ### HUD et sauvegarde
 - [ ] Valider le bloc HUD Alliances avec et sans allies, son placement X/Y et sa sauvegarde.
-- [ ] Verifier la migration des anciennes sauvegardes sans reputation et la persistance des relations.
+- [ ] Tester la migration des anciennes sauvegardes sans reputation et la persistance des relations (les relations vers des gangs absents sont maintenant ignorees au chargement).
 - [ ] Tester le comportement apres Reload(), disparition d un gang ou mort d un chef.
 
 ### Cartels (apres validation des gangs)
