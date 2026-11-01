@@ -102,11 +102,20 @@ namespace LSlife
             // Les renseignements confidentiels restent invisibles tant que le chef
             // n'a pas ete rencontre. La rencontre physique sera geree separement.
             detail.Add("Demander un rendez-vous", () =>
-                GTA.UI.ShowSubtitle("Le chef ne propose pas encore de rendez-vous.", 3500));
+            {
+                LSL.RequestLeaderMeeting(gang.Id);
+                CustomZeeMenu.Close();
+            });
+            if (state.HasMetLeader(gang.Id) && reputation >= GangDiplomacy.TerritoryReputation)
+                detail.Add("Territoires", () => CustomZeeMenu.ShowGangSubmenu(BuildTerritories()));
+            if (state.HasMetLeader(gang.Id) && reputation >= GangDiplomacy.RelationsReputation)
+                detail.Add("Relations", () => CustomZeeMenu.ShowGangSubmenu(BuildRelations()));
             detail.Add("INFORMATIONS", null, () => false);
             detail.Add("Dirigeant : " + (string.IsNullOrWhiteSpace(gang.LeaderName) ?
                 "Identite inconnue" : gang.LeaderName), null, () => false);
             detail.Add("Confiance : " + reputation + "/100", null, () => false);
+            if (state.HasMetLeader(gang.Id))
+                detail.Add("Rencontre : chef deja rencontre", null, () => false);
             detail.Add("Raccrocher", () => CustomZeeMenu.Close());
             return detail;
         }
