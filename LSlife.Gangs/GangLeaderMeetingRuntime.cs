@@ -110,7 +110,12 @@ namespace LSlife
             GTA.UI.ShowSubtitle("Premiere rencontre avec le chef de " + gangId + " confirmee.", 4500);
             try { GangPolitics.Save(GangDiplomacySavePath); lastGangDiplomacySave = Game.GameTime; }
             catch (Exception ex) { LsFunctions.DbugString("Rencontre du chef : " + ex.Message); }
-            ClearLeaderMeeting();
+            leaderMeetingFinished = true;
+            leaderMeetingDepartureTime = Game.GameTime;
+            if (leaderMeetingPed != null && leaderMeetingCar != null)
+                leaderMeetingPed.Task.EnterVehicle(leaderMeetingCar, (VehicleSeat)0);
+            if (leaderMeetingEscort != null && leaderMeetingCar != null)
+                leaderMeetingEscort.Task.EnterVehicle(leaderMeetingCar, unchecked((VehicleSeat)(-1)));
         }
     }
 }
