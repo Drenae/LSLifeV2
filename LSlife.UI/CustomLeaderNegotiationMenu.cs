@@ -12,6 +12,7 @@ namespace LSlife
         private static string gangId;
         private static bool waitForRelease;
         private static bool awaitingConfirmation;
+        private static bool awaitingMembershipConfirmation;
         private static int lastFrame = -1;
 
         internal static bool Visible { get { return menu != null && menu.Visible; } }
@@ -22,6 +23,7 @@ namespace LSlife
                 CustomMenuShared.IsAnyGameplayMenuOpen()) return;
             gangId = targetGangId;
             awaitingConfirmation = false;
+            awaitingMembershipConfirmation = false;
             Rebuild();
         }
 
@@ -32,8 +34,14 @@ namespace LSlife
             if (!state.TryGetGang(gangId, out gang)) { Close(); return; }
             if (menu != null) menu.Close();
             menu = new CustomMenu(gang.Name,
+                awaitingMembershipConfirmation ? "ADHESION" :
                 awaitingConfirmation ? "CONFIRMATION" : "NEGOCIATIONS");
-            if (awaitingConfirmation)
+            if (awaitingMembershipConfirmation)
+            {
+                menu.Add("Confirmer mon adhesion", ConfirmMembership);
+                menu.Add("Annuler", () => { awaitingMembershipConfirmation = false; Rebuild(); });
+            }
+            else if (awaitingConfirmation)
             {
                 menu.Add("Confirmer l'alliance", ConfirmAlliance);
                 menu.Add("Annuler", () => { awaitingConfirmation = false; Rebuild(); });
@@ -41,6 +49,8 @@ namespace LSlife
             else
             {
                 menu.Add("Proposer une alliance", ProposeAlliance);
+                if (string.IsNullOrWhiteSpace(state.PlayerGangId))
+                    menu.Add("Rejoindre ce gang", RequestMembership);
                 menu.Add("Quitter la rencontre", Close);
             }
             menu.Open();
@@ -64,6 +74,51 @@ namespace LSlife
             if (state.GetRelation(state.PlayerGangId, gangId).Trust < 75)
                 return "Confiance diplomatique requise : 75/100.";
             return null;
+        }
+
+        private static void RequestMembership()
+        {
+            var state = LSL.DiplomacyState;
+            if (!string.IsNullOrWhiteSpace(state.PlayerGangId))
+            {
+                GTA.UI.ShowSubtitle("Vous appartenez deja a un gang.", 3500);
+                return;
+            }
+            if (!state.HasMetLeader(gangId) ||
+                state.GetPlayerReputation(gangId) < GangDiplomacy.AllianceReputation)
+            {
+                GTA.UI.ShowSubtitle("Le chef exige une reputation de 60/100.", 4000);
+                return;
+            }
+            awaitingMembershipConfirmation = true;
+            Rebuild();
+        }
+
+        private static void ConfirmMembership()
+        {
+            var state = LSL.DiplomacyState;
+            if (!string.IsNullOrWhiteSpace(state.PlayerGangId) ||
+                !state.HasMetLeader(gangId) ||
+                state.GetPlayerReputation(gangId) < GangDiplomacy.AllianceReputation)
+            {
+                GTA.UI.ShowSubtitle("Adhesion refusee : conditions non remplies.", 4000);
+                awaitingMembershipConfirmation = false;
+                Rebuild();
+                return;
+            }
+            try
+            {
+                state.JoinGang(gangId, PlayerGangRank.Recruit);
+                state.Save("scripts\\LSLife\\LSLife_GangDiplomacy.xml");
+                GTA.UI.ShowSubtitle("Vous avez rejoint " + gangId + " comme recrue.", 5000);
+            }
+            catch (Exception ex)
+            {
+                LsFunctions.DbugString("Adhesion gang : " + ex.Message);
+                GTA.UI.ShowSubtitle("Adhesion non confirmee, sauvegarde a verifier.", 4500);
+            }
+            awaitingMembershipConfirmation = false;
+            Rebuild();
         }
 
         private static void ProposeAlliance()
@@ -116,6 +171,7 @@ namespace LSlife
             if (menu != null) menu.Close();
             gangId = null;
             awaitingConfirmation = false;
+            awaitingMembershipConfirmation = false;
         }
 
         internal static void TickOncePerFrame()
@@ -152,7 +208,12 @@ namespace LSlife
                 !string.Equals(state.PlayerGangId, gangId, StringComparison.OrdinalIgnoreCase))
                 layout.TextPair("Confiance", state.GetRelation(state.PlayerGangId, gangId).Trust + "/100");
             layout.Separator(0.004f);
-            if (awaitingConfirmation)
+            if (awaitingMembershipConfirmation)
+            {
+                layout.Row("Confirmer mon adhesion", menu.SelectedIndex == 0);
+                layout.Row("Annuler", menu.SelectedIndex == 1);
+            }
+            else if (awaitingConfirmation)
             {
                 layout.Row("Confirmer l'alliance", menu.SelectedIndex == 0);
                 layout.Row("Annuler", menu.SelectedIndex == 1);
@@ -161,7 +222,15 @@ namespace LSlife
             {
                 layout.Row("Proposer une alliance", menu.SelectedIndex == 0,
                     AllianceRequirement() == null ? "Disponible" : "Verrouille");
-                layout.Row("Quitter", menu.SelectedIndex == 1);
+                int quitIndex = 1;
+                if (string.IsNullOrWhiteSpace(state.PlayerGangId))
+                {
+                    layout.Row("Rejoindre ce gang", menu.SelectedIndex == 1,
+                        state.GetPlayerReputation(gangId) >= GangDiplomacy.AllianceReputation
+                            ? "Disponible" : "60 requis");
+                    quitIndex = 2;
+                }
+                layout.Row("Quitter", menu.SelectedIndex == quitIndex);
             }
             layout.Render();
         }
