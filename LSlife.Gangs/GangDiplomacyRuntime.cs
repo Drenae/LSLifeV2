@@ -55,7 +55,12 @@ namespace LSlife
                         GangPolitics.RegisterGang(nativeGang, nativeGang);
                         GangPolitics.SetTerritoryOwner(area.Name, nativeGang);
                     }
-                    string ownerId = GangPolitics.GetTerritoryOwner(area.Name);
+                    // Capturer la position des nouvelles zones sans attendre le prochain tick.
+            if (player != null && player.Character != null && player.Character.Exists() &&
+                string.Equals(World.GetZoneNameLabel(player.Character.Position),
+                    area.Name, StringComparison.OrdinalIgnoreCase))
+                RecordGangTerritoryVisit(area.Name, player.Character.Position);
+            string ownerId = GangPolitics.GetTerritoryOwner(area.Name);
                     if (!string.IsNullOrEmpty(ownerId))
                     {
                         GangOrganization owner;
