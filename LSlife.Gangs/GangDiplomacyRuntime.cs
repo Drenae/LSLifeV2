@@ -33,7 +33,6 @@ namespace LSlife
         {
             TickGangRepresentative();
             TickLeaderMeeting();
-            TickGangTerritoryMap();
         }
 
         private void InitializeGangDiplomacy()
@@ -41,7 +40,6 @@ namespace LSlife
             try
             {
                 GangPolitics.Load(GangDiplomacySavePath);
-                LoadGangTerritoryMap();
                 foreach (Area area in areas)
                 {
                     if (area.Gang == null) continue;
@@ -55,12 +53,7 @@ namespace LSlife
                         GangPolitics.RegisterGang(nativeGang, nativeGang);
                         GangPolitics.SetTerritoryOwner(area.Name, nativeGang);
                     }
-                    // Capturer la position des nouvelles zones sans attendre le prochain tick.
-            if (player != null && player.Character != null && player.Character.Exists() &&
-                string.Equals(World.GetZoneNameLabel(player.Character.Position),
-                    area.Name, StringComparison.OrdinalIgnoreCase))
-                RecordGangTerritoryVisit(area.Name, player.Character.Position);
-            string ownerId = GangPolitics.GetTerritoryOwner(area.Name);
+                    string ownerId = GangPolitics.GetTerritoryOwner(area.Name);
                     if (!string.IsNullOrEmpty(ownerId))
                     {
                         GangOrganization owner;
@@ -110,10 +103,6 @@ namespace LSlife
             GangPolitics.SetTerritoryOwner(area.Name, name);
             if (!string.Equals(area.Gang.Name, name, StringComparison.OrdinalIgnoreCase))
                 area.Gang = new Gang(name, (int)area.GangPresance * 10000, 50, 20, area.Name);
-            if (player != null && player.Character != null && player.Character.Exists() &&
-                string.Equals(World.GetZoneNameLabel(player.Character.Position),
-                    area.Name, StringComparison.OrdinalIgnoreCase))
-                RecordGangTerritoryVisit(area.Name, player.Character.Position);
             try
             {
                 GangPolitics.Save(GangDiplomacySavePath);
