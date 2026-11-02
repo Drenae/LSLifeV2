@@ -12,8 +12,8 @@ namespace LSlife
 {
     public partial class LSL
     {
-        // Phase 1 : points de quartiers decouverts, carte pause uniquement.
-        // Une position de visite n'est PAS une frontiere geographique.
+        // Carte pause : marqueurs de decouverte et surfaces des zones GTA V.
+        // Les surfaces utilisent les limites XY du jeu, pas les positions visitees.
         private const string TerritoryMapPath = "scripts\\LSLife\\LSLife_TerritoryMap.xml";
         private readonly Dictionary<string, Vector3> territoryMapPositions =
             new Dictionary<string, Vector3>(StringComparer.OrdinalIgnoreCase);
@@ -24,6 +24,7 @@ namespace LSlife
         private readonly Dictionary<string, List<Blip>> territoryMapAreaBlips =
             new Dictionary<string, List<Blip>>(StringComparer.OrdinalIgnoreCase);
         private const int TerritoryMapMaxAreaBlips = 250;
+        private const int TerritoryMapAreaAlpha = 48;
         private int territoryMapLastCheck;
         private bool territoryMapSavePending;
         private int territoryMapLastSaveAttempt;
@@ -35,8 +36,7 @@ namespace LSlife
             {
                 "OCEANA", "SANAND", "ISHEIST", "ISHEIST2"
             };
-        // Les marqueurs sont un apercu : les limites exactes des quartiers
-        // doivent etre obtenues avant toute coloration de surface.
+        // Libelles lisibles pour les marqueurs de quartier.
         private static string TerritoryMapDisplayName(string zone)
         {
             switch ((zone ?? "").ToUpperInvariant())
@@ -221,7 +221,7 @@ namespace LSlife
                     if (area == null || !area.Exists()) continue;
                     created.Add(area);
                     area.Color = (BlipColor)TerritoryMapColor(owner);
-                    Function.Call(Hash.SET_BLIP_ALPHA, area, 65);
+                    Function.Call(Hash.SET_BLIP_ALPHA, area, TerritoryMapAreaAlpha);
                     Function.Call(Hash.SET_BLIP_ROTATION, area, 0);
                     // 3 : grande carte uniquement ; 2 afficherait aussi la minimap.
                     Function.Call(Hash.SET_BLIP_DISPLAY, area, 3);
@@ -269,7 +269,25 @@ namespace LSlife
                 string previous;
                 if (territoryMapBlips.ContainsKey(entry.Key) &&
                     territoryMapOwners.TryGetValue(entry.Key, out previous) && previous == owner &&
-                    territoryMapBlips[entry.Key].Exists()) continue;
+                    territoryMapBlips[entry.Key].Exists())
+                {
+                    // Une surface peut avoir ete supprimee par un autre mod ou
+                    // refusee faute de place. La recreer sans toucher au marqueur.
+                    List<Blip> areas;
+                    if (territoryMapAreaBlips.TryGetValue(entry.Key, out areas))
+                    {
+                        bool intact = true;
+                        foreach (Blip area in areas)
+                            if (area == null || !area.Exists()) { intact = false; break; }
+                        if (!intact)
+                        {
+                            RemoveGangTerritoryArea(entry.Key);
+                            AddGangTerritoryArea(entry.Key, owner);
+                        }
+                    }
+                    else AddGangTerritoryArea(entry.Key, owner);
+                    continue;
+                }
                 RemoveGangTerritoryArea(entry.Key);
                 Blip existing;
                 if (territoryMapBlips.TryGetValue(entry.Key, out existing) && existing.Exists())
@@ -278,7 +296,7 @@ namespace LSlife
                 if (blip == null) continue;
                 blip.Name = TerritoryMapDisplayName(entry.Key) + " - " + owner;
                 blip.Color = (BlipColor)TerritoryMapColor(owner);
-                // Display 2 = carte principale uniquement, pas minimap.
+                // Display 3 = carte principale uniquement, pas minimap.
                 Function.Call(Hash.SET_BLIP_DISPLAY, blip, 3);
                 territoryMapBlips[entry.Key] = blip;
                 AddGangTerritoryArea(entry.Key, owner);
