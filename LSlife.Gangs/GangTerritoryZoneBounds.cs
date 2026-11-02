@@ -77,6 +77,36 @@ namespace LSlife
                 }
                 previous = current;
             }
+            // Deuxieme passe : fusionner aussi verticalement les bandes adjacentes
+            // de largeur identique. Les surfaces restent exactement equivalentes
+            // aux volumes IPL, sans superposition ni creation de zone artificielle.
+            bool changed;
+            do
+            {
+                changed = false;
+                result.Sort((a, b) =>
+                {
+                    int x = a.X.CompareTo(b.X);
+                    if (x != 0) return x;
+                    int w = a.Width.CompareTo(b.Width);
+                    return w != 0 ? w : a.Y.CompareTo(b.Y);
+                });
+                for (int i = 0; i < result.Count && !changed; i++)
+                {
+                    for (int j = i + 1; j < result.Count; j++)
+                    {
+                        Rectangle a = result[i], b = result[j];
+                        if (Math.Abs(a.X - b.X) > 0.001f ||
+                            Math.Abs(a.Width - b.Width) > 0.001f) break;
+                        if (Math.Abs(a.Y + a.Height - b.Y) > 0.001f) continue;
+                        a.Height = b.Y + b.Height - a.Y;
+                        result[i] = a;
+                        result.RemoveAt(j);
+                        changed = true;
+                        break;
+                    }
+                }
+            } while (changed);
             return result;
         }
 
