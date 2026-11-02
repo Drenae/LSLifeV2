@@ -85,6 +85,7 @@
 - [ ] Etudier l impact des alliances sur les territoires, la pression policiere et les guerres de gangs.
 
 ### Carte des territoires — test opt-in OpenIV
+- [ ] Confirmer les traces `IPL DIRECT` / `IPL ALIAS` / `IPL ZONE INTROUVABLE` dans les logs ; aucune surface ne doit provenir des anciennes limites pendant ce test.
 - [ ] Tester TERRITORYMAPTEST=true avec scripts\\LSLife\\popzone.ipl (fichier OpenIV de 91 Ko), verifier les surfaces des quartiers visites sur la carte pause, les limites et les couleurs ; verifier les alias de codes GTA/ipl et la limite des blips.
 - [ ] Verifier la compilation et le comportement apres Reload(), sans modifier les sauvegardes diplomatiques.
 - [ ] Conserver le rendu des territoires desactive par defaut tant que le test n'est pas valide.
