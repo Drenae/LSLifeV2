@@ -314,9 +314,11 @@ public partial class LSL
 				areaIndex = areas.IndexOf(cArea);
 			}
 			InitializeGangDiplomacy();
+			InitializeTerritoryMapTest();
 			firstRun = false;
 		}
 		TickGangDiplomacy();
+		if (territoryMapTestEnabled) TickGangTerritoryMap();
 		TickGangEncounters();
 		if (DEBUG)
 		{
