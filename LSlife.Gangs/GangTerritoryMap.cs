@@ -22,6 +22,14 @@ namespace LSlife
         private readonly Dictionary<string, string> territoryMapOwners =
             new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         private int territoryMapLastCheck;
+        private int territoryMapLastOwnerRefresh;
+        private readonly HashSet<string> territoryMapPendingZones =
+            new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        private static readonly HashSet<string> TerritoryMapExcludedZones =
+            new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+            {
+                "OCEANA", "SANAND", "ISHEIST", "ISHEIST2"
+            };
         // Les marqueurs sont un apercu : les limites exactes des quartiers
         // doivent etre obtenues avant toute coloration de surface.
         private static string TerritoryMapDisplayName(string zone)
@@ -51,6 +59,8 @@ namespace LSlife
         {
             ClearGangTerritoryMap();
             territoryMapPositions.Clear();
+            territoryMapPendingZones.Clear();
+            territoryMapLastOwnerRefresh = 0;
             if (!File.Exists(TerritoryMapPath)) return;
             try
             {
@@ -65,6 +75,9 @@ namespace LSlife
                             CultureInfo.InvariantCulture, out y) ||
                         !float.TryParse((string)zone.Attribute("z"), NumberStyles.Float,
                             CultureInfo.InvariantCulture, out z)) continue;
+                    if (float.IsNaN(x) || float.IsNaN(y) || float.IsNaN(z) ||
+                        float.IsInfinity(x) || float.IsInfinity(y) || float.IsInfinity(z))
+                        continue;
                     territoryMapPositions[id] = new Vector3(x, y, z);
                 }
             }
@@ -77,9 +90,11 @@ namespace LSlife
         private void RecordGangTerritoryVisit(string zone, Vector3 position)
         {
             if (string.IsNullOrWhiteSpace(zone) ||
+                TerritoryMapExcludedZones.Contains(zone) ||
                 territoryMapPositions.ContainsKey(zone) ||
                 string.IsNullOrEmpty(GangPolitics.GetTerritoryOwner(zone))) return;
             territoryMapPositions[zone] = position;
+            territoryMapPendingZones.Add(zone);
             SaveGangTerritoryMap();
         }
 
