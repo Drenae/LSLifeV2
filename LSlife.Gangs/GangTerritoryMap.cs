@@ -113,7 +113,17 @@ namespace LSlife
                         new XAttribute("y", v.Y.ToString("R", CultureInfo.InvariantCulture)),
                         new XAttribute("z", v.Z.ToString("R", CultureInfo.InvariantCulture))));
                 }
-                new XDocument(root).Save(TerritoryMapPath);
+                string temporaryPath = TerritoryMapPath + ".tmp";
+                string backupPath = TerritoryMapPath + ".bak";
+                new XDocument(root).Save(temporaryPath);
+                if (File.Exists(TerritoryMapPath))
+                {
+                    File.Replace(temporaryPath, TerritoryMapPath, backupPath);
+                }
+                else
+                {
+                    File.Move(temporaryPath, TerritoryMapPath);
+                }
             }
             catch (Exception ex)
             {
