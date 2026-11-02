@@ -59,6 +59,7 @@
 - [ ] Tester expiration, Reload(), vehicule detruit, mort des PNJ et blocage des rendez-vous concurrents ; verifier l'absence de PNJ orphelins.
 
 ### Rendez-vous et negociations en personne
+- [ ] PRIORITE ACTIVE : construire le menu de negociation physique du chef, distinct du telephone, puis les demandes d'alliance et leurs conditions.
 - [ ] Tester les rendez-vous demandes par telephone : apparition du chef distinct, marqueur temporaire, expiration (5 min DEBUG / 10 min normal) et nettoyage au Reload().
 - [ ] Tester la premiere rencontre physique du chef et la persistance XML de metLeaders apres Reload(), sans attribuer de faux nom au chef ; ameliorer ensuite les lieux de rendez-vous pour les rendre propres a chaque gang.
 - [ ] Ouvrir un menu distinct de negociations uniquement face au chef, jamais par simple appel.
@@ -76,19 +77,10 @@
 - [ ] Prevoir les contributions, le partage des revenus, les rivalites et les trahisons.
 - [ ] Etudier l impact des alliances sur les territoires, la pression policiere et les guerres de gangs.
 
-### Carte des territoires — TOUS les gangs decouverts
-- [x] Phase 1 validee en jeu : points colores de tous les quartiers decouverts et occupes, sans limitation aux alliances, visibles dans le menu Pause.
-- [x] Positions de quartiers conservees dans LSLife_TerritoryMap.xml et restaurees apres Reload() (validation utilisateur).
-- [ ] Tester le rafraichissement de la couleur et du nom lors d'un changement de proprietaire, ainsi que le nettoyage des blips au Reload().
-- [ ] Valider en jeu les rectangles normalises (fusion des superpositions et des bandes contigues) : pas de doubles teintes, aucune perte de surface, transparence 48, lisibilite et performances dans les zones complexes.
-- [ ] Verifier le display 3 sur carte Pause (aucune surface ni marqueur sur la minimap), la transparence, la lisibilite des icones GTA, le plafond de 250 rectangles, les mises a jour de proprietaire et le nettoyage Reload().
-- [ ] Prevoir une option de desactivation des surfaces si le rendu pose probleme, sans desactiver les marqueurs.
-- [ ] Tester les noms de quartiers lisibles et la capture de position des nouvelles zones des leur enregistrement.
-- [ ] Tester la sauvegarde atomique (.tmp/.bak), la restauration automatique depuis un .bak valide si le XML principal est corrompu, et la relance des ecritures apres erreur.
-- [ ] Tester le filtrage des coordonnees invalides et des zones maritimes, puis la mise a jour des proprietaires toutes les 10 secondes.
-- [ ] Comparer les limites XY importees depuis zones.json aux frontieres visibles en jeu, notamment les zones qui se touchent et les quartiers complexes ; ne pas confondre points de decouverte et contours.
-- [ ] Etudier une legende de couleurs par gang, la visibilite uniquement dans le menu Pause et les performances avec de nombreuses zones.
-- [ ] Verifier la compatibilite avec les autres mods de carte et les zones sans proprietaire.
+### Carte des territoires — en pause
+- [ ] Reprendre ulterieurement l'affichage des points et des surfaces colorees de tous les gangs decouverts, sans restriction aux alliances.
+- [ ] Revalider les limites des quartiers, les superpositions, le rendu sur carte Pause et les changements de proprietaire.
+- [ ] Reactiver explicitement le chargement et le tick de GangTerritoryMap apres validation ; conserver les donnees et les fichiers XML existants.
 
 ### Interface et sauvegarde
 - [ ] Ajouter les interactions diplomatiques et les negociations avec les chefs dans les ecrans gangs/cartels, sans accord automatique.
