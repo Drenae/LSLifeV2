@@ -80,11 +80,11 @@ namespace LSlife
             return result;
         }
 
-        // Lecture directe des volumes extraits par OpenIV. Le fichier reste optionnel :
-        // les donnees integrees sont conservees comme solution de repli.
+        // Mode test : les volumes proviennent exclusivement du fichier OpenIV.
         private static Dictionary<string, List<Rectangle>> PopzoneZones;
         internal static bool LoadPopzone(string path)
         {
+            PopzoneZones = null;
             if (!System.IO.File.Exists(path)) return false;
             var parsed = new Dictionary<string, List<Rectangle>>(StringComparer.OrdinalIgnoreCase);
             foreach (string raw in System.IO.File.ReadAllLines(path))
@@ -117,26 +117,37 @@ namespace LSlife
 
         internal static IList<Rectangle> Get(string zone)
         {
+            string source;
+            return Get(zone, out source);
+        }
+
+        internal static IList<Rectangle> Get(string zone, out string source)
+        {
+            source = "IPL ABSENT";
+            if (string.IsNullOrWhiteSpace(zone) || PopzoneZones == null) return null;
             List<Rectangle> bounds;
-            if (zone == null) return null;
-            if (PopzoneZones != null)
+            if (PopzoneZones.TryGetValue(zone, out bounds))
             {
-                if (PopzoneZones.TryGetValue(zone, out bounds)) return bounds;
-                // Les noms renvoyes par GTA et ceux de l'IPL ne sont pas toujours
-                // identiques (ex. DOWNT / Downtown).
-                string alias = zone.ToUpperInvariant();
-                switch (alias)
-                {
-                    case "DOWNT": alias = "Downtown"; break;
-                    case "WVINE": alias = "WVine"; break;
-                    case "EAST_V": alias = "EastV"; break;
-                    case "CHAMH": alias = "ChamH"; break;
-                    case "PBOX": alias = "PillBox"; break;
-                    case "VINE": alias = "Vine"; break;
-                }
-                if (PopzoneZones.TryGetValue(alias, out bounds)) return bounds;
+                source = "IPL DIRECT";
+                return bounds;
             }
-            return Zones.TryGetValue(zone, out bounds) ? (IList<Rectangle>)bounds : null;
+            string alias = zone.ToUpperInvariant();
+            switch (alias)
+            {
+                case "DOWNT": alias = "Downtown"; break;
+                case "WVINE": alias = "WVine"; break;
+                case "EAST_V": alias = "EastV"; break;
+                case "CHAMH": alias = "ChamH"; break;
+                case "PBOX": alias = "PillBox"; break;
+                case "VINE": alias = "Vine"; break;
+            }
+            if (PopzoneZones.TryGetValue(alias, out bounds))
+            {
+                source = "IPL ALIAS " + alias;
+                return bounds;
+            }
+            source = "IPL ZONE INTROUVABLE";
+            return null;
         }
 
         private static Dictionary<string, List<Rectangle>> Parse()
