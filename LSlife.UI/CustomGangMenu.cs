@@ -10,6 +10,8 @@ namespace LSlife
     {
         private static CustomMenu overview;
         private static CustomMenu foundingConfirmation;
+        private static CustomMenu territoryControl;
+        private static CustomMenu captureConfirmation;
         private const string PlayerFoundedGangId = "PLAYER_ORGANIZATION";
         private static CustomMenu detail;
         private static CustomMenu relations;
@@ -28,7 +30,7 @@ namespace LSlife
         private const int PageSize = 5;
         internal static bool IsGangMenu(CustomMenu menu)
         {
-            return menu != null && (menu == foundingConfirmation || menu == overview || menu == detail || menu == relations ||
+            return menu != null && (menu == foundingConfirmation || menu == territoryControl || menu == captureConfirmation || menu == overview || menu == detail || menu == relations ||
                 menu == territories || menu == cartels || menu == cartelDetail ||
                 menu == relationDetail || menu == agreements);
         }
@@ -52,7 +54,8 @@ namespace LSlife
 
         internal static CustomMenu Back(CustomMenu current)
         {
-            if (current == foundingConfirmation) return BuildOverview();
+            if (current == foundingConfirmation || current == territoryControl) return BuildOverview();
+            if (current == captureConfirmation) return BuildTerritoryControl();
             if (current == agreements) return BuildRelationDetail();
             if (current == relationDetail) return BuildRelations();
             if (current == relations || current == territories) return BuildDetail();
@@ -93,10 +96,61 @@ namespace LSlife
                     overview.Add("Mon gang : " + mine.Name, () =>
                         GTA.UI.ShowSubtitle("Rang : " + state.PlayerRank +
                             " | Territoires : " + mine.Territories.Count, 4000));
+                overview.Add("Controle des territoires", () =>
+                    CustomZeeMenu.ShowGangSubmenu(BuildTerritoryControl()));
             }
             overview.Add("Cartels", () => { cartelPage = 0; CustomZeeMenu.ShowGangSubmenu(BuildCartels()); });
             overview.Add("Fermer", () => CustomZeeMenu.Close());
             return overview;
+        }
+
+
+        private static CustomMenu BuildTerritoryControl()
+        {
+            var state = LSL.DiplomacyState;
+            string zone = World.GetZoneNameLabel(Game.Player.Character.Position);
+            string owner = state.GetTerritoryOwner(zone);
+            GangOrganization ownerGang;
+            string ownerName = string.IsNullOrEmpty(owner) ? "Sans proprietaire" :
+                state.TryGetGang(owner, out ownerGang) ? ownerGang.Name : owner;
+            territoryControl = new CustomMenu("TERRITOIRES", "QUARTIER ACTUEL");
+            territoryControl.Add("Quartier : " + zone, null, () => false);
+            territoryControl.Add("Proprietaire : " + ownerName, null, () => false);
+            territoryControl.Add("Mes territoires : " +
+                state.Organizations.Where(g => string.Equals(g.Id, state.PlayerGangId,
+                    StringComparison.OrdinalIgnoreCase)).Sum(g => g.Territories.Count),
+                null, () => false);
+            if (GangTerritoryCapture.IsActive)
+                territoryControl.Add("Abandonner la prise en cours", () =>
+                {
+                    GangTerritoryCapture.Cancel();
+                    CustomZeeMenu.ShowGangSubmenu(BuildTerritoryControl());
+                });
+            else
+                territoryControl.Add("Prendre le controle du quartier", () =>
+                {
+                    string refusal = GangTerritoryCapture.Requirement(zone);
+                    if (refusal != null) { GTA.UI.ShowSubtitle(refusal, 4500); return; }
+                    CustomZeeMenu.ShowGangSubmenu(BuildCaptureConfirmation());
+                });
+            territoryControl.Add("Retour", () => CustomZeeMenu.ShowGangSubmenu(BuildOverview()));
+            return territoryControl;
+        }
+
+        private static CustomMenu BuildCaptureConfirmation()
+        {
+            string zone = World.GetZoneNameLabel(Game.Player.Character.Position);
+            captureConfirmation = new CustomMenu("TERRITOIRES", "CONFIRMATION");
+            captureConfirmation.Add("Quartier : " + zone, null, () => false);
+            captureConfirmation.Add("Lancer la prise de controle", () =>
+            {
+                string refusal = GangTerritoryCapture.Start(zone);
+                GTA.UI.ShowSubtitle(refusal ?? "Restez dans le quartier pendant 90 secondes, a pied.", 5000);
+                CustomZeeMenu.ShowGangSubmenu(BuildTerritoryControl());
+            });
+            captureConfirmation.Add("Annuler", () =>
+                CustomZeeMenu.ShowGangSubmenu(BuildTerritoryControl()));
+            return captureConfirmation;
         }
 
         private static CustomMenu BuildFoundingConfirmation()
