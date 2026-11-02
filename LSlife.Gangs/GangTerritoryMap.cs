@@ -152,8 +152,15 @@ namespace LSlife
             territoryMapLastCheck = Game.GameTime;
             string currentZone = World.GetZoneNameLabel(player.Character.Position);
             RecordGangTerritoryVisit(currentZone, player.Character.Position);
+            // Rafraichissement complet limite pour eviter de parcourir toutes les
+            // zones a chaque tick ; les nouvelles decouvertes restent immediates.
+            bool fullRefresh = Game.GameTime - territoryMapLastOwnerRefresh >= 10000 ||
+                territoryMapLastOwnerRefresh == 0;
+            if (fullRefresh) territoryMapLastOwnerRefresh = Game.GameTime;
             foreach (var entry in territoryMapPositions)
             {
+                if (!fullRefresh && !territoryMapPendingZones.Contains(entry.Key))
+                    continue;
                 string owner = GangPolitics.GetTerritoryOwner(entry.Key);
                 if (string.IsNullOrEmpty(owner))
                 {
@@ -180,6 +187,7 @@ namespace LSlife
                 territoryMapBlips[entry.Key] = blip;
                 territoryMapOwners[entry.Key] = owner;
             }
+            territoryMapPendingZones.Clear();
         }
 
         private void ClearGangTerritoryMap()
