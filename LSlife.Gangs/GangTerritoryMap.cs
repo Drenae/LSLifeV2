@@ -25,6 +25,9 @@ namespace LSlife
             new Dictionary<string, List<Blip>>(StringComparer.OrdinalIgnoreCase);
         private const int TerritoryMapMaxAreaBlips = 250;
         private const int TerritoryMapAreaAlpha = 48;
+        private const int TerritoryMapMaxAreasPerZone = 24;
+        private readonly HashSet<string> territoryMapAreaCapacityWarnings =
+            new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         private int territoryMapLastCheck;
         private bool territoryMapSavePending;
         private int territoryMapLastSaveAttempt;
@@ -206,7 +209,18 @@ namespace LSlife
             int active = 0;
             foreach (List<Blip> existing in territoryMapAreaBlips.Values)
                 active += existing.Count;
-            if (active + bounds.Count > TerritoryMapMaxAreaBlips) return;
+            if (bounds.Count > TerritoryMapMaxAreasPerZone ||
+                active + bounds.Count > TerritoryMapMaxAreaBlips)
+            {
+                // Ne jamais afficher un quartier partiellement colore.
+                // Le marqueur de proprietaire reste disponible.
+                if (territoryMapAreaCapacityWarnings.Add(zone))
+                    LsFunctions.DbugString("Carte territoires : surface reportee (" +
+                        zone + ", " + bounds.Count + " rectangles, " + active +
+                        " actifs).");
+                return;
+            }
+            territoryMapAreaCapacityWarnings.Remove(zone);
 
             var created = new List<Blip>();
             try
@@ -315,6 +329,7 @@ namespace LSlife
                     if (area != null && area.Exists()) area.Remove();
             territoryMapAreaBlips.Clear();
             territoryMapOwners.Clear();
+            territoryMapAreaCapacityWarnings.Clear();
         }
     }
 }
