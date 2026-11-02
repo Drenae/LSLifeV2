@@ -28,6 +28,13 @@
 - [ ] Auditer LS LifeAreas.xml : son chargement historique n'enregistre pas les nouvelles zones visitees ; definir si un inventaire complet doit y etre ajoute sans perturber les statistiques existantes.
 - [ ] Ne jamais ecraser les proprietaires sauvegardes lors d'une nouvelle decouverte.
 
+### Conquete et gestion du territoire du joueur
+- [ ] Tester en jeu le menu GANGS > Controle des territoires, quartier courant, proprietaire et compteur de zones.
+- [ ] Tester la premiere conquete a pied (90 secondes dans le quartier), l'annulation en sortant / en vehicule / en mourant, la protection des allies et la restriction au chef.
+- [ ] Tester le transfert du proprietaire dans les zones en memoire et LSLife_GangDiplomacy.xml, puis Reload() ; aucun territoire attribue automatiquement a la fondation.
+- [ ] Ajouter une conquete armee immersive avec defenseurs, objectifs, riposte, risque de guerre, cooldown et controle de zone ; l'occupation actuelle est une premiere phase, pas une guerre complete.
+- [ ] Prevoir le cas des organisations creees puis quittees, ainsi que la gestion des rangs et des zones neutres.
+
 ### Territoires natifs GTA V
 - [ ] Valider la migration unique des quartiers connus et la conservation des reputations, relations et sauvegardes.
 - [ ] Tester la persistance des conquetes apres plusieurs Reload().
