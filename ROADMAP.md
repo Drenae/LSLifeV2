@@ -62,8 +62,9 @@
 - [ ] PRIORITE ACTIVE : construire le menu de negociation physique du chef, distinct du telephone, puis les demandes d'alliance et leurs conditions.
 - [ ] Tester les rendez-vous demandes par telephone : apparition du chef distinct, marqueur temporaire, expiration (5 min DEBUG / 10 min normal) et nettoyage au Reload().
 - [ ] Tester la premiere rencontre physique du chef et la persistance XML de metLeaders apres Reload(), sans attribuer de faux nom au chef ; ameliorer ensuite les lieux de rendez-vous pour les rendre propres a chaque gang.
-- [ ] Ouvrir un menu distinct de negociations uniquement face au chef, jamais par simple appel.
-- [ ] Commencer par la demande d alliance au seuil requis (60/100 de reputation personnelle, gang du joueur requis et confiance diplomatique suffisante) ; debloquer ensuite d autres accords progressivement.
+- [ ] Tester en jeu le menu physique de negociations du chef (CustomMenu, clavier/manette), uniquement pendant le rendez-vous, avec depart du chef apres fermeture et nettoyage Reload().
+- [ ] Tester la demande d'alliance en personne : reputation >=60, gang du joueur requis, confiance diplomatique >=75, aucun accord entre gangs tiers ; verifier persistance XML et statut Allie apres Reload().
+- [ ] Ajouter ensuite une confirmation explicite, les reactions du chef et d'autres accords diplomatiques sans les autoriser par telephone.
 - [ ] Gerer les refus, ruptures, renegociations, reactions et consequences sur la reputation.
 - [ ] Interdire la modification des accords entre deux gangs tiers.
 
