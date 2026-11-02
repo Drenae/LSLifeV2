@@ -14,6 +14,24 @@ namespace LSlife
     {
         // Carte pause : marqueurs de decouverte et surfaces des zones GTA V.
         // Les surfaces utilisent les limites XY du jeu, pas les positions visitees.
+        private bool territoryMapTestEnabled;
+        private const string TerritoryPopzonePath = "scripts\\LSLife\\popzone.ipl";
+        private void InitializeTerritoryMapTest()
+        {
+            if (!territoryMapTestEnabled) return;
+            try
+            {
+                bool loaded = GangTerritoryZoneBounds.LoadPopzone(TerritoryPopzonePath);
+                LsFunctions.DbugString(loaded
+                    ? "Carte territoires : limites OpenIV popzone chargees."
+                    : "Carte territoires : popzone.ipl absent ou invalide, limites integrees.");
+                LoadGangTerritoryMap();
+            }
+            catch (Exception ex)
+            {
+                LsFunctions.DbugString("Carte territoires : initialisation : " + ex.Message);
+            }
+        }
         private const string TerritoryMapPath = "scripts\\LSLife\\LSLife_TerritoryMap.xml";
         private readonly Dictionary<string, Vector3> territoryMapPositions =
             new Dictionary<string, Vector3>(StringComparer.OrdinalIgnoreCase);
