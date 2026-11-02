@@ -36,6 +36,7 @@ public partial class LSL
 		DrawMarkers = iniSettings.GetValue<bool>("OPTIONS", "MARKERS", true);
 		AreaDebug = iniSettings.GetValue<bool>("OPTIONS", "AREADEBUG", false);
 		LCRWMAP = iniSettings.GetValue<bool>("OPTIONS", "LCRWMAP", false);
+		territoryMapTestEnabled = iniSettings.GetValue<bool>("OPTIONS", "TERRITORYMAPTEST", false);
 		if (hardMode)
 		{
 			weed1Price = 180;
