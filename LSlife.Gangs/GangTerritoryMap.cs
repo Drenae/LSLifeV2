@@ -22,6 +22,8 @@ namespace LSlife
         private readonly Dictionary<string, string> territoryMapOwners =
             new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         private int territoryMapLastCheck;
+        private bool territoryMapSavePending;
+        private int territoryMapLastSaveAttempt;
         private int territoryMapLastOwnerRefresh;
         private readonly HashSet<string> territoryMapPendingZones =
             new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -61,6 +63,7 @@ namespace LSlife
             territoryMapPositions.Clear();
             territoryMapPendingZones.Clear();
             territoryMapLastOwnerRefresh = 0;
+            territoryMapSavePending = false;
 
             // Recuperer le dernier fichier valide si une ecriture a ete interrompue.
             string[] candidates = { TerritoryMapPath, TerritoryMapPath + ".bak" };
@@ -94,7 +97,11 @@ namespace LSlife
                     foreach (var entry in loaded)
                         territoryMapPositions.Add(entry.Key, entry.Value);
                     if (candidate != TerritoryMapPath)
+                    {
                         LsFunctions.DbugString("Carte territoires : restauration depuis .bak.");
+                        // Conserver le backup intact jusqu'a la prochaine ecriture.
+                        territoryMapSavePending = true;
+                    }
                     return;
                 }
                 catch (Exception ex)
@@ -113,11 +120,13 @@ namespace LSlife
                 string.IsNullOrEmpty(GangPolitics.GetTerritoryOwner(zone))) return;
             territoryMapPositions[zone] = position;
             territoryMapPendingZones.Add(zone);
+            territoryMapSavePending = true;
             SaveGangTerritoryMap();
         }
 
         private void SaveGangTerritoryMap()
         {
+            territoryMapLastSaveAttempt = Game.GameTime;
             try
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(TerritoryMapPath));
@@ -136,12 +145,27 @@ namespace LSlife
                 new XDocument(root).Save(temporaryPath);
                 if (File.Exists(TerritoryMapPath))
                 {
-                    File.Replace(temporaryPath, TerritoryMapPath, backupPath);
+                    if (territoryMapSavePending && File.Exists(backupPath))
+                    {
+                        // La sauvegarde de secours peut etre la seule copie valide :
+                        // ne jamais la remplacer par un fichier principal corrompu.
+                        bool primaryValid = true;
+                        try { XDocument.Load(TerritoryMapPath); }
+                        catch { primaryValid = false; }
+                        if (!primaryValid)
+                        {
+                            File.Delete(TerritoryMapPath);
+                            File.Move(temporaryPath, TerritoryMapPath);
+                        }
+                        else File.Replace(temporaryPath, TerritoryMapPath, backupPath);
+                    }
+                    else File.Replace(temporaryPath, TerritoryMapPath, backupPath);
                 }
                 else
                 {
                     File.Move(temporaryPath, TerritoryMapPath);
                 }
+                territoryMapSavePending = false;
             }
             catch (Exception ex)
             {
@@ -168,6 +192,9 @@ namespace LSlife
             if (firstRun || player == null || player.Character == null ||
                 !player.Character.Exists() || Game.GameTime - territoryMapLastCheck < 1500) return;
             territoryMapLastCheck = Game.GameTime;
+            if (territoryMapSavePending &&
+                Game.GameTime - territoryMapLastSaveAttempt >= 10000)
+                SaveGangTerritoryMap();
             string currentZone = World.GetZoneNameLabel(player.Character.Position);
             RecordGangTerritoryVisit(currentZone, player.Character.Position);
             // Rafraichissement complet limite pour eviter de parcourir toutes les
