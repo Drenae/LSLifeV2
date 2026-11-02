@@ -11,6 +11,7 @@
 - Préserver la compatibilité des sauvegardes et les fonctionnalités existantes.
 
 ## Organisation UI et commandes
+- [ ] Verifier en jeu le contact permanent « Reseau Gangs » dans iFruit apres demarrage et Reload(), meme sans gang, et son ouverture du menu de creation ; verifier la coexistence avec Zee et les chefs debloques.
 - [ ] Regrouper les menus actifs dans `LSlife.UI/Menus/`, sans melanger les anciens fichiers `DealerMenus.cs`, `PlayerMenus.cs`, etc. avec les nouveaux menus actifs avant audit de leurs usages.
 - [ ] Renommer les classes/fichiers `Custom*Menu` en noms definitifs sans prefixe `Custom`, en actualisant toutes les references et en preservant `CustomMenu` comme composant technique jusqu'a migration complete.
 - [ ] Verifier le stick gauche a pied, le D-pad et les commandes vehicule avec un menu ouvert, sur manette et clavier.
