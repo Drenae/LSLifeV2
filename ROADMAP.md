@@ -76,10 +76,13 @@
 - [ ] Prevoir les contributions, le partage des revenus, les rivalites et les trahisons.
 - [ ] Etudier l impact des alliances sur les territoires, la pression policiere et les guerres de gangs.
 
-### Carte des territoires (faisabilite a valider)
-- [ ] Etudier l'affichage sur la carte du menu Pause des territoires du gang du joueur, des gangs allies et des membres du cartel uniquement ; ne jamais afficher les territoires des gangs neutres ou ennemis, ni sur la minimap.
-- [ ] Si les API GTA V Legacy / SHVDN2 le permettent, colorer seulement les zones autorisees selon l'appartenance et les alliances en cours ; laisser les zones libres et celles des autres gangs sans marquage.
-- [ ] Verifier la precision des limites de quartiers, les performances et la compatibilite avec les autres mods de carte avant implementation.
+### Carte des territoires — TOUS les gangs decouverts
+- [ ] Tester en jeu la phase 1 : marqueurs colores des quartiers decouverts et occupes par n'importe quel gang sur la carte du menu Pause, sans limitation aux alliances et sans marqueur sur la minimap.
+- [ ] Verifier la creation de LSLife_TerritoryMap.xml en visitant les zones et la restauration des points apres Reload(), sans modifier LSLife_GangDiplomacy.xml.
+- [ ] Tester le rafraichissement de la couleur et du nom lors d'un changement de proprietaire, ainsi que le nettoyage des blips au Reload().
+- [ ] Phase 2 : trouver une methode fiable pour recuperer les contours reels des zones GTA V Legacy ; remplacer les marqueurs de position par des surfaces colorees sans inventer les limites.
+- [ ] Etudier une legende de couleurs par gang, la visibilite uniquement dans le menu Pause et les performances avec de nombreuses zones.
+- [ ] Verifier la compatibilite avec les autres mods de carte et les zones sans proprietaire.
 
 ### Interface et sauvegarde
 - [ ] Ajouter les interactions diplomatiques et les negociations avec les chefs dans les ecrans gangs/cartels, sans accord automatique.
