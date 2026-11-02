@@ -21,6 +21,9 @@ namespace LSlife
             new Dictionary<string, Blip>(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, string> territoryMapOwners =
             new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, List<Blip>> territoryMapAreaBlips =
+            new Dictionary<string, List<Blip>>(StringComparer.OrdinalIgnoreCase);
+        private const int TerritoryMapMaxAreaBlips = 250;
         private int territoryMapLastCheck;
         private bool territoryMapSavePending;
         private int territoryMapLastSaveAttempt;
@@ -187,6 +190,43 @@ namespace LSlife
             }
         }
 
+        private void RemoveGangTerritoryArea(string zone)
+        {
+            List<Blip> blips;
+            if (!territoryMapAreaBlips.TryGetValue(zone, out blips)) return;
+            foreach (Blip blip in blips)
+                if (blip != null && blip.Exists()) blip.Remove();
+            territoryMapAreaBlips.Remove(zone);
+        }
+
+        private void AddGangTerritoryArea(string zone, string owner)
+        {
+            IList<GangTerritoryZoneBounds.Rectangle> bounds = GangTerritoryZoneBounds.Get(zone);
+            if (bounds == null || bounds.Count == 0) return;
+            int active = 0;
+            foreach (List<Blip> existing in territoryMapAreaBlips.Values)
+                active += existing.Count;
+            if (active + bounds.Count > TerritoryMapMaxAreaBlips) return;
+
+            var created = new List<Blip>();
+            foreach (GangTerritoryZoneBounds.Rectangle rectangle in bounds)
+            {
+                float cx = rectangle.X + rectangle.Width / 2f;
+                float cy = rectangle.Y + rectangle.Height / 2f;
+                // GTA V Legacy : ADD_BLIP_FOR_AREA, disponible par son hash natif.
+                Blip area = Function.Call<Blip>((Hash)0xCE5D0E5E315DB238UL,
+                    cx, cy, 0f, rectangle.Width, rectangle.Height);
+                if (area == null || !area.Exists()) continue;
+                area.Color = (BlipColor)TerritoryMapColor(owner);
+                Function.Call(Hash.SET_BLIP_ALPHA, area, 65);
+                Function.Call(Hash.SET_BLIP_ROTATION, area, 0);
+                // 3 : grande carte uniquement ; 2 afficherait aussi la minimap.
+                Function.Call(Hash.SET_BLIP_DISPLAY, area, 3);
+                created.Add(area);
+            }
+            if (created.Count > 0) territoryMapAreaBlips[zone] = created;
+        }
+
         private void TickGangTerritoryMap()
         {
             if (firstRun || player == null || player.Character == null ||
@@ -213,6 +253,7 @@ namespace LSlife
                     if (territoryMapBlips.TryGetValue(entry.Key, out old) && old.Exists())
                         old.Remove();
                     territoryMapBlips.Remove(entry.Key);
+                    RemoveGangTerritoryArea(entry.Key);
                     territoryMapOwners.Remove(entry.Key);
                     continue;
                 }
@@ -220,6 +261,7 @@ namespace LSlife
                 if (territoryMapBlips.ContainsKey(entry.Key) &&
                     territoryMapOwners.TryGetValue(entry.Key, out previous) && previous == owner &&
                     territoryMapBlips[entry.Key].Exists()) continue;
+                RemoveGangTerritoryArea(entry.Key);
                 Blip existing;
                 if (territoryMapBlips.TryGetValue(entry.Key, out existing) && existing.Exists())
                     existing.Remove();
@@ -228,8 +270,9 @@ namespace LSlife
                 blip.Name = TerritoryMapDisplayName(entry.Key) + " - " + owner;
                 blip.Color = (BlipColor)TerritoryMapColor(owner);
                 // Display 2 = carte principale uniquement, pas minimap.
-                Function.Call(Hash.SET_BLIP_DISPLAY, blip, 2);
+                Function.Call(Hash.SET_BLIP_DISPLAY, blip, 3);
                 territoryMapBlips[entry.Key] = blip;
+                AddGangTerritoryArea(entry.Key, owner);
                 territoryMapOwners[entry.Key] = owner;
             }
             territoryMapPendingZones.Clear();
@@ -240,6 +283,10 @@ namespace LSlife
             foreach (Blip blip in territoryMapBlips.Values)
                 if (blip != null && blip.Exists()) blip.Remove();
             territoryMapBlips.Clear();
+            foreach (List<Blip> group in territoryMapAreaBlips.Values)
+                foreach (Blip area in group)
+                    if (area != null && area.Exists()) area.Remove();
+            territoryMapAreaBlips.Clear();
             territoryMapOwners.Clear();
         }
     }
