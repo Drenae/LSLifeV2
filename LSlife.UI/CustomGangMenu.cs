@@ -9,6 +9,8 @@ namespace LSlife
     internal static class CustomGangMenu
     {
         private static CustomMenu overview;
+        private static CustomMenu foundingConfirmation;
+        private const string PlayerFoundedGangId = "PLAYER_ORGANIZATION";
         private static CustomMenu detail;
         private static CustomMenu relations;
         private static CustomMenu relationDetail;
@@ -26,7 +28,7 @@ namespace LSlife
         private const int PageSize = 5;
         internal static bool IsGangMenu(CustomMenu menu)
         {
-            return menu != null && (menu == overview || menu == detail || menu == relations ||
+            return menu != null && (menu == foundingConfirmation || menu == overview || menu == detail || menu == relations ||
                 menu == territories || menu == cartels || menu == cartelDetail ||
                 menu == relationDetail || menu == agreements);
         }
@@ -50,6 +52,7 @@ namespace LSlife
 
         internal static CustomMenu Back(CustomMenu current)
         {
+            if (current == foundingConfirmation) return BuildOverview();
             if (current == agreements) return BuildRelationDetail();
             if (current == relationDetail) return BuildRelations();
             if (current == relations || current == territories) return BuildDetail();
@@ -80,9 +83,58 @@ namespace LSlife
             }
             if (page > 0) overview.Add("Page precedente", () => { page--; CustomZeeMenu.ShowGangSubmenu(BuildOverview()); });
             if (page + 1 < pages) overview.Add("Page suivante", () => { page++; CustomZeeMenu.ShowGangSubmenu(BuildOverview()); });
+            if (string.IsNullOrWhiteSpace(state.PlayerGangId))
+                overview.Add("Fonder mon organisation", () =>
+                    CustomZeeMenu.ShowGangSubmenu(BuildFoundingConfirmation()));
+            else
+            {
+                GangOrganization mine;
+                if (state.TryGetGang(state.PlayerGangId, out mine))
+                    overview.Add("Mon gang : " + mine.Name, () =>
+                        GTA.UI.ShowSubtitle("Rang : " + state.PlayerRank +
+                            " | Territoires : " + mine.Territories.Count, 4000));
+            }
             overview.Add("Cartels", () => { cartelPage = 0; CustomZeeMenu.ShowGangSubmenu(BuildCartels()); });
             overview.Add("Fermer", () => CustomZeeMenu.Close());
             return overview;
+        }
+
+        private static CustomMenu BuildFoundingConfirmation()
+        {
+            foundingConfirmation = new CustomMenu("MON ORGANISATION", "CREATION");
+            foundingConfirmation.Add("Nom : Mon organisation", null, () => false);
+            foundingConfirmation.Add("Creer et devenir chef", () =>
+            {
+                var state = LSL.DiplomacyState;
+                if (!string.IsNullOrWhiteSpace(state.PlayerGangId))
+                {
+                    GTA.UI.ShowSubtitle("Vous appartenez deja a un gang.", 3500);
+                    CustomZeeMenu.ShowGangSubmenu(BuildOverview());
+                    return;
+                }
+                GangOrganization existing;
+                if (state.TryGetGang(PlayerFoundedGangId, out existing))
+                {
+                    GTA.UI.ShowSubtitle("Cette organisation existe deja.", 3500);
+                    CustomZeeMenu.ShowGangSubmenu(BuildOverview());
+                    return;
+                }
+                try
+                {
+                    state.FoundPlayerGang(PlayerFoundedGangId, "Mon organisation");
+                    state.Save("scripts\\LSLife\\LSLife_GangDiplomacy.xml");
+                    GTA.UI.ShowSubtitle("Organisation creee. Vous en etes le chef.", 5000);
+                }
+                catch (Exception ex)
+                {
+                    LsFunctions.DbugString("Creation organisation : " + ex.Message);
+                    GTA.UI.ShowSubtitle("Creation impossible ou sauvegarde non confirmee.", 4000);
+                }
+                CustomZeeMenu.ShowGangSubmenu(BuildOverview());
+            });
+            foundingConfirmation.Add("Annuler", () =>
+                CustomZeeMenu.ShowGangSubmenu(BuildOverview()));
+            return foundingConfirmation;
         }
 
         private static CustomMenu BuildDetail()
