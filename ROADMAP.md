@@ -64,6 +64,11 @@
 - [ ] Tester l'adhesion volontaire a un gang existant face au chef (reputation 60, rencontre physique, confirmation, rang Recrue) et la persistance XML.
 - [ ] Prevoir la personnalisation du nom de l'organisation et un vrai systeme de recrutement, de progression de rang et de sortie de gang.
 
+### Accords diplomatiques progressifs
+- [ ] Tester en jeu le pacte de non-agression (+10 confiance), l'accord commercial (+10) et le soutien arme (+5), avec confirmations physiques et persistance XML apres Reload().
+- [ ] Tester le chemin 50 -> 60 -> 70 -> 75 puis l'alliance, ainsi que la rupture d'un accord (-10 confiance), les refus et l'absence de bonus en boucle.
+- [ ] Ajouter des missions de cooperation, des consequences concretes des accords (commerce, soutien, non-agression), et des reactions de chefs avant de finaliser la diplomatie.
+
 ### Rendez-vous et negociations en personne
 - [ ] PRIORITE ACTIVE : construire le menu de negociation physique du chef, distinct du telephone, puis les demandes d'alliance et leurs conditions.
 - [ ] Tester les rendez-vous demandes par telephone : apparition du chef distinct, marqueur temporaire, expiration (5 min DEBUG / 10 min normal) et nettoyage au Reload().
@@ -84,7 +89,7 @@
 - [ ] Prevoir les contributions, le partage des revenus, les rivalites et les trahisons.
 - [ ] Etudier l impact des alliances sur les territoires, la pression policiere et les guerres de gangs.
 
-### Carte des territoires — test opt-in OpenIV
+### Carte des territoires — test opt-in OpenIV (en pause, apres alliances)
 - [ ] Verifier en jeu la fusion horizontale ET verticale des rectangles IPL : contours, jonctions, nombre de blips et performance sur plusieurs quartiers voisins. `ADD_BLIP_FOR_AREA` reste rectangulaire ; un contour polygonal continu necessiterait un autre moteur de rendu.
 - [ ] Confirmer les traces `IPL DIRECT` / `IPL ALIAS` / `IPL ZONE INTROUVABLE` dans les logs ; aucune surface ne doit provenir des anciennes limites pendant ce test.
 - [ ] Tester TERRITORYMAPTEST=true avec scripts\\LSLife\\popzone.ipl (fichier OpenIV de 91 Ko), verifier les surfaces des quartiers visites sur la carte pause, les limites et les couleurs ; verifier les alias de codes GTA/ipl et la limite des blips.
