@@ -80,13 +80,63 @@ namespace LSlife
             return result;
         }
 
+        // Lecture directe des volumes extraits par OpenIV. Le fichier reste optionnel :
+        // les donnees integrees sont conservees comme solution de repli.
+        private static Dictionary<string, List<Rectangle>> PopzoneZones;
+        internal static bool LoadPopzone(string path)
+        {
+            if (!System.IO.File.Exists(path)) return false;
+            var parsed = new Dictionary<string, List<Rectangle>>(StringComparer.OrdinalIgnoreCase);
+            foreach (string raw in System.IO.File.ReadAllLines(path))
+            {
+                string line = raw.Trim();
+                if (line.Length == 0 || line.Equals("zone", StringComparison.OrdinalIgnoreCase) ||
+                    line.Equals("end", StringComparison.OrdinalIgnoreCase) || line.StartsWith("#")) continue;
+                string[] parts = line.Split(',');
+                if (parts.Length < 9) continue;
+                float x1, y1, x2, y2;
+                if (!float.TryParse(parts[1].Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, out x1) ||
+                    !float.TryParse(parts[2].Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, out y1) ||
+                    !float.TryParse(parts[4].Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, out x2) ||
+                    !float.TryParse(parts[5].Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, out y2) ||
+                    x2 <= x1 || y2 <= y1) continue;
+                string zone = parts[7].Trim();
+                List<Rectangle> rectangles;
+                if (!parsed.TryGetValue(zone, out rectangles))
+                    parsed[zone] = rectangles = new List<Rectangle>();
+                rectangles.Add(new Rectangle(x1, y1, x2 - x1, y2 - y1));
+            }
+            if (parsed.Count == 0) return false;
+            foreach (string key in new List<string>(parsed.Keys))
+                parsed[key] = Normalize(parsed[key]);
+            PopzoneZones = parsed;
+            return true;
+        }
+
         private static readonly Dictionary<string, List<Rectangle>> Zones = Parse();
 
         internal static IList<Rectangle> Get(string zone)
         {
             List<Rectangle> bounds;
-            return zone != null && Zones.TryGetValue(zone, out bounds)
-                ? (IList<Rectangle>)bounds : null;
+            if (zone == null) return null;
+            if (PopzoneZones != null)
+            {
+                if (PopzoneZones.TryGetValue(zone, out bounds)) return bounds;
+                // Les noms renvoyes par GTA et ceux de l'IPL ne sont pas toujours
+                // identiques (ex. DOWNT / Downtown).
+                string alias = zone.ToUpperInvariant();
+                switch (alias)
+                {
+                    case "DOWNT": alias = "Downtown"; break;
+                    case "WVINE": alias = "WVine"; break;
+                    case "EAST_V": alias = "EastV"; break;
+                    case "CHAMH": alias = "ChamH"; break;
+                    case "PBOX": alias = "PillBox"; break;
+                    case "VINE": alias = "Vine"; break;
+                }
+                if (PopzoneZones.TryGetValue(alias, out bounds)) return bounds;
+            }
+            return Zones.TryGetValue(zone, out bounds) ? (IList<Rectangle>)bounds : null;
         }
 
         private static Dictionary<string, List<Rectangle>> Parse()
