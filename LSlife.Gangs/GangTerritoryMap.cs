@@ -74,6 +74,15 @@ namespace LSlife
             }
         }
 
+        private void RecordGangTerritoryVisit(string zone, Vector3 position)
+        {
+            if (string.IsNullOrWhiteSpace(zone) ||
+                territoryMapPositions.ContainsKey(zone) ||
+                string.IsNullOrEmpty(GangPolitics.GetTerritoryOwner(zone))) return;
+            territoryMapPositions[zone] = position;
+            SaveGangTerritoryMap();
+        }
+
         private void SaveGangTerritoryMap()
         {
             try
@@ -117,16 +126,7 @@ namespace LSlife
                 !player.Character.Exists() || Game.GameTime - territoryMapLastCheck < 1500) return;
             territoryMapLastCheck = Game.GameTime;
             string currentZone = World.GetZoneNameLabel(player.Character.Position);
-            if (!string.IsNullOrWhiteSpace(currentZone) &&
-                !territoryMapPositions.ContainsKey(currentZone))
-            {
-                // On ne conserve que les quartiers connus par la diplomatie.
-                if (!string.IsNullOrEmpty(GangPolitics.GetTerritoryOwner(currentZone)))
-                {
-                    territoryMapPositions[currentZone] = player.Character.Position;
-                    SaveGangTerritoryMap();
-                }
-            }
+            RecordGangTerritoryVisit(currentZone, player.Character.Position);
             foreach (var entry in territoryMapPositions)
             {
                 string owner = GangPolitics.GetTerritoryOwner(entry.Key);
