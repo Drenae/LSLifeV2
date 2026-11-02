@@ -26,6 +26,7 @@ namespace LSlife
 
         private void ClearLeaderMeeting()
         {
+            CustomLeaderNegotiationMenu.Close();
             if (leaderMeetingBlip != null && leaderMeetingBlip.Exists())
                 leaderMeetingBlip.Remove();
             leaderMeetingBlip = null;
@@ -123,6 +124,14 @@ namespace LSlife
                 ClearLeaderMeeting();
                 return;
             }
+            if (CustomLeaderNegotiationMenu.Visible)
+            {
+                if (player.Character.Position.DistanceTo(leaderMeetingPed.Position) > 5f ||
+                    player.Character.IsInVehicle())
+                    CustomLeaderNegotiationMenu.Close();
+                else
+                    return;
+            }
             if (leaderMeetingFinished)
             {
                 if (Game.GameTime > leaderMeetingDepartureTime + 45000 ||
@@ -171,6 +180,9 @@ namespace LSlife
             GTA.UI.ShowSubtitle("Premiere rencontre avec le chef de " + gangId + " confirmee.", 4500);
             try { GangPolitics.Save(GangDiplomacySavePath); lastGangDiplomacySave = Game.GameTime; }
             catch (Exception ex) { LsFunctions.DbugString("Rencontre du chef : " + ex.Message); }
+            // Premiere interaction : le chef reste sur place pour negocier.
+            // Le depart ne commence qu'une fois le joueur parti.
+            CustomLeaderNegotiationMenu.Open(gangId);
             leaderMeetingFinished = true;
             leaderMeetingDepartureTime = Game.GameTime;
             if (leaderMeetingPed != null && leaderMeetingCar != null)
