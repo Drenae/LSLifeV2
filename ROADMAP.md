@@ -77,10 +77,12 @@
 - [ ] Etudier l impact des alliances sur les territoires, la pression policiere et les guerres de gangs.
 
 ### Carte des territoires — TOUS les gangs decouverts
-- [ ] Tester en jeu la phase 1 : marqueurs colores des quartiers decouverts et occupes par n'importe quel gang sur la carte du menu Pause, sans limitation aux alliances et sans marqueur sur la minimap.
-- [ ] Verifier la creation de LSLife_TerritoryMap.xml en visitant les zones et la restauration des points apres Reload(), sans modifier LSLife_GangDiplomacy.xml.
+- [x] Phase 1 validee en jeu : points colores de tous les quartiers decouverts et occupes, sans limitation aux alliances, visibles dans le menu Pause.
+- [x] Positions de quartiers conservees dans LSLife_TerritoryMap.xml et restaurees apres Reload() (validation utilisateur).
 - [ ] Tester le rafraichissement de la couleur et du nom lors d'un changement de proprietaire, ainsi que le nettoyage des blips au Reload().
-- [ ] Phase 2 : trouver une methode fiable pour recuperer les contours reels des zones GTA V Legacy ; remplacer les marqueurs de position par des surfaces colorees sans inventer les limites.
+- [ ] PRIORITE : rechercher dans GTA V Legacy les vrais contours des zones (natives zone bounds / donnees de zones) ; confirmer leur disponibilite dans SHVDN2 avant de coder les surfaces colorees. Les marqueurs actuels ne representent pas des limites.
+- [ ] Dessiner les surfaces des quartiers avec la couleur de leur gang, sans minimap et sans recouvrir les icones GTA ; prevoir une option de desactivation si necessaire.
+- [ ] Tester les noms de quartiers lisibles et la capture de position des nouvelles zones des leur enregistrement.
 - [ ] Etudier une legende de couleurs par gang, la visibilite uniquement dans le menu Pause et les performances avec de nombreuses zones.
 - [ ] Verifier la compatibilite avec les autres mods de carte et les zones sans proprietaire.
 
