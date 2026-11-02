@@ -16,6 +16,70 @@ namespace LSlife
             { X = x; Y = y; Width = width; Height = height; }
         }
 
+        // Fusionne les rectangles superposes d'un meme quartier.
+        // Chaque tranche X recoit l'union de ses intervalles Y, puis les
+        // tranches consecutives identiques sont fusionnees horizontalement.
+        // Le resultat couvre la meme surface, sans double coloration.
+        private static List<Rectangle> Normalize(List<Rectangle> input)
+        {
+            if (input.Count < 2) return input;
+            var edges = new SortedSet<float>();
+            foreach (Rectangle r in input)
+            {
+                edges.Add(r.X);
+                edges.Add(r.X + r.Width);
+            }
+            var xs = new List<float>(edges);
+            var result = new List<Rectangle>();
+            var previous = new Dictionary<string, int>(StringComparer.Ordinal);
+            for (int i = 0; i + 1 < xs.Count; i++)
+            {
+                float left = xs[i], right = xs[i + 1];
+                if (right - left < 0.001f) continue;
+                var intervals = new List<Tuple<float, float>>();
+                foreach (Rectangle r in input)
+                    if (r.X <= left + 0.001f &&
+                        r.X + r.Width >= right - 0.001f)
+                        intervals.Add(Tuple.Create(r.Y, r.Y + r.Height));
+                intervals.Sort((a, b) =>
+                {
+                    int compare = a.Item1.CompareTo(b.Item1);
+                    return compare != 0 ? compare : a.Item2.CompareTo(b.Item2);
+                });
+                var current = new Dictionary<string, int>(StringComparer.Ordinal);
+                for (int j = 0; j < intervals.Count;)
+                {
+                    float bottom = intervals[j].Item1;
+                    float top = intervals[j].Item2;
+                    j++;
+                    while (j < intervals.Count && intervals[j].Item1 <= top + 0.001f)
+                    {
+                        top = Math.Max(top, intervals[j].Item2);
+                        j++;
+                    }
+                    if (top - bottom < 0.001f) continue;
+                    string key = bottom.ToString("R", CultureInfo.InvariantCulture) +
+                        "|" + top.ToString("R", CultureInfo.InvariantCulture);
+                    int index;
+                    if (previous.TryGetValue(key, out index) &&
+                        Math.Abs(result[index].X + result[index].Width - left) < 0.001f)
+                    {
+                        Rectangle old = result[index];
+                        old.Width = right - old.X;
+                        result[index] = old;
+                        current[key] = index;
+                    }
+                    else
+                    {
+                        current[key] = result.Count;
+                        result.Add(new Rectangle(left, bottom, right - left, top - bottom));
+                    }
+                }
+                previous = current;
+            }
+            return result;
+        }
+
         private static readonly Dictionary<string, List<Rectangle>> Zones = Parse();
 
         internal static IList<Rectangle> Get(string zone)
@@ -44,6 +108,9 @@ namespace LSlife
                     result[parts[0]] = bounds = new List<Rectangle>();
                 bounds.Add(new Rectangle(x, y, width, height));
             }
+            var keys = new List<string>(result.Keys);
+            foreach (string key in keys)
+                result[key] = Normalize(result[key]);
             return result;
         }
 
