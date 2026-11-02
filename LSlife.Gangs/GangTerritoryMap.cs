@@ -61,29 +61,47 @@ namespace LSlife
             territoryMapPositions.Clear();
             territoryMapPendingZones.Clear();
             territoryMapLastOwnerRefresh = 0;
-            if (!File.Exists(TerritoryMapPath)) return;
-            try
+
+            // Recuperer le dernier fichier valide si une ecriture a ete interrompue.
+            string[] candidates = { TerritoryMapPath, TerritoryMapPath + ".bak" };
+            foreach (string candidate in candidates)
             {
-                foreach (XElement zone in XDocument.Load(TerritoryMapPath).Descendants("zone"))
+                if (!File.Exists(candidate)) continue;
+                try
                 {
-                    string id = (string)zone.Attribute("id");
-                    float x, y, z;
-                    if (string.IsNullOrWhiteSpace(id) ||
-                        !float.TryParse((string)zone.Attribute("x"), NumberStyles.Float,
-                            CultureInfo.InvariantCulture, out x) ||
-                        !float.TryParse((string)zone.Attribute("y"), NumberStyles.Float,
-                            CultureInfo.InvariantCulture, out y) ||
-                        !float.TryParse((string)zone.Attribute("z"), NumberStyles.Float,
-                            CultureInfo.InvariantCulture, out z)) continue;
-                    if (float.IsNaN(x) || float.IsNaN(y) || float.IsNaN(z) ||
-                        float.IsInfinity(x) || float.IsInfinity(y) || float.IsInfinity(z))
-                        continue;
-                    territoryMapPositions[id] = new Vector3(x, y, z);
+                    var loaded = new Dictionary<string, Vector3>(StringComparer.OrdinalIgnoreCase);
+                    XDocument document = XDocument.Load(candidate);
+                    if (document.Root == null ||
+                        document.Root.Name.LocalName != "discoveredTerritoryPositions")
+                        throw new InvalidDataException("Format de carte inconnu.");
+                    foreach (XElement zone in document.Root.Elements("zone"))
+                    {
+                        string id = (string)zone.Attribute("id");
+                        float x, y, z;
+                        if (string.IsNullOrWhiteSpace(id) ||
+                            TerritoryMapExcludedZones.Contains(id) ||
+                            !float.TryParse((string)zone.Attribute("x"), NumberStyles.Float,
+                                CultureInfo.InvariantCulture, out x) ||
+                            !float.TryParse((string)zone.Attribute("y"), NumberStyles.Float,
+                                CultureInfo.InvariantCulture, out y) ||
+                            !float.TryParse((string)zone.Attribute("z"), NumberStyles.Float,
+                                CultureInfo.InvariantCulture, out z) ||
+                            float.IsNaN(x) || float.IsNaN(y) || float.IsNaN(z) ||
+                            float.IsInfinity(x) || float.IsInfinity(y) || float.IsInfinity(z))
+                            continue;
+                        loaded[id] = new Vector3(x, y, z);
+                    }
+                    foreach (var entry in loaded)
+                        territoryMapPositions.Add(entry.Key, entry.Value);
+                    if (candidate != TerritoryMapPath)
+                        LsFunctions.DbugString("Carte territoires : restauration depuis .bak.");
+                    return;
                 }
-            }
-            catch (Exception ex)
-            {
-                LsFunctions.DbugString("Carte territoires : chargement : " + ex.Message);
+                catch (Exception ex)
+                {
+                    LsFunctions.DbugString("Carte territoires : lecture " +
+                        candidate + " : " + ex.Message);
+                }
             }
         }
 
