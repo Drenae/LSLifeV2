@@ -256,6 +256,14 @@ public partial class LSL
 				zee.Icon = ContactIcon.Blank;
 				phone.Contacts.Add(zee);
 				contactZee = zee;
+				// Acces permanent au reseau diplomatique, meme sans contact
+				// de chef debloque ni appartenance a un gang.
+				var gangNetwork = new iFruitContact("Reseau Gangs");
+				gangNetwork.DialTimeout = 1000;
+				gangNetwork.Active = true;
+				gangNetwork.Icon = ContactIcon.Blank;
+				gangNetwork.Answered += answeredContact => CustomZeeMenu.ToggleNetwork();
+				phone.Contacts.Add(gangNetwork);
 				gangLeaderContacts.Clear();
 				phoneContactsLastSync = -1;
 				iFruit = phone;
