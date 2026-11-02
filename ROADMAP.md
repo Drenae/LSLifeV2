@@ -80,13 +80,13 @@
 - [x] Phase 1 validee en jeu : points colores de tous les quartiers decouverts et occupes, sans limitation aux alliances, visibles dans le menu Pause.
 - [x] Positions de quartiers conservees dans LSLife_TerritoryMap.xml et restaurees apres Reload() (validation utilisateur).
 - [ ] Tester le rafraichissement de la couleur et du nom lors d'un changement de proprietaire, ainsi que le nettoyage des blips au Reload().
-- [ ] Tester en jeu les surfaces colorees : rectangles XY provenant des donnees GTA V zones.json, rendus par la native ADD_BLIP_FOR_AREA (SHVDN2) avec transparence 65, uniquement pour les quartiers decouverts et occupes. Valider l'alignement, les chevauchements et les zones complexes.
+- [ ] Valider en jeu les rectangles normalises (fusion des superpositions et des bandes contigues) : pas de doubles teintes, aucune perte de surface, transparence 48, lisibilite et performances dans les zones complexes.
 - [ ] Verifier le display 3 sur carte Pause (aucune surface ni marqueur sur la minimap), la transparence, la lisibilite des icones GTA, le plafond de 250 rectangles, les mises a jour de proprietaire et le nettoyage Reload().
 - [ ] Prevoir une option de desactivation des surfaces si le rendu pose probleme, sans desactiver les marqueurs.
 - [ ] Tester les noms de quartiers lisibles et la capture de position des nouvelles zones des leur enregistrement.
 - [ ] Tester la sauvegarde atomique (.tmp/.bak), la restauration automatique depuis un .bak valide si le XML principal est corrompu, et la relance des ecritures apres erreur.
 - [ ] Tester le filtrage des coordonnees invalides et des zones maritimes, puis la mise a jour des proprietaires toutes les 10 secondes.
-- [ ] Auditer les natives GTA V de zonage pour verifier si les limites exactes peuvent etre obtenues ; ne pas confondre points de decouverte et contours de quartier.
+- [ ] Comparer les limites XY importees depuis zones.json aux frontieres visibles en jeu, notamment les zones qui se touchent et les quartiers complexes ; ne pas confondre points de decouverte et contours.
 - [ ] Etudier une legende de couleurs par gang, la visibilite uniquement dans le menu Pause et les performances avec de nombreuses zones.
 - [ ] Verifier la compatibilite avec les autres mods de carte et les zones sans proprietaire.
 
