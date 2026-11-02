@@ -58,13 +58,18 @@
 - [ ] Tester que le conducteur ne part qu'une fois le chef et l'accompagnateur tous deux remontes dans LE vehicule du rendez-vous ; aucun depart seul.
 - [ ] Tester expiration, Reload(), vehicule detruit, mort des PNJ et blocage des rendez-vous concurrents ; verifier l'absence de PNJ orphelins.
 
+### Appartenance du joueur a un gang
+- [ ] Tester la creation volontaire de « Mon organisation » dans le reseau GANGS, sa confirmation et sa persistance apres Reload().
+- [ ] Tester l'adhesion volontaire a un gang existant face au chef (reputation 60, rencontre physique, confirmation, rang Recrue) et la persistance XML.
+- [ ] Prevoir la personnalisation du nom de l'organisation et un vrai systeme de recrutement, de progression de rang et de sortie de gang.
+
 ### Rendez-vous et negociations en personne
 - [ ] PRIORITE ACTIVE : construire le menu de negociation physique du chef, distinct du telephone, puis les demandes d'alliance et leurs conditions.
 - [ ] Tester les rendez-vous demandes par telephone : apparition du chef distinct, marqueur temporaire, expiration (5 min DEBUG / 10 min normal) et nettoyage au Reload().
 - [ ] Tester la premiere rencontre physique du chef et la persistance XML de metLeaders apres Reload(), sans attribuer de faux nom au chef ; ameliorer ensuite les lieux de rendez-vous pour les rendre propres a chaque gang.
 - [ ] Tester en jeu le menu physique de negociations du chef (CustomMenu, clavier/manette), uniquement pendant le rendez-vous, avec depart du chef apres fermeture et nettoyage Reload().
 - [ ] Tester la demande d'alliance en personne : reputation >=60, gang du joueur requis, confiance diplomatique >=75, aucun accord entre gangs tiers ; verifier persistance XML et statut Allie apres Reload().
-- [ ] Ajouter ensuite une confirmation explicite, les reactions du chef et d'autres accords diplomatiques sans les autoriser par telephone.
+- [ ] Tester la confirmation explicite d'alliance et d'adhesion, les refus et le maintien du menu en face du chef ; ajouter ensuite les reactions du chef et d'autres accords diplomatiques.
 - [ ] Gerer les refus, ruptures, renegociations, reactions et consequences sur la reputation.
 - [ ] Interdire la modification des accords entre deux gangs tiers.
 
