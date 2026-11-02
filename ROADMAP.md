@@ -84,6 +84,11 @@
 - [ ] Prevoir les contributions, le partage des revenus, les rivalites et les trahisons.
 - [ ] Etudier l impact des alliances sur les territoires, la pression policiere et les guerres de gangs.
 
+### Carte des territoires — test opt-in OpenIV
+- [ ] Tester TERRITORYMAPTEST=true avec scripts\\LSLife\\popzone.ipl (fichier OpenIV de 91 Ko), verifier les surfaces des quartiers visites sur la carte pause, les limites et les couleurs ; verifier les alias de codes GTA/ipl et la limite des blips.
+- [ ] Verifier la compilation et le comportement apres Reload(), sans modifier les sauvegardes diplomatiques.
+- [ ] Conserver le rendu des territoires desactive par defaut tant que le test n'est pas valide.
+
 ### Carte des territoires — en pause
 - [ ] Reprendre ulterieurement l'affichage des points et des surfaces colorees de tous les gangs decouverts, sans restriction aux alliances.
 - [ ] Revalider les limites des quartiers, les superpositions, le rendu sur carte Pause et les changements de proprietaire.
