@@ -13,6 +13,8 @@ namespace LSlife
         private static bool waitForRelease;
         private static bool awaitingConfirmation;
         private static bool awaitingMembershipConfirmation;
+        private static GangAgreementType? pendingAgreement;
+        private static bool pendingCancellation;
         private static int lastFrame = -1;
 
         internal static bool Visible { get { return menu != null && menu.Visible; } }
@@ -24,6 +26,8 @@ namespace LSlife
             gangId = targetGangId;
             awaitingConfirmation = false;
             awaitingMembershipConfirmation = false;
+            pendingAgreement = null;
+            pendingCancellation = false;
             Rebuild();
         }
 
@@ -35,8 +39,14 @@ namespace LSlife
             if (menu != null) menu.Close();
             menu = new CustomMenu(gang.Name,
                 awaitingMembershipConfirmation ? "ADHESION" :
+                pendingAgreement.HasValue ? "ACCORD DIPLOMATIQUE" :
                 awaitingConfirmation ? "CONFIRMATION" : "NEGOCIATIONS");
-            if (awaitingMembershipConfirmation)
+            if (pendingAgreement.HasValue)
+            {
+                menu.Add(pendingCancellation ? "Confirmer la rupture" : "Confirmer l\u0027accord", ConfirmDiplomaticAgreement);
+                menu.Add("Annuler", () => { pendingAgreement = null; Rebuild(); });
+            }
+            else if (awaitingMembershipConfirmation)
             {
                 menu.Add("Confirmer mon adhesion", ConfirmMembership);
                 menu.Add("Annuler", () => { awaitingMembershipConfirmation = false; Rebuild(); });
@@ -49,6 +59,12 @@ namespace LSlife
             else
             {
                 menu.Add("Proposer une alliance", ProposeAlliance);
+                if (CanDiscussDiplomacy())
+                {
+                    menu.Add("Pacte de non-agression", () => RequestAgreement(GangAgreementType.NonAggression));
+                    menu.Add("Accord commercial", () => RequestAgreement(GangAgreementType.Trade));
+                    menu.Add("Soutien arme", () => RequestAgreement(GangAgreementType.ArmedSupport));
+                }
                 if (string.IsNullOrWhiteSpace(state.PlayerGangId))
                     menu.Add("Rejoindre ce gang", RequestMembership);
                 menu.Add("Quitter la rencontre", Close);
@@ -74,6 +90,90 @@ namespace LSlife
             if (state.GetRelation(state.PlayerGangId, gangId).Trust < 75)
                 return "Confiance diplomatique requise : 75/100.";
             return null;
+        }
+
+
+        private static bool CanDiscussDiplomacy()
+        {
+            var state = LSL.DiplomacyState;
+            return !string.IsNullOrWhiteSpace(state.PlayerGangId) &&
+                !string.Equals(state.PlayerGangId, gangId, StringComparison.OrdinalIgnoreCase) &&
+                state.HasMetLeader(gangId);
+        }
+
+        private static string AgreementRequirement(GangAgreementType agreement)
+        {
+            var state = LSL.DiplomacyState;
+            if (!CanDiscussDiplomacy()) return "Un gang et une rencontre avec le chef sont requis.";
+            if (state.GetPlayerReputation(gangId) < GangDiplomacy.AllianceReputation)
+                return "Reputation requise : 60/100.";
+            var relation = state.GetRelation(state.PlayerGangId, gangId);
+            if (relation.Agreements.Contains(agreement)) return null;
+            if (!state.CanNegotiate(state.PlayerGangId, gangId))
+                return "Relation hostile ou confiance insuffisante.";
+            int minimum = agreement == GangAgreementType.NonAggression ? 35 :
+                agreement == GangAgreementType.Trade ? 50 : 65;
+            return relation.Trust < minimum ? "Confiance requise : " + minimum + "/100." : null;
+        }
+
+        private static void RequestAgreement(GangAgreementType agreement)
+        {
+            string refusal = AgreementRequirement(agreement);
+            if (refusal != null) { GTA.UI.ShowSubtitle(refusal, 4500); return; }
+            var state = LSL.DiplomacyState;
+            pendingCancellation = state.GetRelation(state.PlayerGangId, gangId).Agreements.Contains(agreement);
+            pendingAgreement = agreement;
+            Rebuild();
+        }
+
+        private static void ConfirmDiplomaticAgreement()
+        {
+            if (!pendingAgreement.HasValue) return;
+            var state = LSL.DiplomacyState;
+            GangAgreementType agreement = pendingAgreement.Value;
+            if (!CanDiscussDiplomacy() || state.GetPlayerReputation(gangId) < GangDiplomacy.AllianceReputation)
+            {
+                GTA.UI.ShowSubtitle("Negociation indisponible.", 4000);
+                pendingAgreement = null;
+                Rebuild();
+                return;
+            }
+            string player = state.PlayerGangId;
+            var relation = state.GetRelation(player, gangId);
+            if (pendingCancellation)
+            {
+                if (relation.Agreements.Contains(agreement))
+                {
+                    state.CancelAgreement(player, gangId, agreement);
+                    GTA.UI.ShowSubtitle("Accord rompu. La confiance diminue.", 4500);
+                }
+            }
+            else
+            {
+                string refusal = AgreementRequirement(agreement);
+                if (refusal != null || !state.ProposeAgreement(player, gangId, agreement))
+                {
+                    GTA.UI.ShowSubtitle(refusal ?? "Le chef refuse cet accord.", 4500);
+                    pendingAgreement = null;
+                    Rebuild();
+                    return;
+                }
+                // La cooperation fait progresser la confiance jusqu'au seuil d'alliance.
+                // Le bonus n'est verse qu'a la premiere signature, jamais en boucle.
+                int bonus = agreement == GangAgreementType.NonAggression ? 10 :
+                    agreement == GangAgreementType.Trade ? 10 : 5;
+                state.ChangeTrust(player, gangId, bonus);
+                GTA.UI.ShowSubtitle("Accord conclu. Confiance +" + bonus + ".", 4500);
+            }
+            try { state.Save("scripts\\LSLife\\LSLife_GangDiplomacy.xml"); }
+            catch (Exception ex)
+            {
+                LsFunctions.DbugString("Accord diplomatique : " + ex.Message);
+                GTA.UI.ShowSubtitle("Accord modifie, sauvegarde a verifier.", 4500);
+            }
+            pendingAgreement = null;
+            pendingCancellation = false;
+            Rebuild();
         }
 
         private static void RequestMembership()
@@ -172,6 +272,8 @@ namespace LSlife
             gangId = null;
             awaitingConfirmation = false;
             awaitingMembershipConfirmation = false;
+            pendingAgreement = null;
+            pendingCancellation = false;
         }
 
         internal static void TickOncePerFrame()
@@ -208,7 +310,13 @@ namespace LSlife
                 !string.Equals(state.PlayerGangId, gangId, StringComparison.OrdinalIgnoreCase))
                 layout.TextPair("Confiance", state.GetRelation(state.PlayerGangId, gangId).Trust + "/100");
             layout.Separator(0.004f);
-            if (awaitingMembershipConfirmation)
+            if (pendingAgreement.HasValue)
+            {
+                layout.TextPair("Accord", pendingAgreement.Value.ToString());
+                layout.Row(pendingCancellation ? "Confirmer la rupture" : "Confirmer l\u0027accord", menu.SelectedIndex == 0);
+                layout.Row("Annuler", menu.SelectedIndex == 1);
+            }
+            else if (awaitingMembershipConfirmation)
             {
                 layout.Row("Confirmer mon adhesion", menu.SelectedIndex == 0);
                 layout.Row("Annuler", menu.SelectedIndex == 1);
@@ -223,12 +331,25 @@ namespace LSlife
                 layout.Row("Proposer une alliance", menu.SelectedIndex == 0,
                     AllianceRequirement() == null ? "Disponible" : "Verrouille");
                 int quitIndex = 1;
+                if (CanDiscussDiplomacy())
+                {
+                    var relation = state.GetRelation(state.PlayerGangId, gangId);
+                    foreach (GangAgreementType type in new[] { GangAgreementType.NonAggression, GangAgreementType.Trade, GangAgreementType.ArmedSupport })
+                    {
+                        string label = type == GangAgreementType.NonAggression ? "Pacte de non-agression" :
+                            type == GangAgreementType.Trade ? "Accord commercial" : "Soutien arme";
+                        string status = relation.Agreements.Contains(type) ? "Rompre" :
+                            AgreementRequirement(type) == null ? "Proposer" : "Verrouille";
+                        layout.Row(label, menu.SelectedIndex == quitIndex, status);
+                        quitIndex++;
+                    }
+                }
                 if (string.IsNullOrWhiteSpace(state.PlayerGangId))
                 {
-                    layout.Row("Rejoindre ce gang", menu.SelectedIndex == 1,
+                    layout.Row("Rejoindre ce gang", menu.SelectedIndex == quitIndex,
                         state.GetPlayerReputation(gangId) >= GangDiplomacy.AllianceReputation
                             ? "Disponible" : "60 requis");
-                    quitIndex = 2;
+                    quitIndex++;
                 }
                 layout.Row("Quitter", menu.SelectedIndex == quitIndex);
             }
