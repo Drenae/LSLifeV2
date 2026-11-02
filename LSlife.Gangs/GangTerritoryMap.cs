@@ -209,22 +209,31 @@ namespace LSlife
             if (active + bounds.Count > TerritoryMapMaxAreaBlips) return;
 
             var created = new List<Blip>();
-            foreach (GangTerritoryZoneBounds.Rectangle rectangle in bounds)
+            try
             {
-                float cx = rectangle.X + rectangle.Width / 2f;
-                float cy = rectangle.Y + rectangle.Height / 2f;
-                // GTA V Legacy : ADD_BLIP_FOR_AREA, disponible par son hash natif.
-                Blip area = Function.Call<Blip>((Hash)0xCE5D0E5E315DB238UL,
-                    cx, cy, 0f, rectangle.Width, rectangle.Height);
-                if (area == null || !area.Exists()) continue;
-                area.Color = (BlipColor)TerritoryMapColor(owner);
-                Function.Call(Hash.SET_BLIP_ALPHA, area, 65);
-                Function.Call(Hash.SET_BLIP_ROTATION, area, 0);
-                // 3 : grande carte uniquement ; 2 afficherait aussi la minimap.
-                Function.Call(Hash.SET_BLIP_DISPLAY, area, 3);
-                created.Add(area);
+                foreach (GangTerritoryZoneBounds.Rectangle rectangle in bounds)
+                {
+                    float cx = rectangle.X + rectangle.Width / 2f;
+                    float cy = rectangle.Y + rectangle.Height / 2f;
+                    // GTA V Legacy : ADD_BLIP_FOR_AREA, disponible par son hash natif.
+                    Blip area = Function.Call<Blip>((Hash)0xCE5D0E5E315DB238UL,
+                        cx, cy, 0f, rectangle.Width, rectangle.Height);
+                    if (area == null || !area.Exists()) continue;
+                    created.Add(area);
+                    area.Color = (BlipColor)TerritoryMapColor(owner);
+                    Function.Call(Hash.SET_BLIP_ALPHA, area, 65);
+                    Function.Call(Hash.SET_BLIP_ROTATION, area, 0);
+                    // 3 : grande carte uniquement ; 2 afficherait aussi la minimap.
+                    Function.Call(Hash.SET_BLIP_DISPLAY, area, 3);
+                }
+                if (created.Count > 0) territoryMapAreaBlips[zone] = created;
             }
-            if (created.Count > 0) territoryMapAreaBlips[zone] = created;
+            catch (Exception ex)
+            {
+                foreach (Blip area in created)
+                    if (area != null && area.Exists()) area.Remove();
+                LsFunctions.DbugString("Carte territoires : surface " + zone + " : " + ex.Message);
+            }
         }
 
         private void TickGangTerritoryMap()
