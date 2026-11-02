@@ -33,6 +33,7 @@ namespace LSlife
         {
             TickGangRepresentative();
             TickLeaderMeeting();
+            TickGangTerritoryMap();
         }
 
         private void InitializeGangDiplomacy()
@@ -40,6 +41,7 @@ namespace LSlife
             try
             {
                 GangPolitics.Load(GangDiplomacySavePath);
+                LoadGangTerritoryMap();
                 foreach (Area area in areas)
                 {
                     if (area.Gang == null) continue;
