@@ -11,6 +11,7 @@ namespace LSlife
         private static CustomMenu menu;
         private static string gangId;
         private static bool waitForRelease;
+        private static bool awaitingConfirmation;
         private static int lastFrame = -1;
 
         internal static bool Visible { get { return menu != null && menu.Visible; } }
@@ -20,6 +21,7 @@ namespace LSlife
             if (Visible || string.IsNullOrWhiteSpace(targetGangId) ||
                 CustomMenuShared.IsAnyGameplayMenuOpen()) return;
             gangId = targetGangId;
+            awaitingConfirmation = false;
             Rebuild();
         }
 
@@ -29,9 +31,18 @@ namespace LSlife
             GangOrganization gang;
             if (!state.TryGetGang(gangId, out gang)) { Close(); return; }
             if (menu != null) menu.Close();
-            menu = new CustomMenu(gang.Name, "NEGOCIATIONS");
-            menu.Add("Proposer une alliance", ProposeAlliance);
-            menu.Add("Quitter la rencontre", Close);
+            menu = new CustomMenu(gang.Name,
+                awaitingConfirmation ? "CONFIRMATION" : "NEGOCIATIONS");
+            if (awaitingConfirmation)
+            {
+                menu.Add("Confirmer l'alliance", ConfirmAlliance);
+                menu.Add("Annuler", () => { awaitingConfirmation = false; Rebuild(); });
+            }
+            else
+            {
+                menu.Add("Proposer une alliance", ProposeAlliance);
+                menu.Add("Quitter la rencontre", Close);
+            }
             menu.Open();
             waitForRelease = true;
         }
@@ -63,6 +74,20 @@ namespace LSlife
                 GTA.UI.ShowSubtitle(refusal, 4500);
                 return;
             }
+            awaitingConfirmation = true;
+            Rebuild();
+        }
+
+        private static void ConfirmAlliance()
+        {
+            string refusal = AllianceRequirement();
+            if (refusal != null)
+            {
+                GTA.UI.ShowSubtitle(refusal, 4500);
+                awaitingConfirmation = false;
+                Rebuild();
+                return;
+            }
             var state = LSL.DiplomacyState;
             string playerGang = state.PlayerGangId;
             // Revalider au moment du clic pour ne pas negocier un accord tiers.
@@ -82,6 +107,7 @@ namespace LSlife
                 LsFunctions.DbugString("Alliance : sauvegarde impossible : " + ex.Message);
                 GTA.UI.ShowSubtitle("Alliance conclue, sauvegarde a verifier.", 4500);
             }
+            awaitingConfirmation = false;
             Rebuild();
         }
 
@@ -89,6 +115,7 @@ namespace LSlife
         {
             if (menu != null) menu.Close();
             gangId = null;
+            awaitingConfirmation = false;
         }
 
         internal static void TickOncePerFrame()
@@ -114,14 +141,28 @@ namespace LSlife
             layout.Header("CHEF DE GANG", "NEGOCIATIONS");
             layout.Separator(0.004f);
             layout.TextPair("Gang", gangId);
+            if (!string.IsNullOrWhiteSpace(state.PlayerGangId))
+            {
+                GangOrganization mine;
+                if (state.TryGetGang(state.PlayerGangId, out mine))
+                    layout.TextPair("Votre gang", mine.Name);
+            }
             layout.TextPair("Reputation", state.GetPlayerReputation(gangId) + "/100");
             if (!string.IsNullOrWhiteSpace(state.PlayerGangId) &&
                 !string.Equals(state.PlayerGangId, gangId, StringComparison.OrdinalIgnoreCase))
                 layout.TextPair("Confiance", state.GetRelation(state.PlayerGangId, gangId).Trust + "/100");
             layout.Separator(0.004f);
-            layout.Row("Proposer une alliance", menu.SelectedIndex == 0,
-                AllianceRequirement() == null ? "Disponible" : "Verrouille");
-            layout.Row("Quitter", menu.SelectedIndex == 1);
+            if (awaitingConfirmation)
+            {
+                layout.Row("Confirmer l'alliance", menu.SelectedIndex == 0);
+                layout.Row("Annuler", menu.SelectedIndex == 1);
+            }
+            else
+            {
+                layout.Row("Proposer une alliance", menu.SelectedIndex == 0,
+                    AllianceRequirement() == null ? "Disponible" : "Verrouille");
+                layout.Row("Quitter", menu.SelectedIndex == 1);
+            }
             layout.Render();
         }
 
