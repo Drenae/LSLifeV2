@@ -14,6 +14,9 @@ namespace LSlife
         private static string originalOwner;
         private static int startedAt;
         private static int lastNotice;
+        private const int RetryDelay = 120000;
+        private static readonly System.Collections.Generic.Dictionary<string, int> retryAfter =
+            new System.Collections.Generic.Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
         internal static bool IsActive { get { return !string.IsNullOrEmpty(zone); } }
 
@@ -26,6 +29,9 @@ namespace LSlife
             if (state.PlayerRank != PlayerGangRank.Leader)
                 return "Seul le chef peut lancer une prise de territoire.";
             if (IsActive) return "Une prise de territoire est deja en cours.";
+            int next;
+            if (retryAfter.TryGetValue(target, out next) && Game.GameTime < next)
+                return "Quartier en alerte : patientez " + Math.Max(1, (next - Game.GameTime + 999) / 1000) + " s.";
             string owner = state.GetTerritoryOwner(target);
             if (string.Equals(owner, state.PlayerGangId, StringComparison.OrdinalIgnoreCase))
                 return "Ce quartier appartient deja a votre gang.";
@@ -72,7 +78,8 @@ namespace LSlife
                 !string.Equals(World.GetZoneNameLabel(player.Position), zone, StringComparison.OrdinalIgnoreCase) ||
                 !string.Equals(state.GetTerritoryOwner(zone), originalOwner, StringComparison.OrdinalIgnoreCase))
             {
-                GTA.UI.ShowSubtitle("Prise de territoire annulee : conditions perdues.", 4000);
+                retryAfter[zone] = Game.GameTime + RetryDelay;
+                GTA.UI.ShowSubtitle("Prise de territoire echouee : quartier en alerte 2 minutes.", 4500);
                 Cancel();
                 return;
             }
