@@ -222,7 +222,10 @@ namespace LSlife
 
         private void AddGangTerritoryArea(string zone, string owner)
         {
-            IList<GangTerritoryZoneBounds.Rectangle> bounds = GangTerritoryZoneBounds.Get(zone);
+            string source;
+            IList<GangTerritoryZoneBounds.Rectangle> bounds = GangTerritoryZoneBounds.Get(zone, out source);
+            LsFunctions.DbugString("Carte territoires : " + zone + " -> " + source +
+                " (" + (bounds == null ? 0 : bounds.Count) + " rectangles).");
             if (bounds == null || bounds.Count == 0) return;
             int active = 0;
             foreach (List<Blip> existing in territoryMapAreaBlips.Values)
