@@ -116,6 +116,7 @@ namespace LSlife
 
         private void TickGangDiplomacy()
         {
+            GangTerritoryCapture.Tick();
             if (firstRun || !GangPolitics.IsDirty || Game.GameTime - lastGangDiplomacySave < 60000) return;
             lastGangDiplomacySave = Game.GameTime;
             try { GangPolitics.Save(GangDiplomacySavePath); }
