@@ -80,8 +80,9 @@
 - [x] Phase 1 validee en jeu : points colores de tous les quartiers decouverts et occupes, sans limitation aux alliances, visibles dans le menu Pause.
 - [x] Positions de quartiers conservees dans LSLife_TerritoryMap.xml et restaurees apres Reload() (validation utilisateur).
 - [ ] Tester le rafraichissement de la couleur et du nom lors d'un changement de proprietaire, ainsi que le nettoyage des blips au Reload().
-- [ ] PRIORITE : rechercher dans GTA V Legacy les vrais contours des zones (natives zone bounds / donnees de zones) ; confirmer leur disponibilite dans SHVDN2 avant de coder les surfaces colorees. Les marqueurs actuels ne representent pas des limites.
-- [ ] Dessiner les surfaces des quartiers avec la couleur de leur gang, sans minimap et sans recouvrir les icones GTA ; prevoir une option de desactivation si necessaire.
+- [ ] Tester en jeu les surfaces colorees : rectangles XY provenant des donnees GTA V zones.json, rendus par la native ADD_BLIP_FOR_AREA (SHVDN2) avec transparence 65, uniquement pour les quartiers decouverts et occupes. Valider l'alignement, les chevauchements et les zones complexes.
+- [ ] Verifier le display 3 sur carte Pause (aucune surface ni marqueur sur la minimap), la transparence, la lisibilite des icones GTA, le plafond de 250 rectangles, les mises a jour de proprietaire et le nettoyage Reload().
+- [ ] Prevoir une option de desactivation des surfaces si le rendu pose probleme, sans desactiver les marqueurs.
 - [ ] Tester les noms de quartiers lisibles et la capture de position des nouvelles zones des leur enregistrement.
 - [ ] Tester la sauvegarde atomique (.tmp/.bak), la restauration automatique depuis un .bak valide si le XML principal est corrompu, et la relance des ecritures apres erreur.
 - [ ] Tester le filtrage des coordonnees invalides et des zones maritimes, puis la mise a jour des proprietaires toutes les 10 secondes.
