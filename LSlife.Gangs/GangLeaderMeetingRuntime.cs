@@ -134,6 +134,14 @@ namespace LSlife
             }
             if (leaderMeetingFinished)
             {
+                if (!leaderMeetingDrivingAway && !CustomLeaderNegotiationMenu.Visible &&
+                    leaderMeetingDepartureTime == 0)
+                {
+                    leaderMeetingDepartureTime = Game.GameTime;
+                    leaderMeetingPed.Task.EnterVehicle(leaderMeetingCar, (VehicleSeat)0);
+                    leaderMeetingEscort.Task.EnterVehicle(leaderMeetingCar,
+                        unchecked((VehicleSeat)(-1)));
+                }
                 if (Game.GameTime > leaderMeetingDepartureTime + 45000 ||
                     (leaderMeetingDrivingAway && leaderMeetingCar != null &&
                      leaderMeetingCar.Position.DistanceTo(player.Character.Position) > 150f))
@@ -184,11 +192,7 @@ namespace LSlife
             // Le depart ne commence qu'une fois le joueur parti.
             CustomLeaderNegotiationMenu.Open(gangId);
             leaderMeetingFinished = true;
-            leaderMeetingDepartureTime = Game.GameTime;
-            if (leaderMeetingPed != null && leaderMeetingCar != null)
-                leaderMeetingPed.Task.EnterVehicle(leaderMeetingCar, (VehicleSeat)0);
-            if (leaderMeetingEscort != null && leaderMeetingCar != null)
-                leaderMeetingEscort.Task.EnterVehicle(leaderMeetingCar, unchecked((VehicleSeat)(-1)));
+            leaderMeetingDepartureTime = 0;
         }
     }
 }
