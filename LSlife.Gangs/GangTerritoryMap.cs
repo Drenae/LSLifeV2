@@ -22,6 +22,30 @@ namespace LSlife
         private readonly Dictionary<string, string> territoryMapOwners =
             new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         private int territoryMapLastCheck;
+        // Les marqueurs sont un apercu : les limites exactes des quartiers
+        // doivent etre obtenues avant toute coloration de surface.
+        private static string TerritoryMapDisplayName(string zone)
+        {
+            switch ((zone ?? "").ToUpperInvariant())
+            {
+                case "DAVIS": return "Davis";
+                case "CHAMH": return "Chamberlain Hills";
+                case "STRAW": return "Strawberry";
+                case "RANCHO": return "Rancho";
+                case "LAMESA": return "La Mesa";
+                case "EBURO": return "El Burro Heights";
+                case "EAST_V": return "East Vinewood";
+                case "CHIL": return "Vinewood Hills";
+                case "PBOX": return "Pillbox Hill";
+                case "DOWNT": return "Downtown";
+                case "MURRI": return "Murrieta Heights";
+                case "CYPRE": return "Cypress Flats";
+                case "TEXTI": return "Textile City";
+                case "LMESA": return "La Mesa";
+                default: return zone;
+            }
+        }
+
 
         private void LoadGangTerritoryMap()
         {
@@ -124,7 +148,7 @@ namespace LSlife
                     existing.Remove();
                 Blip blip = World.CreateBlip(entry.Value);
                 if (blip == null) continue;
-                blip.Name = entry.Key + " - " + owner;
+                blip.Name = TerritoryMapDisplayName(entry.Key) + " - " + owner;
                 blip.Color = (BlipColor)TerritoryMapColor(owner);
                 // Display 2 = carte principale uniquement, pas minimap.
                 Function.Call(Hash.SET_BLIP_DISPLAY, blip, 2);
