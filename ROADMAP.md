@@ -83,6 +83,8 @@
 - [ ] PRIORITE : rechercher dans GTA V Legacy les vrais contours des zones (natives zone bounds / donnees de zones) ; confirmer leur disponibilite dans SHVDN2 avant de coder les surfaces colorees. Les marqueurs actuels ne representent pas des limites.
 - [ ] Dessiner les surfaces des quartiers avec la couleur de leur gang, sans minimap et sans recouvrir les icones GTA ; prevoir une option de desactivation si necessaire.
 - [ ] Tester les noms de quartiers lisibles et la capture de position des nouvelles zones des leur enregistrement.
+- [ ] Valider la sauvegarde atomique des positions (.tmp/.bak), le filtrage des coordonnees invalides et des zones maritimes, puis la mise a jour des proprietaires toutes les 10 secondes.
+- [ ] Auditer les natives GTA V de zonage pour verifier si les limites exactes peuvent etre obtenues ; ne pas confondre points de decouverte et contours de quartier.
 - [ ] Etudier une legende de couleurs par gang, la visibilite uniquement dans le menu Pause et les performances avec de nombreuses zones.
 - [ ] Verifier la compatibilite avec les autres mods de carte et les zones sans proprietaire.
 
