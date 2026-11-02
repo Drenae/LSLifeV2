@@ -91,6 +91,15 @@ namespace LSlife
             try
             {
                 state.SetTerritoryOwner(conquered, attackingGang);
+                GangOrganization newOwner;
+                if (state.TryGetGang(attackingGang, out newOwner))
+                {
+                    foreach (Area area in LSL.areas)
+                    {
+                        if (area == null || !string.Equals(area.Name, conquered, StringComparison.OrdinalIgnoreCase) || area.Gang == null) continue;
+                        area.Gang = new Gang(newOwner.Name, (int)area.GangPresance * 10000, 50, 20, area.Name);
+                    }
+                }
                 state.Save("scripts\\LSLife\\LSLife_GangDiplomacy.xml");
                 GTA.UI.ShowSubtitle("Territoire conquis : " + conquered + ".", 5000);
             }
