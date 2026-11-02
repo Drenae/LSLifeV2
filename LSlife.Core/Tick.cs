@@ -347,6 +347,7 @@ public partial class LSL
 		CustomZeeMenu.Tick();
 		CustomStashMenu.TickOncePerFrame();
 		CustomCustomerMenu.TickOncePerFrame();
+		CustomLeaderNegotiationMenu.TickOncePerFrame();
 		CustomWeaponDealerMenu.TickOncePerFrame();
 		CustomHireDealerMenu.TickOncePerFrame();
 		CustomWorkerMenu.TickOncePerFrame();
