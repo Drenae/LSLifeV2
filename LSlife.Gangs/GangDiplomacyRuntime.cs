@@ -124,7 +124,27 @@ namespace LSlife
             if (!firstRun && Game.GameTime - lastGangTerritoryRevenue >= 600000)
             {
                 lastGangTerritoryRevenue = Game.GameTime;
+                GangOrganization mine = null;
+                int before = 0;
+                bool hasGang = !string.IsNullOrWhiteSpace(GangPolitics.PlayerGangId) &&
+                    GangPolitics.TryGetGang(GangPolitics.PlayerGangId, out mine);
+                if (hasGang) before = mine.Money;
                 GangPolitics.CollectTerritoryRevenue(250);
+                if (hasGang && mine.Money > before)
+                    GTA.UI.ShowSubtitle("Revenus des quartiers : +" +
+                        (mine.Money - before) + " $ dans la tresorerie du gang.", 4500);
+                if (GangPolitics.IsDirty)
+                {
+                    try
+                    {
+                        GangPolitics.Save(GangDiplomacySavePath);
+                        lastGangDiplomacySave = Game.GameTime;
+                    }
+                    catch (Exception ex)
+                    {
+                        LsFunctions.DbugString("Revenus territoriaux : sauvegarde : " + ex.Message);
+                    }
+                }
             }
             if (firstRun || !GangPolitics.IsDirty || Game.GameTime - lastGangDiplomacySave < 60000) return;
             lastGangDiplomacySave = Game.GameTime;
