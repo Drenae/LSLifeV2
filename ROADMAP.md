@@ -11,8 +11,11 @@ Branche de travail : `feature/gang-network-rebuild`. Ancienne branche `feature/g
 - [x] Découverte des gangs validée en jeu selon le retour utilisateur.
 - [ ] Ajouter le nom personnalisable, les chefs, les autres gangs, la propriété territoriale, les revenus et les rôles en jeu.
 - [x] Contact direct avec les chefs depuis les fiches, confiance persistante indépendante de la réputation, pacte, alliance et rupture avec confirmation.
-- [ ] Compiler et valider la diplomatie en jeu, y compris la persistance après redémarrage.
-- [ ] Raccorder les accords et les trahisons aux réactions des gangs et aux guerres de conquête par vagues.
+- [x] Diplomatie validée en jeu selon le retour utilisateur.
+- [x] Conquête des quartiers de référence : attaque attribuée au joueur contre un dealer de quartier, trois vagues, échec par mort, fuite ou abandon, transfert et récompense sauvegardés après victoire. Une attaque rompt les accords et pénalise la confiance.
+- [x] Territoires et revenus de 250 $ par zone toutes les dix minutes versés à la caisse du gang du joueur.
+- [ ] Compiler et valider les guerres, la navigation, les sauvegardes, l'apparition des renforts en limite de zone et les effets diplomatiques.
+- [ ] Étendre les territoires et les réactions, dont les offensives de gangs natifs contre le gang du joueur.
 - [ ] Cartel à développer ultérieurement.
 
 ## Cible SHVDN3 nightly (28 octobre 2026)

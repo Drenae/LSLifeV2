@@ -1,3 +1,4 @@
+using System.Linq;
 using GTA;
 using GTA.Native;
 
@@ -67,7 +68,7 @@ internal static class CustomGangNetworkMenu
         menu.Add("Relation : " + GangRelations.Label(relation.Agreement), null, () => false);
         menu.Add("Territoires de référence", null, () => false);
         foreach (string zone in GangDiscovery.Territories(gang))
-            menu.Add(zone, null, () => false);
+            menu.Add(zone + (GangTerritoryWar.Owns(zone) ? " (ton gang)" : ""), null, () => false);
         menu.Add("Contacter le chef", () => ShowDiplomacy(gang));
         menu.Add("Retour", ShowGangs);
         Open(menu, ShowGangs);
@@ -133,9 +134,28 @@ internal static class CustomGangNetworkMenu
         menu.Add("Effectif : " + (1 + gang.Dealers + gang.Soldiers), null, () => false);
         menu.Add("Verser 5 000 $", Deposit);
         menu.Add("Recrutement", ShowRecruitment);
+        menu.Add("Territoires : " + gang.Territories.Count, ShowTerritories);
+        if (GangTerritoryWar.Active)
+            menu.Add("Abandonner la conquête", () =>
+            {
+                GangTerritoryWar.Abandon();
+                ShowOrganization();
+            });
         menu.Add("Quitter mon gang", ShowLeaveConfirmation);
         menu.Add("Retour", ShowRoot);
         Open(menu, ShowRoot);
+    }
+
+    private static void ShowTerritories()
+    {
+        var gang = PlayerGangOrganization.Current;
+        var menu = new CustomMenu("Territoires", "");
+        foreach (string zone in gang.Territories.OrderBy(zone => zone))
+            menu.Add(zone, null, () => false);
+        menu.Add("Revenus : " + (gang.Territories.Count * GangTerritoryWar.RevenuePerZone) +
+            " $ / 10 min", null, () => false);
+        menu.Add("Retour", ShowOrganization);
+        Open(menu, ShowOrganization);
     }
 
     private static void Deposit()
@@ -177,7 +197,11 @@ internal static class CustomGangNetworkMenu
         menu.Add("Annuler", ShowOrganization);
         menu.Add("Confirmer le départ", () =>
         {
-            if (PlayerGangOrganization.Leave()) ShowRoot();
+            if (PlayerGangOrganization.Leave())
+            {
+                GangTerritoryWar.Abandon();
+                ShowRoot();
+            }
         });
         Open(menu, ShowOrganization);
     }

@@ -95,6 +95,15 @@ internal static class GangRelations
             new Relation(Math.Max(0, relation.Trust - 20), relation.Introduced, GangAgreement.None));
     }
 
+    internal static bool RecordTerritorialAttack(string gang)
+    {
+        var relation = Get(gang);
+        int penalty = relation.Agreement == GangAgreement.Alliance ? 40 :
+            relation.Agreement == GangAgreement.Pact ? 30 : 10;
+        return Save(gang, new Relation(Math.Max(0, relation.Trust - penalty),
+            relation.Introduced, GangAgreement.None));
+    }
+
     private static void Load()
     {
         if (loaded) return;

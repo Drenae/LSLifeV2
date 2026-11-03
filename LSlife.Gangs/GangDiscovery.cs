@@ -36,6 +36,9 @@ internal static class GangDiscovery
         return discovered.OrderBy(gang => gang, StringComparer.Ordinal);
     }
 
+    internal static string ReferenceOwner(string zone) =>
+        zone != null && ZoneGangs.TryGetValue(zone, out string gang) ? gang : null;
+
     internal static IEnumerable<string> Territories(string gang) =>
         ZoneGangs.Where(zone => zone.Value == gang).Select(zone => zone.Key);
 
