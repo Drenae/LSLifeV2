@@ -24,6 +24,7 @@ namespace LSlife
         private string pendingLeaderGangId;
         private int leaderMeetingExpires;
         private Ped representative;
+        private bool representativeGreetingActive;
         private Blip representativeBlip;
         private string representativeGangId;
         private string representativeZone;
