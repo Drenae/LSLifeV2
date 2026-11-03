@@ -299,6 +299,7 @@ public partial class LSL
 		// Les menus CustomMenu ne dependent plus de l'existence du pool historique.
 		CustomZeeMenu.Tick();
 		CustomGangNetworkMenu.Tick();
+		if (!firstRun) GangDiscovery.Tick(Game.Player);
 		CustomStashMenu.TickOncePerFrame();
 		CustomCustomerMenu.TickOncePerFrame();
 		CustomWeaponDealerMenu.TickOncePerFrame();

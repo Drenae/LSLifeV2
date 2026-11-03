@@ -49,9 +49,24 @@ internal static class CustomGangNetworkMenu
     private static void ShowGangs()
     {
         var menu = new CustomMenu("Gangs", "");
-        menu.Add("Aucun gang découvert", null, () => false);
+        foreach (string gang in GangDiscovery.KnownGangs())
+            menu.Add(gang, () => ShowGang(gang));
+
+        if (menu.Entries.Count == 0)
+            menu.Add("Aucun gang découvert", null, () => false);
         menu.Add("Retour", ShowRoot);
         Open(menu, ShowRoot);
+    }
+
+    private static void ShowGang(string gang)
+    {
+        var menu = new CustomMenu(gang, "FICHE");
+        menu.Add("Chef : identité inconnue", null, () => false);
+        menu.Add("Territoires de référence", null, () => false);
+        foreach (string zone in GangDiscovery.Territories(gang))
+            menu.Add(zone, null, () => false);
+        menu.Add("Retour", ShowGangs);
+        Open(menu, ShowGangs);
     }
 
     private static void ShowFounding()

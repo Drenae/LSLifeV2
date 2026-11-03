@@ -6,8 +6,10 @@ Branche de travail : `feature/gang-network-rebuild`. Ancienne branche `feature/g
 - [x] Contact Réseau Gangs raccordé au même événement et au même appel de fermeture. Menu principal et retour depuis Gangs raccordés au Tick.
 - [x] Ouverture du menu Réseau Gangs confirmée en jeu.
 - [x] Lot organisation : création avec le nom par défaut, trésorerie, dépôt de 5 000 $, recrutement comptable de dealers et soldats, départ avec confirmation et sauvegarde XML dédiée.
-- [ ] Compiler et valider en jeu le lot organisation, notamment la persistance après redémarrage et le retour avec Rond.
-- [ ] Ajouter le nom personnalisable, la découverte persistante, les fiches, les territoires, les revenus territoriaux et les rôles en jeu.
+- [x] Lot organisation validé en jeu selon le retour utilisateur.
+- [x] Découverte persistante en traversant les sept zones de référence de l’ancienne branche. Fiches consultables pour les quatre gangs couverts.
+- [ ] Compiler et valider la découverte à Davis, la fiche Ballas, le retour avec Rond et la persistance après redémarrage.
+- [ ] Ajouter le nom personnalisable, les chefs, les autres gangs, la propriété territoriale, les revenus et les rôles en jeu.
 - [ ] Diplomatie par la confiance, pactes et alliances, puis conquête par vagues avec victoire et échec persistants.
 - [ ] Cartel à développer ultérieurement.
 
