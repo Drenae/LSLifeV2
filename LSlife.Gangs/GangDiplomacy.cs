@@ -325,6 +325,24 @@ namespace LSlife.Gangs
         }
 
 
+
+        internal int CollectTerritoryRevenue(int amountPerTerritory)
+        {
+            if (amountPerTerritory <= 0) return 0;
+            int total = 0;
+            foreach (GangOrganization gang in organizations.Values)
+            {
+                if (gang.Territories.Count == 0) continue;
+                int revenue = (int)Math.Min((long)gang.Territories.Count * amountPerTerritory,
+                    999999999L - gang.Money);
+                if (revenue <= 0) continue;
+                gang.Money += revenue;
+                total += revenue;
+                MarkDirty();
+            }
+            return total;
+        }
+
         internal bool DepositToPlayerGang(int amount)
         {
             if (amount <= 0 || string.IsNullOrWhiteSpace(PlayerGangId) ||
