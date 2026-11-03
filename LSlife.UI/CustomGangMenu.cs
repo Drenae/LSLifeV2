@@ -11,6 +11,10 @@ namespace LSlife
         private static CustomMenu overview;
         private static CustomMenu foundingConfirmation;
         private static CustomMenu territoryControl;
+        private static CustomMenu ownedTerritories;
+        private static CustomMenu organizationManagement;
+        private static CustomMenu leaveConfirmation;
+        private static int ownedTerritoryPage;
         private static CustomMenu captureConfirmation;
         private const string PlayerFoundedGangId = "PLAYER_ORGANIZATION";
         private static CustomMenu detail;
@@ -30,7 +34,8 @@ namespace LSlife
         private const int PageSize = 5;
         internal static bool IsGangMenu(CustomMenu menu)
         {
-            return menu != null && (menu == foundingConfirmation || menu == territoryControl || menu == captureConfirmation || menu == overview || menu == detail || menu == relations ||
+            return menu != null && (menu == foundingConfirmation || menu == territoryControl || menu == captureConfirmation ||
+                menu == ownedTerritories || menu == organizationManagement || menu == leaveConfirmation || menu == overview || menu == detail || menu == relations ||
                 menu == territories || menu == cartels || menu == cartelDetail ||
                 menu == relationDetail || menu == agreements);
         }
@@ -54,7 +59,9 @@ namespace LSlife
 
         internal static CustomMenu Back(CustomMenu current)
         {
-            if (current == foundingConfirmation || current == territoryControl) return BuildOverview();
+            if (current == foundingConfirmation || current == territoryControl || current == organizationManagement) return BuildOverview();
+            if (current == ownedTerritories) return BuildTerritoryControl();
+            if (current == leaveConfirmation) return BuildOrganizationManagement();
             if (current == captureConfirmation) return BuildTerritoryControl();
             if (current == agreements) return BuildRelationDetail();
             if (current == relationDetail) return BuildRelations();
@@ -98,6 +105,8 @@ namespace LSlife
                             " | Territoires : " + mine.Territories.Count, 4000));
                 overview.Add("Controle des territoires", () =>
                     CustomZeeMenu.ShowGangSubmenu(BuildTerritoryControl()));
+                overview.Add("Gestion de mon gang", () =>
+                    CustomZeeMenu.ShowGangSubmenu(BuildOrganizationManagement()));
             }
             overview.Add("Cartels", () => { cartelPage = 0; CustomZeeMenu.ShowGangSubmenu(BuildCartels()); });
             overview.Add("Fermer", () => CustomZeeMenu.Close());
@@ -120,6 +129,11 @@ namespace LSlife
                 state.Organizations.Where(g => string.Equals(g.Id, state.PlayerGangId,
                     StringComparison.OrdinalIgnoreCase)).Sum(g => g.Territories.Count),
                 null, () => false);
+            territoryControl.Add("Liste de mes territoires", () =>
+            {
+                ownedTerritoryPage = 0;
+                CustomZeeMenu.ShowGangSubmenu(BuildOwnedTerritories());
+            });
             if (GangTerritoryCapture.IsActive)
                 territoryControl.Add("Abandonner la prise en cours", () =>
                 {
@@ -135,6 +149,107 @@ namespace LSlife
                 });
             territoryControl.Add("Retour", () => CustomZeeMenu.ShowGangSubmenu(BuildOverview()));
             return territoryControl;
+        }
+
+
+        private static CustomMenu BuildOwnedTerritories()
+        {
+            var state = LSL.DiplomacyState;
+            GangOrganization mine;
+            if (string.IsNullOrWhiteSpace(state.PlayerGangId) ||
+                !state.TryGetGang(state.PlayerGangId, out mine)) return BuildOverview();
+            var zones = mine.Territories.OrderBy(z => z).ToList();
+            int pages = Math.Max(1, (zones.Count + PageSize - 1) / PageSize);
+            ownedTerritoryPage = Math.Max(0, Math.Min(ownedTerritoryPage, pages - 1));
+            ownedTerritories = new CustomMenu("MES TERRITOIRES",
+                mine.Name + "  " + (ownedTerritoryPage + 1) + "/" + pages);
+            if (zones.Count == 0)
+                ownedTerritories.Add("Aucun quartier controle", null, () => false);
+            foreach (string id in zones.Skip(ownedTerritoryPage * PageSize).Take(PageSize))
+            {
+                string captured = id;
+                ownedTerritories.Add(captured, () =>
+                    GTA.UI.ShowSubtitle("Quartier controle : " + captured, 3500));
+            }
+            if (ownedTerritoryPage > 0)
+                ownedTerritories.Add("Page precedente", () =>
+                {
+                    ownedTerritoryPage--;
+                    CustomZeeMenu.ShowGangSubmenu(BuildOwnedTerritories());
+                });
+            if (ownedTerritoryPage + 1 < pages)
+                ownedTerritories.Add("Page suivante", () =>
+                {
+                    ownedTerritoryPage++;
+                    CustomZeeMenu.ShowGangSubmenu(BuildOwnedTerritories());
+                });
+            ownedTerritories.Add("Retour", () =>
+                CustomZeeMenu.ShowGangSubmenu(BuildTerritoryControl()));
+            return ownedTerritories;
+        }
+
+        private static CustomMenu BuildOrganizationManagement()
+        {
+            var state = LSL.DiplomacyState;
+            GangOrganization mine;
+            if (string.IsNullOrWhiteSpace(state.PlayerGangId) ||
+                !state.TryGetGang(state.PlayerGangId, out mine)) return BuildOverview();
+            organizationManagement = new CustomMenu("MON GANG", mine.Name);
+            organizationManagement.Add("Rang : " + state.PlayerRank, null, () => false);
+            organizationManagement.Add("Territoires : " + mine.Territories.Count, null, () => false);
+            organizationManagement.Add("Membres : " + mine.Members, null, () => false);
+            organizationManagement.Add("Tresorerie : " + mine.Money + " $", null, () => false);
+            int allied = state.Organizations.Count(g =>
+                !string.Equals(g.Id, mine.Id, StringComparison.OrdinalIgnoreCase) &&
+                state.AreAllied(mine.Id, g.Id));
+            organizationManagement.Add("Allies : " + allied, null, () => false);
+            organizationManagement.Add("Quitter mon gang", () =>
+            {
+                if (GangTerritoryCapture.IsActive)
+                {
+                    GTA.UI.ShowSubtitle("Terminez ou annulez d'abord la prise de territoire.", 4000);
+                    return;
+                }
+                CustomZeeMenu.ShowGangSubmenu(BuildLeaveConfirmation());
+            });
+            organizationManagement.Add("Retour", () =>
+                CustomZeeMenu.ShowGangSubmenu(BuildOverview()));
+            return organizationManagement;
+        }
+
+        private static CustomMenu BuildLeaveConfirmation()
+        {
+            leaveConfirmation = new CustomMenu("MON GANG", "CONFIRMER LE DEPART");
+            leaveConfirmation.Add("Conserver les territoires et alliances", null, () => false);
+            leaveConfirmation.Add("Confirmer : quitter le gang", () =>
+            {
+                var state = LSL.DiplomacyState;
+                if (GangTerritoryCapture.IsActive)
+                {
+                    GTA.UI.ShowSubtitle("Prise de territoire encore active.", 3500);
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(state.PlayerGangId))
+                {
+                    CustomZeeMenu.ShowGangSubmenu(BuildOverview());
+                    return;
+                }
+                try
+                {
+                    state.LeaveGang();
+                    state.Save("scripts\\LSLife\\LSLife_GangDiplomacy.xml");
+                    GTA.UI.ShowSubtitle("Vous avez quitte le gang. Ses territoires sont conserves.", 5000);
+                }
+                catch (Exception ex)
+                {
+                    LsFunctions.DbugString("Depart du gang : " + ex.Message);
+                    GTA.UI.ShowSubtitle("Depart effectue, sauvegarde a verifier.", 4500);
+                }
+                CustomZeeMenu.ShowGangSubmenu(BuildOverview());
+            });
+            leaveConfirmation.Add("Annuler", () =>
+                CustomZeeMenu.ShowGangSubmenu(BuildOrganizationManagement()));
+            return leaveConfirmation;
         }
 
         private static CustomMenu BuildCaptureConfirmation()
