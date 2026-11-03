@@ -337,7 +337,7 @@ namespace LSlife.Gangs
                     999999999L - gang.Money);
                 if (revenue <= 0) continue;
                 gang.Money += revenue;
-                total += revenue;
+                total = (int)Math.Min(2147483647L, (long)total + revenue);
                 MarkDirty();
             }
             return total;
