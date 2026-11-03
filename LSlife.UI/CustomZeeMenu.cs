@@ -46,6 +46,7 @@ internal static class CustomZeeMenu
         activeMenu = target;
         quantityRepeat.Reset();
         activeMenu.Open();
+        if (LSL.iFruit != null) LSL.iFruit.Close(1000);
     }
 
     internal static void ToggleNetwork()
@@ -56,6 +57,7 @@ internal static class CustomZeeMenu
         activeMenu = CustomGangMenu.Open();
         quantityRepeat.Reset();
         activeMenu.Open();
+        if (LSL.iFruit != null) LSL.iFruit.Close(1000);
     }
 
     public static void Toggle()
