@@ -48,7 +48,7 @@ namespace LSlife
                 {
                     if (candidate == null || !candidate.Exists() || !candidate.IsAlive ||
                         candidate == player.Character || candidate.IsInVehicle() ||
-                        candidate.IsPersistent || candidate.IsInCombat ||
+                        candidate.IsPersistent ||
                         (aDealer != null && candidate == aDealer.dPed)) continue;
                     if (!string.Equals(World.GetZoneNameLabel(candidate.Position),
                         area.Name, StringComparison.OrdinalIgnoreCase)) continue;
