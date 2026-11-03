@@ -203,6 +203,36 @@ namespace LSlife
                 !string.Equals(g.Id, mine.Id, StringComparison.OrdinalIgnoreCase) &&
                 state.AreAllied(mine.Id, g.Id));
             organizationManagement.Add("Allies : " + allied, null, () => false);
+            if (state.PlayerRank == PlayerGangRank.Leader)
+            {
+                organizationManagement.Add("Verser 5 000 $ a la caisse", () =>
+                {
+                    const int amount = 5000;
+                    if (Game.Player.Money < amount)
+                    {
+                        GTA.UI.ShowSubtitle("Fonds personnels insuffisants.", 3500);
+                        return;
+                    }
+                    if (!state.DepositToPlayerGang(amount))
+                    {
+                        GTA.UI.ShowSubtitle("Depot impossible : caisse pleine ou rang insuffisant.", 3500);
+                        return;
+                    }
+                    Game.Player.Money -= amount;
+                    SaveOrganizationChange("Depot effectue : +5 000 $ dans la caisse.");
+                    CustomZeeMenu.ShowGangSubmenu(BuildOrganizationManagement());
+                });
+                organizationManagement.Add("Recruter un membre (10 000 $)", () =>
+                {
+                    if (!state.RecruitPlayerGangMember(10000))
+                    {
+                        GTA.UI.ShowSubtitle("Recrutement impossible : caisse insuffisante ou limite de 100 membres.", 4500);
+                        return;
+                    }
+                    SaveOrganizationChange("Un nouveau membre a rejoint votre organisation.");
+                    CustomZeeMenu.ShowGangSubmenu(BuildOrganizationManagement());
+                });
+            }
             organizationManagement.Add("Quitter mon gang", () =>
             {
                 if (GangTerritoryCapture.IsActive)
@@ -215,6 +245,21 @@ namespace LSlife
             organizationManagement.Add("Retour", () =>
                 CustomZeeMenu.ShowGangSubmenu(BuildOverview()));
             return organizationManagement;
+        }
+
+
+        private static void SaveOrganizationChange(string success)
+        {
+            try
+            {
+                LSL.DiplomacyState.Save("scripts\\LSLife\\LSLife_GangDiplomacy.xml");
+                GTA.UI.ShowSubtitle(success, 4000);
+            }
+            catch (Exception ex)
+            {
+                LsFunctions.DbugString("Gestion du gang : " + ex.Message);
+                GTA.UI.ShowSubtitle("Modification effectuee, sauvegarde a verifier.", 4500);
+            }
         }
 
         private static CustomMenu BuildLeaveConfirmation()
