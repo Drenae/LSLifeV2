@@ -17,6 +17,13 @@
 - [ ] Verifier le stick gauche a pied, le D-pad et les commandes vehicule avec un menu ouvert, sur manette et clavier.
 
 ## Correctifs a valider en jeu
+- [ ] Tester les commandes D-pad et boutons de face pendant les appels Reseau Gangs / chef : seul CustomMenu doit reagir ; le telephone iFruit ne doit plus naviguer.
+- [ ] Tester Retour dans un sous-menu (ne raccroche pas), Retour au menu principal (raccroche), et Raccrocher explicite ; verifier le telephone apres appel.
+- [ ] Tester les gerants : selection d\u0027un PNJ GTA deja present, sans changement de modele, sans immobilisation, sans spawn et sans suppression lors du changement de quartier / Reload().
+- [ ] Tester un seul gerant actif par quartier, le changement de quartier, les deplacements du PNJ et les cooldowns de service par gang.
+- [ ] Tester les trois roles de recrutement, leurs tarifs, le plafond global et le maximum de gerants lie aux territoires ; verifier les anciennes sauvegardes XML.
+- [ ] Ajouter ensuite de vrais dealers/soldats recrutes et des affectations de gerants aux quartiers : les effectifs par fonction sont pour l\u0027instant comptabilises, pas des PNJ deployes.
+
 - [ ] Appeler un chef : conserver l'appel actif et l'animation du telephone a l'oreille pendant le CustomMenu ; fermer iFruit via Close(1000) uniquement sur Raccrocher ou Retour, puis verifier la reouverture normale du telephone.
 - [ ] Verifier l'identite graphique des en-tetes CONTACT et INFORMATIONS (memes separateurs, couleurs et police).
 - [ ] Verifier que le proprietaire d'une zone ne change plus entre plusieurs Reload() consecutifs grace a la sauvegarde immediate du premier proprietaire ; ne pas reinitialiser les sauvegardes existantes.
