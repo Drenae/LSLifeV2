@@ -62,11 +62,55 @@ internal static class CustomGangNetworkMenu
     {
         var menu = new CustomMenu(gang, "FICHE");
         menu.Add("Chef : identité inconnue", null, () => false);
+        var relation = GangRelations.Get(gang);
+        menu.Add("Confiance : " + relation.Trust + "/100", null, () => false);
+        menu.Add("Relation : " + GangRelations.Label(relation.Agreement), null, () => false);
         menu.Add("Territoires de référence", null, () => false);
         foreach (string zone in GangDiscovery.Territories(gang))
             menu.Add(zone, null, () => false);
+        menu.Add("Contacter le chef", () => ShowDiplomacy(gang));
         menu.Add("Retour", ShowGangs);
         Open(menu, ShowGangs);
+    }
+
+    private static void ShowDiplomacy(string gang)
+    {
+        var relation = GangRelations.Get(gang);
+        var menu = new CustomMenu("Diplomatie", gang);
+        menu.Add("Confiance : " + relation.Trust + "/100", null, () => false);
+        menu.Add("Accord : " + GangRelations.Label(relation.Agreement), null, () => false);
+        menu.Add("Se présenter (+10 confiance)", () =>
+        {
+            if (GangRelations.Introduce(gang)) ShowDiplomacy(gang);
+        }, () => !relation.Introduced);
+        menu.Add("Soutenir le gang : 5 000 $", () =>
+        {
+            if (GangRelations.Support(gang, Game.Player)) ShowDiplomacy(gang);
+        }, () => relation.Introduced && relation.Trust < 100);
+        menu.Add("Proposer un pacte (25 confiance)", () =>
+        {
+            if (GangRelations.Negotiate(gang, GangAgreement.Pact)) ShowDiplomacy(gang);
+        }, () => GangRelations.CanNegotiate(relation, GangAgreement.Pact));
+        menu.Add("Proposer une alliance (60 confiance)", () =>
+        {
+            if (GangRelations.Negotiate(gang, GangAgreement.Alliance)) ShowDiplomacy(gang);
+        }, () => GangRelations.CanNegotiate(relation, GangAgreement.Alliance));
+        if (relation.Agreement != GangAgreement.None)
+            menu.Add("Rompre l'accord", () => ShowBreakConfirmation(gang));
+        menu.Add("Retour", () => ShowGang(gang));
+        Open(menu, () => ShowGang(gang));
+    }
+
+    private static void ShowBreakConfirmation(string gang)
+    {
+        var menu = new CustomMenu("Rompre l'accord", gang);
+        menu.Add("Perte de 20 points de confiance", null, () => false);
+        menu.Add("Annuler", () => ShowDiplomacy(gang));
+        menu.Add("Confirmer la rupture", () =>
+        {
+            if (GangRelations.Break(gang)) ShowDiplomacy(gang);
+        });
+        Open(menu, () => ShowDiplomacy(gang));
     }
 
     private static void ShowFounding()

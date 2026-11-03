@@ -8,9 +8,11 @@ Branche de travail : `feature/gang-network-rebuild`. Ancienne branche `feature/g
 - [x] Lot organisation : création avec le nom par défaut, trésorerie, dépôt de 5 000 $, recrutement comptable de dealers et soldats, départ avec confirmation et sauvegarde XML dédiée.
 - [x] Lot organisation validé en jeu selon le retour utilisateur.
 - [x] Découverte persistante en traversant les sept zones de référence de l’ancienne branche. Fiches consultables pour les quatre gangs couverts.
-- [ ] Compiler et valider la découverte à Davis, la fiche Ballas, le retour avec Rond et la persistance après redémarrage.
+- [x] Découverte des gangs validée en jeu selon le retour utilisateur.
 - [ ] Ajouter le nom personnalisable, les chefs, les autres gangs, la propriété territoriale, les revenus et les rôles en jeu.
-- [ ] Diplomatie par la confiance, pactes et alliances, puis conquête par vagues avec victoire et échec persistants.
+- [x] Contact direct avec les chefs depuis les fiches, confiance persistante indépendante de la réputation, pacte, alliance et rupture avec confirmation.
+- [ ] Compiler et valider la diplomatie en jeu, y compris la persistance après redémarrage.
+- [ ] Raccorder les accords et les trahisons aux réactions des gangs et aux guerres de conquête par vagues.
 - [ ] Cartel à développer ultérieurement.
 
 ## Cible SHVDN3 nightly (28 octobre 2026)
