@@ -199,6 +199,9 @@ namespace LSlife
             organizationManagement.Add("Rang : " + state.PlayerRank, null, () => false);
             organizationManagement.Add("Territoires : " + mine.Territories.Count, null, () => false);
             organizationManagement.Add("Membres : " + mine.Members, null, () => false);
+            organizationManagement.Add("Dealers : " + mine.Dealers + " | Soldats : " + mine.Soldiers, null, () => false);
+            organizationManagement.Add("Gerants : " + mine.Managers, null, () => false);
+            organizationManagement.Add("Revenu territorial : " + (mine.Territories.Count * 250) + " $ / 10 min", null, () => false);
             organizationManagement.Add("Tresorerie : " + mine.Money + " $", null, () => false);
             int allied = state.Organizations.Count(g =>
                 !string.Equals(g.Id, mine.Id, StringComparison.OrdinalIgnoreCase) &&
