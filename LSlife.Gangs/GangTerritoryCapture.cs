@@ -98,6 +98,12 @@ namespace LSlife
             try
             {
                 state.SetTerritoryOwner(conquered, attackingGang);
+                if (!string.IsNullOrWhiteSpace(originalOwner) &&
+                    !string.Equals(originalOwner, attackingGang, StringComparison.OrdinalIgnoreCase))
+                {
+                    state.ChangeTrust(attackingGang, originalOwner, -15);
+                    state.ChangePlayerReputation(originalOwner, -10);
+                }
                 GangOrganization newOwner;
                 if (state.TryGetGang(attackingGang, out newOwner))
                 {
@@ -108,6 +114,7 @@ namespace LSlife
                     }
                 }
                 state.Save("scripts\\LSLife\\LSLife_GangDiplomacy.xml");
+                retryAfter[conquered] = Game.GameTime + RetryDelay;
                 GTA.UI.ShowSubtitle("Territoire conquis : " + conquered + ".", 5000);
             }
             catch (Exception ex)
