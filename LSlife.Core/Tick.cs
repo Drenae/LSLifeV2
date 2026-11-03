@@ -344,7 +344,7 @@ public partial class LSL
 			// touches directionnelles/validation du telephone iFruit.
 			if (CustomZeeMenu.Visible)
 			{
-				foreach (int control in new[] { 172, 173, 174, 175, 201, 202 })
+				foreach (int control in new[] { 172, 173, 174, 175, 176, 177, 191, 194, 201, 202, 203, 204, 205, 206 })
 				{
 					Function.Call(Hash.DISABLE_CONTROL_ACTION, 0, control, true);
 					Function.Call(Hash.DISABLE_CONTROL_ACTION, 2, control, true);
