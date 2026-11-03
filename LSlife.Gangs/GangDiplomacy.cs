@@ -324,6 +324,32 @@ namespace LSlife.Gangs
             MarkDirty();
         }
 
+
+        internal bool DepositToPlayerGang(int amount)
+        {
+            if (amount <= 0 || string.IsNullOrWhiteSpace(PlayerGangId) ||
+                PlayerRank != PlayerGangRank.Leader) return false;
+            GangOrganization gang;
+            if (!organizations.TryGetValue(PlayerGangId, out gang) ||
+                (long)gang.Money + amount > 999999999L) return false;
+            gang.Money += amount;
+            MarkDirty();
+            return true;
+        }
+
+        internal bool RecruitPlayerGangMember(int cost)
+        {
+            if (cost <= 0 || string.IsNullOrWhiteSpace(PlayerGangId) ||
+                PlayerRank != PlayerGangRank.Leader) return false;
+            GangOrganization gang;
+            if (!organizations.TryGetValue(PlayerGangId, out gang) ||
+                gang.Members >= 100 || gang.Money < cost) return false;
+            gang.Money -= cost;
+            gang.Members++;
+            MarkDirty();
+            return true;
+        }
+
         internal void LeaveGang() { PlayerGangId = null; PlayerRank = PlayerGangRank.Independent; MarkDirty(); }
 
         internal GangOrganization FoundPlayerGang(string id, string name)
