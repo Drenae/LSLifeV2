@@ -224,6 +224,12 @@ public partial class LSL
 				zee.Active = true;
 				zee.Icon = ContactIcon.Blank;
 				phone.Contacts.Add(zee);
+				var gangNetwork = new iFruitContact(CustomGangNetworkMenu.ContactName);
+				gangNetwork.Answered += LsFunctions.ContactAnswered;
+				gangNetwork.DialTimeout = 1000;
+				gangNetwork.Active = true;
+				gangNetwork.Icon = ContactIcon.Blank;
+				phone.Contacts.Add(gangNetwork);
 				contactZee = zee;
 				iFruit = phone;
 			}
@@ -292,6 +298,7 @@ public partial class LSL
 		if (iFruit != null) iFruit.Update();
 		// Les menus CustomMenu ne dependent plus de l'existence du pool historique.
 		CustomZeeMenu.Tick();
+		CustomGangNetworkMenu.Tick();
 		CustomStashMenu.TickOncePerFrame();
 		CustomCustomerMenu.TickOncePerFrame();
 		CustomWeaponDealerMenu.TickOncePerFrame();

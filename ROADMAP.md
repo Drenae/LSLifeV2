@@ -1,3 +1,14 @@
+## Réseau Gangs — accès téléphone (3 novembre 2026)
+
+Branche de travail : `feature/gang-network-rebuild`. Ancienne branche `feature/gang-alliances` en référence uniquement. Cible GTA V Legacy, SHVDN2 et .NET Framework 4.8.
+
+- [x] Audit de Zee : enregistrement dans le Tick, événement Answered, ouverture directe, fermeture iFruit et commandes manette.
+- [x] Contact Réseau Gangs raccordé au même événement et au même appel de fermeture. Menu principal et retour depuis Gangs raccordés au Tick.
+- [ ] Compiler avec Build-Baseline.ps1 puis vérifier à froid en jeu les deux contacts, l'ouverture immédiate, Rond depuis Gangs et depuis l'accueil, puis Fermer.
+- [ ] Après validation : découverte persistante et fiches, création et gestion du gang, trésorerie, membres et revenus territoriaux.
+- [ ] Diplomatie par la confiance, pactes et alliances, puis conquête par vagues avec victoire et échec persistants.
+- [ ] Cartel à développer ultérieurement.
+
 ## Cible SHVDN3 nightly (28 octobre 2026)
 
 - [x] Source officielle choisie : `scripthookvdotnet/scripthookvdotnet-nightly`.

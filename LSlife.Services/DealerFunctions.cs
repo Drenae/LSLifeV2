@@ -66,6 +66,10 @@ internal static partial class LsFunctions
 			// Ne plus lire ni rafraichir les anciens widgets NativeUI.
 			CustomZeeMenu.Toggle();
 		}
+		else if (contact != null && contact.Name == CustomGangNetworkMenu.ContactName)
+		{
+			CustomGangNetworkMenu.Toggle();
+		}
 		if (LSL.iFruit != null)
 			LSL.iFruit.Close(1000);
 	}
