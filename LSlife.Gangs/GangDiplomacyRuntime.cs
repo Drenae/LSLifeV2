@@ -26,6 +26,7 @@ namespace LSlife
         private Ped representative;
         private Blip representativeBlip;
         private string representativeGangId;
+        private string representativeZone;
         private int representativeSpawnTime;
         private readonly System.Collections.Generic.Dictionary<string, int> representativeLastService =
             new System.Collections.Generic.Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
