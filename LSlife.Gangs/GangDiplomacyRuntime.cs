@@ -12,6 +12,7 @@ namespace LSlife
         internal static GangDiplomacy DiplomacyState { get { return GangPolitics; } }
         private const string GangDiplomacySavePath = "scripts\\LSLife\\LSLife_GangDiplomacy.xml";
         private int lastGangDiplomacySave;
+        private int lastGangTerritoryRevenue;
         private Vehicle leaderMeetingCar;
         private Ped leaderMeetingEscort;
         private bool leaderMeetingExited;
@@ -77,6 +78,7 @@ namespace LSlife
                 if (GangPolitics.IsDirty)
                     GangPolitics.Save(GangDiplomacySavePath);
                 lastGangDiplomacySave = Game.GameTime;
+                lastGangTerritoryRevenue = Game.GameTime;
             }
             catch (Exception ex)
             {
@@ -117,6 +119,11 @@ namespace LSlife
         private void TickGangDiplomacy()
         {
             GangTerritoryCapture.Tick();
+            if (!firstRun && Game.GameTime - lastGangTerritoryRevenue >= 600000)
+            {
+                lastGangTerritoryRevenue = Game.GameTime;
+                GangPolitics.CollectTerritoryRevenue(250);
+            }
             if (firstRun || !GangPolitics.IsDirty || Game.GameTime - lastGangDiplomacySave < 60000) return;
             lastGangDiplomacySave = Game.GameTime;
             try { GangPolitics.Save(GangDiplomacySavePath); }
