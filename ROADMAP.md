@@ -28,6 +28,15 @@
 - [ ] Auditer LS LifeAreas.xml : son chargement historique n'enregistre pas les nouvelles zones visitees ; definir si un inventaire complet doit y etre ajoute sans perturber les statistiques existantes.
 - [ ] Ne jamais ecraser les proprietaires sauvegardes lors d'une nouvelle decouverte.
 
+### Gestion du gang et economie — a valider
+- [ ] Tester la page Gestion de mon gang : rang, tresorerie, membres, alliances et territoires, puis le retour dans le menu GANGS.
+- [ ] Tester la liste paginee des quartiers possedes (aucun, 1, plus de 5), la navigation et la conservation apres Reload().
+- [ ] Tester depot de 5 000 $ depuis l'argent du joueur, recrutement de membres pour 10 000 $ depuis la caisse, plafond de 100 membres et fonds insuffisants.
+- [ ] Tester les revenus de 250 $ par territoire toutes les 10 minutes de jeu, sans revenu automatique lors du Reload().
+- [ ] Tester la sortie volontaire d'un gang, la confirmation, la conservation des territoires/accords du gang quitte et le refus pendant une prise de territoire.
+- [ ] Etudier la sauvegarde transactionnelle du depot pour eviter toute perte d'argent en cas d'echec disque, et la persistance des delais de conquete.
+- [ ] Verifier la protection des pactes de non-agression et les pertes de confiance (-15) et de reputation (-10) lors d'une conquete.
+
 ### Conquete et gestion du territoire du joueur
 - [ ] Tester en jeu le menu GANGS > Controle des territoires, quartier courant, proprietaire et compteur de zones.
 - [ ] Tester la premiere conquete a pied (90 secondes dans le quartier), l'annulation en sortant / en vehicule / en mourant, la protection des allies et la restriction au chef.
