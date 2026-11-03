@@ -4,8 +4,10 @@ Branche de travail : `feature/gang-network-rebuild`. Ancienne branche `feature/g
 
 - [x] Audit de Zee : enregistrement dans le Tick, événement Answered, ouverture directe, fermeture iFruit et commandes manette.
 - [x] Contact Réseau Gangs raccordé au même événement et au même appel de fermeture. Menu principal et retour depuis Gangs raccordés au Tick.
-- [ ] Compiler avec Build-Baseline.ps1 puis vérifier à froid en jeu les deux contacts, l'ouverture immédiate, Rond depuis Gangs et depuis l'accueil, puis Fermer.
-- [ ] Après validation : découverte persistante et fiches, création et gestion du gang, trésorerie, membres et revenus territoriaux.
+- [x] Ouverture du menu Réseau Gangs confirmée en jeu.
+- [x] Lot organisation : création avec le nom par défaut, trésorerie, dépôt de 5 000 $, recrutement comptable de dealers et soldats, départ avec confirmation et sauvegarde XML dédiée.
+- [ ] Compiler et valider en jeu le lot organisation, notamment la persistance après redémarrage et le retour avec Rond.
+- [ ] Ajouter le nom personnalisable, la découverte persistante, les fiches, les territoires, les revenus territoriaux et les rôles en jeu.
 - [ ] Diplomatie par la confiance, pactes et alliances, puis conquête par vagues avec victoire et échec persistants.
 - [ ] Cartel à développer ultérieurement.
 
