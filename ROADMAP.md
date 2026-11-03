@@ -17,6 +17,12 @@
 - [ ] Verifier le stick gauche a pied, le D-pad et les commandes vehicule avec un menu ouvert, sur manette et clavier.
 
 ## Correctifs a valider en jeu
+- [ ] Verifier que les appels Reseau Gangs et chefs ferment iFruit immediatement comme Zee et conservent le menu CustomMenu ; rond ne doit plus naviguer dans le telephone.
+- [ ] Verifier les gerants sur les gangs natifs : seuls les PNJ du modele de leur faction sont selectionnes ; ils s\u0027arretent a l\u0027approche, font face au joueur puis reprennent leur promenade apres eloignement.
+- [ ] Verifier les zones sans PNJ de faction : aucun civil generique ne doit etre designe gerant ; prevoir un systeme de gerant attribue pour les gangs personnalises.
+- [ ] Verifier le recapitulatif des recrues par role, le revenu estime et la notification de versement dans la tresorerie apres 10 minutes.
+- [ ] Developper le gameplay reel des dealers/soldats/gerants recrutes (affectations, equipement, taches, gestion territoriale) : les compteurs seuls ne constituent pas des employes operationnels.
+
 - [ ] Tester les commandes D-pad et boutons de face pendant les appels Reseau Gangs / chef : seul CustomMenu doit reagir ; le telephone iFruit ne doit plus naviguer.
 - [ ] Tester Retour dans un sous-menu (ne raccroche pas), Retour au menu principal (raccroche), et Raccrocher explicite ; verifier le telephone apres appel.
 - [ ] Tester les gerants : selection d\u0027un PNJ GTA deja present, sans changement de modele, sans immobilisation, sans spawn et sans suppression lors du changement de quartier / Reload().
