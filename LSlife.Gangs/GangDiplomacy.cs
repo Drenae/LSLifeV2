@@ -9,6 +9,7 @@ namespace LSlife.Gangs
 {
     internal enum GangRelationStatus { Hostile, Neutral, NonAggression, Allied }
     internal enum GangAgreementType { NonAggression, Trade, ArmedSupport, MutualDefense }
+    internal enum GangRecruitRole { Dealer, Soldier, Manager }
     internal enum PlayerGangRank { Independent, Recruit, Member, Lieutenant, RightHand, Leader }
 
     internal sealed class GangRelation
@@ -29,6 +30,9 @@ namespace LSlife.Gangs
         internal string LeaderName;
         internal int Money;
         internal int Members;
+        internal int Dealers;
+        internal int Soldiers;
+        internal int Managers;
         internal bool PlayerFounded;
         internal readonly HashSet<string> Territories = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
@@ -355,15 +359,21 @@ namespace LSlife.Gangs
             return true;
         }
 
-        internal bool RecruitPlayerGangMember(int cost)
+        internal bool RecruitPlayerGangMember(GangRecruitRole role, int cost)
         {
-            if (cost <= 0 || string.IsNullOrWhiteSpace(PlayerGangId) ||
+            if (cost <= 0 || !Enum.IsDefined(typeof(GangRecruitRole), role) ||
+                string.IsNullOrWhiteSpace(PlayerGangId) ||
                 PlayerRank != PlayerGangRank.Leader) return false;
             GangOrganization gang;
             if (!organizations.TryGetValue(PlayerGangId, out gang) ||
                 gang.Members >= 100 || gang.Money < cost) return false;
+            if (role == GangRecruitRole.Manager && gang.Managers >= gang.Territories.Count)
+                return false;
             gang.Money -= cost;
             gang.Members++;
+            if (role == GangRecruitRole.Dealer) gang.Dealers++;
+            else if (role == GangRecruitRole.Soldier) gang.Soldiers++;
+            else gang.Managers++;
             MarkDirty();
             return true;
         }
@@ -429,7 +439,9 @@ namespace LSlife.Gangs
                 new XElement("organizations", organizations.Values.OrderBy(g => g.Id).Select(g =>
                     new XElement("gang", new XAttribute("id", g.Id), new XAttribute("name", g.Name),
                         new XAttribute("leader", g.LeaderName ?? ""), new XAttribute("money", g.Money),
-                        new XAttribute("members", g.Members), new XAttribute("playerFounded", g.PlayerFounded),
+                        new XAttribute("members", g.Members),
+                        new XAttribute("dealers", g.Dealers), new XAttribute("soldiers", g.Soldiers),
+                        new XAttribute("managers", g.Managers), new XAttribute("playerFounded", g.PlayerFounded),
                         g.Territories.OrderBy(t => t).Select(t => new XElement("territory", t))))),
                 new XElement("relations", relations.Values.OrderBy(r => Key(r.First, r.Second)).Select(r =>
                     new XElement("relation", new XAttribute("first", r.First), new XAttribute("second", r.Second),
@@ -467,6 +479,15 @@ namespace LSlife.Gangs
                 gang.LeaderName = (string)element.Attribute("leader");
                 gang.Money = ReadInt(element, "money", 0, 0, 999999999);
                 gang.Members = ReadInt(element, "members", 0, 0, 100000);
+                gang.Dealers = ReadInt(element, "dealers", 0, 0, gang.Members);
+                gang.Soldiers = ReadInt(element, "soldiers", 0, 0, gang.Members);
+                gang.Managers = ReadInt(element, "managers", 0, 0, gang.Members);
+                if (gang.Dealers + gang.Soldiers + gang.Managers > gang.Members)
+                {
+                    gang.Dealers = 0;
+                    gang.Soldiers = 0;
+                    gang.Managers = 0;
+                }
                 gang.PlayerFounded = (bool?)element.Attribute("playerFounded") ?? false;
                 foreach (XElement territory in element.Elements("territory"))
                     if (!string.IsNullOrWhiteSpace(territory.Value)) gang.Territories.Add(territory.Value);
