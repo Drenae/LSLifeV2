@@ -13,6 +13,10 @@ namespace LSlife
             if (representativeBlip != null && representativeBlip.Exists()) representativeBlip.Remove();
             representativeBlip = null;
             // PNJ du monde ouvert : ne jamais le supprimer ni modifier son apparence.
+            if (representative != null && representative.Exists() && representative.IsAlive &&
+                representativeGreetingActive)
+                representative.Task.WanderAround();
+            representativeGreetingActive = false;
             representative = null;
             representativeGangId = null;
             representativeZone = null;
@@ -42,13 +46,16 @@ namespace LSlife
                 representativeSpawnTime = Game.GameTime;
                 // Reutiliser un habitant GTA existant : aucun spawn, aucun changement
                 // de modele, aucun gel de position, aucune suppression du PNJ.
+                string gangModel;
+                if (!GangUtilities.TryGetRepresentativeModel(gang.Name, out gangModel)) return;
+                int expectedModel = new Model(gangModel).Hash;
                 Ped nearest = null;
                 float best = 55f;
                 foreach (Ped candidate in World.GetNearbyPeds(player.Character, 55f))
                 {
                     if (candidate == null || !candidate.Exists() || !candidate.IsAlive ||
                         candidate == player.Character || candidate.IsInVehicle() ||
-                        candidate.IsPersistent ||
+                        candidate.IsPersistent || candidate.Model.Hash != expectedModel ||
                         (aDealer != null && candidate == aDealer.dPed)) continue;
                     if (!string.Equals(World.GetZoneNameLabel(candidate.Position),
                         area.Name, StringComparison.OrdinalIgnoreCase)) continue;
@@ -64,6 +71,20 @@ namespace LSlife
             }
 
             UpdateRepresentativeDebug(gang.Name);
+            float playerDistance = representative.Position.DistanceTo(player.Character.Position);
+            if (representativeGreetingActive && (playerDistance > 7f || player.Character.IsInVehicle()))
+            {
+                representativeGreetingActive = false;
+                if (representative.Exists() && representative.IsAlive)
+                    representative.Task.WanderAround();
+            }
+            if (!representativeGreetingActive && playerDistance < 4.5f &&
+                !player.Character.IsInVehicle() && !representative.IsInCombatAgainst(player.Character))
+            {
+                representativeGreetingActive = true;
+                representative.Task.Wait(20000);
+                representative.Task.TurnTo(player.Character);
+            }
             if (player.Character.IsInVehicle() || CustomMenuShared.IsAnyGameplayMenuOpen() ||
                 representative.Position.DistanceTo(player.Character.Position) > 3f) return;
             // Tests DEBUG : 3 secondes au lieu de 2 minutes en partie normale.
