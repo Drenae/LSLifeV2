@@ -13,6 +13,7 @@ namespace LSlife
         private static CustomMenu territoryControl;
         private static CustomMenu ownedTerritories;
         private static CustomMenu organizationManagement;
+        private static CustomMenu recruitmentMenu;
         private static CustomMenu leaveConfirmation;
         private static int ownedTerritoryPage;
         private static CustomMenu captureConfirmation;
@@ -35,7 +36,7 @@ namespace LSlife
         internal static bool IsGangMenu(CustomMenu menu)
         {
             return menu != null && (menu == foundingConfirmation || menu == territoryControl || menu == captureConfirmation ||
-                menu == ownedTerritories || menu == organizationManagement || menu == leaveConfirmation || menu == overview || menu == detail || menu == relations ||
+                menu == ownedTerritories || menu == organizationManagement || menu == recruitmentMenu || menu == leaveConfirmation || menu == overview || menu == detail || menu == relations ||
                 menu == territories || menu == cartels || menu == cartelDetail ||
                 menu == relationDetail || menu == agreements);
         }
@@ -61,7 +62,7 @@ namespace LSlife
         {
             if (current == foundingConfirmation || current == territoryControl || current == organizationManagement) return BuildOverview();
             if (current == ownedTerritories) return BuildTerritoryControl();
-            if (current == leaveConfirmation) return BuildOrganizationManagement();
+            if (current == leaveConfirmation || current == recruitmentMenu) return BuildOrganizationManagement();
             if (current == captureConfirmation) return BuildTerritoryControl();
             if (current == agreements) return BuildRelationDetail();
             if (current == relationDetail) return BuildRelations();
@@ -222,16 +223,8 @@ namespace LSlife
                     SaveOrganizationChange("Depot effectue : +5 000 $ dans la caisse.");
                     CustomZeeMenu.ShowGangSubmenu(BuildOrganizationManagement());
                 });
-                organizationManagement.Add("Recruter un membre (10 000 $)", () =>
-                {
-                    if (!state.RecruitPlayerGangMember(10000))
-                    {
-                        GTA.UI.ShowSubtitle("Recrutement impossible : caisse insuffisante ou limite de 100 membres.", 4500);
-                        return;
-                    }
-                    SaveOrganizationChange("Un nouveau membre a rejoint votre organisation.");
-                    CustomZeeMenu.ShowGangSubmenu(BuildOrganizationManagement());
-                });
+                organizationManagement.Add("Recrutement par fonction", () =>
+                    CustomZeeMenu.ShowGangSubmenu(BuildRecruitmentMenu()));
             }
             organizationManagement.Add("Quitter mon gang", () =>
             {
@@ -247,6 +240,41 @@ namespace LSlife
             return organizationManagement;
         }
 
+
+
+        private static CustomMenu BuildRecruitmentMenu()
+        {
+            var state = LSL.DiplomacyState;
+            GangOrganization mine;
+            if (string.IsNullOrWhiteSpace(state.PlayerGangId) ||
+                !state.TryGetGang(state.PlayerGangId, out mine)) return BuildOverview();
+            recruitmentMenu = new CustomMenu("RECRUTEMENT", mine.Name);
+            recruitmentMenu.Add("Dealers : " + mine.Dealers, null, () => false);
+            recruitmentMenu.Add("Soldats : " + mine.Soldiers, null, () => false);
+            recruitmentMenu.Add("Gerants : " + mine.Managers + "/" + mine.Territories.Count,
+                null, () => false);
+            recruitmentMenu.Add("Recruter dealer : 10 000 $", () =>
+                RecruitGangRole(GangRecruitRole.Dealer, 10000));
+            recruitmentMenu.Add("Recruter soldat : 15 000 $", () =>
+                RecruitGangRole(GangRecruitRole.Soldier, 15000));
+            recruitmentMenu.Add("Recruter gerant : 20 000 $", () =>
+                RecruitGangRole(GangRecruitRole.Manager, 20000));
+            recruitmentMenu.Add("Retour", () =>
+                CustomZeeMenu.ShowGangSubmenu(BuildOrganizationManagement()));
+            return recruitmentMenu;
+        }
+
+        private static void RecruitGangRole(GangRecruitRole role, int price)
+        {
+            var state = LSL.DiplomacyState;
+            if (!state.RecruitPlayerGangMember(role, price))
+            {
+                GTA.UI.ShowSubtitle("Recrutement refuse : caisse, effectifs ou territoires insuffisants.", 4500);
+                return;
+            }
+            SaveOrganizationChange("Recrutement confirme : " + role + ".");
+            CustomZeeMenu.ShowGangSubmenu(BuildRecruitmentMenu());
+        }
 
         private static void SaveOrganizationChange(string success)
         {
