@@ -12,9 +12,10 @@ namespace LSlife
         {
             if (representativeBlip != null && representativeBlip.Exists()) representativeBlip.Remove();
             representativeBlip = null;
-            if (representative != null && representative.Exists()) representative.Delete();
+            // PNJ du monde ouvert : ne jamais le supprimer ni modifier son apparence.
             representative = null;
             representativeGangId = null;
+            representativeZone = null;
         }
 
         private void TickGangRepresentative()
@@ -31,36 +32,35 @@ namespace LSlife
             }
             if (representative != null && (!representative.Exists() || !representative.IsAlive ||
                 representativeGangId != gang.Id ||
-                representative.Position.DistanceTo(player.Character.Position) > 150f))
+                !string.Equals(representativeZone, area.Name, StringComparison.OrdinalIgnoreCase) ||
+                representative.Position.DistanceTo(player.Character.Position) > 85f))
                 ClearRepresentative();
 
             if (representative == null)
             {
-                if (Game.GameTime - representativeSpawnTime < 10000) return;
+                if (Game.GameTime - representativeSpawnTime < 30000) return;
                 representativeSpawnTime = Game.GameTime;
-                Vector3 pos = World.GetNextPositionOnSidewalk(
-                    player.Character.Position + player.Character.ForwardVector * 25f);
-                if (pos.DistanceTo(player.Character.Position) < 10f) return;
-                // Recaler le trottoir sur le sol avant de figer le PNJ.
-                var groundZ = new OutputArgument();
-                bool foundGround = Function.Call<bool>(Hash.GET_GROUND_Z_FOR_3D_COORD,
-                    pos.X, pos.Y, pos.Z + 50f, groundZ, false);
-                if (!foundGround) return;
-                pos.Z = groundZ.GetResult<float>();
-                string nativeModel;
-                Model pedModel = GangUtilities.TryGetRepresentativeModel(gang.Id, out nativeModel)
-                    ? new Model(nativeModel)
-                    : LsFunctions.RequestModel(unchecked((PedHash)(-1954728090)));
-                representative = World.CreatePed(pedModel, pos);
-                if (representative == null || !representative.Exists())
+                // Reutiliser un habitant GTA existant : aucun spawn, aucun changement
+                // de modele, aucun gel de position, aucune suppression du PNJ.
+                Ped nearest = null;
+                float best = 55f;
+                foreach (Ped candidate in World.GetNearbyPeds(player.Character, 55f))
                 {
-                    representative = null;
-                    return;
+                    if (candidate == null || !candidate.Exists() || !candidate.IsAlive ||
+                        candidate == player.Character || candidate.IsInVehicle() ||
+                        candidate.IsPersistent || candidate.IsInCombat ||
+                        (aDealer != null && candidate == aDealer.dPed)) continue;
+                    if (!string.Equals(World.GetZoneNameLabel(candidate.Position),
+                        area.Name, StringComparison.OrdinalIgnoreCase)) continue;
+                    float distance = candidate.Position.DistanceTo(player.Character.Position);
+                    if (distance < 12f || distance >= best) continue;
+                    best = distance;
+                    nearest = candidate;
                 }
+                if (nearest == null) return;
+                representative = nearest;
                 representativeGangId = gang.Id;
-                representative.IsPersistent = true;
-                // Un interlocuteur doit rester accessible : l'IA ne peut plus l'envoyer sur la route.
-                representative.FreezePosition = true;
+                representativeZone = area.Name;
             }
 
             UpdateRepresentativeDebug(gang.Name);
@@ -76,7 +76,7 @@ namespace LSlife
             if ((float)Game.GameTime > displayHelpTimer + 4000f)
             {
                 displayHelpTimer = Game.GameTime;
-                LsFunctions.DisplayHelpText("~INPUT_CONTEXT~ : parler au representant de " + gang.Name);
+                LsFunctions.DisplayHelpText("~INPUT_CONTEXT~ : parler au gerant de " + gang.Name);
             }
             if (!Game.IsControlJustPressed(2, (GTA.Control)51)) return;
             representativeLastService[gang.Id] = Game.GameTime;
@@ -97,7 +97,7 @@ namespace LSlife
             }
             if (representativeBlip != null && representativeBlip.Exists()) return;
             representativeBlip = representative.AddBlip();
-            representativeBlip.Name = "Representant " + gangName + " (DEBUG)";
+            representativeBlip.Name = "Gerant " + gangName + " (DEBUG)";
             representativeBlip.Color = (BlipColor)2;
             representativeBlip.IsShortRange = false;
         }
