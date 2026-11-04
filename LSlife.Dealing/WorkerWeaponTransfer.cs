@@ -1,151 +1,121 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using GTA;
-using GTA.Native;
 
 namespace LSlife;
 
-// Logique de transfert d'armes partagee, sans types ni evenements NativeUI.
 internal static class WorkerWeaponTransfer
 {
+	private const string DealersPath = "scripts\\LSLife\\LSLife_Dealers.xml";
+	private static readonly WeaponHash Unarmed = unchecked((WeaponHash)(-1569615261));
+
 	public static void GiveWeaponToWorker(int index)
 	{
-		if (LSL.DealerHandler == null || LSL.DealerHandler.currentDealer == null ||
-			LSL.DealerHandler.currentDealer.Ped == null || index < 0 ||
-			index >= LSL.playerWeps.Count || index >= LSL.playerWeapons.Count) return;
-		//IL_0112: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0118: Invalid comparison between Unknown and I4
-		//IL_03ac: Unknown result type (might be due to invalid IL or missing references)
-		//IL_02fc: Unknown result type (might be due to invalid IL or missing references)
-		//IL_037b: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0327: Unknown result type (might be due to invalid IL or missing references)
-		if (LSL.DEBUG)
+		PlayerDealer worker = LSL.DealerHandler?.currentDealer;
+		Ped recipient = worker?.Ped;
+		Ped player = Game.Player.Character;
+		if (!LsFunctions.IsLivePed(recipient) || !LsFunctions.IsLivePed(player) ||
+			index < 0 || index >= LSL.playerWeps.Count ||
+			!Enum.TryParse((string)LSL.playerWeps[index], out WeaponHash incoming) || incoming == Unarmed)
+			return;
+
+		WeaponHash outgoing = recipient.Weapons.Current.Hash;
+		if (outgoing == Unarmed)
+			outgoing = recipient.Weapons.BestWeapon.Hash;
+
+		bool exchange = outgoing != Unarmed;
+		if (!CanTransfer(player, recipient, incoming, outgoing, exchange))
 		{
-			UI.Notify("Transfert d'arme");
+			UI.ShowSubtitle("Échange impossible : vérifie les armes déjà possédées.", 3500);
+			return;
 		}
-		if (LSL.playerWeps.Count > 0)
+
+		if (!LsFunctions.HandOverGoods(player, recipient) || LSL.DealerHandler.currentDealer != worker ||
+			worker.Ped != recipient || Game.Player.Character != player ||
+			!CanTransfer(player, recipient, incoming, outgoing, exchange))
+			return;
+
+		XElement incomingData = LsFunctions.PedWeapons(player, preserveAmmo: true)
+			.FirstOrDefault(weapon => HasHash(weapon, incoming));
+		XElement outgoingData = exchange
+			? LsFunctions.PedWeapons(recipient, preserveAmmo: true).FirstOrDefault(weapon => HasHash(weapon, outgoing))
+			: null;
+		if (incomingData == null || (exchange && outgoingData == null)) return;
+
+		XDocument document = XmlSaveFile.Load(DealersPath);
+		XElement dealer = document.Descendants("dealer")
+			.FirstOrDefault(element => (string)element.Element("id") == worker.ID.ToString());
+		if (dealer == null)
 		{
-			PlayerDealer worker = LSL.DealerHandler.currentDealer;
-			Ped pedAtStart = worker.Ped;
-			if (!LsFunctions.HandOverGoods(LSL.player.Character, pedAtStart) ||
-				LSL.DealerHandler.currentDealer != worker || worker.Ped != pedAtStart ||
-				index >= LSL.playerWeps.Count || index >= LSL.playerWeapons.Count) return;
-			WeaponHash wep = default;
-			if (Enum.TryParse(LSL.playerWeps[index], out wep))
+			UI.ShowSubtitle("Échange impossible : employé introuvable dans la sauvegarde.", 3500);
+			return;
+		}
+
+		dealer.Elements("weapon")
+			.Where(weapon => HasHash(weapon, incoming) || (exchange && HasHash(weapon, outgoing))).Remove();
+		incomingData.SetAttributeValue("exactAmmo", true);
+		dealer.Add(incomingData);
+
+		// Verify both weapons can be granted before removing either original.
+		WeaponHash selectedPlayerWeapon = player.Weapons.Current.Hash;
+		WeaponHash selectedWorkerWeapon = recipient.Weapons.Current.Hash;
+		bool committed = false;
+		try
+		{
+			recipient.Weapons.Give(incoming, 0, false, true);
+			if (exchange) player.Weapons.Give(outgoing, 0, false, true);
+			if (!recipient.Weapons.HasWeapon(incoming) || (exchange && !player.Weapons.HasWeapon(outgoing)))
+				return;
+
+			XmlSaveFile.Save(document, DealersPath);
+			committed = true;
+		}
+		catch (IOException error)
+		{
+			LsFunctions.DbugString(error.Message);
+			UI.ShowSubtitle("Échange annulé : sauvegarde de l’employé impossible.", 3500);
+			return;
+		}
+		finally
+		{
+			if (!committed)
 			{
-				if ((int)wep == -1569615261)
-				{
-					return;
-				}
-				XElement w = LSL.playerWeapons[index];
-				if (w != null)
-				{
-					XDocument dealersDoc = XmlSaveFile.Load("scripts\\LSLife\\LSLife_Dealers.xml");
-					if (dealersDoc.Descendants().Count() <= 0)
-					{
-						return;
-					}
-					{
-						foreach (XElement element in dealersDoc.Descendants())
-						{
-							if (!(element.Name == "dealer"))
-							{
-								continue;
-							}
-							bool found = false;
-							foreach (XElement e in element.Elements())
-							{
-								if (e.Name == "id" && e.Value == LSL.DealerHandler.currentDealer.ID.ToString())
-								{
-									found = true;
-									break;
-								}
-							}
-							if (!found)
-							{
-								continue;
-							}
-							bool hasWeapon = false;
-							XElement dWeapon = null;
-							foreach (XElement e2 in element.Descendants())
-							{
-								if (e2.Name == "HASH" && e2.Value == ((object)wep/*cast due to constrained. prefix*/).ToString())
-								{
-									hasWeapon = true;
-									dWeapon = e2.Parent;
-									break;
-								}
-							}
-							if (hasWeapon)
-							{
-								dWeapon.ReplaceWith(w);
-							}
-							else
-							{
-								element.Add(w);
-							}
-							XmlSaveFile.Save(dealersDoc, "scripts\\LSLife\\LSLife_Dealers.xml");
-							int ammo = 1000;
-							foreach (XElement e3 in w.Descendants())
-							{
-								if (e3.Name == "AMMO")
-								{
-									int.TryParse(e3.Value, out ammo);
-									PlayerDealer currentDealer = LSL.DealerHandler.currentDealer;
-									if (currentDealer != null)
-									{
-										currentDealer.Ped.Weapons.Give(wep, ammo, true, true);
-									}
-									PlayerDealer currentDealer2 = LSL.DealerHandler.currentDealer;
-									if (currentDealer2 != null)
-									{
-										Ped ped = currentDealer2.Ped;
-										if (ped != null)
-										{
-											ped.Weapons.Select(wep);
-										}
-									}
-								}
-								if (!(e3.Name == "COMPONENT") || !Enum.TryParse<WeaponComponent>(e3.Value, out WeaponComponent wepcomp))
-								{
-									continue;
-								}
-								PlayerDealer currentDealer3 = LSL.DealerHandler.currentDealer;
-								if (currentDealer3 != null)
-								{
-									Ped ped2 = currentDealer3.Ped;
-									if (ped2 != null)
-									{
-										ped2.Weapons.Current.SetComponent(wepcomp, true);
-									}
-								}
-							}
-							Game.Player.Character.Weapons.Remove(wep);
-							LSL.playerWeapons.Remove(w);
-							LSL.playerWeps.RemoveAt(index);
-							if (LSL.DEBUG)
-							{
-								UI.Notify("Enregistrement de l'arme du dealer : " + ((object)wep/*cast due to constrained. prefix*/).ToString() + " munitions : " + ammo);
-							}
-							break;
-						}
-						return;
-					}
-				}
-				if (LSL.DEBUG)
-				{
-					UI.Notify("Aucune correspondance dans playerWeapons");
-				}
-			}
-			else if (LSL.DEBUG)
-			{
-				UI.Notify("Identifiant d'arme introuvable : " + LSL.playerWeps[index]);
+				recipient.Weapons.Remove(incoming);
+				recipient.Weapons.Select(selectedWorkerWeapon);
+				if (exchange) player.Weapons.Remove(outgoing);
+				player.Weapons.Select(selectedPlayerWeapon);
 			}
 		}
-		else if (LSL.DEBUG)
+
+		player.Weapons.Remove(incoming);
+		if (exchange)
 		{
-			UI.Notify("Aucune arme trouvée");
+			recipient.Weapons.Remove(outgoing);
+			LsFunctions.ApplyExactWeaponData(player, outgoing, outgoingData);
 		}
+		LsFunctions.ApplyExactWeaponData(recipient, incoming, incomingData);
+		worker.dWeapons = dealer.Elements("weapon").Select(weapon => new XElement(weapon)).ToList();
+
+		// A swap can keep the same weapon count, so the tick's count check is insufficient.
+		var weapons = LsFunctions.PedWeapons(player, preserveAmmo: true);
+		LSL.playerWeapons.Clear();
+		LSL.playerWeps.Clear();
+		foreach (XElement weapon in weapons)
+		{
+			weapon.SetAttributeValue("id", LSL.playerWeapons.Count);
+			LSL.playerWeapons.Add(weapon);
+			LSL.playerWeps.Add((string)weapon.Element("HASH"));
+		}
+		UI.ShowSubtitle(exchange ? "Armes échangées." : "Arme donnée à l’employé.", 2500);
 	}
+
+	private static bool CanTransfer(Ped player, Ped worker, WeaponHash incoming, WeaponHash outgoing, bool exchange) =>
+		LsFunctions.IsLivePed(player) && LsFunctions.IsLivePed(worker) &&
+		player.Weapons.HasWeapon(incoming) && !worker.Weapons.HasWeapon(incoming) &&
+		(!exchange || (worker.Weapons.HasWeapon(outgoing) && !player.Weapons.HasWeapon(outgoing)));
+
+	private static bool HasHash(XElement weapon, WeaponHash expected) =>
+		Enum.TryParse((string)weapon.Element("HASH"), out WeaponHash hash) && hash == expected;
 }

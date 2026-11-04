@@ -41,7 +41,14 @@ Branche active `feature/stabilization-metric-ui`, base SHVDN2 validée `01b6e70`
 - Zee accepte des quantités en grammes, avec des pas de 1 à 100 g. Le stock fournisseur, le panier, la livraison, les stocks en vrac du joueur et du coffre ainsi que les sacs transportent des grammes décimaux. Les stocks destinés à la vente au détail restent en grammes entiers.
 - Les tarifs remisés sont calculés en dollars par gramme. Le panier cumule les montants décimaux puis arrondit le total au dollar, comme l’exige le portefeuille du jeu. Le réapprovisionnement garde ses paramètres économiques historiques. Les ventes automatiques de Zee calculent leur recette sur la masse vendue.
 - Le XML conserve les noms historiques. À la lecture, l’attribut `grams` est prioritaire. En son absence, les anciennes onces sont converties exactement. À l’écriture, le texte historique contient les onces entières pour les anciennes versions et l’attribut garde la masse complète. Une ancienne DLL ne comptabilise donc pas les fractions de paquet.
-- À valider en jeu : commander exactement 100 g, récupérer la commande sur soi puis dans le coffre, transférer 1 g, relancer GTA et vérifier les soldes. Tester aussi une ancienne sauvegarde et une annulation de commande.
+- Conversion métrique validée en jeu par l’utilisateur.
+
+## Lot équipement — échange d’armes
+
+- Un employé armé rend l’arme qu’il tient. S’il est désarmé à l’écran, l’échange vise sa meilleure arme disponible. Les autres armes de son inventaire sont conservées.
+- Les deux armes sont contrôlées avant et après l’animation. L’échange est refusé si l’un des personnages possède déjà l’arme qu’il recevrait. La nouvelle arme est retirée au joueur seulement après validation des ajouts et sauvegarde du dealer.
+- L’arme transférée conserve ses composants et les munitions relevées lors de l’échange. Les armes marquées `exactAmmo` sont restaurées sans le bonus historique de munitions au chargement.
+- À valider en jeu : don à un employé désarmé, échange avec deux types d’armes, refus en cas de doublon et rechargement après échange. Vérifier aussi les armes partageant le même type de munitions dans GTA.
 
 ## Lot XML — protections livrées
 

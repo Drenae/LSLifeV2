@@ -157,7 +157,7 @@ internal static partial class LsFunctions
 		}
 	}
 
-	public static List<XElement> PedWeapons(Ped _ped)
+	public static List<XElement> PedWeapons(Ped _ped, bool preserveAmmo = false)
 	{
 		//IL_0026: Unknown result type (might be due to invalid IL or missing references)
 		//IL_002b: Unknown result type (might be due to invalid IL or missing references)
@@ -181,7 +181,7 @@ internal static partial class LsFunctions
 				continue;
 			}
 			int ammunitionInWeapon = Function.Call<int>((Hash)97480644549409105L, (_ped), ((int)weapon));
-			if (ammunitionInWeapon < 500)
+			if (!preserveAmmo && ammunitionInWeapon < 500)
 			{
 				ammunitionInWeapon = 500;
 			}
@@ -220,6 +220,15 @@ internal static partial class LsFunctions
 		WeaponHash cWeapon = _ped.Weapons.Current.Hash;
 		foreach (XElement _weapon in _weapons)
 		{
+			if ((string)_weapon.Attribute("exactAmmo") == "true" &&
+				Enum.TryParse((string)_weapon.Element("HASH"), out WeaponHash savedWeapon))
+			{
+				if (!_ped.Weapons.HasWeapon(savedWeapon))
+					_ped.Weapons.Give(savedWeapon, 0, false, true);
+				ApplyExactWeaponData(_ped, savedWeapon, _weapon);
+				continue;
+			}
+
 			bool hasWeapon = false;
 			WeaponHash weapon = unchecked((WeaponHash)(-1569615261));
 			foreach (XElement ele in _weapon.Elements())
@@ -264,6 +273,20 @@ internal static partial class LsFunctions
 			}
 		}
 		_ped.Weapons.Select(cWeapon);
+	}
+
+	internal static void ApplyExactWeaponData(Ped ped, WeaponHash hash, XElement data)
+	{
+		ped.Weapons.Select(hash, true);
+		Weapon weapon = ped.Weapons.Current;
+		if (weapon.Hash != hash) return;
+		if (int.TryParse((string)data.Element("AMMO"), out int ammo))
+			weapon.Ammo = Math.Max(0, ammo);
+		foreach (XElement element in data.Elements("COMPONENT"))
+		{
+			if (Enum.TryParse(element.Value, out WeaponComponent component))
+				weapon.SetComponent(component, true);
+		}
 	}
 
 	public static void MovePed(Ped p, Vector3 target)
