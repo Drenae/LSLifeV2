@@ -59,21 +59,21 @@ public partial class LSL
 						PlayerInventory["Weed"] = number;
 					}
 					if (e.Name == "weedOz")
-						int.TryParse(e.Value, out LsFunctions.pWeedOunce);
+						LsFunctions.playerBulkWeedGrams = LsFunctions.ReadStockGrams(e);
 					if (e.Name == "crack")
 					{
 						int.TryParse(e.Value, out number);
 						PlayerInventory["Crack"] = number;
 					}
 					if (e.Name == "crackOz")
-						int.TryParse(e.Value, out LsFunctions.pCrackOunce);
+						LsFunctions.playerBulkCrackGrams = LsFunctions.ReadStockGrams(e);
 					if (e.Name == "cocain")
 					{
 						int.TryParse(e.Value, out number);
 						PlayerInventory["Cocaine"] = number;
 					}
 					if (e.Name == "cocaineOz")
-						int.TryParse(e.Value, out LsFunctions.pCocaineOunce);
+						LsFunctions.playerBulkCocaineGrams = LsFunctions.ReadStockGrams(e);
 					if (e.Name == "armour")
 						int.TryParse(e.Value, out playerArmours);
 				}
@@ -84,17 +84,17 @@ public partial class LSL
 				}
 				if (element.Element("weedOz") == null)
 				{
-					element.Add(new XElement("weedOz", LsFunctions.pWeedOunce));
+					element.Add(new XElement("weedOz", 0));
 					saveMigrated = true;
 				}
 				if (element.Element("crackOz") == null)
 				{
-					element.Add(new XElement("crackOz", LsFunctions.pCrackOunce));
+					element.Add(new XElement("crackOz", 0));
 					saveMigrated = true;
 				}
 				if (element.Element("cocaineOz") == null)
 				{
-					element.Add(new XElement("cocaineOz", LsFunctions.pCocaineOunce));
+					element.Add(new XElement("cocaineOz", 0));
 					saveMigrated = true;
 				}
 			}
@@ -138,15 +138,15 @@ public partial class LSL
 				}
 				if (e2.Name == "weed")
 				{
-					int.TryParse(e2.Value, out dealer1Weed);
+					dealerWeedGrams = LsFunctions.ReadStockGrams(e2);
 				}
 				if (e2.Name == "crack")
 				{
-					int.TryParse(e2.Value, out dealer1Crack);
+					dealerCrackGrams = LsFunctions.ReadStockGrams(e2);
 				}
 				if (e2.Name == "cocain")
 				{
-					int.TryParse(e2.Value, out dealer1Cocain);
+					dealerCocaineGrams = LsFunctions.ReadStockGrams(e2);
 				}
 				if (e2.Name == "money")
 				{

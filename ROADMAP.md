@@ -36,6 +36,13 @@ Branche active `feature/stabilization-metric-ui`, base SHVDN2 validée `01b6e70`
 - Le menu présente le pas de commande en g/kg. Les pas correspondent encore à des conditionnements entiers. Le devis et la réservation utilisent la même remise, et la sélection est ramenée au stock disponible après chaque ajout.
 - Les quantités libres en grammes exigent encore de migrer le stock fournisseur, le panier, la remise de commande et le stockage historique du joueur et du coffre.
 
+## Lot métrique — commandes et stocks
+
+- Zee accepte des quantités en grammes, avec des pas de 1 à 100 g. Le stock fournisseur, le panier, la livraison, les stocks en vrac du joueur et du coffre ainsi que les sacs transportent des grammes décimaux. Les stocks destinés à la vente au détail restent en grammes entiers.
+- Les tarifs remisés sont calculés en dollars par gramme. Le panier cumule les montants décimaux puis arrondit le total au dollar, comme l’exige le portefeuille du jeu. Le réapprovisionnement garde ses paramètres économiques historiques. Les ventes automatiques de Zee calculent leur recette sur la masse vendue.
+- Le XML conserve les noms historiques. À la lecture, l’attribut `grams` est prioritaire. En son absence, les anciennes onces sont converties exactement. À l’écriture, le texte historique contient les onces entières pour les anciennes versions et l’attribut garde la masse complète. Une ancienne DLL ne comptabilise donc pas les fractions de paquet.
+- À valider en jeu : commander exactement 100 g, récupérer la commande sur soi puis dans le coffre, transférer 1 g, relancer GTA et vérifier les soldes. Tester aussi une ancienne sauvegarde et une annulation de commande.
+
 ## Lot XML — protections livrées
 
 - Les écritures d’inventaire, de Zee, des dealers, des planques, des véhicules et coffres, des armes, des quartiers, des points d’apparition et des paramètres HUD utilisent le même service. Les définitions de zones et le fichier historique des armes de planque sont lus par ce service.

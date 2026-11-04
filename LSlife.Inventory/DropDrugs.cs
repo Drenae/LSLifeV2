@@ -42,7 +42,7 @@ internal static class DropDrugs
 			{
 				forwardPos = ray.HitCoords + ray.SurfaceNormal;
 			}
-			LSL.pickupHandler.AddBag(new DroppedBag("You have dropped " + LsFunctions.FormatWeight(LSL.TotalDrugsCarried()) + " of drugs!", LSL.PlayerInventory["Weed"], LSL.PlayerInventory["Crack"], LSL.PlayerInventory["Cocaine"], LsFunctions.pWeedOunce, LsFunctions.pCrackOunce, LsFunctions.pCocaineOunce, 0, forwardPos));
+			LSL.pickupHandler.AddBag(new DroppedBag("You have dropped " + LsFunctions.FormatWeight(LSL.TotalDrugsCarried()) + " of drugs!", LSL.PlayerInventory["Weed"], LSL.PlayerInventory["Crack"], LSL.PlayerInventory["Cocaine"], LsFunctions.playerBulkWeedGrams, LsFunctions.playerBulkCrackGrams, LsFunctions.playerBulkCocaineGrams, 0, forwardPos));
 			LsFunctions.PlayTheSound();
 			RemovePlayerDrugs();
 			LsFunctions.UpdateInventory();
@@ -65,8 +65,8 @@ internal static class DropDrugs
 		{
 			LSL.PlayerInventory[drug] = 0;
 		}
-		LsFunctions.pCocaineOunce = 0;
-		LsFunctions.pWeedOunce = 0;
-		LsFunctions.pCrackOunce = 0;
+		LsFunctions.playerBulkCocaineGrams = 0;
+		LsFunctions.playerBulkWeedGrams = 0;
+		LsFunctions.playerBulkCrackGrams = 0;
 	}
 }

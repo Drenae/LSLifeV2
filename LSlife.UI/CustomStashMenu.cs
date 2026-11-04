@@ -17,7 +17,7 @@ internal static class CustomStashMenu
     private static Vehicle openedCar;
     private static int stepIndex;
     private static readonly int[] selected = new int[9];
-    private static readonly int[] quantity = new int[7];
+    private static readonly decimal[] quantity = new decimal[7];
     private static readonly int[] steps = { 1, 5, 10, 25, 50, 100 };
     private static bool waitForRelease;
     private static int lastFrame = -1;
@@ -87,7 +87,7 @@ internal static class CustomStashMenu
         if (put || vehicle) return row <= 6 ? row - 1 : row - 1;
         return row == 4 ? 6 : row == 5 ? 7 : 8;
     }
-    private static int MaxQuantity(int k)
+    private static decimal MaxQuantity(int k)
     {
         if (k == 6) return Math.Max(0, vehicle
             ? (put ? Game.Player.Money : LSL.pStashVehicle.drugCarMoney)
@@ -99,9 +99,9 @@ internal static class CustomStashMenu
                 case 0: return LSL.PlayerInventory["Weed"];
                 case 1: return LSL.PlayerInventory["Crack"];
                 case 2: return LSL.PlayerInventory["Cocaine"];
-                case 3: return LsFunctions.pWeedOunce;
-                case 4: return LsFunctions.pCrackOunce;
-                case 5: return LsFunctions.pCocaineOunce;
+                case 3: return LsFunctions.playerBulkWeedGrams;
+                case 4: return LsFunctions.playerBulkCrackGrams;
+                case 5: return LsFunctions.playerBulkCocaineGrams;
             }
         }
         if (vehicle)
@@ -112,9 +112,9 @@ internal static class CustomStashMenu
                 case 0: return car.drugCarWeed;
                 case 1: return car.drugCarCrack;
                 case 2: return car.drugCarCocain;
-                case 3: return car.drugCarWeedOz;
-                case 4: return car.drugCarCrackOz;
-                case 5: return car.drugCarCocainOz;
+                case 3: return car.carBulkWeedGrams;
+                case 4: return car.carBulkCrackGrams;
+                case 5: return car.carBulkCocaineGrams;
             }
         }
         else
@@ -156,8 +156,8 @@ internal static class CustomStashMenu
         if (k == -1) { stepIndex = (stepIndex + direction + steps.Length) % steps.Length; return; }
         if (k <= 6)
         {
-            long next = (long)quantity[k] + (long)direction * steps[stepIndex];
-            quantity[k] = (int)Math.Max(0L, Math.Min((long)Math.Max(0, MaxQuantity(k)), next));
+            decimal next = quantity[k] + direction * steps[stepIndex];
+            quantity[k] = Math.Max(0m, Math.Min(MaxQuantity(k), next));
         }
         else
         {
@@ -209,17 +209,16 @@ internal static class CustomStashMenu
     }
     private static void TakeHouse(int k)
     {
-        HouseStashTransfer.Withdraw(k, k <= 6 ? quantity[k] : selected[k]);
+        HouseStashTransfer.Withdraw(k, k <= 6 ? (int)quantity[k] : selected[k]);
     }
     private static string Value(int k)
     {
         if (k == -1) return "< x" + steps[stepIndex] + " >";
         if (k <= 6)
         {
-            int value = Math.Min(quantity[k], Math.Max(0, MaxQuantity(k)));
-            return k <= 2 ? LsFunctions.FormatWeight(value)
-                : k <= 5 ? LsFunctions.FormatOunceWeight(value)
-                : LsFunctions.IntToMoney(value) + "$";
+            decimal value = Math.Min(quantity[k], Math.Max(0, MaxQuantity(k)));
+            return k <= 5 ? LsFunctions.FormatWeight(value)
+                : LsFunctions.IntToMoney((int)value) + "$";
         }
         int count = Count(k);
         if (count == 0) return "Aucun";
@@ -229,10 +228,9 @@ internal static class CustomStashMenu
     private static string AvailableValue(int k)
     {
         if (k < 0 || k > 6) return null;
-        int maximum = Math.Max(0, MaxQuantity(k));
-        return k <= 2 ? "/ " + LsFunctions.FormatWeight(maximum)
-            : k <= 5 ? "/ " + LsFunctions.FormatOunceWeight(maximum)
-            : "/ " + LsFunctions.IntToMoney(maximum) + "$";
+        decimal maximum = Math.Max(0, MaxQuantity(k));
+        return k <= 5 ? "/ " + LsFunctions.FormatWeight(maximum)
+            : "/ " + LsFunctions.IntToMoney((int)maximum) + "$";
     }
 
     private static void Section(CustomMenuLayout layout, string title)
@@ -269,8 +267,8 @@ internal static class CustomStashMenu
             if (k >= 0 && k <= 6)
             {
                 // Barre dans la ligne, comme le menu Approvisionner de l'employe.
-                int maximum = Math.Max(0, MaxQuantity(k));
-                float fraction = maximum > 0 ? Math.Min(1f, (float)quantity[k] / maximum) : 0f;
+                decimal maximum = Math.Max(0, MaxQuantity(k));
+                float fraction = maximum > 0 ? Math.Min(1f, (float)(quantity[k] / maximum)) : 0f;
                 bool red = k >= 3 && k <= 5;
                 layout.Block(0f, y =>
                 {
@@ -381,9 +379,9 @@ internal static class CustomStashMenu
             layout.Block(0.029f, y =>
                 CustomMenuRenderer.TextCenteredVertically("STOCK CONDITIONNE",
                     layout.Left + 0.019f, y, 0.029f, 0.28f, 226, 206, 167, 255));
-            layout.ColoredTextPair("Cannabis", LsFunctions.FormatOunceWeight(car.drugCarWeedOz), 226, 85, 85);
-            layout.ColoredTextPair("Crack", LsFunctions.FormatOunceWeight(car.drugCarCrackOz), 226, 85, 85);
-            layout.ColoredTextPair("Cocaine", LsFunctions.FormatOunceWeight(car.drugCarCocainOz), 226, 85, 85);
+            layout.ColoredTextPair("Cannabis", LsFunctions.FormatWeight(car.carBulkWeedGrams), 226, 85, 85);
+            layout.ColoredTextPair("Crack", LsFunctions.FormatWeight(car.carBulkCrackGrams), 226, 85, 85);
+            layout.ColoredTextPair("Cocaine", LsFunctions.FormatWeight(car.carBulkCocaineGrams), 226, 85, 85);
             layout.Separator(0.005f);
             layout.TextPair("Argent", LsFunctions.IntToMoney(car.drugCarMoney) + " $");
         }

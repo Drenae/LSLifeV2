@@ -109,11 +109,11 @@ public partial class LSL : Script
 
 	public static int cocain1Price = 5000;
 
-	public static int dealer1Weed;
+	public static decimal dealerWeedGrams;
 
-	public static int dealer1Crack;
+	public static decimal dealerCrackGrams;
 
-	public static int dealer1Cocain;
+	public static decimal dealerCocaineGrams;
 
 	public static int dealer1Money;
 

@@ -145,15 +145,15 @@ internal static partial class LsFunctions
 			{
 				if (e.Name == "weed")
 				{
-					e.Value = LSL.dealer1Weed.ToString();
+					LsFunctions.WriteStockGrams(e, LSL.dealerWeedGrams);
 				}
 				if (e.Name == "crack")
 				{
-					e.Value = LSL.dealer1Crack.ToString();
+					LsFunctions.WriteStockGrams(e, LSL.dealerCrackGrams);
 				}
 				if (e.Name == "cocain")
 				{
-					e.Value = LSL.dealer1Cocain.ToString();
+					LsFunctions.WriteStockGrams(e, LSL.dealerCocaineGrams);
 				}
 				if (e.Name == "debt")
 				{
@@ -188,21 +188,9 @@ internal static partial class LsFunctions
 					e.Value = LSL.dealer1Debt.ToString();
 					changed = true;
 				}
-				if (e.Name == "weed" && e.Value != LSL.dealer1Weed.ToString())
-				{
-					e.Value = LSL.dealer1Weed.ToString();
-					changed = true;
-				}
-				if (e.Name == "crack" && e.Value != LSL.dealer1Crack.ToString())
-				{
-					e.Value = LSL.dealer1Crack.ToString();
-					changed = true;
-				}
-				if (e.Name == "cocain" && e.Value != LSL.dealer1Cocain.ToString())
-				{
-					e.Value = LSL.dealer1Cocain.ToString();
-					changed = true;
-				}
+				if (e.Name == "weed") changed |= WriteStockGrams(e, LSL.dealerWeedGrams);
+				if (e.Name == "crack") changed |= WriteStockGrams(e, LSL.dealerCrackGrams);
+				if (e.Name == "cocain") changed |= WriteStockGrams(e, LSL.dealerCocaineGrams);
 				if (e.Name == "rep" && e.Value != LSL.dealer1Rep.ToString())
 				{
 					e.Value = LSL.dealer1Rep.ToString();

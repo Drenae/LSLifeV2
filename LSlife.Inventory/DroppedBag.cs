@@ -13,11 +13,11 @@ public class DroppedBag
 
 	private int cocaine;
 
-	private int weedZ;
+	private decimal weedZ;
 
-	private int crackZ;
+	private decimal crackZ;
 
-	private int cocaineZ;
+	private decimal cocaineZ;
 
 	private int money;
 
@@ -37,7 +37,7 @@ public class DroppedBag
 
 	public Pig Pig;
 
-	public DroppedBag(string _subtitleString, int _weed, int _crack, int _cocaine, int _weedZ, int _crackZ, int _cocaineZ, int _money, Vector3 _pos)
+	public DroppedBag(string _subtitleString, int _weed, int _crack, int _cocaine, decimal _weedZ, decimal _crackZ, decimal _cocaineZ, int _money, Vector3 _pos)
 	{
 		//IL_0048: Unknown result type (might be due to invalid IL or missing references)
 		//IL_004a: Unknown result type (might be due to invalid IL or missing references)
@@ -87,16 +87,16 @@ public class DroppedBag
 		LSL.PlayerInventory["Weed"] += weed;
 		LSL.PlayerInventory["Crack"] += crack;
 		LSL.PlayerInventory["Cocaine"] += cocaine;
-		LsFunctions.pWeedOunce += weedZ;
-		LsFunctions.pCrackOunce += crackZ;
-		LsFunctions.pCocaineOunce += cocaineZ;
+		LsFunctions.playerBulkWeedGrams += weedZ;
+		LsFunctions.playerBulkCrackGrams += crackZ;
+		LsFunctions.playerBulkCocaineGrams += cocaineZ;
 		Player player = Game.Player;
 		player.Money += money;
 		if (weapons != null)
 		{
 			LsFunctions.GivePedWeapons(Game.Player.Character, weapons);
 		}
-		UI.ShowSubtitle("Tu as ramassé " + LsFunctions.FormatWeight(weed) +  " de cannabis, " + LsFunctions.FormatWeight(crack) + " de crack, " + LsFunctions.FormatWeight(cocaine) + " de cocaïne et " + LsFunctions.IntToMoney(money) + " $", 5000);
+		UI.ShowSubtitle("Tu as ramassé " + LsFunctions.FormatWeight(weed + weedZ) +  " de cannabis, " + LsFunctions.FormatWeight(crack + crackZ) + " de crack, " + LsFunctions.FormatWeight(cocaine + cocaineZ) + " de cocaïne et " + LsFunctions.IntToMoney(money) + " $", 5000);
 		LsFunctions.UpdateInventory();
 	}
 

@@ -18,11 +18,11 @@ internal static partial class LsFunctions
 {
 	public const int pMaxDrugs = 7168;
 
-	public static int pWeedOunce = 0;
+	public static decimal playerBulkWeedGrams = 0;
 
-	public static int pCrackOunce = 0;
+	public static decimal playerBulkCrackGrams = 0;
 
-	public static int pCocaineOunce = 0;
+	public static decimal playerBulkCocaineGrams = 0;
 
 	public static List<PedHash> cHashes = new List<PedHash>();
 

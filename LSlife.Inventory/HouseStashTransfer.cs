@@ -8,7 +8,7 @@ namespace LSlife;
 // Transferts vers une planque independants des callbacks NativeUI.
 internal static class HouseStashTransfer
 {
-    internal static void Deposit(int kind, int requested)
+    internal static void Deposit(int kind, decimal requested)
     {
         var house = LSL.HouseHandler.CurrentHouse;
         if (house == null || requested < 0) return;
@@ -16,38 +16,38 @@ internal static class HouseStashTransfer
         switch (kind)
         {
             case 0:
-                amount = Math.Min(requested, LSL.PlayerInventory["Weed"]);
+                amount = Math.Min((int)requested, LSL.PlayerInventory["Weed"]);
                 house.Weed += amount; LSL.PlayerInventory["Weed"] -= amount;
                 break;
             case 1:
-                amount = Math.Min(requested, LSL.PlayerInventory["Crack"]);
+                amount = Math.Min((int)requested, LSL.PlayerInventory["Crack"]);
                 house.Crack += amount; LSL.PlayerInventory["Crack"] -= amount;
                 break;
             case 2:
-                amount = Math.Min(requested, LSL.PlayerInventory["Cocaine"]);
+                amount = Math.Min((int)requested, LSL.PlayerInventory["Cocaine"]);
                 house.Cocain += amount; LSL.PlayerInventory["Cocaine"] -= amount;
                 break;
             case 3:
-                amount = Math.Min(requested, LsFunctions.pWeedOunce);
-                house.Weed += LsFunctions.OuncesToGrams(amount); LsFunctions.pWeedOunce -= amount;
+                decimal weed = Math.Min(requested, LsFunctions.playerBulkWeedGrams);
+                house.Weed += weed; LsFunctions.playerBulkWeedGrams -= weed;
                 break;
             case 4:
-                amount = Math.Min(requested, LsFunctions.pCrackOunce);
-                house.Crack += LsFunctions.OuncesToGrams(amount); LsFunctions.pCrackOunce -= amount;
+                decimal crack = Math.Min(requested, LsFunctions.playerBulkCrackGrams);
+                house.Crack += crack; LsFunctions.playerBulkCrackGrams -= crack;
                 break;
             case 5:
-                amount = Math.Min(requested, LsFunctions.pCocaineOunce);
-                house.Cocain += LsFunctions.OuncesToGrams(amount); LsFunctions.pCocaineOunce -= amount;
+                decimal cocaine = Math.Min(requested, LsFunctions.playerBulkCocaineGrams);
+                house.Cocain += cocaine; LsFunctions.playerBulkCocaineGrams -= cocaine;
                 break;
             case 6:
-                amount = Math.Min(requested, Game.Player.Money);
+                amount = Math.Min((int)requested, Game.Player.Money);
                 house.Money += amount; Game.Player.Money -= amount;
                 break;
             case 8:
                 if (requested >= LSL.playerWeapons.Count || requested >= LSL.playerWeps.Count) return;
-                XElement weaponXml = LSL.playerWeapons[requested];
+                XElement weaponXml = LSL.playerWeapons[(int)requested];
                 if (weaponXml == null) return;
-                if (!Enum.TryParse(LSL.playerWeps[requested], out WeaponHash weapon) ||
+                if (!Enum.TryParse(LSL.playerWeps[(int)requested], out WeaponHash weapon) ||
                     (int)weapon == -1569615261) return;
                 int id = 0;
                 foreach (XElement existing in house.Weapons)
@@ -58,10 +58,10 @@ internal static class HouseStashTransfer
                 }
                 weaponXml.SetAttributeValue("id", id);
                 house.Weapons.Add(weaponXml);
-                house.Weps.Add(LSL.playerWeps[requested]);
+                house.Weps.Add(LSL.playerWeps[(int)requested]);
                 Game.Player.Character.Weapons.Remove(weapon);
-                LSL.playerWeapons.RemoveAt(requested);
-                LSL.playerWeps.RemoveAt(requested);
+                LSL.playerWeapons.RemoveAt((int)requested);
+                LSL.playerWeps.RemoveAt((int)requested);
                 break;
             default: return;
         }

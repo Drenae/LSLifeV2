@@ -79,18 +79,6 @@ public partial class LSL
 						{
 							int.TryParse(e.Value, out dealer1Debt);
 						}
-						if (e.Name == "weed")
-						{
-							int.TryParse(e.Value, out dealer1Weed);
-						}
-						if (e.Name == "crack")
-						{
-							int.TryParse(e.Value, out dealer1Crack);
-						}
-						if (e.Name == "cocain")
-						{
-							int.TryParse(e.Value, out dealer1Cocain);
-						}
 						if (e.Name == "money")
 						{
 							int.TryParse(e.Value, out dealer1Money);

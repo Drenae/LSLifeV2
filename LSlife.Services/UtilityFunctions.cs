@@ -49,7 +49,7 @@ internal static partial class LsFunctions
 			HoursPassed = HowManyHoursPassed();
 			TimeChanged = true;
 			LSL.hour = Function.Call<int>((Hash)2675767815307398015L);
-			if ((LSL.dealer1Weed == 0 || LSL.dealer1Crack == 0 || LSL.dealer1Cocain == 0) && !LSL.dealer1ReloadOrder && !LSL.dealer1Reloaded)
+			if ((LSL.dealerWeedGrams == 0 || LSL.dealerCrackGrams == 0 || LSL.dealerCocaineGrams == 0) && !LSL.dealer1ReloadOrder && !LSL.dealer1Reloaded)
 			{
 				LSL.dealer1ReloadOrder = true;
 				int waitTime = 20;
@@ -153,17 +153,17 @@ internal static partial class LsFunctions
 				float weedMoney = 0f;
 				float crackMoney = 0f;
 				float cocainMoney = 0f;
-				if (LSL.dealer1Weed < 40)
+				if (LSL.dealerWeedGrams < OuncesToGrams(40))
 				{
 					weedMoney = (float)LSL.dealer1Money * 0.75f;
 					LSL.dealer1Money -= (int)weedMoney;
 				}
-				if (LSL.dealer1Crack < 40)
+				if (LSL.dealerCrackGrams < OuncesToGrams(40))
 				{
 					crackMoney = (float)LSL.dealer1Money * 0.6f;
 					LSL.dealer1Money -= (int)crackMoney;
 				}
-				if (LSL.dealer1Cocain < 40)
+				if (LSL.dealerCocaineGrams < OuncesToGrams(40))
 				{
 					cocainMoney = LSL.dealer1Money;
 					LSL.dealer1Money -= (int)cocainMoney;
@@ -174,9 +174,9 @@ internal static partial class LsFunctions
 				int finalWeed = (int)weedMoney / dWeed;
 				int finalCrack = (int)crackMoney / dCrack;
 				int finalCocain = (int)cocainMoney / dCocaine;
-				LSL.dealer1Weed += finalWeed;
-				LSL.dealer1Crack += finalCrack;
-				LSL.dealer1Cocain += finalCocain;
+				LSL.dealerWeedGrams += OuncesToGrams(finalWeed);
+				LSL.dealerCrackGrams += OuncesToGrams(finalCrack);
+				LSL.dealerCocaineGrams += OuncesToGrams(finalCocain);
 				weedMoney -= (float)(finalWeed * dWeed);
 				crackMoney -= (float)(finalCrack * dCrack);
 				cocainMoney -= (float)(finalCocain * dCocaine);
@@ -208,17 +208,17 @@ internal static partial class LsFunctions
 				float weedMoney2 = 0f;
 				float crackMoney2 = 0f;
 				float cocainMoney2 = 0f;
-				if (LSL.dealer1Weed < 40)
+				if (LSL.dealerWeedGrams < OuncesToGrams(40))
 				{
 					weedMoney2 = (float)LSL.dealer1Money * 0.75f;
 					LSL.dealer1Money -= (int)weedMoney2;
 				}
-				if (LSL.dealer1Crack < 40)
+				if (LSL.dealerCrackGrams < OuncesToGrams(40))
 				{
 					crackMoney2 = (float)LSL.dealer1Money * 0.6f;
 					LSL.dealer1Money -= (int)crackMoney2;
 				}
-				if (LSL.dealer1Cocain < 40)
+				if (LSL.dealerCocaineGrams < OuncesToGrams(40))
 				{
 					cocainMoney2 = LSL.dealer1Money;
 					LSL.dealer1Money -= (int)cocainMoney2;
@@ -229,9 +229,9 @@ internal static partial class LsFunctions
 				int finalWeed2 = (int)weedMoney2 / dWeed2;
 				int finalCrack2 = (int)crackMoney2 / dCrack2;
 				int finalCocain2 = (int)cocainMoney2 / dCocaine2;
-				LSL.dealer1Weed += finalWeed2;
-				LSL.dealer1Crack += finalCrack2;
-				LSL.dealer1Cocain += finalCocain2;
+				LSL.dealerWeedGrams += OuncesToGrams(finalWeed2);
+				LSL.dealerCrackGrams += OuncesToGrams(finalCrack2);
+				LSL.dealerCocaineGrams += OuncesToGrams(finalCocain2);
 				weedMoney2 -= (float)(finalWeed2 * dWeed2);
 				crackMoney2 -= (float)(finalCrack2 * dCrack2);
 				cocainMoney2 -= (float)(finalCocain2 * dCocaine2);
@@ -285,18 +285,12 @@ internal static partial class LsFunctions
 		{
 			LSL.dealer1Money = 1200000;
 		}
-		if (LSL.dealer1Weed > 0)
+		if (LSL.dealerWeedGrams > 0)
 		{
-			if (LSL.dealer1Weed == 1)
-			{
-				LSL.dealer1Weed = 0;
-				LSL.dealer1Money += LSL.weed1Price / 2 + Discount(LSL.weed1Price / 2);
-			}
-			else
-			{
-				LSL.dealer1Weed -= LSL.dealer1Weed / 2;
-				LSL.dealer1Money += (LSL.weed1Price / 2 + Discount(LSL.weed1Price / 2)) * LSL.dealer1Weed;
-			}
+			decimal sold = LSL.dealerWeedGrams <= GramsPerOunce ? LSL.dealerWeedGrams : LSL.dealerWeedGrams / 2m;
+			LSL.dealerWeedGrams -= sold;
+			int basePrice = LSL.weed1Price / 2;
+			LSL.dealer1Money += (int)decimal.Round(sold * (basePrice + Discount(basePrice)) / GramsPerOunce);
 			foreach (XElement element2 in LSL.LSLifeSave.Descendants())
 			{
 				if (!(element2.Name == "dealer1"))
@@ -307,7 +301,7 @@ internal static partial class LsFunctions
 				{
 					if (drugCarEle2.Name == "weed")
 					{
-						drugCarEle2.Value = LSL.dealer1Weed.ToString();
+						LsFunctions.WriteStockGrams(drugCarEle2, LSL.dealerWeedGrams);
 					}
 					if (drugCarEle2.Name == "money")
 					{
@@ -316,18 +310,12 @@ internal static partial class LsFunctions
 				}
 			}
 		}
-		if (LSL.dealer1Crack > 0)
+		if (LSL.dealerCrackGrams > 0)
 		{
-			if (LSL.dealer1Crack == 1)
-			{
-				LSL.dealer1Crack = 0;
-				LSL.dealer1Money += LSL.crack1Price / 2 + Discount(LSL.crack1Price / 2);
-			}
-			else
-			{
-				LSL.dealer1Crack -= LSL.dealer1Crack / 2;
-				LSL.dealer1Money += (LSL.crack1Price / 2 + Discount(LSL.crack1Price / 2)) * LSL.dealer1Crack;
-			}
+			decimal sold = LSL.dealerCrackGrams <= GramsPerOunce ? LSL.dealerCrackGrams : LSL.dealerCrackGrams / 2m;
+			LSL.dealerCrackGrams -= sold;
+			int basePrice = LSL.crack1Price / 2;
+			LSL.dealer1Money += (int)decimal.Round(sold * (basePrice + Discount(basePrice)) / GramsPerOunce);
 			foreach (XElement element3 in LSL.LSLifeSave.Descendants())
 			{
 				if (!(element3.Name == "dealer1"))
@@ -338,7 +326,7 @@ internal static partial class LsFunctions
 				{
 					if (drugCarEle3.Name == "crack")
 					{
-						drugCarEle3.Value = LSL.dealer1Crack.ToString();
+						LsFunctions.WriteStockGrams(drugCarEle3, LSL.dealerCrackGrams);
 					}
 					if (drugCarEle3.Name == "money")
 					{
@@ -347,18 +335,12 @@ internal static partial class LsFunctions
 				}
 			}
 		}
-		if (LSL.dealer1Cocain > 0)
+		if (LSL.dealerCocaineGrams > 0)
 		{
-			if (LSL.dealer1Cocain == 1)
-			{
-				LSL.dealer1Cocain = 0;
-				LSL.dealer1Money += LSL.cocain1Price / 2 + Discount(LSL.cocain1Price / 2);
-			}
-			else
-			{
-				LSL.dealer1Cocain -= LSL.dealer1Cocain / 2;
-				LSL.dealer1Money += (LSL.cocain1Price / 2 + Discount(LSL.cocain1Price / 2)) * LSL.dealer1Cocain;
-			}
+			decimal sold = LSL.dealerCocaineGrams <= GramsPerOunce ? LSL.dealerCocaineGrams : LSL.dealerCocaineGrams / 2m;
+			LSL.dealerCocaineGrams -= sold;
+			int basePrice = LSL.cocain1Price / 2;
+			LSL.dealer1Money += (int)decimal.Round(sold * (basePrice + Discount(basePrice)) / GramsPerOunce);
 			foreach (XElement element4 in LSL.LSLifeSave.Descendants())
 			{
 				if (!(element4.Name == "dealer1"))
@@ -369,7 +351,7 @@ internal static partial class LsFunctions
 				{
 					if (drugCarEle4.Name == "cocain")
 					{
-						drugCarEle4.Value = LSL.dealer1Cocain.ToString();
+						LsFunctions.WriteStockGrams(drugCarEle4, LSL.dealerCocaineGrams);
 					}
 					if (drugCarEle4.Name == "money")
 					{

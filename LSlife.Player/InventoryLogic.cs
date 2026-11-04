@@ -24,8 +24,8 @@ public partial class LSL
 	public static decimal TotalDrugsCarried()
 	{
 		return LsFunctions.TotalDrugGrams(PlayerInventory) +
-			LsFunctions.OuncesToGrams(LsFunctions.pWeedOunce) +
-			LsFunctions.OuncesToGrams(LsFunctions.pCrackOunce) +
-			LsFunctions.OuncesToGrams(LsFunctions.pCocaineOunce);
+			LsFunctions.playerBulkWeedGrams +
+			LsFunctions.playerBulkCrackGrams +
+			LsFunctions.playerBulkCocaineGrams;
 	}
 }

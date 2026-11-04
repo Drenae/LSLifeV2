@@ -12,30 +12,32 @@ public class DrugOrder
 
 	public bool pickedUp;
 
-	public int weed { get; private set; }
+	public decimal weed { get; private set; }
 
-	public int crack { get; private set; }
+	public decimal crack { get; private set; }
 
-	public int cocaine { get; private set; }
+	public decimal cocaine { get; private set; }
 
-	public int Bill { get; private set; }
+	private decimal bill;
 
-	public void OrderWeed(int amount, int price)
+	public int Bill => (int)decimal.Round(bill, 0, System.MidpointRounding.AwayFromZero);
+
+	public void OrderWeed(decimal amount, decimal price)
 	{
 		weed += amount;
-		Bill += price;
+		bill += price;
 	}
 
-	public void OrderCrack(int amount, int price)
+	public void OrderCrack(decimal amount, decimal price)
 	{
 		crack += amount;
-		Bill += price;
+		bill += price;
 	}
 
-	public void OrderCocaine(int amount, int price)
+	public void OrderCocaine(decimal amount, decimal price)
 	{
 		cocaine += amount;
-		Bill += price;
+		bill += price;
 	}
 
 	public bool PayBill()
@@ -84,15 +86,15 @@ public class DrugOrder
 		{
 			if (weed > 0)
 			{
-				LsFunctions.pWeedOunce += weed;
+				LsFunctions.playerBulkWeedGrams += weed;
 			}
 			if (crack > 0)
 			{
-				LsFunctions.pCrackOunce += crack;
+				LsFunctions.playerBulkCrackGrams += crack;
 			}
 			if (cocaine > 0)
 			{
-				LsFunctions.pCocaineOunce += cocaine;
+				LsFunctions.playerBulkCocaineGrams += cocaine;
 			}
 			LsFunctions.PlayTheSound();
 			pickedUp = true;
@@ -108,15 +110,15 @@ public class DrugOrder
 				LSL.player.Character.SetIntoVehicle(stash.drugCar, unchecked((VehicleSeat)(-1)));
 				if (weed > 0)
 				{
-					LSL.pStashVehicle.drugCarWeedOz += weed;
+					LSL.pStashVehicle.carBulkWeedGrams += weed;
 				}
 				if (crack > 0)
 				{
-					LSL.pStashVehicle.drugCarCrackOz += crack;
+					LSL.pStashVehicle.carBulkCrackGrams += crack;
 				}
 				if (cocaine > 0)
 				{
-					LSL.pStashVehicle.drugCarCocainOz += cocaine;
+					LSL.pStashVehicle.carBulkCocaineGrams += cocaine;
 				}
 				LsFunctions.PlayTheSound();
 				pickedUp = true;
@@ -148,33 +150,33 @@ public class DrugOrder
 				{
 					if (e.Name == "weedOz")
 					{
-						e.Value = LsFunctions.pWeedOunce.ToString();
+						LsFunctions.WriteStockGrams(e, LsFunctions.playerBulkWeedGrams);
 					}
 					if (e.Name == "crackOz")
 					{
-						e.Value = LsFunctions.pCrackOunce.ToString();
+						LsFunctions.WriteStockGrams(e, LsFunctions.playerBulkCrackGrams);
 					}
 					if (e.Name == "cocaineOz")
 					{
-						e.Value = LsFunctions.pCocaineOunce.ToString();
+						LsFunctions.WriteStockGrams(e, LsFunctions.playerBulkCocaineGrams);
 					}
 				}
 			}
-			if (element.Name == "drugCarStash")
+			if (element.Name == "drugCarStash" && LSL.pStashVehicle != null)
 			{
 				foreach (XElement e2 in element.Elements())
 				{
 					if (e2.Name == "weedOz")
 					{
-						e2.Value = LSL.pStashVehicle.drugCarWeedOz.ToString();
+						LsFunctions.WriteStockGrams(e2, LSL.pStashVehicle.carBulkWeedGrams);
 					}
 					if (e2.Name == "crackOz")
 					{
-						e2.Value = LSL.pStashVehicle.drugCarCrackOz.ToString();
+						LsFunctions.WriteStockGrams(e2, LSL.pStashVehicle.carBulkCrackGrams);
 					}
 					if (e2.Name == "cocainOz")
 					{
-						e2.Value = LSL.pStashVehicle.drugCarCocainOz.ToString();
+						LsFunctions.WriteStockGrams(e2, LSL.pStashVehicle.carBulkCocaineGrams);
 					}
 				}
 			}
@@ -186,15 +188,15 @@ public class DrugOrder
 			{
 				if (e3.Name == "weed")
 				{
-					e3.Value = LSL.dealer1Weed.ToString();
+					LsFunctions.WriteStockGrams(e3, LSL.dealerWeedGrams);
 				}
 				if (e3.Name == "crack")
 				{
-					e3.Value = LSL.dealer1Crack.ToString();
+					LsFunctions.WriteStockGrams(e3, LSL.dealerCrackGrams);
 				}
 				if (e3.Name == "cocain")
 				{
-					e3.Value = LSL.dealer1Cocain.ToString();
+					LsFunctions.WriteStockGrams(e3, LSL.dealerCocaineGrams);
 				}
 				if (e3.Name == "debt")
 				{
@@ -220,7 +222,7 @@ public class DrugOrder
 
 	private decimal OrderSizeInGrams()
 	{
-		return LsFunctions.OuncesToGrams(weed) + LsFunctions.OuncesToGrams(crack) + LsFunctions.OuncesToGrams(cocaine);
+		return weed + crack + cocaine;
 	}
 
 	internal bool OrderValid()
@@ -235,9 +237,9 @@ public class DrugOrder
 
 	internal void PutBackDrugs()
 	{
-		LSL.dealer1Weed += weed;
-		LSL.dealer1Crack += crack;
-		LSL.dealer1Cocain += cocaine;
+		LSL.dealerWeedGrams += weed;
+		LSL.dealerCrackGrams += crack;
+		LSL.dealerCocaineGrams += cocaine;
 		LsFunctions.SaveDealer();
 	}
 
@@ -246,7 +248,7 @@ public class DrugOrder
 		weed = 0;
 		crack = 0;
 		cocaine = 0;
-		Bill = 0;
+		bill = 0;
 		payed = false;
 		pickedUp = false;
 		Placed = false;

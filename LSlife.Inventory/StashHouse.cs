@@ -127,12 +127,12 @@ public class StashHouse
 		LSL.PlayerInventory["Crack"] = 0;
 		Cocain += LSL.PlayerInventory["Cocaine"];
 		LSL.PlayerInventory["Cocaine"] = 0;
-		Weed += LsFunctions.OuncesToGrams(LsFunctions.pWeedOunce);
-		LsFunctions.pWeedOunce = 0;
-		Crack += LsFunctions.OuncesToGrams(LsFunctions.pCrackOunce);
-		LsFunctions.pCrackOunce = 0;
-		Cocain += LsFunctions.OuncesToGrams(LsFunctions.pCocaineOunce);
-		LsFunctions.pCocaineOunce = 0;
+		Weed += LsFunctions.playerBulkWeedGrams;
+		LsFunctions.playerBulkWeedGrams = 0;
+		Crack += LsFunctions.playerBulkCrackGrams;
+		LsFunctions.playerBulkCrackGrams = 0;
+		Cocain += LsFunctions.playerBulkCocaineGrams;
+		LsFunctions.playerBulkCocaineGrams = 0;
 		LsFunctions.UpdateInventory();
 		LSL.HouseHandler.SaveHouse(this);
 	}

@@ -5,9 +5,9 @@ namespace LSlife;
 // Calculs purs des quantites et multiplicateurs des commandes Zee.
 internal static class ZeeOrderQuantities
 {
-    internal static int Adjust(int current, int multiplier, int stock, int direction)
+    internal static decimal Adjust(decimal current, int multiplier, decimal stock, int direction)
     {
-        int value = current + direction * multiplier;
+        decimal value = current + direction * multiplier;
         if (value < 0) value = 0;
         if (value > stock) value = stock;
         return value;

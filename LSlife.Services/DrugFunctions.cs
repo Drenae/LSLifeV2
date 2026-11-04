@@ -90,27 +90,15 @@ internal static partial class LsFunctions
 				}
 				else if (e.Name == "weedOz")
 				{
-					if (e.Value != pWeedOunce.ToString())
-					{
-						e.Value = pWeedOunce.ToString();
-						saveChanged = true;
-					}
+					saveChanged |= WriteStockGrams(e, playerBulkWeedGrams);
 				}
 				else if (e.Name == "crackOz")
 				{
-					if (e.Value != pCrackOunce.ToString())
-					{
-						e.Value = pCrackOunce.ToString();
-						saveChanged = true;
-					}
+					saveChanged |= WriteStockGrams(e, playerBulkCrackGrams);
 				}
 				else if (e.Name == "cocaineOz")
 				{
-					if (e.Value != pCocaineOunce.ToString())
-					{
-						e.Value = pCocaineOunce.ToString();
-						saveChanged = true;
-					}
+					saveChanged |= WriteStockGrams(e, playerBulkCocaineGrams);
 				}
 				else if (e.Name == "armour" && e.Value != LSL.playerArmours.ToString())
 				{
@@ -142,18 +130,27 @@ internal static partial class LsFunctions
 
 	internal static int WholeGrams(decimal grams) => (int)Math.Min(int.MaxValue, Math.Max(0m, grams));
 
-	public static void AddWeedOz(int _amount)
+	// The attribute is authoritative. Keep whole historical units in the element
+	// text so older builds can still read the whole packages.
+	internal static decimal ReadStockGrams(XElement element)
 	{
-		pWeedOunce += _amount;
+		XAttribute grams = element.Attribute("grams");
+		if (grams != null)
+			return (decimal)grams;
+
+		return int.TryParse(element.Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out int ounces)
+			? OuncesToGrams(ounces) : 0m;
 	}
 
-	public static void AddCrackOz(int _amount)
+	internal static bool WriteStockGrams(XElement element, decimal grams)
 	{
-		pCrackOunce += _amount;
-	}
+		string legacy = decimal.Truncate(grams / GramsPerOunce).ToString(CultureInfo.InvariantCulture);
+		string metric = grams.ToString(CultureInfo.InvariantCulture);
+		if (element.Value == legacy && (string)element.Attribute("grams") == metric)
+			return false;
 
-	public static void AddCocaineOz(int _amount)
-	{
-		pCocaineOunce += _amount;
+		element.Value = legacy;
+		element.SetAttributeValue("grams", metric);
+		return true;
 	}
 }

@@ -55,9 +55,9 @@ public partial class LSL
 			"argent : " + dealer1Money,
 			"reload : " + dealer1ReloadOrder,
 			"reloaded : " + dealer1Reloaded,
-			"cannabis : " + dealer1Weed,
-			"crack : " + dealer1Crack,
-			"cocaine : " + dealer1Cocain
+			"cannabis : " + dealerWeedGrams,
+			"crack : " + dealerCrackGrams,
+			"cocaine : " + dealerCocaineGrams
 		});
 	}
 
@@ -305,9 +305,9 @@ internal static class Hud
 			};
 			string[] raw =
 			{
-				LsFunctions.FormatOunceWeight(LsFunctions.pWeedOunce),
-				LsFunctions.FormatOunceWeight(LsFunctions.pCrackOunce),
-				LsFunctions.FormatOunceWeight(LsFunctions.pCocaineOunce)
+				LsFunctions.FormatWeight(LsFunctions.playerBulkWeedGrams),
+				LsFunctions.FormatWeight(LsFunctions.playerBulkCrackGrams),
+				LsFunctions.FormatWeight(LsFunctions.playerBulkCocaineGrams)
 			};
 			for (int i = 0; i < 3; i++)
 			{
