@@ -24,11 +24,11 @@ public class StashHouse
 
 	public bool inside;
 
-	public int Weed;
+	public decimal Weed;
 
-	public int Crack;
+	public decimal Crack;
 
-	public int Cocain;
+	public decimal Cocain;
 
 	public int WeedOz;
 
@@ -84,7 +84,7 @@ public class StashHouse
 		}
 	}
 
-	public StashHouse(int _id, Vector3 _entrancePos, Vector3 _exitPos, Vector3 _stashPos, Vector3 _health, bool _purchased, int _price, bool _inside, int _Weed, int _Crack, int _Cocain, int _Money, int _Armor, List<XElement> _weapons, List<dynamic> _weps)
+	public StashHouse(int _id, Vector3 _entrancePos, Vector3 _exitPos, Vector3 _stashPos, Vector3 _health, bool _purchased, int _price, bool _inside, decimal _Weed, decimal _Crack, decimal _Cocain, int _Money, int _Armor, List<XElement> _weapons, List<dynamic> _weps)
 	{
 		//IL_0019: Unknown result type (might be due to invalid IL or missing references)
 		//IL_0030: Unknown result type (might be due to invalid IL or missing references)
@@ -127,11 +127,11 @@ public class StashHouse
 		LSL.PlayerInventory["Crack"] = 0;
 		Cocain += LSL.PlayerInventory["Cocaine"];
 		LSL.PlayerInventory["Cocaine"] = 0;
-		Weed += LsFunctions.pWeedOunce * 28;
+		Weed += LsFunctions.OuncesToGrams(LsFunctions.pWeedOunce);
 		LsFunctions.pWeedOunce = 0;
-		Crack += LsFunctions.pCrackOunce * 28;
+		Crack += LsFunctions.OuncesToGrams(LsFunctions.pCrackOunce);
 		LsFunctions.pCrackOunce = 0;
-		Cocain += LsFunctions.pCocaineOunce * 28;
+		Cocain += LsFunctions.OuncesToGrams(LsFunctions.pCocaineOunce);
 		LsFunctions.pCocaineOunce = 0;
 		LsFunctions.UpdateInventory();
 		LSL.HouseHandler.SaveHouse(this);

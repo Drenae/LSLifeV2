@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -80,9 +81,9 @@ public class StashHouseHandler
 			Vector3 health = Vector3.Zero;
 			int price = 0;
 			bool purchased = false;
-			int weed = 0;
-			int crack = 0;
-			int cocain = 0;
+			decimal weed = 0;
+			decimal crack = 0;
+			decimal cocain = 0;
 			int armour = 0;
 			int money = 0;
 			bool inside = false;
@@ -195,11 +196,11 @@ public class StashHouseHandler
 					{
 						if (found)
 						{
-							ele5.Value = weed.ToString();
+							WriteStashWeight(ele5, weed);
 						}
 						else
 						{
-							int.TryParse(ele5.Value, out weed);
+							weed = ReadStashWeight(ele5);
 							if (LSL.DEBUG)
 							{
 								UI.Notify("~y~Weed : " + weed);
@@ -210,22 +211,22 @@ public class StashHouseHandler
 					{
 						if (found)
 						{
-							ele5.Value = crack.ToString();
+							WriteStashWeight(ele5, crack);
 						}
 						else
 						{
-							int.TryParse(ele5.Value, out crack);
+							crack = ReadStashWeight(ele5);
 						}
 					}
 					if (ele5.Name == "cocain")
 					{
 						if (found)
 						{
-							ele5.Value = cocain.ToString();
+							WriteStashWeight(ele5, cocain);
 						}
 						else
 						{
-							int.TryParse(ele5.Value, out cocain);
+							cocain = ReadStashWeight(ele5);
 						}
 					}
 					if (ele5.Name == "money")
@@ -303,15 +304,15 @@ public class StashHouseHandler
 				{
 					if (ele.Name == "weed")
 					{
-						ele.Value = _house.Weed.ToString();
+						WriteStashWeight(ele, _house.Weed);
 					}
 					if (ele.Name == "crack")
 					{
-						ele.Value = _house.Crack.ToString();
+						WriteStashWeight(ele, _house.Crack);
 					}
 					if (ele.Name == "cocain")
 					{
-						ele.Value = _house.Cocain.ToString();
+						WriteStashWeight(ele, _house.Cocain);
 					}
 					if (ele.Name == "money")
 					{
@@ -332,14 +333,35 @@ public class StashHouseHandler
 		}
 	}
 
+	// Keep the legacy whole-gram value readable by earlier versions.
+	private const string FractionalGramsAttribute = "fractionalGrams";
+
+	private static decimal ReadStashWeight(XElement element)
+	{
+		decimal.TryParse(element.Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out decimal whole);
+		decimal.TryParse((string)element.Attribute(FractionalGramsAttribute), NumberStyles.AllowDecimalPoint,
+			CultureInfo.InvariantCulture, out decimal fraction);
+		return fraction > 0m && fraction < 1m ? whole + fraction : whole;
+	}
+
+	private static void WriteStashWeight(XElement element, decimal grams)
+	{
+		decimal whole = Math.Floor(grams);
+		decimal fraction = grams - whole;
+		element.Value = whole.ToString(CultureInfo.InvariantCulture);
+		element.SetAttributeValue(FractionalGramsAttribute,
+			fraction == 0m ? null : fraction.ToString(CultureInfo.InvariantCulture));
+	}
+
 	public int TotalStashDrugs()
 	{
-		int drugs = 0;
+		long drugs = 0;
 		foreach (StashHouse house in Houses)
 		{
-			drugs += house.Weed + house.Crack + house.Cocain;
+			drugs += (long)LsFunctions.WholeGrams(house.Weed) +
+				LsFunctions.WholeGrams(house.Crack) + LsFunctions.WholeGrams(house.Cocain);
 		}
-		return drugs;
+		return (int)Math.Min(int.MaxValue, drugs);
 	}
 
 

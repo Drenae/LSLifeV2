@@ -29,15 +29,15 @@ internal static class HouseStashTransfer
                 break;
             case 3:
                 amount = Math.Min(requested, LsFunctions.pWeedOunce);
-                house.Weed += amount * 28; LsFunctions.pWeedOunce -= amount;
+                house.Weed += LsFunctions.OuncesToGrams(amount); LsFunctions.pWeedOunce -= amount;
                 break;
             case 4:
                 amount = Math.Min(requested, LsFunctions.pCrackOunce);
-                house.Crack += amount * 28; LsFunctions.pCrackOunce -= amount;
+                house.Crack += LsFunctions.OuncesToGrams(amount); LsFunctions.pCrackOunce -= amount;
                 break;
             case 5:
                 amount = Math.Min(requested, LsFunctions.pCocaineOunce);
-                house.Cocain += amount * 28; LsFunctions.pCocaineOunce -= amount;
+                house.Cocain += LsFunctions.OuncesToGrams(amount); LsFunctions.pCocaineOunce -= amount;
                 break;
             case 6:
                 amount = Math.Min(requested, Game.Player.Money);
@@ -77,15 +77,15 @@ internal static class HouseStashTransfer
         switch (kind)
         {
             case 0:
-                amount = Math.Min(requested, house.Weed);
+                amount = Math.Min(requested, LsFunctions.WholeGrams(house.Weed));
                 house.Weed -= amount; LSL.PlayerInventory["Weed"] += amount;
                 break;
             case 1:
-                amount = Math.Min(requested, house.Crack);
+                amount = Math.Min(requested, LsFunctions.WholeGrams(house.Crack));
                 house.Crack -= amount; LSL.PlayerInventory["Crack"] += amount;
                 break;
             case 2:
-                amount = Math.Min(requested, house.Cocain);
+                amount = Math.Min(requested, LsFunctions.WholeGrams(house.Cocain));
                 house.Cocain -= amount; LSL.PlayerInventory["Cocaine"] += amount;
                 break;
             case 6:

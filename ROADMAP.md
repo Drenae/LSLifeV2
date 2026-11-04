@@ -13,8 +13,14 @@ Branche active `feature/stabilization-metric-ui`, base SHVDN2 validée `01b6e70`
 
 - Les quantités visibles passent en grammes sous 1 kg, puis en kilogrammes. Le format français retire les zéros inutiles. Le HUD, les commandes et SMS Zee, les coffres, les planques, les employés, les ventes et les livraisons partagent le même format.
 - Pour les champs historiques comptés en onces, le calcul d’affichage utilise exactement 28,349523125 g par once. Les décimales sont arrondies à l’écran. Les prix et le XML gardent leurs valeurs actuelles.
-- La migration interne reste à faire. Les transferts vers une planque et le poids de l’inventaire emploient encore 28 g par unité dans leurs calculs. Un écart d’affichage peut donc apparaître quand ces transferts traversent l’ancienne frontière entre onces et grammes.
+- Affichage métrique validé en jeu par l’utilisateur. Le poids global de l’inventaire, les commandes et les autres stocks historiques restent à migrer.
 - À vérifier en jeu après compilation : stock et prix chez Zee, mêmes quantités dans le HUD et le coffre, affichage sous et au-dessus de 1 kg, lisibilité des valeurs longues et des SMS.
+
+## Lot métrique — transferts vers les planques
+
+- Les dépôts depuis le menu et les dépôts automatiques créditent exactement 28,349523125 g par once. Le retrait vers l’inventaire actuel reste par grammes entiers. La fraction reste disponible dans la planque et s’accumule avec les dépôts suivants.
+- Le XML conserve les grammes entiers dans le texte des champs historiques et stocke le reste dans un attribut facultatif `fractionalGrams`, en culture invariante. Les anciennes sauvegardes se lisent sans conversion ni réécriture préalable. Une version antérieure ne comptabilise que les grammes entiers.
+- À vérifier après compilation : déposer une once, retirer 28 g, relancer GTA et vérifier le reliquat. Répéter avec plusieurs onces et vérifier que les fractions accumulées deviennent retirables par grammes entiers.
 
 ## Lot XML — protections livrées
 

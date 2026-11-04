@@ -136,7 +136,11 @@ internal static partial class LsFunctions
 			: grams.ToString("0.##", WeightCulture) + " g";
 	}
 
-	public static string FormatOunceWeight(int ounces) => FormatWeight(ounces * GramsPerOunce);
+	public static string FormatOunceWeight(int ounces) => FormatWeight(OuncesToGrams(ounces));
+
+	internal static decimal OuncesToGrams(int ounces) => ounces * GramsPerOunce;
+
+	internal static int WholeGrams(decimal grams) => (int)Math.Min(int.MaxValue, Math.Max(0m, grams));
 
 	public static void AddWeedOz(int _amount)
 	{

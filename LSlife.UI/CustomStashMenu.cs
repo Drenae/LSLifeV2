@@ -122,9 +122,9 @@ internal static class CustomStashMenu
             var house = LSL.HouseHandler.CurrentHouse;
             switch (k)
             {
-                case 0: return house.Weed;
-                case 1: return house.Crack;
-                case 2: return house.Cocain;
+                case 0: return LsFunctions.WholeGrams(house.Weed);
+                case 1: return LsFunctions.WholeGrams(house.Crack);
+                case 2: return LsFunctions.WholeGrams(house.Cocain);
             }
         }
         return 0;
