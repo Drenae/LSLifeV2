@@ -31,6 +31,11 @@ Branche active `feature/stabilization-metric-ui`, base SHVDN2 validée `01b6e70`
 - La confiscation tient compte des coffres contenant uniquement du stock en onces et efface ce stock avec les autres quantités de drogue du coffre.
 - À vérifier en jeu : retrait d’une commande près de la limite, apparition et retrait du sac, coffre contenant uniquement du stock en onces. La migration des quantités sélectionnables et stockées reste à traiter.
 
+## Lot métrique — sélection chez Zee
+
+- Le menu présente le pas de commande en g/kg. Les pas correspondent encore à des conditionnements entiers. Le devis et la réservation utilisent la même remise, et la sélection est ramenée au stock disponible après chaque ajout.
+- Les quantités libres en grammes exigent encore de migrer le stock fournisseur, le panier, la remise de commande et le stockage historique du joueur et du coffre.
+
 ## Lot XML — protections livrées
 
 - Les écritures d’inventaire, de Zee, des dealers, des planques, des véhicules et coffres, des armes, des quartiers, des points d’apparition et des paramètres HUD utilisent le même service. Les définitions de zones et le fichier historique des armes de planque sont lus par ce service.

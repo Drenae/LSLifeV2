@@ -100,9 +100,9 @@ internal static class CustomZeeMenu
         {
             cannabisMenu = new CustomMenu("CANNABIS", "ZEE / COMMANDES");
             cannabisMenu.Add("Quantite", () => ChangeCannabis(1));
-            cannabisMenu.Add("Multiplicateur", () => ChangeCannabisMultiplier(1));
+            cannabisMenu.Add("Pas de quantité", () => ChangeCannabisMultiplier(1));
             cannabisMenu.Add("Ajouter a la commande", AddCannabis,
-                () => LSL.dealer1Weed > 0 && weedAmount > 0);
+                () => weedAmount > 0 && weedAmount <= LSL.dealer1Weed);
         }
         orderMenu.Close();
         weedAmount = Math.Min(weedAmount, LSL.dealer1Weed);
@@ -118,9 +118,9 @@ internal static class CustomZeeMenu
         {
             crackMenu = new CustomMenu("CRACK", "ZEE / COMMANDES");
             crackMenu.Add("Quantite", () => ChangeQuantity(1, 1));
-            crackMenu.Add("Multiplicateur", () => ChangeCannabisMultiplier(1));
+            crackMenu.Add("Pas de quantité", () => ChangeCannabisMultiplier(1));
             crackMenu.Add("Ajouter a la commande", () => AddDrug(1),
-                () => LSL.dealer1Crack > 0 && crackAmount > 0);
+                () => crackAmount > 0 && crackAmount <= LSL.dealer1Crack);
         }
         OpenDrugMenu(crackMenu, 1);
     }
@@ -131,9 +131,9 @@ internal static class CustomZeeMenu
         {
             cocaineMenu = new CustomMenu("COCAINE", "ZEE / COMMANDES");
             cocaineMenu.Add("Quantite", () => ChangeQuantity(2, 1));
-            cocaineMenu.Add("Multiplicateur", () => ChangeCannabisMultiplier(1));
+            cocaineMenu.Add("Pas de quantité", () => ChangeCannabisMultiplier(1));
             cocaineMenu.Add("Ajouter a la commande", () => AddDrug(2),
-                () => LSL.dealer1Cocain > 0 && cocaineAmount > 0);
+                () => cocaineAmount > 0 && cocaineAmount <= LSL.dealer1Cocain);
         }
         OpenDrugMenu(cocaineMenu, 2);
     }
@@ -176,7 +176,7 @@ internal static class CustomZeeMenu
     {
         int price = target == cannabisMenu ? LSL.weed1Price :
             target == crackMenu ? LSL.crack1Price : LSL.cocain1Price;
-        return price - LsFunctions.Discount(price);
+        return ZeeDrugOrderActions.DiscountedPricePerPackage(price);
     }
 
     private static string FormatDrugPricePerGram(CustomMenu target)
@@ -200,6 +200,9 @@ internal static class CustomZeeMenu
             drug == 1 ? ZeeDrugOrderActions.AddCrack(crackAmount) :
             ZeeDrugOrderActions.AddCocaine(cocaineAmount);
         if (!added) return;
+        if (drug == 0) weedAmount = Math.Min(weedAmount, LSL.dealer1Weed);
+        else if (drug == 1) crackAmount = Math.Min(crackAmount, LSL.dealer1Crack);
+        else cocaineAmount = Math.Min(cocaineAmount, LSL.dealer1Cocain);
     }
 
     private static void PlaceExistingOrder()
@@ -355,7 +358,7 @@ internal static class CustomZeeMenu
             }
             if (IsDrugMenu(displayed) && i == 1)
             {
-                CustomMenuRenderer.TextRightCenteredVertically("< x" + orderMultiplier + " >",
+                CustomMenuRenderer.TextRightCenteredVertically("< " + LsFunctions.FormatOunceWeight(orderMultiplier) + " >",
                     left + width - 0.018f, y + 0.0005f, 0.040f, 0.305f,
                     218, 176, 101, 255);
             }
