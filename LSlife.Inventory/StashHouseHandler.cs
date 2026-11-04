@@ -65,7 +65,7 @@ public class StashHouseHandler
 			UI.Notify("~r~Fichier StashHouses.xml manquant");
 			return;
 		}
-		XDocument StashDoc = XDocument.Load("scripts\\LSLife\\LSLife_StashHouses.xml");
+		XDocument StashDoc = XmlSaveFile.Load("scripts\\LSLife\\LSLife_StashHouses.xml");
 		foreach (XElement e in StashDoc.Descendants())
 		{
 			if (!(e.Name == "house"))
@@ -93,7 +93,7 @@ public class StashHouseHandler
 				{
 					found = true;
 					lEle.Remove();
-					LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
+					XmlSaveFile.Save(LSL.LSLifeSave, "scripts\\LSLife\\LSLifeSave.xml");
 					break;
 				}
 			}
@@ -274,7 +274,7 @@ public class StashHouseHandler
 			}
 			if (found)
 			{
-				StashDoc.Save("scripts\\LSLife\\LSLife_StashHouses.xml");
+				XmlSaveFile.Save(StashDoc, "scripts\\LSLife\\LSLife_StashHouses.xml");
 			}
 			Houses.Add(new StashHouse(id, entrance, exit, stash, health, purchased, price, inside, weed, crack, cocain, money, armour, sWeapons, sWeps));
 		}
@@ -286,7 +286,7 @@ public class StashHouseHandler
 
 	public void SaveHouse(StashHouse _house)
 	{
-		XDocument StashDoc = XDocument.Load("scripts\\LSLife\\LSLife_StashHouses.xml");
+		XDocument StashDoc = XmlSaveFile.Load("scripts\\LSLife\\LSLife_StashHouses.xml");
 		foreach (XElement e in StashDoc.Descendants())
 		{
 			if (!(e.Name == "house") || !(e.FirstAttribute.Value == _house.id.ToString()))
@@ -321,20 +321,14 @@ public class StashHouseHandler
 					{
 						ele.Value = _house.Armor.ToString();
 					}
-					XElement wEle = new XElement("weapons");
-					foreach (XElement wep in _house.Weapons)
-					{
-						wEle.Add(wep);
-					}
 					if (ele.Name == "weapons")
 					{
-						ele.Remove();
-						el.Add(wEle);
-						break;
+						ele.Elements("weapon").Remove();
+						ele.Add(_house.Weapons.Select(weapon => new XElement(weapon)));
 					}
 				}
 			}
-			StashDoc.Save("scripts\\LSLife\\LSLife_StashHouses.xml");
+			XmlSaveFile.Save(StashDoc, "scripts\\LSLife\\LSLife_StashHouses.xml");
 		}
 	}
 

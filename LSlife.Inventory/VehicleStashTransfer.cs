@@ -43,7 +43,7 @@ internal static class VehicleStashTransfer
         string[] inventoryKeys = { "weed", "crack", "cocain", "weedOz", "crackOz", "cocaineOz" };
         string[] vehicleKeys = { "weed", "crack", "cocain", "weedOz", "crackOz", "cocainOz", "money" };
         const string path = "scripts\\LSLife\\LSLifeSave.xml";
-        LSL.LSLifeSave = XDocument.Load(path);
+        LSL.LSLifeSave = XmlSaveFile.Load(path);
         foreach (XElement element in LSL.LSLifeSave.Descendants())
         {
             if (kind < 6 && element.Name == "playerInventory")
@@ -57,7 +57,7 @@ internal static class VehicleStashTransfer
                 if (field != null) field.Value = nextStored.ToString();
             }
         }
-        LSL.LSLifeSave.Save(path);
+        XmlSaveFile.Save(LSL.LSLifeSave, path);
         car.UpdateCarStash();
         return true;
     }

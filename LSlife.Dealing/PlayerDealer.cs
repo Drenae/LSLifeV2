@@ -155,7 +155,7 @@ public class PlayerDealer
 		//IL_00e4: Unknown result type (might be due to invalid IL or missing references)
 		//IL_0110: Unknown result type (might be due to invalid IL or missing references)
 		//IL_0115: Unknown result type (might be due to invalid IL or missing references)
-		XDocument dealerDoc = XDocument.Load("scripts\\LSLife\\LSLife_Dealers.xml");
+		XDocument dealerDoc = XmlSaveFile.Load("scripts\\LSLife\\LSLife_Dealers.xml");
 		Money = 0;
 		Pos = ((Entity)Ped).Position;
 		Model model = ((Entity)Ped).Model;
@@ -266,7 +266,7 @@ public class PlayerDealer
 			parentElement.Add(pedData);
 		}
 		dealerDoc.Root.Add(parentElement);
-		dealerDoc.Save("scripts\\LSLife\\LSLife_Dealers.xml");
+		XmlSaveFile.Save(dealerDoc, "scripts\\LSLife\\LSLife_Dealers.xml");
 	}
 
 	public void OnTick()
@@ -514,9 +514,9 @@ public class PlayerDealer
 					break;
 				case Enums.PdStates.Resting:
 				{
-					XDocument dealerDoc1 = XDocument.Load("scripts\\LSLife\\LSLife_Dealers.xml");
+					XDocument dealerDoc1 = XmlSaveFile.Load("scripts\\LSLife\\LSLife_Dealers.xml");
 					LSL.DealerHandler.SaveDealer(this, dealerDoc1);
-					dealerDoc1.Save("scripts\\LSLife\\LSLife_Dealers.xml");
+					XmlSaveFile.Save(dealerDoc1, "scripts\\LSLife\\LSLife_Dealers.xml");
 					CurrentState = Enums.PdStates.Resting;
 					break;
 				}

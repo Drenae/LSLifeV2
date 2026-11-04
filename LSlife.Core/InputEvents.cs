@@ -109,14 +109,14 @@ public partial class LSL
 					LsFunctions.PlayTheSound();
 					Vector3 vPos = ((Entity)player.Character.CurrentVehicle).Position;
 					float vHead = ((Entity)player.Character.CurrentVehicle).Heading;
-					XDocument xDocument = XDocument.Load("scripts\\LSLife\\LSLife_Spawns.xml");
+					XDocument xDocument = XmlSaveFile.Load("scripts\\LSLife\\LSLife_Spawns.xml");
 					XElement ePos = new XElement("pos");
 					ePos.Add(new XElement("x", vPos.X));
 					ePos.Add(new XElement("y", vPos.Y));
 					ePos.Add(new XElement("z", vPos.Z));
 					ePos.Add(new XElement("h", vHead));
 					xDocument.Root.Add(ePos);
-					xDocument.Save("scripts\\LSLife\\LSLife_Spawns.xml");
+					XmlSaveFile.Save(xDocument, "scripts\\LSLife\\LSLife_Spawns.xml");
 					UI.Notify("Position ajoutée au fichier XML");
 				}
 				else

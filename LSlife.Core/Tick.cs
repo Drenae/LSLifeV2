@@ -1258,7 +1258,7 @@ public partial class LSL
 			attackerWeed = 0;
 			attackerCrack = 0;
 			attackerCocaine = 0;
-			LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
+			LSLifeSave = XmlSaveFile.Load("scripts\\LSLife\\LSLifeSave.xml");
 			foreach (XElement element2 in LSLifeSave.Descendants())
 			{
 				if (!(element2.Name == "playerInventory"))
@@ -1281,7 +1281,7 @@ public partial class LSL
 					}
 				}
 			}
-			LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
+			XmlSaveFile.Save(LSLifeSave, "scripts\\LSLife\\LSLifeSave.xml");
 		}
 		if (areas.Count > 0 && playerWanted && areas[areaIndex].Heat < 5000f)
 		{
@@ -1415,7 +1415,7 @@ public partial class LSL
 						{
 							PlayerInventory[drug5] = 0;
 						}
-						LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
+						LSLifeSave = XmlSaveFile.Load("scripts\\LSLife\\LSLifeSave.xml");
 						foreach (XElement element4 in LSLifeSave.Descendants())
 						{
 							if (!(element4.Name == "playerInventory"))
@@ -1438,7 +1438,7 @@ public partial class LSL
 								}
 							}
 						}
-						LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
+						XmlSaveFile.Save(LSLifeSave, "scripts\\LSLife\\LSLifeSave.xml");
 					}
 				}
 			}
@@ -1457,7 +1457,7 @@ public partial class LSL
 						{
 							PlayerInventory[drug6] = 0;
 						}
-						LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
+						LSLifeSave = XmlSaveFile.Load("scripts\\LSLife\\LSLifeSave.xml");
 						foreach (XElement element5 in LSLifeSave.Descendants())
 						{
 							if (!(element5.Name == "playerInventory"))
@@ -1480,7 +1480,7 @@ public partial class LSL
 								}
 							}
 						}
-						LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
+						XmlSaveFile.Save(LSLifeSave, "scripts\\LSLife\\LSLifeSave.xml");
 					}
 				}
 			}

@@ -43,7 +43,7 @@ internal static class VehicleArmourTransfer
                 armour.Value = (section.Name == "drugCarStash"
                     ? car.drugCarArmour : LSL.playerArmours).ToString();
             }
-            LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
+            XmlSaveFile.Save(LSL.LSLifeSave, "scripts\\LSLife\\LSLifeSave.xml");
         }
         return true;
     }

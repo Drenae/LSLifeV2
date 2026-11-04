@@ -111,7 +111,7 @@ internal static partial class LsFunctions
 						if (drugCarEle.Name == "reloaded")
 						{
 							drugCarEle.Value = LSL.dealer1Reloaded.ToString();
-							LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
+							XmlSaveFile.Save(LSL.LSLifeSave, "scripts\\LSLife\\LSLifeSave.xml");
 							break;
 						}
 					}
@@ -182,7 +182,7 @@ internal static partial class LsFunctions
 				cocainMoney -= (float)(finalCocain * dCocaine);
 				LSL.dealer1Money += (int)weedMoney + (int)crackMoney + (int)cocainMoney;
 				TextMsg("ZEE", "Réapprovisionnement", "Cannabis : " + finalWeed + "oz, crack : " + finalCrack + "oz, cocaïne : " + finalCocain + "oz.");
-				LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
+				LSL.LSLifeSave = XmlSaveFile.Load("scripts\\LSLife\\LSLifeSave.xml");
 				UpdateSave();
 			}
 			if (LSL.day == dDay && !LSL.dealer1Reloaded && LSL.dealer1ReloadOrder)
@@ -241,7 +241,7 @@ internal static partial class LsFunctions
 				{
 					UI.Notify("Cannabis : " + finalWeed2 + " crack : " + finalCrack2 + " cocaïne : " + finalCocain2);
 				}
-				LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
+				LSL.LSLifeSave = XmlSaveFile.Load("scripts\\LSLife\\LSLifeSave.xml");
 				UpdateSave();
 			}
 			if (LSL.areas.Count > 0)
@@ -280,7 +280,7 @@ internal static partial class LsFunctions
 			return;
 		}
 		LSL.day = Function.Call<int>(unchecked((Hash)(-2777906517671992481L)));
-		LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
+		LSL.LSLifeSave = XmlSaveFile.Load("scripts\\LSLife\\LSLifeSave.xml");
 		if (LSL.dealer1Money > 1200000)
 		{
 			LSL.dealer1Money = 1200000;
@@ -378,7 +378,7 @@ internal static partial class LsFunctions
 				}
 			}
 		}
-		LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
+		XmlSaveFile.Save(LSL.LSLifeSave, "scripts\\LSLife\\LSLifeSave.xml");
 		UpdateSave();
 	}
 

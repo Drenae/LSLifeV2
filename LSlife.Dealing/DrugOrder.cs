@@ -139,7 +139,7 @@ public class DrugOrder
 
 	private void SaveOrder()
 	{
-		LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
+		LSL.LSLifeSave = XmlSaveFile.Load("scripts\\LSLife\\LSLifeSave.xml");
 		foreach (XElement element in LSL.LSLifeSave.Descendants())
 		{
 			if (element.Name == "playerInventory")
@@ -206,7 +206,7 @@ public class DrugOrder
 				}
 			}
 		}
-		LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
+		XmlSaveFile.Save(LSL.LSLifeSave, "scripts\\LSLife\\LSLifeSave.xml");
 	}
 
 	public bool PlayerCanPickup()

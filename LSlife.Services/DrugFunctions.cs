@@ -122,7 +122,7 @@ internal static partial class LsFunctions
 		}
 		if (saveChanged)
 		{
-			LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
+			XmlSaveFile.Save(LSL.LSLifeSave, "scripts\\LSLife\\LSLifeSave.xml");
 		}
 	}
 

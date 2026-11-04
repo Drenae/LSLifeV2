@@ -100,14 +100,14 @@ public class StashVehicle
 			if (!armourFound)
 			{
 				element.Add(new XElement("armour", 0));
-				LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
+				XmlSaveFile.Save(LSL.LSLifeSave, "scripts\\LSLife\\LSLifeSave.xml");
 			}
 			if (!foundOz)
 			{
 				element.Add(new XElement("weedOz", 0));
 				element.Add(new XElement("crackOz", 0));
 				element.Add(new XElement("cocainOz", 0));
-				LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
+				XmlSaveFile.Save(LSL.LSLifeSave, "scripts\\LSLife\\LSLifeSave.xml");
 			}
 		}
 		foreach (XElement element2 in LSL.VehicleXml.Descendants())
@@ -187,7 +187,7 @@ public class StashVehicle
 		LsFunctions.pCrackOunce = 0;
 		drugCarCocainOz += LsFunctions.pCocaineOunce;
 		LsFunctions.pCocaineOunce = 0;
-		LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
+		LSL.LSLifeSave = XmlSaveFile.Load("scripts\\LSLife\\LSLifeSave.xml");
 		foreach (XElement element in LSL.LSLifeSave.Descendants())
 		{
 			if (element.Name == "playerInventory")
@@ -255,7 +255,7 @@ public class StashVehicle
 				}
 			}
 		}
-		LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
+		XmlSaveFile.Save(LSL.LSLifeSave, "scripts\\LSLife\\LSLifeSave.xml");
 		UpdateCarStash();
 	}
 
@@ -497,7 +497,7 @@ public class StashVehicle
 			((Entity)drugCar).CurrentBlip.Remove();
 			drugCar = null;
 			drugCarDestroyed = true;
-			LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
+			LSL.LSLifeSave = XmlSaveFile.Load("scripts\\LSLife\\LSLifeSave.xml");
 			foreach (XElement element in LSL.LSLifeSave.Descendants())
 			{
 				if (!(element.Name == "drugCarStash"))
@@ -524,8 +524,8 @@ public class StashVehicle
 					}
 				}
 			}
-			LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
-			XDocument veh2 = XDocument.Load("scripts\\LSLife\\LSLife_Vehicles.xml");
+			XmlSaveFile.Save(LSL.LSLifeSave, "scripts\\LSLife\\LSLifeSave.xml");
+			XDocument veh2 = XmlSaveFile.Load("scripts\\LSLife\\LSLife_Vehicles.xml");
 			foreach (XElement element2 in veh2.Descendants())
 			{
 				if (element2.Name == "Destroyed")
@@ -533,7 +533,7 @@ public class StashVehicle
 					element2.Value = drugCarDestroyed.ToString();
 				}
 			}
-			veh2.Save("scripts\\LSLife\\LSLife_Vehicles.xml");
+			XmlSaveFile.Save(veh2, "scripts\\LSLife\\LSLife_Vehicles.xml");
 		}
 		if (drugCarDestroyed || !((Entity)(object)drugCar != (Entity)null) || !(LSL.playerPos.DistanceTo(CurrentPosition) > 200f) || !((Entity)drugCar).Exists())
 		{
@@ -597,7 +597,7 @@ public class StashVehicle
 		{
 			((Entity)drugCar).CurrentBlip.Remove();
 		}
-		XDocument veh = XDocument.Load("scripts\\LSLife\\LSLife_Vehicles.xml");
+		XDocument veh = XmlSaveFile.Load("scripts\\LSLife\\LSLife_Vehicles.xml");
 		foreach (XElement element in veh.Descendants())
 		{
 			if (element.Name == "Destroyed")
@@ -605,7 +605,7 @@ public class StashVehicle
 				element.Value = drugCarDestroyed.ToString();
 			}
 		}
-		veh.Save("scripts\\LSLife\\LSLife_Vehicles.xml");
+		XmlSaveFile.Save(veh, "scripts\\LSLife\\LSLife_Vehicles.xml");
 		drugCar = null;
 	}
 
@@ -617,7 +617,7 @@ public class StashVehicle
 		}
 		LsFunctions.SendTextMsg("Le véhicule de stockage a été confisqué et son contenu détruit.");
 		drugCarDestroyed = true;
-		XDocument veh = XDocument.Load("scripts\\LSLife\\LSLife_Vehicles.xml");
+		XDocument veh = XmlSaveFile.Load("scripts\\LSLife\\LSLife_Vehicles.xml");
 		foreach (XElement element in veh.Descendants())
 		{
 			if (element.Name == "Destroyed")
@@ -626,14 +626,14 @@ public class StashVehicle
 				break;
 			}
 		}
-		veh.Save("scripts\\LSLife\\LSLife_Vehicles.xml");
+		XmlSaveFile.Save(veh, "scripts\\LSLife\\LSLife_Vehicles.xml");
 		drugCarWanted = false;
 		((Entity)drugCar).IsPersistent = false;
 		((Entity)drugCar).MarkAsNoLongerNeeded();
 		((Entity)drugCar).CurrentBlip.Remove();
 		((Entity)drugCar).Delete();
 		drugCar = null;
-		LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
+		LSL.LSLifeSave = XmlSaveFile.Load("scripts\\LSLife\\LSLifeSave.xml");
 		foreach (XElement element2 in LSL.LSLifeSave.Descendants())
 		{
 			if (element2.Name == "drugCar")
@@ -671,7 +671,7 @@ public class StashVehicle
 				}
 			}
 		}
-		LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
+		XmlSaveFile.Save(LSL.LSLifeSave, "scripts\\LSLife\\LSLifeSave.xml");
 	}
 
 	private void VehicleLoad()
@@ -718,7 +718,7 @@ public class StashVehicle
 		float fuel = 0f;
 		int livery = -1;
 		bool customTire = false;
-		XDocument vehiclesXML = XDocument.Load("scripts\\LSLife\\LSLife_Vehicles.xml");
+		XDocument vehiclesXML = XmlSaveFile.Load("scripts\\LSLife\\LSLife_Vehicles.xml");
 		foreach (XElement veh in vehiclesXML.Descendants())
 		{
 			if (!(veh.Name == "Vehicle"))
@@ -1015,7 +1015,7 @@ public class StashVehicle
 				}
 			}
 		}
-		XDocument vehiclesXML = XDocument.Load("scripts\\LSLife\\LSLife_Vehicles.xml");
+		XDocument vehiclesXML = XmlSaveFile.Load("scripts\\LSLife\\LSLife_Vehicles.xml");
 		XElement rootElement = vehiclesXML.Root;
 		rootElement.RemoveAll();
 		XElement parentElement = new XElement("Vehicle");
@@ -1073,7 +1073,7 @@ public class StashVehicle
 		parentElement.Add(toggleModsElement);
 		parentElement.Add(neonsElement);
 		rootElement.Add(parentElement);
-		vehiclesXML.Save("scripts\\LSLife\\LSLife_Vehicles.xml");
+		XmlSaveFile.Save(vehiclesXML, "scripts\\LSLife\\LSLife_Vehicles.xml");
 		drugCar = veh;
 		((Entity)drugCar).IsPersistent = true;
 		if (((Entity)drugCar).CurrentBlip != (Blip)null)
@@ -1123,7 +1123,7 @@ public class StashVehicle
 		}
 		vehWeapons.Clear();
 		vehWeps.Clear();
-		LSL.vehWeaponsXML = XDocument.Load("scripts\\LSLife\\LsLife_Vehicle_Weapons.xml");
+		LSL.vehWeaponsXML = XmlSaveFile.Load("scripts\\LSLife\\LsLife_Vehicle_Weapons.xml");
 		foreach (XElement element in LSL.vehWeaponsXML.Descendants())
 		{
 			if (!(element.Name == "weapon"))

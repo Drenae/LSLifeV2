@@ -2,12 +2,26 @@
 
 Branche active `feature/stabilization-metric-ui`, base SHVDN2 validée `01b6e70`. Cible GTA V Legacy solo, .NET Framework 4.8 x64, iFruitAddon2 et CustomMenu. Les entrées ci-dessous sur NativeUI, SHVDN3 et les gangs sont conservées comme historique. Les travaux actifs suivent les priorités de cette section.
 
-1. **Stabilisation des interactions et de l’arrêt.** Ce premier lot lie les menus employé, client et stockage à leur cible d’ouverture. Les remises aux employés revalident le PNJ après les animations. Les ventes interrompues avant paiement ne rapportent plus de réputation. L’arrêt tolère notamment les clients déjà supprimés, les véhicules absents et les blips manquants. À poursuivre après validation avec le cycle des commandes Zee, les transitions de menus et la mesure des traitements par Tick.
+1. **Stabilisation des interactions et de l’arrêt.** Premier lot validé en jeu par l’utilisateur. Ce lot lie les menus employé, client et stockage à leur cible d’ouverture. Les remises aux employés revalident le PNJ après les animations. Les ventes interrompues avant paiement ne rapportent plus de réputation. L’arrêt tolère notamment les clients déjà supprimés, les véhicules absents et les blips manquants. À poursuivre après validation avec le cycle des commandes Zee, les transitions de menus et la mesure des traitements par Tick.
 2. **Sauvegardes XML.** Priorité aux écritures directes et aux transactions réparties entre plusieurs fichiers. `LSLifeSave.xml` contient notamment inventaire, coffre, données Zee et HUD. `LSLife_Dealers.xml` contient les employés, leurs stocks, recettes et équipement. Recenser aussi planques, véhicules, armes de planque et véhicule, quartiers, points d’apparition et données de zones. Prévoir remplacement atomique avec secours, diagnostic de lecture et reprise explicite, puis traiter les transferts multi-fichiers. Conserver les formats et données historiques.
 3. **Métrique g/kg.** Inventorier le stock en vrac, les unités conditionnées, les prix et les conversions actuelles à 28 g. Distinguer champs historiques déjà en grammes et champs en onces avant toute migration versionnée. Utiliser la conversion exacte de 28,349523125 g par once et préserver l’équivalence économique.
 4. **Équipement et employés.** Auditer la mutation XML, les munitions et les composants dans `WorkerWeaponTransfer`. L’ancienne arme est actuellement conservée par le dealer quand le type de la nouvelle diffère. Concevoir un échange qui rende l’ancienne au joueur et puisse échouer avant le retrait de la nouvelle.
 5. **Menus compacts.** Soumettre une proposition visuelle avant la refonte. Centraliser le rendu dans `CustomMenuRenderer`, `CustomMenuLayout` et `CustomMenu`. Valider les parcours clavier/manette.
 6. **Évolutions à étudier.** Vérifier les alertes de stock et de recettes déjà présentes dans `WorkerAlerts`, puis définir les priorités pour le livre des comptes, les statistiques et le réapprovisionnement.
+
+## Lot XML — protections livrées
+
+- Les écritures d’inventaire, de Zee, des dealers, des planques, des véhicules et coffres, des armes, des quartiers, des points d’apparition et des paramètres HUD utilisent le même service. Les définitions de zones et le fichier historique des armes de planque sont lus par ce service.
+- Le service écrit un temporaire dans le dossier cible, le vide sur disque et remplace le fichier actif avec `File.Replace`. Le fichier `.bak` contient la version précédente. Une première création se fait par renommage. Une sauvegarde identique est ignorée pour éviter une écriture et conserver le secours existant.
+- Un XML illisible ou une racine incohérente fait remonter le chemin et la cause de l’échec. Si l’original est absent mais qu’un secours existe, la création est refusée. Pour récupérer, fermer GTA, conserver à part le fichier défectueux et copier le `.bak` validé vers le nom du fichier actif.
+- Les ajouts de champs au démarrage partagent une écriture. La sauvegarde des quartiers conserve les champs inconnus. Dans les planques, les champs placés après la liste d’armes sont aussi mis à jour.
+- L’atomicité est par fichier. Les transactions réparties entre plusieurs fichiers, la validation métier des valeurs XML déjà présentes et la reprise d’une action de jeu après un échec d’écriture restent à traiter.
+
+### Validation du lot XML
+
+- Compiler avec `Build-Baseline.ps1`, puis vérifier sur une copie des sauvegardes qu’un transfert de stock et une modification des réglages HUD survivent à un redémarrage.
+- Vérifier que le `.bak` contient la version précédente après une vraie modification et garde son contenu après une sauvegarde identique.
+- Sur une copie, tronquer le XML actif ou le renommer en laissant le `.bak`, puis relancer. Vérifier le diagnostic et la conservation du secours.
 
 ## Validation du premier lot
 

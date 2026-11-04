@@ -33,7 +33,7 @@ public partial class LSL
 
 	private static void LoadAreaData()
 	{
-		foreach (XElement aEle in XDocument.Load("scripts\\LSLife\\LSLifeAreas.xml").Descendants())
+		foreach (XElement aEle in XmlSaveFile.Load("scripts\\LSLife\\LSLifeAreas.xml").Descendants())
 		{
 			if (!(aEle.Name == "area"))
 			{

@@ -180,7 +180,7 @@ internal static partial class LsFunctions
 				LSL.customers.Remove(c);
 			}
 		}
-		LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
+		LSL.LSLifeSave = XmlSaveFile.Load("scripts\\LSLife\\LSLifeSave.xml");
 		foreach (XElement element in LSL.LSLifeSave.Descendants())
 		{
 			if (!(element.Name == "playerInventory"))
@@ -238,7 +238,7 @@ internal static partial class LsFunctions
 		{
 			OldCustomerHandler.AddCustomer(p, c.Vehicle, LSL.HouseHandler.Inside(), !tip, new KeyValuePair<string, int>(c.Drug.Name, c.amount));
 		}
-		LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
+		XmlSaveFile.Save(LSL.LSLifeSave, "scripts\\LSLife\\LSLifeSave.xml");
 		foreach (Ped pol in police)
 		{
 			if (!IsLivePed(pol)) continue;

@@ -24,7 +24,7 @@ internal static partial class LsFunctions
 		//IL_014f: Unknown result type (might be due to invalid IL or missing references)
 		//IL_0150: Unknown result type (might be due to invalid IL or missing references)
 		//IL_0161: Unknown result type (might be due to invalid IL or missing references)
-		foreach (XElement element in XDocument.Load("scripts\\LSLife\\LSLife_Spawns.xml").Descendants())
+		foreach (XElement element in XmlSaveFile.Load("scripts\\LSLife\\LSLife_Spawns.xml").Descendants())
 		{
 			if (!(element.Name == "pos"))
 			{
@@ -63,7 +63,7 @@ internal static partial class LsFunctions
 		if (File.Exists("scripts\\LSLife\\zoneData\\LsLife_LSSA.xml"))
 		{
 			int i = 0;
-			foreach (XElement zone in XDocument.Load("scripts\\LSLife\\zoneData\\LsLife_LSSA.xml").Descendants())
+			foreach (XElement zone in XmlSaveFile.Load("scripts\\LSLife\\zoneData\\LsLife_LSSA.xml").Descendants())
 			{
 				if (!(zone.Name == "area"))
 				{
@@ -100,7 +100,7 @@ internal static partial class LsFunctions
 		if (File.Exists("scripts\\LSLife\\zoneData\\LsLife_LCRW.xml"))
 		{
 			int i2 = 0;
-			foreach (XElement zone2 in XDocument.Load("scripts\\LSLife\\zoneData\\LsLife_LCRW.xml").Descendants())
+			foreach (XElement zone2 in XmlSaveFile.Load("scripts\\LSLife\\zoneData\\LsLife_LCRW.xml").Descendants())
 			{
 				if (!(zone2.Name == "area"))
 				{
@@ -134,7 +134,7 @@ internal static partial class LsFunctions
 
 	public static void SaveDealer()
 	{
-		LSL.LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
+		LSL.LSLifeSave = XmlSaveFile.Load("scripts\\LSLife\\LSLifeSave.xml");
 		foreach (XElement element in LSL.LSLifeSave.Descendants())
 		{
 			if (!(element.Name == "dealer1"))
@@ -169,7 +169,7 @@ internal static partial class LsFunctions
 				}
 			}
 		}
-		LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
+		XmlSaveFile.Save(LSL.LSLifeSave, "scripts\\LSLife\\LSLifeSave.xml");
 	}
 
 	public static void UpdateSave()
@@ -217,7 +217,7 @@ internal static partial class LsFunctions
 		}
 		if (changed)
 		{
-			LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
+			XmlSaveFile.Save(LSL.LSLifeSave, "scripts\\LSLife\\LSLifeSave.xml");
 			if (LSL.DEBUG)
 			{
 				UI.Notify("Sauvegarde modifiée");
@@ -227,24 +227,27 @@ internal static partial class LsFunctions
 
 	private static void SaveAreaData()
 	{
-		XDocument doc = ((!File.Exists("scripts\\LSLife\\LSLifeAreas.xml")) ? new XDocument(new XElement("areas")) : XDocument.Load("scripts\\LSLife\\LSLifeAreas.xml"));
-		doc.Root.RemoveAll();
+		XDocument doc = ((!File.Exists("scripts\\LSLife\\LSLifeAreas.xml")) ? new XDocument(new XElement("areas")) : XmlSaveFile.Load("scripts\\LSLife\\LSLifeAreas.xml"));
+		var savedAreas = doc.Root.Elements("area").ToLookup(area => (string)area.Element("name"));
 		foreach (Area area in LSL.areas)
 		{
-			XElement aXML = new XElement("area");
-			XElement nameXML = new XElement("name", area.Name);
-			XElement cStrXML = new XElement("cStr", area.CopPresance);
-			XElement gStrXML = new XElement("gStr", area.GangPresance);
-			XElement aHeat = new XElement("aHeat", area.Heat);
-			XElement aRep = new XElement("aRep", area.Reputation);
-			aXML.Add(nameXML);
-			aXML.Add(cStrXML);
-			aXML.Add(gStrXML);
-			aXML.Add(aHeat);
-			aXML.Add(aRep);
-			doc.Root.Add(aXML);
+			var entries = savedAreas[area.Name];
+			if (!entries.Any())
+			{
+				var entry = new XElement("area", new XElement("name", area.Name));
+				doc.Root.Add(entry);
+				entries = new[] { entry };
+			}
+
+			foreach (XElement entry in entries)
+			{
+				entry.SetElementValue("cStr", area.CopPresance);
+				entry.SetElementValue("gStr", area.GangPresance);
+				entry.SetElementValue("aHeat", area.Heat);
+				entry.SetElementValue("aRep", area.Reputation);
+			}
 		}
-		doc.Save("scripts\\LSLife\\LSLifeAreas.xml");
+		XmlSaveFile.Save(doc, "scripts\\LSLife\\LSLifeAreas.xml");
 	}
 
 	public static Prop LoadWeedPlace()

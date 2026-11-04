@@ -330,7 +330,7 @@ public class StashHouse
 	private void SetInside(bool v)
 	{
 		inside = v;
-		XDocument save = XDocument.Load("scripts\\LSLife\\LSLife_StashHouses.xml");
+		XDocument save = XmlSaveFile.Load("scripts\\LSLife\\LSLife_StashHouses.xml");
 		foreach (XElement e in save.Descendants())
 		{
 			if (!(e.Name == "house") || !(e.FirstAttribute.Value == id.ToString()))
@@ -342,7 +342,7 @@ public class StashHouse
 				if (el.Name == "inside")
 				{
 					el.Value = v.ToString();
-					save.Save("scripts\\LSLife\\LSLife_StashHouses.xml");
+					XmlSaveFile.Save(save, "scripts\\LSLife\\LSLife_StashHouses.xml");
 					break;
 				}
 			}
@@ -351,7 +351,7 @@ public class StashHouse
 
 	private void SetPurchased(bool v)
 	{
-		XDocument save = XDocument.Load("scripts\\LSLife\\LSLife_StashHouses.xml");
+		XDocument save = XmlSaveFile.Load("scripts\\LSLife\\LSLife_StashHouses.xml");
 		foreach (XElement e in save.Descendants())
 		{
 			if (!(e.Name == "house") || !(e.FirstAttribute.Value == id.ToString()))
@@ -363,7 +363,7 @@ public class StashHouse
 				if (el.Name == "purchased")
 				{
 					el.Value = v.ToString();
-					save.Save("scripts\\LSLife\\LSLife_StashHouses.xml");
+					XmlSaveFile.Save(save, "scripts\\LSLife\\LSLife_StashHouses.xml");
 					break;
 				}
 			}

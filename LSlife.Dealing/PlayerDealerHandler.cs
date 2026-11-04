@@ -131,11 +131,11 @@ public class PlayerDealerHandler
 		if (!File.Exists("scripts\\LSLife\\LSLife_Dealers.xml"))
 		{
 			dealerDoc = new XDocument(new XElement("dealers"));
-			dealerDoc.Save("scripts\\LSLife\\LSLife_Dealers.xml");
+			XmlSaveFile.Save(dealerDoc, "scripts\\LSLife\\LSLife_Dealers.xml");
 		}
 		else
 		{
-			dealerDoc = XDocument.Load("scripts\\LSLife\\LSLife_Dealers.xml");
+			dealerDoc = XmlSaveFile.Load("scripts\\LSLife\\LSLife_Dealers.xml");
 		}
 		if (dealerDoc.Descendants().ToList().Count <= 0)
 		{
@@ -181,7 +181,7 @@ public class PlayerDealerHandler
 				}
 			}
 		}
-		dealerDoc.Save("scripts\\LSLife\\LSLife_Dealers.xml");
+		XmlSaveFile.Save(dealerDoc, "scripts\\LSLife\\LSLife_Dealers.xml");
 		foreach (XElement ele2 in dealerDoc.Descendants())
 		{
 			if (!(ele2.Name == "dealer"))
@@ -403,12 +403,12 @@ public class PlayerDealerHandler
 
 	private void SaveDealers()
 	{
-		XDocument dealerDoc1 = XDocument.Load("scripts\\LSLife\\LSLife_Dealers.xml");
+		XDocument dealerDoc1 = XmlSaveFile.Load("scripts\\LSLife\\LSLife_Dealers.xml");
 		foreach (PlayerDealer pdealer in dealers)
 		{
 			SaveDealer(pdealer, dealerDoc1);
 		}
-		dealerDoc1.Save("scripts\\LSLife\\LSLife_Dealers.xml");
+		XmlSaveFile.Save(dealerDoc1, "scripts\\LSLife\\LSLife_Dealers.xml");
 	}
 
 	public Vector3 GetCloseHealPosition(Vector3 _pedPos)
@@ -654,7 +654,7 @@ public class PlayerDealerHandler
 
 	private void DeleteDealer(int _id)
 	{
-		XDocument dealerDoc = XDocument.Load("scripts\\LSLife\\LSLife_Dealers.xml");
+		XDocument dealerDoc = XmlSaveFile.Load("scripts\\LSLife\\LSLife_Dealers.xml");
 		if (dealerDoc.Descendants().ToList().Count <= 0 || dealers.Count <= 0)
 		{
 			return;
@@ -685,7 +685,7 @@ public class PlayerDealerHandler
 			dealerEle?.Remove();
 			break;
 		}
-		dealerDoc.Save("scripts\\LSLife\\LSLife_Dealers.xml");
+		XmlSaveFile.Save(dealerDoc, "scripts\\LSLife\\LSLife_Dealers.xml");
 	}
 
 	public void AddDealer(PlayerDealer dealer)

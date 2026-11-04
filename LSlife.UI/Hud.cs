@@ -193,7 +193,7 @@ internal static class Hud
 		SetConfig(config, "debugPosX", debugX);
 		SetConfig(config, "debugPosY", debugY);
 		SetConfig(config, "hudPosVersion", 2);
-		LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
+		XmlSaveFile.Save(LSL.LSLifeSave, "scripts\\LSLife\\LSLifeSave.xml");
 	}
 
 	private static void SetConfig(XElement config, string key, int value)

@@ -41,7 +41,7 @@ internal static class WorkerWeaponTransfer
 				XElement w = LSL.playerWeapons[index];
 				if (w != null)
 				{
-					XDocument dealersDoc = XDocument.Load("scripts\\LSLife\\LSLife_Dealers.xml");
+					XDocument dealersDoc = XmlSaveFile.Load("scripts\\LSLife\\LSLife_Dealers.xml");
 					if (dealersDoc.Descendants().Count() <= 0)
 					{
 						return;
@@ -85,7 +85,7 @@ internal static class WorkerWeaponTransfer
 							{
 								element.Add(w);
 							}
-							dealersDoc.Save("scripts\\LSLife\\LSLife_Dealers.xml");
+							XmlSaveFile.Save(dealersDoc, "scripts\\LSLife\\LSLife_Dealers.xml");
 							int ammo = 1000;
 							foreach (XElement e3 in w.Descendants())
 							{

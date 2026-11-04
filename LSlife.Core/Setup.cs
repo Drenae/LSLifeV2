@@ -43,12 +43,12 @@ public partial class LSL
 			cocain1Price = 1300;
 		}
 		LsFunctions.LoadZoneData();
-		LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
+		LSLifeSave = XmlSaveFile.Load("scripts\\LSLife\\LSLifeSave.xml");
+		bool saveMigrated = false;
 		foreach (XElement element in LSLifeSave.Descendants())
 		{
 			if (element.Name == "playerInventory")
 			{
-				bool saveInventoryMigration = false;
 				foreach (XElement e in element.Elements())
 				{
 					int number;
@@ -79,25 +79,23 @@ public partial class LSL
 				if (element.Element("armour") == null)
 				{
 					element.Add(new XElement("armour", playerArmours));
-					saveInventoryMigration = true;
+					saveMigrated = true;
 				}
 				if (element.Element("weedOz") == null)
 				{
 					element.Add(new XElement("weedOz", LsFunctions.pWeedOunce));
-					saveInventoryMigration = true;
+					saveMigrated = true;
 				}
 				if (element.Element("crackOz") == null)
 				{
 					element.Add(new XElement("crackOz", LsFunctions.pCrackOunce));
-					saveInventoryMigration = true;
+					saveMigrated = true;
 				}
 				if (element.Element("cocaineOz") == null)
 				{
 					element.Add(new XElement("cocaineOz", LsFunctions.pCocaineOunce));
-					saveInventoryMigration = true;
+					saveMigrated = true;
 				}
-				if (saveInventoryMigration)
-					LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
 			}
 			if (!(element.Name == "dealer1"))
 			{
@@ -117,7 +115,7 @@ public partial class LSL
 				XElement dealerRep = new XElement("rep");
 				dealerRep.Value = "1";
 				element.Add(dealerRep);
-				LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
+				saveMigrated = true;
 			}
 			foreach (XElement e2 in element.Elements())
 			{
@@ -171,7 +169,9 @@ public partial class LSL
 				}
 			}
 		}
-		VehicleXml = XDocument.Load("scripts\\LSLife\\LSLife_Vehicles.xml");
+		if (saveMigrated)
+			XmlSaveFile.Save(LSLifeSave, "scripts\\LSLife\\LSLifeSave.xml");
+		VehicleXml = XmlSaveFile.Load("scripts\\LSLife\\LSLife_Vehicles.xml");
 		Enum.TryParse<Keys>(iniSettings.GetValue("KEYS", "MAIN", "F10"), out var mainMenuKey);
 		MenuKey = mainMenuKey;
 		Enum.TryParse<Keys>(iniSettings.GetValue("KEYS", "STOPDEALING", "F11"), out var mainStopDealing);
@@ -179,7 +179,7 @@ public partial class LSL
 		Enum.TryParse<Keys>(iniSettings.GetValue("KEYS", "SETDRUGCAR", "F12"), out var mainSetDrugCar);
 		SetDrugCar = mainSetDrugCar;
 		EnableBlips = true;
-		stashWeaponsXML = XDocument.Load("scripts\\LSLife\\LsLife_Weapons.xml");
+		stashWeaponsXML = XmlSaveFile.Load("scripts\\LSLife\\LsLife_Weapons.xml");
 		foreach (XElement element2 in stashWeaponsXML.Descendants())
 		{
 			if (!(element2.Name == "weapon"))
@@ -191,7 +191,7 @@ public partial class LSL
 				_ = item2.Name == "HASH";
 			}
 		}
-		vehWeaponsXML = XDocument.Load("scripts\\LSLife\\LsLife_Vehicle_Weapons.xml");
+		vehWeaponsXML = XmlSaveFile.Load("scripts\\LSLife\\LsLife_Vehicle_Weapons.xml");
 		int i = 0;
 		foreach (WeaponHash weapon in Enum.GetValues(typeof(WeaponHash)))
 		{

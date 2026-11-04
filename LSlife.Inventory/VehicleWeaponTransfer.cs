@@ -22,7 +22,7 @@ internal static class VehicleWeaponTransfer
             if (weaponXml == null) return false;
             if (!Enum.TryParse(LSL.playerWeps[index], out WeaponHash weapon) ||
                 (int)weapon == -1569615261) return false;
-            LSL.vehWeaponsXML = XDocument.Load(FilePath);
+            LSL.vehWeaponsXML = XmlSaveFile.Load(FilePath);
             var occupiedIds = LSL.vehWeaponsXML.Descendants("weapon")
                 .Select(w => (string)w.Attribute("id"))
                 .Where(idText => idText != null)
@@ -31,7 +31,7 @@ internal static class VehicleWeaponTransfer
             while (occupiedIds.Contains(id.ToString())) id++;
             weaponXml.SetAttributeValue("id", id);
             LSL.vehWeaponsXML.Element("weapons")?.Add(new XElement(weaponXml));
-            LSL.vehWeaponsXML.Save(FilePath);
+            XmlSaveFile.Save(LSL.vehWeaponsXML, FilePath);
             Game.Player.Character.Weapons.Remove(weapon);
             string weaponName = LSL.playerWeps[index];
             LSL.playerWeapons.RemoveAt(index);
@@ -46,7 +46,7 @@ internal static class VehicleWeaponTransfer
             XElement hash = selected.Element("HASH");
             if (hash == null || !Enum.TryParse(hash.Value, out WeaponHash weapon) ||
                 (int)weapon == -1569615261) return false;
-            LSL.vehWeaponsXML = XDocument.Load(FilePath);
+            LSL.vehWeaponsXML = XmlSaveFile.Load(FilePath);
             // Une meme arme peut exister plusieurs fois : retrouver son ID avant son hash.
             string selectedId = (string)selected.Attribute("id");
             XElement stored = LSL.vehWeaponsXML.Descendants("weapon")
@@ -69,7 +69,7 @@ internal static class VehicleWeaponTransfer
             car.vehWeapons.RemoveAt(index);
             car.vehWeps.RemoveAt(index);
             stored.Remove();
-            LSL.vehWeaponsXML.Save(FilePath);
+            XmlSaveFile.Save(LSL.vehWeaponsXML, FilePath);
         }
         car.UpdateCarStash();
         return true;

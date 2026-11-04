@@ -66,7 +66,7 @@ public partial class LSL
 				Script.Wait(100);
 				weaponDealer1.Task.GoTo(pedTarget);
 				dealerTimer = Game.GameTime;
-				LSLifeSave = XDocument.Load("scripts\\LSLife\\LSLifeSave.xml");
+				LSLifeSave = XmlSaveFile.Load("scripts\\LSLife\\LSLifeSave.xml");
 				foreach (XElement element in LSLifeSave.Descendants())
 				{
 					if (!(element.Name == "dealer1"))
