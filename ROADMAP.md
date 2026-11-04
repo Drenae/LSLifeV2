@@ -17,6 +17,8 @@ Branche active `feature/stabilization-metric-ui`, base SHVDN2 validée `01b6e70`
 - Les ajouts de champs au démarrage partagent une écriture. La sauvegarde des quartiers conserve les champs inconnus. Dans les planques, les champs placés après la liste d’armes sont aussi mis à jour.
 - L’atomicité est par fichier. Les transactions réparties entre plusieurs fichiers, la validation métier des valeurs XML déjà présentes et la reprise d’une action de jeu après un échec d’écriture restent à traiter.
 
+- Correctif HUD : le démarrage du script charge les trois positions enregistrées avant le premier Tick, y compris après `Reload()`.
+
 ### Validation du lot XML
 
 - Compiler avec `Build-Baseline.ps1`, puis vérifier sur une copie des sauvegardes qu’un transfert de stock et une modification des réglages HUD survivent à un redémarrage.
