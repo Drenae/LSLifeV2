@@ -571,9 +571,11 @@ public class StashVehicle
 		}
 	}
 
-	public int TotalDrugs()
+	public decimal TotalDrugs()
 	{
-		return drugCarWeed + drugCarCrack + drugCarCocain;
+		return (decimal)drugCarWeed + drugCarCrack + drugCarCocain +
+			LsFunctions.OuncesToGrams(drugCarWeedOz) + LsFunctions.OuncesToGrams(drugCarCrackOz) +
+			LsFunctions.OuncesToGrams(drugCarCocainOz);
 	}
 
 	public void SpawnCar()
@@ -633,6 +635,9 @@ public class StashVehicle
 		((Entity)drugCar).CurrentBlip.Remove();
 		((Entity)drugCar).Delete();
 		drugCar = null;
+		drugCarWeed = drugCarCrack = drugCarCocain = 0;
+		drugCarWeedOz = drugCarCrackOz = drugCarCocainOz = 0;
+		drugCarMoney = 0;
 		LSL.LSLifeSave = XmlSaveFile.Load("scripts\\LSLife\\LSLifeSave.xml");
 		foreach (XElement element2 in LSL.LSLifeSave.Descendants())
 		{
@@ -653,15 +658,15 @@ public class StashVehicle
 			}
 			foreach (XElement carStashEle in element2.Elements())
 			{
-				if (carStashEle.Name == "weed")
+				if (carStashEle.Name == "weed" || carStashEle.Name == "weedOz")
 				{
 					carStashEle.Value = "0";
 				}
-				if (carStashEle.Name == "crack")
+				if (carStashEle.Name == "crack" || carStashEle.Name == "crackOz")
 				{
 					carStashEle.Value = "0";
 				}
-				if (carStashEle.Name == "cocain")
+				if (carStashEle.Name == "cocain" || carStashEle.Name == "cocaineOz")
 				{
 					carStashEle.Value = "0";
 				}

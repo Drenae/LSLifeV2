@@ -24,6 +24,13 @@ Branche active `feature/stabilization-metric-ui`, base SHVDN2 validée `01b6e70`
 - Le XML conserve les grammes entiers dans le texte des champs historiques et stocke le reste dans un attribut facultatif `fractionalGrams`, en culture invariante. Les anciennes sauvegardes se lisent sans conversion ni réécriture préalable. Une version antérieure ne comptabilise que les grammes entiers.
 - À vérifier après compilation : déposer une once, retirer 28 g, relancer GTA et vérifier le reliquat. Répéter avec plusieurs onces et vérifier que les fractions accumulées deviennent retirables par grammes entiers.
 
+## Lot métrique — masses et capacité
+
+- Les masses portées et celles du coffre additionnent les grammes et la masse exacte des quantités historiques. Les livraisons et les contrôles de capacité utilisent ces totaux. Un dealer compte uniquement son propre inventaire.
+- Le retrait d’une commande conserve le seuil strict de 256 onces, soit 7 257,47792 g avec la conversion exacte. Le seuil du sac conserve ses paliers entiers. Les compteurs historiques et les tarifs restent dans leur format actuel.
+- La confiscation tient compte des coffres contenant uniquement du stock en onces et efface ce stock avec les autres quantités de drogue du coffre.
+- À vérifier en jeu : retrait d’une commande près de la limite, apparition et retrait du sac, coffre contenant uniquement du stock en onces. La migration des quantités sélectionnables et stockées reste à traiter.
+
 ## Lot XML — protections livrées
 
 - Les écritures d’inventaire, de Zee, des dealers, des planques, des véhicules et coffres, des armes, des quartiers, des points d’apparition et des paramètres HUD utilisent le même service. Les définitions de zones et le fichier historique des armes de planque sont lus par ce service.

@@ -1397,7 +1397,7 @@ public partial class LSL
 			{
 				notFined = false;
 				playerWanted = false;
-				int AmountOfDrugs = TotalDrugsCarried();
+				decimal AmountOfDrugs = TotalDrugsCarried();
 				if (pStashVehicle != null && pStashVehicle.drugCarWanted && pStashVehicle.TotalDrugs() > 0)
 				{
 					AmountOfDrugs += pStashVehicle.TotalDrugs();
@@ -1630,7 +1630,7 @@ public partial class LSL
 				canSprint = true;
 				sprintChange = true;
 			}
-			if (TotalDrugsCarried() / 28 + (playerWeps.Count - 1) + player.Money / 50000 > 35)
+			if (decimal.Truncate(TotalDrugsCarried() / LsFunctions.GramsPerOunce) + (playerWeps.Count - 1) + player.Money / 50000 > 35)
 			{
 				LsFunctions.PedBag(player.Character, give: true);
 				playerHasBag = true;
@@ -1655,7 +1655,7 @@ public partial class LSL
 				canSprint = false;
 				sprintChange = true;
 			}
-			if (TotalDrugsCarried() / 28 + (playerWeps.Count - 1) + player.Money / 50000 <= 35)
+			if (decimal.Truncate(TotalDrugsCarried() / LsFunctions.GramsPerOunce) + (playerWeps.Count - 1) + player.Money / 50000 <= 35)
 			{
 				LsFunctions.PedBag(player.Character, give: false);
 				playerHasBag = false;

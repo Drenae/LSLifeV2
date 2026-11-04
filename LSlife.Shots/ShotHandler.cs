@@ -104,7 +104,7 @@ internal static class ShotHandler
 			return;
 		}
 		LastShotTime = Game.GameTime;
-		int totalDrugs = LSL.TotalDrugsCarried() + LSL.HouseHandler.TotalStashDrugs();
+		decimal totalDrugs = LSL.TotalDrugsCarried() + LSL.HouseHandler.TotalStashDrugs();
 		if (LSL.pStashVehicle != null)
 		{
 			totalDrugs += LSL.pStashVehicle.TotalDrugs();

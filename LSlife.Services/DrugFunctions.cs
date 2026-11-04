@@ -43,14 +43,14 @@ internal static partial class LsFunctions
 		return name;
 	}
 
-	public static int TotalDrugs(Dictionary<string, int> _drugs)
+	public static decimal TotalDrugGrams(Dictionary<string, int> drugs)
 	{
-		int totalDrugs = 0;
-		foreach (KeyValuePair<string, int> _drug in _drugs)
+		decimal grams = 0;
+		foreach (int quantity in drugs.Values)
 		{
-			totalDrugs += _drugs[_drug.Key];
+			grams += quantity;
 		}
-		return totalDrugs + (pWeedOunce * 28 + pCrackOunce * 28 + pCocaineOunce * 28);
+		return grams;
 	}
 
 	public static void UpdateInventory()
@@ -126,7 +126,7 @@ internal static partial class LsFunctions
 		}
 	}
 
-	private const decimal GramsPerOunce = 28.349523125m;
+	internal const decimal GramsPerOunce = 28.349523125m;
 	private static readonly CultureInfo WeightCulture = CultureInfo.GetCultureInfo("fr-FR");
 
 	public static string FormatWeight(decimal grams)

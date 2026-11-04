@@ -211,16 +211,16 @@ public class DrugOrder
 
 	public bool PlayerCanPickup()
 	{
-		if (LsFunctions.TotalDrugs(LSL.PlayerInventory) + OrderSizeInGrams() < 7168)
+		if (LSL.TotalDrugsCarried() + OrderSizeInGrams() < LsFunctions.OuncesToGrams(256))
 		{
 			return true;
 		}
 		return false;
 	}
 
-	private int OrderSizeInGrams()
+	private decimal OrderSizeInGrams()
 	{
-		return weed * 28 + crack * 28 + cocaine * 28;
+		return LsFunctions.OuncesToGrams(weed) + LsFunctions.OuncesToGrams(crack) + LsFunctions.OuncesToGrams(cocaine);
 	}
 
 	internal bool OrderValid()

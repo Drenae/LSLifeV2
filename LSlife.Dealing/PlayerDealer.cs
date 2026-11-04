@@ -604,7 +604,7 @@ public class PlayerDealer
 					{
 						NewState = Enums.PdStates.WalkToPath;
 					}
-					else if (LsFunctions.TotalDrugs(Drugs) > 0)
+					else if (LsFunctions.TotalDrugGrams(Drugs) > 0)
 					{
 						Deal();
 					}

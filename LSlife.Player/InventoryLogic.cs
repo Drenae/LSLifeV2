@@ -21,8 +21,11 @@ namespace LSlife;
 
 public partial class LSL
 {
-	public static int TotalDrugsCarried()
+	public static decimal TotalDrugsCarried()
 	{
-		return LsFunctions.TotalDrugs(PlayerInventory);
+		return LsFunctions.TotalDrugGrams(PlayerInventory) +
+			LsFunctions.OuncesToGrams(LsFunctions.pWeedOunce) +
+			LsFunctions.OuncesToGrams(LsFunctions.pCrackOunce) +
+			LsFunctions.OuncesToGrams(LsFunctions.pCocaineOunce);
 	}
 }

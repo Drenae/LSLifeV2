@@ -18,7 +18,7 @@ internal static class StreetDealingActions
 		}
 		else if (!LSL.isDealing)
 		{
-			int total = LsFunctions.TotalDrugs(LSL.PlayerInventory) + LSL.HouseHandler.TotalStashDrugs();
+			decimal total = LSL.TotalDrugsCarried() + LSL.HouseHandler.TotalStashDrugs();
 			if (LSL.pStashVehicle != null)
 			{
 				total += LSL.pStashVehicle.TotalDrugs();
