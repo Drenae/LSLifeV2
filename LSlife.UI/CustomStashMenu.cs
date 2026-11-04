@@ -217,8 +217,8 @@ internal static class CustomStashMenu
         if (k <= 6)
         {
             int value = Math.Min(quantity[k], Math.Max(0, MaxQuantity(k)));
-            return k <= 2 ? LsFunctions.GramsToOz(value).Replace(", ", " ").Replace(",", "")
-                : k <= 5 ? value + "oz"
+            return k <= 2 ? LsFunctions.FormatWeight(value)
+                : k <= 5 ? LsFunctions.FormatOunceWeight(value)
                 : LsFunctions.IntToMoney(value) + "$";
         }
         int count = Count(k);
@@ -230,8 +230,8 @@ internal static class CustomStashMenu
     {
         if (k < 0 || k > 6) return null;
         int maximum = Math.Max(0, MaxQuantity(k));
-        return k <= 2 ? "/ " + LsFunctions.GramsToOz(maximum).Replace(", ", " ").Replace(",", "")
-            : k <= 5 ? "/ " + maximum + "oz"
+        return k <= 2 ? "/ " + LsFunctions.FormatWeight(maximum)
+            : k <= 5 ? "/ " + LsFunctions.FormatOunceWeight(maximum)
             : "/ " + LsFunctions.IntToMoney(maximum) + "$";
     }
 
@@ -374,16 +374,16 @@ internal static class CustomStashMenu
             layout.Block(0.029f, y =>
                 CustomMenuRenderer.TextCenteredVertically("STOCK EN VRAC",
                     layout.Left + 0.019f, y, 0.029f, 0.28f, 226, 206, 167, 255));
-            layout.TextPair("Cannabis", LsFunctions.GramsToOz(car.drugCarWeed));
-            layout.TextPair("Crack", LsFunctions.GramsToOz(car.drugCarCrack));
-            layout.TextPair("Cocaine", LsFunctions.GramsToOz(car.drugCarCocain));
+            layout.TextPair("Cannabis", LsFunctions.FormatWeight(car.drugCarWeed));
+            layout.TextPair("Crack", LsFunctions.FormatWeight(car.drugCarCrack));
+            layout.TextPair("Cocaine", LsFunctions.FormatWeight(car.drugCarCocain));
             layout.Separator(0.005f);
             layout.Block(0.029f, y =>
                 CustomMenuRenderer.TextCenteredVertically("STOCK CONDITIONNE",
                     layout.Left + 0.019f, y, 0.029f, 0.28f, 226, 206, 167, 255));
-            layout.ColoredTextPair("Cannabis", car.drugCarWeedOz + " oz", 226, 85, 85);
-            layout.ColoredTextPair("Crack", car.drugCarCrackOz + " oz", 226, 85, 85);
-            layout.ColoredTextPair("Cocaine", car.drugCarCocainOz + " oz", 226, 85, 85);
+            layout.ColoredTextPair("Cannabis", LsFunctions.FormatOunceWeight(car.drugCarWeedOz), 226, 85, 85);
+            layout.ColoredTextPair("Crack", LsFunctions.FormatOunceWeight(car.drugCarCrackOz), 226, 85, 85);
+            layout.ColoredTextPair("Cocaine", LsFunctions.FormatOunceWeight(car.drugCarCocainOz), 226, 85, 85);
             layout.Separator(0.005f);
             layout.TextPair("Argent", LsFunctions.IntToMoney(car.drugCarMoney) + " $");
         }
@@ -392,9 +392,9 @@ internal static class CustomStashMenu
             layout.Separator(0.006f);
             var house = LSL.HouseHandler.CurrentHouse;
             if (house == null) { Close(); return; }
-            layout.TextPair("Cannabis", LsFunctions.GramsToOz(house.Weed));
-            layout.TextPair("Crack", LsFunctions.GramsToOz(house.Crack));
-            layout.TextPair("Cocaine", LsFunctions.GramsToOz(house.Cocain));
+            layout.TextPair("Cannabis", LsFunctions.FormatWeight(house.Weed));
+            layout.TextPair("Crack", LsFunctions.FormatWeight(house.Crack));
+            layout.TextPair("Cocaine", LsFunctions.FormatWeight(house.Cocain));
             layout.TextPair("Argent", LsFunctions.IntToMoney(house.Money) + " $");
         }
         layout.Render();

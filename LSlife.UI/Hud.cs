@@ -299,15 +299,15 @@ internal static class Hud
 			string[] names = { "Cannabis", "Crack", "Cocaïne" };
 			string[] ready =
 			{
-				LsFunctions.GramsToOz(LSL.PlayerInventory["Weed"]) ?? "",
-				LsFunctions.GramsToOz(LSL.PlayerInventory["Crack"]) ?? "",
-				LsFunctions.GramsToOz(LSL.PlayerInventory["Cocaine"]) ?? ""
+				LsFunctions.FormatWeight(LSL.PlayerInventory["Weed"]) ?? "",
+				LsFunctions.FormatWeight(LSL.PlayerInventory["Crack"]) ?? "",
+				LsFunctions.FormatWeight(LSL.PlayerInventory["Cocaine"]) ?? ""
 			};
 			string[] raw =
 			{
-				LsFunctions.pWeedOunce + " oz",
-				LsFunctions.pCrackOunce + " oz",
-				LsFunctions.pCocaineOunce + " oz"
+				LsFunctions.FormatOunceWeight(LsFunctions.pWeedOunce),
+				LsFunctions.FormatOunceWeight(LsFunctions.pCrackOunce),
+				LsFunctions.FormatOunceWeight(LsFunctions.pCocaineOunce)
 			};
 			for (int i = 0; i < 3; i++)
 			{

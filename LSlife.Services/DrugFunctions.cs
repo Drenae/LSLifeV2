@@ -126,16 +126,17 @@ internal static partial class LsFunctions
 		}
 	}
 
-	public static string GramsToOz(int _grams)
+	private const decimal GramsPerOunce = 28.349523125m;
+	private static readonly CultureInfo WeightCulture = CultureInfo.GetCultureInfo("fr-FR");
+
+	public static string FormatWeight(decimal grams)
 	{
-		if (_grams >= 28)
-		{
-			int oz = _grams / 28;
-			int g = _grams - oz * 28;
-			return "~g~" + oz + "~s~oz, ~g~" + g + "~s~g";
-		}
-		return "~g~" + _grams + "~s~g";
+		return Math.Abs(grams) >= 1000m
+			? (grams / 1000m).ToString("0.###", WeightCulture) + " kg"
+			: grams.ToString("0.##", WeightCulture) + " g";
 	}
+
+	public static string FormatOunceWeight(int ounces) => FormatWeight(ounces * GramsPerOunce);
 
 	public static void AddWeedOz(int _amount)
 	{

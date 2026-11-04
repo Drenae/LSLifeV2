@@ -49,7 +49,7 @@ public class Shot
 				{
 					price -= (int)div * customer.Drug.PricePerG;
 				}
-				LsFunctions.TextMsg("Livraison", customer.Ped, "Message", "Tu peux me livrer ~g~" + LsFunctions.GramsToOz(customer.amount) + "~w~ de ~g~" + LsFunctions.DrugDisplayName(customer.Drug.Name) + " ~w~pour $" + LsFunctions.IntToMoney(price) + " à ~y~" + World.GetStreetName(((Entity)customer.Ped).Position) + " ~w~dans ~y~" + World.GetZoneName(((Entity)customer.Ped).Position) + "~w~?");
+				LsFunctions.TextMsg("Livraison", customer.Ped, "Message", "Tu peux me livrer ~g~" + LsFunctions.FormatWeight(customer.amount) + "~w~ de ~g~" + LsFunctions.DrugDisplayName(customer.Drug.Name) + " ~w~pour $" + LsFunctions.IntToMoney(price) + " à ~y~" + World.GetStreetName(((Entity)customer.Ped).Position) + " ~w~dans ~y~" + World.GetZoneName(((Entity)customer.Ped).Position) + "~w~?");
 				timeShotOffered = Game.GameTime;
 				shotOffered = true;
 			}
@@ -82,11 +82,11 @@ public class Shot
 					LsFunctions.TextMsg("Livraison", customer.Ped, "Message", "On se retrouve là-bas.");
 					if (LSL.PlayerInventory[customer.Drug.Name] >= customer.amount)
 					{
-						UI.ShowSubtitle("Livre " + LsFunctions.GramsToOz(customer.amount) + " de ~g~" + LsFunctions.DrugDisplayName(customer.Drug.Name) + "~w~ à ~y~" + World.GetStreetName(((Entity)customer.Ped).Position) + ".", 10000);
+						UI.ShowSubtitle("Livre " + LsFunctions.FormatWeight(customer.amount) + " de ~g~" + LsFunctions.DrugDisplayName(customer.Drug.Name) + "~w~ à ~y~" + World.GetStreetName(((Entity)customer.Ped).Position) + ".", 10000);
 					}
 					else
 					{
-						UI.ShowSubtitle("Tu n’as pas assez de ~g~" + LsFunctions.DrugDisplayName(customer.Drug.Name) + "~w~. Récupère ~g~" + LsFunctions.GramsToOz(customer.amount) + "~w~ et livre-la à ~y~" + World.GetStreetName(((Entity)customer.Ped).Position) + ".", 10000);
+						UI.ShowSubtitle("Tu n’as pas assez de ~g~" + LsFunctions.DrugDisplayName(customer.Drug.Name) + "~w~. Récupère ~g~" + LsFunctions.FormatWeight(customer.amount) + "~w~ et livre-la à ~y~" + World.GetStreetName(((Entity)customer.Ped).Position) + ".", 10000);
 					}
 				}
 				if (Game.GameTime > timeShotOffered + 25000)

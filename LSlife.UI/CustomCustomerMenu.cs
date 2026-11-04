@@ -104,8 +104,8 @@ internal static class CustomCustomerMenu
         layout.Block(0.030f, y =>
             CustomMenuRenderer.TextCenteredVertically("DEMANDE DU CLIENT",
                 layout.Left + 0.019f, y, 0.030f, 0.27f, 226, 206, 167, 255));
-        layout.TextPair(LsFunctions.DrugDisplayName(c.Drug.Name), LsFunctions.GramsToOz(c.amount));
-        layout.TextPair("Stock disponible", LsFunctions.GramsToOz(available));
+        layout.TextPair(LsFunctions.DrugDisplayName(c.Drug.Name), LsFunctions.FormatWeight(c.amount));
+        layout.TextPair("Stock disponible", LsFunctions.FormatWeight(available));
         layout.Separator(0.005f);
         layout.Row("Vendre", menu.SelectedIndex == 0,
             CanSell() ? "+" + LsFunctions.IntToMoney(CustomerSalePricing.SalePrice()) + " $" : "Stock insuffisant",

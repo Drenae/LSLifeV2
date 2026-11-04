@@ -181,7 +181,7 @@ internal static partial class LsFunctions
 				crackMoney -= (float)(finalCrack * dCrack);
 				cocainMoney -= (float)(finalCocain * dCocaine);
 				LSL.dealer1Money += (int)weedMoney + (int)crackMoney + (int)cocainMoney;
-				TextMsg("ZEE", "Réapprovisionnement", "Cannabis : " + finalWeed + "oz, crack : " + finalCrack + "oz, cocaïne : " + finalCocain + "oz.");
+				TextMsg("ZEE", "Réapprovisionnement", "Cannabis : " + FormatOunceWeight(finalWeed) + ", crack : " + FormatOunceWeight(finalCrack) + ", cocaïne : " + FormatOunceWeight(finalCocain) + ".");
 				LSL.LSLifeSave = XmlSaveFile.Load("scripts\\LSLife\\LSLifeSave.xml");
 				UpdateSave();
 			}
@@ -236,7 +236,7 @@ internal static partial class LsFunctions
 				crackMoney2 -= (float)(finalCrack2 * dCrack2);
 				cocainMoney2 -= (float)(finalCocain2 * dCocaine2);
 				LSL.dealer1Money += (int)weedMoney2 + (int)crackMoney2 + (int)cocainMoney2;
-				TextMsg("ZEE", "Réapprovisionnement", "Cannabis : " + finalWeed2 + "oz, crack : " + finalCrack2 + "oz, cocaïne : " + finalCocain2 + "oz.");
+				TextMsg("ZEE", "Réapprovisionnement", "Cannabis : " + FormatOunceWeight(finalWeed2) + ", crack : " + FormatOunceWeight(finalCrack2) + ", cocaïne : " + FormatOunceWeight(finalCocain2) + ".");
 				if (LSL.DEBUG)
 				{
 					UI.Notify("Cannabis : " + finalWeed2 + " crack : " + finalCrack2 + " cocaïne : " + finalCocain2);

@@ -9,6 +9,13 @@ Branche active `feature/stabilization-metric-ui`, base SHVDN2 validée `01b6e70`
 5. **Menus compacts.** Soumettre une proposition visuelle avant la refonte. Centraliser le rendu dans `CustomMenuRenderer`, `CustomMenuLayout` et `CustomMenu`. Valider les parcours clavier/manette.
 6. **Évolutions à étudier.** Vérifier les alertes de stock et de recettes déjà présentes dans `WorkerAlerts`, puis définir les priorités pour le livre des comptes, les statistiques et le réapprovisionnement.
 
+## Lot métrique — affichage
+
+- Les quantités visibles passent en grammes sous 1 kg, puis en kilogrammes. Le format français retire les zéros inutiles. Le HUD, les commandes et SMS Zee, les coffres, les planques, les employés, les ventes et les livraisons partagent le même format.
+- Pour les champs historiques comptés en onces, le calcul d’affichage utilise exactement 28,349523125 g par once. Les décimales sont arrondies à l’écran. Les prix et le XML gardent leurs valeurs actuelles.
+- La migration interne reste à faire. Les transferts vers une planque et le poids de l’inventaire emploient encore 28 g par unité dans leurs calculs. Un écart d’affichage peut donc apparaître quand ces transferts traversent l’ancienne frontière entre onces et grammes.
+- À vérifier en jeu après compilation : stock et prix chez Zee, mêmes quantités dans le HUD et le coffre, affichage sous et au-dessus de 1 kg, lisibilité des valeurs longues et des SMS.
+
 ## Lot XML — protections livrées
 
 - Les écritures d’inventaire, de Zee, des dealers, des planques, des véhicules et coffres, des armes, des quartiers, des points d’apparition et des paramètres HUD utilisent le même service. Les définitions de zones et le fichier historique des armes de planque sont lus par ce service.

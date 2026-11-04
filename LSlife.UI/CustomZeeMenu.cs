@@ -286,8 +286,8 @@ internal static class CustomZeeMenu
             CustomMenuRenderer.Rect(0.149f, y + 0.0225f, 0.255f, 0.045f, 28, 30, 33, 232);
             CustomMenuRenderer.TextCenteredVertically(displayed == dealerMenu ? "CHOISIR LES OPTIONS" :
                 displayed == orderMenu ? "SELECTION DES PRODUITS" :
-                IsDrugMenu(displayed) ? "STOCK " + DrugStock(displayed) + " OZ  |  " +
-                    LsFunctions.IntToMoney(DrugUnitPrice(displayed)) + " $/OZ" :
+                IsDrugMenu(displayed) ? "STOCK " + LsFunctions.FormatOunceWeight(DrugStock(displayed)) + "  |  " +
+                    LsFunctions.IntToMoney(DrugUnitPrice(displayed)) + " $ / " + LsFunctions.FormatOunceWeight(1) :
                 displayed.Subtitle, layout.Left + 0.016f, y, 0.045f,
                 0.275f, 226, 206, 167, 255);
         });
@@ -342,7 +342,7 @@ internal static class CustomZeeMenu
                         barWidth * ratio, 0.006f, 218, 176, 101, 255);
                 CustomMenuRenderer.Rect(barLeft + barWidth * ratio, y + 0.0205f,
                     0.004f, 0.013f, 234, 207, 151, 255);
-                CustomMenuRenderer.TextRightCenteredVertically(DrugAmount(displayed) + " OZ",
+                CustomMenuRenderer.TextRightCenteredVertically(LsFunctions.FormatOunceWeight(DrugAmount(displayed)),
                     left + width - 0.018f, y + 0.0005f, 0.040f, 0.305f,
                     218, 176, 101, 255);
             }
@@ -388,13 +388,13 @@ internal static class CustomZeeMenu
                 const float width = 0.268f;
             if (displayed == orderMenu)
             {
-                CustomMenuRenderer.TextCenteredVertically("CANNABIS  " + LSL.NewOrder.weed + " OZ",
+                CustomMenuRenderer.TextCenteredVertically("CANNABIS  " + LsFunctions.FormatOunceWeight(LSL.NewOrder.weed),
                     left + 0.016f, y + 0.012f, 0.022f,
                     0.255f, 202, 195, 180, 255);
-                CustomMenuRenderer.TextCenteredVertically("CRACK  " + LSL.NewOrder.crack + " OZ",
+                CustomMenuRenderer.TextCenteredVertically("CRACK  " + LsFunctions.FormatOunceWeight(LSL.NewOrder.crack),
                     left + 0.016f, y + 0.035f, 0.022f,
                     0.255f, 202, 195, 180, 255);
-                CustomMenuRenderer.TextCenteredVertically("COCAINE  " + LSL.NewOrder.cocaine + " OZ",
+                CustomMenuRenderer.TextCenteredVertically("COCAINE  " + LsFunctions.FormatOunceWeight(LSL.NewOrder.cocaine),
                     left + 0.016f, y + 0.058f, 0.022f,
                     0.255f, 202, 195, 180, 255);
             }
@@ -402,7 +402,7 @@ internal static class CustomZeeMenu
             {
                 int ordered = displayed == cannabisMenu ? LSL.NewOrder.weed :
                     displayed == crackMenu ? LSL.NewOrder.crack : LSL.NewOrder.cocaine;
-                CustomMenuRenderer.TextCenteredVertically("DEJA AJOUTE  " + ordered + " OZ",
+                CustomMenuRenderer.TextCenteredVertically("DEJA AJOUTE  " + LsFunctions.FormatOunceWeight(ordered),
                     left + 0.016f, y + 0.012f, 0.022f,
                     0.255f, 202, 195, 180, 255);
                 CustomMenuRenderer.TextCenteredVertically("PRIX SELECTION  " +

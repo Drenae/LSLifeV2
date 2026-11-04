@@ -267,7 +267,7 @@ internal static class CustomWorkerMenu
                 int amount = worker.Drugs.ContainsKey(key) ? worker.Drugs[key] : 0;
                 CustomMenuRenderer.TextCenteredVertically(label, layout.Left + 0.021f,
                     y, 0.023f, 0.270f, 226, 227, 229, 255);
-                CustomMenuRenderer.TextRightCenteredVertically(LsFunctions.GramsToOz(amount),
+                CustomMenuRenderer.TextRightCenteredVertically(LsFunctions.FormatWeight(amount),
                     layout.Right - 0.019f, y, 0.023f, 0.295f, 111, 216, 139, 255);
             });
         }
@@ -305,7 +305,7 @@ internal static class CustomWorkerMenu
             if (supply && i < 3)
             {
                 int amount = i == 0 ? supplyWeed : i == 1 ? supplyCrack : supplyCocaine;
-                value = LsFunctions.GramsToOz(amount);
+                value = LsFunctions.FormatWeight(amount);
             }
             else if (supply && i == 3)
                 value = "< x" + supplyStep + " >";
@@ -351,9 +351,9 @@ internal static class CustomWorkerMenu
             layout.Block(0.026f, y =>
                 CustomMenuRenderer.TextCenteredVertically("STOCK JOUEUR",
                     layout.Left + 0.019f, y, 0.026f, 0.270f, 234, 207, 151, 255));
-            layout.TextPair("Cannabis", LsFunctions.GramsToOz(WorkerSupplyTransfer.SupplyAvailable("Weed")));
-            layout.TextPair("Crack", LsFunctions.GramsToOz(WorkerSupplyTransfer.SupplyAvailable("Crack")));
-            layout.TextPair("Cocaïne", LsFunctions.GramsToOz(WorkerSupplyTransfer.SupplyAvailable("Cocaine")));
+            layout.TextPair("Cannabis", LsFunctions.FormatWeight(WorkerSupplyTransfer.SupplyAvailable("Weed")));
+            layout.TextPair("Crack", LsFunctions.FormatWeight(WorkerSupplyTransfer.SupplyAvailable("Crack")));
+            layout.TextPair("Cocaïne", LsFunctions.FormatWeight(WorkerSupplyTransfer.SupplyAvailable("Cocaine")));
         }
         layout.Render();
     }
