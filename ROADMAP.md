@@ -16,6 +16,8 @@ Branche active `feature/stabilization-metric-ui`, base SHVDN2 validée `01b6e70`
 - Affichage métrique validé en jeu par l’utilisateur. Le poids global de l’inventaire, les commandes et les autres stocks historiques restent à migrer.
 - À vérifier en jeu après compilation : stock et prix chez Zee, mêmes quantités dans le HUD et le coffre, affichage sous et au-dessus de 1 kg, lisibilité des valeurs longues et des SMS.
 
+- Chez Zee, le prix unitaire affiché est désormais en dollars par gramme. Le tarif remisé par once est divisé par 28,349523125 et arrondi au centime uniquement pour l’affichage. La facture garde son calcul historique pour préserver les totaux et les commandes existantes.
+
 ## Lot métrique — transferts vers les planques
 
 - Les dépôts depuis le menu et les dépôts automatiques créditent exactement 28,349523125 g par once. Le retrait vers l’inventaire actuel reste par grammes entiers. La fraction reste disponible dans la planque et s’accumule avec les dépôts suivants.

@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Globalization;
 using GTA;
 using GTA.Native;
 
@@ -171,11 +172,17 @@ internal static class CustomZeeMenu
             target == crackMenu ? LSL.dealer1Crack : LSL.dealer1Cocain;
     }
 
-    private static int DrugUnitPrice(CustomMenu target)
+    private static int DrugPricePerOunce(CustomMenu target)
     {
         int price = target == cannabisMenu ? LSL.weed1Price :
             target == crackMenu ? LSL.crack1Price : LSL.cocain1Price;
         return price - LsFunctions.Discount(price);
+    }
+
+    private static string FormatDrugPricePerGram(CustomMenu target)
+    {
+        decimal pricePerGram = DrugPricePerOunce(target) / LsFunctions.OuncesToGrams(1);
+        return pricePerGram.ToString("0.00", CultureInfo.GetCultureInfo("fr-FR")) + " $/g";
     }
 
     private static void ChangeCannabis(int direction) => ChangeQuantity(0, direction);
@@ -287,7 +294,7 @@ internal static class CustomZeeMenu
             CustomMenuRenderer.TextCenteredVertically(displayed == dealerMenu ? "CHOISIR LES OPTIONS" :
                 displayed == orderMenu ? "SELECTION DES PRODUITS" :
                 IsDrugMenu(displayed) ? "STOCK " + LsFunctions.FormatOunceWeight(DrugStock(displayed)) + "  |  " +
-                    LsFunctions.IntToMoney(DrugUnitPrice(displayed)) + " $ / " + LsFunctions.FormatOunceWeight(1) :
+                    FormatDrugPricePerGram(displayed) :
                 displayed.Subtitle, layout.Left + 0.016f, y, 0.045f,
                 0.275f, 226, 206, 167, 255);
         });
@@ -360,7 +367,7 @@ internal static class CustomZeeMenu
             }
             if (IsDrugMenu(displayed) && i == 2)
             {
-                int price = DrugAmount(displayed) * DrugUnitPrice(displayed);
+                int price = DrugAmount(displayed) * DrugPricePerOunce(displayed);
                 CustomMenuRenderer.TextRightCenteredVertically(LsFunctions.IntToMoney(price) + " $",
                     left + width - 0.018f, y + 0.0005f, 0.040f, 0.305f,
                     218, 176, 101, 255);
@@ -407,7 +414,7 @@ internal static class CustomZeeMenu
                     0.255f, 202, 195, 180, 255);
                 CustomMenuRenderer.TextCenteredVertically("PRIX SELECTION  " +
                     LsFunctions.IntToMoney(DrugAmount(displayed) *
-                        DrugUnitPrice(displayed)) + " $",
+                        DrugPricePerOunce(displayed)) + " $",
                     left + 0.016f, y + 0.035f, 0.022f,
                     0.255f, 202, 195, 180, 255);
             }
