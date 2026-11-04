@@ -9,13 +9,15 @@ internal static class CustomCustomerMenu
 {
     private static CustomMenu menu;
     private static bool waitForRelease;
+    private static Customer openedCustomer;
     private static int lastFrame = -1;
 
     public static bool Visible => menu != null && menu.Visible;
 
     public static void Open()
     {
-        if (Visible || LSL.customerSellTo == null || CustomMenuShared.IsAnyGameplayMenuOpen())
+        if (Visible || LSL.customerSellTo?.Drug == null ||
+            !LsFunctions.IsLivePed(LSL.customerSellTo.Ped) || CustomMenuShared.IsAnyGameplayMenuOpen())
             return;
 
         if (menu == null)
@@ -24,6 +26,7 @@ internal static class CustomCustomerMenu
             menu.Add("Vendre", () => Execute(true), CanSell);
             menu.Add("Refuser la vente", () => Execute(false));
         }
+        openedCustomer = LSL.customerSellTo;
         menu.Open();
         waitForRelease = true;
     }
@@ -31,8 +34,8 @@ internal static class CustomCustomerMenu
     private static bool CanSell()
     {
         var customer = LSL.customerSellTo;
-        return customer != null && customer.Drug != null &&
-            LSL.PlayerInventory[customer.Drug.Name] >= customer.amount;
+        return customer?.Drug != null && customer.amount > 0 &&
+            LSL.PlayerInventory.TryGetValue(customer.Drug.Name, out int stock) && stock >= customer.amount;
     }
 
     private static void Execute(bool sale)
@@ -50,6 +53,7 @@ internal static class CustomCustomerMenu
     public static void Close()
     {
         if (menu != null) menu.Close();
+        openedCustomer = null;
     }
 
     public static void TickOncePerFrame()
@@ -58,7 +62,7 @@ internal static class CustomCustomerMenu
         if (lastFrame == frame) return;
         lastFrame = frame;
         if (!Visible) return;
-        if (LSL.customerSellTo == null) { Close(); return; }
+        if (LSL.customerSellTo != openedCustomer || !LsFunctions.IsLivePed(openedCustomer?.Ped)) { Close(); return; }
 
         foreach (int control in new[] { 27, 172, 173, 174, 175, 201, 202, 24, 140, 141, 142, 257, 263, 264 })
         {
@@ -93,7 +97,7 @@ internal static class CustomCustomerMenu
         var c = LSL.customerSellTo;
         if (c == null || c.Drug == null) { Close(); return; }
 
-        int available = LSL.PlayerInventory[c.Drug.Name];
+        LSL.PlayerInventory.TryGetValue(c.Drug.Name, out int available);
         var layout = new CustomMenuLayout();
         layout.Header("CLIENT", "TRANSACTION", titleScale: 0.54f);
         layout.Separator(0.004f);

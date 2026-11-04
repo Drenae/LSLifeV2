@@ -13,6 +13,8 @@ internal static class CustomWorkerMenu
     private static int lastTickFrame = -1;
     private static readonly CustomMenuShared.HorizontalRepeat horizontalRepeat = new CustomMenuShared.HorizontalRepeat();
     private static int equipmentWeaponIndex;
+    private static PlayerDealer openedWorker;
+    private static Ped openedPed;
     public static bool Visible => activeMenu != null && activeMenu.Visible;
 
     public static void Close()
@@ -20,12 +22,18 @@ internal static class CustomWorkerMenu
         if (activeMenu != null) activeMenu.Close();
         activeMenu = null;
         waitForRelease = false;
+        openedWorker = null;
+        openedPed = null;
+        horizontalRepeat.Reset();
     }
 
     public static void Open()
     {
         if (Visible || CustomMenuShared.IsAnyGameplayMenuOpen()) return;
-        if (LSL.DealerHandler.currentDealer == null) return;
+        PlayerDealer worker = LSL.DealerHandler?.currentDealer;
+        if (worker == null || !LsFunctions.IsLivePed(worker.Ped)) return;
+        openedWorker = worker;
+        openedPed = worker.Ped;
         if (workerMenu == null)
         {
             workerMenu = new CustomMenu("EMPLOYE", "");
@@ -128,10 +136,10 @@ internal static class CustomWorkerMenu
     private static void Tick()
     {
         if (!Visible) return;
-        if (LSL.DealerHandler.currentDealer == null)
+        if (LSL.DealerHandler?.currentDealer != openedWorker ||
+            openedWorker.Ped != openedPed || !LsFunctions.IsLivePed(openedPed))
         {
-            activeMenu.Close();
-            activeMenu = null;
+            Close();
             return;
         }
         foreach (int control in new[] { 27, 172, 173, 174, 175, 201, 202, 24, 140, 141, 142, 257, 263, 264 })

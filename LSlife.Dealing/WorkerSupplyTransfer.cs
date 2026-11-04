@@ -10,12 +10,12 @@ internal static class WorkerSupplyTransfer
     {
         PlayerDealer worker = LSL.DealerHandler.currentDealer;
         if (worker == null || worker.Ped == null) return false;
-        if (supplyWeed + supplyCrack + supplyCocaine <= 0 ||
-            supplyWeed > SupplyAvailable("Weed") ||
-            supplyCrack > SupplyAvailable("Crack") ||
-            supplyCocaine > SupplyAvailable("Cocaine")) return false;
+        if (!CanSupply(supplyWeed, supplyCrack, supplyCocaine)) return false;
 
-        LsFunctions.HandOverGoods(LSL.player.Character, worker.Ped);
+        Ped ped = worker.Ped;
+        if (!LsFunctions.HandOverGoods(LSL.player.Character, ped) ||
+            LSL.DealerHandler.currentDealer != worker || worker.Ped != ped ||
+            !CanSupply(supplyWeed, supplyCrack, supplyCocaine)) return false;
         if (supplyWeed > 0) { worker.Drugs["Weed"] += supplyWeed; LSL.PlayerInventory["Weed"] -= supplyWeed; }
         if (supplyCrack > 0) { worker.Drugs["Crack"] += supplyCrack; LSL.PlayerInventory["Crack"] -= supplyCrack; }
         if (supplyCocaine > 0) { worker.Drugs["Cocaine"] += supplyCocaine; LSL.PlayerInventory["Cocaine"] -= supplyCocaine; }
@@ -23,6 +23,11 @@ internal static class WorkerSupplyTransfer
         LSL.DealerHandler.needsSave = true;
         return true;
     }
+
+    private static bool CanSupply(int weed, int crack, int cocaine) =>
+        weed >= 0 && crack >= 0 && cocaine >= 0 && (weed > 0 || crack > 0 || cocaine > 0) &&
+        weed <= SupplyAvailable("Weed") && crack <= SupplyAvailable("Crack") &&
+        cocaine <= SupplyAvailable("Cocaine");
 
     internal static int SupplyAvailable(string key)
     {

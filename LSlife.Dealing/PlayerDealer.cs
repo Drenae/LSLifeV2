@@ -271,7 +271,7 @@ public class PlayerDealer
 
 	public void OnTick()
 	{
-		if ((Entity)(object)Ped != (Entity)null)
+		if (LsFunctions.IsLivePed(Ped))
 		{
 			Enums.PdStates currentState = CurrentState;
 			if (currentState == Enums.PdStates.TalkToPlayer || (uint)(currentState - 8) <= 1u || currentState == Enums.PdStates.Defend)

@@ -1,3 +1,24 @@
+# Phase de stabilisation — 4 novembre 2026
+
+Branche active `feature/stabilization-metric-ui`, base SHVDN2 validée `01b6e70`. Cible GTA V Legacy solo, .NET Framework 4.8 x64, iFruitAddon2 et CustomMenu. Les entrées ci-dessous sur NativeUI, SHVDN3 et les gangs sont conservées comme historique. Les travaux actifs suivent les priorités de cette section.
+
+1. **Stabilisation des interactions et de l’arrêt.** Ce premier lot lie les menus employé, client et stockage à leur cible d’ouverture. Les remises aux employés revalident le PNJ après les animations. Les ventes interrompues avant paiement ne rapportent plus de réputation. L’arrêt tolère notamment les clients déjà supprimés, les véhicules absents et les blips manquants. À poursuivre après validation avec le cycle des commandes Zee, les transitions de menus et la mesure des traitements par Tick.
+2. **Sauvegardes XML.** Priorité aux écritures directes et aux transactions réparties entre plusieurs fichiers. `LSLifeSave.xml` contient notamment inventaire, coffre, données Zee et HUD. `LSLife_Dealers.xml` contient les employés, leurs stocks, recettes et équipement. Recenser aussi planques, véhicules, armes de planque et véhicule, quartiers, points d’apparition et données de zones. Prévoir remplacement atomique avec secours, diagnostic de lecture et reprise explicite, puis traiter les transferts multi-fichiers. Conserver les formats et données historiques.
+3. **Métrique g/kg.** Inventorier le stock en vrac, les unités conditionnées, les prix et les conversions actuelles à 28 g. Distinguer champs historiques déjà en grammes et champs en onces avant toute migration versionnée. Utiliser la conversion exacte de 28,349523125 g par once et préserver l’équivalence économique.
+4. **Équipement et employés.** Auditer la mutation XML, les munitions et les composants dans `WorkerWeaponTransfer`. L’ancienne arme est actuellement conservée par le dealer quand le type de la nouvelle diffère. Concevoir un échange qui rende l’ancienne au joueur et puisse échouer avant le retrait de la nouvelle.
+5. **Menus compacts.** Soumettre une proposition visuelle avant la refonte. Centraliser le rendu dans `CustomMenuRenderer`, `CustomMenuLayout` et `CustomMenu`. Valider les parcours clavier/manette.
+6. **Évolutions à étudier.** Vérifier les alertes de stock et de recettes déjà présentes dans `WorkerAlerts`, puis définir les priorités pour le livre des comptes, les statistiques et le réapprovisionnement.
+
+## Validation du premier lot
+
+- Compiler sous Windows avec `Build-Baseline.ps1`.
+- Démarrer GTA à froid, vérifier le téléphone et le contact Zee, puis tester un rechargement du script avec des entités déjà supprimées.
+- Vérifier approvisionnement, recettes et équipement sur un employé présent puis interrompre une remise pendant l’animation. Vérifier les quantités et l’argent.
+- Tester vente et refus d’un client à pied, en véhicule et lors d’une livraison. Interrompre une vente avant paiement.
+- Quitter une planque ou supprimer le véhicule de stockage pendant que son menu est ouvert. Vérifier aussi les transferts normaux dans les deux sens.
+
+---
+
 ## Cible SHVDN3 nightly (28 octobre 2026)
 
 - [x] Source officielle choisie : `scripthookvdotnet/scripthookvdotnet-nightly`.

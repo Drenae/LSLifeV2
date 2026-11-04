@@ -81,7 +81,7 @@ internal static partial class LsFunctions
 		}
 	}
 
-	public static void MakeStreetSale(Customer c, bool inCar)
+	public static bool MakeStreetSale(Customer c, bool inCar)
 	{
 		//IL_0678: Unknown result type (might be due to invalid IL or missing references)
 		//IL_0655: Unknown result type (might be due to invalid IL or missing references)
@@ -90,6 +90,8 @@ internal static partial class LsFunctions
 		//IL_0947: Unknown result type (might be due to invalid IL or missing references)
 		List<Ped> police = new List<Ped>();
 		Ped p = c.Ped;
+		Ped playerPed = Game.Player.Character;
+		if (!IsLivePed(p) || !IsLivePed(playerPed)) return false;
 		int price = c.amount * c.Drug.PricePerG;
 		float divder = (float)c.amount / 7f;
 		if (divder >= 1f)
@@ -98,7 +100,6 @@ internal static partial class LsFunctions
 		}
 		LSL.PedsCanSeeDeal = 0;
 		float repEarned = (float)price * 0.01f;
-		LSL.areas[LSL.areaIndex].Reputation += repEarned;
 		foreach (Ped ped in LSL.lPeds.GetPeds.Where((Ped r) => ((Entity)r).IsAlive))
 		{
 			if (IsPolice(ped))
@@ -116,9 +117,13 @@ internal static partial class LsFunctions
 			Game.Player.Character.Task.TurnTo((Entity)(object)p);
 			Function.Call(unchecked((Hash)(-8213159594590722974L)), (p), ("GENERIC_HOWS_IT_GOING"), ("SPEECH_PARAMS_STANDARD"), (0));
 			Script.Wait(1000);
+			if (!IsLivePed(p) || !IsLivePed(playerPed) || Game.Player.Character != playerPed) return false;
 			p.Task.PlayAnimation("switch@franklin@002110_04_magd_3_weed_exchange", "002110_04_magd_3_weed_exchange_franklin", 8f, 3000, (AnimationFlags)16);
 			Game.Player.Character.Task.PlayAnimation("switch@franklin@002110_04_magd_3_weed_exchange", "002110_04_magd_3_weed_exchange_shopkeeper", 8f, 3000, (AnimationFlags)16);
 			Script.Wait(2000);
+			if (!IsLivePed(p) || !IsLivePed(playerPed) || Game.Player.Character != playerPed ||
+				LSL.PlayerInventory[c.Drug.Name] < c.amount) return false;
+			LSL.areas[LSL.areaIndex].Reputation += repEarned;
 			Player player = Game.Player;
 			player.Money += price;
 			Ped ped2 = c.Ped;
@@ -133,7 +138,7 @@ internal static partial class LsFunctions
 			}
 			if (c.FarAway)
 			{
-				ShotHandler.RemoveShot(ShotHandler.shots.First((Shot s) => s.customer == c));
+				ShotHandler.RemoveShot(ShotHandler.shots.FirstOrDefault((Shot s) => s.customer == c));
 			}
 			else
 			{
@@ -144,8 +149,12 @@ internal static partial class LsFunctions
 		{
 			Function.Call(unchecked((Hash)(-8213159594590722974L)), (p), ("GENERIC_HOWS_IT_GOING"), ("SPEECH_PARAMS_STANDARD"), (0));
 			Script.Wait(1000);
+			if (!IsLivePed(p) || !IsLivePed(playerPed) || Game.Player.Character != playerPed) return false;
 			p.Task.PlayAnimation("switch@franklin@002110_04_magd_3_weed_exchange", "002110_04_magd_3_weed_exchange_franklin", 8f, 3000, (AnimationFlags)16);
 			Script.Wait(3000);
+			if (!IsLivePed(p) || !IsLivePed(playerPed) || Game.Player.Character != playerPed ||
+				LSL.PlayerInventory[c.Drug.Name] < c.amount) return false;
+			LSL.areas[LSL.areaIndex].Reputation += repEarned;
 			Player player2 = Game.Player;
 			player2.Money += price;
 			Ped ped3 = c.Ped;
@@ -164,7 +173,7 @@ internal static partial class LsFunctions
 			}
 			if (c.FarAway)
 			{
-				ShotHandler.RemoveShot(ShotHandler.shots.First((Shot s) => s.customer == c));
+				ShotHandler.RemoveShot(ShotHandler.shots.FirstOrDefault((Shot s) => s.customer == c));
 			}
 			else
 			{
@@ -232,6 +241,7 @@ internal static partial class LsFunctions
 		LSL.LSLifeSave.Save("scripts\\LSLife\\LSLifeSave.xml");
 		foreach (Ped pol in police)
 		{
+			if (!IsLivePed(pol)) continue;
 			if (LSL.DEBUG)
 			{
 				UI.Notify(police.Count + " | " + Function.Call<int>(unchecked((Hash)(-70476366192974276L)), (((Entity)pol).Handle)) + " | " + IsPolice(pol));
@@ -250,10 +260,14 @@ internal static partial class LsFunctions
 		}
 		CheckIfPartolsCanSee();
 		LSL.customerSellTo = null;
+		return true;
 	}
 
-	public static void HandOverGoods(Ped _from, Ped _too)
+	internal static bool IsLivePed(Ped ped) => ped != null && ((Entity)ped).Exists() && ((Entity)ped).IsAlive;
+
+	public static bool HandOverGoods(Ped _from, Ped _too)
 	{
+		if (!IsLivePed(_from) || !IsLivePed(_too)) return false;
 		//IL_01f6: Unknown result type (might be due to invalid IL or missing references)
 		//IL_01fb: Unknown result type (might be due to invalid IL or missing references)
 		//IL_01ff: Unknown result type (might be due to invalid IL or missing references)
@@ -283,12 +297,15 @@ internal static partial class LsFunctions
 			_too.Task.TurnTo((Entity)(object)_from);
 			Script.Wait(1000);
 		}
+		if (!IsLivePed(_from) || !IsLivePed(_too)) return false;
 		_too.Task.PlayAnimation("switch@franklin@002110_04_magd_3_weed_exchange", "002110_04_magd_3_weed_exchange_franklin", 8f, 2000, (AnimationFlags)16);
 		_from.Task.PlayAnimation("switch@franklin@002110_04_magd_3_weed_exchange", "002110_04_magd_3_weed_exchange_shopkeeper", 8f, 2000, (AnimationFlags)16);
 		Script.Wait(2000);
+		if (!IsLivePed(_from) || !IsLivePed(_too)) return false;
 		Vector3 position;
 		foreach (Ped pol in police)
 		{
+			if (!IsLivePed(pol)) continue;
 			if (LSL.DEBUG)
 			{
 				UI.Notify(police.Count + " | " + Function.Call<int>(unchecked((Hash)(-70476366192974276L)), (((Entity)pol).Handle)) + " | " + IsPolice(pol));
@@ -318,6 +335,7 @@ internal static partial class LsFunctions
 		}
 		CheckIfPartolsCanSee();
 		LSL.lastTimeDealDone = Game.GameTime;
+		return true;
 	}
 
 	public static int MoneyToRep(int _money, bool _debt)

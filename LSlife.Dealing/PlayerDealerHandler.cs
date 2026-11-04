@@ -54,12 +54,12 @@ public class PlayerDealerHandler
 		//IL_0056: Unknown result type (might be due to invalid IL or missing references)
 		//IL_005b: Unknown result type (might be due to invalid IL or missing references)
 		//IL_006f: Unknown result type (might be due to invalid IL or missing references)
-		if (currentDealer != null)
+		if (currentDealer != null && LsFunctions.IsLivePed(currentDealer.Ped))
 		{
 			Vector3 position = ((Entity)currentDealer.Ped).Position;
 			if (position.DistanceTo(LSL.playerPos) < 5f)
 			{
-				World.DrawMarker((MarkerType)0, ((Entity)currentDealer.Ped).Position + new Vector3(0f, 0f, 1.5f), Vector3.Zero, Vector3.Zero, new Vector3(0.2f, 0.2f, 0.2f), Color.Green);
+				World.DrawMarker((MarkerType)0, position + new Vector3(0f, 0f, 1.5f), Vector3.Zero, Vector3.Zero, new Vector3(0.2f, 0.2f, 0.2f), Color.Green);
 			}
 		}
 		if (dealers.Count <= 0)

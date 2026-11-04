@@ -21,6 +21,7 @@ internal static class WeaponDealerActions
 		//IL_0267: Unknown result type (might be due to invalid IL or missing references)
 		//IL_0862: Unknown result type (might be due to invalid IL or missing references)
 		//IL_0886: Unknown result type (might be due to invalid IL or missing references)
+		if (!LsFunctions.IsLivePed(LSL.weaponDealer1)) return;
 		if (item == WeaponDealerAction.Melee)
 		{
 			int total = LSL.meleePrice[meleeIndex] - LsFunctions.Discount(LSL.meleePrice[meleeIndex]);
@@ -30,7 +31,7 @@ internal static class WeaponDealerActions
 				Enum.TryParse<WeaponHash>(LSL.meleeWeps[meleeIndex], out weaponHash);
 				if (!Game.Player.Character.Weapons.HasWeapon(weaponHash))
 				{
-					LsFunctions.HandOverGoods(LSL.weaponDealer1, LSL.player.Character);
+					if (!LsFunctions.HandOverGoods(LSL.weaponDealer1, LSL.player.Character)) return;
 					Player player = Game.Player;
 					player.Money -= total;
 					LsFunctions.PlayTheSound();
@@ -46,7 +47,7 @@ internal static class WeaponDealerActions
 				Enum.TryParse<WeaponHash>(LSL.meleeWeps[meleeIndex], out weaponHash2);
 				if (!Game.Player.Character.Weapons.HasWeapon(weaponHash2))
 				{
-					LsFunctions.HandOverGoods(LSL.weaponDealer1, LSL.player.Character);
+					if (!LsFunctions.HandOverGoods(LSL.weaponDealer1, LSL.player.Character)) return;
 					LsFunctions.PlayTheSound();
 					LSL.dealer1Debt += total;
 					Game.Player.Character.Weapons.Give(weaponHash2, 0, true, true);
@@ -205,7 +206,7 @@ internal static class WeaponDealerActions
 		}
 		if (item == WeaponDealerAction.Dismiss && (Entity)(object)LSL.weaponDealer1 != (Entity)null)
 		{
-			((Entity)LSL.weaponDealer1).CurrentBlip.Remove();
+			((Entity)LSL.weaponDealer1).CurrentBlip?.Remove();
 			CustomWeaponDealerMenu.Close();
 			LSL.weaponDealer1.Task.WanderAround();
 			((Entity)LSL.weaponDealer1).MarkAsNoLongerNeeded();

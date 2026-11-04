@@ -12,6 +12,9 @@ internal static class CustomStashMenu
     private static CustomMenu vehicleMenu;
     private static CustomMenu activeMenu;
     private static bool vehicle, transfer, put;
+    private static StashHouse openedHouse;
+    private static StashVehicle openedVehicle;
+    private static Vehicle openedCar;
     private static int stepIndex;
     private static readonly int[] selected = new int[9];
     private static readonly int[] quantity = new int[7];
@@ -27,6 +30,7 @@ internal static class CustomStashMenu
         if (Visible || CustomMenuShared.IsAnyGameplayMenuOpen() ||
             LSL.HouseHandler.CurrentHouse == null) return;
         vehicle = false;
+        openedHouse = LSL.HouseHandler.CurrentHouse;
         if (houseMenu == null)
         {
             houseMenu = new CustomMenu("PLANQUE", "");
@@ -41,7 +45,11 @@ internal static class CustomStashMenu
     public static void OpenVehicle()
     {
         if (Visible || CustomMenuShared.IsAnyGameplayMenuOpen() || LSL.pStashVehicle == null) return;
+        Vehicle car = LSL.pStashVehicle.drugCar;
+        if (car == null || !((Entity)car).Exists()) return;
         vehicle = true;
+        openedVehicle = LSL.pStashVehicle;
+        openedCar = car;
         if (vehicleMenu == null)
         {
             vehicleMenu = new CustomMenu("COFFRE", "");
@@ -289,6 +297,9 @@ internal static class CustomStashMenu
         if (activeMenu != null) activeMenu.Close();
         activeMenu = null;
         transfer = false;
+        openedHouse = null;
+        openedVehicle = null;
+        openedCar = null;
         horizontalRepeat.Reset();
     }
 
@@ -298,6 +309,11 @@ internal static class CustomStashMenu
         if (lastFrame == frame) return;
         lastFrame = frame;
         if (!Visible) return;
+        bool valid = vehicle
+            ? LSL.pStashVehicle == openedVehicle && openedVehicle.drugCar == openedCar &&
+                openedCar != null && ((Entity)openedCar).Exists()
+            : LSL.HouseHandler?.CurrentHouse == openedHouse;
+        if (!valid) { Close(); return; }
         foreach (int control in new[] { 27, 172, 173, 174, 175, 201, 202, 24, 140, 141, 142, 257, 263, 264 })
         {
             Function.Call(Hash.DISABLE_CONTROL_ACTION, 0, control, true);

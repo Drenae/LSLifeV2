@@ -151,10 +151,6 @@ public partial class LSL
 
 	private void OnAbort(object sender, EventArgs e)
 	{
-		if (1 == 0)
-		{
-			return;
-		}
 		if (ShotHandler.shots.Count > 0)
 		{
 			foreach (Shot s in ShotHandler.shots)
@@ -199,6 +195,7 @@ public partial class LSL
 				if (c != null)
 				{
 					Ped ped = c.Ped;
+					if (ped == null || !((Entity)ped).Exists()) continue;
 					Blip currentBlip3 = ((Entity)ped).CurrentBlip;
 					if (currentBlip3 != null)
 					{
@@ -212,7 +209,7 @@ public partial class LSL
 		{
 			if ((Entity)(object)pStashVehicle.drugCar != (Entity)null && ((Entity)pStashVehicle.drugCar).Exists())
 			{
-				((Entity)pStashVehicle.drugCar).CurrentBlip.Remove();
+				((Entity)pStashVehicle.drugCar).CurrentBlip?.Remove();
 				((Entity)pStashVehicle.drugCar).Delete();
 			}
 			Blip drugCarBlip = pStashVehicle.drugCarBlip;
@@ -225,7 +222,7 @@ public partial class LSL
 		{
 			if ((Entity)(object)wepDealer.vehicle != (Entity)null)
 			{
-				((Entity)wepDealer.vehicle).CurrentBlip.Remove();
+				((Entity)wepDealer.vehicle).CurrentBlip?.Remove();
 				((Entity)wepDealer.vehicle).Delete();
 			}
 			if ((Entity)(object)wepDealer.ped != (Entity)null)
@@ -254,10 +251,11 @@ public partial class LSL
 				((Entity)aDealer.cPed).Delete();
 			}
 		}
-		if (DealerHandler.dealers.Count > 0)
+		if (DealerHandler != null && DealerHandler.dealers.Count > 0)
 		{
 			foreach (PlayerDealer pd in DealerHandler.dealers)
 			{
+				if (pd == null) continue;
 				if ((Entity)(object)pd.Ped != (Entity)null)
 				{
 					LsFunctions.NotImmuneToPlayer(pd.Ped);
@@ -322,8 +320,8 @@ public partial class LSL
 					{
 						currentBlip9.Remove();
 					}
+					((Entity)vehicle).Delete();
 				}
-				((Entity)pig.Vehicle).Delete();
 			}
 		}
 		pickupHandler.RemoveBags();

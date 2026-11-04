@@ -13,32 +13,24 @@ internal static class CustomerTransactionActions
 {
 	internal static bool HandleCustomerTransaction(bool sale)
 	{
-		if (LSL.customerSellTo == null) return false;
+		var customer = LSL.customerSellTo;
+		int areaIndex = LSL.areaIndex;
+		if (customer?.Drug == null || customer.amount <= 0 || !LsFunctions.IsLivePed(customer.Ped) ||
+			areaIndex < 0 || areaIndex >= LSL.areas.Count || LSL.areas[areaIndex] == null) return false;
 		//IL_0247: Unknown result type (might be due to invalid IL or missing references)
 		if (sale)
 		{
-			if (LSL.PlayerInventory[LSL.customerSellTo.Drug.Name] < LSL.customerSellTo.amount)
+			if (!LSL.PlayerInventory.TryGetValue(customer.Drug.Name, out int stock) || stock < customer.amount)
 			{
 				LsFunctions.DisplayHelpText("Stock insuffisant pour cette vente.");
 				return false;
 			}
-			foreach (Drug d in LSL.areas[LSL.areaIndex].Drugs)
+			if (!LsFunctions.MakeStreetSale(customer, Game.Player.Character.IsInVehicle())) return false;
+			foreach (Drug drug in LSL.areas[areaIndex].Drugs)
 			{
-				if (d.Name == LSL.customerSellTo.Drug.Name)
-				{
-					d.Supplied = true;
-				}
+				if (drug.Name == customer.Drug.Name) drug.Supplied = true;
 			}
-			if (Game.Player.Character.IsInVehicle())
-			{
-				LsFunctions.MakeStreetSale(LSL.customerSellTo, inCar: true);
-				LSL.lastTimeDealDone = Game.GameTime;
-			}
-			else
-			{
-				LsFunctions.MakeStreetSale(LSL.customerSellTo, inCar: false);
-				LSL.lastTimeDealDone = Game.GameTime;
-			}
+			LSL.lastTimeDealDone = Game.GameTime;
 		}
 		else
 		{
@@ -51,9 +43,10 @@ internal static class CustomerTransactionActions
 			}
 			if (LSL.customerSellTo.FarAway)
 			{
-				ShotHandler.RemoveShot(ShotHandler.shots.First((Shot s) => s.customer == LSL.customerSellTo));
+				ShotHandler.RemoveShot(ShotHandler.shots.FirstOrDefault((Shot s) => s.customer == customer));
 				LSL.lastTimeDealDone = Game.GameTime;
 				OldCustomerHandler.AddCustomer(LSL.customerSellTo.Ped, LSL.customerSellTo.Vehicle, LSL.HouseHandler.Inside(), _canBeRival: true, new KeyValuePair<string, int>(LSL.customerSellTo.Drug.Name, LSL.customerSellTo.amount));
+				LSL.customerSellTo = null;
 				return true;
 			}
 			if ((Entity)(object)LSL.customerSellTo.Vehicle != (Entity)null && ((Entity)LSL.customerSellTo.Vehicle).Exists())

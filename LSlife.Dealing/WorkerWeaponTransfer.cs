@@ -26,7 +26,11 @@ internal static class WorkerWeaponTransfer
 		}
 		if (LSL.playerWeps.Count > 0)
 		{
-			LsFunctions.HandOverGoods(LSL.player.Character, LSL.DealerHandler.currentDealer.Ped);
+			PlayerDealer worker = LSL.DealerHandler.currentDealer;
+			Ped pedAtStart = worker.Ped;
+			if (!LsFunctions.HandOverGoods(LSL.player.Character, pedAtStart) ||
+				LSL.DealerHandler.currentDealer != worker || worker.Ped != pedAtStart ||
+				index >= LSL.playerWeps.Count || index >= LSL.playerWeapons.Count) return;
 			WeaponHash wep = default;
 			if (Enum.TryParse(LSL.playerWeps[index], out wep))
 			{
