@@ -56,6 +56,13 @@ Branche active `feature/stabilization-metric-ui`, base SHVDN2 validée `01b6e70`
 - Zee réutilise le fond de sélection partagé. Les menus employé, stockage, clients, recrutement, armes et options HUD utilisent le même en-tête et le même cadre. Les valeurs informatives sont neutres et les montants sont verts.
 - À compiler et vérifier en jeu : lisibilité sur fond clair, titres longs, menus de stock, navigation clavier/manette et maintien gauche/droite. Les données et les contrôles restent ceux des menus existants.
 
+## Lot employés — réassort et alertes
+
+- Les menus harmonisés sont validés par l’utilisateur. Le livre des comptes est reporté à une phase ultérieure à sa demande.
+- « Préparer le réassort » préremplit les trois quantités pour atteindre 100 g par produit chez l’employé, dans la limite du stock du joueur. La confirmation existante effectue le transfert. Le seuil peut être réglé avec `[WORKER_SUPPLY] TARGET_GRAMS`.
+- Les alertes distinguent le seuil bas et l’épuisement. Une alerte différée reste en attente pendant le délai global, y compris si plusieurs produits sont concernés. Les seuils et les recettes gardent les réglages existants.
+- À vérifier après compilation : employé à 80 g, joueur à 50 g, cible 100 g → proposition de 20 g. Vérifier aussi les produits déjà au-dessus de la cible et les alertes successives après le cooldown.
+
 ## Lot XML — protections livrées
 
 - Les écritures d’inventaire, de Zee, des dealers, des planques, des véhicules et coffres, des armes, des quartiers, des points d’apparition et des paramètres HUD utilisent le même service. Les définitions de zones et le fichier historique des armes de planque sont lus par ce service.

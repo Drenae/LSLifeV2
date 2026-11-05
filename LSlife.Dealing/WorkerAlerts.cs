@@ -15,6 +15,7 @@ internal static class WorkerAlerts
         internal bool RevenueNotified;
         internal readonly HashSet<string> StockNotified = new HashSet<string>();
         internal bool AllEmptyNotified;
+        internal readonly HashSet<string> EmptyNotified = new HashSet<string>();
         internal bool StockChangedPending;
     }
 
@@ -35,7 +36,8 @@ internal static class WorkerAlerts
         enabled = LSL.iniSettings.GetValue<bool>("WORKER_ALERTS", "ENABLED", true);
         stockThreshold = Math.Max(0, LSL.iniSettings.GetValue<int>("WORKER_ALERTS", "STOCK_THRESHOLD", 0));
         revenueThreshold = Math.Max(1, LSL.iniSettings.GetValue<int>("WORKER_ALERTS", "REVENUE_THRESHOLD", 10000));
-        cooldownMs = Math.Max(0, LSL.iniSettings.GetValue<int>("WORKER_ALERTS", "COOLDOWN_SECONDS", 30)) * 1000;
+        cooldownMs = (int)Math.Min(int.MaxValue, (long)Math.Max(0,
+            LSL.iniSettings.GetValue<int>("WORKER_ALERTS", "COOLDOWN_SECONDS", 30)) * 1000);
     }
 
     internal static void Observe(PlayerDealer worker)
@@ -50,8 +52,11 @@ internal static class WorkerAlerts
             foreach (string key in keys) s.Stock[key] = Read(worker, key);
             s.RevenueNotified = NetRevenue(worker.Money) >= revenueThreshold;
             s.AllEmptyNotified = AllEmpty(worker);
-            for (int i = 0; i < keys.Length; i++)
-                if (s.Stock[keys[i]] <= stockThreshold) s.StockNotified.Add(keys[i]);
+            foreach (string key in keys)
+            {
+                if (s.Stock[key] <= stockThreshold) s.StockNotified.Add(key);
+                if (s.Stock[key] == 0) s.EmptyNotified.Add(key);
+            }
             snapshots[worker.ID] = s;
             return;
         }
@@ -63,6 +68,7 @@ internal static class WorkerAlerts
             int now = Read(worker, key), before = s.Stock[key];
             if (now != before) changed = true;
             if (now > stockThreshold) s.StockNotified.Remove(key);
+            if (now > 0) s.EmptyNotified.Remove(key);
             s.Stock[key] = now;
         }
 
@@ -81,7 +87,11 @@ internal static class WorkerAlerts
                 {
                     s.AllEmptyNotified = true;
                     s.StockChangedPending = false;
-                    foreach (string key in keys) s.StockNotified.Add(key);
+                    foreach (string key in keys)
+                    {
+                        s.StockNotified.Add(key);
+                        s.EmptyNotified.Add(key);
+                    }
                 }
             }
             else if (!empty)
@@ -89,15 +99,18 @@ internal static class WorkerAlerts
                 for (int i = 0; i < keys.Length; i++)
                 {
                     string key = keys[i];
-                    if (s.Stock[key] <= stockThreshold && !s.StockNotified.Contains(key))
+                    bool exhausted = s.Stock[key] == 0 && !s.EmptyNotified.Contains(key);
+                    bool low = s.Stock[key] <= stockThreshold && !s.StockNotified.Contains(key);
+                    if (!exhausted && !low) continue;
+                    string message = exhausted
+                        ? "Mon stock de " + labels[i] + " est épuisé."
+                        : "Il me reste " + LsFunctions.FormatWeight(s.Stock[key]) + " de " + labels[i] + ".";
+                    if (Send(worker, message))
                     {
-                        if (Send(worker, "Mon stock de " + labels[i] + " est epuise ou trop bas."))
-                        {
-                            s.StockNotified.Add(key);
-                            s.StockChangedPending = false;
-                        }
-                        break;
+                        s.StockNotified.Add(key);
+                        if (exhausted) s.EmptyNotified.Add(key);
                     }
+                    break;
                 }
             }
             if (!empty && !HasUnnotifiedLowStock(worker, s)) s.StockChangedPending = false;
@@ -114,7 +127,8 @@ internal static class WorkerAlerts
     private static bool HasUnnotifiedLowStock(PlayerDealer worker, Snapshot s)
     {
         foreach (string key in keys)
-            if (Read(worker, key) <= stockThreshold && !s.StockNotified.Contains(key)) return true;
+            if ((Read(worker, key) == 0 && !s.EmptyNotified.Contains(key)) ||
+                (Read(worker, key) <= stockThreshold && !s.StockNotified.Contains(key))) return true;
         return false;
     }
 

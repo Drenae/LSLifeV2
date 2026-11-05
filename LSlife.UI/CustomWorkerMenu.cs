@@ -96,11 +96,23 @@ internal static class CustomWorkerMenu
             workerSupplyMenu.Add("Cocaïne", () => ChangeSupply(2, 1));
             workerSupplyMenu.Add("Multiplicateur", () => ChangeSupplyStep(1));
             workerSupplyMenu.Add("Confirmer le transfert", ConfirmWorkerSupply,
-                () => supplyWeed + supplyCrack + supplyCocaine > 0);
+                () => supplyWeed > 0 || supplyCrack > 0 || supplyCocaine > 0);
+            workerSupplyMenu.Add("Préparer le réassort", SuggestWorkerSupply);
         }
         workerMenu.Close();
         activeMenu = workerSupplyMenu;
         workerSupplyMenu.Open();
+    }
+
+    private static void SuggestWorkerSupply()
+    {
+        PlayerDealer worker = LSL.DealerHandler?.currentDealer;
+        if (worker == null || !LsFunctions.IsLivePed(worker.Ped)) return;
+        int target = Math.Max(0, LSL.iniSettings.GetValue<int>("WORKER_SUPPLY", "TARGET_GRAMS", 100));
+        supplyWeed = WorkerSupplyQuantities.SuggestedAmount(worker, "Weed", target);
+        supplyCrack = WorkerSupplyQuantities.SuggestedAmount(worker, "Crack", target);
+        supplyCocaine = WorkerSupplyQuantities.SuggestedAmount(worker, "Cocaine", target);
+        horizontalRepeat.Reset();
     }
 
     private static void ChangeSupply(int index, int direction)

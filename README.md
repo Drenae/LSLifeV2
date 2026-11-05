@@ -74,3 +74,12 @@ COOLDOWN_SECONDS = 30
 - `COOLDOWN_SECONDS` : intervalle minimum entre deux notifications, tous employés confondus.
 - L'état initial d'un employé est observé sans générer d'alerte ; une transition ultérieure est nécessaire.
 - Les notifications utilisent le système historique `SendTextMsg` (son SMS + notification GTA), **pas un message persistant dans la boîte de réception du téléphone**.
+
+### Réassort des employés
+
+Dans le menu Approvisionner, « Préparer le réassort » propose les quantités nécessaires pour atteindre la cible par produit, en tenant compte du stock du joueur. La confirmation du transfert reste nécessaire.
+
+```ini
+[WORKER_SUPPLY]
+TARGET_GRAMS = 100
+```
