@@ -53,7 +53,7 @@ internal sealed class CustomMenuLayout
             throw new ArgumentOutOfRangeException(nameof(spacing));
         float centerY = cursor + spacing + thickness / 2f;
         draws.Add(() => CustomMenuRenderer.Rect(centerX, centerY,
-            width - 2f * inset, thickness, 171, 133, 73, 235));
+            width - 2f * inset, thickness, 130, 130, 130, 115));
         cursor += spacing * 2f + thickness;
     }
 
@@ -65,14 +65,14 @@ internal sealed class CustomMenuLayout
         draws.Add(() =>
         {
             CustomMenuRenderer.Rect(centerX, y + height / 2f,
-                width - 0.004f, height, 22, 25, 29, 240);
-            CustomMenuRenderer.Rect(Left + 0.008f, y + height / 2f,
-                0.003f, Math.Max(0f, height - 0.028f), 194, 156, 88, 255);
-            CustomMenuRenderer.TextCenteredVertically(title, Left + 0.023f,
-                y, height, titleScale, 234, 207, 151, 255);
-            if (!string.IsNullOrEmpty(right))
-                CustomMenuRenderer.TextRightCenteredVertically(right, Right - 0.018f,
-                    y, height, 0.270f, 218, 176, 101, 255);
+                width - 0.002f, height, 10, 10, 12, 105);
+            bool hasSubtitle = !string.IsNullOrEmpty(right);
+            float titleHeight = hasSubtitle ? height * 0.56f : height;
+            CustomMenuRenderer.TextCenteredVertically(title, Left + 0.019f,
+                y, titleHeight, Math.Min(titleScale, 0.49f), 226, 180, 94, 255);
+            if (hasSubtitle)
+                CustomMenuRenderer.TextCenteredVertically(right, Left + 0.019f,
+                    y + titleHeight, height - titleHeight, 0.245f, 207, 207, 209, 255);
         });
         cursor += height;
     }
@@ -84,28 +84,21 @@ internal sealed class CustomMenuLayout
         float y = cursor;
         draws.Add(() =>
         {
-            CustomMenuRenderer.Rect(centerX, y + height / 2f,
-                width - 0.012f, height - 0.003f,
-                selected ? 65 : 39, selected ? 55 : 43,
-                selected ? 40 : 48, selected ? 248 : 245);
-            if (selected)
-            {
-                CustomMenuRenderer.Rect(Left + 0.008f, y + height / 2f,
-                    0.0035f, height - 0.005f, 218, 176, 101, 255);
-                CustomMenuRenderer.Rect(centerX, y + 0.001f, width - 0.012f,
-                    0.001f, 172, 137, 78, 225);
-                CustomMenuRenderer.Rect(centerX, y + height - 0.002f, width - 0.012f,
-                    0.001f, 172, 137, 78, 225);
-            }
+            CustomMenuRenderer.RowBackground(centerX, y, width, height, selected);
             int color = enabled ? 234 : 133;
             CustomMenuRenderer.TextCenteredVertically(label, Left + 0.019f,
-                y, height, 0.315f, selected ? 255 : color,
-                selected ? 247 : color, selected ? 226 : color, 255);
+                y, height, 0.315f, selected && enabled ? 255 : color,
+                selected && enabled ? 255 : color, selected && enabled ? 255 : color, 255);
             if (!string.IsNullOrEmpty(value))
-                CustomMenuRenderer.TextRightCenteredVertically(value, string.IsNullOrEmpty(availableValue) ? Right - 0.019f : Right - 0.094f,
-                    y, height, 0.27f, dimValue ? 120 : redValue ? (emphasizeValue ? 255 : 226) : (emphasizeValue ? 160 : 111),
-                    dimValue ? 120 : redValue ? (emphasizeValue ? 120 : 85) : (emphasizeValue ? 255 : 216),
-                    dimValue ? 120 : redValue ? (emphasizeValue ? 120 : 85) : (emphasizeValue ? 185 : 139), 255);
+            {
+                bool money = value.Contains("$");
+                int r = dimValue ? 120 : redValue ? 226 : money ? 153 : 230;
+                int g = dimValue ? 120 : redValue ? 85 : money ? 211 : 230;
+                int b = dimValue ? 120 : redValue ? 85 : money ? 122 : 232;
+                CustomMenuRenderer.TextRightCenteredVertically(value,
+                    string.IsNullOrEmpty(availableValue) ? Right - 0.019f : Right - 0.094f,
+                    y, height, emphasizeValue ? 0.28f : 0.27f, r, g, b, 255);
+            }
             if (!string.IsNullOrEmpty(availableValue))
                 CustomMenuRenderer.TextRightCenteredVertically(availableValue, Right - 0.019f,
                     y, height, 0.245f, dimValue ? 105 : 174, dimValue ? 105 : 176, dimValue ? 105 : 180, 255);
@@ -122,7 +115,9 @@ internal sealed class CustomMenuLayout
             CustomMenuRenderer.TextCenteredVertically(label, Left + 0.019f,
                 y, height, 0.265f, 226, 227, 229, 255);
             CustomMenuRenderer.TextRightCenteredVertically(value, Right - 0.019f,
-                y, height, 0.265f, 111, 216, 139, 255);
+                y, height, 0.265f, value != null && value.Contains("$") ? 153 : 230,
+                value != null && value.Contains("$") ? 211 : 230,
+                value != null && value.Contains("$") ? 122 : 232, 255);
         });
         cursor += height;
     }
@@ -147,11 +142,7 @@ internal sealed class CustomMenuLayout
     {
         if (bottomPadding < 0f) throw new ArgumentOutOfRangeException(nameof(bottomPadding));
         float height = Height + bottomPadding;
-        CustomMenuRenderer.Rect(centerX, top + height / 2f, width, height, 13, 16, 20, 238);
-        CustomMenuRenderer.Rect(centerX, top, width, 0.002f, 194, 156, 88, 255);
-        CustomMenuRenderer.Rect(centerX, top + height, width, 0.002f, 194, 156, 88, 255);
-        CustomMenuRenderer.Rect(Left, top + height / 2f, 0.0015f, height, 151, 119, 69, 220);
-        CustomMenuRenderer.Rect(Right, top + height / 2f, 0.0015f, height, 151, 119, 69, 220);
+        CustomMenuRenderer.Rect(centerX, top + height / 2f, width, height, 9, 10, 12, 205);
         foreach (Action draw in draws) draw();
     }
 }

@@ -50,6 +50,12 @@ Branche active `feature/stabilization-metric-ui`, base SHVDN2 validée `01b6e70`
 - L’arme transférée conserve ses composants et les munitions relevées lors de l’échange. Les armes marquées `exactAmmo` sont restaurées sans le bonus historique de munitions au chargement.
 - À valider en jeu : don à un employé désarmé, échange avec deux types d’armes, refus en cas de doublon et rechargement après échange. Vérifier aussi les armes partageant le même type de munitions dans GTA.
 
+## Lot graphique — maquette approuvée
+
+- Fond anthracite translucide, titres dorés et sous-titres sous le titre. La sélection partage un fond gris avec un trait doré à gauche. Les séparateurs sont fins et neutres.
+- Zee réutilise le fond de sélection partagé. Les menus employé, stockage, clients, recrutement, armes et options HUD utilisent le même en-tête et le même cadre. Les valeurs informatives sont neutres et les montants sont verts.
+- À compiler et vérifier en jeu : lisibilité sur fond clair, titres longs, menus de stock, navigation clavier/manette et maintien gauche/droite. Les données et les contrôles restent ceux des menus existants.
+
 ## Lot XML — protections livrées
 
 - Les écritures d’inventaire, de Zee, des dealers, des planques, des véhicules et coffres, des armes, des quartiers, des points d’apparition et des paramètres HUD utilisent le même service. Les définitions de zones et le fichier historique des armes de planque sont lus par ce service.
