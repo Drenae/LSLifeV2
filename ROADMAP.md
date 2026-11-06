@@ -14,7 +14,7 @@
 - [x] Aucun revenu automatique ou passif lié à la possession d'un territoire.
 - [x] Aucun MLO ou QG requis pour créer et gérer le gang.
 
-Les trois premiers jalons sont déclarés terminés par l'utilisateur. Ne pas les relancer sans bug constaté. Les nouvelles fonctionnalités ne sont **pas encore implémentées** sur cette branche.
+Les trois premiers jalons sont déclarés terminés par l'utilisateur. Ne pas les relancer sans bug constaté. Le lot 1 est maintenant implemente ; la validation en jeu reste a effectuer. Les lots suivants ne sont pas encore implementes.
 
 ## 2. Règles fonctionnelles décidées
 
@@ -46,12 +46,16 @@ Les trois premiers jalons sont déclarés terminés par l'utilisateur. Ne pas le
 
 ### Lot 1 — Fondations, création et persistance du gang (priorité immédiate)
 
-- [ ] Auditer `Area`, `AreaLogic`, `Gang`, les dealers, les menus et les services XML.
-- [ ] Concevoir un modèle de gang du joueur **distinct des gangs natifs**, avec ID stable, nom, identité et état sauvegardé.
-- [ ] Ajouter création/chargement/sauvegarde non destructifs, validation des données et compatibilité avec les sauvegardes existantes.
-- [ ] Ajouter un menu CustomMenu compact : créer le gang, consulter son identité et accéder à sa gestion.
-- [ ] Préparer les références de membres et de territoires sans dupliquer les données métier.
-- [ ] Compiler puis faire valider en jeu par l'utilisateur.
+- [x] Auditer `Area`, `AreaLogic`, `Gang`, les dealers, les menus et les services XML.
+- [x] Concevoir un modèle de gang du joueur **distinct des gangs natifs**, avec ID stable, nom, identité et état sauvegardé.
+- [x] Ajouter création/chargement/sauvegarde non destructifs, validation des données et compatibilité avec les sauvegardes existantes.
+- [x] Ajouter un menu CustomMenu compact : créer le gang, consulter son identité et accéder à sa gestion.
+- [x] Préparer les références de membres et de territoires sans dupliquer les données métier.
+- [x] Compiler le mod complet : Release .NET Framework 4.8 x64, SDK 10.0.403, references publiques SHVDN2 3.6.0 et iFruitAddon2 3.1.1 ; 0 erreur, 16 avertissements dans le code existant.
+- [ ] Faire valider en jeu par l'utilisateur.
+- [x] Verifier la persistance sans GTA : 35 assertions reussies (creation, relecture, identite stable, .bak, XML invalides, conflits et erreurs d'ecriture).
+
+**Livraison lot 1 :** `PlayerGangProfile` et `PlayerGangStore`, fichier isole `LSLife_PlayerGang.xml`, menu compact de creation/edition, acces F9 (`[KEYS] GANG`) et entree « Mon gang » chez Zee. Le chef logique `player` suit la portee des sauvegardes existantes. References de dealers/quartiers preparees mais vides. Aucun transfert, territoire, recrutement ni batiment ajoute. Audit : `AUDIT_PLAYER_GANG.md`. Parcours de validation : `TEST_PLAYER_GANG.md`.
 
 ### Lot 2 — Territoires fondés sur la réputation
 
@@ -82,8 +86,15 @@ Les trois premiers jalons sont déclarés terminés par l'utilisateur. Ne pas le
 
 - [ ] Ajuster la décroissance de réputation et les conditions de conservation des quartiers.
 - [ ] Définir les éventuels rôles, membres non-dealers, présence à Paleto Bay et fonctions supplémentaires du gang.
-- [ ] Intégrer le bâtiment choisi **seulement après modification et validation du MLO dans Blender** : d'abord une StashHouse classique par téléportation, avec ID XML stable.
-- [ ] **Tout à la fin**, transformer cette StashHouse en QG avec fonctions de gestion du gang.
+
+### Lot 6 — Integration ulterieure de la StashHouse
+
+- [ ] Attendre le feu vert et le batiment termine par l'utilisateur.
+- [ ] Integrer une StashHouse classique par teleportation, avec ID XML stable et sauvegardes conservees.
+
+### Lot 7 — Transformation finale en QG
+
+- [ ] Tout a la fin, transformer cette meme StashHouse en QG avec fonctions de gestion du gang, en conservant son ID et ses sauvegardes.
 
 ## 5. Contraintes de livraison
 

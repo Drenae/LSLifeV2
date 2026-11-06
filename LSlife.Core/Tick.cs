@@ -298,6 +298,7 @@ public partial class LSL
 		CustomHireDealerMenu.TickOncePerFrame();
 		CustomWorkerMenu.TickOncePerFrame();
 		CustomHudOptionsMenu.TickOncePerFrame();
+		CustomPlayerGangMenu.TickOncePerFrame();
 		if (Game.IsControlPressed(2, (Control)76) && Game.IsControlJustPressed(2, (Control)26))
 		{
 			DropDrugs.Drop();

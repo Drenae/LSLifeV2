@@ -52,6 +52,7 @@ internal static class CustomZeeMenu
         menu.Add("Demander a etre depose", () => RunZeeAction(ZeeContactActions.CallLift));
         menu.Add("Rembourser la dette", () => RunZeeAction(ZeeContactActions.PayZeeDebt), () => LSL.dealer1Debt > 0);
         menu.Add("Options du HUD", OpenHudOptions);
+        menu.Add("Mon gang", () => { Close(); CustomPlayerGangMenu.Open(true); });
     }
 
     private static void OpenHudOptions()

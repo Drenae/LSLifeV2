@@ -22,6 +22,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
+    <Compile Remove="tests/**/*.cs" />
     <Reference Include="System.Core" />
     <Reference Include="iFruitAddon2">
       <HintPath>$(GtaVPath)\scripts\iFruitAddon2.dll</HintPath>

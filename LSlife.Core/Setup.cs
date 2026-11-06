@@ -45,6 +45,7 @@ public partial class LSL
 		LsFunctions.LoadZoneData();
 		LSLifeSave = XmlSaveFile.Load("scripts\\LSLife\\LSLifeSave.xml");
 		Hud.Innit();
+		CustomPlayerGangMenu.Initialize();
 		bool saveMigrated = false;
 		foreach (XElement element in LSLifeSave.Descendants())
 		{

@@ -24,6 +24,13 @@ public partial class LSL
 {
 	private void onKeyDown(object sender, KeyEventArgs e)
 	{
+        if (e.KeyCode == iniSettings.GetValue<Keys>("KEYS", "GANG", Keys.F9) && player != null && player.IsAlive)
+        {
+            if (CustomPlayerGangMenu.Visible) CustomPlayerGangMenu.Close(false);
+            else CustomPlayerGangMenu.Open();
+            return;
+        }
+        if (CustomPlayerGangMenu.Visible) return;
 		//IL_0093: Unknown result type (might be due to invalid IL or missing references)
 		//IL_0098: Unknown result type (might be due to invalid IL or missing references)
 		//IL_00b1: Unknown result type (might be due to invalid IL or missing references)

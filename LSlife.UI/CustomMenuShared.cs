@@ -10,7 +10,8 @@ internal static class CustomMenuShared
     // Point d'entree unique pour les interactions du monde et le HUD.
     internal static bool IsAnyGameplayMenuOpen()
     {
-        return CustomZeeMenu.Visible
+        return CustomPlayerGangMenu.Visible
+            || CustomZeeMenu.Visible
             || CustomStashMenu.Visible
             || CustomCustomerMenu.Visible
             || CustomWeaponDealerMenu.Visible
